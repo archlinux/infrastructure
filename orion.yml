@@ -1,0 +1,9 @@
+---
+
+- name: setup orion
+  hosts: orion
+  remote_user: root
+  roles:
+    - common
+    - tools
+    - borg

@@ -1,0 +1,17 @@
+---
+
+# This script is for provisioning a server for first boot.
+# Care: It is not idempotent by design.
+
+- name: provision orion
+  hosts: orion
+  remote_user: root
+  vars:
+    - hostname: orion
+      ipv4_address: "88.198.91.70"
+      ipv6_address: "2a01:4f8:160:6087::1/128"
+      ipv4_gateway: "88.198.91.65"
+      ipv6_gateway: "fe80::1"
+      filesystem: btrfs
+  roles:
+    - install_arch

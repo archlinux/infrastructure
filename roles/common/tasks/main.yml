@@ -1,0 +1,30 @@
+---
+
+- name: update pacman cache
+  pacman: update_cache=yes
+
+- name: install ntp
+  pacman: name=ntp state=present
+
+- name: start and enable ntp
+  service: name=ntpd enabled=yes state=started
+
+- name: install smart
+  pacman: name=smartmontools state=present
+
+- name: start and enable smart
+  service: name=smartd enabled=yes state=started
+
+- name: install mlocate
+  pacman: name=mlocate state=present
+
+- name: activate regular updatedb for mlocate
+  service: name=updatedb.timer enabled=yes state=started
+
+- name: generate locales
+  locale_gen: name={{ item }} state=present
+  with_items:
+    - en_US.UTF-8
+
+- name: configure locales
+  template: src=locale.conf.j2 dest=/etc/locale.conf owner=root group=root mode=0644

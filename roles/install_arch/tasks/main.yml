@@ -1,0 +1,121 @@
+---
+
+- name: read /etc/motd
+  command: cat /etc/motd
+  register: motd_contents
+
+- name: check whether we're running in the Hetzner rescue system
+  fail: msg="Not running in Hetzner rescue system!"
+  when: "'Hetzner Rescue' not in motd_contents.stdout"
+
+- name: partition and format the disks
+  command: mkfs.btrfs -f -L rootfs -d raid1 /dev/sda /dev/sdb
+  when: filesystem == "btrfs"
+
+- name: create BIOS boot partitions
+  command: sgdisk -n 1:0:10M /dev/{{ item }}
+  when: filesystem == "ext4"
+  with_items:
+    - sda
+    - sdb
+
+- name: create RAID partitions
+  command: sgdisk -n 2:0:0 /dev/{{ item }}
+  when: filesystem == "ext4"
+  with_items:
+    - sda
+    - sdb
+
+- name: set BIOS boot partition types
+  command: sgdisk -t 1:ef02 /dev/{{ item }}
+  when: filesystem == "ext4"
+  with_items:
+    - sda
+    - sdb
+
+- name: set RAID partition types
+  command: sgdisk -t 2:fd00
+  when: filesystem == "ext4"
+  with_items:
+    - sda
+    - sdb
+
+- name: create MDADM array
+  command: mdadm --create --level=1 --raid-devices=2 --run /dev/md0 /dev/sda2 /dev/sdb2
+
+- name: format the MDADM array
+  filesystem: dev=/dev/md0 fstype=ext4
+  when: filesystem == "ext4"
+
+- name: mount the filesystem (btrfs)
+  mount: name=/mnt src='LABEL=rootfs' fstype=btrfs state=mounted
+  when: filesystem == "btrfs"
+
+- name: mount the filesystem (ext4)
+  mount: name=/mnt src=/dev/md0 fstype=ext4 state=mounted
+  when: filesystem == "ext4"
+
+- name: install arch base
+  command: pacstrap /mnt base
+
+- name: initialize pacman keyring
+  command: arch-chroot /mnt pacman-key --init
+
+- name: populate pacman keyring
+  command: arch-chroot /mnt pacman-key --poulate archlinux
+
+- name: force re-install all packages with proper database in chroot
+  command: arch-chroot /mnt pacman --force base base-devel grub openssh sudo btrfs-progs python2
+
+- name: generate mdadm.conf
+  shell: mdadm --detail --scan >> /mnt/etc/mdadm.conf
+  when: filesystem == "ext4"
+
+- name: set the hostname
+  lineinfile: dest=/mnt/etc/hostname line="{{ hostname }}" create=yes
+
+- name: add mdadm_udev to mkinitcpio.conf
+  lineinfile: dest=/mnt/etc/mkinitcpio.conf backrefs=yes regexp="^(.*)block filesystems(.*)$" line="\1block mdadm_udev filesystems\2"
+  when: filesystem == "ext4"
+
+- name: run mkinitcpio
+  command: arch-chroot /mnt mkinitcpio -p linux
+
+- name: generate fstab
+  shell: genfstab -p -L /mnt >> /etc/fstab
+
+- name: configure network
+  template: src=10-static-ethernet.network.j2 dest=/mnt/etc/systemd/network/10-static-ethernet.network owner=root group=root mode=0644
+
+- name: install grub
+  command: arch-chroot /mnt grub-install --recheck {{ item }}
+  with_items:
+    - sda
+    - sdb
+
+- name: configure grub
+  command: arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+
+- name: configure zoneinfo
+  file: src=/usr/share/zoneinfo/UTC dest=/mnt/etc/localtime state=link force=yes
+
+- name: configure locale.gen
+  lineinfile: dest=/mnt/etc/locale.gen line="en_US.UTF-8 UTF-8"
+
+- name: run locale-gen inside chroot
+  command: arch-chroot /mnt locale-gen
+
+- name: enable services inside chroot
+  command: arch-chroot /mnt systemctl enable sshd systemd-networkd systemd-resolved
+
+- name: add authorized key for root
+  authorized_key: user=root key="{{ item }}" path=/mnt/root/.ssh/authorized_keys
+  with_file:
+    - sven.pub
+    - florian.pub
+
+- name: configure sshd
+  template: src=sshd_config.j2 dest=/mnt/etc/ssh/sshd_config owner=root group=root mode=0644
+
+- name: create symlink to resolv.conf
+  file: src=/run/systemd/resolve/resolv.conf dest=/mnt/etc/resolv.conf state=link force=yes
