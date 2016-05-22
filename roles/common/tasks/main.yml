@@ -28,3 +28,6 @@
 
 - name: configure locales
   template: src=locale.conf.j2 dest=/etc/locale.conf owner=root group=root mode=0644
+
+- name: generate ssh key for root
+  command: ssh-keygen -b 4096 -N "" -f /root/.ssh/id_rsa creates="/root/.ssh/id_rsa"

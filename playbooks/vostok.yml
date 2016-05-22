@@ -6,5 +6,5 @@
   roles:
     - common
     - tools
-    - borg
     - sshd
+    - { role: borg-server, backup_dir: "/backup", backup_clients: "orion" }

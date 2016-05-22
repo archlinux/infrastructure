@@ -6,5 +6,5 @@
   roles:
     - common
     - tools
-    - borg
     - sshd
+    - { role: borg-client, backup_host: "root@vostok.archlinux.org", backup_dir: "/backup/orion" }

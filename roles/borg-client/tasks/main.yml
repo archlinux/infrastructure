@@ -1,0 +1,27 @@
+---
+
+- name: install borg
+  pacman: name=borg state=present
+
+- name: check if borg repository already exists
+  command: borg list {{ backup_host }}:{{ backup_dir }}
+  register: borg_list
+  ignore_errors: True
+
+- name: init borg repository
+  command: borg init -e keyfile {{ backup_host }}:{{ backup_dir }}
+  when: borg_list | failed
+  environment:
+    BORG_PASSPHRASE: ""
+
+- name: install borg backup script
+  template: src=borg-backup.sh dest=/usr/local/bin/borg-backup.sh owner=root group=root mode=755
+
+- name: install systemd timers for backup
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=644
+  with_items:
+    - borg-backup.timer
+    - borg-backup.service
+
+- name: activate systemd timers for backup
+  service: name=borg-backup.timer enabled=yes state=started

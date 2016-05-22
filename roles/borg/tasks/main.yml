@@ -1,4 +1,0 @@
----
-
-- name: install borg
-  pacman: name=borg state=present
