@@ -110,9 +110,7 @@
 
 - name: add authorized key for root
   authorized_key: user=root key="{{ item }}" path=/mnt/root/.ssh/authorized_keys
-  with_file:
-    - sven.pub
-    - florian.pub
+  with_file: "{{ root_ssh_keys }}"
 
 - name: configure sshd
   template: src=sshd_config.j2 dest=/mnt/etc/ssh/sshd_config owner=root group=root mode=0644
