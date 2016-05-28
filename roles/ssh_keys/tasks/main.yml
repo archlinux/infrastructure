@@ -6,5 +6,5 @@
 
 - set_fact: pubkey_string={{ pubkeys.results | map(attribute='ansible_facts.pubkey_list') | join('\n') }}
 
-- name: add authorized key for root
+- name: add authorized keys for root
   authorized_key: user=root key="{{ pubkey_string }}" exclusive=yes
