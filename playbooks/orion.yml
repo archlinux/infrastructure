@@ -9,3 +9,4 @@
     - sshd
     - ssh_keys
     - { role: borg-client, backup_host: "borg@vostok.archlinux.org", backup_dir: "/backup/orion" }
+    - archusers

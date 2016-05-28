@@ -1,0 +1,351 @@
+---
+
+arch_groups:
+  - dev
+  - tu
+  - fellows
+
+arch_users:
+  aaron:
+    name: "Aaron Griffin"
+    ssh_key: aaron.pub
+    groups:
+      - dev
+  aginiewicz:
+    name: "Andrzej Giniewicz"
+    ssh_key: aginiewicz.pub
+    groups:
+      - tu
+  allan:
+    name: "Allan McRae"
+    ssh_key: allan.pub
+    groups:
+      - dev
+  alucryd:
+    name: "Maxime Gauduin"
+    ssh_key: alucryd.pub
+    groups:
+      - dev
+      - tu
+  ambrevar:
+    name: "Pierre Neidhardt"
+    ssh_key: ambrevar.pub
+    groups:
+      - tu
+  anatolik:
+    name: "Anatol Pomozov"
+    ssh_key: anatolik.pub
+    groups:
+      - dev
+      - tu
+  andrea:
+    name: "Andrea Scarpino"
+    ssh_key: andrea.pub
+    groups:
+      - dev
+  andrew:
+    name: "Andrew Gregory"
+    ssh_key: andrew.pub
+    groups:
+      - dev
+  anthraxx:
+    name: "Levente Polyak"
+    ssh_key: anthraxx.pub
+    groups:
+      - tu
+  andyrtr:
+    name: "Andreas Radke"
+    ssh_key: andyrtr.pub
+    groups:
+      - dev
+  angvp:
+    name: "Ángel Velásquez"
+    ssh_key: angvp.pub
+    groups:
+      - dev
+  arcanis:
+    name: "Evgeniy Alekseev"
+    ssh_key: arcanis.pub
+    groups:
+      - tu
+  arodseth:
+    name: "Alexander Rødseth"
+    ssh_key: arodseth.pub
+    groups:
+      - tu
+  arojas:
+    name: "Antonio Rojas"
+    ssh_key: arojas.pub
+    groups:
+      - dev
+      - tu
+  bgyorgy:
+    name: "Balló György"
+    ssh_key: bgyorgy.pub
+    groups:
+      - tu
+  bisson:
+    name: "Gaëtan Bisson"
+    ssh_key: bisson.pub
+    groups:
+      - dev
+  bluewind:
+    name: "Florian Pritz"
+    ssh_key: bluewind.pub
+    groups:
+      - dev
+      - tu
+  bpiotrowski:
+    name: "Bartłomiej Piotrowski"
+    ssh_key: bpiotrowski.pub
+    groups:
+      - dev
+      - tu
+  cbehan:
+    name: "Connor Behan"
+    ssh_key: cbehan.pub
+    groups:
+      - tu
+  dan:
+    name: "Dan McGee"
+    ssh_key: dan.pub
+    groups:
+      - dev
+  daniel:
+    name: "Daniel Isenmann"
+    ssh_key: daniel.pub
+    groups:
+      - dev
+  demize:
+    name: "Johannes Löthberg"
+    ssh_key: demize.pub
+    groups:
+      - tu
+  dicebot:
+    name: "Mihails Strasuns"
+    ssh_key: dicebot.pub
+    groups:
+      - tu
+  djgera:
+    name: "Gerardo Exequiel Pozzi"
+    ssh_key: djgera.pub
+    groups:
+      - dev
+  dreisner:
+    name: "Dave Reisner"
+    ssh_key: dreisner.pub
+    groups:
+      - dev
+  dwallace:
+    name: "Daniel Wallace"
+    ssh_key: dwallace.pub
+    groups:
+      - tu
+  eric:
+    name: "Eric Bélanger"
+    ssh_key: eric.pub
+    groups:
+      - dev
+  eworm:
+    name: "Christian Hesse"
+    ssh_key: eworm.pub
+    groups:
+      - tu
+  faidoc:
+    name: "Alexandre Filgueira"
+    ssh_key: faidoc.pub
+    groups:
+      - tu
+  farseerfc:
+    name: "Jiachen Yang"
+    ssh_key: farseerfc.pub
+    groups:
+      - tu
+  felixonmars:
+    name: "Felix Yan"
+    ssh_key: felixonmars.pub
+    groups:
+      - dev
+      - tu
+  foutrelis:
+    name: "Evangelos Foutras"
+    ssh_key: foutrelis.pub
+    groups:
+      - dev
+      - tu
+  giovanni:
+    name: ""
+    ssh_key: giovanni.pub
+    groups:
+      - dev
+  guillaume:
+    name: "Guillaume Alaux"
+    ssh_key: guillaume.pub
+    groups:
+      - dev
+  heftig:
+    name: "Jan Steffens"
+    ssh_key: heftig.pub
+    groups:
+      - dev
+      - tu
+  idevolder:
+    name: "Ike Devolder"
+    ssh_key: idevolder.pub
+    groups:
+      - tu
+  ioni:
+    name: "Ionuț Mircea Bîru"
+    ssh_key: ioni.pub
+    groups:
+      - dev
+  jelle:
+    name: "Jelle van der Waa"
+    ssh_key: jelle.pub
+    groups:
+      - tu
+  jgc:
+    name: "Jan de Groot"
+    ssh_key: jgc.pub
+    groups:
+      - dev
+  jleclanche:
+    name: "Jerome Leclanche"
+    ssh_key: jleclanche.pub
+    groups:
+      - tu
+  jlichtblau:
+    name: "Jaroslav Lichtblau"
+    ssh_key: jlichtblau.pub
+    groups:
+      - tu
+  jouke:
+    name: "Jouke Witteveen"
+    ssh_key: jouke.pub
+    groups:
+      - ""
+  jsteel:
+    name: "Jonathan Steel"
+    ssh_key: jsteel.pub
+    groups:
+      - tu
+  juergen:
+    name: "Jürgen Hötzel"
+    ssh_key: juergen.pub
+    groups:
+      - dev
+  kkeen:
+    name: "Kyle Keen"
+    ssh_key: kkeen.pub
+    groups:
+      - tu
+  lcarlier:
+    name: "Laurent Carlier"
+    ssh_key: lcarlier.pub
+    groups:
+      - dev
+      - tu
+  lfleischer:
+    name: "Lukas Fleischer"
+    ssh_key: lfleischer.pub
+    groups:
+      - dev
+      - tu
+  mtorromeo:
+    name: "Massimiliano Torromeo"
+    ssh_key: mtorromeo.pub
+    groups:
+      - tu
+  muflone:
+    name: "Fabio Castelli"
+    ssh_key: muflone.pub
+    groups:
+      - tu
+  pierre:
+    name: "Pierre Schmitz"
+    ssh_key: pierre.pub
+    groups:
+      - dev
+  remy:
+    name: "Rémy Oudompheng"
+    ssh_key: remy.pub
+    groups:
+      - dev
+  ronald:
+    name: "Ronald van Haren"
+    ssh_key: ronald.pub
+    groups:
+      - dev
+  schiv:
+    name: "Ray Rashif"
+    ssh_key: schiv.pub
+    groups:
+      - dev
+      - tu
+  schuay:
+    name: "Jakob Gruber"
+    ssh_key: schuay.pub
+    groups:
+      - tu
+  seblu:
+    name: "Sébastien Luttringer"
+    ssh_key: seblu.pub
+    groups:
+      - dev
+      - tu
+  speps:
+    name: "speps"
+    ssh_key: speps.pub
+    groups:
+      - tu
+  spupykin:
+    name: "Sergej Pupykin"
+    ssh_key: spupykin.pub
+    groups:
+      - tu
+  stativ:
+    name: "Lukas Jirkovsky"
+    ssh_key: stativ.pub
+    groups:
+      - tu
+  svenstaro:
+    name: "Sven-Hendrik Haase"
+    ssh_key: svenstaro.pub
+    groups:
+      - dev
+      - tu
+  thestinger:
+    name: "Daniel Micay"
+    ssh_key: thestinger.pub
+    groups:
+      - tu
+  thomas:
+    name: "Thomas Bächler"
+    ssh_key: thomas.pub
+    groups:
+      - dev
+  tomegun:
+    name: "Tom Gundersen"
+    ssh_key: tomegun.pub
+    groups:
+      - dev
+  tpowa:
+    name: "Tobias Powalowski"
+    ssh_key: tpowa.pub
+    groups:
+      - dev
+  tredaelli:
+    name: "Timothy Redaelli"
+    ssh_key: tredaelli.pub
+    groups:
+      - tu
+  ttoepper:
+    name: "Thorsten Töpper"
+    ssh_key: ttoepper.pub
+    groups:
+      - tu
+  xyne:
+    name: "Xyne"
+    ssh_key: xyne.pub
+    groups:
+      - tu

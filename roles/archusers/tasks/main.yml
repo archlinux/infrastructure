@@ -1,0 +1,32 @@
+---
+
+- name: create Arch Linux-specific groups
+  group: name="{{ item }}" state=present system=no
+  with_items: "{{ arch_groups }}"
+
+- name: create Arch Linux-specific users
+  user:
+    name: "{{ item.key }}"
+    group: users
+    groups: "{{ item.value.groups | join(',') }}"
+    comment: "{{ item.value.name}}"
+    state: present
+  with_dict: "{{ arch_users }}"
+
+- name: configure ssh keys
+  authorized_key:
+    user: "{{ item.key }}"
+    key: "{{ lookup('file', '../pubkeys/' + item.value.ssh_key) }}"
+    manage_dir: yes
+    state: present
+    exclusive: yes
+  with_dict: "{{ arch_users }}"
+
+- name: get list of remote users
+  find: paths="/home" file_type="directory"
+  register: all_users
+
+- name: disable ssh keys of disabled users
+  file: path="/home/{{ item }}/.ssh/authorized_keys" state=absent
+  when: item not in "{{ arch_users }}"
+  with_items: "{{ all_users.files | map(attribute='path') | map('basename') | list }}"
