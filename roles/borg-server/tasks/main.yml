@@ -3,8 +3,14 @@
 - name: install borg
   pacman: name=borg state=present
 
+- name: create borg user
+  user: home="{{ backup_dir }}" name=borg
+
+- name: create borg user home
+  file: path="{{ backup_dir }}" state=directory owner=borg group=borg mode=700
+
 - name: create the root backup directory at {{ backup_dir }}
-  file: path="{{ backup_dir }}/{{ item }}" state=directory owner=root group=root mode=700
+  file: path="{{ backup_dir }}/{{ item }}" state=directory owner=borg group=borg mode=700
   with_items: "{{ backup_clients }}"
 
 - name: fetch ssh keys
@@ -15,7 +21,7 @@
 
 - name: allow certain clients to connect
   authorized_key:
-    user=root
+    user=borg
     key="{{ item.stdout }}"
     manage_dir=yes
     key_options="command=\"borg serve --restrict-to-path {{ backup_dir }}/{{ item['item'] }}\",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc"

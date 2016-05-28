@@ -8,4 +8,4 @@
     - tools
     - sshd
     - ssh_keys
-    - { role: borg-client, backup_host: "root@vostok.archlinux.org", backup_dir: "/backup/orion" }
+    - { role: borg-client, backup_host: "borg@vostok.archlinux.org", backup_dir: "/backup/orion" }
