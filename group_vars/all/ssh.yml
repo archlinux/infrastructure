@@ -1,5 +1,6 @@
 ---
 
 root_ssh_keys:
-  - sven.pub
-  - florian.pub
+  - barthalion.pub
+  - bluewind.pub
+  - svenstaro.pub
