@@ -108,9 +108,14 @@
 - name: enable services inside chroot
   command: arch-chroot /mnt systemctl enable sshd systemd-networkd systemd-resolved
 
+- set_fact: pubkey_list="{{ lookup('file', '../pubkeys/' + item) }}"
+  register: pubkeys
+  with_items: "{{ root_ssh_keys }}"
+
+- set_fact: pubkey_string={{ pubkeys.results | map(attribute='ansible_facts.pubkey_list') | join('\n') }}
+
 - name: add authorized key for root
-  authorized_key: user=root key="{{ item }}" path=/mnt/root/.ssh/authorized_keys
-  with_file: "{{ root_ssh_keys }}"
+  authorized_key: user=root key="{{ pubkey_string }}" path=/mnt/root/.ssh/authorized_keys exclusive=yes
 
 - name: configure sshd
   template: src=sshd_config.j2 dest=/mnt/etc/ssh/sshd_config owner=root group=root mode=0644

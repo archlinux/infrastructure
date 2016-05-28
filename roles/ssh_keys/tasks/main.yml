@@ -1,0 +1,10 @@
+---
+
+- set_fact: pubkey_list="{{ lookup('file', '../pubkeys/' + item) }}"
+  register: pubkeys
+  with_items: "{{ root_ssh_keys }}"
+
+- set_fact: pubkey_string={{ pubkeys.results | map(attribute='ansible_facts.pubkey_list') | join('\n') }}
+
+- name: add authorized key for root
+  authorized_key: user=root key="{{ pubkey_string }}" exclusive=yes
