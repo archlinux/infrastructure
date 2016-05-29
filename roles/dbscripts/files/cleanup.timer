@@ -1,0 +1,9 @@
+[Unit]
+Description=Cleanup
+
+[Timer]
+OnBootSec=15min
+OnUnitActiveSec=3h
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,9 @@
+[Unit]
+Description=Integrity Check
+
+[Timer]
+OnCalendar=weekly
+Persistent=true
+
+[Install]
+WantedBy=timers.target

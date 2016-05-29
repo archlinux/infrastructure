@@ -1,0 +1,92 @@
+---
+
+- name: install svn and git
+  pacman: name=git,subversion state=present
+
+- name: create dbscripts users
+  user: name="{{ item }}" shell=/sbin/nologin
+  with_items:
+    - svn-packages
+    - svn-community
+    - sourceballs
+    - cleanup
+
+- name: create dbscripts paths
+  file: path="{{ item }}" state=directory
+  with_items:
+    - /srv/repos/svn-community
+    - /srv/repos/svn-packages
+
+- file: path="/srv/repos/svn-community/package-cleanup" state=directory owner=svn-community group=tu mode=0775
+- acl: name=/srv/repos/svn-community/package-cleanup entry="user:cleanup:rwx" state=present
+- acl: name=/srv/repos/svn-community/package-cleanup entry="default:user::rwx" state=present
+- acl: name=/srv/repos/svn-community/package-cleanup entry="default:user:cleanup:rwx" state=present
+- acl: name=/srv/repos/svn-community/package-cleanup entry="default:group::rwx" state=present
+- acl: name=/srv/repos/svn-community/package-cleanup entry="default:other::r-x" state=present
+
+- file: path="/srv/repos/svn-packages/package-cleanup" state=directory owner=svn-packages group=dev mode=0775
+- acl: name=/srv/repos/svn-packages/package-cleanup entry="user:cleanup:rwx" state=present
+- acl: name=/srv/repos/svn-packages/package-cleanup entry="default:user::rwx" state=present
+- acl: name=/srv/repos/svn-packages/package-cleanup entry="default:user:cleanup:rwx" state=present
+- acl: name=/srv/repos/svn-packages/package-cleanup entry="default:group::rwx" state=present
+- acl: name=/srv/repos/svn-packages/package-cleanup entry="default:other::r-x" state=present
+
+- file: path="/srv/repos/svn-community/source-cleanup" state=directory owner=sourceballs group=svn-community mode=0755
+- file: path="/srv/repos/svn-packages/source-cleanup" state=directory owner=sourceballs group=svn-packages mode=0755
+
+- file: path="/srv/repos/svn-community/svn" state=directory owner=svn-community group=svn-community mode=0755
+- acl: name=/srv/repos/svn-community/svn entry="default:user::rwx" state=present
+- acl: name=/srv/repos/svn-community/svn entry="default:group::r-x" state=present
+- acl: name=/srv/repos/svn-community/svn entry="default:other::r-x" state=present
+
+- file: path="/srv/repos/svn-packages/svn" state=directory owner=svn-packages group=svn-packages mode=0755
+- acl: name=/srv/repos/svn-packages/svn entry="default:user::rwx" state=present
+- acl: name=/srv/repos/svn-packages/svn entry="default:group::r-x" state=present
+- acl: name=/srv/repos/svn-packages/svn entry="default:other::r-x" state=present
+
+- file: path="/srv/repos/svn-community/tmp" state=directory owner=svn-community group=tu mode=1775
+- acl: name=/srv/repos/svn-community/tmp entry="user:sourceballs:rwx" state=present
+
+- file: path="/srv/repos/svn-packages/tmp" state=directory owner=svn-packages group=dev mode=1775
+- acl: name=/srv/repos/svn-packages/tmp entry="user:sourceballs:rwx" state=present
+
+- name: clone dbscripts git repo
+  git: dest=/srv/repos/{{ item }}/dbscripts repo=git://git.archlinux.org/dbscripts.git
+  with_items:
+    - svn-community
+    - svn-packages
+
+- name: make /srv/svn
+  file: path=/srv/svn state=directory
+
+- name: symlink /srv/svn/community to /srv/repos/svn-community/svn
+  file: path=/srv/svn/community src=/srv/repos/svn-community/svn state=link
+
+- name: symlink /srv/svn/packages to /srv/repos/svn-packages/svn
+  file: path=/srv/svn/packages src=/srv/repos/svn-packages/svn state=link
+
+- name: symlink /community to /srv/repos/svn-community/dbscripts
+  file: path=/community src=/srv/repos/svn-community/dbscripts state=link
+
+- name: symlink /packages to /srv/repos/svn-packages/dbscripts
+  file: path=/packages src=/srv/repos/svn-packages state=link
+
+- name: install systemd timers
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=644
+  with_items:
+    - cleanup.timer
+    - cleanup.service
+    - sourceballs.timer
+    - sourceballs.service
+    - integrity-check.timer
+    - integrity-check.service
+    - lastsync.timer
+    - lastsync.service
+
+- name: activatre systemd timers
+  service: name={{ item }} enabled=yes state=started
+  with_items:
+    - cleanup.timer
+    - sourceballs.timer
+    - integrity-check.timer
+    - lastsync.timer

@@ -1,0 +1,9 @@
+[Unit]
+Description=Sourceballs
+
+[Service]
+Type=oneshot
+User=sourceballs
+ExecStart=/usr/bin/bash -c '/srv/repos/svn-community/dbscripts/cron-jobs/sourceballs 2>&1 | /srv/repos/svn-community/dbscripts/cron-jobs/devlist-mailer "Community Sourceballs" "arch-notifications@archlinux.org"'
+ExecStart=/usr/bin/bash -c '/srv/repos/svn-packages/dbscripts/cron-jobs/sourceballs 2>&1 | /srv/repos/svn-packages/dbscripts/cron-jobs/devlist-mailer "Packages Sourceballs" "arch-notifications@archlinux.org"'
+ExecStart=/usr/bin/find /home/sourceballs/sources -type f -mtime +7 -delete
