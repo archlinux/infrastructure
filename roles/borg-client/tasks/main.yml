@@ -15,7 +15,7 @@
     BORG_PASSPHRASE: ""
 
 - name: install borg backup script
-  template: src=borg-backup.sh dest=/usr/local/bin/borg-backup.sh owner=root group=root mode=755
+  template: src=borg-backup.sh.j2 dest=/usr/local/bin/borg-backup.sh owner=root group=root mode=755
 
 - name: install systemd timers for backup
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=644
