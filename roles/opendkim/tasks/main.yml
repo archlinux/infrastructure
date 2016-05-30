@@ -1,7 +1,7 @@
 ---
 
 - name: install opendkim
-  pacman: name=postfix state=present
+  pacman: name=opendkim state=present
 
 - name: install opendkim.conf
   template: src=opendkim.conf.j2 dest=/etc/opendkim/opendkim.conf owner=root group=root mode=644
