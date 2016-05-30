@@ -19,6 +19,3 @@
 - name: start and enable opendkim
   service: name=opendkim enabled=yes state=started
 
-
-
-
