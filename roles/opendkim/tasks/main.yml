@@ -16,7 +16,10 @@
 - file: path="/etc/opendkim/private" state=directory owner=root group=root mode=0700
 
 - name: generate DKIM key for {{dkim_selector}}
-  command: opendkim-genkey -r -s {{dkim_selector}} -d archlinux.org --bits=4096 creates=/etc/opendkim/private/{{dkim_selector}}.private
+  command: opendkim-genkey -r -s {{dkim_selector}} -d archlinux.org --bits=4096
+  args:
+    creates: /etc/opendkim/private/{{dkim_selector}}.private
+    chdir: /etc/opendkim/private
 
 - name: start and enable opendkim
   service: name=opendkim enabled=yes state=started
