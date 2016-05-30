@@ -13,6 +13,7 @@
   when: borg_list | failed
   environment:
     BORG_PASSPHRASE: ""
+  ignore_errors: True # This can sometimes fail if a backup is in progress :/
 
 - name: install borg backup script
   template: src=borg-backup.sh.j2 dest=/usr/local/bin/borg-backup.sh owner=root group=root mode=755
