@@ -1,0 +1,29 @@
+# Person who should get root's mail. Don't receive mail as root!
+root:       root@archlinux.org
+backup:     root
+
+# Basic system aliases -- these MUST be present
+MAILER-DAEMON:  postmaster
+postmaster: root
+
+# General redirections for pseudo accounts
+bin:        root
+daemon:     root
+named:      root
+nobody:     root
+uucp:       root
+www:        root
+ftp-bugs:   root
+postfix:    root
+
+# Put your local aliases here.
+
+# Well-known aliases
+manager:    root
+dumper:     root
+operator:   root
+abuse:      postmaster
+
+# trap decode to catch security attacks
+decode:     root
+

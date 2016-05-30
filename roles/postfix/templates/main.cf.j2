@@ -1,0 +1,62 @@
+compatibility_level = 2
+
+smtpd_banner = $myhostname ESMTP $mail_name
+biff = no
+
+append_dot_mydomain = no
+
+smtpd_tls_dh1024_param_file = /etc/postfix/dh2048.pem
+smtpd_tls_dh512_param_file = /etc/postfix/dh_512.pem
+smtpd_tls_eecdh_grade = ultra
+tls_preempt_cipherlist = yes
+smtpd_tls_loglevel = 1
+smtpd_tls_security_level = may
+tls_ssl_options = NO_COMPRESSION
+
+smtpd_tls_mandatory_protocols = !SSLv2 !SSLv3
+smtp_tls_mandatory_protocols = !SSLv2 !SSLv3
+smtp_tls_protocols = !SSLv2, !SSLv3
+smtpd_tls_protocols = !SSLv2 !SSLv3
+smtpd_tls_mandatory_ciphers=high
+tls_high_cipherlist=EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHAA
+
+smtp_tls_loglevel = 1
+smtp_tls_security_level = may
+
+smtpd_tls_session_cache_database = btree:/var/lib/postfix/smtpd_scache
+smtp_tls_session_cache_database = btree:/var/lib/postfix/smtp_scache
+
+smtp_use_tls = yes
+smtp_tls_CApath = /etc/ssl/certs
+daemon_directory = /usr/lib/postfix/bin
+mydomain = {{inventory_hostname}}
+myhostname = {{inventory_hostname}}
+myorigin = archlinux.org
+mydestination =
+
+default_database_type=btree
+indexed = ${default_database_type}:${config_directory}
+
+alias_maps = ${indexed}/aliases
+alias_database = ${indexed}/aliases
+
+# enable for testing new config
+soft_bounce = no
+debug_peer_list =
+
+smtp_connection_cache_on_demand = yes
+
+message_size_limit = 104857600
+inet_interfaces = all
+inet_protocols = all
+disable_vrfy_command = yes
+strict_rfc821_envelopes = yes
+
+smtpd_milters=unix:/var/spool/opendkim/opendkim
+non_smtpd_milters=unix:/var/spool/opendkim/opendkim
+
+address_verify_map = ${default_database_type}:/var/lib/postfix/verify_cache
+
+strict_rfc821_envelopes = yes
+smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
+

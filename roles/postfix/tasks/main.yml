@@ -1,0 +1,37 @@
+---
+
+dependencies:
+  # TODO does this work with the dkim_selector variable used in opendkim?
+  - {role: "opendkim" }
+
+- name: install postfix
+  pacman: name=postfix state=present
+
+- name: install main.cf
+  template: src=main.cf.j2 dest=/etc/postfix/main.cf owner=root group=root mode=644
+  notifty:
+    - reload postfix
+
+- name: install master.cf
+  template: src=master.cf.j2 dest=/etc/postfix/master.cf owner=root group=root mode=644
+  notifty:
+    - reload postfix
+
+- name: install aliases
+  template: src=aliases.j2 dest=/etc/postfix/aliases owner=root group=root mode=644
+
+- name: update aliases db
+  command: postalias /etc/postfix/aliases
+
+- name: create dhparam 2048
+  command: openssl dhparam -out /etc/postfix/dh2048.pem 2048 creates=/etc/postfix/dh2048.pem
+  notifty:
+    - reload postfix
+
+- name: create dhparam 512
+  command: openssl dhparam -out /etc/postfix/dh_512.pem 512 creates=/etc/postfix/dh_512.pem
+  notifty:
+    - reload postfix
+
+- name: start and enable postfix
+  service: name=postfix enabled=yes state=started

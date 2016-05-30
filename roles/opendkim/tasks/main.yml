@@ -1,0 +1,24 @@
+---
+
+- name: install opendkim
+  pacman: name=postfix state=present
+
+- name: install opendkim.conf
+  template: src=opendkim.conf.j2 dest=/etc/opendkim/opendkim.conf owner=root group=root mode=644
+  notifty:
+    - restart opendkim
+
+- name: install domains config
+  template: src=domains.j2 dest=/etc/opendkim/domains owner=root group=root mode=644
+  notifty:
+    - restart opendkim
+
+- name: generate DKIM key for {{dkim_selector}}
+  command: opendkim-genkey -r -s {{dkim_selector}} -d archlinux.org --bits=4096 creates=/etc/opendkim/private/{{dkim_selector}}
+
+- name: start and enable opendkim
+  service: name=opendkim enabled=yes state=started
+
+
+
+
