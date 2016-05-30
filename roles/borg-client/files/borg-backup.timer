@@ -2,7 +2,7 @@
 Description=Borg backup
 
 [Timer]
-OnCalendar=weekly
+OnCalendar=daily
 Persistent=true
 
 [Install]
