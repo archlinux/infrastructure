@@ -5,12 +5,12 @@
 
 - name: install main.cf
   template: src=main.cf.j2 dest=/etc/postfix/main.cf owner=root group=root mode=644
-  notifty:
+  notify:
     - reload postfix
 
 - name: install master.cf
   template: src=master.cf.j2 dest=/etc/postfix/master.cf owner=root group=root mode=644
-  notifty:
+  notify:
     - reload postfix
 
 - name: install aliases
@@ -21,12 +21,12 @@
 
 - name: create dhparam 2048
   command: openssl dhparam -out /etc/postfix/dh2048.pem 2048 creates=/etc/postfix/dh2048.pem
-  notifty:
+  notify:
     - reload postfix
 
 - name: create dhparam 512
   command: openssl dhparam -out /etc/postfix/dh_512.pem 512 creates=/etc/postfix/dh_512.pem
-  notifty:
+  notify:
     - reload postfix
 
 - name: start and enable postfix

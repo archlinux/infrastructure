@@ -5,12 +5,12 @@
 
 - name: install opendkim.conf
   template: src=opendkim.conf.j2 dest=/etc/opendkim/opendkim.conf owner=root group=root mode=644
-  notifty:
+  notify:
     - restart opendkim
 
 - name: install domains config
   template: src=domains.j2 dest=/etc/opendkim/domains owner=root group=root mode=644
-  notifty:
+  notify:
     - restart opendkim
 
 - name: generate DKIM key for {{dkim_selector}}
