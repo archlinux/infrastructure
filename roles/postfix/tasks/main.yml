@@ -1,9 +1,5 @@
 ---
 
-dependencies:
-  # TODO does this work with the dkim_selector variable used in opendkim?
-  - {role: "opendkim" }
-
 - name: install postfix
   pacman: name=postfix state=present
 
