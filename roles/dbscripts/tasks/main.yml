@@ -11,6 +11,49 @@
     - sourceballs
     - cleanup
 
+- name: create Arch Linux-specific users
+  user:
+    name: "{{ item.key }}"
+    group: users
+    groups: "{{ item.value.groups | join(',') }}"
+    comment: "{{ item.value.name}}"
+    state: present
+  with_dict: "{{ arch_users }}"
+
+- name: gather pubkeys for all devs
+  set_fact: dev_pubkey_list="command=\"/usr/bin/svnserve --tunnel-user='{{ item.key }}' -t\",no-port-forwarding,no-agent-forwarding,no-pty {{ lookup('file', '../pubkeys/' + item.value.ssh_key)}}"
+  register: dev_pubkeys
+  when: "\"dev\" in item.value.groups"
+  with_dict: "{{ arch_users }}"
+
+- name: join all dev pubkeys into a big string
+  set_fact: dev_pubkey_string="{% for key in dev_pubkeys.results %}{{ key.ansible_facts.dev_pubkey_list + '\n' if 'ansible_facts' in key else '' }}{% endfor %}"
+
+- name: gather pubkeys for all tus
+  set_fact: tu_pubkey_list="command=\"/usr/bin/svnserve --tunnel-user='{{ item.key }}' -t\",no-port-forwarding,no-agent-forwarding,no-pty {{ lookup('file', '../pubkeys/' + item.value.ssh_key)}}"
+  register: tu_pubkeys
+  when: "\"tu\" in item.value.groups"
+  with_dict: "{{ arch_users }}"
+
+- name: join all tu pubkeys into a big string
+  set_fact: tu_pubkey_string="{% for key in tu_pubkeys.results %}{{ key.ansible_facts.tu_pubkey_list + '\n' if 'ansible_facts' in key else '' }}{% endfor %}"
+
+- name: configure ssh keys for devs
+  authorized_key:
+    user: svn-packages
+    key: "{{ dev_pubkey_string }}"
+    manage_dir: yes
+    state: present
+    exclusive: yes
+
+- name: configure ssh keys for tu
+  authorized_key:
+    user: svn-community
+    key: "{{ tu_pubkey_string }}"
+    manage_dir: yes
+    state: present
+    exclusive: yes
+
 - name: create dbscripts paths
   file: path="{{ item }}" state=directory
   with_items:
@@ -50,6 +93,10 @@
 - file: path="/srv/repos/svn-packages/tmp" state=directory owner=svn-packages group=dev mode=1775
 - acl: name=/srv/repos/svn-packages/tmp entry="user:sourceballs:rwx" state=present
 
+- file: path="/srv/ftp/lastupdate" state=touch owner=ftp group=ftp mode=0644
+- acl: name=/srv/ftp/lastupdate entry="group:tu:rw-" state=present
+- acl: name=/srv/ftp/lastupdate entry="group:dev:rw-" state=present
+
 - name: clone dbscripts git repo
   git: dest=/srv/repos/{{ item }}/dbscripts repo=git://git.archlinux.org/dbscripts.git
   with_items:
@@ -83,7 +130,7 @@
     - lastsync.timer
     - lastsync.service
 
-- name: activatre systemd timers
+- name: activate systemd timers
   service: name={{ item }} enabled=yes state=started
   with_items:
     - cleanup.timer
