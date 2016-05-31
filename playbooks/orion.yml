@@ -13,3 +13,4 @@
     - { role: postfix}
     - archusers
     - dbscripts
+    - sudo

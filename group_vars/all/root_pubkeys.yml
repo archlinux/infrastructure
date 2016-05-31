@@ -1,7 +1,6 @@
 ---
 
 root_ssh_keys:
-  - bpiotrowski.pub
   - bluewind.pub
+  - bpiotrowski.pub
   - svenstaro.pub
-

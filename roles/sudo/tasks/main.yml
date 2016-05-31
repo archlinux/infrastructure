@@ -1,0 +1,11 @@
+---
+
+- name: install sudo
+  pacman: name=sudo state=present
+
+- name: add sudo users to wheel
+  user: name="{{ item }}" append=yes groups=wheel
+  with_items: "{{ sudo_users }}"
+
+- name: allow wheel group to use sudo
+  lineinfile: dest=/etc/sudoers state=present regexp='^%wheel' line='%wheel ALL=(ALL) ALL' validate='visudo -cf %s'
