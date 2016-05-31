@@ -8,7 +8,7 @@
   notify:
     - restart opendkim
 
-- file: path="/var/spool/opendkim/" state=directory owner=opendkim group=mail mode=750
+- file: path="/var/spool/opendkim/" state=directory owner=opendkim group=postfix mode=750
 
 - name: install domains config
   template: src=domains.j2 dest=/etc/opendkim/domains owner=root group=root mode=644
