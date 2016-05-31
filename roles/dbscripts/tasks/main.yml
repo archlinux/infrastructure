@@ -9,7 +9,9 @@
     - svn-packages
     - svn-community
     - sourceballs
-    - cleanup
+
+- name: add cleanup user
+  user: name=cleanup groups=tu,dev,multilib shell=/sbin/nologin
 
 - name: create Arch Linux-specific users
   user:
@@ -46,7 +48,7 @@
     state: present
     exclusive: yes
 
-- name: configure ssh keys for tu
+- name: configure ssh keys for TUs
   authorized_key:
     user: svn-community
     key: "{{ tu_pubkey_string }}"

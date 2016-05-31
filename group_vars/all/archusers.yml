@@ -4,6 +4,7 @@ arch_groups:
   - dev
   - tu
   - fellows
+  - multilib
 
 arch_users:
   aaron:
@@ -21,12 +22,14 @@ arch_users:
     ssh_key: allan.pub
     groups:
       - dev
+      - multilib
   alucryd:
     name: "Maxime Gauduin"
     ssh_key: alucryd.pub
     groups:
       - dev
       - tu
+      - multilib
   ambrevar:
     name: "Pierre Neidhardt"
     ssh_key: ambrevar.pub
@@ -43,6 +46,7 @@ arch_users:
     ssh_key: andrea.pub
     groups:
       - dev
+      - multilib
   andrew:
     name: "Andrew Gregory"
     ssh_key: andrew.pub
@@ -53,6 +57,7 @@ arch_users:
     ssh_key: anthraxx.pub
     groups:
       - tu
+      - multilib
   andyrtr:
     name: "Andreas Radke"
     ssh_key: andyrtr.pub
@@ -73,12 +78,14 @@ arch_users:
     ssh_key: arodseth.pub
     groups:
       - tu
+      - multilib
   arojas:
     name: "Antonio Rojas"
     ssh_key: arojas.pub
     groups:
       - dev
       - tu
+      - multilib
   bgyorgy:
     name: "Balló György"
     ssh_key: bgyorgy.pub
@@ -95,12 +102,14 @@ arch_users:
     groups:
       - dev
       - tu
+      - multilib
   bpiotrowski:
     name: "Bartłomiej Piotrowski"
     ssh_key: bpiotrowski.pub
     groups:
       - dev
       - tu
+      - multilib
   cbehan:
     name: "Connor Behan"
     ssh_key: cbehan.pub
@@ -111,6 +120,7 @@ arch_users:
     ssh_key: dan.pub
     groups:
       - dev
+      - multilib
   daniel:
     name: "Daniel Isenmann"
     ssh_key: daniel.pub
@@ -126,6 +136,7 @@ arch_users:
     ssh_key: dicebot.pub
     groups:
       - tu
+      - multilib
   djgera:
     name: "Gerardo Exequiel Pozzi"
     ssh_key: djgera.pub
@@ -136,16 +147,19 @@ arch_users:
     ssh_key: dreisner.pub
     groups:
       - dev
+      - multilib
   dwallace:
     name: "Daniel Wallace"
     ssh_key: dwallace.pub
     groups:
       - tu
+      - multilib
   eric:
     name: "Eric Bélanger"
     ssh_key: eric.pub
     groups:
       - dev
+      - multilib
   eworm:
     name: "Christian Hesse"
     ssh_key: eworm.pub
@@ -173,11 +187,13 @@ arch_users:
     groups:
       - dev
       - tu
+      - multilib
   giovanni:
     name: ""
     ssh_key: giovanni.pub
     groups:
       - dev
+      - multilib
   guillaume:
     name: "Guillaume Alaux"
     ssh_key: guillaume.pub
@@ -189,6 +205,7 @@ arch_users:
     groups:
       - dev
       - tu
+      - multilib
   idevolder:
     name: "Ike Devolder"
     ssh_key: idevolder.pub
@@ -199,6 +216,7 @@ arch_users:
     ssh_key: ioni.pub
     groups:
       - dev
+      - multilib
   jelle:
     name: "Jelle van der Waa"
     ssh_key: jelle.pub
@@ -209,6 +227,7 @@ arch_users:
     ssh_key: jgc.pub
     groups:
       - dev
+      - multilib
   jleclanche:
     name: "Jerome Leclanche"
     ssh_key: jleclanche.pub
@@ -239,18 +258,21 @@ arch_users:
     ssh_key: kkeen.pub
     groups:
       - tu
+      - multilib
   lcarlier:
     name: "Laurent Carlier"
     ssh_key: lcarlier.pub
     groups:
       - dev
       - tu
+      - multilib
   lfleischer:
     name: "Lukas Fleischer"
     ssh_key: lfleischer.pub
     groups:
       - dev
       - tu
+      - multilib
   mtorromeo:
     name: "Massimiliano Torromeo"
     ssh_key: mtorromeo.pub
@@ -266,6 +288,7 @@ arch_users:
     ssh_key: pierre.pub
     groups:
       - dev
+      - multilib
   remy:
     name: "Rémy Oudompheng"
     ssh_key: remy.pub
@@ -282,27 +305,32 @@ arch_users:
     groups:
       - dev
       - tu
+      - multilib
   schuay:
     name: "Jakob Gruber"
     ssh_key: schuay.pub
     groups:
       - tu
+      - multilib
   seblu:
     name: "Sébastien Luttringer"
     ssh_key: seblu.pub
     groups:
       - dev
       - tu
+      - multilib
   speps:
     name: "speps"
     ssh_key: speps.pub
     groups:
       - tu
+      - multilib
   spupykin:
     name: "Sergej Pupykin"
     ssh_key: spupykin.pub
     groups:
       - tu
+      - multilib
   stativ:
     name: "Lukas Jirkovsky"
     ssh_key: stativ.pub
@@ -314,26 +342,31 @@ arch_users:
     groups:
       - dev
       - tu
+      - multilib
   thestinger:
     name: "Daniel Micay"
     ssh_key: thestinger.pub
     groups:
       - tu
+      - multilib
   thomas:
     name: "Thomas Bächler"
     ssh_key: thomas.pub
     groups:
       - dev
+      - multilib
   tomegun:
     name: "Tom Gundersen"
     ssh_key: tomegun.pub
     groups:
       - dev
+      - multilib
   tpowa:
     name: "Tobias Powalowski"
     ssh_key: tpowa.pub
     groups:
       - dev
+      - multilib
   tredaelli:
     name: "Timothy Redaelli"
     ssh_key: tredaelli.pub
