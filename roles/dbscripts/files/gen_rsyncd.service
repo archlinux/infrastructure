@@ -1,0 +1,7 @@
+[Unit]
+Description=Generate rsync config for mirrors
+
+[Service]
+Type=oneshot
+User=root
+ExecStart=/etc/rsyncd-conf-genscripts/gen_rsyncd.conf.pl
