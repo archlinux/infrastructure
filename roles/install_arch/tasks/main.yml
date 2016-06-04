@@ -42,6 +42,7 @@
 
 - name: create MDADM array
   command: mdadm --create --level=1 --raid-devices=2 --run /dev/md0 /dev/sda2 /dev/sdb2
+  when: filesystem == "ext4"
 
 - name: format the MDADM array
   filesystem: dev=/dev/md0 fstype=ext4
@@ -55,17 +56,51 @@
   mount: name=/mnt src=/dev/md0 fstype=ext4 state=mounted
   when: filesystem == "ext4"
 
-- name: install arch base
-  command: pacstrap /mnt base
+- name: touch LOCK file on mountpoint
+  file: path=/mnt/LOCK state=touch
 
-- name: initialize pacman keyring
-  command: arch-chroot /mnt pacman-key --init
+- name: download bootstrap image
+  unarchive:
+    src: https://mirrors.kernel.org/archlinux/iso/latest/archlinux-bootstrap-2016.06.01-x86_64.tar.gz
+    dest: /tmp/
+    copy: no
+    creates: /tmp/root.x86_64
 
-- name: populate pacman keyring
-  command: arch-chroot /mnt pacman-key --poulate archlinux
+- name: copy resolv.conf to bootstrap chroot
+  copy: remote_src=True src=/etc/resolv.conf dest=/tmp/root.x86_64/etc/resolv.conf
 
-- name: force re-install all packages with proper database in chroot
-  command: arch-chroot /mnt pacman --force base base-devel grub openssh sudo btrfs-progs python2
+- name: mount /proc to bootstrap chroot
+  command: mount --rbind /proc /tmp/root.x86_64/proc creates=/tmp/root.x86_64/proc/uptime
+
+- name: mount /sys to bootstrap chroot
+  command: mount --rbind /sys /tmp/root.x86_64/sys creates=/tmp/root.x86_64/sys/dev
+
+- name: mount /dev to bootstrap chroot
+  command: mount --rbind /dev /tmp/root.x86_64/dev creates=/tmp/root.x86_64/dev/zero
+
+- name: mount /mnt to bootstrap chroot
+  command: mount --rbind /mnt /tmp/root.x86_64/mnt creates=/tmp/root.x86_64/mnt/LOCK
+
+- name: configure mirrorlist in bootstrap chroot
+  lineinfile: dest=/tmp/root.x86_64/etc/pacman.d/mirrorlist line="Server = https://mirrors.kernel.org/archlinux/$repo/os/$arch"
+
+- name: initialize pacman keyring inside bootstrap chroot
+  command: chroot /tmp/root.x86_64 pacman-key --init
+
+- name: populate pacman keyring inside bootstrap chroot
+  command: chroot /tmp/root.x86_64 pacman-key --populate archlinux
+
+- name: install arch base from bootstrap chroot
+  command: chroot /tmp/root.x86_64 pacstrap /mnt base base-devel btrfs-progs grub openssh creates=/tmp/root.x86_64/mnt/bin
+
+- name: mount /proc to new chroot
+  command: mount --rbind /proc /mnt/proc creates=/mnt/proc/uptime
+
+- name: mount /sys to new chroot
+  command: mount --rbind /sys /mnt/sys creates=/mnt/sys/dev
+
+- name: mount /dev to new chroot
+  command: mount --rbind /dev /mnt/dev creates=/mnt/dev/zero
 
 - name: generate mdadm.conf
   shell: mdadm --detail --scan >> /mnt/etc/mdadm.conf
@@ -75,26 +110,30 @@
   lineinfile: dest=/mnt/etc/hostname line="{{ hostname }}" create=yes
 
 - name: add mdadm_udev to mkinitcpio.conf
-  lineinfile: dest=/mnt/etc/mkinitcpio.conf backrefs=yes regexp="^(.*)block filesystems(.*)$" line="\1block mdadm_udev filesystems\2"
+  lineinfile:
+    dest: /mnt/etc/mkinitcpio.conf
+    backrefs: yes
+    regexp: '^(.*)block filesystems(.*)$'
+    line: '\1block mdadm_udev filesystems\2'
   when: filesystem == "ext4"
 
 - name: run mkinitcpio
-  command: arch-chroot /mnt mkinitcpio -p linux
+  command: chroot /mnt mkinitcpio -p linux
 
 - name: generate fstab
-  shell: genfstab -p -L /mnt >> /etc/fstab
+  command: chroot /tmp/root.x86_64 bash -c "genfstab -p -L /mnt >> /etc/fstab"
 
 - name: configure network
   template: src=10-static-ethernet.network.j2 dest=/mnt/etc/systemd/network/10-static-ethernet.network owner=root group=root mode=0644
 
 - name: install grub
-  command: arch-chroot /mnt grub-install --recheck {{ item }}
+  command: chroot /mnt grub-install --recheck {{ item }}
   with_items:
-    - sda
-    - sdb
+    - /dev/sda
+    - /dev/sdb
 
 - name: configure grub
-  command: arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+  command: chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 
 - name: configure zoneinfo
   file: src=/usr/share/zoneinfo/UTC dest=/mnt/etc/localtime state=link force=yes
@@ -103,10 +142,10 @@
   lineinfile: dest=/mnt/etc/locale.gen line="en_US.UTF-8 UTF-8"
 
 - name: run locale-gen inside chroot
-  command: arch-chroot /mnt locale-gen
+  command: chroot /mnt locale-gen
 
 - name: enable services inside chroot
-  command: arch-chroot /mnt systemctl enable sshd systemd-networkd systemd-resolved
+  command: chroot /mnt systemctl enable sshd systemd-networkd systemd-resolved
 
 - set_fact: pubkey_list="{{ lookup('file', '../pubkeys/' + item) }}"
   register: pubkeys
@@ -115,10 +154,13 @@
 - set_fact: pubkey_string={{ pubkeys.results | map(attribute='ansible_facts.pubkey_list') | join('\n') }}
 
 - name: add authorized key for root
-  authorized_key: user=root key="{{ pubkey_string }}" path=/mnt/root/.ssh/authorized_keys exclusive=yes
+  authorized_key: user=root key="{{ pubkey_string }}" path=/tmp/root.x86_64/mnt/root/.ssh/authorized_keys exclusive=yes
 
 - name: configure sshd
   template: src=sshd_config.j2 dest=/mnt/etc/ssh/sshd_config owner=root group=root mode=0644
 
 - name: create symlink to resolv.conf
   file: src=/run/systemd/resolve/resolv.conf dest=/mnt/etc/resolv.conf state=link force=yes
+
+- name: remove LOCK file on mountpoint
+  file: path=/mnt/LOCK state=absent
