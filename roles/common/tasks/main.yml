@@ -14,6 +14,7 @@
 
 - name: start and enable smart
   service: name=smartd enabled=yes state=started
+  ignore_errors: yes # Ignore errors due to https://github.com/ansible/ansible-modules-core/issues/3868
 
 - name: install mlocate
   pacman: name=mlocate state=present
