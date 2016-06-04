@@ -91,7 +91,7 @@
   command: chroot /tmp/root.x86_64 pacman-key --populate archlinux
 
 - name: install arch base from bootstrap chroot
-  command: chroot /tmp/root.x86_64 pacstrap /mnt base base-devel btrfs-progs grub openssh creates=/tmp/root.x86_64/mnt/bin
+  command: chroot /tmp/root.x86_64 pacstrap /mnt base base-devel btrfs-progs grub openssh python2 creates=/tmp/root.x86_64/mnt/bin
 
 - name: mount /proc to new chroot
   command: mount --rbind /proc /mnt/proc creates=/mnt/proc/uptime
