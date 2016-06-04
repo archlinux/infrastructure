@@ -1,0 +1,11 @@
+---
+
+- name: setup vostok
+  hosts: vostok
+  remote_user: root
+  roles:
+    - common
+    - tools
+    - sshd
+    - ssh_keys
+    - { role: borg-server, backup_dir: "/backup", backup_clients: "orion" }
