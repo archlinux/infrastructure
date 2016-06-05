@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+# Script to backup all postgres databases individually
+# 
+# Requires local login with `postgres` user and either trusted or peer auth.
+#
+
+DBLIST=($(sudo -u postgres psql -d postgres -qt -c 'SELECT datname from pg_database'))
+for db in "${DBLIST[@]}"; do
+        if [[ $db =~ template[01] ]]; then
+                continue;
+        fi
+        echo "Dumping $db to {{ postgres_backup_dir }}";
+        sudo -u postgres pg_dump --serializable-deferrable -Fc "$db" > "{{ postgres_backup_dir }}/$db.dump"
+done
+
+echo "Dumping globals to {{ postgres_backup_dir }}"
+sudo -u postgres pg_dumpall --globals-only > "{{ postgres_backup_dir }}/globals.sql.dump"
