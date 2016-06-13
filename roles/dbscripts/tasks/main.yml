@@ -4,14 +4,16 @@
   pacman: name=git,subversion,rsync,perl-dbd-pg state=present
 
 - name: create dbscripts users
-  user: name="{{ item }}" shell=/sbin/nologin
+  user: name="{{ item }}" shell=/bin/bash
   with_items:
     - svn-packages
     - svn-community
-    - sourceballs
 
 - name: add cleanup user
   user: name=cleanup groups=tu,dev,multilib shell=/sbin/nologin
+
+- name: add sourceballs user
+  user: name=sourceballs shell=/sbin/nologin
 
 - name: create Arch Linux-specific users
   user:
