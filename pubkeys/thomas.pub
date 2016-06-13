@@ -1,1 +1,3 @@
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILYaSAjCQlcxHBPHYnCuZPQJuiUFMi7KTgNpfKdA02+V thomas@evey
 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIERBq0JU2/zJeyxJ+RtsqFYdbAbG16Ddgx9PM0ZAZ1Ha thomas@lije
+command="/usr/lib/rsync/rrsync -ro /srv/ftp",no-port-forwarding,no-agent-forwarding,no-pty ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDbsT1obcsdYFc4Gla0+BMKH/kqkBRkEU/8KXDOJ0Aep mirror@han.bchlr.de
