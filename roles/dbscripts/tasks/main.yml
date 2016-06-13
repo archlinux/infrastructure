@@ -15,6 +15,9 @@
 - name: add sourceballs user
   user: name=sourceballs shell=/sbin/nologin
 
+- name: set up sudoers.d for special users
+  copy: src=sudoers.d dest=/etc/sudoers.d/dbscripts owner=root group=root mode=600
+
 - name: create Arch Linux-specific users
   user:
     name: "{{ item.key }}"
