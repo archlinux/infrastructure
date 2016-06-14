@@ -140,6 +140,9 @@
 - name: generate mirror config
   command: /etc/rsyncd-conf-genscripts/gen_rsyncd.conf.pl
 
+- name: install svnlog
+  copy: src=svnlog dest=/usr/local/bin/svnlog owner=root group=root mode=755
+
 - name: start rsync
   service: name=rsyncd.socket enabled=yes state=started
 
