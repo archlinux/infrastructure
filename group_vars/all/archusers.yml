@@ -64,6 +64,7 @@ arch_users:
     ssh_key: andyrtr.pub
     groups:
       - dev
+      - tu
   angvp:
     name: "Ángel Velásquez"
     ssh_key: angvp.pub
