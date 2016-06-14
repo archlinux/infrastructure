@@ -1,7 +1,7 @@
 ---
 
 - name: install svn, git, rsync and some perl stuff
-  pacman: name=git,subversion,rsync,perl-dbd-pg state=present
+  pacman: name=git,subversion,rsync,perl-dbd-pg,perl-timedate,diffstat state=present
 
 - name: create dbscripts users
   user: name="{{ item }}" shell=/bin/bash
