@@ -27,28 +27,31 @@
     state: present
   with_dict: "{{ arch_users }}"
 
-- name: gather pubkeys for all devs
-  set_fact: dev_pubkey_list="command=\"/usr/bin/svnserve --tunnel-user='{{ item.key }}' -t\",no-port-forwarding,no-agent-forwarding,no-pty {{ lookup('file', '../pubkeys/' + item.value.ssh_key)}}"
-  register: dev_pubkeys
-  when: "\"dev\" in item.value.groups"
+- name: gather all pubkeys of all users
+  set_fact: pubkeys_per_user="{{ lookup('file', '../pubkeys/' + item.value.ssh_key).split('\n') }}"
+  register: pubkeys
   with_dict: "{{ arch_users }}"
+
+- name: gather pubkeys for all devs
+  set_fact: dev_pubkeys_svn="{% for key in item.ansible_facts.pubkeys_per_user if 'dev' in item.item.value.groups and 'command' not in key %}{{ 'command=\"/usr/bin/svnserve --tunnel-user=' + item.item.key + ' -t\",no-port-forwarding,no-agent-forwarding,no-pty ' + key + '\n' }}{% endfor %}"
+  register: dev_pubkeys_svn_reg
+  with_items: "{{ pubkeys.results }}"
 
 - name: join all dev pubkeys into a big string
-  set_fact: dev_pubkey_string="{% for key in dev_pubkeys.results %}{{ key.ansible_facts.dev_pubkey_list + '\n' if 'ansible_facts' in key else '' }}{% endfor %}"
+  set_fact: dev_pubkeys_string="{% for result in dev_pubkeys_svn_reg.results %}{{ result.ansible_facts.dev_pubkeys_svn }}{% endfor %}"
 
-- name: gather pubkeys for all tus
-  set_fact: tu_pubkey_list="command=\"/usr/bin/svnserve --tunnel-user='{{ item.key }}' -t\",no-port-forwarding,no-agent-forwarding,no-pty {{ lookup('file', '../pubkeys/' + item.value.ssh_key)}}"
-  register: tu_pubkeys
-  when: "\"tu\" in item.value.groups"
-  with_dict: "{{ arch_users }}"
+- name: gather pubkeys for all TUs
+  set_fact: tu_pubkeys_svn="{% for key in item.ansible_facts.pubkeys_per_user if 'tu' in item.item.value.groups and 'command' not in key %}{{ 'command=\"/usr/bin/svnserve --tunnel-user=' + item.item.key + ' -t\",no-port-forwarding,no-agent-forwarding,no-pty ' + key + '\n' }}{% endfor %}"
+  register: tu_pubkeys_svn_reg
+  with_items: "{{ pubkeys.results }}"
 
 - name: join all tu pubkeys into a big string
-  set_fact: tu_pubkey_string="{% for key in tu_pubkeys.results %}{{ key.ansible_facts.tu_pubkey_list + '\n' if 'ansible_facts' in key else '' }}{% endfor %}"
+  set_fact: tu_pubkeys_string="{% for result in tu_pubkeys_svn_reg.results %}{{ result.ansible_facts.tu_pubkeys_svn }}{% endfor %}"
 
 - name: configure ssh keys for devs
   authorized_key:
     user: svn-packages
-    key: "{{ dev_pubkey_string }}"
+    key: "{{ dev_pubkeys_string }}"
     manage_dir: yes
     state: present
     exclusive: yes
@@ -56,7 +59,7 @@
 - name: configure ssh keys for TUs
   authorized_key:
     user: svn-community
-    key: "{{ tu_pubkey_string }}"
+    key: "{{ tu_pubkeys_string }}"
     manage_dir: yes
     state: present
     exclusive: yes
