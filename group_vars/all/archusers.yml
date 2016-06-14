@@ -165,6 +165,7 @@ arch_users:
     name: "Christian Hesse"
     ssh_key: eworm.pub
     groups:
+      - dev
       - tu
   faidoc:
     name: "Alexandre Filgueira"
