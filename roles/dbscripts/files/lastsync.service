@@ -4,4 +4,4 @@ Description=lastsync
 [Service]
 Type=oneshot
 User=ftp
-ExecStart=/usr/bin/bash -c "date '+\%s\' > /srv/ftp/lastsync"
+ExecStart=/usr/bin/bash -c "date +%%s > /srv/ftp/lastsync"

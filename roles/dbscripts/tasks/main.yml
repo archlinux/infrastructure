@@ -103,6 +103,8 @@
 - file: path="/srv/repos/svn-packages/tmp" state=directory owner=svn-packages group=dev mode=1775
 - acl: name=/srv/repos/svn-packages/tmp entry="user:sourceballs:rwx" state=present
 
+- file: path="/srv/ftp/lastsync" state=touch owner=ftp group=ftp mode=0644
+
 - file: path="/srv/ftp/lastupdate" state=touch owner=ftp group=ftp mode=0644
 - acl: name=/srv/ftp/lastupdate entry="group:tu:rw-" state=present
 - acl: name=/srv/ftp/lastupdate entry="group:dev:rw-" state=present
