@@ -30,5 +30,4 @@
     - reload postfix
 
 - name: start and enable postfix
-  # TODO FIXME: disable this for now so that we don't send mails on accident (dbscripts still has errors)
-  service: name=postfix enabled=no state=stopped
+  service: name=postfix enabled=yes state=started
