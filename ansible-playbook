@@ -1,0 +1,3 @@
+#!/bin/bash
+
+exec ansible-playbook --vault-password-file $(dirname $0)/misc/get-vault-pass.sh "$@"
