@@ -8,4 +8,10 @@
   with_items: "{{ sudo_users }}"
 
 - name: allow wheel group to use sudo
-  lineinfile: dest=/etc/sudoers state=present regexp='^%wheel' line='%wheel ALL=(ALL) ALL' validate='visudo -cf %s'
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel ALL=\(ALL\) ALL'
+    insertafter: '^# %wheel ALL=\(ALL\) ALL'
+    line: '%wheel ALL=(ALL) ALL'
+    validate: 'visudo -cf %s'
