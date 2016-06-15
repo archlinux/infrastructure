@@ -156,8 +156,14 @@
 - name: install svnlog
   copy: src=svnlog dest=/usr/local/bin/svnlog owner=root group=root mode=755
 
-- name: start rsync
+- name: start and enable rsync
   service: name=rsyncd.socket enabled=yes state=started
+
+- name: configure svnserve
+  copy: dest=/etc/conf.d/svnserve content="SVNSERVE_ARGS=-R -r /srv/svn\n"
+
+- name: start and enable svnserve
+  service: name=svnserve enabled=yes state=started
 
 - name: install systemd timers
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=644
