@@ -12,5 +12,6 @@
     - { role: opendkim, dkim_selector: orion }
     - { role: postfix}
     - archusers
-    - dbscripts
+    - nginx
+    - { role: dbscripts, repos_domain: "repos.archlinux.org" }
     - sudo

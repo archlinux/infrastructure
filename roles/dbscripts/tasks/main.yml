@@ -18,6 +18,14 @@
 - name: set up sudoers.d for special users
   copy: src=sudoers.d dest=/etc/sudoers.d/dbscripts owner=root group=root mode=600
 
+- name: set up nginx
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/dbscripts.conf owner=root group=root mode=644
+  notify:
+    - restart nginx
+
+- name: put dbscripts.htpasswd in place
+  copy: src=dbscripts.htpasswd dest=/etc/nginx/auth/dbscripts.htpasswd owner=root group=http mode=640
+
 - name: create Arch Linux-specific users
   user:
     name: "{{ item.key }}"

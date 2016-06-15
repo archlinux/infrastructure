@@ -1,0 +1,21 @@
+---
+
+- name: install nginx
+  pacman: name=nginx-mainline state=present
+
+- name: configure nginx
+  template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf owner=root group=root mode=644
+  notify:
+    - restart nginx
+
+- name: create nginx.d directory
+  file: state=directory path=/etc/nginx/nginx.d owner=root group=root mode=755
+
+- name: create auth directory
+  file: state=directory path=/etc/nginx/auth owner=root group=root mode=755
+
+- name: create default nginx log directory
+  file: state=directory path=/var/log/nginx/default owner=http group=log mode=750
+
+- name: enable nginx
+  service: name=nginx enabled=yes
