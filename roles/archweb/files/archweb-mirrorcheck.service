@@ -6,8 +6,9 @@ After=network.target
 Type=oneshot
 User=archweb
 WorkingDirectory=/srv/http/archweb
-ExecStart=/srv/http/archweb/env/bin/python manage.py mirrorcheck --location 3
-ExecStart=/srv/http/archweb/env/bin/python manage.py mirrorcheck --location 4
+# TODO put this in a template for when we also deploy it on other machines
+ExecStart=/srv/http/archweb/env/bin/python manage.py mirrorcheck --location 5
+ExecStart=/srv/http/archweb/env/bin/python manage.py mirrorcheck --location 6
 Nice=5
 
 [Install]
