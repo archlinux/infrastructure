@@ -3,7 +3,7 @@
 - name: install git
   pacman: name=git,python2,python2-virtualenv state=present
 
-- name: make archweb uesr
+- name: make archweb user
   user: name=archweb shell=/bin/false home="{{ archweb_home }}" createhome=no
 
 - name: fix home permissions
@@ -27,7 +27,7 @@
 - name: fix home permissions
   file: state=directory owner=archweb group=archweb path="{{ archweb_home }}"
 
-- name: copy archweb-reporead.service
+- name: copy archweb services
   copy: src="{{ item }}" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
   with_items:
     - archweb-reporead.service
