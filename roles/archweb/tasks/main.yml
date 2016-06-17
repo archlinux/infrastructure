@@ -15,7 +15,7 @@
   become_user: archweb
 
 - name: make virtualenv
-  command: virtualenv2 "{{ archweb_home }}"/env
+  command: virtualenv2 "{{ archweb_home }}"/env creates="{{ archweb_home }}/env/bin/python"
   become: true
   become_user: archweb
 
