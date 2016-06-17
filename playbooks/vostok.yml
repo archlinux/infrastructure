@@ -7,5 +7,5 @@
     - common
     - tools
     - sshd
-    - ssh_keys
+    - root_ssh
     - { role: borg-server, backup_dir: "/backup", backup_clients: ["orion", "apollo"] }

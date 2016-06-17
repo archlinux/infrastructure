@@ -7,5 +7,5 @@
     - common
     - tools
     - sshd
-    - ssh_keys
+    - root_ssh
     - { role: borg-client, backup_host: "borg@vostok.archlinux.org", backup_dir: "/backup/apollo", postgres_backup_dir: "/var/lib/postgres/backup" }
