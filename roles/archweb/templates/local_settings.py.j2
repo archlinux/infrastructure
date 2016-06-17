@@ -1,0 +1,28 @@
+# Django settings for archlinux project.
+
+
+## Database settings
+DATABASES = {
+    'default': {
+        'ENGINE'  : 'django.db.backends.postgresql_psycopg2',
+        'NAME'    : 'archweb',
+        'USER'    : 'archweb_update',
+        'PASSWORD': '{{ postgres_users.archweb_update }}',
+        'HOST'    : 'gudrun.archlinux.org',
+        'OPTIONS' : {
+            'autocommit': True,
+            'application_name': 'archweb',
+            'sslmode': 'require',
+        }
+    }
+}
+
+## Make this unique, and don't share it with anybody.
+SECRET_KEY = '{{ archweb_secret_key }}'
+
+## Cache settings
+CACHE_BACKEND = 'memcached://gudrun.archlinux.org:11211'
+CACHE_MIDDLEWARE_SECONDS = 300
+CACHE_MIDDLEWARE_KEY_PREFIX = 'arch'
+
+# vim: set ts=4 sw=4 et:

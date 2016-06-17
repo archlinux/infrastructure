@@ -15,3 +15,4 @@
     - { role: nginx, tags: ["nginx"] }
     - { role: dbscripts, repos_domain: "repos.archlinux.org" }
     - sudo
+    - { role: archweb, archweb_home: "/srv/http/archweb" }

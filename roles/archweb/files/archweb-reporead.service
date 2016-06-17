@@ -1,0 +1,13 @@
+[Unit]
+Description=archweb reporead
+After=network.target
+
+[Service]
+User=archweb
+WorkingDirectory=/srv/http/archweb
+ExecStart=/srv/http/archweb/env/bin/python manage.py reporead_inotify
+Restart=on-failure
+Nice=5
+
+[Install]
+WantedBy=multi-user.target
