@@ -185,6 +185,7 @@ arch_users:
     groups:
       - dev
       - tu
+      - multilib
   foutrelis:
     name: "Evangelos Foutras"
     ssh_key: foutrelis.pub
