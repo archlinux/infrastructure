@@ -13,6 +13,6 @@
     - { role: postfix, tags: ['mail'] }
     - { role: archusers, tags: ['archusers'] }
     - { role: nginx, tags: ["nginx"] }
-    - { role: dbscripts, repos_domain: "repos.archlinux.org", tags: ['dbscripts', 'archusers'] }
+    - { role: dbscripts, repos_domain: "repos.archlinux.org", svntogit_repos: "/srv/svntogit/repos", tags: ['dbscripts', 'archusers'] }
     - { role: sudo, tags: ['sudo', 'archusers'] }
     - { role: archweb, archweb_home: "/srv/http/archweb", tags: ['archweb'] }

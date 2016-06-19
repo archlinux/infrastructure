@@ -164,6 +164,62 @@
 - name: install svnlog
   copy: src=svnlog dest=/usr/local/bin/svnlog owner=root group=root mode=755
 
+- name: add arch-svntogit user
+  user: name=svntogit shell=/sbin/nologin home=/srv/svntogit generate_ssh_key=yes ssh_key_bits=4096
+
+- name: configure svntogit git user name
+  command: git config --global user.name = 'svntogit'
+  become: yes
+  become_user: svntogit
+
+- name: configure svntogit git user email
+  command: git config --global user.name = 'svntogit@repos.archlinux.org'
+  become: yes
+  become_user: svntogit
+
+- name: template arch-svntogit
+  copy: src=update-repos.sh dest=/srv/svntogit/update-repos.sh owner=root group=root mode=755
+
+- name: create svntogit repos subdir
+  file: path="/srv/svntogit/repos" state=directory owner=svntogit group=svntogit mode=0775
+
+- name: clone git-svn repos
+  command: git svn clone file:///srv/repos/svn-{{ item }}/svn /srv/svntogit/repos/{{ item }} creates=/srv/svntogit/repos/{{ item }}
+  with_items:
+    - community
+    - packages
+  become: yes
+  become_user: svntogit
+
+- name: add svntogit public remotes
+  command: git remote add public ssh://git.archlinux.org/srv/git/svntogit/{{ item }}.git chdir=/srv/svntogit/repos/{{ item }}
+  with_items:
+    - community
+    - packages
+  become: yes
+  become_user: svntogit
+  ignore_errors: yes
+
+  # The following command also serves as a way to get the data the first time the repo is set up
+- name: configure svntogit pull upstream branch
+  command: git pull public master chdir=/srv/svntogit/repos/{{ item }}
+  with_items:
+    - community
+    - packages
+  become: yes
+  become_user: svntogit
+
+- name: configure svntogit push upstream branch
+  command: git push -u public master chdir=/srv/svntogit/repos/{{ item }}
+  with_items:
+    - community
+    - packages
+  become: yes
+  become_user: svntogit
+
+- name: fix svntogit home permissions
+  file: path="/srv/svntogit" state=directory owner=svntogit group=svntogit mode=0775
+
 - name: start and enable rsync
   service: name=rsyncd.socket enabled=yes state=started
 
@@ -191,6 +247,10 @@
     - lastsync.service
     - gen_rsyncd.timer
     - gen_rsyncd.service
+    - arch-svntogit.timer
+    - arch-svntogit.service
+  notify:
+    - daemon reload
 
 - name: activate systemd timers
   service: name={{ item }} enabled=yes state=started
@@ -201,3 +261,4 @@
     - integrity-check.timer
     - lastsync.timer
     - gen_rsyncd.timer
+    - arch-svntogit.timer

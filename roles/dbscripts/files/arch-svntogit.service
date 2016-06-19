@@ -1,0 +1,7 @@
+[Unit]
+Description=arch-svntogit
+
+[Service]
+Type=oneshot
+User=svntogit
+ExecStart=/srv/svntogit/update-repos.sh
