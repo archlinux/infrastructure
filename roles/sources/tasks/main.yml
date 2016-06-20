@@ -1,0 +1,9 @@
+---
+
+- name: set up nginx
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/sources.conf owner=root group=root mode=644
+  notify:
+    - restart nginx
+
+- name: make nginx log dir
+  file: path=/var/log/nginx/{{ sources_domain }} state=directory owner=http group=log mode=755

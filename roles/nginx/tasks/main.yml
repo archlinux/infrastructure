@@ -1,12 +1,21 @@
 ---
 
 - name: install nginx
-  pacman: name=nginx-mainline state=present
+  pacman: name=nginx-mainline,certbot state=present
 
 - name: configure nginx
   template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf owner=root group=root mode=644
   notify:
     - restart nginx
+
+- name: snippets directory
+  file: state=directory path=/etc/nginx/snippets owner=root group=root mode=755
+
+- name: copy snippets
+  template: src={{ item }} dest=/etc/nginx/snippets owner=root group=root mode=644
+  with_items:
+    - letsencrypt.conf
+    - sslsettings.conf
 
 - name: create nginx.d directory
   file: state=directory path=/etc/nginx/nginx.d owner=root group=root mode=755
@@ -16,6 +25,23 @@
 
 - name: create default nginx log directory
   file: state=directory path=/var/log/nginx/default owner=http group=log mode=750
+
+- name: create unique DH group
+  command: openssl dhparam -out /etc/ssl/dhparams.pem 2048 creates=/etc/ssl/dhparams.pem
+
+- name: create directory to store validation stuff in
+  file: owner=root group=http mode=750 path={{ letsencrypt_validation_dir }} state=directory
+
+- name: install letsencrypt renewal service
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=644
+  with_items:
+    - certbot-renewal.service
+    - certbot-renewal.timer
+  notify:
+    - daemon reload
+
+- name: activate letsencrypt renewal service
+  service: name=certbot-renewal.timer enabled=yes state=started
 
 - name: enable nginx
   service: name=nginx enabled=yes

@@ -1,6 +1,6 @@
 server {
-    listen       80 default_server;
-    listen       [::];
+    listen       80;
+    listen       [::]:80;
     server_name  {{ repos_domain }};
     root         /srv/ftp;
 
@@ -9,6 +9,8 @@ server {
     location /lastupdate {
         allow all;
     }
+
+    include snippets/letsencrypt.conf;
 
     # Server at velocitynet
     allow  66.211.214.130; # dom0.archlinux.org.

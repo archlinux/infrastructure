@@ -11,6 +11,14 @@ After the provisioning script has run, it is safe to reboot.
 Once in the new system, run the regular playbook: `ansible-playbook playbooks/$hostname.yml`. This
 playbook is the one regularily used for adminstrating the server and is entirely idempotent.
 
+##### Note about first time certificates
+
+The first time a certificate is issued, you'll have to do this manually by yourself. First, configure the DNS to
+point to the new server and then run a playbook onto the server which includes the nginx role. Then on the server,
+it is necessary to run the following once:
+
+certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w /var/lib/letsencrypt/ <domain-name>
+
 ## Servers
 
 ### vostok
@@ -22,7 +30,7 @@ playbook is the one regularily used for adminstrating the server and is entirely
 
 #### Services
 - repos/sync (repos.archlinux.org)
-- sources
+- sources (sources.archlinux.org)
 - archive (archive.archlinux.org)
 
 ### apollo
