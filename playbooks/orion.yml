@@ -16,4 +16,4 @@
     - { role: dbscripts, repos_domain: "repos.archlinux.org", svntogit_repos: "/srv/svntogit/repos", tags: ['dbscripts', 'archusers'] }
     - { role: sudo, tags: ['sudo', 'archusers'] }
     - { role: archweb, archweb_home: "/srv/http/archweb", tags: ['archweb'] }
-    - { role: sources, sources_domain: "sources.archlinux.org", tags: ['sources'] }
+    - { role: sources, sources_domain: "sources.archlinux.org", sources_dir: "/srv/sources", tags: ['sources'] }

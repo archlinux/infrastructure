@@ -26,7 +26,7 @@ server {
     ssl_trusted_certificate /etc/letsencrypt/live/{{ sources_domain }}/chain.pem;
     include snippets/sslsettings.conf;
 
-    root         /srv/ftp/sources;
+    root         {{ sources_dir }};
 
     autoindex on;
 }
