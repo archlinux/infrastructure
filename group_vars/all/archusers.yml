@@ -204,6 +204,7 @@ arch_users:
     ssh_key: guillaume.pub
     groups:
       - dev
+      - tu
   heftig:
     name: "Jan Steffens"
     ssh_key: heftig.pub
