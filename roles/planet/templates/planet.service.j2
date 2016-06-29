@@ -1,0 +1,8 @@
+[Unit]
+Description=planet
+
+[Service]
+Type=oneshot
+User=http
+ExecStart=/usr/bin/python2 planet.py archplanet/config.ini
+WorkingDirectory={{ planet_dir }}
