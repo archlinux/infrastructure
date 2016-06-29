@@ -40,11 +40,11 @@ certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096
 - wiki (wiki.archlinux.org)
 - aur (aur.archlinux.org)
 - mailman
-- planet
+- planet (planet.archlinux.org)
 - bugs (bugs.archlinux.org)
 - archweb
 - patchwork
-- projects
+- projects (planet.archlinux.org)
 
 ### soyuz
 
