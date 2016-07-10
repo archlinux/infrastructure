@@ -19,6 +19,28 @@
 - name: update aliases db
   command: postalias /etc/postfix/aliases
 
+- name: install additional files
+  template: src=files/{{item}} dest=/etc/postfix/{{item}} owner=root group=root mode=644
+  with_items:
+    - access_client
+    - access_sender
+    - access_helo
+    - body_checks
+    - header_checks
+    - transport
+    - relocated
+    - compat_maps
+
+- name: postmap additional files
+  command: postmap /etc/postfix/{{item}}
+  with_items:
+    - access_client
+    - access_sender
+    - access_helo
+    - transport
+    - relocated
+    - compat_maps
+
 - name: create dhparam 2048
   command: openssl dhparam -out /etc/postfix/dh2048.pem 2048 creates=/etc/postfix/dh2048.pem
   notify:

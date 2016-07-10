@@ -9,7 +9,22 @@
 # service type  private unpriv  chroot  wakeup  maxproc command + args
 #               (yes)   (yes)   (no)    (never) (100)
 # ==========================================================================
+{% if postfix_server %}
+smtp      inet  n       -       n       -       -       smtpd
+    -o smtpd_proxy_filter=[127.0.0.1]:10025
+    -o smtpd_client_connection_count_limit=20
+    -o smtpd_proxy_options=speed_adjust
+submission inet n       -       n       -       -       smtpd
+    -o syslog_name=postfix/submission
+    -o smtpd_tls_security_level=encrypt
+    -o smtpd_sasl_auth_enable=yes
+    -o smtpd_recipient_restrictions=$submission_recipient_restrictions
+    -o content_filter=smtp:[127.0.0.1]:10025
+    -o smtpd_client_connection_count_limit=10
+    #-o smtpd_milters=unix:/var/spool/opendkim/opendkim
+{% else %}
 localhost:smtp      inet  n       -       n       -       -       smtpd
+{% endif %}
 #smtp      inet  n       -       n       -       1       postscreen
 #smtpd     pass  -       -       n       -       -       smtpd
 #dnsblog   unix  -       -       n       -       0       dnsblog
@@ -62,69 +77,23 @@ virtual   unix  -       n       n       -       -       virtual
 lmtp      unix  -       -       n       -       -       lmtp
 anvil     unix  -       -       n       -       1       anvil
 scache    unix  -       -       n       -       1       scache
+
+{% if postfix_server %}
+# After-filter SMTP server. Receive mail from the content filter
+# on localhost port 10026.
 #
-# ====================================================================
-# Interfaces to non-Postfix software. Be sure to examine the manual
-# pages of the non-Postfix software to find out what options it wants.
-#
-# Many of the following services use the Postfix pipe(8) delivery
-# agent.  See the pipe(8) man page for information about ${recipient}
-# and other message envelope options.
-# ====================================================================
-#
-# maildrop. See the Postfix MAILDROP_README file for details.
-# Also specify in main.cf: maildrop_destination_recipient_limit=1
-#
-#maildrop  unix  -       n       n       -       -       pipe
-#  flags=DRhu user=vmail argv=/usr/local/bin/maildrop -d ${recipient}
-#
-# ====================================================================
-#
-# Recent Cyrus versions can use the existing "lmtp" master.cf entry.
-#
-# Specify in cyrus.conf:
-#   lmtp    cmd="lmtpd -a" listen="localhost:lmtp" proto=tcp4
-#
-# Specify in main.cf one or more of the following:
-#  mailbox_transport = lmtp:inet:localhost
-#  virtual_transport = lmtp:inet:localhost
-#
-# ====================================================================
-#
-# Cyrus 2.1.5 (Amos Gouaux)
-# Also specify in main.cf: cyrus_destination_recipient_limit=1
-#
-#cyrus     unix  -       n       n       -       -       pipe
-#  user=cyrus argv=/cyrus/bin/deliver -e -r ${sender} -m ${extension} ${user}
-#
-# ====================================================================
-#
-# Old example of delivery via Cyrus.
-#
-#old-cyrus unix  -       n       n       -       -       pipe
-#  flags=R user=cyrus argv=/cyrus/bin/deliver -e -m ${extension} ${user}
-#
-# ====================================================================
-#
-# See the Postfix UUCP_README file for configuration details.
-#
-#uucp      unix  -       n       n       -       -       pipe
-#  flags=Fqhu user=uucp argv=uux -r -n -z -a$sender - $nexthop!rmail ($recipient)
-#
-# ====================================================================
-#
-# Other external delivery methods.
-#
-#ifmail    unix  -       n       n       -       -       pipe
-#  flags=F user=ftn argv=/usr/lib/ifmail/ifmail -r $nexthop ($recipient)
-#
-#bsmtp     unix  -       n       n       -       -       pipe
-#  flags=Fq. user=bsmtp argv=/usr/local/sbin/bsmtp -f $sender $nexthop $recipient
-#
-#scalemail-backend unix -       n       n       -       2       pipe
-#  flags=R user=scalemail argv=/usr/lib/scalemail/bin/scalemail-store
-#  ${nexthop} ${user} ${extension}
-#
-#mailman   unix  -       n       n       -       -       pipe
-#  flags=FR user=list argv=/usr/lib/mailman/bin/postfix-to-mailman.py
-#  ${nexthop} ${user}
+127.0.0.1:10026 inet n  -       n       -        -      smtpd
+        -o syslog_name=postfix/after-sa-smtp
+        -o smtpd_authorized_xforward_hosts=127.0.0.0/8
+        -o smtpd_client_restrictions=
+        -o smtpd_helo_restrictions=
+        -o smtpd_sender_restrictions=
+        -o smtpd_recipient_restrictions=$post_queue_smtpd_recipient_restrictions
+        -o smtpd_data_restrictions=
+        -o smtpd_end_of_data_restrictions=
+        -o mynetworks=127.0.0.0/8
+        -o receive_override_options=no_unknown_recipient_checks,no_milters
+        -o smtpd_tls_auth_only=no
+        -o smtpd_reject_footer=
+        -o smtpd_tls_security_level=none
+{% endif %}

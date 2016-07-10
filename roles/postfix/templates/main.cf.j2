@@ -5,6 +5,11 @@ biff = no
 
 append_dot_mydomain = no
 
+{% if postfix_server %}
+smtpd_tls_cert_file = /etc/letsencrypt/live/{{inventory_hostname}}/fullchain.pem
+smtpd_tls_key_file = /etc/letsencrypt/live/{{inventory_hostname}}/privkey.pem
+{% endif %}
+
 smtpd_tls_dh1024_param_file = /etc/postfix/dh2048.pem
 smtpd_tls_dh512_param_file = /etc/postfix/dh_512.pem
 smtpd_tls_eecdh_grade = ultra
@@ -28,17 +33,34 @@ smtp_tls_session_cache_database = btree:/var/lib/postfix/smtp_scache
 
 smtp_use_tls = yes
 smtp_tls_CApath = /etc/ssl/certs
+
+# TODO: daemon_directory should be the same as the default. drop it
 daemon_directory = /usr/lib/postfix/bin
 mydomain = {{inventory_hostname}}
 myhostname = {{inventory_hostname}}
 myorigin = archlinux.org
+{% if postfix_server %}
+mydestination = archlinux.org
+{% else %}
 mydestination =
+{% endif %}
 
 default_database_type=btree
 indexed = ${default_database_type}:${config_directory}
 
-alias_maps = ${indexed}/aliases
-alias_database = ${indexed}/aliases
+mynetworks =
+  127.0.0.1
+  [::ffff:127.0.0.0]/104
+  [::1]/128
+mailbox_transport = lmtp:unix:private/dovecot-lmtp
+lmtp_destination_recipient_limit=1
+mailbox_size_limit = 0
+message_size_limit = 104857600
+recipient_delimiter = +
+inet_interfaces = all
+inet_protocols = all
+disable_vrfy_command = yes
+strict_rfc821_envelopes = yes
 
 # enable for testing new config
 soft_bounce = no
@@ -46,17 +68,127 @@ debug_peer_list =
 
 smtp_connection_cache_on_demand = yes
 
-message_size_limit = 104857600
-inet_interfaces = all
-inet_protocols = all
-disable_vrfy_command = yes
-strict_rfc821_envelopes = yes
-
 smtpd_milters=unix:/var/spool/opendkim/opendkim
 non_smtpd_milters=unix:/var/spool/opendkim/opendkim
 
-address_verify_map = ${default_database_type}:/var/lib/postfix/verify_cache
+# custom restriction classes
+policy_check =
+# postfwd
+{% if postfix_server %}
+  check_policy_service inet:127.0.0.1:10040
+{% endif %}
 
-strict_rfc821_envelopes = yes
+submission_recipient_restrictions=
+# allow postmaster
+  check_recipient_access btree:/etc/postfix/access_recipient,
+  permit_sasl_authenticated,
+  reject
+
 smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
 
+smtpd_recipient_restrictions =
+# policy services
+  $policy_check,
+# white-/blacklisting
+  check_recipient_access btree:/etc/postfix/access_recipient,
+  check_client_access btree:/etc/postfix/access_client,
+  check_helo_access btree:/etc/postfix/access_helo,
+  check_sender_access btree:/etc/postfix/access_sender,
+# reject unclean mails
+  reject_unauth_pipelining,
+  reject_non_fqdn_recipient,
+  reject_non_fqdn_sender,
+  reject_unknown_recipient_domain,
+  reject_unknown_sender_domain,
+# allow our users
+  reject_authenticated_sender_login_mismatch,
+  permit_sasl_authenticated,
+  permit_mynetworks,
+# reject mailservers without proper rDNS and hostname->IP
+  #warn_if_reject reject_unknown_client_hostname,
+# check RBLs
+# check the HELO
+  #warn_if_reject reject_invalid_helo_hostname,
+# reject relaying
+  reject_unauth_destination,
+# cache if recipient exists
+  #reject_unverified_recipient,
+  #permit_mx_backup,
+  permit
+
+# some rate limiting rules only work after data so check it again
+smtpd_end_of_data_restrictions =
+  $policy_check
+
+# needed to put our users on HOLD
+post_queue_smtpd_recipient_restrictions =
+  check_sender_access btree:/etc/postfix/access_sender-post-filter,
+  permit_mynetworks,
+  reject
+
+address_verify_map = ${default_database_type}:/var/lib/postfix/verify_cache
+
+unverified_recipient_reject_code = 550
+unknown_hostname_reject_code = 550
+unknown_client_reject_code = 550
+unknown_address_reject_code = 550
+
+smtpd_reject_footer = For assistance contact <postmaster@archlinux.org>. Please provide the following information in your problem report: time ($localtime) and client ($client_address).
+
+smtpd_sasl_auth_enable = yes
+smtpd_tls_auth_only = yes
+
+smtpd_sasl_security_options = noanonymous
+broken_sasl_auth_clients = yes
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = /var/run/dovecot/auth-client
+smtpd_tls_received_header = yes
+# needed for SA
+smtpd_sasl_authenticated_header = yes
+
+{% if postfix_server %}
+smtpd_sender_login_maps =
+  btree:/etc/postfix/smtp_sender_map,
+  btree:/etc/postfix/users
+{% endif %}
+smtpd_helo_required = yes
+
+smtpd_client_connection_rate_limit = 400
+smtpd_client_message_rate_limit = 500
+smtpd_client_recipient_rate_limit = 500
+
+alias_maps =
+  btree:/etc/postfix/aliases
+alias_database = $alias_maps
+
+{% if postfix_server %}
+virtual_alias_maps =
+  btree:/etc/postfix/users
+  btree:/etc/postfix/mailman_compat
+virtual_alias_domains =  btree:/etc/postfix/domains
+{% endif %}
+
+{% if postfix_server %}
+# reject mails to system users (nobody looks in those mailboxes)
+local_recipient_maps =
+  btree:/etc/postfix/users
+  $alias_maps
+  btree:/etc/postfix/mailman_compat
+  #btree:/etc/postfix/temporary_mailman_maps
+  btree:/etc/postfix/compat_maps
+relocated_maps = btree:/etc/postfix/relocated
+{% endif %}
+
+transport_maps =
+  btree:/etc/postfix/transport
+  btree:/etc/postfix/compat_maps
+  #btree:/etc/postfix/temporary_mailman_maps
+
+authorized_mailq_users = root
+
+header_checks = pcre:/etc/postfix/header_checks
+body_checks = pcre:/etc/postfix/body_checks
+
+delay_warning_time = 4h
+
+# vim: set ft=pfmain:
