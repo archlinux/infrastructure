@@ -80,7 +80,7 @@ policy_check =
 
 submission_recipient_restrictions=
 # allow postmaster
-  check_recipient_access btree:/etc/postfix/access_recipient,
+  check_recipient_access ${indexed}/access_recipient,
   permit_sasl_authenticated,
   reject
 
@@ -90,10 +90,10 @@ smtpd_recipient_restrictions =
 # policy services
   $policy_check,
 # white-/blacklisting
-  check_recipient_access btree:/etc/postfix/access_recipient,
-  check_client_access btree:/etc/postfix/access_client,
-  check_helo_access btree:/etc/postfix/access_helo,
-  check_sender_access btree:/etc/postfix/access_sender,
+  check_recipient_access ${indexed}/access_recipient,
+  check_client_access ${indexed}/access_client,
+  check_helo_access ${indexed}/access_helo,
+  check_sender_access ${indexed}/access_sender,
 # reject unclean mails
   reject_unauth_pipelining,
   reject_non_fqdn_recipient,
@@ -122,7 +122,7 @@ smtpd_end_of_data_restrictions =
 
 # needed to put our users on HOLD
 post_queue_smtpd_recipient_restrictions =
-  check_sender_access btree:/etc/postfix/access_sender-post-filter,
+  check_sender_access ${indexed}/access_sender-post-filter,
   permit_mynetworks,
   reject
 
@@ -148,8 +148,8 @@ smtpd_sasl_authenticated_header = yes
 
 {% if postfix_server %}
 smtpd_sender_login_maps =
-  btree:/etc/postfix/smtp_sender_map,
-  btree:/etc/postfix/users
+  ${indexed}/smtp_sender_map,
+  ${indexed}/users
 {% endif %}
 smtpd_helo_required = yes
 
@@ -157,32 +157,32 @@ smtpd_client_connection_rate_limit = 400
 smtpd_client_message_rate_limit = 500
 smtpd_client_recipient_rate_limit = 500
 
-alias_maps =
-  btree:/etc/postfix/aliases
-alias_database = $alias_maps
+alias_maps = ${indexed}/aliases
+alias_database = ${indexed}/aliases
+
 
 {% if postfix_server %}
 virtual_alias_maps =
-  btree:/etc/postfix/users
-  btree:/etc/postfix/mailman_compat
-virtual_alias_domains =  btree:/etc/postfix/domains
+  ${indexed}/users
+  ${indexed}/mailman_compat
+virtual_alias_domains =  ${indexed}/domains
 {% endif %}
 
 {% if postfix_server %}
 # reject mails to system users (nobody looks in those mailboxes)
 local_recipient_maps =
-  btree:/etc/postfix/users
+  ${indexed}/users
   $alias_maps
-  btree:/etc/postfix/mailman_compat
-  #btree:/etc/postfix/temporary_mailman_maps
-  btree:/etc/postfix/compat_maps
-relocated_maps = btree:/etc/postfix/relocated
+  ${indexed}/mailman_compat
+  #${indexed}/temporary_mailman_maps
+  ${indexed}/compat_maps
+relocated_maps = ${indexed}/relocated
 {% endif %}
 
 transport_maps =
-  btree:/etc/postfix/transport
-  btree:/etc/postfix/compat_maps
-  #btree:/etc/postfix/temporary_mailman_maps
+  ${indexed}/transport
+  ${indexed}/compat_maps
+  #${indexed}/temporary_mailman_maps
 
 authorized_mailq_users = root
 
