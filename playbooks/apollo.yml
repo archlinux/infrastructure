@@ -11,5 +11,5 @@
     - { role: borg-client, backup_host: "borg@vostok.archlinux.org", backup_dir: "/backup/apollo", postgres_backup_dir: "/var/lib/postgres/backup", tags: ["borg"] }
     - { role: nginx, letsencrypt_validation_dir: "/var/lib/letsencrypt", tags: ["nginx"] }
     - { role: planet, planet_domain: "planet.archlinux.org", planet_dir: "/srv/http/planet", tags: ["planet"] }
-    - { role: opendkim, dkim_selector: apollo, tags: ['mail'] }
     - { role: postfix, postfix_server: false, tags: ["mail"] }
+    - { role: opendkim, dkim_selector: apollo, tags: ['mail'] }
