@@ -3,33 +3,29 @@
 - name: install postfix
   pacman: name=postfix state=present
 
-- name: install main.cf
-  template: src=main.cf.j2 dest=/etc/postfix/main.cf owner=root group=root mode=644
+- name: install template configs
+  template: src={{item}}.j2 dest=/etc/postfix/{{item}} owner=root group=root mode=644
   notify:
     - reload postfix
-
-- name: install master.cf
-  template: src=master.cf.j2 dest=/etc/postfix/master.cf owner=root group=root mode=644
-  notify:
-    - reload postfix
-
-- name: install aliases
-  template: src=aliases.j2 dest=/etc/postfix/aliases owner=root group=root mode=644
-
-- name: update aliases db
-  command: postalias /etc/postfix/aliases
+  with_items:
+    - main.cf
+    - master.cf
+    - transport
+    - aliases
 
 - name: install additional files
-  template: src=files/{{item}} dest=/etc/postfix/{{item}} owner=root group=root mode=644
+  copy: src={{item}} dest=/etc/postfix/{{item}} owner=root group=root mode=644
   with_items:
     - access_client
     - access_sender
     - access_helo
     - body_checks
     - header_checks
-    - transport
     - relocated
     - compat_maps
+
+- name: update aliases db
+  command: postalias /etc/postfix/aliases
 
 - name: postmap additional files
   command: postmap /etc/postfix/{{item}}
