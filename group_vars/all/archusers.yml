@@ -23,6 +23,7 @@ arch_users:
     groups:
       - dev
       - multilib
+      - tu
   alucryd:
     name: "Maxime Gauduin"
     ssh_key: alucryd.pub
