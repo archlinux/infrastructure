@@ -1,0 +1,14 @@
+---
+
+- name: install postfwd
+  pacman: name=postfwd state=present
+
+- name: install postfwd.cf
+  template: src=postfwd.cf.j2 dest=/etc/postfwd/postfwd.cf owner=root group=root mode=600
+  notify:
+    - reload postfwd
+
+- name: start and enable postfwd
+  service: name=postfwd enabled=yes state=started
+
+

@@ -1,0 +1,29 @@
+# skip lower rate limiting for certain users
+# TODO: populate this from a variable if the feature is used
+&&SASL_WHITELIST {
+	sasl_username=devnull;
+};
+
+# skip lower rate limiting for certain users
+# sasl_username != doesn't work for whatever reason
+id=SaslWhitelist;
+	protocol_state==END-OF-MESSAGE;
+	&&SASL_WHITELIST;
+	action=rcpt(sasl_username/300/21600/REJECT You can only send to 300 recipients per 6h per user)
+
+# skip lower rate limiting for certain users
+id=SaslWhitelist2;
+	protocol_state==END-OF-MESSAGE;
+	&&SASL_WHITELIST;
+	action=dunno;
+
+# sasl_username != doesn't work for whatever reason
+id=RcptRate;
+	protocol_state==END-OF-MESSAGE;
+	sasl_username!~/^$/;
+	action=rcpt(sasl_username/100/21600/REJECT You can only send to 100 recipients per 6h per user)
+
+# this causes postfwd to log something for every mail; easier testing
+id=logging;
+	protocol_state==END-OF-MESSAGE;
+	action=dunno;
