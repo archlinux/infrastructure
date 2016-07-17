@@ -1,0 +1,119 @@
+auth_mechanisms = plain login
+disable_plaintext_auth = yes
+mail_location = mdbox:~/.mdbox
+mail_plugins = $mail_plugins zlib notify mail_log
+
+# enable imap notify
+mailbox_list_index=yes
+
+# remove domain part from username and lowercase it
+auth_username_format = %Ln
+
+namespace inbox {
+	hidden = no
+	inbox = yes
+	list = yes
+	location = 
+	prefix = 
+	separator = .
+	type = private
+
+	mailbox Trash {
+		auto = subscribe
+		special_use = \Trash
+	}
+	mailbox Drafts {
+		auto = subscribe
+		special_use = \Drafts
+	}
+	mailbox Sent {
+		auto = subscribe # autocreate, autosubscribe
+		special_use = \Sent
+	}
+	mailbox Junk {
+		auto = subscribe
+		special_use = \Junk
+	}
+}
+
+passdb {
+	driver = pam
+}
+plugin {
+	sieve = ~/.dovecot.sieve
+	sieve_dir = ~/.sieve
+	sieve_global_dir = /etc/dovecot/sieve/global/
+	sieve_global_path = /etc/dovecot/sieve/default.sieve
+
+	mail_log_events = delete undelete expunge copy mailbox_delete mailbox_rename
+	mail_log_fields = uid box msgid size
+}
+protocols = imap pop3 sieve lmtp
+service auth {
+	unix_listener auth-client {
+		group = postfix
+		user = postfix
+		mode = 0660
+	}
+	user = root
+}
+service imap-login {
+	process_limit = 400
+	process_min_avail = 5
+}
+
+service managesieve-login {
+	inet_listener sieve {
+		# use default port
+		#port = 4190
+	}
+	inet_listener sieve-obsolete {
+		port = 2000
+	}
+}
+service managesieve {
+}
+service lmtp {
+	unix_listener /var/spool/postfix/private/dovecot-lmtp {
+		group = postfix
+		user = postfix
+		mode = 0660
+	}
+}
+
+login_log_format_elements = "user=<%u> method=%m rip=%r lip=%l mpid=%e %c %k"
+
+ssl_cert = </etc/letsencrypt/live/{{inventory_hostname}}/fullchain.pem
+ssl_key = </etc/letsencrypt/live/{{inventory_hostname}}/privkey.pem
+ssl_prefer_server_ciphers = yes
+ssl_protocols = !SSLv2 !SSLv3
+ssl_options = no_compression
+
+ssl_cipher_list = EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
+
+userdb {
+	driver = passwd
+}
+protocol imap {
+	imap_client_workarounds = tb-extra-mailbox-sep
+	mail_max_userip_connections = 30
+	mail_plugins = $mail_plugins
+}
+protocol lda {
+	mail_plugins = $mail_plugins sieve
+	postmaster_address = postmaster@archlinux.org
+}
+protocol lmtp {
+	postmaster_address = postmaster@archlinux.org
+	mail_plugins = $mail_plugins sieve
+}
+protocol sieve {
+	managesieve_logout_format = bytes ( in=%i : out=%o )
+}
+plugin {
+	sieve = ~/.dovecot.sieve
+	sieve_dir = ~/.sieve
+	zlib_save_level = 6
+	zlib_save = gz
+}
+auth_failure_delay = 2
