@@ -13,3 +13,5 @@
     - { role: planet, planet_domain: "planet.archlinux.org", planet_dir: "/srv/http/planet", tags: ["planet"] }
     - { role: postfix, postfix_server: false, tags: ["mail"] }
     - { role: opendkim, dkim_selector: apollo, tags: ['mail'] }
+    - { role: dovecot, tags: ['mail', "dovecot"] }
+    - { role: postfwd, tags: ['mail', "postfwd"] }
