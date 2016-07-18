@@ -12,6 +12,6 @@
     - { role: nginx, letsencrypt_validation_dir: "/var/lib/letsencrypt", tags: ["nginx"] }
     - { role: planet, planet_domain: "planet.archlinux.org", planet_dir: "/srv/http/planet", tags: ["planet"] }
     - { role: postfix, postfix_server: false, tags: ["mail", "postfix"] }
-    - { role: opendkim, dkim_selector: apollo, tags: ['mail', "opendim"] }
+    - { role: opendkim, dkim_selector: apollo, tags: ['mail', "opendkim"] }
     - { role: dovecot, tags: ['mail', "dovecot"] }
     - { role: postfwd, tags: ['mail', "postfwd"] }
