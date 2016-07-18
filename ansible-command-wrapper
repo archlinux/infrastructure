@@ -1,0 +1,15 @@
+#!/bin/bash
+
+command=$(basename "$0")
+
+if [[ $command = "ansible-command-wrapper" ]]; then
+	if [[ $# -gt 0 ]]; then
+		command=$1
+		shift
+	else
+		echo "usage: ansible-command-wrapper <command name> [arguments]" >&2
+		exit 1
+	fi
+fi
+
+exec "$command" --vault-password-file $(dirname $0)/misc/get-vault-pass.sh "$@"
