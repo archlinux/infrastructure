@@ -1,0 +1,12 @@
+server {
+    listen       80;
+    listen       [::]:80;
+    server_name  {{ inventory_hostname }};
+    root         /srv/http;
+
+    include snippets/letsencrypt.conf;
+
+	location / {
+		return 404;
+	}
+}
