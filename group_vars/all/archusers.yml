@@ -302,6 +302,7 @@ arch_users:
     ssh_key: remy.pub
     groups:
       - dev
+      - tu
   ronald:
     name: "Ronald van Haren"
     ssh_key: ronald.pub
