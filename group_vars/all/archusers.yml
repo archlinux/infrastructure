@@ -297,6 +297,7 @@ arch_users:
     groups:
       - dev
       - multilib
+      - tu
   remy:
     name: "Rémy Oudompheng"
     ssh_key: remy.pub
