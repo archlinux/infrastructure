@@ -24,7 +24,6 @@ server {
     ssl_certificate      /etc/letsencrypt/live/{{ sources_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ sources_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ sources_domain }}/chain.pem;
-    include snippets/sslsettings.conf;
 
     root         {{ sources_dir }};
 

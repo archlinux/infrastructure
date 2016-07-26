@@ -24,7 +24,6 @@ server {
     ssl_certificate      /etc/letsencrypt/live/{{ planet_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ planet_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ planet_domain }}/chain.pem;
-    include snippets/sslsettings.conf;
 
     root         {{ planet_dir }}/archplanet/output;
 
