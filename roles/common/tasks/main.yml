@@ -32,3 +32,8 @@
 
 - name: generate ssh key for root
   command: ssh-keygen -b 4096 -N "" -f /root/.ssh/id_rsa creates="/root/.ssh/id_rsa"
+
+- name: configure network
+  template: src=10-static-ethernet.network.j2 dest=/etc/systemd/network/10-static-ethernet.network owner=root group=root mode=0644
+  notify:
+    - restart networkd
