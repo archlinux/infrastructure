@@ -1,0 +1,7 @@
+---
+
+ipv4_address: "138.201.81.199"
+ipv6_address: "2a01:4f8:172:1d86::1/128"
+ipv4_gateway: "138.201.81.193"
+ipv6_gateway: "fe80::1"
+filesystem: btrfs
