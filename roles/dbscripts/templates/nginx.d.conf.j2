@@ -2,12 +2,45 @@ server {
     listen       80;
     listen       [::]:80;
     server_name  {{ repos_domain }};
+    root         /srv/ftp;
 
     include snippets/letsencrypt.conf;
 
-    location / {
-        rewrite ^(.*) https://$server_name$1;
+    satisfy  any;
+
+    location /lastupdate {
+        allow all;
     }
+
+    # Server at velocitynet
+    allow  66.211.214.130; # dom0.archlinux.org.
+    allow  66.211.214.131; # gudrun.archlinux.org.
+    allow  66.211.214.132; # gerolde.archlinux.org.
+    allow  2001:470:1f10:717::2/128; # gerolde's tunnel IP
+
+    # Thomas' home
+    #allow  87.193.186.180; # port-87-193-186-180.static.qsc.de.
+    allow  2001:1a80:3026::/48;
+
+    # orion.archlinux.org
+    allow  88.198.91.70;
+    allow  2a01:4f8:160:6087::1;
+
+    # brynhild.archlinux.org
+    allow  176.9.18.112;
+    allow  2a01:4f8:150:1261::2;
+
+    # alberich.archlinux.org
+    allow 216.151.172.98;
+
+    # allison.archlinux.de
+    allow  144.76.107.12;
+    allow  2a01:4f8:192:520b::2;
+
+    auth_basic            "Restricted";
+    auth_basic_user_file  auth/dbscripts.htpasswd;
+
+    autoindex  on;
 }
 
 server {
