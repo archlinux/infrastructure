@@ -8,10 +8,5 @@
   remote_user: root
   vars:
     - hostname: vostok
-      ipv4_address: "5.9.158.171"
-      ipv6_address: "2a01:4f8:190:51aa::1/128"
-      ipv4_gateway: "5.9.158.161"
-      ipv6_gateway: "fe80::1"
-      filesystem: ext4
   roles:
     - install_arch
