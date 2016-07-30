@@ -2,6 +2,7 @@
 
 sudo_users:
   - allan
+  - angvp
   - bluewind
   - bpiotrowski
   - dan
