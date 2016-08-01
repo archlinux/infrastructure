@@ -4,7 +4,7 @@
   hosts: vostok
   remote_user: root
   roles:
-    - common
+    - { role: common, tags: ['common'] }
     - tools
     - sshd
     - root_ssh
