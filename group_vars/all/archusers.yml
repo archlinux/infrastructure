@@ -353,6 +353,11 @@ arch_users:
       - dev
       - tu
       - multilib
+  tensor5:
+    name: "Nicola Squartini"
+    ssh_key: tensor5.pub
+    groups:
+      - tu
   thestinger:
     name: "Daniel Micay"
     ssh_key: thestinger.pub
