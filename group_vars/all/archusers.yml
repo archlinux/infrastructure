@@ -42,6 +42,7 @@ arch_users:
     groups:
       - dev
       - tu
+      - multilib
   andrea:
     name: "Andrea Scarpino"
     ssh_key: andrea.pub
