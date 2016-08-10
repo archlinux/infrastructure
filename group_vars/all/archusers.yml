@@ -383,6 +383,7 @@ arch_users:
     groups:
       - dev
       - multilib
+      - tu
   tredaelli:
     name: "Timothy Redaelli"
     ssh_key: tredaelli.pub
