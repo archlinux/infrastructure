@@ -153,6 +153,7 @@ arch_users:
     groups:
       - dev
       - multilib
+      - tu
   dwallace:
     name: "Daniel Wallace"
     ssh_key: dwallace.pub
