@@ -237,7 +237,7 @@ arch_users:
     groups:
       - dev
       - multilib
-      - community
+      - tu
   jleclanche:
     name: "Jerome Leclanche"
     ssh_key: jleclanche.pub
