@@ -264,6 +264,7 @@ arch_users:
     groups:
       - dev
       - multilib
+      - tu
   kkeen:
     name: "Kyle Keen"
     ssh_key: kkeen.pub
