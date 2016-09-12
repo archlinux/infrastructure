@@ -15,3 +15,4 @@
     - { role: opendkim, dkim_selector: apollo, tags: ['mail', "opendkim"] }
     - { role: dovecot, tags: ['mail', "dovecot"] }
     - { role: postfwd, tags: ['mail', "postfwd"] }
+    - { role: postgres, tags: ['postgres'] }
