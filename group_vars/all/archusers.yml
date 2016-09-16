@@ -295,6 +295,11 @@ arch_users:
     ssh_key: muflone.pub
     groups:
       - tu
+  nicohood:
+    name: "NicoHood"
+    ssh_key: nicohood.pub
+    groups:
+      - tu
   pierre:
     name: "Pierre Schmitz"
     ssh_key: pierre.pub
