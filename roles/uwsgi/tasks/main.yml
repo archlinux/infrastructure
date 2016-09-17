@@ -1,0 +1,7 @@
+---
+
+- name: install uwsgi
+  pacman: name=uwsgi,uwsgi-plugin-python2 state=present
+
+- name: create archweb.ini (uwsgi)
+  template: src=archweb.j2 dest=/etc/uwsgi/archweb.ini
