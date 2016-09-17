@@ -81,6 +81,12 @@
     state: present
     exclusive: yes
 
+- name: create staging directories in user homes
+  file: path=/home/{{item[0]}}/staging/{{item[1]}} state=directory owner={{item[0]}} group=users mode=755
+  with_nested:
+    - "{{arch_users}}"
+    - ['core', 'extra', 'testing', 'staging', 'community', 'community-staging', 'community-testing',  'multilib', 'multilib-staging', 'multilib-testing']
+
 - name: create dbscripts paths
   file: path="{{ item }}" state=directory
   with_items:
