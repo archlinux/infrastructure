@@ -15,8 +15,11 @@
     BORG_PASSPHRASE: ""
   ignore_errors: True # This can sometimes fail if a backup is in progress :/
 
-- name: install borg backup script
-  template: src=borg-backup.sh.j2 dest=/usr/local/bin/borg-backup.sh owner=root group=root mode=755
+- name: install scripts
+  template: src={{item}}.j2 dest=/usr/local/bin/{{item}} owner=root group=root mode=755
+  with_items:
+    - borg-backup.sh
+    - borg
 
 - name: install postgres backup script
   template: src=backup-postgres.sh.j2 dest=/usr/local/bin/backup-postgres.sh owner=root group=root mode=755
