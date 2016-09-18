@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
+set -e
+
 # In case there is postgresql running, dump all of it somewhere.
-systemctl status postgresql && /usr/local/bin/backup-postgres.sh
+systemctl status postgresql && /usr/local/bin/backup-postgres.sh || true
 
 borg create -v --stats -C lz4 -e /proc \
     -e /sys -e /dev -e /run -e /tmp -e /var/cache \
