@@ -1,0 +1,8 @@
+---
+ipv4_address: "TBD"
+ipv6_address: "TBD/128"
+ipv4_gateway: "TBD"
+ipv6_gateway: "fe80::1"
+filesystem: btrfs
+
+# TODO: fill in IP addresses

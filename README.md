@@ -52,3 +52,7 @@ certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096
 - build server (pkgbuild.com)
 - releng
 - torrent tracker
+- sogrep
+- /~user/ webhost
+- irc bot (phrik)
+- quassel core
