@@ -1,0 +1,56 @@
+#!/bin/bash -e
+
+if [[ `/usr/bin/whoami` != quassel ]]; then
+  if [[ -n $BREAK_RECURSION ]]; then
+    echo >&2 "Couldn't become quassel."
+    exit 1
+  fi
+  exec /usr/bin/sudo -u quassel -- env BREAK_RECURSION=1 "$0"
+fi
+
+shopt -s extglob
+export PATH=/usr/bin
+export LC_ALL=C
+
+case $SUDO_USER in
+  (""|root) echo >&2 "You need to run this as the user you want to add."
+    exit 1 ;;
+  (+([a-z])) ;;
+  (*) echo >&2 "Invalid user."
+    exit 1 ;;
+esac
+
+if [[ `users` != *$SUDO_USER* ]]; then
+  echo >&2 "Unknown user."
+  exit 1
+fi
+
+ttyopts=`stty -g`
+trap 'stty $ttyopts' EXIT
+
+stty -echo
+echo >&2 -n "New password for $SUDO_USER's Quassel user: "
+read <&2
+pw="$REPLY"
+echo
+echo >&2 -n "Repeat the password: "
+read <&2
+echo
+if [[ $pw != $REPLY ]]; then
+  echo >&2 "Passwords don't match."
+  exit 1
+fi
+sha1=(`printf %s "$pw" | sha1sum`)
+
+if psql -c "INSERT INTO quasseluser (username, password) VALUES ('$SUDO_USER', '${sha1[0]}')" &>/dev/null; then
+  echo >&2 "Added user '$SUDO_USER'."
+  exit 0
+fi
+
+if psql -c "UPDATE quasseluser SET password = '${sha1[0]}' WHERE username = '$SUDO_USER'" &>/dev/null; then
+  echo >&2 "Updated password for user '$SUDO_USER'."
+  exit 0
+fi
+
+echo >&2 "SQL error."
+exit 1

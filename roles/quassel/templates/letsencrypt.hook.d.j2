@@ -1,0 +1,11 @@
+#!/bin/sh
+
+test "$1" = renew || exit 0
+
+for domain in $RENEWED_DOMAINS; do
+  case "$domain" in
+    {{ quassel_domain }})
+      systemctl restart quassel
+      ;;
+  esac
+done

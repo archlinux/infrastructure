@@ -13,3 +13,4 @@
     - { role: nginx, letsencrypt_validation_dir: "/var/lib/letsencrypt", tags: ["nginx"] }
     - { role: sudo, tags: ['sudo', 'archusers'] }
     - { role: postgres, tags: ['postgres'] }
+    - { role: quassel, quassel_domain: "quassel.archlinux.org", tags: ['quassel'] }
