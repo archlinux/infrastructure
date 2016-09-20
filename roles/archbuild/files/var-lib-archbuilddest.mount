@@ -1,0 +1,11 @@
+[Unit]
+Description=Build destinations
+Wants=strictatime@var-lib-archbuilddest.service
+
+[Mount]
+What=/var/lib/archbuilddest
+Where=/var/lib/archbuilddest
+Options=bind
+
+[Install]
+WantedBy=local-fs.target

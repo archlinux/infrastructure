@@ -1,0 +1,75 @@
+---
+
+- name: install archbuild
+  pacman: name=devtools,zsh state=present
+
+- name: install archbuild scripts
+  copy: src={{ item }} dest=/usr/local/bin/{{ item }} owner=root group=root mode=0755
+  with_items:
+    - mkpkg
+    - diffrepo
+    - clean-chroots
+    - clean-dests
+
+- name: install archbuild units
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - clean-chroots.timer
+    - clean-chroots.service
+    - clean-dests.timer
+    - clean-dests.service
+    - var-lib-archbuild.mount
+    - var-lib-archbuilddest.mount
+    - strictatime@.service
+  notify:
+    - daemon reload
+
+- name: start and enable archbuild units
+  service: name={{ item }} enabled=yes state=started
+  with_items:
+    - var-lib-archbuild.mount
+    - var-lib-archbuilddest.mount
+    - clean-chroots.timer
+    - clean-dests.timer
+
+- name: create archbuilddest
+  file:
+    state: directory
+    path: '/var/lib/{{ "/".join(item) }}'
+    owner: root
+    group: root
+    mode: 0755
+  with_nested:
+    - [archbuilddest]
+    - [logdest, pkgdest, srcdest]
+
+- name: set acl on archbuilddest
+  acl:
+    name: '/var/lib/archbuilddest/{{ item[0] }}'
+    state: present
+    entry: '{{ item[1] }}'
+  with_nested:
+    - [logdest, pkgdest, srcdest]
+    - ['user::rwx',
+       'group::r-x',
+       'group:dev:rwx',
+       'group:tu:rwx',
+       'mask::rwx',
+       'other::r-x',
+       'default:user::rwx',
+       'default:group::r-x',
+       'default:group:dev:rwx',
+       'default:group:tu:rwx',
+       'default:mask::rwx',
+       'default:other::r-x']
+
+- name: set makepkg.conf vars
+  lineinfile:
+    dest: /etc/makepkg.conf
+    insertafter: '^#?{{ item.key }}='
+    line: '{{ item.key }}={{ item.value }}'
+  with_dict:
+    MAKEFLAGS: '-j{{ ansible_processor_vcpus + 1 }}'
+    LOGDEST: /var/lib/archbuilddest/logdest
+    PKGDEST: /var/lib/archbuilddest/pkgdest
+    SRCDEST: /var/lib/archbuilddest/srcdest

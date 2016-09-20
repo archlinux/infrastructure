@@ -1,0 +1,36 @@
+#!/bin/zsh
+setopt extendedglob nomatch errreturn
+
+integer ret=0 br=0
+
+cd /var/lib/archbuild
+
+if btrfs filesystem df . &>/dev/null; then
+  remove() {
+    btrfs sub del $1
+  }
+else
+  remove() {
+    rm -rf $1
+  }
+fi
+
+for chroot in */^root(/Nmh+12); do
+  exec 9>>| $chroot.lock
+
+  if ! flock -n 9; then
+    echo "<5>Not deleting $chroot; in use"
+    continue
+  fi
+
+  echo "<6>Deleting $chroot"
+
+  if ! remove $chroot &>/dev/null; then
+    echo "<3>Error deleting $chroot"
+    ret=1
+  fi
+
+  # We don't remove the lockfile. Less races that way
+done
+
+exit $ret

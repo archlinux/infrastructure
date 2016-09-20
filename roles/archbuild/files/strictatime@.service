@@ -1,0 +1,12 @@
+[Unit]
+Description=strictatime for %f
+DefaultDependencies=no
+After=local-fs.target %i.mount
+Before=sysinit.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/mount -o remount,lazytime,strictatime %f
+
+[Install]
+WantedBy=local-fs.target

@@ -1,0 +1,262 @@
+#!/bin/zsh
+setopt extendedglob nomatch
+TRAPERR() { exit 1 }
+
+arch=(x86_64 i686) # arches to build ("any" builds x86_64 and repo-adds x86_64 and i686)
+check=1
+chroot=extra # The chroot to use (without arch)
+mailaddr= # send failed build logs where?
+packagedir=~/packages # root directory for packages
+pkgname=()
+builddeps=()
+repodb=$USERNAME.db.tar.gz # repo db filename
+repodir=~/public_html/repo # repo to use. arch dir is appended
+srcdest=.
+usage=0
+
+argerror() {
+  echo "type: 'mkpkg -h' for more information" >&2
+  exit 1
+}
+
+usage() {
+  echo 'Usage:  mkpkg [OPTION]... PACKAGE...'
+  echo 'Automatically builds PACKAGE(s) and adds each to a repository'
+  echo
+  echo 'Options:'
+  echo '  -f  Ignore check_* requests'
+  echo '  -h  Display this message. Specify twice for more details'
+}
+
+usage2() {
+  echo
+  echo '--- Configurables ---'
+  echo '  arch        Arches to build (array); "any" is special-cased.'
+  echo "                Default: $(declare -m arch)"
+  echo
+  echo '  chroot      Chroot setup to use. Does not include architecture.'
+  echo "                Default: $(declare -m chroot)"
+  echo
+  echo '  mailaddr    Where to mail logs from failed builds. May be an array.'
+  echo "                Default: $(declare -m mailaddr)"
+  echo
+  echo '  packagedir  Root directory for packages.'
+  echo "                Default: $(declare -m packagedir)"
+  echo
+  echo '  pkgname     Product pkgnames, not unlike makepkg. REQUIRED'
+  echo "                Default: $(declare -m pkgname)"
+  echo
+  echo '  builddeps   Additional pkgnames to install from local repo (array).'
+  echo "                Default: $(declare -m builddeps)"
+  echo
+  echo '  repodb      Repo db filename.'
+  echo "                Default: $(declare -m repodb)"
+  echo
+  echo '  repodir     Repo to use. Architecture dir is appended.'
+  echo "                Default: $(declare -m repodir)"
+  echo
+  echo '  srcdest     Where to find sources. Used by check_* functions.'
+  echo "                Default: $(declare -m srcdest)"
+  echo
+  echo '  build()     Calls archbuild.'
+  echo '                First argument: arch'
+  echo '                Rest: makechrootpkg args'
+  echo
+  echo '--- Default build function ---'
+  declare -f build
+  echo
+  echo '--- Program outline ---'
+  echo ' - source ~/.mkpkg'
+  echo ' - cd $packagedir'
+  echo ' - for PACKAGE:'
+  echo '    - cd PACKAGE'
+  echo '    - source MKPKG'
+  echo '    - Remove old built packages'
+  echo '    - for $arch:'
+  echo '       - Call build() with $arch makechrootpkg_args'
+  echo '          - On failure, mail logs if $mailaddr is set'
+  echo '       - Copy built packages to $repodir/$arch'
+  echo '       - Repo-remove old deltas from $repodb'
+  echo '       - Remove old delta files'
+  echo '       - Repo-add built packages to $repodb'
+  echo '       - Remove old package files'
+  echo '    - Remove duplicate log files'
+  echo
+  echo '--- Quick start ---'
+  echo " 1. Put a PKGBUILD for foo-git into $packagedir/foo-git/"
+  echo ' 2. Also put a file named MKPKG into this directory, containing:'
+  echo '      pkgname=(foo-git)'
+  echo ' 3. Now run: mkpkg foo-git'
+  echo
+  echo 'mkpkg will build the package and publish it in a repository named'
+  echo "  $repodir/\$arch/$repodb"
+  echo
+  echo 'For builds conditional on VCS updates, run check_{bzr,git,hg,svn} DIR [BRANCH]'
+  echo 'from MKPKG, with DIR being a makepkg VCS source and BRANCH a branch (optional).'
+  echo 'mkpkg will attempt to update the repository. If it is up to date, the build is'
+  echo 'skipped. The option -f can be used to suppress this behavior, so packages are'
+  echo 'always built.'
+  echo
+  echo 'The primary use of this script is running it from cron to build nightlies.'
+}
+
+check_bzr() {
+  local oldver
+
+  if [[ -d $srcdest/$1 && $check == 1 ]]; then
+    pushd $srcdest/$1
+    oldver=$(bzr revno)
+    bzr pull &>/dev/null || :
+    [[ $oldver == $(bzr revno) ]] && exit 0
+    popd
+  fi
+}
+
+check_git() {
+  local oldver
+
+  if [[ -d $srcdest/$1 && $check == 1 ]]; then
+    pushd $srcdest/$1
+    oldver=$(git rev-parse ${2:-HEAD})
+    git fetch --all -p &>/dev/null || :
+    [[ $oldver == $(git rev-parse ${2:-HEAD}) ]] && exit 0
+    popd
+  fi
+}
+
+check_hg() {
+  local oldver
+
+  if [[ -d $srcdest/$1 && $check == 1 ]]; then
+    pushd $srcdest/$1
+    oldver=$(hg id -ir ${2:-tip})
+    hg pull &>/dev/null || :
+    [[ $oldver == $(hg id -ir ${2:-tip}) ]] && exit 0
+    popd
+  fi
+}
+
+check_svn() {
+  local oldver
+
+  if [[ -d $srcdest/$1 && $check == 1 ]]; then
+    pushd $srcdest/$1
+    oldver=$(svnversion)
+    svn up &>/dev/null || :
+    [[ $oldver == $(svnversion) ]] && exit 0
+    popd
+  fi
+}
+
+build() {
+  [[ $chroot == multilib* ]] && 1=
+  ionice -c 3 chrt -b 0 sudo ${chroot}${1:+-$1}-build -- ${*:2}
+}
+
+# Parameters: arch
+repoadd() {
+  local -a pkgs olddeltas repopkgs
+
+  pkgs=( ${^pkgname}-[^-]##-[^-]##-($1|any).pkg.tar.xz(-om[1]) )
+  mkdir -p $repodir/$1
+  cp $pkgs $repodir/$1/
+
+  pushd $repodir/$1
+
+  # clean up old deltas, keep 2 newest
+  olddeltas=( ${^pkgname}-[^-]##-[^-]##_to_[^-]##-[^-]##-($1|any).delta(-Nom[3,-1]) )
+  repo-remove -q $repodb $olddeltas &>/dev/null || :
+  rm -f $olddeltas
+
+  # Add to databases, with delta generation
+  XDELTA="-9 -S lzma" repo-add -d -q $repodb $pkgs
+
+  # clean up old packages
+  repopkgs=( ${^pkgname}-[^-]##-[^-]##-($1|any).pkg.tar.xz )
+  rm -f ${repopkgs:|pkgs}
+
+  popd
+}
+
+# Parameters: message logfile
+maillog() {
+  if [[ -n $mailaddr ]]; then
+    xz <$2 >$2.xz
+    mail -s "mkpkg failure" -a $2.xz $mailaddr <<MESSAGE
+${1}
+MESSAGE
+    rm $2.xz
+  else
+    echo $1 >&2
+  fi
+}
+
+# Parameters: arch
+build_and_add() {
+  local -a buildargs
+  local dep
+
+  buildargs=(-l $USERNAME-mkpkg -T)
+  for dep in $builddeps; do
+    buildargs+=(-I $repodir/$1/${dep}-[^-]##-[^-]##-($1|any).pkg.tar.xz(-om[1]) )
+  done
+
+  if build $1 $buildargs &>$1.log; then
+    repoadd $1 || :
+    return 0
+  else
+    maillog "$0:$LINENO: '$1' build for '$package' failed" $1.log
+    return 1
+  fi
+}
+
+mkpkg_one() (
+  cd $package
+  source MKPKG
+
+  if [[ -z $pkgname ]]; then
+    echo "$0:$LINENO: no pkgnames found for '$package'" >&2
+    echo "Please set \$pkgname in $PWD/MKPKG" >&2
+    exit 1
+  fi
+
+  rm -f ${^pkgname}-[^-]##-[^-]##-[^-]##.pkg.tar.xz(N)
+
+  for a in $arch; do
+    case $a in
+      any) build_and_add x86_64 && repoadd i686 || : ;;
+      i686|x86_64) build_and_add $a || : ;;
+      *) echo "$0:$LINENO: invalid arch '$a' for '$package'" >&2 ;;
+    esac
+  done
+
+  rm -f *-*.log(|.[0-9])(N) logpipe.*(N)
+)
+
+[[ -f ~/.mkpkg ]] && source ~/.mkpkg
+
+while getopts fh option; do
+  case $option in
+    f) check=0 ;;
+    h) (( usage += 1 )) ;;
+    \?) argerror ;;
+  esac
+done
+shift $((OPTIND - 1))
+
+if (( usage > 0 )); then
+  usage
+  (( usage > 1 )) && usage2
+  exit 0
+fi
+
+if [[ -z $1 ]]; then
+  echo "$0:$LINENO: no packages given" >&2
+  argerror
+fi
+
+cd $packagedir
+
+for package; do
+  mkpkg_one
+done

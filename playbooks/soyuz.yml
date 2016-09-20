@@ -16,3 +16,4 @@
     - { role: quassel, quassel_domain: "quassel.archlinux.org", tags: ['quassel'] }
     - { role: syncrepo, tags: ['syncrepo'] }
     - { role: sogrep, tags: ['sogrep'] }
+    - { role: archbuild, tags: ['archbuild'] }

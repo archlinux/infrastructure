@@ -1,0 +1,10 @@
+[Unit]
+Description=Clean up old chroots
+RequiresMountsFor=/var/lib/archbuild
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/clean-chroots
+Nice=19
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
