@@ -32,6 +32,12 @@
 - name: create directory to store validation stuff in
   file: owner=root group=http mode=750 path={{ letsencrypt_validation_dir }} state=directory
 
+- name: install letsencrypt hook
+  copy: src=hook.sh dest=/etc/letsencrypt/hook.sh owner=root group=root mode=755
+
+- name: create letsencrypt hook dir
+  file: state=directory path=/etc/letsencrypt/hook.d owner=root group=root mode=755
+
 - name: install letsencrypt renewal service
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=644
   with_items:
