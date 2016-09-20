@@ -235,6 +235,12 @@
 - name: fix svntogit home permissions
   file: path="/srv/svntogit" state=directory owner=svntogit group=svntogit mode=0775
 
+- name: install repo helpers
+  copy: src={{ item }} dest=/usr/local/bin/{{ item }} owner=root group=root mode=755
+  with_items:
+    - lsrepo
+    - checklib32
+
 - name: start and enable rsync
   service: name=rsyncd.socket enabled=yes state=started
 
