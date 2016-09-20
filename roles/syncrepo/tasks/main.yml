@@ -1,0 +1,25 @@
+---
+
+- name: install rsync
+  pacman: name=rsync state=present
+
+- name: install syncrepo script
+  copy: src=syncrepo dest=/usr/local/bin/syncrepo owner=root group=root mode=0755
+
+- name: install syncrepo units
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - syncrepo.timer
+    - syncrepo.service
+  notify:
+    - daemon reload
+
+- name: start and enable syncrepo units
+  service: name=syncrepo.timer enabled=yes state=started
+
+- name: install local mirror
+  lineinfile:
+    dest: /etc/pacman.d/mirrorlist
+    line: 'Server = file:///srv/ftp/$repo/os/$arch'
+    insertbefore: BOF
+    create: true
