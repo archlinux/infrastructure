@@ -17,3 +17,4 @@
     - { role: syncrepo, tags: ['syncrepo'] }
     - { role: sogrep, tags: ['sogrep'] }
     - { role: archbuild, tags: ['archbuild'] }
+    - { role: public_html, public_domain: "pkgbuild.com", tags: ['nginx'] }
