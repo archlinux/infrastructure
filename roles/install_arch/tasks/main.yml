@@ -138,6 +138,12 @@
 - name: configure grub
   command: chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 
+- name: configure nss
+  lineinfile:
+    dest: /mnt/etc/nsswitch.conf
+    regexp: '^hosts:'
+    line: 'hosts: files mymachines resolve myhostname'
+
 - name: enable services inside chroot
   command: chroot /mnt systemctl enable sshd systemd-networkd systemd-resolved
 
