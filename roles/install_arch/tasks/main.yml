@@ -120,9 +120,6 @@
 - name: run mkinitcpio
   command: chroot /mnt mkinitcpio -p linux
 
-- name: generate fstab
-  command: chroot /tmp/root.x86_64 bash -c "genfstab -p -L /mnt >> /etc/fstab"
-
 - name: configure network
   template: src=10-static-ethernet.network.j2 dest=/mnt/etc/systemd/network/10-static-ethernet.network owner=root group=root mode=0644
 
