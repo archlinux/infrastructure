@@ -14,9 +14,6 @@
   notify:
     - restart postgres
 
-- name: start and enable postgres
-  service: name=postgresql enabled=yes state=started
-
 - name: configure postgres
   template: src={{ item }}.j2 dest=/var/lib/postgres/data/{{ item }} owner=postgres group=postgres mode=600
   with_items:
@@ -24,6 +21,9 @@
     - pg_hba.conf
   notify:
     - restart postgres
+
+- name: start and enable postgres
+  service: name=postgresql enabled=yes state=started
 
 - name: set postgres user password
   postgresql_user: name=postgres password={{ postgres_users.postgres }}
