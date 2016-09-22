@@ -8,3 +8,6 @@ ExecStart=/usr/local/bin/generate-public_html
 Nice=19
 IOSchedulingClass=best-effort
 IOSchedulingPriority=7
+
+[Install]
+WantedBy=multi-user.target
