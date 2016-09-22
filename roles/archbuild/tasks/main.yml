@@ -24,6 +24,12 @@
   notify:
     - daemon reload
 
+- name: install archbuild user units
+  copy: src={{ item }} dest=/etc/systemd/user/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - mkpkg@.timer
+    - mkpkg@.service
+
 - name: start and enable archbuild mounts
   service: name={{ item }} enabled=yes state=started
   with_items:
