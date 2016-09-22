@@ -47,21 +47,16 @@
   acl:
     name: '/var/lib/archbuilddest/{{ item[0] }}'
     state: present
-    entry: '{{ item[1] }}'
+    entry: '{{ item[1] }}{{ item[2] }}'
   with_nested:
     - [logdest, pkgdest, srcdest]
-    - ['user::rwx',
-       'group::r-x',
+    - ['', 'default:']
+    - ['mask::rwx',
+       'user::rwx',
        'group:dev:rwx',
        'group:tu:rwx',
-       'mask::rwx',
-       'other::r-x',
-       'default:user::rwx',
-       'default:group::r-x',
-       'default:group:dev:rwx',
-       'default:group:tu:rwx',
-       'default:mask::rwx',
-       'default:other::r-x']
+       'group::r-x',
+       'other::r-x']
 
 - name: set makepkg.conf vars
   lineinfile:
