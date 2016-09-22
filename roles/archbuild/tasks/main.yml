@@ -36,7 +36,7 @@
     path: '/var/lib/{{ "/".join(item) }}'
     owner: root
     group: root
-    mode: 0755
+    mode: 01777
   with_nested:
     - [archbuilddest]
     - [logdest, pkgdest, srcdest]
@@ -45,16 +45,15 @@
   acl:
     name: '/var/lib/archbuilddest/{{ item[0] }}'
     state: present
-    entry: '{{ item[1] }}{{ item[2] }}'
+    entry: 'default:{{ item[1] }}'
   with_nested:
     - [logdest, pkgdest, srcdest]
-    - ['', 'default:']
-    - ['mask::rwx',
-       'user::rwx',
+    - ['user::rwx',
+       'group::r-x',
        'group:dev:rwx',
        'group:tu:rwx',
-       'group::r-x',
-       'other::r-x']
+       'other::r-x',
+       'mask::rwx']
 
 - name: start and enable archbuild units
   service: name={{ item }} enabled=yes state=started
