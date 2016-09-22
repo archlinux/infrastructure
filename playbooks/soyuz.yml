@@ -8,7 +8,7 @@
     - { role: tools, tags: ['tools'] }
     - { role: sshd, tags: ['sshd'] }
     - { role: root_ssh, tags: ['root_ssh'] }
-    - { role: borg-client, backup_host: "borg@vostok.archlinux.org", backup_dir: "/backup/soyuz", postgres_backup_dir: None, tags: ['borg'] }
+    - { role: borg-client, backup_host: "borg@vostok.archlinux.org", backup_dir: "/backup/soyuz", postgres_backup_dir: "/var/lib/postgres/backup", tags: ['borg'] }
     - { role: archusers, tags: ['archusers'] }
     - { role: nginx, letsencrypt_validation_dir: "/var/lib/letsencrypt", tags: ["nginx"] }
     - { role: sudo, tags: ['sudo', 'archusers'] }
