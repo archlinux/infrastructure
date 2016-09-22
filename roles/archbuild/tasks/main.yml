@@ -39,7 +39,7 @@
     mode: 01777
   with_nested:
     - [archbuilddest]
-    - [logdest, pkgdest, srcdest]
+    - [srcdest]
 
 - name: set acl on archbuilddest
   acl:
@@ -47,7 +47,7 @@
     state: present
     entry: 'default:{{ item[1] }}'
   with_nested:
-    - [logdest, pkgdest, srcdest]
+    - [srcdest]
     - ['user::rwx',
        'group::r-x',
        'group:dev:rwx',
@@ -65,11 +65,9 @@
   lineinfile:
     dest: /etc/makepkg.conf
     insertafter: '^#?{{ item.key }}='
-    line: '{{ item.key }}={{ item.value }}'
+    line: '{{ item.key }}="{{ item.value }}"'
   with_dict:
     MAKEFLAGS: '-j{{ ansible_processor_vcpus + 1 }}'
-    LOGDEST: /var/lib/archbuilddest/logdest
-    PKGDEST: /var/lib/archbuilddest/pkgdest
     SRCDEST: /var/lib/archbuilddest/srcdest
 
 - name: install archbuild sudoers config
