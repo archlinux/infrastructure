@@ -1,8 +1,7 @@
 ---
-ipv4_address: "TBD"
-ipv6_address: "TBD/128"
-ipv4_gateway: "TBD"
+ipv4_address: "138.201.206.85"
+ipv6_address: "2a01:4f8:173:1654::1/128"
+ipv4_gateway: "138.201.206.65"
 ipv6_gateway: "fe80::1"
 filesystem: btrfs
 
-# TODO: fill in IP addresses
