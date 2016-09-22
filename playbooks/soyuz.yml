@@ -17,4 +17,4 @@
     - { role: syncrepo, mirror_domain: "mirror.pkgbuild.com", tags: ['syncrepo', 'nginx'] }
     - { role: sogrep, tags: ['sogrep'] }
     - { role: archbuild, tags: ['archbuild'] }
-    - { role: public_html, public_domain: "pkgbuild.com", tags: ['nginx'] }
+    - { role: public_html, public_domain: "pkgbuild.com", tags: ['public_html', 'nginx'] }
