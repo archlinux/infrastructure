@@ -24,13 +24,11 @@
   notify:
     - daemon reload
 
-- name: start and enable archbuild units
+- name: start and enable archbuild mounts
   service: name={{ item }} enabled=yes state=started
   with_items:
     - var-lib-archbuild.mount
     - var-lib-archbuilddest.mount
-    - clean-chroots.timer
-    - clean-dests.timer
 
 - name: create archbuilddest
   file:
@@ -57,6 +55,12 @@
        'group:tu:rwx',
        'group::r-x',
        'other::r-x']
+
+- name: start and enable archbuild units
+  service: name={{ item }} enabled=yes state=started
+  with_items:
+    - clean-chroots.timer
+    - clean-dests.timer
 
 - name: set makepkg.conf vars
   lineinfile:
