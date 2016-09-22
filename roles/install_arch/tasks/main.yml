@@ -61,7 +61,7 @@
 
 - name: download bootstrap image
   unarchive:
-    src: https://mirrors.kernel.org/archlinux/iso/latest/archlinux-bootstrap-2016.06.01-x86_64.tar.gz
+    src: https://mirrors.kernel.org/archlinux/iso/latest/archlinux-bootstrap-2016.09.03-x86_64.tar.gz
     dest: /tmp/
     copy: no
     creates: /tmp/root.x86_64
