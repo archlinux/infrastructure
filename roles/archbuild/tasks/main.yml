@@ -73,3 +73,6 @@
     LOGDEST: /var/lib/archbuilddest/logdest
     PKGDEST: /var/lib/archbuilddest/pkgdest
     SRCDEST: /var/lib/archbuilddest/srcdest
+
+- name: install archbuild sudoers config
+  copy: src=sudoers dest=/etc/sudoers.d/archbuild
