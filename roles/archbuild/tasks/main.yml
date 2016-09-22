@@ -1,7 +1,7 @@
 ---
 
 - name: install archbuild
-  pacman: name=devtools,zsh state=present
+  pacman: name=devtools,zsh,git,subversion,mercurial,bzr state=present
 
 - name: install archbuild scripts
   copy: src={{ item }} dest=/usr/local/bin/{{ item }} owner=root group=root mode=0755
