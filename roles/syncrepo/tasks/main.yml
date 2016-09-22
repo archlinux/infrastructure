@@ -1,5 +1,9 @@
 ---
 
+- stat: path="/etc/letsencrypt/live/{{ mirror_domain }}/fullchain.pem"
+  register: certfile
+  when: 'mirror_domain != ""'
+
 - name: install rsync
   pacman: name=rsync state=present
 
@@ -23,3 +27,9 @@
     line: 'Server = file:///srv/ftp/$repo/os/$arch'
     insertbefore: BOF
     create: true
+
+- name: set up nginx
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/syncrepo.conf owner=root group=root mode=0644
+  notify:
+    - restart nginx
+  when: 'mirror_domain != ""'

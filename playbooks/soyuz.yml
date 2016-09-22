@@ -14,7 +14,7 @@
     - { role: sudo, tags: ['sudo', 'archusers'] }
     - { role: postgres, tags: ['postgres'] }
     - { role: quassel, quassel_domain: "quassel.archlinux.org", tags: ['quassel'] }
-    - { role: syncrepo, tags: ['syncrepo'] }
+    - { role: syncrepo, mirror_domain: "mirror.pkgbuild.com", tags: ['syncrepo', 'nginx'] }
     - { role: sogrep, tags: ['sogrep'] }
     - { role: archbuild, tags: ['archbuild'] }
     - { role: public_html, public_domain: "pkgbuild.com", tags: ['nginx'] }
