@@ -1,18 +1,18 @@
 ---
 
 - name: set up nginx
-  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/sources.conf owner=root group=root mode=644
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/sources.conf owner=root group=root mode=0644
   notify:
     - restart nginx
 
 - name: make nginx log dir
-  file: path=/var/log/nginx/{{ sources_domain }} state=directory owner=http group=log mode=755
+  file: path=/var/log/nginx/{{ sources_domain }} state=directory owner=http group=log mode=0755
 
 - name: make sources dir
-  file: path={{ sources_dir }} state=directory owner=root group=root mode=755
+  file: path={{ sources_dir }} state=directory owner=root group=root mode=0755
 
 - name: make symlink to repo sources
-  file: path={{ sources_dir }}/sources src=/srv/ftp/sources state=link owner=root group=root mode=755
+  file: path={{ sources_dir }}/sources src=/srv/ftp/sources state=link owner=root group=root mode=0755
 
 - name: make symlink to other sources
-  file: path={{ sources_dir }}/other src=/srv/ftp/other state=link owner=root group=root mode=755
+  file: path={{ sources_dir }}/other src=/srv/ftp/other state=link owner=root group=root mode=0755

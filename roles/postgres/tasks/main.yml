@@ -15,7 +15,7 @@
     - restart postgres
 
 - name: configure postgres
-  template: src={{ item }}.j2 dest=/var/lib/postgres/data/{{ item }} owner=postgres group=postgres mode=600
+  template: src={{ item }}.j2 dest=/var/lib/postgres/data/{{ item }} owner=postgres group=postgres mode=0600
   with_items:
     - postgresql.conf
     - pg_hba.conf

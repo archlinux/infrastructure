@@ -16,7 +16,7 @@
   user: name=sourceballs shell=/sbin/nologin
 
 - name: set up sudoers.d for special users
-  copy: src=sudoers.d dest=/etc/sudoers.d/dbscripts owner=root group=root mode=600
+  copy: src=sudoers.d dest=/etc/sudoers.d/dbscripts owner=root group=root mode=0600
 
 - stat: path="/etc/letsencrypt/live/{{ repos_domain }}/fullchain.pem"
   register: certfile
@@ -24,14 +24,14 @@
     - nginx
 
 - name: set up nginx
-  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/dbscripts.conf owner=root group=root mode=644
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/dbscripts.conf owner=root group=root mode=0644
   notify:
     - restart nginx
   tags:
     - nginx
 
 - name: put dbscripts.htpasswd in place
-  copy: src=dbscripts.htpasswd dest=/etc/nginx/auth/dbscripts.htpasswd owner=root group=http mode=640
+  copy: src=dbscripts.htpasswd dest=/etc/nginx/auth/dbscripts.htpasswd owner=root group=http mode=0640
   tags:
     - nginx
 
@@ -82,7 +82,7 @@
     exclusive: yes
 
 - name: create staging directories in user homes
-  file: path=/home/{{item[0]}}/staging/{{item[1]}} state=directory owner={{item[0]}} group=users mode=755
+  file: path=/home/{{item[0]}}/staging/{{item[1]}} state=directory owner={{item[0]}} group=users mode=0755
   with_nested:
     - "{{arch_users}}"
     - ['core', 'extra', 'testing', 'staging', 'community', 'community-staging', 'community-testing',  'multilib', 'multilib-staging', 'multilib-testing']
@@ -154,7 +154,7 @@
   file: path=/packages src=/srv/repos/svn-packages/dbscripts state=link
 
 - name: put rsyncd.conf into tmpfiles
-  copy: src=rsyncd-tmpfiles.d dest=/etc/tmpfiles.d/rsyncd.conf owner=root group=root mode=644
+  copy: src=rsyncd-tmpfiles.d dest=/etc/tmpfiles.d/rsyncd.conf owner=root group=root mode=0644
   register: rsyncdtmpfiles
 
 - name: use tmpfiles.d/rsyncd.conf
@@ -162,22 +162,22 @@
   when: rsyncdtmpfiles.changed
 
 - name: create rsyncd-conf-genscripts
-  file: path=/etc/rsyncd-conf-genscripts state=directory owner=root group=root mode=700
+  file: path=/etc/rsyncd-conf-genscripts state=directory owner=root group=root mode=0700
 
 - name: install rsync.conf.proto
-  copy: src=rsyncd.conf.proto dest=/etc/rsyncd-conf-genscripts/rsyncd.conf.proto owner=root group=root mode=644
+  copy: src=rsyncd.conf.proto dest=/etc/rsyncd-conf-genscripts/rsyncd.conf.proto owner=root group=root mode=0644
 
 - name: install rsyncd.secrets
-  copy: src=rsyncd.secrets dest=/etc/rsyncd.secrets owner=root group=root mode=600
+  copy: src=rsyncd.secrets dest=/etc/rsyncd.secrets owner=root group=root mode=0600
 
 - name: configure gen_rsyncd.conf.pl
-  template: src=gen_rsyncd.conf.pl dest=/etc/rsyncd-conf-genscripts/gen_rsyncd.conf.pl owner=root group=root mode=700
+  template: src=gen_rsyncd.conf.pl dest=/etc/rsyncd-conf-genscripts/gen_rsyncd.conf.pl owner=root group=root mode=0700
 
 - name: generate mirror config
   command: /etc/rsyncd-conf-genscripts/gen_rsyncd.conf.pl
 
 - name: install svnlog
-  copy: src=svnlog dest=/usr/local/bin/svnlog owner=root group=root mode=755
+  copy: src=svnlog dest=/usr/local/bin/svnlog owner=root group=root mode=0755
 
 - name: add arch-svntogit user
   user: name=svntogit shell=/sbin/nologin home=/srv/svntogit generate_ssh_key=yes ssh_key_bits=4096
@@ -193,7 +193,7 @@
   become_user: svntogit
 
 - name: template arch-svntogit
-  copy: src=update-repos.sh dest=/srv/svntogit/update-repos.sh owner=root group=root mode=755
+  copy: src=update-repos.sh dest=/srv/svntogit/update-repos.sh owner=root group=root mode=0755
 
 - name: create svntogit repos subdir
   file: path="/srv/svntogit/repos" state=directory owner=svntogit group=svntogit mode=0775
@@ -236,7 +236,7 @@
   file: path="/srv/svntogit" state=directory owner=svntogit group=svntogit mode=0775
 
 - name: install repo helpers
-  copy: src={{ item }} dest=/usr/local/bin/{{ item }} owner=root group=root mode=755
+  copy: src={{ item }} dest=/usr/local/bin/{{ item }} owner=root group=root mode=0755
   with_items:
     - lsrepo
     - checklib32
@@ -251,10 +251,10 @@
   service: name=svnserve enabled=yes state=started
 
 - name: set up update-abs
-  template: src=update-abs.sh.j2 dest=/usr/local/bin/update-abs.sh owner=root group=root mode=755
+  template: src=update-abs.sh.j2 dest=/usr/local/bin/update-abs.sh owner=root group=root mode=0755
 
 - name: install systemd timers
-  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=644
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
     - update-abs.timer
     - update-abs.service

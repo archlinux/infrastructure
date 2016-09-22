@@ -16,13 +16,13 @@
   ignore_errors: True # This can sometimes fail if a backup is in progress :/
 
 - name: install scripts
-  template: src={{item}}.j2 dest=/usr/local/bin/{{item}} owner=root group=root mode=755
+  template: src={{item}}.j2 dest=/usr/local/bin/{{item}} owner=root group=root mode=0755
   with_items:
     - borg-backup.sh
     - borg
 
 - name: install postgres backup script
-  template: src=backup-postgres.sh.j2 dest=/usr/local/bin/backup-postgres.sh owner=root group=root mode=755
+  template: src=backup-postgres.sh.j2 dest=/usr/local/bin/backup-postgres.sh owner=root group=root mode=0755
   when: postgres_backup_dir != None
 
 - name: check whether postgres user exists
@@ -35,7 +35,7 @@
   when: check_postgres_user|succeeded and postgres_backup_dir != None
 
 - name: install systemd timers for backup
-  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=644
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
     - borg-backup.timer
     - borg-backup.service

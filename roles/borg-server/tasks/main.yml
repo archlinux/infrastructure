@@ -7,10 +7,10 @@
   user: home="{{ backup_dir }}" name=borg
 
 - name: create borg user home
-  file: path="{{ backup_dir }}" state=directory owner=borg group=borg mode=700
+  file: path="{{ backup_dir }}" state=directory owner=borg group=borg mode=0700
 
 - name: create the root backup directory at {{ backup_dir }}
-  file: path="{{ backup_dir }}/{{ item }}" state=directory owner=borg group=borg mode=700
+  file: path="{{ backup_dir }}/{{ item }}" state=directory owner=borg group=borg mode=0700
   with_items: "{{ backup_clients }}"
 
 - name: fetch ssh keys

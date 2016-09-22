@@ -4,14 +4,14 @@
   pacman: name=opendkim state=present
 
 - name: install opendkim.conf
-  template: src=opendkim.conf.j2 dest=/etc/opendkim/opendkim.conf owner=root group=root mode=644
+  template: src=opendkim.conf.j2 dest=/etc/opendkim/opendkim.conf owner=root group=root mode=0644
   notify:
     - restart opendkim
 
-- file: path="/var/spool/opendkim/" state=directory owner=opendkim group=postfix mode=750
+- file: path="/var/spool/opendkim/" state=directory owner=opendkim group=postfix mode=0750
 
 - name: install domains config
-  template: src=domains.j2 dest=/etc/opendkim/domains owner=root group=root mode=644
+  template: src=domains.j2 dest=/etc/opendkim/domains owner=root group=root mode=0644
   notify:
     - restart opendkim
 

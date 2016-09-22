@@ -37,7 +37,7 @@
     - daemon reload
 
 - name: configure archweb
-  template: src=local_settings.py.j2 dest=/srv/http/archweb/local_settings.py owner=archweb group=archweb mode=660
+  template: src=local_settings.py.j2 dest=/srv/http/archweb/local_settings.py owner=archweb group=archweb mode=0660
 
 - name: start and enable archweb services
   service: name="{{ item }}" enabled=yes state=started
