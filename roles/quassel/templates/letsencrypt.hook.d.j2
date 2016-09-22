@@ -2,9 +2,13 @@
 
 test "$1" = renew || exit 0
 
+quassel_domain="{{ quassel_domain }}"
+
 for domain in $RENEWED_DOMAINS; do
   case "$domain" in
-    {{ quassel_domain }})
+    $quassel_domain)
+      cat /etc/letsencrypt/live/$quassel_domain/{privkey,fullchain}.pem |
+        install -o quassel -g quassel -m 400 /dev/stdin /var/lib/quassel/quasselCert.pem
       systemctl restart quassel
       ;;
   esac
