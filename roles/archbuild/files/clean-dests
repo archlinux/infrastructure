@@ -3,6 +3,4 @@ setopt extendedglob nomatch errreturn
 
 cd /var/lib/archbuilddest
 
-rm -rf logdest/*(Nm+7)
-rm -rf pkgdest/*(Nm+7)
-rm -rf srcdest/*(Nm+90)
+rm -rf srcdest/*(Na+90)
