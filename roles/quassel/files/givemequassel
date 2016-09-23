@@ -1,11 +1,7 @@
 #!/bin/bash -e
 
 if [[ `/usr/bin/whoami` != quassel ]]; then
-  if [[ -n $BREAK_RECURSION ]]; then
-    echo >&2 "Couldn't become quassel."
-    exit 1
-  fi
-  exec /usr/bin/sudo -u quassel -- env BREAK_RECURSION=1 "$0"
+  exec /usr/bin/sudo -u quassel -- "$0"
 fi
 
 shopt -s extglob
