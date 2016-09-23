@@ -40,17 +40,16 @@ if [[ $pw != $REPLY ]]; then
   echo >&2 "Passwords don't match."
   exit 1
 fi
-sha1=(`printf %s "$pw" | sha1sum`)
 
-if psql -c "INSERT INTO quasseluser (username, password) VALUES ('$SUDO_USER', '${sha1[0]}')" &>/dev/null; then
-  echo >&2 "Added user '$SUDO_USER'."
-  exit 0
-fi
-
-if psql -c "UPDATE quasseluser SET password = '${sha1[0]}' WHERE username = '$SUDO_USER'" &>/dev/null; then
+if printf '%s\n' $pw $pw | quasselcore --configdir=/var/lib/quassel --change-userpass $SUDO_USER &>/dev/null; then
   echo >&2 "Updated password for user '$SUDO_USER'."
   exit 0
 fi
 
-echo >&2 "SQL error."
+if printf '%s\n' $SUDO_USER $pw $pw | quasselcore --configdir=/var/lib/quassel --add-user &>/dev/null; then
+  echo >&2 "Added user '$SUDO_USER'."
+  exit 0
+fi
+
+echo >&2 "Quassel error."
 exit 1

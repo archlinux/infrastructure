@@ -4,9 +4,8 @@ Requisite=postgresql.service
 After=postgresql.service
 
 [Service]
-User=quassel
-Group=quassel
+User=postgres
 Type=oneshot
-ExecStart=/usr/bin/psql -c "DELETE FROM backlog WHERE time < NOW() - INTERVAL '1 months';"
-ExecStart=/usr/bin/psql -c "CLUSTER backlog USING backlog_bufferid_idx;"
-ExecStart=/usr/bin/psql -c "VACUUM FULL ANALYZE backlog;"
+ExecStart=/usr/bin/psql -d quassel -c "DELETE FROM backlog WHERE time < NOW() - INTERVAL '1 months';"
+ExecStart=/usr/bin/psql -d quassel -c "CLUSTER backlog USING backlog_bufferid_idx;"
+ExecStart=/usr/bin/psql -d quassel -c "VACUUM FULL ANALYZE backlog;"
