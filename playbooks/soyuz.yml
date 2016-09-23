@@ -18,5 +18,6 @@
     - { role: quassel, quassel_domain: "quassel.archlinux.org", tags: ['quassel'] }
     - { role: syncrepo, mirror_domain: "mirror.pkgbuild.com", tags: ['syncrepo', 'nginx'] }
     - { role: sogrep, tags: ['sogrep'] }
+    - { role: postfix, postfix_server: false, tags: ["mail", "postfix"] }
     - { role: archbuild, tags: ['archbuild'] }
     - { role: public_html, public_domain: "pkgbuild.com", tags: ['public_html', 'nginx'] }
