@@ -18,8 +18,14 @@
   notify:
     - daemon reload
 
+- name: install rsyncd config
+  copy: src=rsyncd.conf dest=/etc/rsyncd.conf owner=root group=root mode=0644
+
 - name: start and enable syncrepo units
-  service: name=syncrepo.timer enabled=yes state=started
+  service: name={{ item }} enabled=yes state=started
+  with_items:
+    - syncrepo.timer
+    - rsyncd.socket
 
 - name: install local mirror
   lineinfile:
