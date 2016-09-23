@@ -150,7 +150,7 @@ check_svn() {
 
 build() {
   [[ $chroot == multilib* ]] && 1=
-  ionice -c 3 chrt -b 0 sudo ${chroot}${1:+-$1}-build -- ${*:2}
+  sudo ${chroot}${1:+-$1}-build -- ${*:2}
 }
 
 # Parameters: arch
