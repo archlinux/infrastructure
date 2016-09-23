@@ -28,7 +28,7 @@ function {
   local pkgname epoch pkgver pkgrel arch
   for pkg in *.pkg.tar.*z(N); do
     parse $pkg
-    otherpkg=( /srv/repo/pool/*/${pkgname}-[^-]##-[^-]##-${arch}.pkg.tar.*z(Nom[1]) )
+    otherpkg=( /srv/ftp/pool/*/${pkgname}-[^-]##-[^-]##-${arch}.pkg.tar.*z(Nom[1]) )
     if [[ -n $otherpkg ]]; then
       sdiff -sw $COLUMNS <(tartf Repo $otherpkg) <(tartf Our $pkg)
       echo

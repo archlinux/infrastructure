@@ -1,6 +1,6 @@
 #!/bin/bash
 
-target="/srv/repo"
+target="/srv/ftp"
 tmp=$(mktemp -d)
 arches=('i686' 'x86_64')
 lock='/tmp/links.lck'

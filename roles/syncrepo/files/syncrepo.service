@@ -1,6 +1,6 @@
 [Unit]
 Description=Synchronize package repository mirror
-RequiresMountsFor=/srv/repo
+RequiresMountsFor=/srv/ftp
 
 [Service]
 Type=oneshot
