@@ -27,6 +27,13 @@
     - syncrepo.timer
     - rsyncd.socket
 
+- name: set local mirror as cachedir
+  lineinfile:
+    dest: /etc/pacman.conf
+    insertafter: '^#CacheDir'
+    regexp: '^CacheDir'
+    line: 'CacheDir = /var/cache/pacman/pkg/ /srv/ftp/pool/packages/ /srv/ftp/pool/community/'
+
 - name: install local mirror
   lineinfile:
     dest: /etc/pacman.d/mirrorlist
