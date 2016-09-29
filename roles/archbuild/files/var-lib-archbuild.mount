@@ -5,7 +5,7 @@ Description=Build chroots
 What=tmpfs
 Where=/var/lib/archbuild
 Type=tmpfs
-Options=size=50G,mode=0755,strictatime
+Options=size=120%,mode=0755,strictatime
 
 [Install]
 WantedBy=local-fs.target
