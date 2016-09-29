@@ -1,7 +1,7 @@
 ---
 
 - name: install archbuild
-  pacman: name=devtools,zsh,git,subversion,mercurial,bzr,xdelta3 state=present
+  pacman: name=systemd-swap,devtools,zsh,git,subversion,mercurial,bzr,xdelta3 state=present
 
 - name: install archbuild scripts
   copy: src={{ item }} dest=/usr/local/bin/{{ item }} owner=root group=root mode=0755
@@ -30,9 +30,13 @@
     - mkpkg@.timer
     - mkpkg@.service
 
+- name: install systemd-swap config
+  copy: src=systemd-swap.conf dest=/etc/systemd-swap.conf owner=root group=root mode=0644
+
 - name: start and enable archbuild mounts
   service: name={{ item }} enabled=yes state=started
   with_items:
+    - systemd-swap.service
     - var-lib-archbuild.mount
     - var-lib-archbuilddest.mount
 
