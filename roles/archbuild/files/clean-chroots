@@ -5,7 +5,7 @@ integer ret=0
 
 cd /var/lib/archbuild
 
-chroots=( */^root(/Nmh+12) )
+chroots=( */^root(/Nmh+2) )
 (( ${#chroots} )) || exit 0
 
 df -HT .
