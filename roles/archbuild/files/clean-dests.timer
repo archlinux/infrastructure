@@ -1,9 +1,9 @@
 [Unit]
-Description=Hourly dest cleanup
+Description=Daily dest cleanup
 
 [Timer]
-OnCalendar=hourly
-AccuracySec=1h
+OnCalendar=daily
+AccuracySec=24h
 Persistent=true
 
 [Install]
