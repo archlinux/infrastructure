@@ -2,7 +2,7 @@
 Description=Nightly build of %I
 
 [Timer]
-OnCalendar=22:00
+OnCalendar=00:00
 RandomizedDelaySec=8h
 
 [Install]
