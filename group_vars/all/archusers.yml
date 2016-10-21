@@ -318,6 +318,7 @@ arch_users:
     ssh_key: ronald.pub
     groups:
       - dev
+      - tu
   schiv:
     name: "Ray Rashif"
     ssh_key: schiv.pub
