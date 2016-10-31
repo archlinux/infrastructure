@@ -154,12 +154,6 @@ arch_users:
       - dev
       - multilib
       - tu
-  dwallace:
-    name: "Daniel Wallace"
-    ssh_key: dwallace.pub
-    groups:
-      - tu
-      - multilib
   eric:
     name: "Eric Bélanger"
     ssh_key: eric.pub
