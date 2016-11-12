@@ -196,6 +196,11 @@ arch_users:
     groups:
       - dev
       - multilib
+  grazzolini:
+    name: "Giancarlo Razzolini"
+    ssh_key: grazzolini.pub
+    groups:
+      - tu
   guillaume:
     name: "Guillaume Alaux"
     ssh_key: guillaume.pub
