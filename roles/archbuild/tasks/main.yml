@@ -32,7 +32,7 @@
     - mkpkg@.service
 
 - name: install systemd-swap config
-  copy: src=systemd-swap.conf dest=/etc/systemd-swap.conf owner=root group=root mode=0644
+  copy: src=swap.conf dest=/etc/systemd/swap.conf owner=root group=root mode=0644
 
 - name: start and enable archbuild mounts
   service: name={{ item }} enabled=yes state=started
