@@ -1,7 +1,21 @@
 ---
 
 - name: install uwsgi
-  pacman: name=uwsgi,uwsgi-plugin-python2 state=present
+  pacman: name=uwsgi state=present
 
-- name: create archweb.ini (uwsgi)
-  template: src=archweb.j2 dest=/etc/uwsgi/archweb.ini
+- name: make uwsgi user
+  user: name=uwsgi shell=/bin/false home=/ createhome=no
+
+- name: configure uwsgi
+  template: src=emperor.ini.j2 dest=/etc/uwsgi/emperor.ini owner=root group=root mode=0644
+  notify:
+    - restart emperor.uwsgi
+
+- name: vassals directory
+  file: state=directory path=/etc/uwsgi/vassals owner=root group=root mode=0755
+
+- name: create default uwsgi log directory
+  file: state=directory path=/var/log/uwsgi owner=uwsgi group=uwsgi mode=0770
+
+- name: enable emperor.uwsgi.service
+  service: name=emperor.uwsgi enabled=yes
