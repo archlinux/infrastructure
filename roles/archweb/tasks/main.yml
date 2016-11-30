@@ -1,10 +1,10 @@
 ---
 
 - name: install git
-  pacman: name=git,python2,python2-virtualenv state=present
+  pacman: name=git,memcached,python2,python2-virtualenv,uwsgi-plugin-python2 state=present
 
 - name: make archweb user
-  user: name=archweb shell=/bin/false home="{{ archweb_home }}" createhome=no
+  user: name=archweb shell=/bin/false home="{{ archweb_home }}" createhome=no groups=uwsgi
 
 - name: fix home permissions
   file: state=directory owner=archweb group=archweb path="{{ archweb_home }}"
@@ -35,12 +35,17 @@
     - archweb-mirrorcheck.timer
   notify:
     - daemon reload
+  when: services
 
 - name: configure archweb
-  template: src=local_settings.py.j2 dest=/srv/http/archweb/local_settings.py owner=archweb group=archweb mode=660
+  template: src=local_settings.py.j2 dest=/srv/http/archweb/local_settings.py owner=archweb group=archweb mode=0660
+
+- name: deploy archweb
+  template: src=archweb.ini.j2 dest=/etc/uwsgi/vassals/archweb.ini owner=archweb group=http mode=0644
 
 - name: start and enable archweb services
   service: name="{{ item }}" enabled=yes state=started
   with_items:
     - archweb-reporead.service
     - archweb-mirrorcheck.timer
+  when: services

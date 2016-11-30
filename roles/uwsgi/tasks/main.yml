@@ -15,7 +15,7 @@
   file: state=directory path=/etc/uwsgi/vassals owner=root group=root mode=0755
 
 - name: create default uwsgi log directory
-  file: state=directory path=/var/log/uwsgi owner=uwsgi group=uwsgi mode=0770
+  file: state=directory path=/var/log/uwsgi owner=uwsgi group=http mode=0770
 
 - name: enable emperor.uwsgi.service
   service: name=emperor.uwsgi enabled=yes

@@ -1,0 +1,15 @@
+[uwsgi]
+plugins=python2
+chdir=/srv/http/archweb
+wsgi-file=archweb.wsgi
+socket=/run/uwsgi/archweb.sock
+chmod-socket=664
+virtualenv=/srv/http/archweb/env
+processes=6
+threads=2
+master=true
+uid=archweb
+gid=http
+thunder-lock = true
+daemonize=/var/log/uwsgi/archweb.log
+stats=/run/uwsgi/archweb-stats.sock
