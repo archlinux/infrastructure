@@ -1,0 +1,27 @@
+---
+- name: create phpinfo user
+  user: name=php-phpinfo home=/ shell=/bin/false system=yes createhome=no
+
+- name: create phpinfo webroot
+  file: state=directory dest=/srv/http/phpinfo owner=root group=root mode=0755
+
+- name: create phpinfo page
+  copy: >
+    content="<?php phpinfo(); ?>"
+    dest=/srv/http/phpinfo/index.php
+    owner=root group=root mode=0644
+
+- name: configure nginx
+  template: >
+    src=nginx.conf.j2 dest=/etc/nginx/nginx.d/phpinfo.conf
+    owner=root group=root mode=0644
+  notify: restart nginx
+
+- name: configure php-fpm
+  template: >
+    src=php-fpm.conf.j2 dest=/etc/php/php-fpm.d/phpinfo.conf
+    owner=root group=root mode=0644
+  notify: reload php-fpm@phpinfo
+
+- name: start and enable systemd socket
+  service: name=php-fpm@phpinfo.socket state=running enabled=true

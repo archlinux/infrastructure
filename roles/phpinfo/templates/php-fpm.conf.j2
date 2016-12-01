@@ -1,0 +1,18 @@
+[global]
+error_log = syslog
+daemonize = no
+
+[phpinfo]
+listen = /run/php-fpm/phpinfo.socket
+listen.owner = http
+listen.group = http
+listen.mode = 0660
+
+pm = dynamic
+pm.max_children = 3
+pm.start_servers = 1
+pm.min_spare_servers = 1
+pm.max_spare_servers = 2
+pm.max_requests = 2000
+
+php_admin_value[open_basedir] = /srv/http/phpinfo

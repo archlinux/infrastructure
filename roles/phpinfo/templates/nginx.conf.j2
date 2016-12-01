@@ -1,0 +1,12 @@
+server {
+    server_name phpinfo;
+    root /srv/http/phpinfo;
+    index index.php;
+
+    location ~ ^/[^/]+\.php$ {
+        fastcgi_pass   unix:/run/php-fpm/phpinfo.socket;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+}

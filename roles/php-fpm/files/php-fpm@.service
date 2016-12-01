@@ -1,0 +1,26 @@
+[Unit]
+Description=PHP-FPM service for %i
+After=syslog.target network.target
+After=mysqld.service postfix.service
+Requires=php-fpm@.socket
+
+[Service]
+Type=notify
+
+PrivateTmp=true
+NoNewPrivileges=true
+;PrivateNetwork=true
+PrivateDevices=true
+
+ProtectHome=true
+ProtectSystem=full
+InaccessibleDirectories=/srv/vmail /var/lib/mysql
+
+User=php-%i
+Group=php-%i
+Environment="FPM_SOCKETS=/run/php-fpm/%i.socket=3"
+ExecStart=/usr/bin/php-fpm --nodaemonize --fpm-config /etc/php/php-fpm.d/%i.conf
+ExecReload=/bin/kill -USR2 $MAINPID
+
+[Install]
+WantedBy=multi-user.target
