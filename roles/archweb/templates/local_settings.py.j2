@@ -37,14 +37,12 @@ SESSION_COOKIE_SECURE = True
 
 ## static files URL
 STATIC_URL = '/static/'
-STATIC_URL = 'https://d11xdyzr0div58.cloudfront.net/static/'
 
 ## location for saving dev pictures
-MEDIA_ROOT = '/srv/http/vhosts/archlinux.org/img'
+MEDIA_ROOT = '{{ archweb_dir }}/media/img'
 
 ## web url for serving image files
 MEDIA_URL = '/img/'
-MEDIA_URL = 'https://d11xdyzr0div58.cloudfront.net/img/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = {{ archweb_secret_key }}
@@ -53,6 +51,6 @@ SECRET_KEY = {{ archweb_secret_key }}
 ALLOWED_HOSTS = ['{{ archweb_domain }}']
 
 ## CDN settings
-CDN_ENABLED = True
+CDN_ENABLED = False
 
 # vim: set ts=4 sw=4 et:

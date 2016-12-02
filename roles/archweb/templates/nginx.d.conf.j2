@@ -29,6 +29,14 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ archweb_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ archweb_domain }}/chain.pem;
 
+    location /static {
+        alias {{ archweb_dir }}/collected_static;
+    }
+
+    location /img {
+        alias {{ archweb_dir }}/media/img;
+    }
+
     location / {
         include uwsgi_params;
         uwsgi_pass archweb;
