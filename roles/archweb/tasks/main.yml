@@ -4,28 +4,36 @@
   pacman: name=git,memcached,python2,python2-virtualenv,uwsgi-plugin-python2 state=present
 
 - name: make archweb user
-  user: name=archweb shell=/bin/false home="{{ archweb_home }}" createhome=no groups=uwsgi
+  user: name=archweb shell=/bin/false home="{{ archweb_dir }}" createhome=no groups=uwsgi
 
 - name: fix home permissions
-  file: state=directory owner=archweb group=archweb path="{{ archweb_home }}"
+  file: state=directory owner=archweb group=archweb path="{{ archweb_dir }}"
+
+- name: set up nginx
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/archweb.conf owner=root group=root mode=644
+  notify:
+    - restart nginx
+
+- name: make nginx log dir
+  file: path=/var/log/nginx/{{ archweb_domain }} state=directory owner=http group=log mode=755
 
 - name: clone archweb repo
-  git: repo=git://git.archlinux.org/archweb.git dest="{{ archweb_home }}"
+  git: repo=git://git.archlinux.org/archweb.git dest="{{ archweb_dir }}"
   become: true
   become_user: archweb
 
 - name: make virtualenv
-  command: virtualenv2 "{{ archweb_home }}"/env creates="{{ archweb_home }}/env/bin/python"
+  command: virtualenv2 "{{ archweb_dir }}"/env creates="{{ archweb_dir }}/env/bin/python"
   become: true
   become_user: archweb
 
 - name: install stuff into virtualenv
-  pip: requirements="{{ archweb_home }}/requirements_prod.txt" virtualenv="{{ archweb_home }}/env"
+  pip: requirements="{{ archweb_dir }}/requirements_prod.txt" virtualenv="{{ archweb_dir }}/env"
   become: true
   become_user: archweb
 
 - name: fix home permissions
-  file: state=directory owner=archweb group=archweb path="{{ archweb_home }}"
+  file: state=directory owner=archweb group=archweb path="{{ archweb_dir }}"
 
 - name: copy archweb services
   copy: src="{{ item }}" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644

@@ -1,28 +1,58 @@
 # Django settings for archlinux project.
 
+## Debug settings
+DEBUG = False
+TEMPLATE_DEBUG = False
 
-## Database settings
+## Notification admins
+ADMINS = (
+    ('Archweb Bugs', 'dan@archlinux.org'),
+)
+
+SERVER_EMAIL = 'archweb@archlinux.org'
+
 DATABASES = {
     'default': {
         'ENGINE'  : 'django.db.backends.postgresql_psycopg2',
+        'PORT'    : 5432,
         'NAME'    : 'archweb',
-        'USER'    : 'archweb_update',
-        'PASSWORD': '{{ postgres_users.archweb_update }}',
-        'HOST'    : 'gudrun.archlinux.org',
-        'OPTIONS' : {
-            'autocommit': True,
-            'application_name': 'archweb',
-            'sslmode': 'require',
-        }
+        'USER'    : 'archweb',
+        'PASSWORD': '{{ archweb_db_password }}',
+        'OPTIONS' : {'autocommit': True, 'application_name': 'archweb'},
+    },
+}
+
+## Define cache settings
+CACHES = {
+    'default': {
+        'BACKEND' : 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
     }
 }
 
-## Make this unique, and don't share it with anybody.
-SECRET_KEY = '{{ archweb_secret_key }}'
+## Use secure session cookies? Make this true if you want all
+## logged-in actions to take place over HTTPS only. If developing
+## locally, you will want to use False.
+SESSION_COOKIE_SECURE = True
 
-## Cache settings
-CACHE_BACKEND = 'memcached://gudrun.archlinux.org:11211'
-CACHE_MIDDLEWARE_SECONDS = 300
-CACHE_MIDDLEWARE_KEY_PREFIX = 'arch'
+## static files URL
+STATIC_URL = '/static/'
+STATIC_URL = 'https://d11xdyzr0div58.cloudfront.net/static/'
+
+## location for saving dev pictures
+MEDIA_ROOT = '/srv/http/vhosts/archlinux.org/img'
+
+## web url for serving image files
+MEDIA_URL = '/img/'
+MEDIA_URL = 'https://d11xdyzr0div58.cloudfront.net/img/'
+
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = {{ archweb_secret_key }}
+
+# Hostnames we allow this site to be served under
+ALLOWED_HOSTS = ['{{ archweb_domain }}']
+
+## CDN settings
+CDN_ENABLED = True
 
 # vim: set ts=4 sw=4 et:
