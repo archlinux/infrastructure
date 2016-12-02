@@ -1,0 +1,70 @@
+#!/bin/zsh
+
+setopt extended_glob
+
+while getopts q option; do
+  case $option in
+    q) integer quiet=1 ;;
+    \?) return 1 ;;
+  esac
+done
+shift $((OPTIND - 1))
+
+case $1 in
+  staging)
+    lib32repos+=(multilib-staging)
+    repos+=(staging community-staging)
+    ;&
+  testing)
+    lib32repo+=(multilib-testing)
+    repos+=(testing community-testing)
+    ;&
+  "")
+    lib32repos+=(multilib)
+    repos+=(extra core community)
+    ;;
+  *)
+    echo "Invalid repo!"
+    exit 1
+    ;;
+esac
+
+cd /srv/ftp
+
+typeset -A checked
+output=""
+
+for lib32repo in $lib32repos; do
+  for lib32file in $lib32repo/os/x86_64/lib32-*(N); do
+    name=${${${lib32file:t}#lib32-}%-*-*-x86_64.pkg.tar.*}
+    lib32version=${${${lib32file:t}#lib32-$name-}%-x86_64.pkg.tar.*}
+
+    if [[ -z $checked[$name] ]] then
+      version=""
+
+      for repo in $repos; do
+        for file in $repo/os/x86_64/$name-[^-]##-[^-]##-x86_64.pkg.tar.*(N); do
+          version=${${${file:t}#$name-}%-x86_64.pkg.tar.*}
+          if [[ $lib32file -ot $file ]] then
+            if (( quiet )) then
+              echo "lib32-$name"
+            else
+              output+="$lib32repo lib32-$name $lib32version $(stat --printf=%y $lib32file)\n"
+              output+="$repo $name $version $(stat --printf=%y $file)\n"
+              output+=" \n"
+            fi
+          fi
+          break 2
+        done
+      done
+
+      if [[ -z $version ]] then
+        echo "Warning: couldn't find a 64-bit package for lib32-$name."
+      fi
+
+      checked[$name]=1
+    fi
+  done
+done
+
+[[ -n $output ]] && echo $output | column -t

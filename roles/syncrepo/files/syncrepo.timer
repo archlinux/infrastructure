@@ -1,0 +1,10 @@
+[Unit]
+Description=Minutely repository sync
+
+[Timer]
+OnCalendar=minutely
+AccuracySec=1m
+Persistent=true
+
+[Install]
+WantedBy=timers.target

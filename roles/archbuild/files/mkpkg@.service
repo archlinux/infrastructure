@@ -1,0 +1,8 @@
+[Unit]
+Description=Build of %I
+RequiresMountsFor=/var/lib/archbuild
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/mkpkg %I
+CPUSchedulingPolicy=batch

@@ -1,0 +1,38 @@
+---
+
+# make and gcc are required for sa-compile
+- name: install spampd and dependencies
+  pacman: name=spampd,make,gcc state=present
+
+- name: install sa-update.sh
+  copy: src=sa-update.sh dest=/usr/local/bin/sa-update.sh owner=root group=root mode=0755
+
+- name: install support files
+  copy: src={{ item }} dest=/etc/mail/spamassassin/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - update-gpgkeys
+    - update-channels
+    - yerp.gpg.key
+    - zmi.gpg.key
+
+- name: install systemd timers
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - sa-update.timer
+    - sa-update.service
+  notify:
+    - systemd daemon reload
+
+- name: add gpg keys to SA keyring
+  command: /usr/bin/vendor_perl/sa-update --import "/etc/mail/spamassassin/{{item}}"
+  with_items:
+    - yerp.gpg.key
+    - zmi.gpg.key
+
+- name: activate systemd timers
+  service: name={{ item }} enabled=yes state=started
+  with_items:
+    sa-update.timer
+
+- name: start spampd
+  service: name=spampd enabled=yes state=started

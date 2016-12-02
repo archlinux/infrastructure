@@ -1,5 +1,5 @@
 - name: install sysadmin tools
-  pacman: name=lsof,psmisc,htop,nethogs,iftop,rsync,tmux,mtr,sshfs,dfc,tree,dstat,dmidecode,net-tools,ncdu,nmap,sysstat,iptraf-ng state=present
+  pacman: name=lsof,psmisc,htop,nethogs,iftop,rsync,tmux,mtr,sshfs,dfc,tree,dstat,dmidecode,net-tools,ncdu,nmap,sysstat,iptraf-ng,vnstat,screen state=present
 
 - name: install misc utils
-  pacman: name=zsh,colordiff,multitail,httpie,the_silver_searcher,cloc,ipcalc,calc,wget,neovim,python2-neovim,vim state=present
+  pacman: name=zsh,colordiff,multitail,httpie,the_silver_searcher,cloc,ipcalc,calc,wget,neovim,python2-neovim,vim,parallel state=present

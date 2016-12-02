@@ -154,12 +154,6 @@ arch_users:
       - dev
       - multilib
       - tu
-  dwallace:
-    name: "Daniel Wallace"
-    ssh_key: dwallace.pub
-    groups:
-      - tu
-      - multilib
   eric:
     name: "Eric Bélanger"
     ssh_key: eric.pub
@@ -202,6 +196,11 @@ arch_users:
     groups:
       - dev
       - multilib
+  grazzolini:
+    name: "Giancarlo Razzolini"
+    ssh_key: grazzolini.pub
+    groups:
+      - tu
   guillaume:
     name: "Guillaume Alaux"
     ssh_key: guillaume.pub
@@ -318,6 +317,7 @@ arch_users:
     ssh_key: ronald.pub
     groups:
       - dev
+      - tu
   schiv:
     name: "Ray Rashif"
     ssh_key: schiv.pub

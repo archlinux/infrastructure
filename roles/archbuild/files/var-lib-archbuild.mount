@@ -1,0 +1,11 @@
+[Unit]
+Description=Build chroots
+
+[Mount]
+What=tmpfs
+Where=/var/lib/archbuild
+Type=tmpfs
+Options=size=120%,mode=0755,strictatime
+
+[Install]
+WantedBy=local-fs.target

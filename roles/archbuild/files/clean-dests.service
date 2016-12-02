@@ -1,0 +1,10 @@
+[Unit]
+Description=Clean up old dests
+RequiresMountsFor=/var/lib/archbuilddest
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/clean-dests
+Nice=19
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7

@@ -1,0 +1,89 @@
+#!/bin/bash -e
+
+target=/srv/public_html/index.html
+
+cat >${target}.tmp <<END
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>{{ ansible_fqdn }}</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="/static/archweb.css" media="screen, projection" />
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+  <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico" />
+</head>
+<body>
+  <div id="archnavbar"><!-- Arch Linux global navigation bar -->
+    <div id="archnavbarlogo">
+      <p><a href="http://www.archlinux.org/" title="Arch news, packages, projects and more"></a></p>
+    </div>
+    <div id="archnavbarmenu">
+      <ul id="archnavbarlist">
+        <li id="anb-home"><a href="http://www.archlinux.org/" title="Arch news, packages, projects and more">Home</a></li>
+        <li id="anb-packages"><a href="http://www.archlinux.org/packages/" title="Arch Package Database">Packages</a></li>
+        <li id="anb-forums"><a href="https://bbs.archlinux.org/" title="Community forums">Forums</a></li>
+        <li id="anb-wiki"><a href="https://wiki.archlinux.org/" title="Community documentation">Wiki</a></li>
+        <li id="anb-bugs"><a href="https://bugs.archlinux.org/" title="Report and follow bugs">Bugs</a></li>
+        <li id="anb-aur"><a href="https://aur.archlinux.org/" title="Arch Linux User Repository">AUR</a></li>
+        <li id="anb-download"><a href="http://www.archlinux.org/download/" title="Get Arch Linux">Download</a></li>
+      </ul>
+    </div>
+  </div><!-- #archnavbar -->
+  <div id="content">
+    <div id="archdev-navbar">
+    </div>
+    <div id="content-left-wrapper">
+      <div id="content-left">
+        <div id="intro" class="box">
+          <h2>Build server</h2>
+          <p>This is an {{ ansible_processor[1] }} server with {{ ansible_memtotal_mb }} MB of memory.</p>
+          <p>
+            This machine is meant for building packages for Arch Linux distribution.
+            The server is paid from donations and is available to all Trusted Users and Developers.
+          </p>
+          <p>It runs Arch Linux and packages are built in clean chroots using devtools.</p>
+        </div><!-- #intro -->
+        <div id="news">
+          <!-- <h3>Some text1</h3> #optional for news-->
+        </div> <!-- #news -->
+      </div><!-- #content_left -->
+    </div>
+    <div id="content-right">
+      <div id="pkg-updates" class="widget box">
+        <h3>TU/Dev User Dirs</h3>
+        <ul>
+END
+
+cd /
+sudo -u http find /home -mindepth 1 -maxdepth 1 \
+  -exec test -r {}/public_html \; \
+  -printf '           <li><a href="/~%P">%P</a></li>\n' \
+  | sort >> ${target}.tmp
+
+cat >>${target}.tmp <<END
+        </ul>
+      </div>
+    </div>
+    <div id="footer">
+      <p>
+        Copyright &copy; 2002-2016
+        <a href="mailto:jvinet@zeroflux.org" title="Contact Judd Vinet">Judd Vinet</a>
+        and <a href="mailto:aaron@archlinux.org" title="Contact Aaron Griffin">Aaron Griffin</a>.
+      </p>
+      <p>
+        The Arch Linux name and logo are recognized
+        <a href="https://wiki.archlinux.org/index.php/DeveloperWiki:TrademarkPolicy" title="Arch Linux Trademark Policy">trademarks</a>.
+        Some rights reserved.
+      </p>
+      <p>
+        The registered trademark Linux® is used pursuant to a sublicense from LMI,
+        the exclusive licensee of Linus Torvalds, owner of the mark on a world-wide basis.
+      </p>
+    </div><!-- #footer -->
+  </div><!-- #content -->
+</body>
+</html>
+END
+
+mv ${target}.tmp ${target}

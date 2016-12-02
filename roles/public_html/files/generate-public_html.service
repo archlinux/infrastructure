@@ -1,0 +1,13 @@
+[Unit]
+Description=Generate public_html files
+RequiresMountsFor=/srv/public_html
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/generate-public_html
+Nice=19
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+
+[Install]
+WantedBy=multi-user.target

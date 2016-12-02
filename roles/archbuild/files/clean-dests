@@ -1,0 +1,24 @@
+#!/bin/zsh
+setopt extendedglob nomatch errreturn
+
+integer ret=0
+
+cd /var/lib/archbuilddest/srcdest
+
+files=( *(Na+90) )
+(( ${#files} )) || exit 0
+
+df -HT .
+echo "<6>Deleting ${#files} files"
+
+for file in $files; do
+  if rm -rf $file; then
+    echo "<6>Deleted $file"
+  else
+    echo "<3>Error deleting $file"
+    ret=1
+  fi
+done
+
+df -HT .
+exit $ret

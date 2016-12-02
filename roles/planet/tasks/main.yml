@@ -4,33 +4,33 @@
   pacman: name=git,python2,libxslt state=present
 
 - name: set up nginx
-  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/planet.conf owner=root group=root mode=644
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/planet.conf owner=root group=root mode=0644
   notify:
     - restart nginx
 
 - name: make nginx log dir
-  file: path=/var/log/nginx/{{ planet_domain }} state=directory owner=http group=log mode=755
+  file: path=/var/log/nginx/{{ planet_domain }} state=directory owner=http group=log mode=0755
 
 - name: clone planet git repo
   git: dest={{ planet_dir }} repo=https://git.archlinux.org/vhosts/planet.archlinux.org.git
 
 - name: make cache and output dirs
-  file: path={{ planet_dir }}/archplanet/{{ item }} state=directory owner=http group=http mode=755
+  file: path={{ planet_dir }}/archplanet/{{ item }} state=directory owner=http group=http mode=0755
   with_items:
     - cache
     - output
 
 - name: fix permissions for themes
-  file: path={{ planet_dir }}/themes/{{ item }} state=directory owner=http group=http mode=755
+  file: path={{ planet_dir }}/themes/{{ item }} state=directory owner=http group=http mode=0755
   with_items:
     - archlinux
     - common
 
 - name: install systemd timer
-  copy: src=planet.timer dest=/etc/systemd/system/planet.timer owner=root group=root mode=644
+  copy: src=planet.timer dest=/etc/systemd/system/planet.timer owner=root group=root mode=0644
 
 - name: install systemd unit file
-  template: src=planet.service.j2 dest=/etc/systemd/system/planet.service owner=root group=root mode=644
+  template: src=planet.service.j2 dest=/etc/systemd/system/planet.service owner=root group=root mode=0644
 
 - name: reload systemd
   command: systemctl daemon-reload

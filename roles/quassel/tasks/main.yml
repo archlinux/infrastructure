@@ -1,0 +1,67 @@
+---
+
+- name: install quassel
+  pacman: name=quassel-core,oidentd,python2-pexpect state=present
+
+- name: add quassel postgres db
+  postgresql_db: db=quassel
+  become: yes
+  become_user: postgres
+  become_method: su
+
+- name: add quassel postgres user
+  postgresql_user: db=quassel name=quassel password={{ postgres_users.quassel }}
+  become: yes
+  become_user: postgres
+  become_method: su
+
+- name: initialize quassel
+  become: yes
+  become_user: quassel
+  become_method: sudo
+  expect:
+    command: quasselcore --configdir=/var/lib/quassel --select-backend=PostgreSQL
+    responses:
+      Username: ''
+      Password:
+        - '{{ postgres_users.quassel }}'
+        - ''
+        - ''
+        - ''
+      Hostname: ''
+      Port: ''
+      Database: ''
+    creates: /var/lib/quassel/quasselcore.conf
+
+- name: install quassel cert renewal hook
+  template: src=letsencrypt.hook.d.j2 dest=/etc/letsencrypt/hook.d/quassel owner=root group=root mode=0755
+
+- name: install quassel units
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - clean-quassel.timer
+    - clean-quassel.service
+  notify:
+    - daemon reload
+
+- name: add quassel.service.d dir
+  file: state=directory path=/etc/systemd/system/quassel.service.d owner=root group=root mode=0755
+
+- name: install quassel.service snippet
+  template: src=quassel.service.d.j2 dest=/etc/systemd/system/quassel.service.d/local.conf owner=root group=root mode=0644
+
+- name: install givemequassel script
+  copy: src=givemequassel dest=/usr/local/bin/givemequassel owner=root group=root mode=0755
+
+- name: install givemequassel sudoers config
+  copy: src=givemequassel.sudoers dest=/etc/sudoers.d/givemequassel
+
+- name: install oidentd.conf
+  copy: src=oidentd.conf dest=/etc/oidentd.conf owner=root group=root mode=0755
+
+- name: start and enable quassel
+  service: name={{ item }} enabled=yes state=started
+  with_items:
+    - oidentd.socket
+    - quassel.service
+    - clean-quassel.timer

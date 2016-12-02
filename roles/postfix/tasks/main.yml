@@ -4,7 +4,7 @@
   pacman: name=postfix state=present
 
 - name: install template configs
-  template: src={{item}}.j2 dest=/etc/postfix/{{item}} owner=root group=root mode=644
+  template: src={{item}}.j2 dest=/etc/postfix/{{item}} owner=root group=root mode=0644
   notify:
     - reload postfix
   with_items:
@@ -14,7 +14,7 @@
     - aliases
 
 - name: install additional files
-  copy: src={{item}} dest=/etc/postfix/{{item}} owner=root group=root mode=644
+  copy: src={{item}} dest=/etc/postfix/{{item}} owner=root group=root mode=0644
   with_items:
     - access_client
     - access_sender

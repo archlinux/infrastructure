@@ -1,0 +1,8 @@
+[Unit]
+Description=sa-update
+
+[Timer]
+OnCalendar=*-*-* 00:05:00
+
+[Install]
+WantedBy=timers.target

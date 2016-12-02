@@ -19,6 +19,12 @@ it is necessary to run the following once:
 
 certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w /var/lib/letsencrypt/ -d <domain-name>
 
+##### Note about opendkim
+
+The opendkim DNS data has to be added to DNS manually. The roles verifies that the DNS is correct before starting opendkim.
+
+The file that has to be added to the zone is `/etc/opendkim/private/$selector.txt`.
+
 ## Servers
 
 ### vostok
@@ -52,3 +58,7 @@ certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096
 - build server (pkgbuild.com)
 - releng
 - torrent tracker
+- sogrep
+- /~user/ webhost
+- irc bot (phrik)
+- quassel core

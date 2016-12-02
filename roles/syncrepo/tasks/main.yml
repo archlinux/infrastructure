@@ -1,0 +1,48 @@
+---
+
+- stat: path="/etc/letsencrypt/live/{{ mirror_domain }}/fullchain.pem"
+  register: certfile
+  when: 'mirror_domain != ""'
+
+- name: install rsync
+  pacman: name=rsync state=present
+
+- name: install syncrepo script
+  copy: src=syncrepo dest=/usr/local/bin/syncrepo owner=root group=root mode=0755
+
+- name: install syncrepo units
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - syncrepo.timer
+    - syncrepo.service
+  notify:
+    - daemon reload
+
+- name: install rsyncd config
+  copy: src=rsyncd.conf dest=/etc/rsyncd.conf owner=root group=root mode=0644
+
+- name: start and enable syncrepo units
+  service: name={{ item }} enabled=yes state=started
+  with_items:
+    - syncrepo.timer
+    - rsyncd.socket
+
+- name: set local mirror as cachedir
+  lineinfile:
+    dest: /etc/pacman.conf
+    insertafter: '^#CacheDir'
+    regexp: '^CacheDir'
+    line: 'CacheDir = /var/cache/pacman/pkg/ /srv/ftp/pool/packages/ /srv/ftp/pool/community/'
+
+- name: install local mirror
+  lineinfile:
+    dest: /etc/pacman.d/mirrorlist
+    line: 'Server = file:///srv/ftp/$repo/os/$arch'
+    insertbefore: BOF
+    create: true
+
+- name: set up nginx
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/syncrepo.conf owner=root group=root mode=0644
+  notify:
+    - restart nginx
+  when: 'mirror_domain != ""'

@@ -1,0 +1,51 @@
+#!/bin/bash -e
+
+if [[ `/usr/bin/whoami` != quassel ]]; then
+  exec /usr/bin/sudo -u quassel -- "$0"
+fi
+
+shopt -s extglob
+export PATH=/usr/bin
+export LC_ALL=C
+
+case $SUDO_USER in
+  (""|root) echo >&2 "You need to run this as the user you want to add."
+    exit 1 ;;
+  (+([a-z])) ;;
+  (*) echo >&2 "Invalid user."
+    exit 1 ;;
+esac
+
+if [[ `users` != *$SUDO_USER* ]]; then
+  echo >&2 "Unknown user."
+  exit 1
+fi
+
+ttyopts=`stty -g`
+trap 'stty $ttyopts' EXIT
+
+stty -echo
+echo >&2 -n "New password for $SUDO_USER's Quassel user: "
+read <&2
+pw="$REPLY"
+echo
+echo >&2 -n "Repeat the password: "
+read <&2
+echo
+if [[ $pw != $REPLY ]]; then
+  echo >&2 "Passwords don't match."
+  exit 1
+fi
+
+if printf '%s\n' $pw $pw | quasselcore --configdir=/var/lib/quassel --change-userpass $SUDO_USER &>/dev/null; then
+  echo >&2 "Updated password for user '$SUDO_USER'."
+  exit 0
+fi
+
+if printf '%s\n' $SUDO_USER $pw $pw | quasselcore --configdir=/var/lib/quassel --add-user &>/dev/null; then
+  echo >&2 "Added user '$SUDO_USER'."
+  exit 0
+fi
+
+echo >&2 "Quassel error."
+exit 1

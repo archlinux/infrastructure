@@ -1,0 +1,11 @@
+Cmnd_Alias ARCHBUILD = /usr/sbin/makechrootpkg, /usr/sbin/mkarchroot, \
+                       /usr/bin/extra-i686-build,          /usr/bin/extra-x86_64-build, \
+                       /usr/bin/testing-i686-build,        /usr/bin/testing-x86_64-build, \
+                       /usr/bin/staging-i686-build,        /usr/bin/staging-x86_64-build, \
+                       /usr/bin/kde-unstable-i686-build,   /usr/bin/kde-unstable-x86_64-build, \
+                       /usr/bin/gnome-unstable-i686-build, /usr/bin/gnome-unstable-x86_64-build, \
+                       /usr/sbin/arch-nspawn, /usr/local/bin/syncrepo, /usr/bin/multilib-build, \
+                       /usr/bin/multilib-testing-build,    /usr/bin/multilib-staging-build
+
+%dev ALL = NOPASSWD: ARCHBUILD
+%tu  ALL = NOPASSWD: ARCHBUILD

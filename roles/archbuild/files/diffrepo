@@ -1,0 +1,37 @@
+#!/bin/zsh
+setopt extendedglob nomatch
+
+parse() {
+  local pkgdata
+  IFS=- read -A pkgdata <<<"${${1:t}%.pkg.tar.*z}"
+  pkgname=${(j:-:)pkgdata[1,-4]}
+  epoch=
+  pkgver=${pkgdata[-3]}
+  pkgrel=${pkgdata[-2]}
+  arch=${pkgdata[-1]}
+
+  IFS=: read -A pkgdata <<<$pkgver
+  if (( ${#pkgdata} > 1 )); then
+    epoch=${pkgdata[1]}:
+    pkgver=${pkgdata[2]}
+  fi
+}
+
+tartf() {
+  local pkgname epoch pkgver pkgrel arch tag=$1 pkgfile="$2"
+  parse $pkgfile
+  echo "=== $tag $pkgname ${epoch}${pkgver}-${pkgrel} $arch ==="
+  bsdtar tf $pkgfile | sort
+}
+
+function {
+  local pkgname epoch pkgver pkgrel arch
+  for pkg in *.pkg.tar.*z(N); do
+    parse $pkg
+    otherpkg=( /srv/ftp/pool/*/${pkgname}-[^-]##-[^-]##-${arch}.pkg.tar.*z(Nom[1]) )
+    if [[ -n $otherpkg ]]; then
+      sdiff -sw $COLUMNS <(tartf Repo $otherpkg) <(tartf Our $pkg)
+      echo
+    fi
+  done
+}

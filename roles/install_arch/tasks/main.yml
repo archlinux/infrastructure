@@ -61,7 +61,7 @@
 
 - name: download bootstrap image
   unarchive:
-    src: https://mirrors.kernel.org/archlinux/iso/latest/archlinux-bootstrap-2016.06.01-x86_64.tar.gz
+    src: https://mirrors.kernel.org/archlinux/iso/latest/archlinux-bootstrap-2016.09.03-x86_64.tar.gz
     dest: /tmp/
     copy: no
     creates: /tmp/root.x86_64
@@ -106,8 +106,14 @@
   shell: mdadm --detail --scan >> /mnt/etc/mdadm.conf
   when: filesystem == "ext4"
 
-- name: set the hostname
-  lineinfile: dest=/mnt/etc/hostname line="{{ hostname }}" create=yes
+- name: configure locale.gen
+  lineinfile: dest=/mnt/etc/locale.gen line="en_US.UTF-8 UTF-8"
+
+- name: run locale-gen inside chroot
+  command: chroot /mnt locale-gen
+
+- name: run systemd-firstboot
+  command: chroot /mnt systemd-firstboot --locale=en_US.UTF-8 --timezone=UTC --hostname={{ hostname }}
 
 - name: add mdadm_udev to mkinitcpio.conf
   lineinfile:
@@ -119,9 +125,6 @@
 
 - name: run mkinitcpio
   command: chroot /mnt mkinitcpio -p linux
-
-- name: generate fstab
-  command: chroot /tmp/root.x86_64 bash -c "genfstab -p -L /mnt >> /etc/fstab"
 
 - name: configure network
   template: src=10-static-ethernet.network.j2 dest=/mnt/etc/systemd/network/10-static-ethernet.network owner=root group=root mode=0644
@@ -135,14 +138,11 @@
 - name: configure grub
   command: chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 
-- name: configure zoneinfo
-  file: src=/usr/share/zoneinfo/UTC dest=/mnt/etc/localtime state=link force=yes
-
-- name: configure locale.gen
-  lineinfile: dest=/mnt/etc/locale.gen line="en_US.UTF-8 UTF-8"
-
-- name: run locale-gen inside chroot
-  command: chroot /mnt locale-gen
+- name: configure nss
+  lineinfile:
+    dest: /mnt/etc/nsswitch.conf
+    regexp: '^hosts:'
+    line: 'hosts: files mymachines resolve myhostname'
 
 - name: enable services inside chroot
   command: chroot /mnt systemctl enable sshd systemd-networkd systemd-resolved

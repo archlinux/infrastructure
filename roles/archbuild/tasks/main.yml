@@ -1,0 +1,85 @@
+---
+
+- name: install archbuild
+  pacman: name=systemd-swap,devtools,zsh,git,subversion,mercurial,bzr,xdelta3,ruby,tig state=present
+
+- name: install archbuild scripts
+  copy: src={{ item }} dest=/usr/local/bin/{{ item }} owner=root group=root mode=0755
+  with_items:
+    - mkpkg
+    - diffrepo
+    - clean-chroots
+    - clean-dests
+    - gitpkg
+
+- name: install archbuild units
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - clean-chroots.timer
+    - clean-chroots.service
+    - clean-dests.timer
+    - clean-dests.service
+    - var-lib-archbuild.mount
+    - var-lib-archbuilddest.mount
+    - strictatime@.service
+  notify:
+    - daemon reload
+
+- name: install archbuild user units
+  copy: src={{ item }} dest=/etc/systemd/user/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - mkpkg@.timer
+    - mkpkg@.service
+
+- name: install systemd-swap config
+  copy: src=swap.conf dest=/etc/systemd/swap.conf owner=root group=root mode=0644
+
+- name: start and enable archbuild mounts
+  service: name={{ item }} enabled=yes state=started
+  with_items:
+    - systemd-swap.service
+    - var-lib-archbuild.mount
+    - var-lib-archbuilddest.mount
+
+- name: create archbuilddest
+  file:
+    state: directory
+    path: '/var/lib/{{ "/".join(item) }}'
+    owner: root
+    group: root
+    mode: 01777
+  with_nested:
+    - [archbuilddest]
+    - [srcdest]
+
+- name: set acl on archbuilddest
+  acl:
+    name: '/var/lib/archbuilddest/{{ item[0] }}'
+    state: present
+    entry: 'default:{{ item[1] }}'
+  with_nested:
+    - [srcdest]
+    - ['user::rwx',
+       'group::r-x',
+       'group:dev:rwx',
+       'group:tu:rwx',
+       'other::r-x',
+       'mask::rwx']
+
+- name: start and enable archbuild units
+  service: name={{ item }} enabled=yes state=started
+  with_items:
+    - clean-chroots.timer
+    - clean-dests.timer
+
+- name: set makepkg.conf vars
+  lineinfile:
+    dest: /etc/makepkg.conf
+    insertafter: '^#?{{ item.key }}='
+    line: '{{ item.key }}="{{ item.value }}"'
+  with_dict:
+    MAKEFLAGS: '-j{{ ansible_processor_vcpus + 1 }}'
+    SRCDEST: /var/lib/archbuilddest/srcdest
+
+- name: install archbuild sudoers config
+  copy: src=sudoers dest=/etc/sudoers.d/archbuild

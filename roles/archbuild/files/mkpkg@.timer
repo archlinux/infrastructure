@@ -1,0 +1,9 @@
+[Unit]
+Description=Nightly build of %I
+
+[Timer]
+OnCalendar=00:00
+RandomizedDelaySec=8h
+
+[Install]
+WantedBy=timers.target

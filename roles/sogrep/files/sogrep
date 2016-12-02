@@ -1,0 +1,31 @@
+#!/bin/bash
+
+target="/srv/ftp"
+tmp=$(mktemp -d)
+arches=('i686' 'x86_64')
+lock='/tmp/links.lck'
+
+[ -f "${lock}" ] && echo "create links is running" && exit 1
+
+if [ $# -ne 2 ]; then
+	echo "usage: $(basename $0) <repo> <soname>"
+	exit 1
+fi
+
+repo="${1}"
+lib="${2}"
+
+for arch in ${arches[@]}; do
+	db=${target}/${repo}/os/${arch}/${repo}.links.tar.gz
+	if [ -f ${db} ]; then
+		mkdir -p ${tmp}/${repo}/${arch}
+		bsdtar -xf ${db} -C ${tmp}/${repo}/${arch}
+	fi
+done
+
+for i in $(grep -rl "${lib}" ${tmp}); do
+	pkg=$(basename $(dirname $i))
+	echo ${pkg%-*-*}
+done | sort -u
+
+rm -rf ${tmp}
