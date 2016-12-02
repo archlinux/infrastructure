@@ -1,0 +1,26 @@
+---
+mariadb_skip_name_resolve: False
+mariadb_skip_networking: False
+
+mariadb_key_buffer_size: '16M'
+mariadb_max_allowed_packet: '1M'
+mariadb_table_open_cache: '64'
+mariadb_sort_buffer_size: '512K'
+mariadb_net_buffer_length: '8K'
+mariadb_read_buffer_size: '256K'
+mariadb_read_rnd_buffer_size: '512K'
+mariadb_myisam_sort_buffer_size: '8M'
+mariadb_query_cache_type: '1'
+mariadb_query_cache_limit: '16M'
+mariadb_query_cache_size: '32M'
+mariadb_max_connections: '400'
+mariadb_thread_cache_size: '16'
+
+mariadb_innodb_data_file_path: 'ibdata1:10M:autoextend'
+mariadb_innodb_buffer_pool_size: '16M'
+mariadb_innodb_log_file_size: '5M'
+mariadb_innodb_log_buffer_size: '8M'
+mariadb_innodb_flush_log_at_trx_commit: '1'
+mariadb_innodb_stats_sample_pages: '32'
+mariadb_innodb_thread_concurrency: '8'
+mariadb_innodb_file_per_table: False

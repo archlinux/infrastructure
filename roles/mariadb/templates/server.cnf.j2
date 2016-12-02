@@ -1,0 +1,61 @@
+[client]
+port            = 3306
+socket          = /run/mysqld/mysqld.sock
+
+[mysqld]
+port            = 3306
+socket          = /run/mysqld/mysqld.sock
+skip-external-locking
+{% if mariadb_skip_name_resolve %}
+skip-name-resolve
+{% endif %}
+{% if mariadb_skip_networking %}
+skip-networking
+{% endif %}
+
+# Memory settings
+key_buffer_size = {{ mariadb_key_buffer_size }}
+max_allowed_packet = {{ mariadb_max_allowed_packet }}
+table_open_cache = {{ mariadb_table_open_cache }}
+sort_buffer_size = {{ mariadb_sort_buffer_size }}
+net_buffer_length = {{ mariadb_net_buffer_length }}
+read_buffer_size = {{ mariadb_read_buffer_size }}
+read_rnd_buffer_size = {{ mariadb_read_rnd_buffer_size }}
+myisam_sort_buffer_size = {{ mariadb_myisam_sort_buffer_size }}
+query_cache_type = {{ mariadb_query_cache_type }}
+query_cache_limit = {{ mariadb_query_cache_limit }}
+query_cache_size = {{ mariadb_query_cache_size }}
+max_connections = {{ mariadb_max_connections }}
+thread_cache_size = {{ mariadb_thread_cache_size }}
+
+# Single server setup
+server-id       = 1
+innodb_support_xa = 0
+
+# InnoDB settings
+innodb_data_file_path = {{ mariadb_innodb_data_file_path }}
+innodb_buffer_pool_size = {{ mariadb_innodb_buffer_pool_size }}
+innodb_log_file_size = {{ mariadb_innodb_log_file_size }}
+innodb_log_buffer_size = {{ mariadb_innodb_log_buffer_size }}
+innodb_flush_log_at_trx_commit = {{ mariadb_innodb_flush_log_at_trx_commit }}
+innodb_stats_sample_pages = {{ mariadb_innodb_stats_sample_pages }}
+innodb_thread_concurrency = {{ mariadb_innodb_thread_concurrency }}
+{% if mariadb_innodb_file_per_table %}
+innodb_file_per_table
+{% endif %}
+
+[mysqldump]
+quick
+max_allowed_packet = 16M
+
+[mysql]
+no-auto-rehash
+
+[myisamchk]
+key_buffer_size = 20M
+sort_buffer_size = 20M
+read_buffer = 2M
+write_buffer = 2M
+
+[mysqlhotcopy]
+interactive-timeout

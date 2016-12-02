@@ -1,0 +1,38 @@
+---
+- name: install mariadb
+  pacman: name=mariadb,mysql-python state=present
+
+- name: initialize mariadb
+  command: mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+  args:
+    creates: /var/lib/mysql/mysql
+
+- name: start and enable the service
+  service: name=mariadb state=running enabled=yes
+
+- name: delete anonymous users
+  mysql_user: user='' host_all=yes state='absent'
+
+- name: disallow remote root login
+  command: 'mysql -NBe "{{ item }}"'
+  with_items:
+    - DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1')
+  changed_when: false
+
+- name: drop test database
+  mysql_db: db=test state=absent
+
+- name: set root password
+  mysql_user: user=root host={{ item }} password={{ mariadb_users.root }}
+  with_items:
+    - '127.0.0.1'
+    - '::1'
+    - 'localhost'
+
+- name: create client configuration for root
+  template: src=client.cnf.j2 dest=/root/.my.cnf
+
+- name: configure mariadb
+  template: src=server.cnf.j2 dest=/etc/mysql/my.cnf
+  notify:
+    - restart mariadb
