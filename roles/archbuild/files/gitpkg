@@ -258,7 +258,7 @@ class Repo
       loop do
         puts
         if (ref = Readline.readline("Enter ref (or nothing to view all): ", true).strip).empty?
-          system('tig', '--all', '--date-order') or log('--graph', '--all', '--oneline')
+          system('tig', '--branches', '--tags', '--date-order') or log('--graph', '--branches', '--tags', '--oneline')
         else
           begin
             commit = resolve ref
