@@ -2,8 +2,11 @@
 - name: install php-fpm
   pacman: name=php-fpm state=present
 
-- name: install php-fpm@ service
+- name: install php-fpm units
   copy: >
-    src=php-fpm@.service dest=/etc/systemd/system/php-fpm@.service
+    src={{ item }} dest=/etc/systemd/system/{{ item }}
     owner=root group=root mode=0644
+  with_items:
+    - php-fpm@.socket
+    - php-fpm@.service
   notify: daemon reload

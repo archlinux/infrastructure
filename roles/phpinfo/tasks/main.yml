@@ -23,5 +23,5 @@
     owner=root group=root mode=0644
   notify: reload php-fpm@phpinfo
 
-- name: start and enable php-fpm
-  service: name=php-fpm@phpinfo.service state=running enabled=true
+- name: start and enable systemd socket
+  service: name=php-fpm@phpinfo.socket state=running enabled=true

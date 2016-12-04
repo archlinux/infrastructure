@@ -2,6 +2,7 @@
 Description=PHP-FPM service for %i
 After=syslog.target network.target
 After=mysqld.service postfix.service
+Requires=php-fpm@.socket
 
 [Service]
 Type=notify
