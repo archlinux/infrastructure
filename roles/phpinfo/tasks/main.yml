@@ -21,7 +21,7 @@
   template: >
     src=php-fpm.conf.j2 dest=/etc/php/php-fpm.d/phpinfo.conf
     owner=root group=root mode=0644
-  notify: reload php-fpm@phpinfo
+  notify: restart php-fpm@phpinfo
 
 - name: start and enable systemd socket
   service: name=php-fpm@phpinfo.socket state=running enabled=true
