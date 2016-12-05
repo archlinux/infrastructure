@@ -32,6 +32,9 @@
   become: true
   become_user: archweb
 
+- name: create media dir
+  file: state=directory owner=archweb group=archweb path="{{ archweb_dir }}/media"
+
 - name: fix home permissions
   file: state=directory owner=archweb group=archweb path="{{ archweb_dir }}"
 
