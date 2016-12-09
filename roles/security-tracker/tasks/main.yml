@@ -1,0 +1,31 @@
+---
+
+- name: install packages
+  pacman: name={{ item }} state=present
+  with_items:
+    - git
+    - python
+    - python-sqlalchemy
+    - python-flask
+    - python-flask-sqlalchemy
+    - python-flask-wtf
+    - python-flask-login
+    - python-requests
+    - python-scrypt
+    - pyalpm
+    - sqlite
+    - expac
+
+- name: make security user
+  user: name=security shell=/bin/false home="{{ security_tracker_dir }}" createhome=no
+
+- name: fix home permissions
+  file: state=directory owner=security group=security path="{{ security_tracker_dir }}"
+
+- name: clone security-tracker repo
+  git: repo=https://github.com/anthraxx/arch-security-tracker.git version="stable" dest="{{ security_tracker_dir }}"
+  become: true
+  become_user: security
+
+- name: fix home permissions
+  file: state=directory owner=security group=security path="{{ security_tracker_dir }}"
