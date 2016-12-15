@@ -1,0 +1,15 @@
+[uwsgi]
+plugins=python
+chdir={{ security_tracker_dir }}
+module=run
+callable=app
+socket=/run/uwsgi/security-tracker.sock
+chmod-socket=664
+processes=4
+threads=2
+master=true
+uid=security
+gid=http
+thunder-lock = true
+daemonize=/var/log/uwsgi/security.log
+stats=/run/uwsgi/security-tracker-stats.sock

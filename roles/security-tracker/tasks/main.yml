@@ -15,6 +15,7 @@
     - pyalpm
     - sqlite
     - expac
+    - uwsgi-plugin-python
 
 - name: make security user
   user: name=security shell=/bin/false home="{{ security_tracker_dir }}" createhome=no
@@ -29,3 +30,11 @@
 
 - name: fix home permissions
   file: state=directory owner=security group=security path="{{ security_tracker_dir }}"
+
+- name: set up nginx
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/security-tracker.conf owner=root group=root mode=644
+  notify:
+    - restart nginx
+
+- name: make nginx log dir
+  file: path=/var/log/nginx/{{ security_tracker_domain }} state=directory owner=http group=log mode=755
