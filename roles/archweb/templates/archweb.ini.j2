@@ -1,10 +1,10 @@
 [uwsgi]
 plugins=python2
-chdir=/srv/http/archweb
+chdir={{ archweb_dir }}
 wsgi-file=archweb.wsgi
 socket=/run/uwsgi/archweb.sock
 chmod-socket=664
-virtualenv=/srv/http/archweb/env
+virtualenv={{ archweb_dir }}/env
 processes=6
 threads=2
 master=true
