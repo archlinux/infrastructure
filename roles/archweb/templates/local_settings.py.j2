@@ -45,7 +45,7 @@ MEDIA_ROOT = '{{ archweb_dir }}/media/img'
 MEDIA_URL = '/img/'
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = {{ archweb_secret_key }}
+SECRET_KEY = '{{ archweb_secret_key }}'
 
 # Hostnames we allow this site to be served under
 ALLOWED_HOSTS = ['{{ archweb_domain }}']
