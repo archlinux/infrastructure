@@ -1,0 +1,12 @@
+[Unit]
+Description=Security Tracker update service
+
+[Service]
+Type=oneshot
+User=security
+Group=security
+WorkingDirectory=/srv/http/security-tracker
+ExecStart=/usr/bin/make update
+
+[Install]
+WantedBy=multi-user.target

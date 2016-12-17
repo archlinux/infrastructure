@@ -38,3 +38,23 @@
 
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ security_tracker_domain }} state=directory owner=http group=log mode=755
+
+- name: copy security-tracker units
+  copy: src="{{ item }}" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
+  with_items:
+    - security-tracker-update.timer
+    - security-tracker-update.service
+  notify:
+    - daemon reload
+
+- name: configure security-tracker
+  template: src=20-user.local.conf.j2 dest={{ security_tracker_dir }}/config/20-user.local.conf owner=security group=security mode=0640
+
+- name: deploy security-tracker
+  template: src=security-tracker.ini.j2 dest=/etc/uwsgi/vassals/security-tracker.ini owner=security group=http mode=0644
+
+- name: start and enable security-tracker units
+  service: name="{{ item }}" enabled=yes state=started
+  with_items:
+    - security-tracker-update.timer
+    - security-tracker-update.service
