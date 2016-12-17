@@ -17,5 +17,5 @@
 - name: create default uwsgi log directory
   file: state=directory path=/var/log/uwsgi owner=uwsgi group=http mode=0770
 
-- name: enable emperor.uwsgi.service
-  service: name=emperor.uwsgi enabled=yes
+- name: enable and start emperor.uwsgi.service
+  service: name=emperor.uwsgi enabled=yes state=started
