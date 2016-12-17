@@ -28,6 +28,11 @@
   become: true
   become_user: security
 
+- name: run initial setup
+  become: true
+  become_user: security
+  command: /usr/bin/make chdir="{{ security_tracker_dir }}" creates=*.db
+
 - name: fix home permissions
   file: state=directory owner=security group=security path="{{ security_tracker_dir }}"
 
