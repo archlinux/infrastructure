@@ -407,3 +407,8 @@ arch_users:
     ssh_key: xyne.pub
     groups:
       - tu
+  zorun:
+    name: "Baptiste Jonglez"
+    ssh_key: zorun.pub
+    groups:
+      - tu
