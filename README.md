@@ -2,6 +2,9 @@
 
 This repository contains the complete collection of ansible playbooks and roles for the Arch Linux infrastructure.
 
+It also contains git submodules so you have to run `git submodule update --init
+--recursive` after cloning or some tasks will fail to run.
+
 #### Instructions
 All systems are set up the same way. For the first time setup in the Hetzner rescue system,
 run the provisioning script: `ansible-playbook playbooks/$hostname-provision.yml`.
