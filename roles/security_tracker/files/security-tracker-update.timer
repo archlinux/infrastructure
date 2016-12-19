@@ -2,9 +2,9 @@
 Description=Security Tracker update timer
 
 [Timer]
-OnUnitActiveSec=1h
-OnBootSec=15min
-RandomizedDelaySec=10min
+OnUnitActiveSec=5min
+OnBootSec=5min
+RandomizedDelaySec=1min
 
 [Install]
 WantedBy=timers.target
