@@ -48,11 +48,13 @@
   set_fact: pubkeys_per_user="{{ lookup('file', '../pubkeys/' + item.value.ssh_key).split('\n') }}"
   register: pubkeys
   with_dict: "{{ arch_users }}"
+  tags: ["archusers"]
 
 - name: gather pubkeys for all devs
   set_fact: dev_pubkeys_svn="{% for key in item.ansible_facts.pubkeys_per_user if 'dev' in item.item.value.groups and 'command' not in key %}{{ 'command=\"/usr/bin/svnserve --tunnel-user=' + item.item.key + ' -t\",no-port-forwarding,no-agent-forwarding,no-pty ' + key + '\n' }}{% endfor %}"
   register: dev_pubkeys_svn_reg
   with_items: "{{ pubkeys.results }}"
+  tags: ["archusers"]
 
 - name: join all dev pubkeys into a big string
   set_fact: dev_pubkeys_string="{% for result in dev_pubkeys_svn_reg.results %}{{ result.ansible_facts.dev_pubkeys_svn }}{% endfor %}"
@@ -61,9 +63,11 @@
   set_fact: tu_pubkeys_svn="{% for key in item.ansible_facts.pubkeys_per_user if 'tu' in item.item.value.groups and 'command' not in key %}{{ 'command=\"/usr/bin/svnserve --tunnel-user=' + item.item.key + ' -t\",no-port-forwarding,no-agent-forwarding,no-pty ' + key + '\n' }}{% endfor %}"
   register: tu_pubkeys_svn_reg
   with_items: "{{ pubkeys.results }}"
+  tags: ["archusers"]
 
 - name: join all tu pubkeys into a big string
   set_fact: tu_pubkeys_string="{% for result in tu_pubkeys_svn_reg.results %}{{ result.ansible_facts.tu_pubkeys_svn }}{% endfor %}"
+  tags: ["archusers"]
 
 - name: configure ssh keys for devs
   authorized_key:
@@ -72,6 +76,7 @@
     manage_dir: yes
     state: present
     exclusive: yes
+  tags: ["archusers"]
 
 - name: configure ssh keys for TUs
   authorized_key:
@@ -80,12 +85,14 @@
     manage_dir: yes
     state: present
     exclusive: yes
+  tags: ["archusers"]
 
 - name: create staging directories in user homes
   file: path=/home/{{item[0]}}/staging/{{item[1]}} state=directory owner={{item[0]}} group=users mode=0755
   with_nested:
     - "{{arch_users}}"
     - ['core', 'extra', 'testing', 'staging', 'community', 'community-staging', 'community-testing',  'multilib', 'multilib-staging', 'multilib-testing']
+  tags: ["archusers"]
 
 - name: create dbscripts paths
   file: path="{{ item }}" state=directory
