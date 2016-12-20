@@ -16,4 +16,6 @@
     - { role: opendkim, dkim_selector: apollo, tags: ['mail', "opendkim"] }
     - { role: dovecot, tags: ['mail', "dovecot"] }
     - { role: postfwd, tags: ['mail', "postfwd"] }
-    - { role: postgres, tags: ['postgres'] }
+    - { role: postgres, postgres_max_connections: 1000, postgres_shared_buffers: 4096MB, tags: ['postgres'] }
+    - { role: sudo, tags: ['sudo'] }
+    - { role: security_tracker, security_tracker_domain: "security.archlinux.org", security_tracker_dir: "/srv/http/security-tracker", tags: ["security_tracker"] }
