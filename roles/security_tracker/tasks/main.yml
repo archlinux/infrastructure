@@ -58,8 +58,5 @@
 - name: deploy security-tracker
   template: src=security-tracker.ini.j2 dest=/etc/uwsgi/vassals/security-tracker.ini owner=security group=http mode=0644
 
-- name: start and enable security-tracker units
-  service: name="{{ item }}" enabled=yes state=started
-  with_items:
-    - security-tracker-update.timer
-    - security-tracker-update.service
+- name: start and enable security-tracker timer
+  service: name="security-tracker-update.timer" enabled=yes state=started
