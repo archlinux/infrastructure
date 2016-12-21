@@ -14,7 +14,7 @@
     - { role: archusers, tags: ['archusers'] }
     - { role: nginx, letsencrypt_validation_dir: "/var/lib/letsencrypt", tags: ["nginx"] }
     - { role: sudo, tags: ['sudo', 'archusers'] }
-    - { role: postgres, tags: ['postgres'] }
+    - { role: postgres, postgres_max_connections: 100, postgres_shared_buffers: 128MB, tags: ['postgres'] }
     - { role: quassel, quassel_domain: "quassel.archlinux.org", tags: ['quassel'] }
     - { role: syncrepo, mirror_domain: "mirror.pkgbuild.com", tags: ['syncrepo', 'nginx'] }
     - { role: sogrep, tags: ['sogrep'] }
