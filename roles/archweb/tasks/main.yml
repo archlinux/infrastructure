@@ -1,7 +1,7 @@
 ---
 
 - name: install git
-  pacman: name=git,memcached,python2,python2-virtualenv,uwsgi-plugin-python2 state=present
+  pacman: name=git,python2,python2-virtualenv,uwsgi-plugin-python2 state=present
 
 - name: make archweb user
   user: name=archweb shell=/bin/false home="{{ archweb_dir }}" createhome=no groups=uwsgi
@@ -48,11 +48,22 @@
     - daemon reload
   when: services
 
+- name: copy archweb memcached service
+  copy: src="archweb-memcached.service" dest="/etc/systemd/system/archweb-memcached.service" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+  when: not services
+
 - name: configure archweb
   template: src=local_settings.py.j2 dest=/srv/http/archweb/local_settings.py owner=archweb group=archweb mode=0660
 
 - name: deploy archweb
   template: src=archweb.ini.j2 dest=/etc/uwsgi/vassals/archweb.ini owner=archweb group=http mode=0644
+  when: not services
+
+- name: start and enable archweb memcached service
+  service: name="archweb-memcached.service" enabled=yes state=started
+  when: not services
 
 - name: start and enable archweb services
   service: name="{{ item }}" enabled=yes state=started
