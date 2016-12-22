@@ -29,6 +29,10 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ security_tracker_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ security_tracker_domain }}/chain.pem;
 
+    location /static {
+        alias {{ security_tracker_dir }}/app/static;
+    }
+
     location / {
         include uwsgi_params;
         uwsgi_pass security-tracker;
