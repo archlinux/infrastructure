@@ -1,7 +1,7 @@
 ---
 
 - name: install uwsgi
-  pacman: name=uwsgi state=present
+  pacman: name=uwsgi,uwsgitop state=present
 
 - name: make uwsgi user
   user: name=uwsgi shell=/bin/false home=/ createhome=no
