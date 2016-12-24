@@ -27,6 +27,7 @@
   git: repo=https://github.com/anthraxx/arch-security-tracker.git version="stable" dest="{{ security_tracker_dir }}"
   become: true
   become_user: security
+  register: release
 
 - name: run initial setup
   become: true
@@ -57,6 +58,12 @@
 
 - name: deploy security-tracker
   template: src=security-tracker.ini.j2 dest=/etc/uwsgi/vassals/security-tracker.ini owner=security group=http mode=0644
+
+- name: deploy new release
+  become: true
+  become_user: security
+  file: path=/etc/uwsgi/vassals/security-tracker.ini state=touch
+  when: release.changed
 
 - name: start and enable security-tracker timer
   service: name="security-tracker-update.timer" enabled=yes state=started
