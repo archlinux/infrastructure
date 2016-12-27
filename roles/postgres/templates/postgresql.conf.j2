@@ -56,7 +56,7 @@
 
 # - Connection Settings -
 
-#listen_addresses = 'localhost'		# what IP address(es) to listen on;
+listen_addresses = {{ postgres_listen_addresses | default('localhost') }}		# what IP address(es) to listen on;
 					# comma-separated list of addresses;
 					# defaults to 'localhost'; use '*' for all
 					# (change requires restart)
@@ -76,14 +76,14 @@ max_connections = {{ postgres_max_connections | default('100') }}			# (change re
 # - Security and Authentication -
 
 #authentication_timeout = 1min		# 1s-600s
-#ssl = off				# (change requires restart)
+ssl = {{ postgres_ssl | default('off') }}				# (change requires restart)
 #ssl_ciphers = 'HIGH:MEDIUM:+3DES:!aNULL' # allowed SSL ciphers
 					# (change requires restart)
-#ssl_prefer_server_ciphers = on		# (change requires restart)
+ssl_prefer_server_ciphers = on		# (change requires restart)
 #ssl_ecdh_curve = 'prime256v1'		# (change requires restart)
-#ssl_cert_file = 'server.crt'		# (change requires restart)
-#ssl_key_file = 'server.key'		# (change requires restart)
-#ssl_ca_file = ''			# (change requires restart)
+ssl_cert_file = '/etc/letsencrypt/live/{{ inventory_hostname }}/fullchain.pem'		# (change requires restart)
+ssl_key_file = '/etc/letsencrypt/live/{{ inventory_hostname }}/privkey.pem'		# (change requires restart)
+ssl_ca_file = 'etc/letsencrypt/live/{{ inventory_hostname }}/chain.pem'			# (change requires restart)
 #ssl_crl_file = ''			# (change requires restart)
 #password_encryption = on
 #db_user_namespace = off

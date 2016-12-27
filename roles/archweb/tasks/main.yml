@@ -38,32 +38,37 @@
 - name: fix home permissions
   file: state=directory owner=archweb group=archweb path="{{ archweb_dir }}"
 
-- name: copy archweb services
-  copy: src="{{ item }}" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
-  with_items:
-    - archweb-reporead.service
-    - archweb-mirrorcheck.service
-    - archweb-mirrorcheck.timer
+- name: install reporead service
+  template: src="archweb-reporead.service.j2" dest="/etc/systemd/system/archweb-reporead.service" owner=root group=root mode=0644
   notify:
     - daemon reload
   when: services
 
-- name: copy archweb memcached service
-  copy: src="archweb-memcached.service" dest="/etc/systemd/system/archweb-memcached.service" owner=root group=root mode=0644
+- name: install mirrorcheck service and timer
+  template: src="archweb-mirrorcheck.service.j2" dest="/etc/systemd/system/archweb-mirrorcheck.service" owner=root group=root mode=0644
   notify:
     - daemon reload
-  when: not services
+  when: services
+
+- name: install mirrorcheck timer
+  template: src="archweb-mirrorcheck.timer.j2" dest="/etc/systemd/system/archweb-mirrorcheck.timer" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+  when: services
+
+- name: install archweb memcached service
+  template: src="archweb-memcached.service.j2" dest="/etc/systemd/system/archweb-memcached.service" owner=root group=root mode=0644
+  notify:
+    - daemon reload
 
 - name: configure archweb
   template: src=local_settings.py.j2 dest=/srv/http/archweb/local_settings.py owner=archweb group=archweb mode=0660
 
 - name: deploy archweb
   template: src=archweb.ini.j2 dest=/etc/uwsgi/vassals/archweb.ini owner=archweb group=http mode=0644
-  when: not services
 
 - name: start and enable archweb memcached service
   service: name="archweb-memcached.service" enabled=yes state=started
-  when: not services
 
 - name: start and enable archweb services
   service: name="{{ item }}" enabled=yes state=started

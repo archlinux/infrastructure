@@ -1,0 +1,14 @@
+[Unit]
+Description=archewb mirrorcheck
+After=network.target
+
+[Service]
+Type=oneshot
+User=archweb
+WorkingDirectory={{ archweb_dir }}
+ExecStart={{ archweb_dir }}/env/bin/python manage.py mirrorcheck --location 5
+ExecStart={{ archweb_dir}}/env/bin/python manage.py mirrorcheck --location 6
+Nice=5
+
+[Install]
+WantedBy=multi-user.target
