@@ -1,0 +1,11 @@
+---
+postgres_listen_addresses: 'localhost'
+postgres_max_connections: '100'
+
+postgres_ssl: 'off'
+postgres_ssl_prefer_server_ciphers: 'on'
+postgres_ssl_cert_file: '/etc/letsencrypt/live/{{ inventory_hostname }}/fullchain.pem'
+postgres_ssl_key_file: '/etc/letsencrypt/live/{{ inventory_hostname }}/privkey.pem'
+postgres_ssl_ca_file: '/etc/letsencrypt/live/{{ inventory_hostname }}/chain.pem'
+
+postgres_shared_buffers: '128MB'
