@@ -56,12 +56,12 @@
 
 # - Connection Settings -
 
-listen_addresses = {{ postgres_listen_addresses | default('localhost') }}		# what IP address(es) to listen on;
+listen_addresses = {{ postgres_listen_addresses }}		# what IP address(es) to listen on;
 					# comma-separated list of addresses;
 					# defaults to 'localhost'; use '*' for all
 					# (change requires restart)
 #port = 5432				# (change requires restart)
-max_connections = {{ postgres_max_connections | default('100') }}			# (change requires restart)
+max_connections = {{ postgres_max_connections }}			# (change requires restart)
 #superuser_reserved_connections = 3	# (change requires restart)
 #unix_socket_directories = '/run/postgresql'	# comma-separated list of directories
 					# (change requires restart)
@@ -76,14 +76,14 @@ max_connections = {{ postgres_max_connections | default('100') }}			# (change re
 # - Security and Authentication -
 
 #authentication_timeout = 1min		# 1s-600s
-ssl = {{ postgres_ssl | default('off') }}				# (change requires restart)
+ssl = {{ postgres_ssl }}				# (change requires restart)
 #ssl_ciphers = 'HIGH:MEDIUM:+3DES:!aNULL' # allowed SSL ciphers
 					# (change requires restart)
-ssl_prefer_server_ciphers = on		# (change requires restart)
+ssl_prefer_server_ciphers = {{ postgres_ssl_prefer_server_ciphers }}		# (change requires restart)
 #ssl_ecdh_curve = 'prime256v1'		# (change requires restart)
-ssl_cert_file = '/etc/letsencrypt/live/{{ inventory_hostname }}/fullchain.pem'		# (change requires restart)
-ssl_key_file = '/etc/letsencrypt/live/{{ inventory_hostname }}/privkey.pem'		# (change requires restart)
-ssl_ca_file = 'etc/letsencrypt/live/{{ inventory_hostname }}/chain.pem'			# (change requires restart)
+ssl_cert_file = '{{ postgres_ssl_cert_file }}'		# (change requires restart)
+ssl_key_file = '{{ postgres_ssl_key_file }}'		# (change requires restart)
+ssl_ca_file = '{{ postgres_ssl_ca_file }}'			# (change requires restart)
 #ssl_crl_file = ''			# (change requires restart)
 #password_encryption = on
 #db_user_namespace = off
@@ -110,7 +110,7 @@ ssl_ca_file = 'etc/letsencrypt/live/{{ inventory_hostname }}/chain.pem'			# (cha
 
 # - Memory -
 
-shared_buffers = {{ postgres_shared_buffers | default('128MB') }}			# min 128kB
+shared_buffers = {{ postgres_shared_buffers }}			# min 128kB
 					# (change requires restart)
 #huge_pages = try			# on, off, or try
 					# (change requires restart)
