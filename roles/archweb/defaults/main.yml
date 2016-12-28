@@ -1,0 +1,4 @@
+---
+archweb_dir: '/srv/http/archweb'
+archweb_domain: 'www.archlinux.org'
+archweb_services: false
