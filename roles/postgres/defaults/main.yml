@@ -9,3 +9,5 @@ postgres_ssl_key_file: '/etc/letsencrypt/live/{{ inventory_hostname }}/privkey.p
 postgres_ssl_ca_file: '/etc/letsencrypt/live/{{ inventory_hostname }}/chain.pem'
 
 postgres_shared_buffers: '128MB'
+
+postgres_ssl_hosts: []

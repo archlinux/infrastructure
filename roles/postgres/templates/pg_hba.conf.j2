@@ -1,3 +1,4 @@
+
 # PostgreSQL Client Authentication Configuration File
 # ===================================================
 #
@@ -94,3 +95,8 @@ host    sameuser        all             ::1/128                 md5
 #local   replication     postgres                                trust
 #host    replication     postgres        127.0.0.1/32            trust
 #host    replication     postgres        ::1/128                 trust
+{% if postgres_ssl_hosts %}
+{% for host in postgres_ssl_hosts %}
+hostssl all             all             {{ host }}              md5
+{% endfor %}
+{% endif %}
