@@ -42,19 +42,19 @@
   template: src="archweb-reporead.service.j2" dest="/etc/systemd/system/archweb-reporead.service" owner=root group=root mode=0644
   notify:
     - daemon reload
-  when: services
+  when: archweb_services
 
 - name: install mirrorcheck service and timer
   template: src="archweb-mirrorcheck.service.j2" dest="/etc/systemd/system/archweb-mirrorcheck.service" owner=root group=root mode=0644
   notify:
     - daemon reload
-  when: services
+  when: archweb_services
 
 - name: install mirrorcheck timer
   template: src="archweb-mirrorcheck.timer.j2" dest="/etc/systemd/system/archweb-mirrorcheck.timer" owner=root group=root mode=0644
   notify:
     - daemon reload
-  when: services
+  when: archweb_services
 
 - name: install archweb memcached service
   template: src="archweb-memcached.service.j2" dest="/etc/systemd/system/archweb-memcached.service" owner=root group=root mode=0644
@@ -75,4 +75,4 @@
   with_items:
     - archweb-reporead.service
     - archweb-mirrorcheck.timer
-  when: services
+  when: archweb_services
