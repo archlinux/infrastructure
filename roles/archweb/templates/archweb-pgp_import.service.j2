@@ -1,0 +1,11 @@
+[Unit]
+Description=archewb pgp_import
+
+[Service]
+Type=oneshot
+User=archweb
+WorkingDirectory={{ archweb_dir }}
+ExecStart={{ archweb_dir }}/env/bin/python manage.py pgp_import {{ archweb_keyring }}
+
+[Install]
+WantedBy=multi-user.target

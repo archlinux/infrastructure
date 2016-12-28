@@ -3,5 +3,7 @@ archweb_dir: '/srv/http/archweb'
 archweb_domain: 'www.archlinux.org'
 archweb_site: true
 archweb_mirrorcheck: false
+archweb_pgp_import: false
+archweb_keyring: '/etc/pacman.d/gnupg/pubring.gpg'
 archweb_reporead: false
 archweb_services: false

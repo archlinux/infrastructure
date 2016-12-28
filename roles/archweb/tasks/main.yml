@@ -59,6 +59,20 @@
     - daemon reload
   when: archweb_services or archweb_mirrorcheck
 
+- name: install pgp_import service
+  template: src="archweb-pgp_import.service.j2" dest="/etc/systemd/system/archweb-pgp_import.service" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+  when: archweb_services or archweb_pgp_import
+
+- name: create pacman.d hooks dir
+  file: state=directory owner=root group=root path="/etc/pacman.d/hooks"
+  when: archweb_services or archweb_pgp_import
+
+- name: install pgp_import hook
+  template: src="archweb-pgp_import-pacman-hook.j2" dest="/etc/pacman.d/hooks/archweb-pgp_import.hook" owner=root group=root mode=0644
+  when: archweb_services or archweb_pgp_import
+
 - name: install archweb memcached service
   template: src="archweb-memcached.service.j2" dest="/etc/systemd/system/archweb-memcached.service" owner=root group=root mode=0644
   notify:
