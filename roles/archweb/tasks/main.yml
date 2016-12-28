@@ -13,9 +13,11 @@
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/archweb.conf owner=root group=root mode=644
   notify:
     - restart nginx
+  when: archweb_site
 
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ archweb_domain }} state=directory owner=http group=log mode=755
+  when: archweb_site
 
 - name: clone archweb repo
   git: repo=git://git.archlinux.org/archweb.git dest="{{ archweb_dir }}"
@@ -34,6 +36,7 @@
 
 - name: create media dir
   file: state=directory owner=archweb group=archweb path="{{ archweb_dir }}/media"
+  when: archweb_site
 
 - name: fix home permissions
   file: state=directory owner=archweb group=archweb path="{{ archweb_dir }}"
@@ -42,37 +45,41 @@
   template: src="archweb-reporead.service.j2" dest="/etc/systemd/system/archweb-reporead.service" owner=root group=root mode=0644
   notify:
     - daemon reload
-  when: archweb_services
+  when: archweb_services or archweb_reporead
 
-- name: install mirrorcheck service and timer
+- name: install mirrorcheck service
   template: src="archweb-mirrorcheck.service.j2" dest="/etc/systemd/system/archweb-mirrorcheck.service" owner=root group=root mode=0644
   notify:
     - daemon reload
-  when: archweb_services
+  when: archweb_services or archweb_mirrorcheck
 
 - name: install mirrorcheck timer
   template: src="archweb-mirrorcheck.timer.j2" dest="/etc/systemd/system/archweb-mirrorcheck.timer" owner=root group=root mode=0644
   notify:
     - daemon reload
-  when: archweb_services
+  when: archweb_services or archweb_mirrorcheck
 
 - name: install archweb memcached service
   template: src="archweb-memcached.service.j2" dest="/etc/systemd/system/archweb-memcached.service" owner=root group=root mode=0644
   notify:
     - daemon reload
+  when: archweb_site
 
 - name: configure archweb
   template: src=local_settings.py.j2 dest=/srv/http/archweb/local_settings.py owner=archweb group=archweb mode=0660
 
 - name: deploy archweb
   template: src=archweb.ini.j2 dest=/etc/uwsgi/vassals/archweb.ini owner=archweb group=http mode=0644
+  when: archweb_site
 
 - name: start and enable archweb memcached service
   service: name="archweb-memcached.service" enabled=yes state=started
+  when: archweb_site
 
-- name: start and enable archweb services
-  service: name="{{ item }}" enabled=yes state=started
-  with_items:
-    - archweb-reporead.service
-    - archweb-mirrorcheck.timer
-  when: archweb_services
+- name: start and enable archweb reporead service
+  service: name="archweb-reporead.service" enabled=yes state=started
+  when: archweb_services or archweb_reporead
+
+- name: start and enable archweb mirrorcheck timer
+  service: name="archweb-mirrorcheck.timer" enabled=yes state=started
+  when: archweb_services or archweb_mirrorcheck

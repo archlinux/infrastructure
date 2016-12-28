@@ -1,4 +1,7 @@
 ---
 archweb_dir: '/srv/http/archweb'
 archweb_domain: 'www.archlinux.org'
+archweb_site: true
+archweb_mirrorcheck: false
+archweb_reporead: false
 archweb_services: false

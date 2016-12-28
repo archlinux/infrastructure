@@ -6,8 +6,9 @@ After=network.target
 Type=oneshot
 User=archweb
 WorkingDirectory={{ archweb_dir }}
-ExecStart={{ archweb_dir }}/env/bin/python manage.py mirrorcheck --location 5
-ExecStart={{ archweb_dir}}/env/bin/python manage.py mirrorcheck --location 6
+{% for location in archweb_mirrorcheck_locations %}
+ExecStart={{ archweb_dir }}/env/bin/python manage.py mirrorcheck --location {{ location }}
+{% endfor %}
 Nice=5
 
 [Install]
