@@ -26,7 +26,7 @@
   service: name=postgresql enabled=yes state=started
 
 - name: set postgres user password
-  postgresql_user: name=postgres password={{ postgres_users.postgres }}
+  postgresql_user: name=postgres password={{ postgres_users.postgres }} encrypted=yes
   become: yes
   become_user: postgres
   become_method: su
