@@ -15,9 +15,12 @@ DATABASES = {
     'default': {
         'ENGINE'  : 'django.db.backends.postgresql_psycopg2',
         'PORT'    : 5432,
-        'NAME'    : 'archweb',
-        'USER'    : 'archweb',
-        'PASSWORD': '{{ archweb_db_password }}',
+{% if archweb_db_host != 'localhost' %}
+        'HOST'    : '{{ archweb_db_host }}',
+{% endif %}
+        'NAME'    : '{{ archweb_db }}',
+        'USER'    : '{{ archweb_db_site_user }}',
+        'PASSWORD': '{{ archweb_db_site_password }}',
         'OPTIONS' : {'autocommit': True, 'application_name': 'archweb'},
     },
 }
