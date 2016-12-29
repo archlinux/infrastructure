@@ -7,3 +7,10 @@ archweb_pgp_import: false
 archweb_keyring: '/etc/pacman.d/gnupg/pubring.gpg'
 archweb_reporead: false
 archweb_services: false
+
+archweb_db: 'archweb'
+archweb_db_host: 'localhost'
+archweb_db_site_user: 'archweb'
+archweb_db_services_user: 'archweb_services'
+archweb_db_dbscripts_user: 'archweb_dbscripts'
+archweb_db_backup_user: 'archweb_backup'
