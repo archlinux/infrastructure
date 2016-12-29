@@ -42,6 +42,10 @@
 - name: fix home permissions
   file: state=directory owner=archweb group=archweb path="{{ archweb_dir }}"
 
+- name: configure archweb
+  template: src=local_settings.py.j2 dest=/srv/http/archweb/local_settings.py owner=archweb group=archweb mode=0660
+  no_log: true
+
 - name: create archweb db users
   postgresql_user: name={{ item.user }} password={{ item.password }} login_host="{{ archweb_db_host }}" login_password="{{ postgres_users.postgres }}" encrypted=yes
   no_log: true
@@ -55,18 +59,6 @@
   postgresql_db: name="{{ archweb_db }}" login_host="{{ archweb_db_host }}" login_password="{{ postgres_users.postgres }}" owner="{{ archweb_db_site_user }}"
   register: db_created
 
-- name: db privileges for archweb users
-  postgresql_privs: database="{{ archweb_db }}" host="{{ archweb_db_host }}" login="{{ archweb_db_site_user }}" password="{{ archweb_db_site_password }}"
-                    privs=CONNECT roles="{{ item }}" type=database
-  postgresql_privs: database="{{ archweb_db }}" host="{{ archweb_db_host }}" login="{{ archweb_db_site_user }}" password="{{ archweb_db_site_password }}"
-                    privs=SELECT roles="{{ item }}" type=table objs=ALL_IN_SCHEMA
-  postgresql_privs: database="{{ archweb_db }}" host="{{ archweb_db_host }}" login="{{ archweb_db_site_user }}" password="{{ archweb_db_site_password }}"
-                    privs=SELECT roles="{{ item }}" type=sequence objs=ALL_IN_SCHEMA
-  with_items:
-    - "{{ archweb_db_services_user }}"
-    - "{{ archweb_db_dbscripts_user }}"
-    - "{{ archweb_db_backup_user }}"
-
 - name: django syncdb
   django_manage: app_path="{{ archweb_dir }}" command=syncdb virtualenv="{{ archweb_dir }}/env"
   become: true
@@ -78,6 +70,29 @@
   become: true
   become_user: archweb
   when: archweb_site and (db_created.changed or release.changed)
+
+- name: db privileges for archweb users
+  postgresql_privs: database="{{ archweb_db }}" host="{{ archweb_db_host }}" login="{{ archweb_db_site_user }}" password="{{ archweb_db_site_password }}"
+                    privs=CONNECT roles="{{ item }}" type=database
+  with_items:
+    - "{{ archweb_db_services_user }}"
+    - "{{ archweb_db_dbscripts_user }}"
+    - "{{ archweb_db_backup_user }}"
+
+- name: table privileges for archweb users
+  postgresql_privs: database="{{ archweb_db }}" host="{{ archweb_db_host }}" login="{{ archweb_db_site_user }}" password="{{ archweb_db_site_password }}"
+                    privs=SELECT roles="{{ item.user }}" type=table objs="{{ item.objs }}"
+  with_items:
+    - { user: "{{ archweb_db_services_user }}", objs: "{{ archweb_db_services_table_objs }}" }
+    - { user: "{{ archweb_db_dbscripts_user }}", objs: "{{ archweb_db_dbscripts_table_objs }}" }
+    - { user: "{{ archweb_db_backup_user }}", objs: "{{ archweb_db_backup_table_objs }}" }
+
+- name: sequence privileges for archweb users
+  postgresql_privs: database="{{ archweb_db }}" host="{{ archweb_db_host }}" login="{{ archweb_db_site_user }}" password="{{ archweb_db_site_password }}"
+                    privs=SELECT roles="{{ item.user }}" type=sequence objs="{{ item.objs }}"
+  with_items:
+    - { user: "{{ archweb_db_services_user }}", objs: "{{ archweb_db_services_sequence_objs }}" }
+    - { user: "{{ archweb_db_backup_user }}", objs: "{{ archweb_db_backup_sequence_objs }}" }
 
 - name: django collectstatic
   django_manage: app_path="{{ archweb_dir }}" command=collectstatic virtualenv="{{ archweb_dir }}/env"
@@ -122,10 +137,6 @@
   notify:
     - daemon reload
   when: archweb_site
-
-- name: configure archweb
-  template: src=local_settings.py.j2 dest=/srv/http/archweb/local_settings.py owner=archweb group=archweb mode=0660
-  no_log: true
 
 - name: deploy archweb
   template: src=archweb.ini.j2 dest=/etc/uwsgi/vassals/archweb.ini owner=archweb group=http mode=0644
