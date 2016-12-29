@@ -58,6 +58,10 @@
 - name: db privileges for archweb users
   postgresql_privs: database="{{ archweb_db }}" host="{{ archweb_db_host }}" login="{{ archweb_db_site_user }}" password="{{ archweb_db_site_password }}"
                     privs=CONNECT roles="{{ item }}" type=database
+  postgresql_privs: database="{{ archweb_db }}" host="{{ archweb_db_host }}" login="{{ archweb_db_site_user }}" password="{{ archweb_db_site_password }}"
+                    privs=SELECT roles="{{ item }}" type=table objs=ALL_IN_SCHEMA
+  postgresql_privs: database="{{ archweb_db }}" host="{{ archweb_db_host }}" login="{{ archweb_db_site_user }}" password="{{ archweb_db_site_password }}"
+                    privs=SELECT roles="{{ item }}" type=sequence objs=ALL_IN_SCHEMA
   with_items:
     - "{{ archweb_db_services_user }}"
     - "{{ archweb_db_dbscripts_user }}"
