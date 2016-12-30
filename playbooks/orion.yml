@@ -3,6 +3,8 @@
 - name: setup orion
   hosts: orion
   remote_user: root
+  vars:
+    archweb_db_host: 'apollo.archlinux.org'
   roles:
     - { role: common, tags: ['common'] }
     - { role: tools, tags: ['tools'] }
@@ -15,5 +17,5 @@
     - { role: nginx, letsencrypt_validation_dir: "/var/lib/letsencrypt", tags: ["nginx"] }
     - { role: dbscripts, repos_domain: "repos.archlinux.org", svntogit_repos: "/srv/svntogit/repos", tags: ['dbscripts', 'archusers'] }
     - { role: sudo, tags: ['sudo', 'archusers'] }
-    - { role: archweb, archweb_home: "/srv/http/archweb", tags: ['archweb'] }
+    - { role: archweb, archweb_site: false, archweb_services: true, archweb_mirrorcheck_locations: [5, 6], tags: ['archweb'] }
     - { role: sources, sources_domain: "sources.archlinux.org", sources_dir: "/srv/sources", tags: ['sources'] }
