@@ -179,6 +179,7 @@
 
 - name: configure gen_rsyncd.conf.pl
   template: src=gen_rsyncd.conf.pl dest=/etc/rsyncd-conf-genscripts/gen_rsyncd.conf.pl owner=root group=root mode=0700
+  no_log: true
 
 - name: generate mirror config
   command: /etc/rsyncd-conf-genscripts/gen_rsyncd.conf.pl
