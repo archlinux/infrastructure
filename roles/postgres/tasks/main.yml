@@ -30,3 +30,22 @@
   become: yes
   become_user: postgres
   become_method: su
+
+- name: install postgres cert renewal hook
+  template: src=letsencrypt.hook.d.j2 dest=/etc/letsencrypt/hook.d/postgres owner=root group=root mode=0755
+  when: postgres_ssl == 'on'
+
+- name: install postgres certificate
+  copy: src=/etc/letsencrypt/live/{{ inventory_hostname }}/fullchain.pem dest={{ postgres_ssl_cert_file }}
+        remote_src=true owner=postgres group=postgres mode=0400
+  when: postgres_ssl == 'on'
+
+- name: install postgres private key
+  copy: src=/etc/letsencrypt/live/{{ inventory_hostname }}/privkey.pem dest={{ postgres_ssl_key_file }}
+        remote_src=true owner=postgres group=postgres mode=0400
+  when: postgres_ssl == 'on'
+
+- name: install postgres ca
+  copy: src=/etc/letsencrypt/live/{{ inventory_hostname }}/chain.pem dest={{ postgres_ssl_ca_file }}
+        remote_src=true owner=postgres group=postgres mode=0400
+  when: postgres_ssl == 'on'
