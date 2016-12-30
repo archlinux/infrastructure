@@ -4,10 +4,14 @@
   pacman: name=git,python2,python2-virtualenv,uwsgi-plugin-python2 state=present
 
 - name: make archweb user
-  user: name=archweb shell=/bin/false home="{{ archweb_dir }}" createhome=no groups=uwsgi
+  user: name=archweb shell=/bin/false home="{{ archweb_dir }}" createhome=no
 
 - name: fix home permissions
   file: state=directory owner=archweb group=archweb path="{{ archweb_dir }}"
+
+- name: set archweb groups
+  user: name=archweb groups=uwsgi
+  when: archweb_site
 
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/archweb.conf owner=root group=root mode=644
