@@ -17,7 +17,7 @@
     - { role: dovecot, tags: ['mail', "dovecot"] }
     - { role: postfwd, tags: ['mail', "postfwd"] }
     - { role: postgres, postgres_listen_addresses: "'*'", postgres_max_connections: 1000, postgres_ssl: 'on', postgres_shared_buffers: 4096MB,
-              postgres_ssl_hosts: ["{{ hostvars['orion.archlinux.org']['ipv4_address'] }}",
+              postgres_ssl_hosts: ["{{ hostvars['orion.archlinux.org']['ipv4_address'] }}/32",
               "{{ hostvars['orion.archlinux.org']['ipv6_address'] }}"], tags: ['postgres'] }
     - { role: sudo, tags: ['sudo'] }
     - { role: uwsgi, tags: ['uwsgi'] }
