@@ -1,6 +1,7 @@
 ---
 archweb_dir: '/srv/http/archweb'
 archweb_domain: 'www.archlinux.org'
+archweb_alternate_domains: ['archlinux.org']
 archweb_site: true
 archweb_mirrorcheck: false
 archweb_pgp_import: false
