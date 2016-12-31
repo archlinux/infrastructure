@@ -48,6 +48,7 @@
 
 - name: configure archweb
   template: src=local_settings.py.j2 dest=/srv/http/archweb/local_settings.py owner=archweb group=archweb mode=0660
+  register: config
   no_log: true
 
 - name: create archweb db users
@@ -150,7 +151,7 @@
   become: true
   become_user: archweb
   file: path=/etc/uwsgi/vassals/archweb.ini state=touch
-  when: archweb_site and release.changed
+  when: archweb_site and (release.changed or config.changed)
 
 - name: start and enable archweb memcached service
   service: name="archweb-memcached.service" enabled=yes state=started
