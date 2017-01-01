@@ -8,6 +8,7 @@ archweb_pgp_import: false
 archweb_keyring: '/etc/pacman.d/gnupg/pubring.gpg'
 archweb_reporead: false
 archweb_services: false
+archweb_forced_deploy: false
 
 archweb_db: 'archweb'
 archweb_db_host: 'localhost'

@@ -2,3 +2,6 @@
 
 - name: daemon reload
   command: systemctl daemon-reload
+
+- name: restart archweb memcached
+  service: name=archweb-memcached state=restarted
