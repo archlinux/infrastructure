@@ -10,8 +10,8 @@ Gateway={{ ipv6_gateway }}
 Domains=archlinux.org.
 
 [Address]
-Address={{ ipv4_address }}/32
-Peer={{ ipv4_gateway }}/32
+Address={{ ipv4_address }}{{ ipv4_netmask }}
+Peer={{ ipv4_gateway }}{{ ipv4_netmask }}
 
 [Address]
-Address={{ ipv6_address }}
+Address={{ ipv6_address }}{{ ipv6_netmask }}
