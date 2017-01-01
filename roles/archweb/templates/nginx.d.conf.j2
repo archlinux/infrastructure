@@ -51,6 +51,42 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ archweb_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ archweb_domain }}/chain.pem;
 
+    location /robots.txt {
+        alias {{ archweb_dir }}/archlinux.org/robots.txt;
+    }
+
+    location /humans.txt {
+        alias {{ archweb_dir }}/archlinux.org/humans.txt;
+    }
+
+    location /google7827eadf026b4a87.html {
+        alias {{ archweb_dir }}/archlinux.org/google7827eadf026b4a87.html;
+    }
+
+    location /BingSiteAuth.xml {
+        alias {{ archweb_dir }}/archlinux.org/BingSiteAuth.xml;
+    }
+
+    location /favicon.ico {
+        alias {{ archweb_dir }}/collected_static/favicon.ico;
+    }
+
+    location /pacman {
+        alias {{ archweb_dir }}/archlinux.org/pacman/;
+    }
+
+    location /netcfg {
+        alias {{ archweb_dir }}/archlinux.org/netcfg/;
+    }
+
+    location /logos {
+        alias {{ archweb_dir }}/archlinux.org/logos/;
+    }
+
+    location /iso {
+        alias /srv/ftp/iso;
+    }
+
     location /static {
         alias {{ archweb_dir }}/collected_static;
     }
