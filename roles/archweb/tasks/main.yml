@@ -38,6 +38,7 @@
   pip: requirements="{{ archweb_dir }}/requirements_prod.txt" virtualenv="{{ archweb_dir }}/env"
   become: true
   become_user: archweb
+  register: virtualenv
 
 - name: create media dir
   file: state=directory owner=archweb group=archweb path="{{ archweb_dir }}/media"
@@ -74,7 +75,7 @@
   django_manage: app_path="{{ archweb_dir }}" command=migrate virtualenv="{{ archweb_dir }}/env"
   become: true
   become_user: archweb
-  when: archweb_site and (db_created.changed or release.changed)
+  when: archweb_site and (db_created.changed or release.changed or virtualenv.changed)
 
 - name: db privileges for archweb users
   postgresql_privs: database="{{ archweb_db }}" host="{{ archweb_db_host }}" login="{{ archweb_db_site_user }}" password="{{ archweb_db_site_password }}"
@@ -103,7 +104,7 @@
   django_manage: app_path="{{ archweb_dir }}" command=collectstatic virtualenv="{{ archweb_dir }}/env"
   become: true
   become_user: archweb
-  when: archweb_site and (db_created.changed or release.changed)
+  when: archweb_site and (db_created.changed or release.changed or config.changed or virtualenv.changed)
 
 - name: install reporead service
   template: src="archweb-reporead.service.j2" dest="/etc/systemd/system/archweb-reporead.service" owner=root group=root mode=0644
@@ -151,7 +152,7 @@
   become: true
   become_user: archweb
   file: path=/etc/uwsgi/vassals/archweb.ini state=touch
-  when: archweb_site and (release.changed or config.changed)
+  when: archweb_site and (release.changed or config.changed or virtualenv.changed)
 
 - name: start and enable archweb memcached service
   service: name="archweb-memcached.service" enabled=yes state=started
