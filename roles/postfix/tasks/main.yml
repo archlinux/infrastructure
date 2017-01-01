@@ -19,6 +19,7 @@
     - access_client
     - access_sender
     - access_helo
+    - access_recipient
     - body_checks
     - header_checks
     - relocated
@@ -33,6 +34,7 @@
     - access_client
     - access_sender
     - access_helo
+    - access_recipient
     - transport
     - relocated
     - compat_maps
