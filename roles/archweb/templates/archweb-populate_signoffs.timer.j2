@@ -1,0 +1,10 @@
+[Unit]
+Description=archweb populate_signoffs timer
+
+[Timer]
+OnUnitActiveSec=20m
+OnBootSec=15min
+RandomizedDelaySec=1min
+
+[Install]
+WantedBy=timers.target

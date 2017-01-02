@@ -136,6 +136,18 @@
     - daemon reload
   when: archweb_services or archweb_mirrorresolv
 
+- name: install populate_signoffs service
+  template: src="archweb-populate_signoffs.service.j2" dest="/etc/systemd/system/archweb-populate_signoffs.service" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+  when: archweb_services or archweb_populate_signoffs
+
+- name: install populate_signoffs timer
+  template: src="archweb-populate_signoffs.timer.j2" dest="/etc/systemd/system/archweb-populate_signoffs.timer" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+  when: archweb_services or archweb_populate_signoffs
+
 - name: install pgp_import service
   template: src="archweb-pgp_import.service.j2" dest="/etc/systemd/system/archweb-pgp_import.service" owner=root group=root mode=0644
   notify:
@@ -186,3 +198,7 @@
 - name: start and enable archweb mirrorresolv timer
   service: name="archweb-mirrorresolv.timer" enabled=yes state=started
   when: archweb_services or archweb_mirrorresolv
+
+- name: start and enable archweb populate_signoffs timer
+  service: name="archweb-populate_signoffs.timer" enabled=yes state=started
+  when: archweb_services or archweb_populate_signoffs

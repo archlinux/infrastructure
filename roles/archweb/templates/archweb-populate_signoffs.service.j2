@@ -1,0 +1,12 @@
+[Unit]
+Description=archewb populate_signoffs service
+After=network.target
+
+[Service]
+Type=oneshot
+User=archweb
+WorkingDirectory={{ archweb_dir }}
+ExecStart={{ archweb_dir }}/env/bin/python manage.py populate_signoffs -v0
+
+[Install]
+WantedBy=multi-user.target
