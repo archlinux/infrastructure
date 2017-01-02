@@ -1,0 +1,11 @@
+[Unit]
+Description=archweb rsync iso service
+After=network.target
+
+[Service]
+Type=oneshot
+User=archweb
+ExecStart=/usr/bin/rsync -rtlHq --delete-delay --delay-updates --safe-links --timeout=600 --contimeout=60 {{ archweb_rsync_iso_origin }} {{ archweb_rsync_iso_dir }}
+
+[Install]
+WantedBy=multi-user.target

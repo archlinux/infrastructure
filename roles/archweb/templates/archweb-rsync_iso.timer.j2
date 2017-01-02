@@ -1,0 +1,10 @@
+[Unit]
+Description=archweb rsync iso timer
+
+[Timer]
+OnUnitActiveSec=1h
+OnBootSec=10min
+RandomizedDelaySec=5min
+
+[Install]
+WantedBy=timers.target

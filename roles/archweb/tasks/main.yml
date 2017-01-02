@@ -23,6 +23,10 @@
   file: path=/var/log/nginx/{{ archweb_domain }} state=directory owner=http group=log mode=755
   when: archweb_site
 
+- name: make rsync iso dir
+  file: path={{ archweb_rsync_iso_dir }} state=directory owner=archweb group=archweb
+  when: archweb_site
+
 - name: clone archweb repo
   git: repo=git://git.archlinux.org/archweb.git dest="{{ archweb_dir }}"
   become: true
@@ -168,6 +172,18 @@
     - daemon reload
   when: archweb_site
 
+- name: install archweb rsync iso service
+  template: src="archweb-rsync_iso.service.j2" dest="/etc/systemd/system/archweb-rsync_iso.service" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+  when: archweb_site
+
+- name: install archweb rsync iso timer
+  template: src="archweb-rsync_iso.timer.j2" dest="/etc/systemd/system/archweb-rsync_iso.timer" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+  when: archweb_site
+
 - name: deploy archweb
   template: src=archweb.ini.j2 dest=/etc/uwsgi/vassals/archweb.ini owner=archweb group=http mode=0644
   when: archweb_site
@@ -181,6 +197,10 @@
 
 - name: start and enable archweb memcached service
   service: name="archweb-memcached.service" enabled=yes state=started
+  when: archweb_site
+
+- name: start and enable archweb rsync iso timer
+  service: name="archweb-rsync_iso.timer" enabled=yes state=started
   when: archweb_site
 
 - name: start and enable archweb reporead service

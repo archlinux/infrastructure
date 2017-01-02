@@ -4,11 +4,15 @@ archweb_domain: 'www.archlinux.org'
 archweb_alternate_domains: ['archlinux.org']
 archweb_site: true
 archweb_mirrorcheck: false
+archweb_mirrorresolv: false
 archweb_pgp_import: false
+archweb_populate_signoffs: false
 archweb_keyring: '/etc/pacman.d/gnupg/pubring.gpg'
 archweb_reporead: false
 archweb_services: false
 archweb_forced_deploy: false
+archweb_rsync_iso_origin: 'repos.archlinux.org::kitchensink/iso/'
+archweb_rsync_iso_dir: '/srv/ftp/iso/'
 
 archweb_db: 'archweb'
 archweb_db_host: 'localhost'
