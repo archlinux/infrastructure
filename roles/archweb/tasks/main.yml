@@ -163,6 +163,10 @@
   service: name="archweb-reporead.service" enabled=yes state=started
   when: archweb_services or archweb_reporead
 
+- name: restart archweb reporead service
+  service: name="archweb-reporead.service" state=restarted
+  when: archweb_services or archweb_reporead and (release.changed or config.changed or virtualenv.changed or archweb_forced_deploy)
+
 - name: start and enable archweb mirrorcheck timer
   service: name="archweb-mirrorcheck.timer" enabled=yes state=started
   when: archweb_services or archweb_mirrorcheck
