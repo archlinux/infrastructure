@@ -182,3 +182,7 @@
 - name: start and enable archweb mirrorcheck timer
   service: name="archweb-mirrorcheck.timer" enabled=yes state=started
   when: archweb_services or archweb_mirrorcheck
+
+- name: start and enable archweb mirrorresolv timer
+  service: name="archweb-mirrorresolv.timer" enabled=yes state=started
+  when: archweb_services or archweb_mirrorresolv
