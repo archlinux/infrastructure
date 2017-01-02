@@ -15,7 +15,7 @@
   template: >
     src=nginx.conf.j2 dest=/etc/nginx/nginx.d/phpinfo.conf
     owner=root group=root mode=0644
-  notify: restart nginx
+  notify: reload nginx
 
 - name: configure php-fpm
   template: >

@@ -6,7 +6,7 @@
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/planet.conf owner=root group=root mode=0644
   notify:
-    - restart nginx
+    - reload nginx
 
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ planet_domain }} state=directory owner=http group=log mode=0755

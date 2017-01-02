@@ -52,7 +52,7 @@
 - name: install inventory_hostname vhost
   template: src=nginx-hostname-vhost.conf.j2 dest=/etc/nginx/nginx.d/nginx-hostname-vhost.conf owner=root group=root mode=0644
   notify:
-    - restart nginx
+    - reload nginx
 
 - name: activate letsencrypt renewal service
   service: name=certbot-renewal.timer enabled=yes state=started

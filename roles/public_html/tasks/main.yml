@@ -24,4 +24,4 @@
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/public_html.conf owner=root group=root mode=0644
   notify:
-    - restart nginx
+    - reload nginx
