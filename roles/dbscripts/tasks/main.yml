@@ -44,48 +44,17 @@
     state: present
   with_dict: "{{ arch_users }}"
 
-- name: gather all pubkeys of all users
-  set_fact: pubkeys_per_user="{{ lookup('file', '../pubkeys/' + item.value.ssh_key).split('\n') }}"
-  register: pubkeys
-  with_dict: "{{ arch_users }}"
-  tags: ["archusers"]
-
-- name: gather pubkeys for all devs
-  set_fact: dev_pubkeys_svn="{% for key in item.ansible_facts.pubkeys_per_user if 'dev' in item.item.value.groups and 'command' not in key %}{{ 'command=\"/usr/bin/svnserve --tunnel-user=' + item.item.key + ' -t\",no-port-forwarding,no-agent-forwarding,no-pty ' + key + '\n' }}{% endfor %}"
-  register: dev_pubkeys_svn_reg
-  with_items: "{{ pubkeys.results }}"
-  tags: ["archusers"]
-
-- name: join all dev pubkeys into a big string
-  set_fact: dev_pubkeys_string="{% for result in dev_pubkeys_svn_reg.results %}{{ result.ansible_facts.dev_pubkeys_svn }}{% endfor %}"
-
-- name: gather pubkeys for all TUs
-  set_fact: tu_pubkeys_svn="{% for key in item.ansible_facts.pubkeys_per_user if 'tu' in item.item.value.groups and 'command' not in key %}{{ 'command=\"/usr/bin/svnserve --tunnel-user=' + item.item.key + ' -t\",no-port-forwarding,no-agent-forwarding,no-pty ' + key + '\n' }}{% endfor %}"
-  register: tu_pubkeys_svn_reg
-  with_items: "{{ pubkeys.results }}"
-  tags: ["archusers"]
-
-- name: join all tu pubkeys into a big string
-  set_fact: tu_pubkeys_string="{% for result in tu_pubkeys_svn_reg.results %}{{ result.ansible_facts.tu_pubkeys_svn }}{% endfor %}"
-  tags: ["archusers"]
-
 - name: configure ssh keys for devs
-  authorized_key:
-    user: svn-packages
-    key: "{{ dev_pubkeys_string }}"
-    manage_dir: yes
-    state: present
-    exclusive: yes
-  tags: ["archusers"]
+  template: src=authorized_keys-group.j2 dest=/home/svn-packages/.ssh/authorized_keys owner=svn-packages group=svn-packages mode=600
+  vars:
+    pubkey_groups: ['dev']
+  tags: ['archusers']
 
 - name: configure ssh keys for TUs
-  authorized_key:
-    user: svn-community
-    key: "{{ tu_pubkeys_string }}"
-    manage_dir: yes
-    state: present
-    exclusive: yes
-  tags: ["archusers"]
+  template: src=authorized_keys-group.j2 dest=/home/svn-community/.ssh/authorized_keys owner=svn-community group=svn-community mode=600
+  vars:
+    pubkey_groups: ['tu']
+  tags: ['archusers']
 
 - name: create staging directories in user homes
   file: path=/home/{{item[0]}}/staging/{{item[1]}} state=directory owner={{item[0]}} group=users mode=0755
