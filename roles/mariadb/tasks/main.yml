@@ -28,6 +28,7 @@
     - '127.0.0.1'
     - '::1'
     - 'localhost'
+  no_log: true
 
 - name: create client configuration for root
   template: src=client.cnf.j2 dest=/root/.my.cnf
