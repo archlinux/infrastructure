@@ -1,0 +1,7 @@
+---
+flyspraydir: '/srv/http/flyspray'
+flyspraydomain: 'bugs.archlinux.org'
+
+flyspraydb: 'flyspray'
+flyspraydb_host: 'localhost'
+flyspraydb_user: 'flyspray'
