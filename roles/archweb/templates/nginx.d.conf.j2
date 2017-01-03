@@ -83,8 +83,12 @@ server {
         alias {{ archweb_dir }}/archlinux.org/logos/;
     }
 
+    location ~ ^/iso/(.*\.(iso|img)$) {
+	deny all;
+    }
+
     location /iso {
-        alias /srv/ftp/iso;
+        alias {{ archweb_rsync_iso_dir }};
     }
 
     location /static {
