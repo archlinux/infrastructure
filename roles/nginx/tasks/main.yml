@@ -19,6 +19,8 @@
   with_items:
     - letsencrypt.conf
     - sslsettings.conf
+  notify:
+    - reload nginx
 
 - name: create nginx.d directory
   file: state=directory path=/etc/nginx/nginx.d owner=root group=root mode=0755
