@@ -1,11 +1,13 @@
 upstream archweb {
     server unix:///run/uwsgi/archweb.sock;
 }
+{% if archweb_alternate_domains %}
+{% for domain in archweb_alternate_domains %}
 
 server {
     listen       80;
     listen       [::]:80;
-    server_name  {{ archweb_domain }}{% for domain in archweb_alternate_domains %} {{ domain }}{% endfor %};
+    server_name  {{ domain }};
 
     access_log   /var/log/nginx/{{ archweb_domain }}/access.log;
     error_log    /var/log/nginx/{{ archweb_domain }}/error.log;
@@ -13,15 +15,14 @@ server {
     include snippets/letsencrypt.conf;
 
     location / {
-        rewrite ^(.*) https://{{ archweb_domain }}$1 permanent;
+        rewrite ^(.*) https://{{ domain }}$1 permanent;
     }
 }
-{% if archweb_alternate_domains %}
 
 server {
     listen       443 ssl http2;
     listen       [::]:443 ssl http2;
-    server_name {% for domain in archweb_alternate_domains %} {{ domain }}{% endfor %};
+    server_name  {{ domain }};
 
     access_log   /var/log/nginx/{{ archweb_domain }}/access.log;
     error_log    /var/log/nginx/{{ archweb_domain }}/error.log;
@@ -34,12 +35,28 @@ server {
         rewrite ^(.*) https://{{ archweb_domain }}$1 permanent;
     }
 }
+{% endfor %}
 
 server {
 {% else %}
 
 server {
 {% endif %}
+    listen       80;
+    listen       [::]:80;
+    server_name  {{ archweb_domain }};
+
+    access_log   /var/log/nginx/{{ archweb_domain }}/access.log;
+    error_log    /var/log/nginx/{{ archweb_domain }}/error.log;
+
+    include snippets/letsencrypt.conf;
+
+    location / {
+        rewrite ^(.*) https://{{ archweb_domain }}$1 permanent;
+    }
+}
+
+server {
     listen       443 ssl http2;
     listen       [::]:443 ssl http2;
     server_name  {{ archweb_domain }};
