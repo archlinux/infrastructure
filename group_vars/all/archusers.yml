@@ -229,6 +229,7 @@ arch_users:
     name: "Jelle van der Waa"
     ssh_key: jelle.pub
     groups:
+      - dev
       - tu
   jgc:
     name: "Jan de Groot"
