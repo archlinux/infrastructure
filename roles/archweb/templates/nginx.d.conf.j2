@@ -100,7 +100,7 @@ server {
         alias {{ archweb_dir }}/archlinux.org/logos/;
     }
 
-    location ~ ^/iso/(.*\.(iso|img)$) {
+    location ~ ^/iso/(.*\.(iso|img|tar\.gz|sfs)$) {
 	deny all;
     }
 
