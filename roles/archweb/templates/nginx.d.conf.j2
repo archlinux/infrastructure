@@ -1,3 +1,4 @@
+
 upstream archweb {
     server unix:///run/uwsgi/archweb.sock;
 }
@@ -32,7 +33,12 @@ server {
     ssl_trusted_certificate /etc/letsencrypt/live/{{ archweb_domain }}/chain.pem;
 
     location / {
-        rewrite ^(.*) https://{{ archweb_domain }}$1 permanent;
+        rewrite ^(.*) https://{{ archweb_domain }}
+        {%- if archweb_domains_redirects -%}
+            {{ archweb_domains_redirects[domain]|default('$1') }}
+        {%- else -%}
+           $1
+        {%- endif %} permanent;
     }
 }
 {% endfor %}

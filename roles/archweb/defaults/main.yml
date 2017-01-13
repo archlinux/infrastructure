@@ -1,7 +1,11 @@
 ---
 archweb_dir: '/srv/http/archweb'
 archweb_domain: 'www.archlinux.org'
-archweb_alternate_domains: ['archlinux.org']
+archweb_alternate_domains: ['archlinux.org', 'master-key.archlinux.org', 'dev.archlinux.org', 'packages.archlinux.org']
+archweb_domains_redirects:
+        'master-key.archlinux.org': '/master-keys'
+        'dev.archlinux.org': '/'
+        'packages.archlinux.org': '/packages'
 archweb_site: true
 archweb_mirrorcheck: false
 archweb_mirrorresolv: false
