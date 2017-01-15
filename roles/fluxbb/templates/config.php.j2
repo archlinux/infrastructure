@@ -1,0 +1,32 @@
+<?php
+
+$db_type = 'mysqli';
+$db_host = 'localhost';
+$db_name = 'fluxbb';
+$db_username = 'fluxbb';
+$db_password = '{{ mariadb_users.forum }}';
+$db_prefix = '';
+$p_connect = false;
+
+$cookie_name = '{{ fluxbb_cookie_name }}';
+$cookie_domain = '';
+$cookie_path = '/';
+$cookie_secure = 0;
+$cookie_seed = '{{ fluxbb_cookie_seed }}';
+
+$arch_home ='http://www.archlinux.org/';
+$arch_navbar = array('Home' => 'http://www.archlinux.org/',
+                      'Packages' => 'http://www.archlinux.org/packages/',
+                      'Forums' => 'https://bbs.archlinux.org/',
+                      'Wiki' => 'https://wiki.archlinux.org/',
+                      'Bugs' => 'https://bugs.archlinux.org/',
+                      'AUR' => 'https://aur.archlinux.org/',
+                      'Download' => 'http://www.archlinux.org/download/');
+$arch_navbar_selected = 'Forums';
+
+$funnyquestion_hash = '{{ fluxbb_funnyquestion_hash }}';
+foreach (array(1, 224, 256, 384, 512) as $hash) {
+        $funny_questions['What is the output of "date -u +%V$(uname)|sha'.$hash.'sum|sed \'s/\W//g\'"?'] = hash('sha'.$hash, gmdate('W').php_uname('s')."\n");
+}
+
+define('PUN', 1);

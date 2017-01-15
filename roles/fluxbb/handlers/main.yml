@@ -1,0 +1,3 @@
+---
+- name: restart php-fpm@fluxbb
+  systemd: name=php-fpm@fluxbb.service state=restarted
