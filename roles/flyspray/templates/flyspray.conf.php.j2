@@ -1,0 +1,31 @@
+; <?php die( 'Do not access this page directly.' ); ?>
+
+[general]
+cookiesalt="{{ flyspray_cookie_salt }}"
+output_buffering="on"
+address_rewriting="1"
+reminder_daemon="0"
+passwdcrypt="md5"
+doku_url="https://wiki.archlinux.org/"
+syntax_plugin="none"
+update_check="0"
+
+[database]
+dbtype="mysqli"
+dbhost="{{ flyspray_db_host }}"
+dbname="{{ flyspray_db }}"
+dbuser="{{ flyspray_db_user }}"
+dbpass="{{ flyspray_db_password }}"
+dbprefix="flyspray_"
+
+[attachments]
+zip="application/zip"
+tgz="application/x-gzip"
+gz="application/x-gzip"
+bz2="application/x-bzip2"
+png="image/png"
+gif="image/gif"
+jpg="image/jpeg"
+jpeg="image/jpeg"
+html="text/html"
+xml="application/xml"

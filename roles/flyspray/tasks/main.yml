@@ -1,0 +1,42 @@
+---
+
+- name: install git
+  pacman: name=git state=present
+
+- name: make flyspray user
+  user: name=flyspray shell=/bin/false home="{{ flyspray_dir }}" createhome=no
+
+- name: fix home permissions
+  file: state=directory owner=flyspray group=flyspray path="{{ flyspray_dir }}"
+
+- name: set up nginx
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/flyspray.conf owner=root group=root mode=644
+  notify:
+    - reload nginx
+
+- name: make nginx log dir
+  file: path=/var/log/nginx/{{ flyspray_domain }} state=directory owner=http group=log mode=755
+
+- name: clone flyspray repo
+  git: repo=git://git.archlinux.org/vhosts/bugs.archlinux.org.git dest="{{ flyspray_dir }}"
+  become: true
+  become_user: flyspray
+  register: release
+
+- name: fix home permissions
+  file: state=directory owner=flyspray group=flyspray path="{{ flyspray_dir }}"
+
+- name: configure flyspray
+  template: src=flyspray.conf.php.j2 dest=/srv/http/flyspray/flyspray.conf.php owner=flyspray group=flyspray mode=0660
+  register: config
+  no_log: true
+
+- name: create flyspray db
+  mysql_db: name="{{ flyspray_db }}" login_host="{{ flyspray_db_host }}" login_password="{{ mariadb_users.root }}"
+  register: db_created
+
+- name: create flyspray db user
+  mysql_user: name={{ flyspray_db_user }} password={{ flyspray_db_password }}
+              login_host="{{ flyspray_db_host }}" login_password="{{ mariadb_users.root }}"
+              priv="{{ flyspray_db }}.*:ALL"
+  no_log: true
