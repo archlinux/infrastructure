@@ -29,6 +29,11 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ security_tracker_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ security_tracker_domain }}/chain.pem;
 
+    location /google9fb65bdd43709b25.html {
+        # verification code for anthraxx
+        return 200 "google-site-verification: google9fb65bdd43709b25.html";
+    }
+
     location /static {
         alias {{ security_tracker_dir }}/app/static;
     }
