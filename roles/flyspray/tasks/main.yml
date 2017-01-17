@@ -18,7 +18,7 @@
   file: path=/var/log/nginx/{{ flyspray_domain }} state=directory owner=http group=log mode=755
 
 - name: clone flyspray repo
-  git: repo=git://git.archlinux.org/vhosts/bugs.archlinux.org.git dest="{{ flyspray_dir }}"
+  git: repo=https://git.archlinux.org/vhosts/bugs.archlinux.org.git dest="{{ flyspray_dir }}"
   become: true
   become_user: "{{ flyspray_user }}"
   register: release
