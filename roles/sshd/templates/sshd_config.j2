@@ -111,6 +111,9 @@ PrintMotd no # pam does that
 # override default of no subsystems
 Subsystem	sftp	/usr/lib/ssh/sftp-server
 
+# unlink forwarded sockets; for gpg agent forwarding
+StreamLocalBindUnlink yes
+
 # Example of overriding settings on a per-user basis
 #Match User anoncvs
 #	X11Forwarding no
