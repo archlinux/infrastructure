@@ -32,6 +32,7 @@
 
 - name: create client configuration for root
   template: src=client.cnf.j2 dest=/root/.my.cnf
+  no_log: true
 
 - name: configure mariadb
   template: src=server.cnf.j2 dest=/etc/mysql/my.cnf
