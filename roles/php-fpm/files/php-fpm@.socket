@@ -4,7 +4,7 @@ Description=PHP-FPM socket for %i
 [Socket]
 ListenStream=/run/php-fpm/%i.socket
 SocketMode=0660
-SocketUser=php-%i
+SocketUser=%i
 SocketGroup=http
 
 [Install] 
