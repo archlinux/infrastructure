@@ -19,8 +19,12 @@
     - { role: postgres, postgres_listen_addresses: "'*'", postgres_max_connections: 1000, postgres_ssl: 'on', postgres_shared_buffers: 4096MB,
               postgres_ssl_hosts: ["{{ hostvars['orion.archlinux.org']['ipv4_address'] }}{{ hostvars['orion.archlinux.org']['ipv4_netmask'] }}",
               "{{ hostvars['orion.archlinux.org']['ipv6_address'] }}{{ hostvars['orion.archlinux.org']['ipv6_netmask'] }}"], tags: ['postgres'] }
+    - { role: mariadb, mariadb_innodb_buffer_pool_size: '64M', mariadb_table_open_cache: '256', mariadb_query_cache_type: '0',
+              mariadb_innodb_file_per_table: True, tags: ["mariadb"] }
     - { role: sudo, tags: ['sudo'] }
     - { role: uwsgi, tags: ['uwsgi'] }
+    - { role: php-fpm, tags: ["php-fpm"] }
     - { role: memcached, tags: ['memcached'] }
     - { role: archweb, tags: ["archweb"] }
     - { role: security_tracker, security_tracker_domain: "security.archlinux.org", security_tracker_dir: "/srv/http/security-tracker", tags: ["security_tracker"] }
+    - { role: flyspray, tags: ["flyspray"] }
