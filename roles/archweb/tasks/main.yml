@@ -28,7 +28,7 @@
   when: archweb_site
 
 - name: clone archweb repo
-  git: repo=git://git.archlinux.org/archweb.git dest="{{ archweb_dir }}"
+  git: repo=https://git.archlinux.org/archweb.git dest="{{ archweb_dir }}"
   become: true
   become_user: archweb
   register: release
