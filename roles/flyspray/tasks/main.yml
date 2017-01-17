@@ -43,7 +43,7 @@
 
 - name: configure php-fpm
   template:
-    src=php-fpm.conf.j2 dest=/etc/php/php-fpm.d/flyspray.conf
+    src=php-fpm.conf.j2 dest="/etc/php/php-fpm.d/{{ flyspray_user }}.conf"
     owner=root group=root mode=0644
   notify:
     - restart php-fpm@flyspray
