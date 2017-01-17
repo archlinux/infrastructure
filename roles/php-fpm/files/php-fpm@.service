@@ -14,7 +14,7 @@ PrivateDevices=true
 
 ProtectHome=true
 ProtectSystem=full
-InaccessibleDirectories=/srv/vmail /var/lib/mysql
+InaccessiblePaths=-/var/lib/mysql
 
 User=php-%i
 Group=php-%i
