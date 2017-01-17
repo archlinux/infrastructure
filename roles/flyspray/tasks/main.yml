@@ -30,7 +30,6 @@
   template: src=flyspray.conf.php.j2 dest=/srv/http/flyspray/flyspray.conf.php owner="{{ flyspray_user }}" group="{{ flyspray_user }}" mode=0660
   register: config
   no_log: true
-  register: config
 
 - name: create flyspray db
   mysql_db: name="{{ flyspray_db }}" login_host="{{ flyspray_db_host }}" login_password="{{ mariadb_users.root }}"
@@ -48,3 +47,6 @@
     owner=root group=root mode=0644
   notify:
     - restart php-fpm@flyspray
+
+- name: start and enable systemd socket
+  service: name=php-fpm@flyspray.socket state=running enabled=true
