@@ -15,7 +15,7 @@ pm.min_spare_servers = 2
 pm.max_spare_servers = 5
 pm.max_requests = 2000
 
-php_admin_value[open_basedir] = {{ flyspray_dir }}
+php_admin_value[open_basedir] = {{ flyspray_dir }}:/tmp
 php_admin_value[opcache.memory_consumption] = 128
 php_admin_value[opcache.interned_strings_buffer] = 8
 php_admin_value[opcache.max_accelerated_files] = 200
