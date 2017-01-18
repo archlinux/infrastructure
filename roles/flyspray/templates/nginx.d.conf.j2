@@ -29,6 +29,8 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ flyspray_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ flyspray_domain }}/chain.pem;
 
+    root {{ flyspray_dir }};
+
     location /setup {
         deny all;
     }
@@ -41,7 +43,8 @@ server {
         location ~ \.php$ {return 403;}
     }
 
-    location / {
+    location ~ \.php$ {
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         include fastcgi_params;
         fastcgi_pass flyspray;
     }
