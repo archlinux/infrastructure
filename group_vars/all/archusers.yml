@@ -77,6 +77,11 @@ arch_users:
     ssh_key: arcanis.pub
     groups:
       - tu
+  archange:
+    name: "Bruno Pagani"
+    ssh_key: archange.pub
+    groups:
+      - tu
   arodseth:
     name: "Alexander Rødseth"
     ssh_key: arodseth.pub
