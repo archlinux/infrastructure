@@ -1,0 +1,4 @@
+---
+php_extensions:
+  - curl
+  - zip

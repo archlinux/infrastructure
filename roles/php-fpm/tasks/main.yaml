@@ -10,3 +10,8 @@
     - php-fpm@.socket
     - php-fpm@.service
   notify: daemon reload
+
+- name: configure default php.ini
+  template: >
+    src=php.ini.j2 dest=/etc/php/php.ini
+    owner=root group=root mode=0644
