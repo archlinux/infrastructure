@@ -17,6 +17,9 @@ archweb_services: false
 archweb_forced_deploy: false
 archweb_rsync_iso_origin: 'repos.archlinux.org::kitchensink/iso/'
 archweb_rsync_iso_dir: '/srv/ftp/iso/'
+archweb_admins: ["('Archweb Bugs', 'dan@archlinux.org')",
+                 "('Giancarlo Razzolini', 'grazzolini@archlinux.org')",
+                 "('Angel Velasquez', 'angvp@archlinux.org')"]
 
 archweb_db: 'archweb'
 archweb_db_host: 'localhost'
