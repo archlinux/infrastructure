@@ -5,10 +5,15 @@ DEBUG = False
 TEMPLATE_DEBUG = False
 
 ## Notification admins
+{% if archweb_admins %}
 ADMINS = (
-    ('Archweb Bugs', 'dan@archlinux.org'),
-    ('Giancarlo Razzolini', 'grazzolini@archlinux.org'),
+{% for admin in archweb_admins %}
+    {{ admin }},
+{% endfor %}
 )
+{% else %}
+ADMINS = ()
+{% endif %}
 
 SERVER_EMAIL = 'archweb@archlinux.org'
 
