@@ -17,6 +17,9 @@
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ flyspray_domain }} state=directory owner=http group=log mode=755
 
+- name: create setup dir with write permissions
+  file: state=directory owner="{{ flyspray_user }}" group="{{ flyspray_user }}" path="{{ flyspray_dir }}/setup" mode=755
+
 - name: clone flyspray repo
   git: repo=https://git.archlinux.org/vhosts/bugs.archlinux.org.git dest="{{ flyspray_dir }}"
   become: true
@@ -25,6 +28,9 @@
 
 - name: fix home permissions
   file: state=directory owner="{{ flyspray_user }}" group="{{ flyspray_user }}" path="{{ flyspray_dir }}"
+
+- name: take away setup dir write permissions
+  file: state=directory owner="{{ flyspray_user }}" group="{{ flyspray_user }}" path="{{ flyspray_dir }}/setup" mode=000
 
 - name: configure flyspray
   template: src=flyspray.conf.php.j2 dest=/srv/http/flyspray/flyspray.conf.php owner="{{ flyspray_user }}" group="{{ flyspray_user }}" mode=0660
