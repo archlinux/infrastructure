@@ -5,7 +5,7 @@ archweb_alternate_domains: ['archlinux.org', 'master-key.archlinux.org', 'dev.ar
 archweb_domains_redirects:
         'master-key.archlinux.org': '/master-keys'
         'dev.archlinux.org': '/'
-        'packages.archlinux.org': '/packages'
+        'packages.archlinux.org': '/packages$1'
 archweb_site: true
 archweb_mirrorcheck: false
 archweb_mirrorresolv: false
