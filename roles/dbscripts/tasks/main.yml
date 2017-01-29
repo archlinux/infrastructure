@@ -57,10 +57,12 @@
   tags: ['archusers']
 
 - name: create staging directories in user homes
-  file: path=/home/{{item[0]}}/staging/{{item[1]}} state=directory owner={{item[0]}} group=users mode=0755
-  with_nested:
-    - "{{arch_users}}"
-    - ['core', 'extra', 'testing', 'staging', 'community', 'community-staging', 'community-testing',  'multilib', 'multilib-staging', 'multilib-testing']
+  dbscripts_mkdirs:
+    pathtmpl: '/home/{user}/staging/{dirname}'
+    permissions: 755
+    directories: ['', 'core', 'extra', 'testing', 'staging', 'community', 'community-staging', 'community-testing',  'multilib', 'multilib-staging', 'multilib-testing']
+    users: "{{arch_users.keys()}}"
+    group: users
   tags: ["archusers"]
 
 - name: create dbscripts paths
