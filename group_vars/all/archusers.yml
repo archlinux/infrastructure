@@ -141,12 +141,6 @@ arch_users:
     ssh_key: demize.pub
     groups:
       - tu
-  dicebot:
-    name: "Mihails Strasuns"
-    ssh_key: dicebot.pub
-    groups:
-      - tu
-      - multilib
   djgera:
     name: "Gerardo Exequiel Pozzi"
     ssh_key: djgera.pub
