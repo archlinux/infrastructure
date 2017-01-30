@@ -5,6 +5,7 @@
 
 - name: make flyspray user
   user: name="{{ flyspray_user }}" shell=/bin/false home="{{ flyspray_dir }}" createhome=no
+  register: user_created
 
 - name: fix home permissions
   file: state=directory owner="{{ flyspray_user }}" group="{{ flyspray_user }}" path="{{ flyspray_dir }}"
@@ -19,6 +20,7 @@
 
 - name: create setup dir with write permissions
   file: state=directory owner="{{ flyspray_user }}" group="{{ flyspray_user }}" path="{{ flyspray_dir }}/setup" mode=755
+  when: not user_created.changed
 
 - name: clone flyspray repo
   git: repo=https://git.archlinux.org/vhosts/bugs.archlinux.org.git dest="{{ flyspray_dir }}"
