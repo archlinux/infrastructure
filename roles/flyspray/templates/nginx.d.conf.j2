@@ -43,6 +43,26 @@ server {
         location ~ \.php$ {return 403;}
     }
 
+    location ~ ^/task/([0-9]+)$ {
+        try_files $uri $uri/ /index.php?do=details&task_id=$1;
+
+        location ~ comment([0-9]+)$ {
+            try_files $uri $uri/ /index.php?do=details&task_id=$1comment$2;
+        }
+
+        location ~ /depends$ {
+            try_files $uri $uri/ /index.php?do=depends&task_id=$1;
+        }
+
+        location ~ /depends&prune=([0-9]+)$ {
+            try_files $uri $uri/ index.php?do=depends&task_id=$1&prune=$2;
+        }
+
+        location ~ /edit$ {
+            try_files $uri $uri/ index.php?do=details&task_id=$1&edit=yep;
+        }
+    }
+
     location ~ \.php$ {
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         include fastcgi_params;
