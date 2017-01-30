@@ -13,11 +13,11 @@ echo "<6>Deleting ${#chroots} chroots"
 
 if btrfs filesystem df . &>/dev/null; then
   remove() {
-    btrfs sub del $1 &>/dev/null
+    btrfs sub del -- $1 &>/dev/null
   }
 else
   remove() {
-    rm -rf $1
+    rm -rf -- $1
   }
 fi
 

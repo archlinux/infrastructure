@@ -12,7 +12,7 @@ df -HT .
 echo "<6>Deleting ${#files} files"
 
 for file in $files; do
-  if rm -rf $file; then
+  if rm -rf -- $file; then
     echo "<6>Deleted $file"
   else
     echo "<3>Error deleting $file"
