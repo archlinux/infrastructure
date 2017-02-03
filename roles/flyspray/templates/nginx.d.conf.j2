@@ -84,6 +84,32 @@ server {
         rewrite ^/pm/editgroup/(?<group_id>[0-9]+)$ /index.php?do=pm&area=editgroup&id=$group_id last;
     }
 
+    location ~ ^/edituser/(?<user_id>[0-9]+)$ {
+        rewrite ^/edituser/[0-9]+$ /index.php?do=admin&area=users&user_id=$user_id last;
+    }
+
+    location ~ ^/register$ {
+        rewrite ^/register$ /index.php?do=register last;
+    }
+
+    location ~ ^/lostpw$ {
+        rewrite ^/lostpw$ /index.php?do=lostpw last;
+    }
+
+    location ~ ^/roadmap {
+        rewrite ^/roadmap$ /index.php?do=roadmap last;
+        rewrite ^/roadmap/proj(?<project_id>[0-9]+)$ /index.php?do=roadmap&project=$project_id last;
+    }
+
+    location ~ ^/toplevel {
+        rewrite ^/toplevel$ /index.php?do=toplevel last;
+        rewrite ^/toplevel/proj(?<project_id>[0-9]+)$ /index.php?do=toplevel&project=$project_id last;
+    }
+
+    location ~ ^/proj(?<project_id>[0-9]+)$ {
+        rewrite ^/proj[0-9]+$ /index.php?project=$project_id last;
+    }
+
     location ~ \.php$ {
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         include fastcgi_params;
