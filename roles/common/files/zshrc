@@ -1,0 +1,254 @@
+# Don't show input while loading
+stty -echo
+
+# some better colors for ls
+eval "`dircolors ~/.dircolors`"
+
+# Keybindings {{{
+bindkey -e
+bindkey '\e[1~' beginning-of-line
+bindkey '\e[4~' end-of-line
+bindkey '\e[3~' delete-char
+bindkey '\e[2~' overwrite-mode
+bindkey "^[[7~" beginning-of-line # Pos1
+bindkey "^[[8~" end-of-line # End
+bindkey "^[[A" history-beginning-search-backward
+bindkey "^[[B" history-beginning-search-forward
+
+# add edit command line feature ("alt-e")
+autoload edit-command-line
+zle -N edit-command-line
+bindkey '\ee' edit-command-line
+
+# }}}
+# Variables {{{
+export EDITOR=vim
+export VISUAL=$EDITOR
+export PAGER=less
+
+export LESSCHARSET="UTF-8"
+export LESSOPEN='|/usr/bin/lesspipe.sh %s 2>&-'
+export LESS='-i -n -w -M -R -P%t?f%f \
+:stdin .?pb%pb\%:?lbLine %lb:?bbByte %bb:-...'
+
+# Less Colors for Man Pages
+export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
+export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # begin bold
+export LESS_TERMCAP_me=$'\E[0m'           # end mode
+export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
+export LESS_TERMCAP_so=$'\E[38;5;11m'    # begin standout-mode - info box
+export LESS_TERMCAP_ue=$'\E[0m'           # end underline
+export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
+# }}}
+# Prompt {{{
+if [[ $UID != 0 ]]; then
+  local username_color="%F{blue}"
+else
+  local username_color="%F{red}"
+fi
+local host_color="%F{green}"
+local path_color="%F{blue}"
+PROMPT="${username_color}$USERNAME%f@${host_color}%B%m%b%f ${path_color}%B%~%b%f > "
+#}
+
+## Spelling prompt
+SPROMPT='zsh: correct '%R' to '%r' ? ([Y]es/[N]o/[E]dit/[A]bort) '
+
+# }}}
+# Other ZSH options {{{
+autoload -U colors
+colors
+
+autoload -U zmv
+
+# .. -> cd ../
+setopt autocd
+
+# cd /etc/**/foo/blub searches ;)
+setopt extendedglob
+
+# push cds to directory stack
+setopt auto_pushd
+
+# don't push something twice
+setopt pushd_ignore_dups
+
+# don't kill jobs when exiting shell
+setopt no_hup
+# and don't warn
+setopt no_check_jobs
+
+# show us when some command didn't exit with 0
+setopt print_exit_value
+
+# makepkg -g > PKGBUILD
+# zsh: file exists: PKGBUILD
+#
+# work saved ;)
+setopt no_clobber
+
+setopt inc_append_history
+setopt no_bg_nice
+setopt share_history
+#setopt bang_hist
+setopt extended_history
+#setopt hist_reduce_blanks
+setopt hist_ignore_space
+setopt hist_find_no_dups
+setopt hist_ignore_dups
+setopt nohistverify
+setopt prompt_subst
+#setopt hist_fcntl_lock
+setopt always_to_end
+
+unsetopt auto_remove_slash
+
+# show the output of time if commands takes longer than n secs (only user+system)
+REPORTTIME=5
+
+# allow comments in interactive shells
+setopt interactivecomments
+
+# ignore lines starting with a space
+setopt hist_ignore_space
+
+# disable XON/XOFF flow control (^s/^q)
+stty -ixon
+
+# }}}
+# Aliases {{{
+# better ask before we lose data
+alias rm='rm -Iv'
+alias cp='cp -iv'
+alias mv='mv -iv'
+
+# I don't like bytes
+alias dum='du -kh --max-depth=2'
+alias dus='du -skh'
+alias du='du -kh'
+alias df="df -Th"
+
+# function to make ls look nice is below
+alias ls='ls -rhbtF --color=auto'
+alias ll='ls -rhbtF --color=auto -l'
+alias la='ls -rhbtF --color=auto -a'
+alias lla='ls -rhbtF --color=auto -la'
+alias lld='ls -rhbtF --color=auto -ld'
+
+alias grep='grep --color'
+
+alias mkdir='nocorrect mkdir'
+alias wget='nocorrect noglob wget'
+
+alias p='pacman'
+alias sd='systemctl --no-pager'
+
+alias is="iostat -Nyxm 2"
+
+alias nocomment='egrep -v "^\s*(#|$)"'
+alias wgetc="wget --content-disposition"
+# }}}
+# Completion stuff {{{
+autoload -Uz compinit
+compinit
+
+unsetopt correct_all
+
+zstyle :compinstall filename '$HOME/.zshrc'
+
+# performance tweaks
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path $HOME/.zsh/cache
+zstyle ':completion:*' use-perl on
+
+# completion colours
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:match:*' original only
+
+# ignore completion for commands we don't have
+zstyle ':completion:*:functions' ignored-patterns '_*'
+
+# get rid of .class and .o files for vim
+zstyle ':completion:*:vim:*' ignored-patterns '*.(class|o)'
+
+# show menu when tabbing
+zstyle ':completion:*' menu yes select
+
+# better completion for kill
+zstyle ':completion:*:*:kill:*' command 'ps --forest -u$USER -o pid,%cpu,tty,cputime,cmd'
+
+# Provide more processes in completion of programs like killall:
+zstyle ':completion:*:processes-names' command 'ps c -u ${USER} -o command | uniq'
+compdef pkill=killall
+
+# bugged with zsh 4.3.10 for whatever reason
+zstyle ':completion:*' file-sort time
+#zstyle ':completion:*' file-sort name
+
+# Ignore same file on rm
+zstyle ':completion:*:(rm|kill|diff):*' ignore-line yes
+zstyle ':completion:*:rm:*' file-patterns '*:all-files'
+
+# e.g. ls foo//bar -> ls foo/bar
+zstyle ':completion:*' squeeze-slashes true
+
+# if in foo/bar don't show bar when cd ../<TAB>
+zstyle ':completion:*:cd:*' ignore-parents parent pwd
+
+# Prevent lost+found directory from being completed
+zstyle ':completion:*:cd:*' ignored-patterns '(*/)#lost+found'
+
+# ignore case when completing
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+# make some stuff look better
+# from: http://ft.bewatermyfriend.org/comp/zsh/zshrc.d/compsys.html
+zstyle ':completion:*:descriptions' format "- %{${fg[yellow]}%}%d%{${reset_color}%} -"
+zstyle ':completion:*:messages'     format "- %{${fg[cyan]}%}%d%{${reset_color}%} -"
+zstyle ':completion:*:corrections'  format "- %{${fg[yellow]}%}%d%{${reset_color}%} - (%{${fg[cyan]}%}errors %e%{${reset_color}%})"
+zstyle ':completion:*:default'      \
+	select-prompt \
+	"%{${fg[yellow]}%}Match %{${fg_bold[cyan]}%}%m%{${fg_no_bold[yellow]}%}  Line %{${fg_bold[cyan]}%}%l%{${fg_no_bold[red]}%}  %p%{${reset_color}%}"
+zstyle ':completion:*:default'      \
+	list-prompt   \
+	"%{${fg[yellow]}%}Line %{${fg_bold[cyan]}%}%l%{${fg_no_bold[yellow]}%}  Continue?%{${reset_color}%}"
+zstyle ':completion:*:warnings'     \
+	format        \
+	"- %{${fg_no_bold[red]}%}no match%{${reset_color}%} - %{${fg_no_bold[yellow]}%}%d%{${reset_color}%}"
+zstyle ':completion:*' group-name ''
+
+# manual pages are sorted into sections
+# from: http://ft.bewatermyfriend.org/comp/zsh/zshrc.d/compsys.html
+zstyle ':completion:*:manuals'       separate-sections true
+zstyle ':completion:*:manuals.(^1*)' insert-sections   true
+
+### highlight the original input.
+    zstyle ':completion:*:original' \
+        list-colors "=*=$color[red];$color[bold]"
+
+### highlight words like 'esac' or 'end'
+    zstyle ':completion:*:reserved-words' \
+        list-colors "=*=$color[red]"
+
+### colorize hostname completion
+    zstyle ':completion:*:*:*:*:hosts' \
+        list-colors "=*=$color[cyan];$color[bg-black]"
+
+### colorize username completion
+    zstyle ':completion:*:*:*:*:users' \
+        list-colors "=*=$color[red];$color[bg-black]"
+
+### colorize processlist for 'kill'
+    zstyle ':completion:*:*:kill:*:processes' \
+        list-colors "=(#b) #([0-9]#) #([^ ]#)*=$color[none]=$color[yellow]=$color[green]"
+# }}}
+
+umask 077
+stty -ctlecho
+
+# Show again
+stty echo
+
+# vim: set ft=zsh:
