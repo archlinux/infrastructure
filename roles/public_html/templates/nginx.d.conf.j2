@@ -4,6 +4,9 @@ server {
     server_name  {{ public_domain }} www.{{ public_domain }};
     root         /srv/public_html;
 
+    access_log   /var/log/nginx/{{ public_domain }}/access.log;
+    error_log    /var/log/nginx/{{ public_domain }}/error.log;
+
     include snippets/letsencrypt.conf;
 
     location ~ ^/~([A-Za-z0-9]+)(/.*)? {
@@ -18,6 +21,9 @@ server {
     listen       [::]:443 ssl http2;
     server_name  {{ public_domain }} www.{{ public_domain }};
     root         /srv/public_html;
+
+    access_log   /var/log/nginx/{{ public_domain }}/access.log;
+    error_log    /var/log/nginx/{{ public_domain }}/error.log;
 
 {% if certfile.stat.exists %}
     ssl_certificate      /etc/letsencrypt/live/{{ public_domain }}/fullchain.pem;

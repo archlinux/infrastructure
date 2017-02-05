@@ -4,6 +4,9 @@ server {
     server_name  {{ mirror_domain }};
     root         /srv/ftp;
 
+    access_log   /var/log/nginx/{{ mirror_domain }}/access.log;
+    error_log    /var/log/nginx/{{ mirror_domain }}/error.log;
+
     include snippets/letsencrypt.conf;
 
     autoindex on;
@@ -14,6 +17,9 @@ server {
     listen       [::]:443 ssl http2;
     server_name  {{ mirror_domain }};
     root         /srv/ftp;
+
+    access_log   /var/log/nginx/{{ mirror_domain }}/access.log;
+    error_log    /var/log/nginx/{{ mirror_domain }}/error.log;
 
 {% if certfile.stat.exists %}
     ssl_certificate      /etc/letsencrypt/live/{{ mirror_domain }}/fullchain.pem;

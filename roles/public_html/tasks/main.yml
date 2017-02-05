@@ -21,6 +21,9 @@
     - generate-public_html.timer
     - generate-public_html.service
 
+- name: make nginx log dir
+  file: path=/var/log/nginx/{{ public_domain }} state=directory owner=http group=log mode=755
+
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/public_html.conf owner=root group=root mode=0644
   notify:
