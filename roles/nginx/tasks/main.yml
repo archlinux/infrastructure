@@ -51,6 +51,9 @@
   notify:
     - daemon reload
 
+- name: install logrotate config
+  copy: src=logrotate.conf dest=/etc/logrotate.d/nginx-ansible owner=root group=root mode=0644
+
 - name: install inventory_hostname vhost
   template: src=nginx-hostname-vhost.conf.j2 dest=/etc/nginx/nginx.d/nginx-hostname-vhost.conf owner=root group=root mode=0644
   notify:
