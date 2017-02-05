@@ -55,6 +55,11 @@ PROMPT="${username_color}$USERNAME%f@${host_color}%B%m%b%f ${path_color}%B%~%b%f
 SPROMPT='zsh: correct '%R' to '%r' ? ([Y]es/[N]o/[E]dit/[A]bort) '
 
 # }}}
+# History {{{
+HISTFILE=~/.zsh/histfile
+HISTSIZE=1000
+SAVEHIST=50000
+# }}}
 # Other ZSH options {{{
 autoload -U colors
 colors
