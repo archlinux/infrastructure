@@ -35,6 +35,9 @@
   notify:
     - restart networkd
 
+- name: create zsh directory
+  file: path=/root/.zsh state=directory owner=root group=root mode=0700
+
 - name: install root shell config
   copy: src={{item}} dest=/root/.{{item}} owner=root group=root mode=0644
   with_items:
