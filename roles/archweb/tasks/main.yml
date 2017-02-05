@@ -20,7 +20,7 @@
   when: archweb_site
 
 - name: make nginx log dir
-  file: path=/var/log/nginx/{{ archweb_domain }} state=directory owner=http group=log mode=755
+  file: path=/var/log/nginx/{{ archweb_domain }} state=directory owner=root group=log mode=750
   when: archweb_site
 
 - name: make rsync iso dir

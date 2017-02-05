@@ -42,7 +42,7 @@
     create: true
 
 - name: make nginx log dir
-  file: path=/var/log/nginx/{{ mirror_domain }} state=directory owner=http group=log mode=755
+  file: path=/var/log/nginx/{{ mirror_domain }} state=directory owner=root group=log mode=750
 
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/syncrepo.conf owner=root group=root mode=0644

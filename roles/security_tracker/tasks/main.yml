@@ -43,7 +43,7 @@
     - reload nginx
 
 - name: make nginx log dir
-  file: path=/var/log/nginx/{{ security_tracker_domain }} state=directory owner=http group=log mode=755
+  file: path=/var/log/nginx/{{ security_tracker_domain }} state=directory owner=root group=log mode=750
 
 - name: copy security-tracker units
   copy: src="{{ item }}" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
