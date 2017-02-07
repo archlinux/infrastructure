@@ -43,14 +43,14 @@ server {
         location ~ \.php$ {return 403;}
     }
 
-    location ~ ^/task/(?<task_id>[0-9]+)$ {
+    location ~ ^/task/(?<task_id>[0-9]+) {
         rewrite ^/task/[0-9]+$ /index.php?do=details&task_id=$task_id last;
-        rewrite ^.*/comment(?<comment_id>[0-9]+)$ /index.php?do=details&task_id=$task_id&comment=$comment_id last;
-        rewrite ^.*/depends$ /index.php?do=depends&task_id=$task_id last;
+        rewrite ^/task/[0-9]+/comment(?<comment_id>[0-9]+)$ /index.php?do=details&task_id=$task_id&comment=$comment_id last;
+        rewrite ^/task/[0-9]+/depends$ /index.php?do=depends&task_id=$task_id last;
         if ( $arg_prune ~ "[0-9]+" ) {
             rewrite ^ /index.php?do=depends&task_id=$task_id&prune=$arg_prune last;
         }
-        rewrite ^.*/edit$ /index.php?do=details&task_id=$task_id&edit=yep last;
+        rewrite ^/task/[0-9]+/edit$ /index.php?do=details&task_id=$task_id&edit=yep last;
     }
 
     location ~ ^/newtask {
