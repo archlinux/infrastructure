@@ -886,9 +886,6 @@ default_socket_timeout = 60
 {% for ext in php_extensions %}
 extension={{ ext }}.so
 {% endfor %}
-{% for ext in php_zend_extensions %}
-extension={{ ext }}.so
-{% endfor %}
 
 ;;;;;;;;;;;;;;;;;;;
 ; Module Settings ;
