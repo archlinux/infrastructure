@@ -110,6 +110,14 @@ server {
         rewrite ^/proj[0-9]+$ /index.php?project=$project_id last;
     }
 
+    location ~ ^/index$ {
+        rewrite ^/index$ /index.php?do=index last;
+    }
+
+    location ~ ^/index/proj(?<project_id>[0-9]+)$ {
+        rewrite ^/index/proj[0-9]+$ /index.php?do=index&project=$project_id last;
+    }
+
     location ~ \.php$ {
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         include fastcgi_params;
