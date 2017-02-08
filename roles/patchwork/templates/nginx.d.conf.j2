@@ -1,0 +1,31 @@
+server {
+    listen       80;
+    listen       [::]:80;
+    server_name  {{ patchwork_domain }};
+
+    access_log   /var/log/nginx/{{ patchwork_domain }}/access.log;
+    error_log    /var/log/nginx/{{ patchwork_domain }}/error.log;
+
+    include snippets/letsencrypt.conf;
+
+    location / {
+        rewrite ^(.*) https://{{ patchwork_domain }}$1 permanent;
+    }
+}
+
+server {
+    listen       443 ssl http2;
+    listen       [::]:443 ssl http2;
+    server_name  {{ patchwork_domain }};
+
+    access_log   /var/log/nginx/{{ patchwork_domain }}/access.log;
+    error_log    /var/log/nginx/{{ patchwork_domain }}/error.log;
+
+    ssl_certificate      /etc/letsencrypt/live/{{ patchwork_domain }}/fullchain.pem;
+    ssl_certificate_key  /etc/letsencrypt/live/{{ patchwork_domain }}/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/{{ patchwork_domain }}/chain.pem;
+
+    location / {
+        return 503;
+    }
+}
