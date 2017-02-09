@@ -25,7 +25,14 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ patchwork_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ patchwork_domain }}/chain.pem;
 
+    error_page 503 /503.html;
+
     location / {
         return 503;
     }
+
+    location = /503.html {
+        root {{ patchwork_dir }};
+    }
+
 }
