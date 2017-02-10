@@ -36,15 +36,15 @@
 
 - name: install mysql backup script
   template: src=backup-mysql.sh.j2 dest=/usr/local/bin/backup-mysql.sh owner=root group=root mode=0755
-  when: mysql_backup_dir != None
+  when: mysql_backup_dir
 
 - name: install mysql backup config
   template: src=backup-my.cnf.j2 dest={{mysql_backup_defaults}}
-  when: mysql_backup_defaults != None
+  when: mysql_backup_defaults
 
 - name: create mysql backup directory
   file: path={{mysql_backup_dir}} state=directory owner=root group=root
-  when: mysql_backup_dir != None
+  when: mysql_backup_dir
 
 - name: install systemd timers for backup
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
