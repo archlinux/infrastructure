@@ -16,7 +16,7 @@
     - reload nginx
 
 - name: make nginx log dir
-  file: path=/var/log/nginx/{{ flyspray_domain }} state=directory owner=root group=log mode=750
+  file: path=/var/log/nginx/{{ flyspray_domain }} state=directory owner=root group=root mode=0755
 
 - name: create setup dir with write permissions
   file: state=directory owner="{{ flyspray_user }}" group="{{ flyspray_user }}" path="{{ flyspray_dir }}/setup" mode=755

@@ -6,7 +6,7 @@
     - reload nginx
 
 - name: make nginx log dir
-  file: path=/var/log/nginx/{{ sources_domain }} state=directory owner=root group=log mode=0750
+  file: path=/var/log/nginx/{{ sources_domain }} state=directory owner=root group=root mode=0755
 
 - name: make sources dir
   file: path={{ sources_dir }} state=directory owner=root group=root mode=0755

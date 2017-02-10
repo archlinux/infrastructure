@@ -11,7 +11,7 @@
     - reload nginx
 
 - name: make nginx log dir
-  file: path=/var/log/nginx/{{ patchwork_domain }} state=directory owner=root group=log mode=750
+  file: path=/var/log/nginx/{{ patchwork_domain }} state=directory owner=root group=root mode=0755
 
 - name: deploy maintenance page
   template: src=503.html.j2 dest="{{ patchwork_dir }}/503.html" owner=patchwork group=patchwork mode=644

@@ -29,7 +29,7 @@
   file: state=directory path=/etc/nginx/auth owner=root group=root mode=0755
 
 - name: create default nginx log directory
-  file: state=directory path=/var/log/nginx/default owner=root group=log mode=0750
+  file: state=directory path=/var/log/nginx/default owner=root group=root mode=0755
 
 - name: create unique DH group
   command: openssl dhparam -out /etc/ssl/dhparams.pem 2048 creates=/etc/ssl/dhparams.pem
