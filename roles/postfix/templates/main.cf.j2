@@ -5,7 +5,7 @@ biff = no
 
 append_dot_mydomain = no
 
-{% if postfix_server %}
+{% if postfix_smtpd_public %}
 smtpd_tls_cert_file = /etc/letsencrypt/live/{{inventory_hostname}}/fullchain.pem
 smtpd_tls_key_file = /etc/letsencrypt/live/{{inventory_hostname}}/privkey.pem
 {% endif %}
@@ -74,7 +74,7 @@ non_smtpd_milters=unix:/var/spool/opendkim/opendkim
 # custom restriction classes
 policy_check =
 # postfwd
-{% if postfix_server %}
+{% if postfix_smtpd_public %}
   check_policy_service inet:127.0.0.1:10040
 {% endif %}
 

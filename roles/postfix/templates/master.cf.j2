@@ -9,11 +9,16 @@
 # service type  private unpriv  chroot  wakeup  maxproc command + args
 #               (yes)   (yes)   (no)    (never) (100)
 # ==========================================================================
-{% if postfix_server %}
+{% if postfix_smtpd_public %}
 smtp      inet  n       -       n       -       -       smtpd
     -o smtpd_proxy_filter=[127.0.0.1]:10025
     -o smtpd_client_connection_count_limit=20
     -o smtpd_proxy_options=speed_adjust
+{% else %}
+localhost:smtp      inet  n       -       n       -       -       smtpd
+{% endif %}
+
+{% if postfix_server %}
 submission inet n       -       n       -       -       smtpd
     -o syslog_name=postfix/submission
     -o smtpd_tls_security_level=encrypt
@@ -22,9 +27,8 @@ submission inet n       -       n       -       -       smtpd
     -o content_filter=smtp:[127.0.0.1]:10025
     -o smtpd_client_connection_count_limit=10
     #-o smtpd_milters=unix:/var/spool/opendkim/opendkim
-{% else %}
-localhost:smtp      inet  n       -       n       -       -       smtpd
 {% endif %}
+
 #smtp      inet  n       -       n       -       1       postscreen
 #smtpd     pass  -       -       n       -       -       smtpd
 #dnsblog   unix  -       -       n       -       0       dnsblog
@@ -80,7 +84,7 @@ lmtp      unix  -       -       n       -       -       lmtp
 anvil     unix  -       -       n       -       1       anvil
 scache    unix  -       -       n       -       1       scache
 
-{% if postfix_server %}
+{% if postfix_smtpd_public %}
 # After-filter SMTP server. Receive mail from the content filter
 # on localhost port 10026.
 #
