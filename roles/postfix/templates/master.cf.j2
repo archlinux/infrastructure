@@ -103,3 +103,8 @@ scache    unix  -       -       n       -       1       scache
         -o smtpd_reject_footer=
         -o smtpd_tls_security_level=none
 {% endif %}
+
+{% if postfix_patchwork_enabled %}
+patchwork   unix  -       n       n       -       -       pipe
+  flags=DFRX user={{postfix_patchwork_user}} argv={{postfix_patchwork_mail_handler}}
+{% endif %}

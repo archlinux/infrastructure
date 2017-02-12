@@ -179,10 +179,19 @@ local_recipient_maps =
 relocated_maps = ${indexed}/relocated
 {% endif %}
 
+relay_domains =
+{%if postfix_patchwork_enabled %}
+  archlinux.org
+{% endif %}
+
 transport_maps =
   ${indexed}/transport
   ${indexed}/compat_maps
   #${indexed}/temporary_mailman_maps
+
+{% if postfix_patchwork_enabled %}
+patchwork_destination_recipient_limit = 1
+{% endif %}
 
 authorized_mailq_users = root
 

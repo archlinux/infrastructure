@@ -1,2 +1,5 @@
 #lists.archlinux.org mailman:
 gmail.com smtp-ipv4:
+{% if postfix_patchwork_enabled %}
+patchwork@archlinux.org patchwork:
+{% endif %}
