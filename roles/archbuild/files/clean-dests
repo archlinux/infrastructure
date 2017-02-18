@@ -5,7 +5,12 @@ integer ret=0
 
 cd /var/lib/archbuilddest/srcdest
 
-files=( *(Na+90) )
+files=( *(.Na+90) )
+for folder in *(/N); do
+  infolder=( $folder/**/*(.NDa-90[1]) )
+  (( ${#infolder} )) || files+=($folder)
+done
+
 (( ${#files} )) || exit 0
 
 df -HT .
