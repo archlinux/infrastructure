@@ -56,6 +56,10 @@ server {
 
     include snippets/letsencrypt.conf;
 
+    location /check_network_status.txt {
+        return 200 'NetworkManager is online';
+    }
+
     location / {
         rewrite ^(.*) https://{{ archweb_domain }}$1 permanent;
     }
