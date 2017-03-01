@@ -338,6 +338,11 @@ arch_users:
       - dev
       - tu
       - multilib
+  shibumi:
+    name: "Christian Rebischke"
+    ssh_key: shibumi.pub
+    groups:
+      - tu
   speps:
     name: "speps"
     ssh_key: speps.pub
