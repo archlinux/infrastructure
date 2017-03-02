@@ -109,7 +109,7 @@ class PkgbuildReader < Pkgbuild
   def initialize(*args)
     super
 
-    @bash = IO.popen ["bash"], "w+"
+    @bash = IO.popen ["bash"], "r+"
     @bash.puts "{", @contents, "} &>/dev/null"
 
     @pkgbase = read :pkgbase
