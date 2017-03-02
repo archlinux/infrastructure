@@ -229,8 +229,10 @@ class Repo
     read('git', 'describe', '--tags', *args).chomp
   end
 
-  def read_file(ref, file)
+  def read_file(ref, file, default=nil)
     read 'git', 'show', "#{ref}:#{file}"
+  rescue
+    nil
   end
 
   def log(*args)
@@ -302,8 +304,9 @@ pbw.replace_var :_commit, "#{commit}  # #{commit_comment}", before: :source
 pbw.sub(/source=\([^) \n]+/, "source=(\"#{reposrc}\"") unless pbr.source.first == reposrc
 
 if gitify
-  autogen = repo.read_file(commit, "autogen.sh") rescue ""
-  configure = repo.read_file(commit, "configure.ac") rescue ""
+  autogen = repo.read_file(commit, "autogen.sh") || ""
+  configure = repo.read_file(commit, "configure.ac") || ""
+  meson_build = repo.read_file(commit, "meson.build") || ""
 
   add_md = lambda do |name, cond=true|
     if !pbr.makedepends.grep(name).empty?
@@ -373,8 +376,8 @@ header "Diff"
 IO.popen(['diff', '-u', '-', pbw.filename], "w") { |f| f.write pbr.contents }
 
 header "Submodules"
-gitmodules = repo.read_file(commit, ".gitmodules") rescue ""
-if gitmodules =~ /submodule/
+gitmodules = repo.read_file(commit, ".gitmodules")
+if gitmodules
   puts gitmodules
 else
   puts "None"
