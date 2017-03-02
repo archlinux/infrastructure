@@ -382,12 +382,10 @@ unless diff.empty?
   puts diff, ""
 end
 
-header "Submodules"
 gitmodules = repo.read_file(commit, ".gitmodules")
 if gitmodules
-  puts gitmodules
-else
-  puts "None"
+  header "Submodules"
+  puts gitmodules, ""
 end
 
 Dir.unlink "src"
