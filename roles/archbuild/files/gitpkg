@@ -372,8 +372,15 @@ pbw.write
 system "updpkgsums"
 system "makepkg", "--verifysource"
 
-header "Diff"
-IO.popen(['diff', '-u', '-', pbw.filename], "w") { |f| f.write pbr.contents }
+diff = IO.popen(['diff', '-u', '-', pbw.filename], "r+") do |f|
+  f.write pbr.contents
+  f.close_write
+  f.read
+end
+unless diff.empty?
+  header "Diff"
+  puts diff, ""
+end
 
 header "Submodules"
 gitmodules = repo.read_file(commit, ".gitmodules")
