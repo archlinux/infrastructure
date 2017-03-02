@@ -334,9 +334,16 @@ if gitify
 
   add_md["git"]
 
+  meson = !meson_build.empty?
   autotools = !autogen.empty?
 
   case
+  when meson
+    add_md["meson"]
+    add_md["vala", meson_build =~ /'vala'/]
+
+    header "Meson Options"
+    puts repo.read_file(commit, "meson_options.txt")
   when autotools
     unless add_md["gnome-common",
         (autogen =~ /gnome-autogen\.sh/ || configure =~ /^GNOME_[A-Z_]+(\(|$)/)]
@@ -358,6 +365,7 @@ if gitify
 
   pbw.gsub(/(\${?#{pbr.basevar}}?|#{repo.name})-\${?pkgver}?/, localname)
 
+  meson &&= pbr !~ /meson/
   autotools &&= pbr !~ /autogen\.sh/
 
   {
@@ -382,6 +390,11 @@ if gitify
     end,
 
     prepare: case
+    when meson
+      <<~END
+        mkdir build
+        cd #{localname}
+      END
     when autotools
       <<~END
         cd #{localname}
@@ -390,11 +403,34 @@ if gitify
     end,
 
     check: case
+    when meson
+      <<~END
+        cd build
+        ninja test
+      END
     when pbr.has_func?(:check)
     when autotools
       <<~END
         cd #{localname}
         make check
+      END
+    end,
+
+    build: case
+    when meson
+      <<~END
+        cd build
+        export LANG=en_US.UTF-8
+        meson --prefix=/usr --buildtype=plain ../#{localname}
+        ninja
+      END
+    end,
+
+    package: case
+    when meson
+      <<~END
+        cd build
+        DESTDIR="$pkgdir" ninja install
       END
     end,
   }.reverse_each do |name, content|
