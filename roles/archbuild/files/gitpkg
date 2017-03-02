@@ -210,7 +210,7 @@ class Repo
   end
 
   def read(*args)
-    ret = IO.popen(args, chdir: @dir) { |f| f.read }
+    ret = IO.popen(args, chdir: @dir, err: "/dev/null") { |f| f.read }
 
     if !$?.exited?
       raise "#{args[0] == "git" ? args[1] : args[0]} failed"
