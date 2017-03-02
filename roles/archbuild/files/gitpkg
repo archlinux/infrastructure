@@ -276,7 +276,7 @@ class Repo
     end
 
     log '--stat=80', commit
-    system 'git', 'show', "#{commit}:NEWS"
+    system('git', 'show', "#{commit}:NEWS") if read_file(commit, "NEWS")
 
     commit
   end
