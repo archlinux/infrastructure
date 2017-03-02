@@ -163,7 +163,7 @@ class Repo
 
   def self.exists?(src)
     _name, url = split_src src
-    !!Kernel.system('git', 'ls-remote', url, out: "/dev/null", err: [:child, :out])
+    !!Kernel.system('git', 'ls-remote', url, [:out, :err] => "/dev/null")
   end
 
   def self.discover(src)
