@@ -32,6 +32,10 @@ def header(s)
   puts "\n\e[1m#{s}:\e[0m"
 end
 
+def indent(s, c=2)
+  s.strip.each_line.map { |l| " " * c + l.strip }.join("\n")
+end
+
 class Pkgbuild
   attr_reader :filename, :contents
 
@@ -66,30 +70,39 @@ class PkgbuildWriter < Pkgbuild
     @contents.gsub!(*args, &block)
   end
 
-  def insert_func(content, where=/[A-Za-z0-9_-]+/)
-    @contents.sub!(/^#{where}\(\)/, "#{content}\n\\&")
+  private def replace_thing(re_gen, after, before, separator)
+    after.nil? ^ before.nil? or raise ArgumentError, "need either after: or before:"
+
+    return false if @contents.sub!(re_gen[]) { yield($1) }
+
+    if after.nil?
+      @contents.sub!(re_gen[before]) { yield("") + separator + $& }
+    else
+      @contents.sub!(re_gen[after]) { $& + separator + yield("") }
+    end
+
+    true
+  end
+
+  def replace_func(name, content=nil, after: nil, before: nil)
+    content.nil? ^ !block_given? or raise ArgumentError, "need either content or block"
+    before.nil? && after.nil? and before=/[A-Za-z0-9_-]+/
+
+    re = lambda { |what=name| /^#{what}\(\)\s*{(.*?)^}/m }
+
+    replace_thing(re, after, before, "\n\n") do |orig|
+      "#{name}() {\n#{indent(content || yield(orig))}\n}"
+    end
   end
 
   def replace_var(name, content=nil, after: nil, before: nil)
     content.nil? ^ !block_given? or raise ArgumentError, "need either content or block"
-    after.nil? ^ before.nil? or raise ArgumentError, "need either after: or before:"
 
-    var_re = lambda { |var| /^#{var}=(\([^)]*\)|.*$)/ }
+    re = lambda { |what=name| /^#{what}=(\([^)]*\)|.*$)/ }
 
-    if has_var? name
-      @contents.sub!(var_re[name]) { "#{name}=#{content || yield($1)}" }
-      return false
+    replace_thing(re, after, before, "\n") do |orig|
+      "#{name}=#{content || yield(orig)}"
     end
-
-    repl = "#{name}=#{content || yield("")}"
-
-    if !after.nil?
-      @contents.sub!(var_re[after]) { $& + "\n" + repl }
-    else
-      @contents.sub!(var_re[before]) { repl + "\n" + $& }
-    end
-
-    true
   end
 
   def append_array(name, content, **kwargs)
@@ -319,16 +332,23 @@ if gitify
     end
   end
 
-  unless add_md["gnome-common",
-      (autogen =~ /gnome-autogen\.sh/ || configure =~ /^GNOME_[A-Z_]+(\(|$)/)]
-    add_md["gtk-doc", configure =~ /^GTK_DOC_CHECK/]
-    add_md["yelp-tools", configure =~ /^YELP_HELP_INIT/]
-    add_md["autoconf-archive", configure =~ /^AX_/]
-    add_md["intltool", configure =~ /^IT_PROG_INTLTOOL/]
-  end
-  add_md["appstream-glib", configure =~ /^APPSTREAM_/]
-  add_md["vala", configure =~ /^AM_PROG_VALAC/]
   add_md["git"]
+
+  autotools = !autogen.empty?
+
+  case
+  when autotools
+    unless add_md["gnome-common",
+        (autogen =~ /gnome-autogen\.sh/ || configure =~ /^GNOME_[A-Z_]+(\(|$)/)]
+      add_md["gtk-doc", configure =~ /^GTK_DOC_CHECK/]
+      add_md["yelp-tools", configure =~ /^YELP_HELP_INIT/]
+      add_md["autoconf-archive", configure =~ /^AX_/]
+      add_md["intltool", configure =~ /^IT_PROG_INTLTOOL/]
+    end
+
+    add_md["appstream-glib", configure =~ /^APPSTREAM_/]
+    add_md["vala", configure =~ /^AM_PROG_VALAC/]
+  end
 
   if pbr.pkgbase == repo.name
     localname = "$#{pbr.basevar}"
@@ -338,34 +358,48 @@ if gitify
 
   pbw.gsub(/(\${?#{pbr.basevar}}?|#{repo.name})-\${?pkgver}?/, localname)
 
-  if pbr !~ /autogen\.sh/
-    pbw.insert_func <<~END
-      prepare() {
+  autotools &&= pbr !~ /autogen\.sh/
+
+  {
+    pkgver: begin
+      ver_sed = ""
+
+      begin
+        describe = repo.describe(commit)
+
+        ver_sed << "s/^#{$&}//;" if describe =~ /^\D+/
+        ver_sed << "s/_/./g;" if describe =~ /_/
+      rescue => e
+        warn "pkgver() deduction failed: #{e}"
+      end
+
+      ver_sed << "s/-/+/g"
+
+      <<~END
+        cd #{localname}
+        git describe --tags | sed '#{ver_sed}'
+      END
+    end,
+
+    prepare: case
+    when autotools
+      <<~END
         cd #{localname}
         NOCONFIGURE=1 ./autogen.sh
-      }
-    END
+      END
+    end,
+
+    check: case
+    when pbr.has_func?(:check)
+    when autotools
+      <<~END
+        cd #{localname}
+        make check
+      END
+    end,
+  }.reverse_each do |name, content|
+    pbw.replace_func(name, content) if content
   end
-
-  sed = ""
-
-  begin
-    describe = repo.describe(commit)
-
-    sed << "s/^#{$&}//;" if describe =~ /^\D+/
-    sed << "s/_/./g;" if describe =~ /_/
-  rescue => e
-    warn "pkgver() deduction failed: #{e}"
-  end
-
-  sed << "s/-/+/g"
-
-  pbw.insert_func <<~END
-    pkgver() {
-      cd #{localname}
-      git describe --tags | sed '#{sed}'
-    }
-  END
 end
 
 pbw.write
