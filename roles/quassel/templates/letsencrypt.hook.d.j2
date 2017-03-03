@@ -8,7 +8,7 @@ for domain in $RENEWED_DOMAINS; do
   case "$domain" in
     $quassel_domain)
       cat /etc/letsencrypt/live/$quassel_domain/{privkey,fullchain}.pem |
-        install -o quassel -g quassel -m 400 /dev/stdin /var/lib/quassel/quasselCert.pem
+        install -o root -g quassel -m 640 /dev/stdin /var/lib/quassel/quasselCert.pem
       systemctl restart quassel
       ;;
   esac
