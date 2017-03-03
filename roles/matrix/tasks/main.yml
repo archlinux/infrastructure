@@ -1,0 +1,107 @@
+---
+
+- stat: path="/etc/letsencrypt/live/{{ matrix_domain }}/fullchain.pem"
+  register: certfile
+  when: 'matrix_domain != ""'
+
+- name: install packages
+  pacman: name=python2-virtualenv,git
+
+- name: add synapse group
+  group: name=synapse system=yes gid=198
+
+- name: add synapse user
+  user: name=synapse system=yes uid=198 group=synapse home=/var/lib/synapse shell=/bin/false createhome=no
+
+- name: create synapse home
+  file: path=/var/lib/synapse state=directory owner=synapse group=synapse mode=0755
+
+- name: create venv
+  command: virtualenv2 /var/lib/synapse/venv
+  args:
+    creates: /var/lib/synapse/venv/bin/python
+  become: yes
+  become_user: synapse
+  become_method: sudo
+
+- name: download synapse
+  command: git clone https://github.com/matrix-org/synapse /var/lib/synapse/synapse
+  args:
+    creates: /var/lib/synapse/synapse/setup.py
+  become: yes
+  become_user: synapse
+  become_method: sudo
+
+- name: install synapse
+  command: /var/lib/synapse/venv/bin/pip install -e /var/lib/synapse/synapse psycopg2 systemd-python lxml
+  args:
+    creates: /var/lib/synapse/venv/bin/synctl
+  become: yes
+  become_user: synapse
+  become_method: sudo
+
+- name: add synapse postgres db
+  postgresql_db: db=synapse
+  become: yes
+  become_user: postgres
+  become_method: su
+
+- name: add synapse postgres user
+  postgresql_user: db=synapse name=synapse password={{ postgres_users.synapse }}
+  become: yes
+  become_user: postgres
+  become_method: su
+
+- name: install matrix units
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - synapse.service
+  notify:
+    - daemon reload
+
+- name: add synapse config dir
+  file: state=directory path=/etc/synapse owner=root group=synapse mode=0750
+
+- name: install homeserver config
+  template: src=homeserver.yaml.j2 dest=/etc/synapse/homeserver.yaml owner=root group=synapse mode=0640
+
+- name: install log config
+  copy: src=log_config.yaml dest=/etc/synapse/log_config.yaml owner=root group=root mode=0644
+
+- name: install federation certificate
+  copy:
+    content: "{{ matrix_secrets[matrix_server_name].federation_crt }}"
+    dest: /etc/synapse/{{ matrix_server_name }}.tls.crt
+    owner: root
+    group: synapse
+    mode: 0640
+
+- name: install federation key
+  copy:
+    content: "{{ matrix_secrets[matrix_server_name].federation_key }}"
+    dest: /etc/synapse/{{ matrix_server_name }}.tls.key
+    owner: root
+    group: synapse
+    mode: 0640
+
+- name: install signing key
+  copy:
+    content: "{{ matrix_secrets[matrix_server_name].signing_key }}"
+    dest: /etc/synapse/{{ matrix_server_name }}.signing.key
+    owner: root
+    group: synapse
+    mode: 0640
+
+- name: start and enable synapse
+  service: name={{ item }} enabled=yes state=started
+  with_items:
+    - synapse.service
+
+- name: make nginx log dir
+  file: path=/var/log/nginx/{{ matrix_domain }} state=directory owner=root group=root mode=0755
+
+- name: set up nginx
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/matrix.conf owner=root group=root mode=0644
+  notify:
+    - reload nginx
+  when: 'matrix_domain != ""'

@@ -1,0 +1,14 @@
+[Unit]
+Description=Synapse Matrix Homeserver
+Requires=postgresql.service
+After=network.target postgresql.service
+
+[Service]
+User=synapse
+WorkingDirectory=~
+ExecStart=/var/lib/synapse/venv/bin/python -m synapse.app.homeserver \
+  --config-path=/etc/synapse/homeserver.yaml
+  --log-config=/etc/synapse/log_config.yaml
+
+[Install]
+WantedBy=multi-user.target
