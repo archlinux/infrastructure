@@ -4,10 +4,10 @@
 # autogenerates on launch with your own SSL certificate + key pair
 # if you like.  Any required intermediary certificates can be
 # appended after the primary certificate in hierarchical order.
-tls_certificate_path: "/etc/synapse/{{ matrix_server_name }}.tls.crt"
+tls_certificate_path: '/etc/synapse/{{ matrix_server_name }}.tls.crt'
 
 # PEM encoded private key for TLS
-tls_private_key_path: "/etc/synapse/{{ matrix_server_name }}.tls.key"
+tls_private_key_path: '/etc/synapse/{{ matrix_server_name }}.tls.key'
 
 # PEM dh parameters for ephemeral keys
 tls_dh_params_path: /etc/ssl/dhparams.pem
@@ -44,13 +44,13 @@ tls_fingerprints: []
 # This is used by remote servers to connect to this server,
 # e.g. matrix.org, localhost:8080, etc.
 # This is also the last part of your UserID.
-server_name: "{{ matrix_server_name }}"
+server_name: '{{ matrix_server_name }}'
 
 # When running as a daemon, the file to store the pid in
 #pid_file: /var/lib/synapse/homeserver.pid
 
 # Whether to serve a web client from the HTTP/HTTPS root resource.
-web_client: true
+web_client: false
 
 # The public-facing base URL for the client API (not including _matrix/...)
 # public_baseurl: https://example.com:8448/
@@ -96,7 +96,7 @@ listeners:
         # List of resources to host on this listener.
         names:
           - client     # The client-server APIs, both v1 and v2
-          - webclient  # The bundled webclient.
+          #- webclient  # The bundled webclient.
 
         # Should synapse compress HTTP responses to clients that support it?
         # This should be disabled if running synapse behind a load balancer
@@ -116,7 +116,7 @@ listeners:
     x_forwarded: true
 
     resources:
-      - names: [client, webclient]
+      - names: [client]
         compress: true
       - names: [federation]
         compress: false
@@ -337,7 +337,7 @@ enable_registration: False
 
 # If set, allows registration by anyone who also has the shared
 # secret, even if registration is otherwise disabled.
-registration_shared_secret: "{{ matrix_secrets[matrix_server_name].registration_shared_secret }}"
+registration_shared_secret: '{{ matrix_secrets[matrix_server_name].registration_shared_secret }}'
 
 # Set the number of bcrypt rounds used to generate password hash.
 # Larger numbers increase the work factor needed to generate the hash.
@@ -374,10 +374,10 @@ room_invite_state_types:
 
 
 # A list of application service config file to use
-app_service_config_files: []
+app_service_config_files: ['/etc/synapse/appservice-registration-irc.yaml']
 
 
-macaroon_secret_key: "{{ matrix_secrets[matrix_server_name].macaroon_secret_key }}"
+macaroon_secret_key: '{{ matrix_secrets[matrix_server_name].macaroon_secret_key }}'
 
 # Used to enable access token expiration.
 expire_access_token: False
@@ -385,7 +385,7 @@ expire_access_token: False
 ## Signing Keys ##
 
 # Path to the signing key to sign messages with
-signing_key_path: "/etc/synapse/{{ matrix_server_name }}.signing.key"
+signing_key_path: '/etc/synapse/{{ matrix_server_name }}.signing.key'
 
 # The keys that the server used to sign messages with but won't use
 # to sign new messages. E.g. it has lost its private key
@@ -447,7 +447,7 @@ password_config:
    enabled: true
    # Uncomment and change to a secret random string for extra security.
    # DO NOT CHANGE THIS AFTER INITIAL SETUP!
-   pepper: "{{ matrix_secrets[matrix_server_name].pepper }}"
+   pepper: '{{ matrix_secrets[matrix_server_name].pepper }}'
 
 
 

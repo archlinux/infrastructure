@@ -1,0 +1,15 @@
+[Unit]
+Description=Matrix IRC Bridge
+Requires=synapse.service
+After=network.target synapse.service
+
+[Service]
+User=synapse
+WorkingDirectory=/var/lib/synapse/matrix-appservice-irc
+ExecStart=/usr/bin/node app.js \
+  -c /etc/synapse/irc-bridge.yaml \
+  -f /etc/synapse/appservice-registration-irc.yaml \
+  -p 8499
+
+[Install]
+WantedBy=multi-user.target

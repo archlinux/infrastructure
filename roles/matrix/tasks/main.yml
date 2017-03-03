@@ -5,7 +5,7 @@
   when: 'matrix_domain != ""'
 
 - name: install packages
-  pacman: name=python2-virtualenv,git
+  pacman: name=python2-virtualenv,git,npm
 
 - name: add synapse group
   group: name=synapse system=yes gid=198
@@ -14,7 +14,12 @@
   user: name=synapse system=yes uid=198 group=synapse home=/var/lib/synapse shell=/bin/false createhome=no
 
 - name: create synapse home
-  file: path=/var/lib/synapse state=directory owner=synapse group=synapse mode=0755
+  file: path={{ item }} state=directory owner=synapse group=synapse mode=0755
+  with_items:
+    - /var/lib/synapse
+    - /var/lib/synapse/irc-nedb
+    - /var/lib/synapse/media_store
+    - /var/lib/synapse/uploads
 
 - name: create venv
   command: virtualenv2 /var/lib/synapse/venv
@@ -32,10 +37,27 @@
   become_user: synapse
   become_method: sudo
 
+- name: download matrix-appservice-irc
+  command: git clone https://github.com/heftig/matrix-appservice-irc /var/lib/synapse/matrix-appservice-irc
+  args:
+    creates: /var/lib/synapse/matrix-appservice-irc/package.json
+  become: yes
+  become_user: synapse
+  become_method: sudo
+
 - name: install synapse
   command: /var/lib/synapse/venv/bin/pip install -e /var/lib/synapse/synapse psycopg2 systemd-python lxml
   args:
     creates: /var/lib/synapse/venv/bin/synctl
+  become: yes
+  become_user: synapse
+  become_method: sudo
+
+- name: install matrix-appservice-irc
+  command: npm install
+  args:
+    chdir: /var/lib/synapse/matrix-appservice-irc
+    creates: /var/lib/synapse/matrix-appservice-irc/node_modules
   become: yes
   become_user: synapse
   become_method: sudo
@@ -52,14 +74,7 @@
   become_user: postgres
   become_method: su
 
-- name: install matrix units
-  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
-  with_items:
-    - synapse.service
-  notify:
-    - daemon reload
-
-- name: add synapse config dir
+- name: create synapse config dir
   file: state=directory path=/etc/synapse owner=root group=synapse mode=0750
 
 - name: install homeserver config
@@ -68,17 +83,23 @@
 - name: install log config
   copy: src=log_config.yaml dest=/etc/synapse/log_config.yaml owner=root group=root mode=0644
 
+- name: install irc-bridge config
+  template: src=irc-bridge.yaml.j2 dest=/etc/synapse/irc-bridge.yaml owner=root group=synapse mode=0640
+
+- name: install irc-bridge registration
+  template: src=appservice-registration-irc.yaml.j2 dest=/etc/synapse/appservice-registration-irc.yaml owner=root group=synapse mode=0640
+
 - name: install federation certificate
   copy:
-    content: "{{ matrix_secrets[matrix_server_name].federation_crt }}"
+    content: '{{ matrix_secrets[matrix_server_name].federation_crt }}'
     dest: /etc/synapse/{{ matrix_server_name }}.tls.crt
     owner: root
-    group: synapse
-    mode: 0640
+    group: root
+    mode: 0644
 
 - name: install federation key
   copy:
-    content: "{{ matrix_secrets[matrix_server_name].federation_key }}"
+    content: '{{ matrix_secrets[matrix_server_name].federation_key }}'
     dest: /etc/synapse/{{ matrix_server_name }}.tls.key
     owner: root
     group: synapse
@@ -86,16 +107,19 @@
 
 - name: install signing key
   copy:
-    content: "{{ matrix_secrets[matrix_server_name].signing_key }}"
+    content: '{{ matrix_secrets[matrix_server_name].signing_key }}'
     dest: /etc/synapse/{{ matrix_server_name }}.signing.key
     owner: root
     group: synapse
     mode: 0640
 
-- name: start and enable synapse
-  service: name={{ item }} enabled=yes state=started
-  with_items:
-    - synapse.service
+- name: install ircpass key
+  copy:
+    content: '{{ matrix_secrets[matrix_server_name].ircpass_key }}'
+    dest: /etc/synapse/{{ matrix_server_name }}.ircpass.key
+    owner: root
+    group: synapse
+    mode: 0640
 
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ matrix_domain }} state=directory owner=root group=root mode=0755
@@ -105,3 +129,17 @@
   notify:
     - reload nginx
   when: 'matrix_domain != ""'
+
+- name: install matrix units
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - synapse.service
+    - matrix-appservice-irc.service
+  notify:
+    - daemon reload
+
+- name: start and enable synapse
+  service: name={{ item }} enabled=yes state=started
+  with_items:
+    - synapse.service
+    - matrix-appservice-irc.service
