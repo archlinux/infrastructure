@@ -38,7 +38,7 @@ ircService:
       # E.g. 'ExampleNet IRC Bridge status'.
       # It is also used in the Third Party Lookup API as the instance `desc`
       # property, where each server is an instance.
-      name: '{{ settings.name }}'
+      name: '{{ matrix_server_name }}—{{ settings.name }}'
       #
       # [DEPRECATED] Use `name`, above, instead.
       # A human-readable description string
