@@ -1,6 +1,6 @@
 ---
 - name: install php-fpm
-  pacman: name=php-fpm state=present
+  pacman: name=php-fpm,php-gd,php-pgsql state=present
 
 - name: install php-fpm units
   copy: >
