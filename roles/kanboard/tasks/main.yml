@@ -1,0 +1,55 @@
+---
+
+- name: install packages
+  pacman: name=git,php-composer state=present
+
+- name: make kanboard user
+  user: name=kanboard shell=/bin/false home="{{ kanboard_dir }}" createhome=no
+
+- name: clone kanboard git repo
+  git: repo=https://github.com/kanboard/kanboard.git dest="{{kanboard_dir}}" version=stable
+
+- name: install nginx config
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/kanboard.conf owner=root group=root mode=644
+  notify:
+    - reload nginx
+
+- name: make nginx log dir
+  file: path=/var/log/nginx/{{ kanboard_domain }} state=directory owner=root group=root mode=0755
+
+- name: make dirs for webuser
+  file: path="{{kanboard_dir}}/{{item}}" owner=kanboard mode=700 state=directory
+  with_items:
+    - data
+    - .composer
+    - vendor
+
+- name: install composer dependencies
+  composer: command="install" working_dir="{{kanboard_dir}}"
+  become: true
+  become_user: kanboard
+
+- name: create kanboard db user
+  postgresql_user: name={{ kanboard_db_user }} password={{ kanboard_db_password }}
+  become: yes
+  become_user: postgres
+  become_method: su
+
+- name: create kanboard db
+  postgresql_db: db="{{kanboard_db}}"
+  become: yes
+  become_user: postgres
+  become_method: su
+
+- name: install kanboard config
+  template: src=config.php.j2 dest="{{kanboard_dir}}/config.php" owner=root group=kanboard mode=640
+
+- name: configure php-fpm
+  template:
+    src=php-fpm.conf.j2 dest="/etc/php/php-fpm.d/kanboard.conf"
+    owner=root group=root mode=0644
+  notify:
+    - restart php-fpm@kanboard
+
+- name: start and enable systemd socket
+  service: name=php-fpm@kanboard.socket state=running enabled=true

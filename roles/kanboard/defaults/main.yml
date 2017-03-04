@@ -1,0 +1,8 @@
+---
+
+kanboard_dir: "/srv/http/kanboard"
+kanboard_domain: "kanboard.archlinux.org"
+
+kanboard_db_user: "kanboard"
+kanboard_db: "kanboard"
+

@@ -30,3 +30,4 @@
     - { role: flyspray, tags: ["flyspray"] }
     - { role: mailman, mailman_domain: "lists.archlinux.org", tags: ["mailman"] }
     - { role: patchwork, tags: ["patchwork"] }
+    - { role: kanboard, tags: ["kanboard"] }
