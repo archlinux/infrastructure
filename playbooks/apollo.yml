@@ -31,3 +31,5 @@
     - { role: mailman, mailman_domain: "lists.archlinux.org", tags: ["mailman"] }
     - { role: patchwork, tags: ["patchwork"] }
     - { role: kanboard, tags: ["kanboard"] }
+    - { role: zabbix-server, tags: ["zabbix", "zabbix-server"] }
+    - { role: zabbix-agent, tags: ["zabbix", "zabbix-agent"] }
