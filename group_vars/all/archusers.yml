@@ -230,6 +230,7 @@ arch_users:
     groups:
       - dev
       - tu
+      - multilib
   jgc:
     name: "Jan de Groot"
     ssh_key: jgc.pub
