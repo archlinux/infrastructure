@@ -7,3 +7,5 @@ ipv6_netmask: "/128"
 ipv4_gateway: "138.201.81.193"
 ipv6_gateway: "fe80::1"
 filesystem: btrfs
+
+zabbix_agent_server: "127.0.0.1"

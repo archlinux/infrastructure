@@ -32,4 +32,3 @@
     - { role: patchwork, tags: ["patchwork"] }
     - { role: kanboard, tags: ["kanboard"] }
     - { role: zabbix-server, tags: ["zabbix", "zabbix-server"] }
-    - { role: zabbix-agent, zabbix_agent_server: "127.0.0.1", tags: ["zabbix", "zabbix-agent"] }
