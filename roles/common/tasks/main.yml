@@ -35,6 +35,13 @@
   notify:
     - restart networkd
 
+- name: configure journald
+  template: src={{item}}.j2 dest=/etc/systemd/{{item}} owner=root group=root mode=644
+  with_items:
+    - journald.conf
+  notify:
+    - restarted journald
+
 - name: create zsh directory
   file: path=/root/.zsh state=directory owner=root group=root mode=0700
 
