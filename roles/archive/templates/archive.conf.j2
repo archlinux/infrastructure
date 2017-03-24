@@ -1,0 +1,55 @@
+# vim:set sw=2 ts=2 ft=sh et:
+# This file is managed by Ansible. Local updates will be lost!
+
+# Archlinux remote rsync server
+ARCHIVE_RSYNC='rsync://rsync.archlinux.org/kitchensink_tier1/'
+
+# Archive local directory
+ARCHIVE_DIR='{{ archive_dir }}'
+
+# Archive User and Group
+ARCHIVE_USER=archive
+ARCHIVE_GROUP=archive
+
+# Package extensions
+PKGEXT='.pkg.tar.xz'
+PKGSIG="$PKGEXT.sig"
+
+# Umask used when archiving
+UMASK=022
+
+##############################################################################
+#### Repositories
+##############################################################################
+
+# Enable repositories archiving
+ARCHIVE_REPO=1
+
+# Enable daily repo trees
+# This offer daily, weekly, monthly, yearly snapshot trees
+REPO_DAYLY=1
+
+# Enable packages tree
+# Create a dedicated tree with packages sorted by name
+REPO_PACKAGES=1
+
+# Enable repository package index
+# Needed by agetpkg to list packages
+REPO_PACKAGES_INDEX=1
+
+# Search in all repository snapshop. This is slow.
+# Better option is to let it to 0 to look only in the last snapshot
+REPO_PACKAGES_FULL_SEARCH=0
+
+# Max duration in second of the rsyncing of the daily snapshot
+REPO_RSYNC_TIMEOUT=80000
+
+##############################################################################
+#### ISO
+##############################################################################
+
+# Enable ISO archiving
+ARCHIVE_ISO=1
+
+# Max duration in second of the rsyncing of the iso images
+ISO_RSYNC_TIMEOUT=6400

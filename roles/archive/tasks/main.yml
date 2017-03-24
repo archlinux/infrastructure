@@ -1,0 +1,44 @@
+---
+
+- name: install archivetools package
+  pacman: name=archivetools state=present
+
+- name: make archive dir
+  file:
+    path: "{{ archive_dir }}"
+    state: directory
+    owner: archive
+    group: archive
+    mode: 0755
+
+- name: setup archive configuration
+  template:
+    src: archive.conf.j2
+    dest: /etc/archive.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: setup archive timer
+  systemd: name=archive.timer enabled=yes state=started
+
+- name: setup archive-hardlink timer
+  systemd: name=archive-hardlink.timer enabled=yes state=started
+
+- name: set up nginx
+  template:
+    src: nginx.d.conf.j2
+    dest: /etc/nginx/nginx.d/archive.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - reload nginx
+
+- name: make nginx log dir
+  file:
+    path: /var/log/nginx/{{ archive_domain }}
+    state: directory
+    owner: root
+    group: root
+    mode: 0755

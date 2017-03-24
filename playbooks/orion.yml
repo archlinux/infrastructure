@@ -19,3 +19,4 @@
     - { role: sudo, tags: ['sudo', 'archusers'] }
     - { role: archweb, archweb_site: false, archweb_services: true, archweb_mirrorcheck_locations: [5, 6], tags: ['archweb'] }
     - { role: sources, sources_domain: "sources.archlinux.org", sources_dir: "/srv/sources", tags: ['sources'] }
+    - { role: archive, archive_domain: "archive.archlinux.org", archive_dir: "/srv/archive", tags: ['archive'] }
