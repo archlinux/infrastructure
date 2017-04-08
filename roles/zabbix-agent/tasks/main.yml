@@ -16,6 +16,10 @@
   notify:
     - restart zabbix agent
 
+- name: Create mysql config for agent checks
+  template: src=my.cnf.j2 dest=/etc/zabbix/zabbix_agentd.my.cnf owner=zabbix-agent group=zabbix-agent mode=600
+  when: zabbix_agent_mysql_user is defined
+
 - name: run zabbix agent service
   service: name=zabbix-agent enabled=yes state=started
 
