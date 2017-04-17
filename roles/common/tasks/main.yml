@@ -35,6 +35,13 @@
   notify:
     - restart networkd
 
+- name: configure tcp congestion control algorithm
+  sysctl:
+    name: net.ipv4.tcp_congestion_control
+    value: "{{tcp_congestion_control}}"
+    sysctl_file: /etc/sysctl.d/local.conf
+  when: tcp_congestion_control is defined
+
 - name: configure journald
   template: src={{item}}.j2 dest=/etc/systemd/{{item}} owner=root group=root mode=644
   with_items:
