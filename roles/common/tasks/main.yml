@@ -35,11 +35,24 @@
   notify:
     - restart networkd
 
+- name: configure default qdisc
+  sysctl:
+    name: net.core.default_qdisc
+    value: "{{default_qdisc}}"
+    sysctl_file: /etc/sysctl.d/net.conf
+  when: default_qdisc is defined
+
+- name: apply default qdisc to interfaces
+  command: tc qdisc replace dev {{item}} root {{default_qdisc}}
+  with_items: "{{ansible_interfaces | difference('lo')}}"
+  when: default_qdisc is defined
+
 - name: configure tcp congestion control algorithm
   sysctl:
     name: net.ipv4.tcp_congestion_control
     value: "{{tcp_congestion_control}}"
-    sysctl_file: /etc/sysctl.d/local.conf
+    sysctl_set: yes
+    sysctl_file: /etc/sysctl.d/net.conf
   when: tcp_congestion_control is defined
 
 - name: configure journald
