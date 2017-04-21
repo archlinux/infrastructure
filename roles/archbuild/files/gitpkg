@@ -446,7 +446,9 @@ diff = IO.popen(['diff', '-u', '-', pbw.filename], "r+") do |f|
 end
 unless diff.empty?
   header "Diff"
-  puts diff, ""
+  IO.popen(["colordiff"], "w") do |f|
+    f.write diff
+  end rescue puts diff
 end
 
 meson_options = repo.read_file(commit, "meson_options.txt")
