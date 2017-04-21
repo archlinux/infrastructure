@@ -1,7 +1,7 @@
 ---
 
 - name: install archbuild
-  pacman: name=systemd-swap,devtools,zsh,git,subversion,mercurial,bzr,xdelta3,ruby,tig state=present
+  pacman: name=systemd-swap,devtools,zsh,git,subversion,mercurial,bzr,xdelta3,ruby,tig,colordiff state=present
 
 - name: install archbuild scripts
   copy: src={{ item }} dest=/usr/local/bin/{{ item }} owner=root group=root mode=0755
