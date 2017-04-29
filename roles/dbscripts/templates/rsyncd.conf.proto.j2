@@ -13,26 +13,12 @@ motd file = /etc/rsyncd.motd
 timeout = 600
 
 # ALLOW ONLY TIERED MIRRORS
-# This effectively disables all sections but abs, *_tier1 and *_auth
+# This effectively disables all sections but *_tier1 and *_auth
 # We keep the configuration around in case we need to revert again
 hosts allow = 127.0.0.1
 
 # DENY THE REST
 hosts deny = *
-
-# ABS
-[abs]
-	path = /srv/abs/rsync
-	comment = ABS rsync
-	list = false
-	exclude = CVS .svn .~tmp~
-	hosts allow = *
-	read only = true
-	refuse options = c compress
-	dont compress = *
-	max connections = 50
-	transfer logging = no
-	lock file = /var/run/rsyncd/abs.lock
 
 # Just the release/stable iso/packages (for most mirrors)
 [ftp]

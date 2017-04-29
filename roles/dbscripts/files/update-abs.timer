@@ -1,9 +1,0 @@
-[Unit]
-Description=update-abs
-
-[Timer]
-OnBootSec=15min
-OnUnitActiveSec=1h
-
-[Install]
-WantedBy=timers.target

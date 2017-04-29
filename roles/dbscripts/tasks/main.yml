@@ -230,14 +230,9 @@
 - name: start and enable svnserve
   service: name=svnserve enabled=yes state=started
 
-- name: set up update-abs
-  template: src=update-abs.sh.j2 dest=/usr/local/bin/update-abs.sh owner=root group=root mode=0755
-
 - name: install systemd timers
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
-    - update-abs.timer
-    - update-abs.service
     - cleanup.timer
     - cleanup.service
     - sourceballs.timer
@@ -256,7 +251,6 @@
 - name: activate systemd timers
   service: name={{ item }} enabled=yes state=started
   with_items:
-    - update-abs.timer
     - cleanup.timer
     - sourceballs.timer
     - integrity-check.timer

@@ -1,7 +1,0 @@
-[Unit]
-Description=update-abs
-
-[Service]
-Type=oneshot
-User=root
-ExecStart=/usr/local/bin/update-abs.sh
