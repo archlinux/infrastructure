@@ -417,7 +417,6 @@ if gitify
     when meson
       <<~END
         cd build
-        export LANG=en_US.UTF-8
         meson --prefix=/usr --buildtype=release ../#{localname}
         ninja
       END
