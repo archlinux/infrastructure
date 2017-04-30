@@ -100,53 +100,39 @@ usage2() {
   echo 'The primary use of this script is running it from cron to build nightlies.'
 }
 
-check_bzr() {
-  local oldver
+check_bzr() (
+  [[ -d $srcdest/$1 ]] || return 0
 
-  if [[ -d $srcdest/$1 && $check == 1 ]]; then
-    pushd $srcdest/$1
-    oldver=$(bzr revno)
-    bzr pull &>/dev/null || :
-    [[ $oldver == $(bzr revno) ]] && exit 0
-    popd
-  fi
-}
+  cd $srcdest/$1
+  bzr pull &>/dev/null || :
+  echo $0 $* $(bzr revno) >> $checkfile
+)
 
-check_git() {
-  local oldver
+check_git() (
+  [[ -d $srcdest/$1 ]] || return 0
+  : ${2:=HEAD}
 
-  if [[ -d $srcdest/$1 && $check == 1 ]]; then
-    pushd $srcdest/$1
-    oldver=$(git rev-parse ${2:-HEAD})
-    git fetch --all -p &>/dev/null || :
-    [[ $oldver == $(git rev-parse ${2:-HEAD}) ]] && exit 0
-    popd
-  fi
-}
+  cd $srcdest/$1
+  git fetch --all -p &>/dev/null || :
+  echo $0 $* $(git rev-parse $2) >> $checkfile
+)
 
-check_hg() {
-  local oldver
+check_hg() (
+  [[ -d $srcdest/$1 ]] || return 0
+  : ${2:=tip}
 
-  if [[ -d $srcdest/$1 && $check == 1 ]]; then
-    pushd $srcdest/$1
-    oldver=$(hg id -ir ${2:-tip})
-    hg pull &>/dev/null || :
-    [[ $oldver == $(hg id -ir ${2:-tip}) ]] && exit 0
-    popd
-  fi
-}
+  cd $srcdest/$1
+  hg pull &>/dev/null || :
+  echo $0 $* $(hg id -ir $2) >> $checkfile
+)
 
-check_svn() {
-  local oldver
+check_svn() (
+  [[ -d $srcdest/$1 ]] || return 0
 
-  if [[ -d $srcdest/$1 && $check == 1 ]]; then
-    pushd $srcdest/$1
-    oldver=$(svnversion)
-    svn up &>/dev/null || :
-    [[ $oldver == $(svnversion) ]] && exit 0
-    popd
-  fi
-}
+  cd $srcdest/$1
+  svn up &>/dev/null || :
+  echo $0 $* $(svnversion) >> $checkfile
+)
 
 build() {
   [[ $chroot == multilib* ]] && 1=
@@ -212,7 +198,19 @@ build_and_add() {
 
 mkpkg_one() (
   cd $package
+
+  checkfile=$PWD/.mkpkg_check.$$
+
   source MKPKG
+
+  if [[ ! -s $checkfile ]]; then
+    rm -f $checkfile
+  elif [[ $check == 1 ]] && diff -q .mkpkg_check $checkfile &>/dev/null; then
+    rm -f $checkfile
+    exit 0
+  else
+    mv -f $checkfile .mkpkg_check
+  fi
 
   if [[ -z $pkgname ]]; then
     echo "$0:$LINENO: no pkgnames found for '$package'" >&2
