@@ -28,7 +28,6 @@ DATABASES = {
         'USER'    : '{{ archweb_db_site_user }}',
         'PASSWORD': '{{ archweb_db_site_password }}',
         'OPTIONS' : {
-            'autocommit': True,
             'application_name': 'archweb',
 {% if archweb_db_host != 'localhost' %}
             'sslmode': 'require',
