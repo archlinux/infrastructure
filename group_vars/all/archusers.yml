@@ -189,6 +189,11 @@ arch_users:
       - dev
       - tu
       - multilib
+  foxxx0:
+    name: "Thore Bödecker"
+    ssh_key: foxxx0.pub
+    groups:
+       - tu
   giovanni:
     name: ""
     ssh_key: giovanni.pub
