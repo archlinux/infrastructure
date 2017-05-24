@@ -20,7 +20,7 @@ The first time a certificate is issued, you'll have to do this manually by yours
 point to the new server and then run a playbook onto the server which includes the nginx role. Then on the server,
 it is necessary to run the following once:
 
-certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w /var/lib/letsencrypt/ -d <domain-name>
+    certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w /var/lib/letsencrypt/ -d <domain-name>
 
 ##### Note about opendkim
 
