@@ -111,7 +111,10 @@
 - acl: name=/srv/ftp/lastupdate entry="group:dev:rw-" state=present
 
 - name: clone dbscripts git repo
-  git: dest=/srv/repos/{{ item }}/dbscripts repo=https://git.archlinux.org/dbscripts.git update=no
+  git: >
+    dest=/srv/repos/{{ item }}/dbscripts
+    repo=https://git.archlinux.org/dbscripts.git
+    branch={{ dbscripts_commit }}
   with_items:
     - svn-community
     - svn-packages
