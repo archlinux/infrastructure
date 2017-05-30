@@ -19,3 +19,6 @@
 
     - name: reload systemd
       command: systemctl daemon-reload
+
+    - name: remove /srv/abs
+      file: path=/srv/abs state=absent
