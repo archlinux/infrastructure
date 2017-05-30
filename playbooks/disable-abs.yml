@@ -2,6 +2,8 @@
 - name: disable ABS
   hosts: orion
   remote_user: root
+  vars:
+    dbscripts_update: no
   roles:
     - { role: dbscripts, repos_domain: "repos.archlinux.org", repos_rsync_domain: "rsync.archlinux.org", svntogit_repos: "/srv/svntogit/repos", postgres_ssl: 'on', tags: ['dbscripts', 'archusers'] }
   tasks:
