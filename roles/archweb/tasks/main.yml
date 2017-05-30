@@ -39,7 +39,7 @@
   become_user: archweb
 
 - name: install stuff into virtualenv
-  pip: requirements="{{ archweb_dir }}/requirements.txt" virtualenv="{{ archweb_dir }}/env"
+  pip: requirements="{{ archweb_dir }}/requirements_prod.txt" virtualenv="{{ archweb_dir }}/env"
   become: true
   become_user: archweb
   register: virtualenv
