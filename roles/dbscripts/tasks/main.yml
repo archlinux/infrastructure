@@ -240,8 +240,6 @@
     - cleanup.service
     - sourceballs.timer
     - sourceballs.service
-    - integrity-check.timer
-    - integrity-check.service
     - lastsync.timer
     - lastsync.service
     - gen_rsyncd.timer
