@@ -254,7 +254,6 @@
   with_items:
     - cleanup.timer
     - sourceballs.timer
-    - integrity-check.timer
     - lastsync.timer
     - gen_rsyncd.timer
     - arch-svntogit.timer
