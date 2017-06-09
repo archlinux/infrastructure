@@ -3,6 +3,7 @@ patchwork_dir: '/srv/http/patchwork'
 patchwork_domain: 'patchwork.archlinux.org'
 patchwork_forced_deploy: false
 patchwork_admins: ["('Giancarlo Razzolini', 'grazzolini@archlinux.org')"]
+patchwork_version: '48c0e00a9eef60e40a6f6888df37d599803096dd'
 
 patchwork_db: 'patchwork'
 patchwork_db_host: 'localhost'
