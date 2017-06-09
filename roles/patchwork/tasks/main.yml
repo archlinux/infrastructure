@@ -1,9 +1,12 @@
 ---
-- name: make patchwork user
-  user: name=patchwork shell=/bin/false home="{{ patchwork_dir }}" createhome=no
+- name: install packages
+  pacman: name=gcc,git,python,python-psycopg2,sudo,uwsgi-plugin-python state=present
 
-- name: fix home permissions
-  file: state=directory owner=patchwork group=patchwork path="{{ patchwork_dir }}"
+- name: make patchwork user
+  user: name=patchwork shell=/bin/false home="{{ patchwork_dir }}" skeleton=/var/empty
+
+- name: set patchwork groups
+  user: name=patchwork groups=uwsgi
 
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/patchwork.conf owner=root group=root mode=644
@@ -13,5 +16,25 @@
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ patchwork_domain }} state=directory owner=root group=root mode=0755
 
-- name: deploy maintenance page
-  template: src=503.html.j2 dest="{{ patchwork_dir }}/503.html" owner=patchwork group=patchwork mode=644
+- name: clone patchwork repo
+  git: repo=https://github.com/getpatchwork/patchwork.git dest="{{ patchwork_dir }}" version="{{ patchwork_version }}"
+  become: true
+  become_user: patchwork
+  register: release
+
+- name: make virtualenv
+  command: python -m venv "{{ patchwork_dir }}"/env creates="{{ patchwork_dir }}/env/bin/python"
+  become: true
+  become_user: patchwork
+
+- name: install from requirements into virtualenv
+  pip: requirements="{{ patchwork_dir }}/requirements-prod.txt" virtualenv="{{ patchwork_dir }}/env"
+  become: true
+  become_user: patchwork
+  register: virtualenv
+
+- name: create media dir
+  file: state=directory owner=patchwork group=patchwork path="{{ patchwork_dir }}/media"
+
+- name: fix home permissions
+  file: state=directory owner=patchwork group=patchwork path="{{ patchwork_dir }}"
