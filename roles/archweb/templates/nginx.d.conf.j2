@@ -117,7 +117,11 @@ server {
         alias {{ archweb_rsync_iso_dir }};
     }
 
+    # Cache django's css, js and png files.
     location /static {
+        expires 30d;
+        add_header Pragma public;
+        add_header Cache-Control "public";
         alias {{ archweb_dir }}/collected_static;
     }
 
