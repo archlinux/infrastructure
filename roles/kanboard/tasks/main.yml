@@ -1,7 +1,7 @@
 ---
 
 - name: install packages
-  pacman: name=git,php-composer state=present
+  pacman: name=git,composer state=present
 
 - name: make kanboard user
   user: name=kanboard shell=/bin/false home="{{ kanboard_dir }}" createhome=no
@@ -52,4 +52,4 @@
     - restart php-fpm@kanboard
 
 - name: start and enable systemd socket
-  service: name=php-fpm@kanboard.socket state=running enabled=true
+  service: name=php-fpm@kanboard.socket state=started enabled=true
