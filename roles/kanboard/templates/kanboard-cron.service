@@ -1,0 +1,8 @@
+[Unit]
+Description=Kanboard cronjob
+
+[Service]
+User=kanboard
+Type=oneshot
+WorkingDirectory={{kanboard_dir}}
+ExecStart=/usr/bin/php ./cli cron

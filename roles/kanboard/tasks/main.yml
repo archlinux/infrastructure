@@ -53,3 +53,12 @@
 
 - name: start and enable systemd socket
   service: name=php-fpm@kanboard.socket state=started enabled=true
+
+- name: install systemd timers for kanboard cronjob
+  template: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - kanboard-cron.timer
+    - kanboard-cron.service
+
+- name: activate systemd timers for kanboard cronjob
+  service: name=kanboard-cron.timer enabled=yes state=started
