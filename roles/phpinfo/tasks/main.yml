@@ -24,4 +24,4 @@
   notify: restart php-fpm@phpinfo
 
 - name: start and enable systemd socket
-  service: name=php-fpm@phpinfo.socket state=running enabled=true
+  service: name=php-fpm@phpinfo.socket state=started enabled=true

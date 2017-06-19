@@ -57,4 +57,4 @@
     - restart php-fpm@flyspray
 
 - name: start and enable systemd socket
-  service: name=php-fpm@flyspray.socket state=running enabled=true
+  service: name=php-fpm@flyspray.socket state=started enabled=true

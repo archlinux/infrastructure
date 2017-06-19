@@ -60,4 +60,4 @@
   service: name=zabbix-server-pgsql enabled=yes state=started
 
 - name: start and enable systemd socket
-  service: name=php-fpm@zabbix-web.socket state=running enabled=true
+  service: name=php-fpm@zabbix-web.socket state=started enabled=true

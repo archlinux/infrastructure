@@ -8,7 +8,7 @@
     creates: /var/lib/mysql/mysql
 
 - name: start and enable the service
-  service: name=mariadb state=running enabled=yes
+  service: name=mariadb state=started enabled=yes
 
 - name: delete anonymous users
   mysql_user: user='' host_all=yes state='absent'
