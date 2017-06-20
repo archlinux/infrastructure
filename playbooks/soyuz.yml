@@ -14,6 +14,7 @@
     - { role: archusers, tags: ['archusers'] }
     - { role: nginx, letsencrypt_validation_dir: "/var/lib/letsencrypt", tags: ["nginx"] }
     - { role: sudo, tags: ['sudo', 'archusers'] }
+    - { role: phrik, tags: ['phrik'] }
     - { role: postgres, tags: ['postgres'] }
     - { role: quassel, quassel_domain: "quassel.archlinux.org", tags: ['quassel'] }
     - { role: matrix, matrix_domain: "matrix.archlinux.org", matrix_server_name: "archlinux.org", tags: ['matrix'] }
