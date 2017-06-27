@@ -34,7 +34,7 @@
   register: virtualenv
 
 - name: fix home permissions
-  file: state=directory owner=patchwork group=patchwork path="{{ patchwork_dir }}"
+  file: state=directory owner=patchwork group=patchwork mode=0755 path="{{ patchwork_dir }}"
 
 - name: configure patchwork
   template: src=production.py.j2 dest="{{ patchwork_dir }}/patchwork/settings/production.py" owner=patchwork group=patchwork mode=0660
