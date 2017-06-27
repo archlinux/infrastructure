@@ -7,4 +7,7 @@ patchwork_version: '48c0e00a9eef60e40a6f6888df37d599803096dd'
 
 patchwork_db: 'patchwork'
 patchwork_db_host: 'localhost'
-patchwork_db_site_user: 'patchwork'
+patchwork_db_user: 'patchwork'
+patchwork_db_backup_user: 'patchwork_backup'
+patchwork_db_backup_table_objs: 'ALL_IN_SCHEMA'
+patchwork_db_backup_sequence_objs: 'ALL_IN_SCHEMA'
