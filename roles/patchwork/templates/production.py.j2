@@ -62,7 +62,7 @@ ADMINS = ()
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': '{{ patchwork_db_host }}',
+        'NAME': '{{ patchwork_db }}',
         'USER': '{{ patchwork_db_user }}',
         'PASSWORD': '{{ patchwork_db_password }}',
         'HOST': '{{ patchwork_db_host }}',
