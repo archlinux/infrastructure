@@ -1,0 +1,80 @@
+"""
+Sample production-ready settings for patchwork project.
+
+Most of these are commented out as they will be installation dependent.
+
+Design based on:
+    http://www.revsys.com/blog/2014/nov/21/recommended-django-project-layout/
+"""
+
+from __future__ import absolute_import
+
+import os
+
+from .base import *  # noqa
+
+#
+# Core settings
+# https://docs.djangoproject.com/en/1.6/ref/settings/#core-settings
+#
+
+# Security
+#
+# You'll need to replace this to a random string. The following python code can
+# be used to generate a secret key:
+#
+#      import string, random
+#      chars = string.letters + string.digits + string.punctuation
+#      print repr("".join([random.choice(chars) for i in range(0,50)]))
+
+SECRET_KEY = '{{ patchwork_secret_key }}'
+
+# Email
+#
+# Replace this with your own details
+
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'localhost')
+EMAIL_PORT = os.getenv('EMAIL_PORT', 25)
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
+EMAIL_USE_TLS = True
+
+DEFAULT_FROM_EMAIL = 'Patchwork <patchwork@patchwork.example.com>'
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
+NOTIFICATION_FROM_EMAIL = DEFAULT_FROM_EMAIL
+
+{% if patchwork_admins %}
+ADMINS = (
+{% for admin in patchwork_admins %}
+    {{ admin }},
+{% endfor %}
+)
+{% else %}
+ADMINS = ()
+{% endif %}
+
+# Database
+#
+# If you're using a postgres database, connecting over a local unix-domain
+# socket, then the following setting should work for you. Otherwise,
+# see https://docs.djangoproject.com/en/1.7/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': '{{ patchwork_db_host }}',
+        'USER': '{{ patchwork_db_user }}',
+        'PASSWORD': '{{ patchwork_db_password }}',
+        'HOST': '{{ patchwork_db_host }}',
+        'PORT': 5432,
+    },
+}
+
+#
+# Static files settings
+# https://docs.djangoproject.com/en/1.7/ref/settings/#static-files
+#
+
+STATIC_ROOT = '{{ patchwork_dir }}/htdocs/static'
+
+TIME_ZONE = 'UTC'
