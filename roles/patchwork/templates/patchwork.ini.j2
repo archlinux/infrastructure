@@ -1,7 +1,8 @@
 [uwsgi]
 plugins=python
 chdir={{ patchwork_dir }}
-wsgi-file=patchwork.wsgi
+pythonpath={{ patchwork_dir }}
+module=patchwork.wsgi:application
 socket=/run/uwsgi/patchwork.sock
 chmod-socket=660
 virtualenv={{ patchwork_dir }}/env
