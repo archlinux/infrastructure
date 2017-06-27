@@ -1,3 +1,7 @@
+upstream patchwork {
+    server unix:///run/uwsgi/patchwork.sock;
+}
+
 server {
     listen       80;
     listen       [::]:80;
@@ -25,14 +29,13 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ patchwork_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ patchwork_domain }}/chain.pem;
 
-    error_page 503 /503.html;
-
-    location / {
-        return 503;
+    location /static {
+        alias {{ patchwork_dir }}/htdocs/static;
     }
 
-    location = /503.html {
-        root {{ patchwork_dir }};
+    location / {
+        include uwsgi_params;
+        uwsgi_pass patchwork;
     }
 
 }
