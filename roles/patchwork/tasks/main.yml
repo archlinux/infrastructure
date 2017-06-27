@@ -33,8 +33,66 @@
   become_user: patchwork
   register: virtualenv
 
-- name: create media dir
-  file: state=directory owner=patchwork group=patchwork path="{{ patchwork_dir }}/media"
-
 - name: fix home permissions
   file: state=directory owner=patchwork group=patchwork path="{{ patchwork_dir }}"
+
+- name: configure patchwork
+  template: src=production.py.j2 dest="{{ patchwork_dir }}/patchwork/settings/production.py" owner=patchwork group=patchwork mode=0660
+  register: config
+  no_log: true
+
+- name: create patchwork db users
+  postgresql_user: name={{ item.user }} password={{ item.password }} login_host="{{ patchwork_db_host }}" login_password="{{ postgres_users.postgres }}" encrypted=yes
+  no_log: true
+  with_items:
+    - { user: "{{ patchwork_db_user }}", password: "{{ patchwork_db_password }}" }
+    - { user: "{{ patchwork_db_backup_user }}", password: "{{ patchwork_db_backup_password }}" }
+
+- name: create patchwork db
+  postgresql_db: name="{{ patchwork_db }}" login_host="{{ patchwork_db_host }}" login_password="{{ postgres_users.postgres }}" owner="{{ patchwork_db_user }}"
+  register: db_created
+
+- name: django syncdb
+  django_manage: app_path="{{ patchwork_dir }}" command=syncdb virtualenv="{{ patchwork_dir }}/env"
+  become: true
+  become_user: patchwork
+  when: db_created.changed
+
+- name: django migrate
+  django_manage: app_path="{{ patchwork_dir }}" command=migrate virtualenv="{{ patchwork_dir }}/env"
+  become: true
+  become_user: patchwork
+  when: (db_created.changed or release.changed or config.changed or virtualenv.changed or patchwork_forced_deploy)
+
+- name: db privileges for patchwork users
+  postgresql_privs: database="{{ patchwork_db }}" host="{{ patchwork_db_host }}" login="{{ patchwork_db_user }}" password="{{ patchwork_db_password }}"
+                    privs=CONNECT roles="{{ item }}" type=database
+  with_items:
+    - "{{ patchwork_db_backup_user }}"
+
+- name: table privileges for patchwork users
+  postgresql_privs: database="{{ patchwork_db }}" host="{{ patchwork_db_host }}" login="{{ patchwork_db_user }}" password="{{ patchwork_db_password }}"
+                    privs=SELECT roles="{{ item.user }}" type=table objs="{{ item.objs }}"
+  with_items:
+    - { user: "{{ patchwork_db_backup_user }}", objs: "{{ patchwork_db_backup_table_objs }}" }
+
+- name: sequence privileges for patchwork users
+  postgresql_privs: database="{{ patchwork_db }}" host="{{ patchwork_db_host }}" login="{{ patchwork_db_user }}" password="{{ patchwork_db_password }}"
+                    privs=SELECT roles="{{ item.user }}" type=sequence objs="{{ item.objs }}"
+  with_items:
+    - { user: "{{ patchwork_db_backup_user }}", objs: "{{ patchwork_db_backup_sequence_objs }}" }
+
+- name: django collectstatic
+  django_manage: app_path="{{ patchwork_dir }}" command=collectstatic virtualenv="{{ patchwork_dir }}/env"
+  become: true
+  become_user: patchwork
+  when: (db_created.changed or release.changed or config.changed or virtualenv.changed or patchwork_forced_deploy)
+
+- name: deploy patchwork
+  template: src=patchwork.ini.j2 dest=/etc/uwsgi/vassals/patchwork.ini owner=patchwork group=http mode=0644
+
+- name: deploy new release
+  become: true
+  become_user: patchwork
+  file: path=/etc/uwsgi/vassals/patchwork.ini state=touch
+  when: (release.changed or config.changed or virtualenv.changed or patchwork_forced_deploy)
