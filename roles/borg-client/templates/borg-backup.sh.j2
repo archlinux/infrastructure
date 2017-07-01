@@ -2,6 +2,30 @@
 
 set -e
 
+src="/"
+snapshotdir="/backup-snap"
+
+##
+#  usage : is_btrfs( $path )
+# return : whether $path is on a btrfs
+# source: makechrootpkg from devtools
+##
+is_btrfs() {
+	[[ -e "$1" && "$(stat -f -c %T "$1")" == btrfs ]]
+}
+
+delete_snapshot() {
+	btrfs subvolume delete --commit-after "$snapshotdir"
+}
+
+if is_btrfs "$src"; then
+	if mountpoint -q "$snapshotdir"; then
+		delete_snapshot
+	fi
+	btrfs subvolume snapshot -r "$src" "$snapshotdir"
+	src="$snapshotdir"
+fi
+
 # In case there is postgresql running, dump all of it somewhere.
 systemctl status postgresql && /usr/local/bin/backup-postgres.sh || true
 
@@ -16,5 +40,9 @@ borg create -v --stats -C lz4 \
     -e /var/cache \
     -e /var/lib/archbuild \
     -e /var/lib/archbuilddest \
-    {{ backup_host }}:{{ backup_dir }}::$(date -I) /
+    {{ backup_host }}:{{ backup_dir }}::$(date -I) "$src"
 borg prune -v {{ backup_host }}:{{ backup_dir }} --keep-daily=7 --keep-weekly=4 --keep-monthly=6
+
+if mountpoint -q "$snapshotdir"; then
+	delete_snapshot
+fi
