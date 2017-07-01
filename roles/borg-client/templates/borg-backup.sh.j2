@@ -40,7 +40,7 @@ borg create -v --stats -C lz4 \
     -e /var/cache \
     -e /var/lib/archbuild \
     -e /var/lib/archbuilddest \
-    {{ backup_host }}:{{ backup_dir }}::$(date -I) "$src"
+    {{ backup_host }}:{{ backup_dir }}::$(date "+%Y%m%d-%H%M%S") "$src"
 borg prune -v {{ backup_host }}:{{ backup_dir }} --keep-daily=7 --keep-weekly=4 --keep-monthly=6
 
 if mountpoint -q "$snapshotdir"; then
