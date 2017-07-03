@@ -19,7 +19,7 @@ delete_snapshot() {
 }
 
 if is_btrfs "$src"; then
-	if mountpoint -q "$snapshotdir"; then
+	if [[ -d "$snapshotdir" ]]; then
 		delete_snapshot
 	fi
 	btrfs subvolume snapshot -r "$src" "$snapshotdir"
