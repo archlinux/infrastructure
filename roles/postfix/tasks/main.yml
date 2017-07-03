@@ -51,5 +51,9 @@
   notify:
     - reload postfix
 
+- name: install patchwork parsemail wrapper
+  template: src=patchwork-parsemail-wrapper.sh dest=/usr/local/bin/patchwork-parsemail-wrapper.sh mode=0755 owner=root group=root
+  when: postfix_patchwork_enabled
+
 - name: start and enable postfix
   service: name=postfix enabled=yes state=started
