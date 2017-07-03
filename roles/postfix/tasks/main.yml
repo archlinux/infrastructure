@@ -18,6 +18,7 @@
   with_items:
     - access_client
     - access_sender
+    - access_sender-post-filter
     - access_helo
     - access_recipient
     - body_checks
@@ -33,6 +34,7 @@
   with_items:
     - access_client
     - access_sender
+    - access_sender-post-filter
     - access_helo
     - access_recipient
     - transport
