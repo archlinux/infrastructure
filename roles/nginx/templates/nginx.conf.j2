@@ -1,5 +1,8 @@
 worker_processes  auto;
 
+load_module /usr/lib/nginx/modules/ngx_http_brotli_filter_module.so;
+load_module /usr/lib/nginx/modules/ngx_http_brotli_static_module.so;
+
 events {
     worker_connections  1024;
 }
@@ -13,6 +16,13 @@ http {
     sendfile        on;
     keepalive_timeout  65;
     client_max_body_size 16M;
+
+    gzip on;
+    gzip_comp_level 6;
+    gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+    brotli on;
+    brotli_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
 
     index  index.php index.html index.htm;
 

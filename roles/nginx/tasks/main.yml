@@ -1,7 +1,7 @@
 ---
 
 - name: install nginx
-  pacman: name=nginx,certbot state=present
+  pacman: name=nginx,nginx-mod-brotli,certbot state=present
 
 - name: install nginx.service snippet
   copy: src=nginx.service.d dest=/etc/systemd/system owner=root group=root mode=0644
