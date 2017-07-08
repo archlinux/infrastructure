@@ -5,4 +5,6 @@ ipv6_address: "2a01:4f8:160:6087::1"
 ipv6_netmask: "/128"
 ipv4_gateway: "88.198.91.65"
 ipv6_gateway: "fe80::1"
+default_qdisc: "fq"
+tcp_congestion_control: "bbr"
 filesystem: btrfs
