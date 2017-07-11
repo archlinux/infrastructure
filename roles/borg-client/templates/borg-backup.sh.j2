@@ -42,6 +42,7 @@ borg create -v --stats -C lz4 \
     -e /var/lib/archbuilddest \
     -e "$snapshotdir/var/lib/archbuild" \
     -e "$snapshotdir/var/lib/archbuilddest" \
+    -e "$snapshotdir/srv/archive" \
     {{ backup_host }}:{{ backup_dir }}::$(date "+%Y%m%d-%H%M%S") "$src"
 borg prune -v {{ backup_host }}:{{ backup_dir }} --keep-daily=7 --keep-weekly=4 --keep-monthly=6
 
