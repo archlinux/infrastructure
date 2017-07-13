@@ -86,7 +86,7 @@ login_log_format_elements = "user=<%u> method=%m rip=%r lip=%l mpid=%e %c %k"
 ssl_cert = </etc/letsencrypt/live/{{inventory_hostname}}/fullchain.pem
 ssl_key = </etc/letsencrypt/live/{{inventory_hostname}}/privkey.pem
 ssl_prefer_server_ciphers = yes
-ssl_protocols = !SSLv2 !SSLv3
+ssl_protocols = !SSLv3
 ssl_options = no_compression
 
 ssl_cipher_list = EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
