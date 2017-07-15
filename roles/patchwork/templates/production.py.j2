@@ -39,7 +39,7 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 EMAIL_USE_TLS = True
 
-DEFAULT_FROM_EMAIL = 'Patchwork <patchwork@patchwork.example.com>'
+DEFAULT_FROM_EMAIL = '{{ patchwork_from_email }}'
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 NOTIFICATION_FROM_EMAIL = DEFAULT_FROM_EMAIL
 
@@ -80,3 +80,11 @@ STATIC_ROOT = '{{ patchwork_dir }}/htdocs/static'
 TIME_ZONE = 'UTC'
 
 ALLOWED_HOSTS = ['{{ patchwork_domain }}']
+
+## Define cache settings
+CACHES = {
+    'default': {
+        'BACKEND' : 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': 'unix:/run/memcached/patchwork.sock',
+    }
+}
