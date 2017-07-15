@@ -1,0 +1,17 @@
+[Unit]
+Description=Patchwork Memcached Daemon
+After=network.target
+
+[Service]
+User=patchwork
+Group=memcached
+# Remove '-l 127.0.0.1' to listen on all addresses
+ExecStart=/usr/bin/memcached -s /run/memcached/patchwork.sock -o modern
+Restart=always
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=full
+MemoryDenyWriteExecute=yes
+
+[Install]
+WantedBy=multi-user.target
