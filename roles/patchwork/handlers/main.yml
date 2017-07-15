@@ -1,0 +1,7 @@
+---
+
+- name: daemon reload
+  command: systemctl daemon-reload
+
+- name: restart patchwork memcached
+  service: name=patchwork-memcached state=restarted
