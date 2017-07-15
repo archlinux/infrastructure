@@ -88,6 +88,11 @@
   become_user: patchwork
   when: (db_created.changed or release.changed or config.changed or virtualenv.changed or patchwork_forced_deploy)
 
+- name: install patchwork memcached service
+  template: src="patchwork-memcached.service.j2" dest="/etc/systemd/system/patchwork-memcached.service" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+
 - name: deploy patchwork
   template: src=patchwork.ini.j2 dest=/etc/uwsgi/vassals/patchwork.ini owner=patchwork group=http mode=0644
 
@@ -96,3 +101,6 @@
   become_user: patchwork
   file: path=/etc/uwsgi/vassals/patchwork.ini state=touch
   when: (release.changed or config.changed or virtualenv.changed or patchwork_forced_deploy)
+
+- name: start and enable patchwork memcached service
+  service: name="patchwork-memcached.service" enabled=yes state=started
