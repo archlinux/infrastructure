@@ -3,6 +3,6 @@ Description=arch-boxes service for deploying images and vagrant boxes
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/packer-io
+ExecStart=/usr/bin/packer-io build -parallel=false -var 'headless=true' -except=vmware-iso vagrant.json
 User={{ archboxes_user }}
-WorkingDirectory={{ archboxes_dir }}
+WorkingDirectory={{ archboxes_dir }}/arch-boxes
