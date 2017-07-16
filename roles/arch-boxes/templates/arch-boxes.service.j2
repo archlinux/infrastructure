@@ -1,0 +1,8 @@
+[Unit]
+Description=arch-boxes service for deploying images and vagrant boxes
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/packer-io
+User={{ archboxes_user }}
+WorkingDirectory={{ archboxes_dir }}
