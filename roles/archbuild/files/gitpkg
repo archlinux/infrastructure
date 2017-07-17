@@ -11,7 +11,7 @@ OptionParser.new do |opts|
 
       If first source is not a git URI, tries to alter PKGBUILD to port from
       autotools distributed source to a git repo. If an absolute Git URI is
-      not provided, derives a GNOME Git URI automatically.
+      not provided, tries discover it automatically.
 
       Otherwise, if a Git URI is provided, replaces the first source with the
       provided URI.
