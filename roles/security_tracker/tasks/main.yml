@@ -24,7 +24,7 @@
   file: state=directory owner=security group=security path="{{ security_tracker_dir }}"
 
 - name: clone security-tracker repo
-  git: repo=https://github.com/anthraxx/arch-security-tracker.git version="stable" dest="{{ security_tracker_dir }}"
+  git: repo=https://github.com/archlinux/arch-security-tracker.git version="stable" dest="{{ security_tracker_dir }}"
   become: true
   become_user: security
   register: release
