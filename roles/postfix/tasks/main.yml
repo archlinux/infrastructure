@@ -24,7 +24,6 @@
     - body_checks
     - header_checks
     - relocated
-    - compat_maps
 
 - name: update aliases db
   command: postalias /etc/postfix/aliases
@@ -39,7 +38,6 @@
     - access_recipient
     - transport
     - relocated
-    - compat_maps
 
 - name: create dhparam 2048
   command: openssl dhparam -out /etc/postfix/dh2048.pem 2048 creates=/etc/postfix/dh2048.pem
@@ -53,3 +51,9 @@
 
 - name: start and enable postfix
   service: name=postfix enabled=yes state=started
+
+- name: remove old files
+  file: path={{item}} state=absent
+  with_items:
+    - compat_maps
+    - compat_maps.db

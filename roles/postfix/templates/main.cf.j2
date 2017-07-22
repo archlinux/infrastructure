@@ -177,7 +177,6 @@ local_recipient_maps =
   $alias_maps
   ${indexed}/mailman_compat
   #${indexed}/temporary_mailman_maps
-  ${indexed}/compat_maps
 relocated_maps = ${indexed}/relocated
 {% endif %}
 
@@ -188,7 +187,6 @@ relay_domains =
 
 transport_maps =
   ${indexed}/transport
-  ${indexed}/compat_maps
   #${indexed}/temporary_mailman_maps
 
 {% if postfix_patchwork_enabled %}
