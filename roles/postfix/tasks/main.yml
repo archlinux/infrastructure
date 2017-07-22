@@ -25,6 +25,8 @@
     - body_checks
     - header_checks
     - relocated
+    - domains
+    - mailman_compat
 
 - name: update aliases db
   command: postalias /etc/postfix/aliases
@@ -40,6 +42,8 @@
     - transport
     - relocated
     - relay_transport_map
+    - domains
+    - mailman_compat
 
 - name: create dhparam 2048
   command: openssl dhparam -out /etc/postfix/dh2048.pem 2048 creates=/etc/postfix/dh2048.pem
