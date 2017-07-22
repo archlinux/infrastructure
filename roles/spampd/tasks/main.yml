@@ -23,6 +23,9 @@
   notify:
     - systemd daemon reload
 
+- name: create sa-update keyring directory
+  file: path=/etc/mail/spamassassin/sa-update-keys mode=700 owner=root group=root state=directory
+
 - name: add gpg keys to SA keyring
   command: /usr/bin/vendor_perl/sa-update --import "/etc/mail/spamassassin/{{item}}"
   with_items:
