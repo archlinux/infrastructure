@@ -13,7 +13,11 @@
     - { role: root_ssh, tags: ['root_ssh'] }
     - { role: borg-client, backup_host: "borg@vostok.archlinux.org", backup_dir: "/backup/orion", postgres_backup_dir: None, tags: ['borg'] }
     - { role: opendkim, dkim_selector: orion, tags: ['mail'] }
-    - { role: postfix, postfix_server: false, tags: ['mail'] }
+    - { role: dovecot, tags: ['mail', "dovecot"] }
+    - { role: spampd, tags: ["mail", "spampd"] }
+    - { role: unbound, tags: ["mail", "unbound"] }
+    - { role: postfwd, tags: ['mail', "postfwd"] }
+    - { role: postfix, postfix_server: true, tags: ['mail'] }
     - { role: archusers, tags: ['archusers'] }
     - { role: nginx, letsencrypt_validation_dir: "/var/lib/letsencrypt", tags: ["nginx"] }
     - { role: dbscripts, repos_domain: "repos.archlinux.org", repos_rsync_domain: "rsync.archlinux.org", svntogit_repos: "/srv/svntogit/repos", postgres_ssl: 'on', tags: ['dbscripts', 'archusers'] }
