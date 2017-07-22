@@ -168,15 +168,13 @@ virtual_alias_maps =
   ${indexed}/users
   ${indexed}/mailman_compat
 virtual_alias_domains =  ${indexed}/domains
-{% endif %}
 
-{% if postfix_server %}
 # reject mails to system users (nobody looks in those mailboxes)
 local_recipient_maps =
   ${indexed}/users
   $alias_maps
   ${indexed}/mailman_compat
-  #${indexed}/temporary_mailman_maps
+  ${indexed}/relay_transport_map
 relocated_maps = ${indexed}/relocated
 {% endif %}
 
@@ -187,6 +185,7 @@ relay_domains =
 
 transport_maps =
   ${indexed}/transport
+  ${indexed}/relay_transport_map
   #${indexed}/temporary_mailman_maps
 
 {% if postfix_patchwork_enabled %}

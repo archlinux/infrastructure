@@ -12,6 +12,7 @@
     - master.cf
     - transport
     - aliases
+    - relay_transport_map
 
 - name: install additional files
   copy: src={{item}} dest=/etc/postfix/{{item}} owner=root group=root mode=0644
@@ -38,6 +39,7 @@
     - access_recipient
     - transport
     - relocated
+    - relay_transport_map
 
 - name: create dhparam 2048
   command: openssl dhparam -out /etc/postfix/dh2048.pem 2048 creates=/etc/postfix/dh2048.pem
