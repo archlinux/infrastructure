@@ -2,7 +2,7 @@
 
 target="/srv/ftp"
 tmp="/srv/syncrepo-tmp"
-lock='/tmp/syncrepo.lck'
+lock='/var/lock/syncrepo.lck'
 source='rsync://rsync.archlinux.org/ftp_tier1'
 lastupdate_url="http://rsync.archlinux.org/lastupdate"
 
