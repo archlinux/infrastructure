@@ -204,6 +204,7 @@ arch_users:
     name: "Giancarlo Razzolini"
     ssh_key: grazzolini.pub
     groups:
+      - dev
       - tu
   guillaume:
     name: "Guillaume Alaux"
