@@ -2,6 +2,4 @@
 
 archboxes_user: 'archboxes'
 archboxes_dir: '/home/archboxes'
-arch_boxes_services: true
-arch_boxes: true
 archboxes_time: 'monthly'

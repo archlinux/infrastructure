@@ -13,14 +13,11 @@
   template: src='arch-boxes.service.j2' dest='/etc/systemd/system/arch-boxes.service' owner=root group=root mode=0644
   notify:
     - daemon reload
-  when: arch_boxes_services
 
 - name: install arch-boxes timer
   template: src='arch-boxes.timer.j2' dest='/etc/systemd/system/arch-boxes.timer' owner=root group=root mode=0644
   notify:
     - daemon reload
-  when: arch_boxes_services
 
 - name: start and enable arch-boxes timer
   service: name='arch-boxes.timer' enabled=yes state=started
-  when: arch_boxes
