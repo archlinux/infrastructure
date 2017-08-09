@@ -412,6 +412,11 @@ arch_users:
     ssh_key: ttoepper.pub
     groups:
       - tu
+  wild:
+    name: "Dan Printzell"
+    ssh_key: wild.pub
+    groups:
+      - tu
   xyne:
     name: "Xyne"
     ssh_key: xyne.pub
