@@ -1,5 +1,5 @@
 ---
 
 archboxes_user: 'archboxes'
-archboxes_dir: '/home/archboxes'
+archboxes_dir: '/srv/arch-boxes'
 archboxes_time: 'monthly'
