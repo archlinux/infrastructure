@@ -3,7 +3,6 @@ Description=Security Tracker update service
 
 [Service]
 Type=oneshot
-RemainAfterExit=yes
 User=security
 Group=security
 WorkingDirectory=/srv/http/security-tracker
