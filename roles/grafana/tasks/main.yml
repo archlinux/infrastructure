@@ -1,0 +1,22 @@
+---
+
+- name: install grafana
+  pacman: name=grafana,grafana-zabbix state=present
+
+- name: set up nginx
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/grafana.conf owner=root group=root mode=644
+  notify:
+    - reload nginx
+
+- name: make nginx log dir
+  file: path=/var/log/nginx/{{ grafana_domain }} state=directory owner=root group=root mode=0755
+
+- name: install grafana config
+  template: src=grafana.ini.j2 dest=/etc/grafana.ini owner=grafana group=root mode=0600
+  notify: restart grafana
+
+- name: fix /var/lib/grafana permissions
+  file: path=/var/lib/grafana mode=0700 owner=grafana group=grafana
+
+- name: start and enable service
+  service: name=grafana state=started enabled=true

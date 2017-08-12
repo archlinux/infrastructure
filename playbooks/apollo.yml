@@ -33,3 +33,4 @@
     - { role: patchwork, tags: ["patchwork"] }
     - { role: kanboard, tags: ["kanboard"] }
     - { role: zabbix-server, tags: ["zabbix", "zabbix-server"] }
+    - { role: grafana, tags: ["grafana"] }
