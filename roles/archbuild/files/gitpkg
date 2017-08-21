@@ -403,7 +403,7 @@ if gitify
     when meson
       <<~END
         cd build
-        mesontest
+        meson test
       END
     when pbr.has_func?(:check)
     when autotools
