@@ -417,7 +417,7 @@ if gitify
     when meson
       <<~END
         cd build
-        meson --prefix=/usr --buildtype=release ../#{localname}
+        meson setup --prefix=/usr --buildtype=release ../#{localname}
         ninja
       END
     end,
