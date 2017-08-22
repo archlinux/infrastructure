@@ -4,13 +4,13 @@
   pacman: name=packer-io,virtualbox,qemu state=present
 
 - name: create arch-boxes user
-  user: name={{ archboxes_user }} shell=/bin/bash home="{{ archboxes_dir }}" createhome=yes
+  user: name={{ archboxes_user }} shell=/bin/bash home="{{ archboxes_home }}" createhome=yes
 
 - name: clone arch-boxes repository
-  git: repo='https://github.com/archlinux/arch-boxes.git' dest="{{ archboxes_dir }}" force=yes
+  git: repo='https://github.com/archlinux/arch-boxes.git' dest="{{ archboxes_git_dir }}" force=yes
 
 - name: replace placeholder to vagrantcloud API Key
-  replace: path="{{ archboxes_dir }}/arch-boxes/vagrant.json" regexp='PLACEHOLDER' replace="{{ archboxes_apikey }}"
+  replace: path="{{ archboxes_git_dir }}/vagrant.json" regexp='PLACEHOLDER' replace="{{ archboxes_apikey }}"
 
 - name: install arch-boxes service
   template: src='arch-boxes.service.j2' dest='/etc/systemd/system/arch-boxes.service' owner=root group=root mode=0644
