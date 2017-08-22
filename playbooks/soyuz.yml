@@ -23,3 +23,4 @@
     - { role: archbuild, tags: ['archbuild'] }
     - { role: public_html, public_domain: "pkgbuild.com", tags: ['public_html', 'nginx'] }
     - { role: crond, tags: ['crond'] }
+    - { role: arch-boxes, tags: ['arch-boxes'] }

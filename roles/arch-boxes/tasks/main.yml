@@ -10,7 +10,7 @@
   git: repo='https://github.com/archlinux/arch-boxes.git' dest="{{ archboxes_dir }}" force=yes
 
 - name: replace placeholder to vagrantcloud API Key
-  replace: path="{{ archboxes_dir }}/arch-boxes/vagrant.json" regexp='PLACEHOLDER' replace="{{ archboxes.apikey }}"
+  replace: path="{{ archboxes_dir }}/arch-boxes/vagrant.json" regexp='PLACEHOLDER' replace="{{ archboxes_apikey }}"
 
 - name: install arch-boxes service
   template: src='arch-boxes.service.j2' dest='/etc/systemd/system/arch-boxes.service' owner=root group=root mode=0644
