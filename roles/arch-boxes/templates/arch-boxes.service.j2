@@ -1,0 +1,10 @@
+[Unit]
+Description=arch-boxes service for deploying images and vagrant boxes
+
+[Service]
+Type=oneshot
+{% raw %}
+ExecStart=/usr/bin/packer-io build -parallel=false -var 'headless=true' -var 'write_zeroes=yes' -var 'iso_url=file:///srv/ftp/iso/latest/archlinux-{{isotime \"2006.01\"}}.01-x86_64.iso' -var 'iso_checksum_url=file:///srv/ftp/iso/latest/sha1sums.txt' -except=vmware-iso vagrant.json
+{% endraw %}
+User={{ archboxes_user }}
+WorkingDirectory={{ archboxes_dir }}/arch-boxes

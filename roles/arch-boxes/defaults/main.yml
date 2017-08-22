@@ -1,0 +1,5 @@
+---
+
+archboxes_user: 'archboxes'
+archboxes_dir: '/srv/arch-boxes'
+archboxes_time: '*-*-05 00:00:00'

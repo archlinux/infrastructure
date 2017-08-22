@@ -1,0 +1,26 @@
+---
+
+- name: install arch-boxes dependencies
+  pacman: name=packer-io,virtualbox,qemu state=present
+
+- name: create arch-boxes user
+  user: name={{ archboxes_user }} shell=/bin/bash home="{{ archboxes_dir }}" createhome=yes
+
+- name: clone arch-boxes repository
+  git: repo='https://github.com/archlinux/arch-boxes.git' dest="{{ archboxes_dir }}" force=yes
+
+- name: replace placeholder to vagrantcloud API Key
+  replace: path="{{ archboxes_dir }}/arch-boxes/vagrant.json" regexp='PLACEHOLDER' replace="{{ archboxes.apikey }}"
+
+- name: install arch-boxes service
+  template: src='arch-boxes.service.j2' dest='/etc/systemd/system/arch-boxes.service' owner=root group=root mode=0644
+  notify:
+    - daemon reload
+
+- name: install arch-boxes timer
+  template: src='arch-boxes.timer.j2' dest='/etc/systemd/system/arch-boxes.timer' owner=root group=root mode=0644
+  notify:
+    - daemon reload
+
+- name: start and enable arch-boxes timer
+  service: name='arch-boxes.timer' enabled=yes state=started
