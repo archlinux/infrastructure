@@ -52,12 +52,6 @@
   postgresql_db: name="{{ patchwork_db }}" login_host="{{ patchwork_db_host }}" login_password="{{ postgres_users.postgres }}" owner="{{ patchwork_db_user }}"
   register: db_created
 
-- name: django syncdb
-  django_manage: app_path="{{ patchwork_dir }}" command=syncdb virtualenv="{{ patchwork_dir }}/env"
-  become: true
-  become_user: patchwork
-  when: db_created.changed
-
 - name: django migrate
   django_manage: app_path="{{ patchwork_dir }}" command=migrate virtualenv="{{ patchwork_dir }}/env"
   become: true
@@ -93,6 +87,16 @@
   notify:
     - daemon reload
 
+- name: install patchwork notification service
+  template: src="patchwork-notification.service.j2" dest="/etc/systemd/system/patchwork-notification.service" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+
+- name: install patchwork notification timer
+  template: src="patchwork-notification.timer.j2" dest="/etc/systemd/system/patchwork-notification.timer" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+
 - name: deploy patchwork
   template: src=patchwork.ini.j2 dest=/etc/uwsgi/vassals/patchwork.ini owner=patchwork group=http mode=0644
 
@@ -104,3 +108,6 @@
 
 - name: start and enable patchwork memcached service
   service: name="patchwork-memcached.service" enabled=yes state=started
+
+- name: start and enable patchwork notification timer
+  service: name="patchwork-notification.timer" enabled=yes state=started
