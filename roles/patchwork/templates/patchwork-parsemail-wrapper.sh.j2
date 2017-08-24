@@ -1,3 +1,3 @@
 #!/bin/bash
 
-PW_PYTHON={{ patchwork_dir }}/env/bin/python {{ patchwork_dir }}/patchwork/bin/parsemail.sh
+sudo -u patchwork PW_PYTHON={{ patchwork_dir }}/env/bin/python {{ patchwork_dir }}/patchwork/bin/parsemail.sh
