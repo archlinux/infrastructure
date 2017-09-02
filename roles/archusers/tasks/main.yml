@@ -20,6 +20,7 @@
     manage_dir: yes
     state: present
     exclusive: yes
+  when: item.value.ssh_key is defined
   with_dict: "{{ arch_users }}"
 
 - name: get list of remote users
