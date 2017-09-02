@@ -93,6 +93,9 @@ arch_users:
       - dev
       - tu
       - multilib
+  aur-notify:
+    name: ""
+    groups: []
   bgyorgy:
     name: "Balló György"
     ssh_key: bgyorgy.pub
@@ -144,6 +147,9 @@ arch_users:
     ssh_key: djgera.pub
     groups:
       - dev
+  donate:
+    name: ""
+    groups: []
   dreisner:
     name: "Dave Reisner"
     ssh_key: dreisner.pub
@@ -157,6 +163,10 @@ arch_users:
     groups:
       - dev
       - multilib
+  eschwartz:
+    name: "Eli Schwartz"
+    ssh_key: eschwartz.pub
+    groups: []
   eworm:
     name: "Christian Hesse"
     ssh_key: eworm.pub
