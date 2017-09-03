@@ -8,6 +8,9 @@
   notify:
     - reload dovecot
 
+- name: install dovecot cert renewal hook
+  template: src=letsencrypt.hook.d.j2 dest=/etc/letsencrypt/hook.d/dovecot owner=root group=root mode=0755
+
 - name: start and enable dovecot
   service: name=dovecot enabled=yes state=started
 

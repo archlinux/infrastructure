@@ -1,0 +1,13 @@
+#!/bin/sh
+
+test "$1" = renew || exit 0
+
+check_domain="{{ mail_domain }}"
+
+for domain in $RENEWED_DOMAINS; do
+    case "$domain" in
+        $check_domain)
+			systemctl reload postfix
+            ;;
+    esac
+done
