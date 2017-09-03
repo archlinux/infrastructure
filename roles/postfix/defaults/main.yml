@@ -5,3 +5,5 @@ postfix_server: false
 postfix_patchwork_enabled: false
 postfix_patchwork_user: "patchwork"
 postfix_patchwork_mail_handler: "/usr/local/bin/patchwork-parsemail-wrapper.sh"
+
+mail_domain: "mail.archlinux.org"

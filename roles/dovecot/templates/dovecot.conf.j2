@@ -83,8 +83,8 @@ service lmtp {
 
 login_log_format_elements = "user=<%u> method=%m rip=%r lip=%l mpid=%e %c %k"
 
-ssl_cert = </etc/letsencrypt/live/{{inventory_hostname}}/fullchain.pem
-ssl_key = </etc/letsencrypt/live/{{inventory_hostname}}/privkey.pem
+ssl_cert = </etc/letsencrypt/live/{{mail_domain}}/fullchain.pem
+ssl_key = </etc/letsencrypt/live/{{mail_domain}}/privkey.pem
 ssl_prefer_server_ciphers = yes
 ssl_protocols = !SSLv3
 ssl_options = no_compression
