@@ -6,6 +6,8 @@
 
 - name: install sa-update.sh
   copy: src=sa-update.sh dest=/usr/local/bin/sa-update.sh owner=root group=root mode=0755
+  notify:
+    - restart sa-update
 
 - name: install support files
   copy: src={{ item }} dest=/etc/mail/spamassassin/{{ item }} owner=root group=root mode=0644

@@ -5,3 +5,6 @@
 
 - name: restart spampd
   service: name=spampd state=restarted
+
+- name: start sa-update
+  service: name=sa-update state=restarted
