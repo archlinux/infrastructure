@@ -4,8 +4,7 @@
   hosts: all
   remote_user: root
   roles:
-    # common reconfigures the network. will berak old hosts
-    #- { role: common, tags: ['common'] }
+    - { role: common, tags: ['common'] }
     - { role: tools, tags: ['tools'] }
     # reconfiguring sshd may break the AUR on luna (unchecked)
     #- { role: sshd, tags: ['sshd'] }
