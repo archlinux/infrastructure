@@ -87,6 +87,8 @@ ifplugin Mail::SpamAssassin::Plugin::Shortcircuit
 
 endif # Mail::SpamAssassin::Plugin::Shortcircuit
 
+loadplugin Mail::SpamAssassin::Plugin::Rule2XSBody
+
 
 header LOCAL_XEROX_1 Subject =~ /Scanned Image from a Xerox WorkCentre/
 score LOCAL_XEROX_1 5
