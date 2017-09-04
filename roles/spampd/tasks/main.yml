@@ -32,6 +32,11 @@
     - yerp.gpg.key
     - zmi.gpg.key
 
+- name: install SA config
+  template: src=local.cf.j2 dest=/etc/mail/spamassassin/local.cf owner=root group=root mode=0644
+  notify:
+    restart spampd
+
 - name: activate systemd timers
   service: name={{ item }} enabled=yes state=started
   with_items:
