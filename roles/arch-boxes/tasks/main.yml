@@ -9,6 +9,9 @@
 - name: clone arch-boxes repository
   git: repo='https://github.com/archlinux/arch-boxes.git' dest="{{ archboxes_git_dir }}" force=yes
 
+- name: adjust permissions of git checkout
+  file: path="{{ archboxes_git_dir }}" state=directory owner="{{ archboxes_user }}" group="{{ archboxes_user }}"
+
 - name: replace placeholder to vagrantcloud API Key
   replace: path="{{ archboxes_git_dir }}/vagrant.json" regexp='PLACEHOLDER' replace="{{ archboxes_apikey }}"
 
