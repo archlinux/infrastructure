@@ -6,7 +6,7 @@ soyuz.archlinux.org
 luna.archlinux.org
 
 [pia]
-169.57.35.94
+mex.mirror.pkgbuild.com
 169.38.85.99
 161.202.204.237
 159.122.70.8
@@ -15,3 +15,6 @@ luna.archlinux.org
 169.50.62.117
 161.202.225.107
 169.50.62.113
+
+[mirrors]
+mex.mirror.pkgbuild.com
