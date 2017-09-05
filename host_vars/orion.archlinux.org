@@ -1,4 +1,5 @@
 ---
+hostname: "orion"
 ipv4_address: "88.198.91.70"
 ipv4_netmask: "/32"
 ipv6_address: "2a01:4f8:160:6087::1"

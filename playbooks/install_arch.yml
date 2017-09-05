@@ -3,10 +3,8 @@
 # This script is for provisioning a server for first boot.
 # Care: It is not idempotent by design.
 
-- name: provision soyuz
-  hosts: soyuz
+- name: install_arch
+  hosts: all
   remote_user: root
-  vars:
-    - hostname: soyuz
   roles:
     - install_arch

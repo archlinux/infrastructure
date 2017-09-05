@@ -1,4 +1,5 @@
 ---
+hostname: "vostok"
 
 ipv4_address: "5.9.158.171"
 ipv4_netmask: "/32"
