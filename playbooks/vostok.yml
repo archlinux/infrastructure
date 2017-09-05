@@ -1,7 +1,7 @@
 ---
 
 - name: setup vostok
-  hosts: vostok
+  hosts: vostok.archlinux.org
   remote_user: root
   roles:
     - { role: common, tags: ['common'] }

@@ -1,7 +1,7 @@
 ---
 
 - name: setup soyuz
-  hosts: soyuz
+  hosts: soyuz.archlinux.org
   remote_user: root
   roles:
     - { role: common, tags: ['common'] }

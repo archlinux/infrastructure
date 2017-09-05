@@ -1,7 +1,7 @@
 ---
 
 - name: setup orion
-  hosts: orion
+  hosts: orion.archlinux.org
   remote_user: root
   vars:
     archweb_db_host: 'apollo.archlinux.org'
