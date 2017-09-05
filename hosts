@@ -1,14 +1,9 @@
-orion ansible_host=orion.archlinux.org
-vostok ansible_host=vostok.archlinux.org
-apollo ansible_host=apollo.archlinux.org
-soyuz ansible_host=soyuz.archlinux.org
-luna ansible_host=luna.archlinux.org
-
 [hetzner]
-apollo
-orion
-soyuz
-vostok
+orion.archlinux.org
+vostok.archlinux.org
+apollo.archlinux.org
+soyuz.archlinux.org
+luna.archlinux.org
 
 [pia]
 169.57.35.94
