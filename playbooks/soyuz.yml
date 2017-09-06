@@ -8,7 +8,7 @@
     - { role: tools, tags: ['tools'] }
     - { role: sshd, tags: ['sshd'] }
     - { role: root_ssh, tags: ['root_ssh'] }
-    - { role: borg-client, backup_host: "borg@vostok.archlinux.org", backup_dir: "/backup/soyuz", postgres_backup_dir: "/var/lib/postgres/backup", tags: ['borg'] }
+    - { role: borg-client, tags: ['borg'] }
     - { role: opendkim, dkim_selector: soyuz, tags: ['mail'] }
     - { role: postfix, postfix_server: false, tags: ["mail", "postfix"] }
     - { role: archusers, tags: ['archusers'] }

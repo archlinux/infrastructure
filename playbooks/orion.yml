@@ -11,7 +11,7 @@
     - { role: tools, tags: ['tools'] }
     - { role: sshd, tags: ['sshd'] }
     - { role: root_ssh, tags: ['root_ssh'] }
-    - { role: borg-client, backup_host: "borg@vostok.archlinux.org", backup_dir: "/backup/orion", postgres_backup_dir: None, tags: ['borg'] }
+    - { role: borg-client, tags: ['borg'] }
     - { role: opendkim, dkim_selector: orion, tags: ['mail'] }
     - { role: dovecot, tags: ['mail', "dovecot"] }
     - { role: spampd, tags: ["mail", "spampd"] }

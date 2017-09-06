@@ -16,7 +16,7 @@
 - name: fetch ssh keys
   command: cat /root/.ssh/id_rsa.pub
   register: ssh_keys
-  delegate_to: "{{ groups[item][0] }}"
+  delegate_to: "{{ item }}"
   with_items: "{{ backup_clients }}"
 
 - name: allow certain clients to connect

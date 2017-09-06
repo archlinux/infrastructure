@@ -8,4 +8,4 @@
     - tools
     - sshd
     - { role: root_ssh, tags: ['root_ssh'] }
-    - { role: borg-server, backup_dir: "/backup", backup_clients: ["orion", "apollo", "soyuz"] }
+    - { role: borg-server, backup_dir: "/backup", backup_clients: "{{groups['borg-clients']}}", tags: ["borg"] }
