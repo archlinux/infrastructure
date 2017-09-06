@@ -1,0 +1,3 @@
+---
+default_qdisc: "fq"
+tcp_congestion_control: "bbr"
