@@ -1,3 +1,4 @@
 ---
 default_qdisc: "fq"
 tcp_congestion_control: "bbr"
+archweb_db_host: 'apollo.archlinux.org'
