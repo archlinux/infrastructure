@@ -1,7 +1,7 @@
 ---
 
 - name: install git
-  pacman: name=git,python2,python2-psycopg2,python2-virtualenv,uwsgi-plugin-python2 state=present
+  pacman: name=git,python2,python2-psycopg2,python2-virtualenv,uwsgi-plugin-python2,gcc state=present
 
 - name: make archweb user
   user: name=archweb shell=/bin/false home="{{ archweb_dir }}" createhome=no
