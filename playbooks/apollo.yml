@@ -1,5 +1,19 @@
 ---
 
+- name: gather mirror facts
+  hosts: mirrors
+  tasks: []
+
+- name: "prepare postgres ssl hosts list"
+  hosts: apollo.archlinux.org
+  tasks:
+      - set_fact: postgres_ssl_hosts="{{ [orion4] + [orion6] + detected_ips}}"
+        vars:
+            orion4: "{{ hostvars['orion.archlinux.org']['ipv4_address'] }}{{ hostvars['orion.archlinux.org']['ipv4_netmask'] }}"
+            orion6: "{{ hostvars['orion.archlinux.org']['ipv6_address'] }}{{ hostvars['orion.archlinux.org']['ipv6_netmask'] }}"
+            detected_ips: "{{ groups['mirrors'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | map('regex_replace', '^(.*)$', '\\1/32') | list}}"
+        tags: ["postgres"]
+
 - name: setup apollo
   hosts: apollo.archlinux.org
   remote_user: root
@@ -17,8 +31,7 @@
     - { role: opendkim, dkim_selector: apollo, tags: ['mail', "opendkim"] }
     - { role: postfwd, tags: ['mail', "postfwd"] }
     - { role: postgres, postgres_listen_addresses: "'*'", postgres_max_connections: 1000, postgres_ssl: 'on', postgres_shared_buffers: 4096MB,
-              postgres_ssl_hosts: ["{{ hostvars['orion.archlinux.org']['ipv4_address'] }}{{ hostvars['orion.archlinux.org']['ipv4_netmask'] }}",
-              "{{ hostvars['orion.archlinux.org']['ipv6_address'] }}{{ hostvars['orion.archlinux.org']['ipv6_netmask'] }}"], tags: ['postgres'] }
+              tags: ['postgres'] }
     - { role: mariadb, mariadb_innodb_buffer_pool_size: '64M', mariadb_table_open_cache: '256', mariadb_query_cache_type: '0',
               mariadb_innodb_file_per_table: True, tags: ["mariadb"] }
     - { role: sudo, tags: ['sudo'] }
