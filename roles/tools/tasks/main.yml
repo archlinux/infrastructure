@@ -22,6 +22,7 @@
     - vnstat
     - screen
     - tcpdump
+    - sudo
 
 - name: install misc utils
   pacman: name={{ item }} state=present
