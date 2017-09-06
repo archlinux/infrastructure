@@ -59,6 +59,7 @@
 - name: create archweb db users
   postgresql_user: name={{ item.user }} password={{ item.password }} login_host="{{ archweb_db_host }}" login_password="{{ postgres_users.postgres }}" encrypted=yes
   no_log: true
+  when: archweb_site or archweb_services
   with_items:
     - { user: "{{ archweb_db_site_user }}", password: "{{ archweb_db_site_password }}" }
     - { user: "{{ archweb_db_services_user }}", password: "{{ archweb_db_services_password }}" }
@@ -67,13 +68,14 @@
 
 - name: create archweb db
   postgresql_db: name="{{ archweb_db }}" login_host="{{ archweb_db_host }}" login_password="{{ postgres_users.postgres }}" owner="{{ archweb_db_site_user }}"
+  when: archweb_site or archweb_services
   register: db_created
 
 - name: django syncdb
   django_manage: app_path="{{ archweb_dir }}" command=syncdb virtualenv="{{ archweb_dir }}/env"
   become: true
   become_user: archweb
-  when: db_created.changed
+  when: (archweb_site or archweb_services) and db_created.changed
 
 - name: django migrate
   django_manage: app_path="{{ archweb_dir }}" command=migrate virtualenv="{{ archweb_dir }}/env"
@@ -84,6 +86,7 @@
 - name: db privileges for archweb users
   postgresql_privs: database="{{ archweb_db }}" host="{{ archweb_db_host }}" login="{{ archweb_db_site_user }}" password="{{ archweb_db_site_password }}"
                     privs=CONNECT roles="{{ item }}" type=database
+  when: archweb_site or archweb_services
   with_items:
     - "{{ archweb_db_services_user }}"
     - "{{ archweb_db_dbscripts_user }}"
@@ -92,6 +95,7 @@
 - name: table privileges for archweb users
   postgresql_privs: database="{{ archweb_db }}" host="{{ archweb_db_host }}" login="{{ archweb_db_site_user }}" password="{{ archweb_db_site_password }}"
                     privs=SELECT roles="{{ item.user }}" type=table objs="{{ item.objs }}"
+  when: archweb_site or archweb_services
   with_items:
     - { user: "{{ archweb_db_services_user }}", objs: "{{ archweb_db_services_table_objs }}" }
     - { user: "{{ archweb_db_dbscripts_user }}", objs: "{{ archweb_db_dbscripts_table_objs }}" }
@@ -100,6 +104,7 @@
 - name: sequence privileges for archweb users
   postgresql_privs: database="{{ archweb_db }}" host="{{ archweb_db_host }}" login="{{ archweb_db_site_user }}" password="{{ archweb_db_site_password }}"
                     privs=SELECT roles="{{ item.user }}" type=sequence objs="{{ item.objs }}"
+  when: archweb_site or archweb_services
   with_items:
     - { user: "{{ archweb_db_services_user }}", objs: "{{ archweb_db_services_sequence_objs }}" }
     - { user: "{{ archweb_db_backup_user }}", objs: "{{ archweb_db_backup_sequence_objs }}" }
