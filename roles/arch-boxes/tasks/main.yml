@@ -1,13 +1,16 @@
 ---
 
 - name: install arch-boxes dependencies
-  pacman: name=packer-io,virtualbox,qemu-headless state=present
+  pacman: name=packer-io,virtualbox,qemu-headless,virtualbox-host-dkms state=present
 
 - name: create arch-boxes user
   user: name={{ archboxes_user }} shell=/bin/bash home="{{ archboxes_home }}" createhome=yes
 
 - name: clone arch-boxes repository
   git: repo='https://github.com/archlinux/arch-boxes.git' dest="{{ archboxes_git_dir }}" force=yes
+
+- name: load virtualbox kernel modules
+  modprobe: name=vboxdrv,vboxnetadp,vboxnetflt state=present
 
 - name: adjust permissions of git checkout
   file: path="{{ archboxes_git_dir }}" state=directory recursive=yes owner="{{ archboxes_user }}" group="{{ archboxes_user }}"
