@@ -12,6 +12,9 @@
 - name: load virtualbox kernel modules
   modprobe: name=vboxdrv,vboxnetadp,vboxnetflt state=present
 
+- name: add modules-load config for virtualbox
+  copy: src=virtualbox.conf dest=/etc/modules-load.d/virtualbox.conf owner=root group=root mode=0644
+
 - name: adjust permissions of git checkout
   file: path="{{ archboxes_git_dir }}" state=directory recursive=yes owner="{{ archboxes_user }}" group="{{ archboxes_user }}"
 
