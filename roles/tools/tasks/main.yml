@@ -44,3 +44,6 @@
     - socat
     - pv
     - ccze
+
+- name: start vnstatd
+  service: name=vnstat state=running enabled=true
