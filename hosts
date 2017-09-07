@@ -6,7 +6,7 @@ soyuz.archlinux.org
 luna.archlinux.org
 
 [pia]
-#ind.mirror.pkgbuild.com
+ind.mirror.pkgbuild.com
 jpn.mirror.pkgbuild.com
 mex.mirror.pkgbuild.com
 sgp.mirror.pkgbuild.com
@@ -18,7 +18,7 @@ sgp.mirror.pkgbuild.com
 169.50.62.113
 
 [mirrors]
-#ind.mirror.pkgbuild.com
+ind.mirror.pkgbuild.com
 jpn.mirror.pkgbuild.com
 mex.mirror.pkgbuild.com
 sgp.mirror.pkgbuild.com
