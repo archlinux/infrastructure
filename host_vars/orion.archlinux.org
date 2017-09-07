@@ -9,3 +9,7 @@ ipv6_gateway: "fe80::1"
 default_qdisc: "fq"
 tcp_congestion_control: "bbr"
 filesystem: btrfs
+
+# raise tcp window limits to 32MiB
+tcp_rmem: "10240 87380 33554432"
+tcp_wmem: "10240 87380 33554432"
