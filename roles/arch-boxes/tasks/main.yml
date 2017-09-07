@@ -17,7 +17,7 @@
   copy: src=virtualbox.conf dest=/etc/modules-load.d/virtualbox.conf owner=root group=root mode=0644
 
 - name: adjust permissions of git checkout
-  file: path="{{ archboxes_git_dir }}" state=directory recursive=yes owner="{{ archboxes_user }}" group="{{ archboxes_user }}"
+  file: path="{{ archboxes_git_dir }}" state=directory recurse=yes owner="{{ archboxes_user }}" group="{{ archboxes_user }}"
 
 - name: replace placeholder to vagrantcloud API Key
   replace: path="{{ archboxes_git_dir }}/vagrant.json" regexp='PLACEHOLDER' replace="{{ archboxes_apikey }}"
