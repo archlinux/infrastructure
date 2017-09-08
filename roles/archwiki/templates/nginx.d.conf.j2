@@ -1,0 +1,72 @@
+upstream archwiki {
+    server unix://{{ archwiki_socket }};
+}
+
+server {
+    listen       80;
+    listen       [::]:80;
+    server_name  {{ archwiki_domain }};
+
+    access_log   /var/log/nginx/{{ archwiki_domain }}/access.log;
+    error_log    /var/log/nginx/{{ archwiki_domain }}/error.log;
+
+    include snippets/letsencrypt.conf;
+
+    location / {
+        rewrite ^(.*) https://$server_name$1 permanent;
+    }
+}
+
+server {
+    listen       443 ssl http2;
+    listen       [::]:443 ssl http2;
+    server_name  {{ archwiki_domain }};
+
+    access_log   /var/log/nginx/{{ archwiki_domain }}/access.log;
+    error_log    /var/log/nginx/{{ archwiki_domain }}/error.log;
+
+    ssl_certificate      /etc/letsencrypt/live/{{ archwiki_domain }}/fullchain.pem;
+    ssl_certificate_key  /etc/letsencrypt/live/{{ archwiki_domain }}/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/{{ archwiki_domain }}/chain.pem;
+
+    root {{ archwiki_dir }}/public;
+    index index.php;
+
+    location ^~ /. {
+        log_not_found off;
+        deny all;
+    }
+
+    # special case due to our '/index.php/Main_Page' type URLs
+    location ~ ^/(?:index|redirect)\.php(?:/.*)$ {
+        fastcgi_pass   archwiki;
+        fastcgi_index  index.php;
+        fastcgi_split_path_info ^(.+\.php)(.*)$;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        fastcgi_param  PATH_INFO        $fastcgi_path_info;
+        fastcgi_param  HTTPS            on;
+        include        fastcgi_params;
+    }
+
+    # normal PHP FastCGI handler
+    location ~ ^/[^/]+\.php$ {
+        fastcgi_pass   archwiki;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        fastcgi_param  HTTPS            on;
+        include        fastcgi_params;
+    }
+
+    # whitelist known OK directories
+    location ~ ^/(?:skins|resources|images|extensions/ArchLinux/modules)/ {
+        expires 7d;
+        add_header Pragma public;
+        add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+    }
+
+    # block all other directories
+    location ~ ^/[^/]+/ {
+        log_not_found off;
+        deny all;
+    }
+}
