@@ -1,0 +1,8 @@
+---
+archwiki_dir: '/srv/http/archwiki'
+archwiki_domain: 'wiki.archlinux.org'
+archwiki_user: 'archwiki'
+
+archwiki_db: 'archwiki'
+archwiki_db_host: 'localhost'
+archwiki_db_user: 'archwiki'
