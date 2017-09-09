@@ -1,6 +1,6 @@
 ---
 backup_host: "borg@vostok.archlinux.org"
 backup_dir: "/backup/{{inventory_hostname}}"
-postgres_backup_dir: None
+postgres_backup_dir: ''
 mysql_backup_dir: ''
 mysql_backup_defaults: ''
