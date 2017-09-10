@@ -28,7 +28,7 @@
   become_user: patchwork
 
 - name: install from requirements into virtualenv
-  pip: requirements="{{ patchwork_dir }}/requirements-prod.txt" virtualenv="{{ patchwork_dir }}/env"
+  pip: requirements="{{ patchwork_dir }}/requirements-prod.txt" virtualenv="{{ patchwork_dir }}/env" extra_args="--no-binary :all:"
   become: true
   become_user: patchwork
   register: virtualenv
