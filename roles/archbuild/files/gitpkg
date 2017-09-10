@@ -16,7 +16,7 @@ OptionParser.new do |opts|
       Otherwise, if a Git URI is provided, replaces the first source with the
       provided URI.
 
-      Submodules aren't yet handled. Remember to properly source and inject
+      Submodules are not yet handled. Remember to properly source and inject
       any submodules required.
 
     Options:
@@ -156,9 +156,10 @@ end
 class Repo
   SRCDEST = "/var/lib/archbuilddest/srcdest"
   DISCOVER_URLS = [
-    "https://anongit.freedesktop.org/git/",
-    "https://git.gnome.org/browse/",
-    "https://github.com/",
+    "https://anongit.freedesktop.org/git/%",
+    "https://gitlab.gnome.org/GNOME/%.git",
+    "https://git.gnome.org/browse/%",
+    "https://github.com/%",
   ]
 
   attr_reader :name, :url
@@ -183,7 +184,7 @@ class Repo
     name, url = split_src src
 
     if url !~ /:\/\//
-      url = DISCOVER_URLS.map { |u| u + url }.find do |u|
+      url = DISCOVER_URLS.map { |u| u.sub(/%/, url) }.find do |u|
         puts "Trying #{u}"
         exists?(u)
       end
