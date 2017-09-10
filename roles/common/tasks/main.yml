@@ -3,8 +3,8 @@
 - name: install ntp
   pacman: name=ntp state=present
 
-- name: start and enable ntp
-  service: name=ntpd enabled=yes state=started
+- name: start and enable systemd-timesyncd
+  service: name=systemd-timesyncd enabled=yes state=started
 
 - name: install smart
   pacman: name=smartmontools state=present
