@@ -417,11 +417,6 @@ arch_users:
     ssh_key: tredaelli.pub
     groups:
       - tu
-  ttoepper:
-    name: "Thorsten Töpper"
-    ssh_key: ttoepper.pub
-    groups:
-      - tu
   wild:
     name: "Dan Printzell"
     ssh_key: wild.pub
