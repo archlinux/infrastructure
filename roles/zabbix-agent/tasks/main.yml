@@ -6,7 +6,7 @@
 - file: path=/etc/zabbix state=directory owner=root group=root mode=755
 
 - name: create host PSK
-  shell: umask 077; head -c100 /dev/urandom | sha512sum | cut -d " " -f1 > /etc/zabbix/zabbix_agentd.psk creates=/etc/zabbix/zabbix_agentd.psk
+  shell: umask 077; openssl rand -hex 64 > /etc/zabbix/zabbix_agentd.psk creates=/etc/zabbix/zabbix_agentd.psk
 
 - name: fix permissions of PSK file
   file: path=/etc/zabbix/zabbix_agentd.psk owner=zabbix-agent group=zabbix-agent mode=600
