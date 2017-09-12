@@ -81,8 +81,8 @@
 - name: mount /mnt to bootstrap chroot
   command: mount --rbind /mnt /tmp/root.x86_64/mnt creates=/tmp/root.x86_64/mnt/LOCK
 
-- name: configure mirrorlist in bootstrap chroot
-  lineinfile: dest=/tmp/root.x86_64/etc/pacman.d/mirrorlist line="Server = https://mirrors.kernel.org/archlinux/$repo/os/$arch"
+- name: configure pacman mirror
+  template: src=mirrorlist.j2 dest=/tmp/root.x86_64/etc/pacman.d/mirrorlist owner=root group=root mode=0644
 
 - name: initialize pacman keyring inside bootstrap chroot
   command: chroot /tmp/root.x86_64 pacman-key --init
