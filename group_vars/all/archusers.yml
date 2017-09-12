@@ -412,11 +412,6 @@ arch_users:
       - dev
       - multilib
       - tu
-  tredaelli:
-    name: "Timothy Redaelli"
-    ssh_key: tredaelli.pub
-    groups:
-      - tu
   wild:
     name: "Dan Printzell"
     ssh_key: wild.pub
