@@ -46,7 +46,12 @@
   become_method: sudo
 
 - name: install synapse
-  command: /var/lib/synapse/venv/bin/pip install -e /var/lib/synapse/synapse psycopg2 systemd-python lxml
+  command: >
+    /var/lib/synapse/venv/bin/pip install
+      --no-binary :all:
+      --only-binary lxml,pymacaroons-pynacl,signedjson,unpaddedbase64,canonicaljson
+      -e /var/lib/synapse/synapse
+      psycopg2 systemd-python lxml
   args:
     creates: /var/lib/synapse/venv/bin/synctl
   become: yes
