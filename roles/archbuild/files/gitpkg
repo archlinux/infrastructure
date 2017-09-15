@@ -28,6 +28,8 @@ OptionParser.new do |opts|
   end
 end.parse!
 
+ENV["GIT_TERMINAL_PROMPT"] = "0"
+
 def header(s)
   puts "\n\e[1m#{s}:\e[0m"
 end
