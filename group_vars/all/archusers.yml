@@ -197,6 +197,11 @@ arch_users:
       - dev
       - tu
       - multilib
+  foxboron:
+    name: "Morten Linderud"
+    ssh_key: foxboron.pub
+    groups:
+      - tu
   foxxx0:
     name: "Thore Bödecker"
     ssh_key: foxxx0.pub
