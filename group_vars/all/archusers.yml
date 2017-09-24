@@ -17,6 +17,11 @@ arch_users:
     ssh_key: aginiewicz.pub
     groups:
       - tu
+  alad:
+    name: "Alad Wenter"
+    ssh_key: alad.pub
+    groups:
+      - tu
   allan:
     name: "Allan McRae"
     ssh_key: allan.pub
