@@ -356,6 +356,10 @@ arch_users:
     groups:
       - tu
       - multilib
+  scimmia:
+    name: "Doug Newgard"
+    ssh_key: scimmia.pub
+    groups: []
   seblu:
     name: "Sébastien Luttringer"
     ssh_key: seblu.pub
