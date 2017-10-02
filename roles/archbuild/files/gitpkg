@@ -261,10 +261,10 @@ class Repo
 
   def choose_commit
     header "Branches"
-    system 'git', '--no-pager', 'branch'
+    system 'git', '--no-pager', 'branch', '--sort=v:refname'
 
     header "Tags"
-    system 'git', '--no-pager', 'tag'
+    system 'git', '--no-pager', 'tag', '--sort=v:refname'
 
     begin
       old_char = Readline.completion_append_character
