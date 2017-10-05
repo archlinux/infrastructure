@@ -5,6 +5,7 @@ arch_groups:
   - tu
   - fellows
   - multilib
+  - archboxes-sudo
 
 arch_users:
   aaron:
@@ -372,6 +373,7 @@ arch_users:
     ssh_key: shibumi.pub
     groups:
       - tu
+      - archboxes-sudo
   speps:
     name: "speps"
     ssh_key: speps.pub
