@@ -9,7 +9,7 @@ update_pkg() {
 	local pkg=$1
 
 	if git show master:$pkg &>/dev/null; then
-		if ! git show-ref -q packages/$pkg; then
+		if ! git show-ref -q --verify refs/heads/packages/$pkg; then
 			# Added package; create package branch
 			git branch packages/$pkg master
 			git filter-branch -f --subdirectory-filter $pkg packages/$pkg \
@@ -38,7 +38,7 @@ for repo in ${REPOS[@]}; do
 	pushd "$REPO_HOME/$repo" >/dev/null
 
 	# Make sure we have a last-commit-processed tag to work from
-	if ! git show-ref -q last-commit-processed; then
+	if ! git show-ref -q --verify refs/tags/last-commit-processed; then
 		echo "==> ERR: Couldn't update '$repo' Git repository;" \
 			"missing last-commit-processed tag" >&2
 		# Skip to the next repo
