@@ -179,6 +179,7 @@ arch_users:
     groups:
       - dev
       - tu
+      - multilib
   faidoc:
     name: "Alexandre Filgueira"
     ssh_key: faidoc.pub
