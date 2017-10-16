@@ -138,11 +138,6 @@ arch_users:
     groups:
       - dev
       - multilib
-  daniel:
-    name: "Daniel Isenmann"
-    ssh_key: daniel.pub
-    groups:
-      - dev
   demize:
     name: "Johannes Löthberg"
     ssh_key: demize.pub
