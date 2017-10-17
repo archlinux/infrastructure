@@ -30,6 +30,14 @@
   notify:
     - daemon reload
 
+- name: install archbuild unit
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - var-lib-archbuild.mount
+  notify:
+    - daemon reload
+  when: archbuild_fs == 'tmpfs'
+
 - name: install archbuild user units
   copy: src={{ item }} dest=/etc/systemd/user/{{ item }} owner=root group=root mode=0644
   with_items:
@@ -38,12 +46,18 @@
 
 - name: install systemd-swap config
   copy: src=swap.conf dest=/etc/systemd/swap.conf owner=root group=root mode=0644
+  when: archbuild_fs == 'tmpfs'
 
 - name: start and enable archbuild mounts
   service: name={{ item }} enabled=yes state=started
   with_items:
     - systemd-swap.service
     - var-lib-archbuild.mount
+  when: archbuild_fs == 'tmpfs'
+
+- name: start and enable archbuilddest mount
+  service: name={{ item }} enabled=yes state=started
+  with_items:
     - var-lib-archbuilddest.mount
 
 - name: create archbuilddest
