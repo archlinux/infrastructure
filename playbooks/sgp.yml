@@ -1,0 +1,18 @@
+---
+- name: setup signapore build server
+  hosts: sgp.pkgbuild.com
+  remote_user: root
+  roles:
+    - { role: common, tags: ['common'] }
+    - { role: tools, tags: ['tools'] }
+    - { role: sshd, tags: ['sshd'] }
+    - { role: root_ssh, tags: ['root_ssh'] }
+    - { role: archusers, tags: ['archusers'] }
+    - { role: nginx, letsencrypt_validation_dir: "/var/lib/letsencrypt", tags: ["nginx"] }
+    - { role: sudo, tags: ['sudo', 'archusers'] }
+    - { role: syncrepo, tags: ['syncrepo', 'nginx'] }
+    - { role: sogrep, tags: ['sogrep'] }
+    - { role: archbuild, tags: ['archbuild'] }
+    - { role: public_html, tags: ['public_html', 'nginx'] }
+    - { role: archweb, archweb_site: false, archweb_services: false, archweb_mirrorcheck: true, tags: ['archweb'] }
+    - { role: crond, tags: ['crond'] }
