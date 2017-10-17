@@ -8,7 +8,7 @@
     - { role: sshd, tags: ['sshd'] }
     - { role: root_ssh, tags: ['root_ssh'] }
     - { role: archusers, tags: ['archusers'] }
-    - { role: nginx, letsencrypt_validation_dir: "/var/lib/letsencrypt", tags: ["nginx"] }
+    - { role: nginx, tags: ["nginx"] }
     - { role: sudo, tags: ['sudo', 'archusers'] }
     - { role: syncrepo, tags: ['syncrepo', 'nginx'] }
     - { role: sogrep, tags: ['sogrep'] }

@@ -23,7 +23,7 @@
     - { role: sshd, tags: ['sshd'] }
     - { role: root_ssh, tags: ['root_ssh'] }
     - { role: borg-client, tags: ["borg"] }
-    - { role: nginx, letsencrypt_validation_dir: "/var/lib/letsencrypt", tags: ["nginx"] }
+    - { role: nginx, tags: ["nginx"] }
     - { role: planet, planet_domain: "planet.archlinux.org", planet_dir: "/srv/http/planet", tags: ["planet"] }
     - { role: spampd, tags: ["mail", "spampd"] }
     - { role: unbound, tags: ["mail", "unbound"] }
