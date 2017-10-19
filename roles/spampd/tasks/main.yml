@@ -2,7 +2,7 @@
 
 # make and gcc are required for sa-compile
 - name: install spampd and dependencies
-  pacman: name=spampd,make,gcc state=present
+  pacman: name=spampd,make,gcc,razor state=present
 
 - name: install sa-update.sh
   copy: src=sa-update.sh dest=/usr/local/bin/sa-update.sh owner=root group=root mode=0755
