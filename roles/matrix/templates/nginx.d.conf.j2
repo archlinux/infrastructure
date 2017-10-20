@@ -25,11 +25,9 @@ server {
     access_log   /var/log/nginx/{{ matrix_domain }}/access.log;
     error_log    /var/log/nginx/{{ matrix_domain }}/error.log;
 
-{% if certfile.stat.exists %}
     ssl_certificate      /etc/letsencrypt/live/{{ matrix_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ matrix_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ matrix_domain }}/chain.pem;
-{% endif %}
 
     location /_matrix {
         proxy_pass http://matrix;

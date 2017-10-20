@@ -18,10 +18,8 @@
 - name: set up sudoers.d for special users
   copy: src=sudoers.d dest=/etc/sudoers.d/dbscripts owner=root group=root mode=0600
 
-- stat: path="/etc/letsencrypt/live/{{ repos_domain }}/fullchain.pem"
-  register: certfile
-  tags:
-    - nginx
+- name: create ssl cert
+  command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{letsencrypt_validation_dir}} -d '{{ repos_domain }}' create='/etc/letsencrypt/live/{{ repos_domain }}/fullchain.pem'
 
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/dbscripts.conf owner=root group=root mode=0644

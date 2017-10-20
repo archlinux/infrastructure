@@ -21,11 +21,9 @@ server {
     access_log   /var/log/nginx/{{ mirror_domain }}/access.log;
     error_log    /var/log/nginx/{{ mirror_domain }}/error.log;
 
-{% if certfile.stat.exists %}
     ssl_certificate      /etc/letsencrypt/live/{{ mirror_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ mirror_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ mirror_domain }}/chain.pem;
-{% endif %}
 
     autoindex on;
 }

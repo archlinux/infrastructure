@@ -1,7 +1,7 @@
 ---
 
-- stat: path="/etc/letsencrypt/live/{{ public_domain }}/fullchain.pem"
-  register: certfile
+- name: create ssl cert
+  command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{letsencrypt_validation_dir}} -d '{{ public_domain }}' create='/etc/letsencrypt/live/{{ public_domain }}/fullchain.pem'
 
 - name: copy webroot files
   copy: src=public_html dest=/srv owner=root group=root mode=0644 directory_mode=0755

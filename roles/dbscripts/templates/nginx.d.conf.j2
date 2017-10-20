@@ -51,11 +51,9 @@ server {
     server_name  {{ repos_domain }} {{repos_rsync_domain}};
     root         /srv/ftp;
 
-{% if certfile.stat.exists %}
     ssl_certificate      /etc/letsencrypt/live/{{ repos_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ repos_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ repos_domain }}/chain.pem;
-{% endif %}
 
     satisfy  any;
 

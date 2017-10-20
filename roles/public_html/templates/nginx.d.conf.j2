@@ -25,11 +25,9 @@ server {
     access_log   /var/log/nginx/{{ public_domain }}/access.log;
     error_log    /var/log/nginx/{{ public_domain }}/error.log;
 
-{% if certfile.stat.exists %}
     ssl_certificate      /etc/letsencrypt/live/{{ public_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ public_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ public_domain }}/chain.pem;
-{% endif %}
 
     location ~ ^/~([A-Za-z0-9]+)(/.*)? {
         alias /home/$1/public_html$2;
