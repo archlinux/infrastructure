@@ -11,5 +11,5 @@
     - { role: root_ssh, tags: ['root_ssh'] }
     # borg-client needs to be adapted to use the hostname instead of hardcoded values
     # here. this also probably doesn't work nicely for old hosts yet
-    #- { role: borg-client, backup_host: "borg@vostok.archlinux.org", backup_dir: "/backup/apollo", postgres_backup_dir: "/var/lib/postgres/backup", tags: ["borg"] }
+    - { role: borg-client, tags: ["borg"], when: "'borg-clients' in group_names" }
     - { role: zabbix-agent, tags: ["zabbix", "zabbix-agent"] }
