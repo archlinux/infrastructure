@@ -46,4 +46,4 @@
     - ccze
 
 - name: start vnstatd
-  service: name=vnstat state=running enabled=true
+  service: name=vnstat state=started enabled=true
