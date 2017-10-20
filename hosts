@@ -27,3 +27,7 @@ sgp.pkgbuild.com
 orion.archlinux.org
 apollo.archlinux.org
 soyuz.archlinux.org
+
+[buildservers]
+soyuz.archlinux.org
+sgp.pkgbuild.com
