@@ -23,7 +23,7 @@
 
 - name: install postgres backup script
   template: src=backup-postgres.sh.j2 dest=/usr/local/bin/backup-postgres.sh owner=root group=root mode=0755
-  when: postgres_backup_dir != ""
+  when: postgres_backup_dir is defined
 
 - name: check whether postgres user exists
   command: getent passwd postgres
@@ -32,19 +32,19 @@
 
 - name: make postgres backup directory
   file: path=/var/lib/postgres/backup owner=postgres group=postgres state=directory
-  when: check_postgres_user|succeeded and postgres_backup_dir != ""
+  when: check_postgres_user|succeeded and postgres_backup_dir is defined
 
 - name: install mysql backup script
   template: src=backup-mysql.sh.j2 dest=/usr/local/bin/backup-mysql.sh owner=root group=root mode=0755
-  when: mysql_backup_dir != ""
+  when: mysql_backup_dir is defined
 
 - name: install mysql backup config
   template: src=backup-my.cnf.j2 dest={{mysql_backup_defaults}}
-  when: mysql_backup_defaults != ""
+  when: mysql_backup_defaults is defined
 
 - name: create mysql backup directory
   file: path={{mysql_backup_dir}} state=directory owner=root group=root
-  when: mysql_backup_dir != ""
+  when: mysql_backup_dir is defined
 
 - name: install systemd timers for backup
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644

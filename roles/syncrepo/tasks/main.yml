@@ -2,7 +2,7 @@
 
 - name: create ssl cert
   command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{letsencrypt_validation_dir}} -d '{{ mirror_domain }}' creates='/etc/letsencrypt/live/{{ mirror_domain }}/fullchain.pem'
-  when: 'mirror_domain != ""'
+  when: 'mirror_domain is defined'
 
 - name: install rsync
   pacman: name=rsync state=present
@@ -48,4 +48,4 @@
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/syncrepo.conf owner=root group=root mode=0644
   notify:
     - reload nginx
-  when: 'mirror_domain != ""'
+  when: 'mirror_domain is defined'
