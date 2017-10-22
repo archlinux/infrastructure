@@ -3,10 +3,12 @@
 mysql_opts="--defaults-file={{mysql_backup_defaults}}"
 backupdir="{{mysql_backup_dir}}"
 
-#mysqldump --defaults-file=/root/mysql-defaults-root -Axc --skip-extended-insert -uroot | gzip > all-databases.sql.gz
-
 for db in $(mysql $mysql_opts -e 'show databases' -s --skip-column-names); do
         if [[ $db != "information_schema" && $db != "performance_schema" ]]; then
                 mysqldump $mysql_opts "$db" --quick --create-options --disable-keys --add-locks --add-drop-table --lock-tables --complete-insert --skip-extended-insert | gzip > "$backupdir/$db.sql.gz"
         fi
 done
+
+[[ ! -d "$backupdir/xtrabackup" ]] && mkdir -p "$backupdir/xtrabackup"
+rm -rf "$backupdir/xtrabackup/"*
+xtrabackup $mysql_opts --backup --target-dir="$backupdir/xtrabackup"

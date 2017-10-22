@@ -46,6 +46,10 @@
   file: path={{mysql_backup_dir}} state=directory owner=root group=root
   when: mysql_backup_dir is defined
 
+- name: install xtrabackup for mysql backup
+  pacman: name=xtrabackup state=installed
+  when: mysql_backup_dir is defined
+
 - name: install systemd timers for backup
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
