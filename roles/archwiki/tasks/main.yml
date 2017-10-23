@@ -1,0 +1,48 @@
+---
+
+- name: install packages
+  pacman: name=git state=present
+
+- name: make archwiki user
+  user: name="{{ archwiki_user }}" shell=/bin/false home="{{ archwiki_dir }}" createhome=no
+  register: user_created
+
+- name: fix home permissions
+  file: state=directory owner="{{ archwiki_user }}" group="{{ archwiki_user }}" path="{{ archwiki_dir }}"
+
+- name: set up nginx
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/archwiki.conf owner=root group=root mode=644
+  notify:
+    - reload nginx
+
+- name: make nginx log dir
+  file: path=/var/log/nginx/{{ archwiki_domain }} state=directory owner=root group=root mode=0755
+
+- name: clone archwiki repo
+  git: repo=https://git.archlinux.org/vhosts/{{ archwiki_domain }}.git dest="{{ archwiki_dir }}/public"
+  become: true
+  become_user: "{{ archwiki_user }}"
+  register: release
+
+- name: fix home permissions
+  file: state=directory owner="{{ archwiki_user }}" group="{{ archwiki_user }}" path="{{ archwiki_dir }}"
+
+- name: create archwiki db
+  mysql_db: name="{{ archwiki_db }}" login_host="{{ archwiki_db_host }}" login_password="{{ mariadb_users.root }}"
+  register: db_created
+
+- name: create archwiki db user
+  mysql_user: name={{ archwiki_db_user }} password={{ archwiki_db_password }}
+              login_host="{{ archwiki_db_host }}" login_password="{{ mariadb_users.root }}"
+              priv="{{ archwiki_db }}.*:ALL"
+  no_log: true
+
+- name: configure php-fpm
+  template:
+    src=php-fpm.conf.j2 dest="/etc/php/php-fpm.d/{{ archwiki_user }}.conf"
+    owner=root group=root mode=0644
+  notify:
+    - restart php-fpm@{{ archwiki_user }}
+
+- name: start and enable systemd socket
+  service: name=php-fpm@{{ archwiki_user }}.socket state=started enabled=true
