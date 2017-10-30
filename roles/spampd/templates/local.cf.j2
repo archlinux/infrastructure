@@ -33,7 +33,7 @@ dns_server 127.0.0.1
 
 #   Set the threshold at which a message is considered spam (default: 5.0)
 #
-required_score 2.5
+required_score 5.0
 
 
 #   Use Bayesian classifier (default: 1)
@@ -54,6 +54,10 @@ required_score 2.5
 # bayes_ignore_header X-Spam-Status
 
 #whitelist_to postmaster@*
+#   Whether to decode non- UTF-8 and non-ASCII textual parts and recode
+#   them to UTF-8 before the text is given over to rules processing.
+#
+# normalize_charset 1
 
 #   Some shortcircuiting, if the plugin is enabled
 # 
@@ -89,23 +93,201 @@ endif # Mail::SpamAssassin::Plugin::Shortcircuit
 
 loadplugin Mail::SpamAssassin::Plugin::Rule2XSBody
 
+add_header all Status _YESNO_, score=_SCORE_ required=_REQD_ tests=_TESTSSCORES_ autolearn=_AUTOLEARN_ version=_VERSION_
 
-header LOCAL_XEROX_1 Subject =~ /Scanned Image from a Xerox WorkCentre/
-score LOCAL_XEROX_1 5
+# enable SPF plugin
+loadplugin Mail::SpamAssassin::Plugin::SPF
 
+# disable suspicious IADB stuff (they whitelisted some spam mails)
+score __RCVD_IN_IADB 0
+
+# reduce the positive weight of returnpath CERTIFIED/SAFE results
+score RCVD_IN_RP_CERTIFIED -0.01 # default -3
+score RCVD_IN_RP_SAFE -0.001      # default -2
+
+# increase scores of some rules
+score RCVD_IN_BL_SPAMCOP_NET 3.5
+score RCVD_IN_SBL 3.5
+score RCVD_IN_XBL 3.5
+score URIBL_SBL 3.5
+score RCVD_IN_SORBS_SPAM 3.5
+score RCVD_IN_BRBL_LASTEXT 2.0
+
+score RDNS_NONE 3.5
+score RDNS_DYNAMIC 1.6
+score HELO_MISC_IP 0.2
+score UNPARSEABLE_RELAY 1.0
+score FREEMAIL_FORGED_REPLYTO 2.0
+
+score BAYES_00 -1.0
+score BAYES_05 -0.5
+score BAYES_20 0
+score BAYES_40 1.0
+
+score BAYES_50 1.25
+#score BAYES_60 3.0
+#score BAYES_80 3.5
+#score BAYES_90 4.0
+#score BAYES_95 4.9
+#score BAYES_99 5.0
+
+score MISSING_HEADERS 1.3
+score LOTS_OF_MONEY 0.5
+score FREEMAIL_FROM 0.5
+score T_DKIM_INVALID 1.0
+
+score MONEY_FRAUD_3 0.5
+score MONEY_FRAUD_5 0.8
+score MONEY_FRAUD_8 1.0
+
+score UPPERCASE_50_75 2.0
+score UPPERCASE_75_100 2.5
+
+# NIX
+header    RCVD_IN_NIX_SPAM  eval:check_rbl('nix-spam-lastexternal','ix.dnsbl.manitu.net.')
+describe  RCVD_IN_NIX_SPAM  Listed in NIX-SPAM DNSBL (www.dnsbl.manitu.net)
+tflags    RCVD_IN_NIX_SPAM  net
+score     RCVD_IN_NIX_SPAM  3.5
+
+# YANDEX
+# also matches valid amazon emails
+# TODO: need to fix!
+#header LOCAL_YANDEX X-Mailer-RecptId =~ /[0-9]+/
+#score LOCAL_YANDEX 5
+
+
+# recent spam with weird URLs in List-Unsubscribe header
+header   LOCAL_WEIRD_UNSUBSCRIBE List-Unsubscribe =~ /(tarif|sicher|sieger|wechseln|stepstone|angebot|versicherung)/i
+describe LOCAL_WEIRD_UNSUBSCRIBE Contains weird HTTP URLs in List-Unsubscribe header
+score    LOCAL_WEIRD_UNSUBSCRIBE 5.0
+
+# cancer stuff
+header   __LOCAL_DISEASE_SUBJ Subject =~ /\b(cancer|ill|doctor|survive|disease|illness|admitted|hospital)\b/i
+body     __LOCAL_DISEASE_BODY /\b(cancer|ill|doctor|survive|disease|illness|admitted|hospital)\b/i
+meta     LOCAL_DISEASE ((__LOCAL_DISEASE_SUBJ + __LOCAL_DISEASE_BODY) > 0)
+describe LOCAL_DISEASE Contains disease keywords in body and/or subject
+score    LOCAL_DISEASE 1.5
+
+# charity stuff
+header   __LOCAL_CHARITY_SUBJ Subject =~ /\b(charity|donation|donate|humanity|orphan|orphanage|widow)\b/i
+body     __LOCAL_CHARITY_BODY /\b(charity|donation|donate|humanity|orphan|orphanage|widow)\b/i
+meta     LOCAL_CHARITY ((__LOCAL_CHARITY_SUBJ + __LOCAL_CHARITY_BODY) > 0)
+describe LOCAL_CHARITY Contains charity or donate keywords in body and/or subject
+score    LOCAL_CHARITY 1.5
+
+# credit stuff
+header   __LOCAL_CREDIT_SUBJ Subject =~ /\b(darlehen|kredit|schufa)\b/i
+body     __LOCAL_CREDIT_BODY /\b(darlehen|kredit|schufa)\b/i
+meta     LOCAL_CREDIT ((__LOCAL_CREDIT_SUBJ + __LOCAL_CREDIT_BODY) > 0)
+describe LOCAL_CREDIT Contains credit keywords in body and/or subject
+score    LOCAL_CREDIT 1.5
+
+header LOCAL_CREDITOFFER Subject =~ /\bDarlehensangebot\b/i
+score LOCAL_CREDITOFFER 1
+
+# extremely long subjects
+header   LOCAL_LONG_SUBJECT_250 Subject =~ /^.{250,}/
+describe LOCAL_LONG_SUBJECT_250 Subject field is extremely large (>250)
+score    LOCAL_LONG_SUBJECT_250 5
+
+header   LOCAL_LONG_SUBJECT_500 Subject =~ /^.{500,}/
+describe LOCAL_LONG_SUBJECT_500 Subject field is extremely large (>500)
+score    LOCAL_LONG_SUBJECT_500 2.1
+
+# delivery notifications
 header LOCAL_ITEM_DELIVERY Subject =~ /Item Delivery Notification/
-score LOCAL_ITEM_DELIVERY 2.5
+score  LOCAL_ITEM_DELIVERY 2.5
+
+header __LOCAL_PARCEL Subject =~ /\b[Pp]arcel\b/
+header __LOCAL_DELIVERY Subject =~ /\bdelivery?\b/
+meta LOCAL_PARCEL_DELIVERY ((__LOCAL_PARCEL + __LOCAL_DELIVERY) > 0)
+describe LOCAL_PARCEL_DELIVERY Subject contains words delivery? and parcel
+score LOCAL_PARCEL_DELIVERY 2.5
 
 header LOCAL_PACKAGE_DELIVERY Subject =~ /Package Delivery Notification/
 score LOCAL_PACKAGE_DELIVERY 2.5
 
+# company documents
 header LOCAL_COMPANY_DOC Subject =~ /Company Documents/
-score LOCAL_COMPANY_DOC 2.5
+score  LOCAL_COMPANY_DOC 2.5
 
-header LOCAL_PARCEL_DELIVERY Subject =~ /Parcel Delivery Notification/
-score LOCAL_PARCEL_DELIVERY 2.5
+header LOCAL_XEROX_1 Subject =~ /Scanned Image from a Xerox WorkCentre/
+score LOCAL_XEROX_1 5
+
 
 header LOCAL_SPAM1 Subject =~ /Reclame sus facturas impagadas/
 score LOCAL_SPAM1 2.5
 
+body __LOCAL_VERTRIEB /\bvertrieb/i
+body __LOCAL_VERKAUF /\b(ab)?verkauf\b/i
+body __LOCAL_ANGEBOT /\bAngebot\b/i
+body __LOCAL_REGAL_BODY /\b(lager|schwer(last)?|stahl)regale?\b/i
+meta LOCAL_REGAL ((__LOCAL_VERKAUF || __LOCAL_ANGEBOT || __LOCAL_VERTRIEB) && __LOCAL_REGAL_BODY)
+describe LOCAL_REGAL Body contains sales pitch for some type of shelf
+score LOCAL_REGAL 1
 
+body LOCAL_ZION_GALIANO /\bZion-Galiano-Vertrieb\b/i
+score LOCAL_ZION_GALIANO 3
+
+header LOCAL_LOTTERY Subject =~ /\bLottery\b/i
+score LOCAL_LOTTERY 0.2
+
+header LOCAL_WINNER Subject =~ /\bWinner\b/i
+score LOCAL_WINNER 0.2
+
+meta LOCAL_LOTTERY_WINNER (LOCAL_LOTTERY && LOCAL_WINNER)
+score LOCAL_LOTTERY_WINNER 1.2
+
+header LOCAL_CREDIT Subject =~ /\bKredit\b/i
+score LOCAL_CREDIT 0.1
+
+header LOCAL_OFFER Subject =~ /\bAngebot\b/i
+score LOCAL_OFFER 0.1
+
+meta LOCAL_CREDIT_OFFER (LOCAL_OFFER && LOCAL_CREDIT)
+score LOCAL_CREDIT_OFFER 0.8
+
+# Attachments
+loadplugin Mail::SpamAssassin::Plugin::MIMEHeader
+
+mimeheader ZIP_ATTACHED Content-Type =~ /zip/i
+describe ZIP_ATTACHED email contains a zip attachment
+score ZIP_ATTACHED 1.0
+
+mimeheader MSWORD_ATTACHED Content-Type =~ /ms-?word/i
+describe MSWORD_ATTACHED email contains a msword attachment
+score MSWORD_ATTACHED 1.0
+
+##################################################
+# from: https://forum.hetzner.de/thread/24022-spamassassin-filterregel/?postID=243392#post243392
+add_header all BL-Results "_RBL_"
+### Senderbase Reputation checks (rf.senderbase.org)
+header __R_SB_FR eval:check_rbl_txt('rf.senderbase.org-lastexternal','rf.senderbase.org')
+describe __R_SB_FR IP reputation of the sender at SenderBase
+tflags __R_SB_FR net
+reuse __R_SB_FR
+
+
+header R_SB_R_NEG3 eval:check_rbl_sub('rf.senderbase.org-lastexternal', '^-[3-9]\.')
+describe R_SB_R_NEG3 SenderBase Reputation is -3 to -10
+score R_SB_R_NEG3 5
+reuse R_SB_R_NEG3
+
+
+header R_SB_R_NEU0 eval:check_rbl_sub('rf.senderbase.org-lastexternal', '^-[0-2]\.')
+describe R_SB_R_NEU0 SenderBase Reputation is 0 to -2.9
+score R_SB_R_NEU0 2
+reuse R_SB_R_NEU0
+
+
+header R_SB_R_POS1 eval:check_rbl_sub('rf.senderbase.org-lastexternal', '^[0-3]\.')
+describe R_SB_R_POS1 SenderBase Reputation is 0 - 2.9
+score R_SB_R_POS1 0.1
+reuse R_SB_R_POS1
+
+
+header R_SB_FR_POS3 eval:check_rbl_sub('rf.senderbase.org-lastexternal', '^[3-9]\.')
+describe R_SB_FR_POS3 SenderBase Reputation is 3.0 - 9.9
+score R_SB_FR_POS3 -0.5
+reuse R_SB_FR_POS3
+###################################################
