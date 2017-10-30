@@ -39,6 +39,9 @@
   notify:
     restart spampd
 
+- name: check SA config validity
+  command: /usr/bin/vendor_perl/spamassassin --lint
+
 - name: activate systemd timers
   service: name={{ item }} enabled=yes state=started
   with_items:
