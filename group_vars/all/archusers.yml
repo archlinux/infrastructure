@@ -158,6 +158,11 @@ arch_users:
       - dev
       - multilib
       - tu
+  dvzrv:
+    name: "David Runge"
+    ssh_key: dvzrv.pub
+    groups:
+      - tu
   eric:
     name: "Eric Bélanger"
     ssh_key: eric.pub
