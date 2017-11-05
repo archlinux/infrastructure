@@ -200,7 +200,7 @@ score  LOCAL_ITEM_DELIVERY 2.5
 
 header __LOCAL_PARCEL Subject =~ /\b[Pp]arcel\b/
 header __LOCAL_DELIVERY Subject =~ /\bdelivery?\b/
-meta LOCAL_PARCEL_DELIVERY ((__LOCAL_PARCEL + __LOCAL_DELIVERY) > 0)
+meta LOCAL_PARCEL_DELIVERY ((__LOCAL_PARCEL + __LOCAL_DELIVERY) > 1)
 describe LOCAL_PARCEL_DELIVERY Subject contains words delivery? and parcel
 score LOCAL_PARCEL_DELIVERY 2.5
 
