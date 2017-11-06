@@ -7,7 +7,7 @@ It also contains git submodules so you have to run `git submodule update --init
 
 #### Instructions
 All systems are set up the same way. For the first time setup in the Hetzner rescue system,
-run the provisioning script: `ansible-playbook playbooks/$hostname-provision.yml`.
+run the provisioning script: `ansible-playbook playbooks/install-arch.yml -l $host`.
 The provisioning script configures a sane basic systemd with sshd. By design, it is NOT idempotent.
 After the provisioning script has run, it is safe to reboot.
 
@@ -21,6 +21,8 @@ point to the new server and then run a playbook onto the server which includes t
 it is necessary to run the following once:
 
     certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w /var/lib/letsencrypt/ -d <domain-name>
+
+Note that some roles already run this automatically.
 
 ##### Note about opendkim
 
