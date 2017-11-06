@@ -10,3 +10,4 @@
   user: groups=phrik name="{{ item }}" append=yes
   with_items:
     - demize
+  tags: ['archusers']

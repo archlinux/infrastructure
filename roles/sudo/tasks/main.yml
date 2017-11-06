@@ -6,6 +6,7 @@
 - name: add sudo users to wheel
   user: name="{{ item }}" append=yes groups=wheel
   with_items: "{{ sudo_users }}"
+  tags: ['archusers']
 
 - name: allow wheel group to use sudo
   lineinfile:
