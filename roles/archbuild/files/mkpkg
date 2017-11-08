@@ -2,7 +2,7 @@
 setopt extendedglob nomatch
 TRAPERR() { exit 1 }
 
-arch=(x86_64 i686) # arches to build ("any" builds x86_64 and repo-adds x86_64 and i686)
+arch=(x86_64) # arches to build ("any" builds x86_64 and repo-adds x86_64 and i686)
 check=1
 chroot=extra # The chroot to use (without arch)
 mailaddr= # send failed build logs where?

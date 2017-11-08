@@ -2,7 +2,7 @@
 
 target="/srv/ftp"
 repos=('core' 'extra' 'community' 'testing' 'community-testing' 'staging' 'community-staging' 'multilib' 'multilib-testing' 'multilib-staging' 'gnome-unstable' 'kde-unstable')
-arches=('i686' 'x86_64')
+arches=('x86_64')
 lock='/tmp/links.lck'
 tmp="$(mktemp -d)"
 

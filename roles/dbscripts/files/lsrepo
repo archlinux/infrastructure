@@ -169,7 +169,7 @@ logging.basicConfig()
 args = parse_args()
 if args.debug:
     logging.root.setLevel(logging.DEBUG)
-archs = frozenset(args.archs or ["i686", "x86_64"])
+archs = frozenset(args.archs or ["x86_64"])
 
 loop = get_event_loop()
 try:

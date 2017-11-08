@@ -2,7 +2,7 @@
 
 target="/srv/ftp"
 tmp=$(mktemp -d)
-arches=('i686' 'x86_64')
+arches=('x86_64')
 lock='/tmp/links.lck'
 
 [ -f "${lock}" ] && echo "create links is running" && exit 1
