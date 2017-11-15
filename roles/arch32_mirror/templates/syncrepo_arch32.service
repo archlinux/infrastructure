@@ -1,0 +1,10 @@
+[Unit]
+Description=Synchronize archlinux32 package repository mirror
+RequiresMountsFor={{ arch32_mirror_dir }}
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/syncrepo_arch32
+Nice=19
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7

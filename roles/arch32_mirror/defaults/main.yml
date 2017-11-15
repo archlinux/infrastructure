@@ -1,0 +1,4 @@
+---
+arch32_mirror_dir: /srv/archlinux32
+arch32_mirror_source: rsync://mirror.archlinux32.org/archlinux32
+arch32_mirror_lastupdate: https://mirror.archlinux32.org/lastupdate

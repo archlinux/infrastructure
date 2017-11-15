@@ -1,0 +1,33 @@
+---
+
+- name: create ssl cert
+  command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{letsencrypt_validation_dir}} -d '{{ arch32_mirror_domain }}' creates='/etc/letsencrypt/live/{{ arch32_mirror_domain }}/fullchain.pem'
+  when: 'arch32_mirror_domain is defined'
+
+- name: install rsync
+  pacman: name=rsync state=present
+
+- name: install syncrepo script
+  template: src=syncrepo_arch32 dest=/usr/local/bin/syncrepo_arch32 owner=root group=root mode=0755
+
+- name: install syncrepo units
+  template: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - syncrepo_arch32.timer
+    - syncrepo_arch32.service
+  notify:
+    - daemon reload
+
+- name: start and enable syncrepo unit
+  service: name={{ item }} enabled=yes state=started
+  with_items:
+    - syncrepo_arch32.timer
+
+- name: make nginx log dir
+  file: path=/var/log/nginx/{{ arch32_mirror_domain }} state=directory owner=root group=root mode=0755
+
+- name: set up nginx
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/syncrepo_arch32.conf owner=root group=root mode=0644
+  notify:
+    - reload nginx
+  when: 'arch32_mirror_domain is defined'
