@@ -27,6 +27,11 @@
 - name: fix home permissions
   file: state=directory owner="{{ archwiki_user }}" group="{{ archwiki_user }}" path="{{ archwiki_dir }}"
 
+- name: configure archwiki
+  template: src=LocalSettings.php.j2 dest="{{ archwiki_dir }}/public/LocalSettings.php" owner="{{ archwiki_user }}" group="{{ archwiki_user }}" mode=0640
+  register: config
+  no_log: true
+
 - name: create archwiki db
   mysql_db: name="{{ archwiki_db }}" login_host="{{ archwiki_db_host }}" login_password="{{ mariadb_users.root }}"
   register: db_created
