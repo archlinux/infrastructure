@@ -13,3 +13,5 @@ filesystem: btrfs
 # raise tcp window limits to 32MiB
 tcp_rmem: "10240 87380 33554432"
 tcp_wmem: "10240 87380 33554432"
+
+mail_domain: "mail.archlinux.org"

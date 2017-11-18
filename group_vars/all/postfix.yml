@@ -1,0 +1,2 @@
+# This is overridden for the actual mail server which uses mail.archlinux.org.
+mail_domain: "{{inventory_hostname}}"
