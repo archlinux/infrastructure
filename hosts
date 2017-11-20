@@ -31,3 +31,7 @@ soyuz.archlinux.org
 [buildservers]
 soyuz.archlinux.org
 sgp.pkgbuild.com
+
+[unmanaged]
+nymeria.archlinux.org
+dragon.archlinux.org
