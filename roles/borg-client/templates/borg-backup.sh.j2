@@ -26,10 +26,10 @@ if is_btrfs "$src"; then
 	src="$snapshotdir"
 fi
 
-# In case there is postgresql running, dump all of it somewhere.
-systemctl status postgresql && /usr/local/bin/backup-postgres.sh || true
-
-systemctl status mysqld && /usr/local/bin/backup-mysql.sh || true
+systemctl is-active postgresql && /usr/local/bin/backup-postgres.sh || true
+if systemctl is-active mysqld || systemctl is-active mariadb; then
+    /usr/local/bin/backup-mysql.sh || true
+fi
 
 borg create -v --stats -C lz4 \
     -e /proc \
