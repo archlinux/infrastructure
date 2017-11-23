@@ -1,7 +1,7 @@
 server {
     listen       80;
     listen       [::]:80;
-    server_name  {{ arch32_mirror_domain }};
+    server_name  {{ arch32_mirror_domain }} pool.mirror.archlinux32.org;
     root         {{ arch32_mirror_dir }};
 
     access_log   /var/log/nginx/{{ arch32_mirror_domain }}/access.log;
