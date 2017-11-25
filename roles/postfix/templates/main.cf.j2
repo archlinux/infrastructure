@@ -137,7 +137,7 @@ unknown_hostname_reject_code = 550
 unknown_client_reject_code = 550
 unknown_address_reject_code = 550
 
-smtpd_reject_footer = For assistance contact <postmaster@archlinux.org>. Please provide the following information in your problem report: time ($localtime) and client ($client_address).
+smtpd_reject_footer = For assistance contact <postmaster@archlinux.org>. Please provide the following information in your problem report: time ($localtime), client ($client_address) and server ($server_name).
 
 {% if postfix_server %}
 smtpd_sasl_auth_enable = yes
