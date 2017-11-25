@@ -35,3 +35,7 @@ sgp.pkgbuild.com
 [unmanaged]
 nymeria.archlinux.org
 dragon.archlinux.org
+
+[dragon-backup]
+nymeria.archlinux.org
+luna.archlinux.org
