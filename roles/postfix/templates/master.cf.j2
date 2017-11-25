@@ -104,6 +104,22 @@ scache    unix  -       -       n       -       1       scache
         -o smtpd_tls_security_level=none
 {% endif %}
 
+# injection port that provides dkim signatures to mails coming in. same as above but milters enabled
+127.0.0.1:10027 inet n  -       n       -        -      smtpd
+        -o syslog_name=postfix/dkim-injector
+        -o smtpd_authorized_xforward_hosts=127.0.0.0/8
+        -o smtpd_client_restrictions=
+        -o smtpd_helo_restrictions=
+        -o smtpd_sender_restrictions=
+        -o smtpd_recipient_restrictions=$post_queue_smtpd_recipient_restrictions
+        -o smtpd_data_restrictions=
+        -o smtpd_end_of_data_restrictions=
+        -o mynetworks=127.0.0.0/8
+        -o receive_override_options=no_unknown_recipient_checks
+        -o smtpd_tls_auth_only=no
+        -o smtpd_reject_footer=
+        -o smtpd_tls_security_level=none
+
 {% if postfix_patchwork_enabled %}
 patchwork   unix  -       n       n       -       -       pipe
   flags=DFRX user={{postfix_patchwork_user}} argv={{postfix_patchwork_mail_handler}}
