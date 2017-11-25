@@ -71,6 +71,10 @@ smtp_connection_cache_on_demand = yes
 smtpd_milters=unix:/var/spool/opendkim/opendkim
 non_smtpd_milters=unix:/var/spool/opendkim/opendkim
 
+# Pass internal mails through filters so they get signed by opendkim
+# XXX: Be careful not to have filters that may reject mails!
+internal_mail_filter_classes = bounce
+
 # custom restriction classes
 policy_check =
 # postfwd
