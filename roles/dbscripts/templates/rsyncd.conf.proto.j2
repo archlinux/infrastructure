@@ -20,6 +20,11 @@ hosts allow = 127.0.0.1
 # DENY THE REST
 hosts deny = *
 
+[temp-archive]
+	path = /srv/archive
+	comment = temporary endpoint for the archive
+	hosts allow = 192.111.146.210
+
 # Just the release/stable iso/packages (for most mirrors)
 [ftp]
 	path = /srv/ftp
