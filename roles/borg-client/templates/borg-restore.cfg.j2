@@ -1,9 +1,11 @@
 # We set the repo in the /usr/local/bin/borg wrapper which is enough
 $borg_repo = "";
 
-#@backup_prefixes = (
-	#{regex => "^/", replacement => "backup-snap/"},
-#);
+{% if filesystem == "btrfs" %}
+@backup_prefixes = (
+	{regex => "^/", replacement => "backup-snap/"},
+);
+{% endif %}
 
 1;
 
