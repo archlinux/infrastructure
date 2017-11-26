@@ -392,7 +392,6 @@ if gitify
     prepare: case
     when meson
       <<~END
-        mkdir build
         cd #{localname}
       END
     when autotools
@@ -419,17 +418,15 @@ if gitify
     build: case
     when meson
       <<~END
-        cd build
-        arch-meson ../#{localname}
-        ninja
+        arch-meson #{localname} build
+        ninja -C build
       END
     end,
 
     package: case
     when meson
       <<~END
-        cd build
-        DESTDIR="$pkgdir" ninja install
+        DESTDIR="$pkgdir" ninja -C build install
       END
     end,
   }.reverse_each do |name, content|
