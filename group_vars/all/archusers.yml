@@ -58,6 +58,11 @@ arch_users:
     ssh_key: andrew.pub
     groups:
       - dev
+  andrewsc:
+    name: "Andrew Crerar"
+    ssh_key: andrewsc.pub
+    groups:
+      - tu
   anthraxx:
     name: "Levente Polyak"
     ssh_key: anthraxx.pub
