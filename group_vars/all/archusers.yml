@@ -409,12 +409,6 @@ arch_users:
     ssh_key: tensor5.pub
     groups:
       - tu
-  thestinger:
-    name: "Daniel Micay"
-    ssh_key: thestinger.pub
-    groups:
-      - tu
-      - multilib
   thomas:
     name: "Thomas Bächler"
     ssh_key: thomas.pub
