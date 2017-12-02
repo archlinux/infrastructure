@@ -7,7 +7,7 @@
   user: name=kanboard shell=/bin/false home="{{ kanboard_dir }}" createhome=no
 
 - name: clone kanboard git repo
-  git: repo=https://github.com/kanboard/kanboard.git dest="{{kanboard_dir}}" version=stable
+  git: repo=https://github.com/kanboard/kanboard.git dest="{{kanboard_dir}}" version={{kanboard_version}}
 
 - name: install nginx config
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/kanboard.conf owner=root group=root mode=644

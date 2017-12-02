@@ -17,3 +17,4 @@ mysql_backup_dir: "/root/backup-mysql"
 mysql_backup_defaults: "/root/.backup-my.cnf"
 
 archweb_version: a4cc538c3bb9a23e6b77ccc03a279185863efd3c
+kanboard_version: "v1.1.0"

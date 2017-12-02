@@ -6,3 +6,5 @@ kanboard_domain: "kanboard.archlinux.org"
 kanboard_db_user: "kanboard"
 kanboard_db: "kanboard"
 
+kanboard_version: "stable"
+
