@@ -1,7 +1,7 @@
 ---
 
 - name: install packages
-  pacman: name=git,composer state=present
+  pacman: name=git state=present
 
 - name: make kanboard user
   user: name=kanboard shell=/bin/false home="{{ kanboard_dir }}" createhome=no
@@ -21,13 +21,6 @@
   file: path="{{kanboard_dir}}/{{item}}" owner=kanboard mode=700 state=directory
   with_items:
     - data
-    - .composer
-    - vendor
-
-- name: install composer dependencies
-  composer: command="install" working_dir="{{kanboard_dir}}"
-  become: true
-  become_user: kanboard
 
 - name: create kanboard db user
   postgresql_user: name={{ kanboard_db_user }} password={{ kanboard_db_password }} encrypted=true
