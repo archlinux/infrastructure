@@ -74,7 +74,7 @@
   become_method: su
 
 - name: add synapse postgres user
-  postgresql_user: db=synapse name=synapse password={{ postgres_users.synapse }}
+  postgresql_user: db=synapse name=synapse password={{ postgres_users.synapse }} encrypted=true
   become: yes
   become_user: postgres
   become_method: su

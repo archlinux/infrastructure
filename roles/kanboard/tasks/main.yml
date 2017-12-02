@@ -30,7 +30,7 @@
   become_user: kanboard
 
 - name: create kanboard db user
-  postgresql_user: name={{ kanboard_db_user }} password={{ kanboard_db_password }}
+  postgresql_user: name={{ kanboard_db_user }} password={{ kanboard_db_password }} encrypted=true
   become: yes
   become_user: postgres
   become_method: su

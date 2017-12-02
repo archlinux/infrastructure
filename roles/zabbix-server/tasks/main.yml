@@ -19,7 +19,7 @@
   file: path=/var/log/nginx/{{ zabbix_domain }} state=directory owner=root group=root mode=0755
 
 - name: create zabbix db user
-  postgresql_user: name={{ zabbix_db_user }} password={{ zabbix_db_password }}
+  postgresql_user: name={{ zabbix_db_user }} password={{ zabbix_db_password }} encrypted=true
   become: yes
   become_user: postgres
   become_method: su
