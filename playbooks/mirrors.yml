@@ -3,12 +3,12 @@
   hosts: mirrors
   remote_user: root
   roles:
-    - { role: common, tags: ['common'] }
-    - { role: tools, tags: ['tools'] }
-    - { role: sshd, tags: ['sshd'] }
-    - { role: root_ssh, tags: ['root_ssh'] }
-    - { role: nginx, tags: ["nginx"] }
-    - { role: syncrepo, tags: ['syncrepo', 'nginx'] }
-    - { role: archweb, archweb_site: false, archweb_services: false, archweb_mirrorcheck: true, tags: ['archweb'] }
-    - { role: zabbix-agent, tags: ["zabbix", "zabbix-agent"] }
-    - { role: arch32_mirror, tags: ['arch32_mirror', 'nginx'] }
+    - { role: common }
+    - { role: tools }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: nginx }
+    - { role: syncrepo, tags: ['nginx'] }
+    - { role: archweb, archweb_site: false, archweb_services: false, archweb_mirrorcheck: true }
+    - { role: zabbix-agent, tags: ["zabbix"] }
+    - { role: arch32_mirror, tags: ['nginx'] }
