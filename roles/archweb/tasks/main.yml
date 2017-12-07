@@ -1,7 +1,6 @@
 ---
-
-- name: install git
-  pacman: name=git,python2,python2-psycopg2,python2-virtualenv,uwsgi-plugin-python2,gcc state=present
+- name: install required packages
+  pacman: name=git,python2-setuptools,python2-psycopg2,python2-virtualenv,uwsgi-plugin-python2,gcc state=present
 
 - name: make archweb user
   user: name=archweb shell=/bin/false home="{{ archweb_dir }}" createhome=no
@@ -15,8 +14,7 @@
 
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/archweb.conf owner=root group=root mode=644
-  notify:
-    - reload nginx
+  notify: reload nginx
   when: archweb_site
 
 - name: make nginx log dir
