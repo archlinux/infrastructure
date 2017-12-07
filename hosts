@@ -6,8 +6,8 @@ soyuz.archlinux.org
 luna.archlinux.org
 
 [pia]
-ind.mirror.pkgbuild.com
-jpn.mirror.pkgbuild.com
+ind.mirror.pkgbuild.com ansible_host=169.38.85.99
+jpn.mirror.pkgbuild.com ansible_host=161.202.225.107
 mex.mirror.pkgbuild.com
 sgp.pkgbuild.com
 
@@ -19,8 +19,8 @@ sgp.pkgbuild.com
 169.50.62.125
 
 [mirrors]
-ind.mirror.pkgbuild.com
-jpn.mirror.pkgbuild.com
+ind.mirror.pkgbuild.com ansible_host=169.38.85.99
+jpn.mirror.pkgbuild.com ansible_host=161.202.225.107
 mex.mirror.pkgbuild.com
 sgp.pkgbuild.com
 
