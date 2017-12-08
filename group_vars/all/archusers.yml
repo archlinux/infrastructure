@@ -168,6 +168,7 @@ arch_users:
     ssh_key: dvzrv.pub
     groups:
       - tu
+      - multilib
   eric:
     name: "Eric Bélanger"
     ssh_key: eric.pub
