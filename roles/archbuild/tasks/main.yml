@@ -24,7 +24,6 @@
     - clean-chroots.service
     - clean-dests.timer
     - clean-dests.service
-    - var-lib-archbuild.mount
     - var-lib-archbuilddest.mount
     - strictatime@.service
   notify:
