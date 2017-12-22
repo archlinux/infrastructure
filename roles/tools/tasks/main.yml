@@ -46,6 +46,8 @@
     - ccze
     - rxvt-unicode-terminfo
     - termite-terminfo
+    - p7zip
+    - unzip
 
 - name: start vnstatd
   service: name=vnstat state=started enabled=true
