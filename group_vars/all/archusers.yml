@@ -178,7 +178,8 @@ arch_users:
   eschwartz:
     name: "Eli Schwartz"
     ssh_key: eschwartz.pub
-    groups: []
+    groups:
+      - tu
   eworm:
     name: "Christian Hesse"
     ssh_key: eworm.pub
