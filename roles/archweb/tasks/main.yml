@@ -27,7 +27,7 @@
 
 - name: clone archweb repo
   git: >
-    repo=https://git.archlinux.org/archweb.git
+    repo={{ archweb_repository }}
     dest="{{ archweb_dir }}"
     version={{ archweb_version }}
   become: true
