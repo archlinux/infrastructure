@@ -136,7 +136,7 @@ check_svn() (
 
 build() {
   [[ $chroot == multilib* ]] && 1=
-  sudo ${chroot}${1:+-$1}-build -- ${*:2}
+  ${chroot}${1:+-$1}-build -- ${*:2}
 }
 
 # Parameters: arch
