@@ -9,10 +9,10 @@ luna.archlinux.org
 ind.mirror.pkgbuild.com
 jpn.mirror.pkgbuild.com
 mex.mirror.pkgbuild.com
+sgp.mirror.pkgbuild.com
 sgp.pkgbuild.com
 
 159.122.70.8
-161.202.204.205
 169.50.62.113
 169.50.62.117
 169.50.62.119
@@ -22,6 +22,7 @@ sgp.pkgbuild.com
 ind.mirror.pkgbuild.com
 jpn.mirror.pkgbuild.com
 mex.mirror.pkgbuild.com
+sgp.mirror.pkgbuild.com
 sgp.pkgbuild.com
 
 [borg-clients]
