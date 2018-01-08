@@ -86,7 +86,7 @@ login_log_format_elements = "user=<%u> method=%m rip=%r lip=%l mpid=%e %c %k"
 ssl_cert = </etc/letsencrypt/live/{{mail_domain}}/fullchain.pem
 ssl_key = </etc/letsencrypt/live/{{mail_domain}}/privkey.pem
 ssl_prefer_server_ciphers = yes
-ssl_protocol_min = TLSv1
+ssl_min_protocol = TLSv1
 ssl_dh=</etc/dovecot/dh.pem
 ssl_options = no_compression
 
