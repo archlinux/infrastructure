@@ -180,6 +180,7 @@ arch_users:
     ssh_key: eschwartz.pub
     groups:
       - tu
+      - multilib
   eworm:
     name: "Christian Hesse"
     ssh_key: eworm.pub
