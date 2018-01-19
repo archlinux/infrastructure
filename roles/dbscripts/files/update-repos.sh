@@ -58,8 +58,8 @@ for repo in ${REPOS[@]}; do
 	fi
 
 	echo '  -> Updating package branches'
-	pkgs=($(git diff --name-only last-commit-processed.. | cut -d'/' -f1 |
-		uniq))
+	pkgs=($(git diff --name-only --no-renames last-commit-processed |
+		cut -d'/' -f1 | uniq))
 	pkg_count=${#pkgs[@]}
 
 	if ((pkg_count)); then
