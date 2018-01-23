@@ -7,7 +7,7 @@ archweb_domains_redirects:
         'dev.archlinux.org': '/'
         'packages.archlinux.org': '/packages$1'
 archweb_repository: 'https://git.archlinux.org/archweb.git'
-archweb_version: 5538aa8799788e19a1691bd3c2e889bb088e654b
+archweb_version: f42f357fdf20d76bc5468ec227dac66cd0ca3ca8
 archweb_site: true
 archweb_mirrorcheck: false
 archweb_mirrorresolv: false
