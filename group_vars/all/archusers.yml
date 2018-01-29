@@ -222,6 +222,10 @@ arch_users:
     ssh_key: foxxx0.pub
     groups:
        - tu
+  fukawi2:
+    name: "Phillip Smith"
+    ssh_key: fukawi2.pub
+    groups: []
   giovanni:
     name: ""
     ssh_key: giovanni.pub

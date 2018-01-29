@@ -10,6 +10,7 @@ root_ssh_keys:
   - grazzolini.pub
   - foutrelis.pub
   - jelle.pub
+  - fukawi2.pub
 
 root_gpgkeys:
   - CFA6AF15E5C74149FC1D8C086D1655C14CE1C13E # bluewind
@@ -21,3 +22,4 @@ root_gpgkeys:
   - ECCAC84C1BA08A6CC8E63FBBF22FB1D78A77AEAB # grazzolini
   - 86CFFCA918CF3AF47147588051E8B148A9999C34 # foutrelis
   - E499C79F53C96A54E572FEE1C06086337C50773E # jelle
+  - 605071ECA86C954B866585C0567A6F396F2CFC03 # fukawi2
