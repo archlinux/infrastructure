@@ -237,6 +237,7 @@ arch_users:
     ssh_key: grazzolini.pub
     groups:
       - dev
+      - multilib
       - tu
   guillaume:
     name: "Guillaume Alaux"
