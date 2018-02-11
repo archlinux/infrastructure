@@ -216,7 +216,7 @@ class Repo
 
     @refs = read('git', 'for-each-ref', '--sort=v:refname', '--format=%(refname)',
                  'refs/heads/*', 'refs/tags/*').lines.
-            map { |l| l.strip.sub(/^refs\/(heads|tags)\//, "") }
+            map { |l| l.scrub.strip.sub(/^refs\/(heads|tags)\//, "") }
   end
 
   def system(*args)
