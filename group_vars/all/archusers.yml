@@ -181,6 +181,11 @@ arch_users:
     groups:
       - tu
       - multilib
+  escondida:
+    name: "Ivy Foster"
+    ssh_key: escondida.pub
+    groups:
+      - tu
   eworm:
     name: "Christian Hesse"
     ssh_key: eworm.pub
