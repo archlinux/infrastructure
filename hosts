@@ -38,8 +38,10 @@ luna.archlinux.org
 soyuz.archlinux.org
 sgp.mirror.pkgbuild.com
 
-[unmanaged]
+[staging]
 nymeria.archlinux.org
+
+[unmanaged]
 dragon.archlinux.org
 
 [dragon-backup]
