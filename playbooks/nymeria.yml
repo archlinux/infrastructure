@@ -1,0 +1,16 @@
+---
+
+- name: setup nymeria
+  hosts: nymeria.archlinux.org
+  remote_user: root
+  roles:
+    - { role: common, tags: ['common'] }
+    - { role: tools, tags: ['tools'] }
+    - { role: sshd, tags: ['sshd'] }
+    - { role: root_ssh, tags: ['root_ssh'] }
+    - { role: nginx, tags: ["nginx"] }
+    - { role: postgres, postgres_max_connections: 1000, postgres_shared_buffers: 4096MB,
+              tags: ['postgres'] }
+    - { role: uwsgi, tags: ['uwsgi'] }
+    - { role: memcached, tags: ['memcached'] }
+    - { role: archweb, archweb_repository: "https://github.com/archlinux/archweb.git", archweb_version: "upgrade_django", archweb_services: false, tags: ["archweb"] }
