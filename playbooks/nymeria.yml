@@ -13,4 +13,4 @@
               tags: ['postgres'] }
     - { role: uwsgi, tags: ['uwsgi'] }
     - { role: memcached, tags: ['memcached'] }
-    - { role: archweb, archweb_repository: "https://github.com/archlinux/archweb.git", archweb_version: "upgrade_django", archweb_services: false, tags: ["archweb"] }
+    - { role: archweb, archweb_repository: "https://github.com/archlinux/archweb.git", archweb_version: "upgrade_django", archweb_services: false, archweb_domain: 'archweb-dev.archlinux.org', tags: ["archweb"] }
