@@ -73,12 +73,6 @@
   when: archweb_site or archweb_services
   register: db_created
 
-- name: django syncdb
-  django_manage: app_path="{{ archweb_dir }}" command=syncdb virtualenv="{{ archweb_dir }}/env"
-  become: true
-  become_user: archweb
-  when: (archweb_site or archweb_services) and db_created.changed
-
 - name: django migrate
   django_manage: app_path="{{ archweb_dir }}" command=migrate virtualenv="{{ archweb_dir }}/env"
   become: true
