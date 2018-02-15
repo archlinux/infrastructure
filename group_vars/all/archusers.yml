@@ -193,11 +193,6 @@ arch_users:
       - dev
       - tu
       - multilib
-  faidoc:
-    name: "Alexandre Filgueira"
-    ssh_key: faidoc.pub
-    groups:
-      - tu
   farseerfc:
     name: "Jiachen Yang"
     ssh_key: farseerfc.pub
@@ -393,12 +388,6 @@ arch_users:
     groups:
       - tu
       - archboxes-sudo
-  speps:
-    name: "speps"
-    ssh_key: speps.pub
-    groups:
-      - tu
-      - multilib
   spupykin:
     name: "Sergej Pupykin"
     ssh_key: spupykin.pub
