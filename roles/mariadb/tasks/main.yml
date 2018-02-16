@@ -7,6 +7,11 @@
   args:
     creates: /var/lib/mysql/mysql
 
+- name: configure mariadb
+  template: src=server.cnf.j2 dest=/etc/mysql/my.cnf
+  notify:
+    - restart mariadb
+
 - name: start and enable the service
   service: name=mariadb state=started enabled=yes
 
@@ -33,11 +38,6 @@
 - name: create client configuration for root
   template: src=client.cnf.j2 dest=/root/.my.cnf
   no_log: true
-
-- name: configure mariadb
-  template: src=server.cnf.j2 dest=/etc/mysql/my.cnf
-  notify:
-    - restart mariadb
 
 - name: configure zabbix-agent user
   mysql_user: user={{zabbix_agent_mysql_user}} host=localhost password={{mariadb_users.zabbix_agent}}
