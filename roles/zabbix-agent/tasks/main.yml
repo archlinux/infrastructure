@@ -24,6 +24,7 @@
   copy: src={{item}} dest=/usr/local/bin/{{item}} mode=0755 owner=root group=root
   with_items:
     - systemd-units-failed.py
+    - mysql-user-stats.pl
 
 - name: run zabbix agent service
   service: name=zabbix-agent enabled=yes state=started
