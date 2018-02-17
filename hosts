@@ -29,6 +29,10 @@ orion.archlinux.org
 apollo.archlinux.org
 soyuz.archlinux.org
 
+[mysql-servsers]
+apollo.archlinux.org
+luna.archlinux.org
+
 [buildservers]
 soyuz.archlinux.org
 sgp.pkgbuild.com

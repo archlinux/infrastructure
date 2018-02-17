@@ -3,6 +3,10 @@
 - name: install packages
   pacman: name=zabbix-agent,python-dbus
 
+- name: install mysql userstats monitoring packages
+  pacman: name=perl-dbi,perl-dbd-mysql,perl-json
+  when: "'mysql-servers' in group_names"
+
 - file: path=/etc/zabbix state=directory owner=root group=root mode=755
 
 - name: create host PSK
