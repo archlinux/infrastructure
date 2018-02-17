@@ -26,9 +26,7 @@ if ($mode eq "userstat") {
 	print encode_json($db->selectrow_hashref("select * from information_schema.user_statistics where user = ?", undef, $user));
 } elsif ($mode eq "discover") {
 	print encode_json({
-			data=> [
-				$db->selectall_arrayref("select user '#USERNAME' from information_schema.user_statistics", {Slice=>{}})
-			]
+			data => $db->selectall_arrayref("select user '{#USERNAME}' from information_schema.user_statistics", {Slice=>{}})
 		});
 } else {
 	die "unhandeled mode";
