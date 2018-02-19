@@ -33,6 +33,10 @@ soyuz.archlinux.org
 apollo.archlinux.org
 luna.archlinux.org
 
+[nginx]
+apollo.archlinux.org
+luna.archlinux.org
+
 [buildservers]
 soyuz.archlinux.org
 sgp.pkgbuild.com

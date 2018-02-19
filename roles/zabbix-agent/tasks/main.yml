@@ -3,6 +3,10 @@
 - name: install packages
   pacman: name=zabbix-agent,python-dbus
 
+- name: install packages for nginx monitoring
+  pacman: name=perl-json,perl-clone,perl-statistics-descriptive
+  when: "'nginx' in group_names"
+
 - name: install mysql userstats monitoring packages
   pacman: name=perl-dbi,perl-dbd-mysql,perl-json
   when: "'mysql-servers' in group_names"
@@ -29,6 +33,17 @@
   with_items:
     - systemd-units-failed.py
     - mysql-user-stats.pl
+    - nginx-zabbix.pl
+
+- name: copy nginx-zabbix.service
+  copy: src=nginx-zabbix.service dest=/etc/systemd/system/nginx-zabbix.service owner=root group=root mode=0644
+  notify:
+    - restart nginx-zabbix.service
+  when: "'nginx' in group_names"
+
+- name: start nginx-zabbix.service
+  service: name=nginx-zabbix.service enabled=yes state=started
+  when: "'nginx' in group_names"
 
 - name: run zabbix agent service
   service: name=zabbix-agent enabled=yes state=started

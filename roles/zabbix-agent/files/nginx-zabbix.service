@@ -1,0 +1,9 @@
+[Unit]
+Description=nginx zabbix monitoring
+After=nginx.service
+
+[Service]
+ExecStart=/usr/local/bin/nginx-zabbix.pl
+
+[Install]
+WantedBy=multi-user.target
