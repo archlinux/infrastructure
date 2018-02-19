@@ -1,8 +1,7 @@
 [uwsgi]
 plugins=python
 chdir={{ security_tracker_dir }}
-module=run
-callable=app
+module=tracker:create_app()
 socket=/run/uwsgi/security-tracker.sock
 chmod-socket=660
 processes=4
