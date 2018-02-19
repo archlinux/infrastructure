@@ -3,7 +3,7 @@ server {
     listen       [::]:80;
     server_name  {{ archive_domain }};
 
-    access_log   /var/log/nginx/{{ archive_domain }}/access.log;
+    access_log   /var/log/nginx/{{ archive_domain }}/access.log main;
     error_log    /var/log/nginx/{{ archive_domain }}/error.log;
 
     include snippets/letsencrypt.conf;
@@ -18,7 +18,7 @@ server {
     listen       [::]:443 ssl http2;
     server_name  {{ archive_domain }};
 
-    access_log   /var/log/nginx/{{ archive_domain }}/access.log;
+    access_log   /var/log/nginx/{{ archive_domain }}/access.log main;
     error_log    /var/log/nginx/{{ archive_domain }}/error.log;
 
     ssl_certificate      /etc/letsencrypt/live/{{ archive_domain }}/fullchain.pem;

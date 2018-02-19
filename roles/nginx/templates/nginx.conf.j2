@@ -13,6 +13,10 @@ http {
     include       mime.types;
     default_type  application/octet-stream;
 
+    log_format  main  '$remote_addr $host $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for" $request_time';
+
     sendfile        on;
     keepalive_timeout  65;
     client_max_body_size 16M;
@@ -26,7 +30,7 @@ http {
 
     index  index.php index.html index.htm;
 
-    access_log syslog:server=unix:/dev/log,nohostname,tag=nginx_http;
+    access_log syslog:server=unix:/dev/log,nohostname,tag=nginx_http main;
 
     include snippets/sslsettings.conf;
 

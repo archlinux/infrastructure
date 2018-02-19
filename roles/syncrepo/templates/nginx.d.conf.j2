@@ -4,7 +4,7 @@ server {
     server_name  {{ mirror_domain }};
     root         /srv/ftp;
 
-    access_log   /var/log/nginx/{{ mirror_domain }}/access.log;
+    access_log   /var/log/nginx/{{ mirror_domain }}/access.log main;
     error_log    /var/log/nginx/{{ mirror_domain }}/error.log;
 
     include snippets/letsencrypt.conf;
@@ -18,7 +18,7 @@ server {
     server_name  {{ mirror_domain }};
     root         /srv/ftp;
 
-    access_log   /var/log/nginx/{{ mirror_domain }}/access.log;
+    access_log   /var/log/nginx/{{ mirror_domain }}/access.log main;
     error_log    /var/log/nginx/{{ mirror_domain }}/error.log;
 
     ssl_certificate      /etc/letsencrypt/live/{{ mirror_domain }}/fullchain.pem;
