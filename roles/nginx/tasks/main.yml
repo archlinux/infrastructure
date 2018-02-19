@@ -58,6 +58,7 @@
   template: src=nginx-hostname-vhost.conf.j2 dest=/etc/nginx/nginx.d/nginx-hostname-vhost.conf owner=root group=root mode=0644
   notify:
     - reload nginx
+  tags: ['nginx']
 
 - name: activate letsencrypt renewal service
   service: name=certbot-renewal.timer enabled=yes state=started

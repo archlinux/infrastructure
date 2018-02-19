@@ -134,6 +134,7 @@
   notify:
     - reload nginx
   when: 'matrix_domain is defined'
+  tags: ['nginx']
 
 - name: install matrix units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644

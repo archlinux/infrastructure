@@ -49,3 +49,4 @@
   notify:
     - reload nginx
   when: 'mirror_domain is defined'
+  tags: ['nginx']

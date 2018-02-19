@@ -31,3 +31,4 @@
   notify:
     - reload nginx
   when: 'arch32_mirror_domain is defined'
+  tags: ['nginx']

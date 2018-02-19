@@ -16,6 +16,7 @@
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/archweb.conf owner=root group=root mode=644
   notify: reload nginx
   when: archweb_site
+  tags: ['nginx']
 
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ archweb_domain }} state=directory owner=root group=root mode=0755

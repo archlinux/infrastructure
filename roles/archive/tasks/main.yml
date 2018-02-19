@@ -34,6 +34,7 @@
     mode: 0644
   notify:
     - reload nginx
+  tags: ['nginx']
 
 - name: make nginx log dir
   file:
