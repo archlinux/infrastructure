@@ -1,0 +1,172 @@
+---
+- name: install required packages
+  pacman: name=git,sudo,python-mysql-connector,python-pygit2,python-srcinfo,python-bleach,python-markdown,make,asciidoc state=present
+
+- name: make aur user
+  user: name="{{ aurweb_user }}" shell=/bin/bash createhome=yes
+
+- name: Create directory
+  file: path={{ aurweb_dir }} state=directory owner={{aurweb_user}} group=http mode=0775
+
+- name: clone aurweb repo
+  git: >
+    repo={{ aurweb_repository }}
+    dest="{{ aurweb_dir }}"
+    version={{ aurweb_version }}
+  become: true
+  become_user: "{{aurweb_user}}"
+  register: release
+
+- name: create aur db
+  mysql_db: name="{{ aurweb_db }}" login_host="{{ aurweb_db_host }}" login_password="{{ mariadb_users.root }}" encoding=utf8
+  register: db_created
+
+- name: create aur db user
+  mysql_user: name={{ aurweb_db_user }} password={{ aurweb_db_password }}
+              login_host="{{ aurweb_db_host }}" login_password="{{ mariadb_users.root }}"
+              priv="{{ aurweb_db }}.*:ALL"
+
+- name: enable innodb_large_prefix
+  mysql_variables:
+    login_host: "{{ aurweb_db_host }}"
+    login_password: "{{ mariadb_users.root }}"
+    variable: innodb_large_prefix
+    value: 1
+
+- name: enable innodb_file_format
+  mysql_variables:
+    login_host: "{{ aurweb_db_host }}"
+    login_password: "{{ mariadb_users.root }}"
+    variable: innodb_file_format
+    value: Barracuda
+
+- name: check if db is imported
+  shell: mysql -u {{ aurweb_db_user }} -p{{ aurweb_db_password }} -e "SELECT ID FROM Users" {{ aurweb_db }}
+  ignore_errors: true
+  register: db_imported
+
+- name: import aur sql db
+  mysql_db:
+    state: import
+    name: "{{ aurweb_db }}"
+    login_host: "{{ aurweb_db_host }}"
+    login_password: "{{ mariadb_users.root }}"
+    target: "{{ aurweb_dir }}/schema/aur-schema.sql"
+  when: db_imported.rc != 0
+
+- name: create aurweb conf dir
+  file: path={{ aurweb_conf_dir }} state=directory
+
+- name: copy aurweb configuration file
+  copy: src={{ aurweb_dir }}/conf/config.defaults dest={{ aurweb_conf_dir }}/config.defaults remote_src=yes
+
+- name: install custom aurweb configuration
+  template: src=config.j2 dest={{ aurweb_conf_dir }}/config
+
+- name: Install python module
+  shell: "python3 setup.py install --install-scripts=/usr/local/bin"
+  args:
+    chdir: "{{ aurweb_dir }}"
+
+- name: Generate HTML documentation
+  make:
+      chdir: "{{ aurweb_dir }}/doc"
+  become: true
+  become_user: "{{aurweb_user}}"
+
+- name: set up nginx
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/aurweb.conf owner=root group=root mode=644
+  notify: reload nginx
+  tags: ['nginx']
+
+- name: make nginx log dir
+  file: path=/var/log/nginx/{{ aurweb_domain }} state=directory owner=root group=root mode=0755
+
+- name: configure php-fpm
+  template:
+    src=php-fpm.conf.j2 dest="/etc/php/php-fpm.d/{{ aurweb_user }}.conf"
+    owner=root group=root mode=0644
+  notify:
+    - restart php-fpm@{{ aurweb_user }}
+
+- name: start and enable systemd socket
+  service: name=php-fpm@{{ aurweb_user }}.socket state=started enabled=true
+
+- name: create git repo dir
+  file: path={{ aurweb_git_dir }} state=directory owner={{aurweb_user}} group=http mode=0775
+
+- name: init git directory
+  command: git init --bare {{ aurweb_git_dir }}
+  args:
+    creates: "{{ aurweb_git_dir }}/HEAD"
+  become: true
+  become_user: "{{aurweb_user}}"
+
+- shell: git config --local --get-all transfer.hideRefs
+  register: git_config
+  args:
+    chdir: "{{ aurweb_git_dir }}"
+  failed_when: git_config.rc == 2 # FIXME: does not work.
+
+- name: configure git tranfser.hideRefs
+  command: git config --local transfer.hideRefs '^refs/'
+  args:
+    chdir: "{{ aurweb_git_dir }}"
+  become: true
+  become_user: "{{aurweb_user}}"
+  when: git_config.stdout.find('^refs/') == -1
+
+
+- name: configure git transfer.hideRefs second
+  command: git config --local --add transfer.hideRefs '!refs/'
+  args:
+    chdir: "{{ aurweb_git_dir }}"
+  become: true
+  become_user: "{{aurweb_user}}"
+  when: git_config.stdout.find('!refs/') == -1
+
+- name: configure git transfer.hideRefs third
+  command: git config --local --add transfer.hideRefs '!HEAD'
+  args:
+    chdir: "{{ aurweb_git_dir }}"
+  become: true
+  become_user: "{{aurweb_user}}"
+  when: git_config.stdout.find('!HEAD') == -1
+
+- name: create symlink for git hook
+  file:
+    src: "{{ aurweb_git_hook }}"
+    dest: "{{ aurweb_git_dir }}/hooks/update"
+    state: link
+
+- name: install AUR maintenance services/timers
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  with_items:
+      - aurweb-aurblup.service
+      - aurweb-aurblup.timer
+      - aurweb-mkpkglists.service
+      - aurweb-mkpkglists.timer
+      - aurweb-pkgmaint.service
+      - aurweb-pkgmaint.timer
+      - aurweb-popupdate.service
+      - aurweb-popupdate.timer
+      - aurweb-tuvotereminder.service
+      - aurweb-tuvotereminder.timer
+
+- name: start and enable AUR maintenance timers
+  service: name={{ item }} enabled=yes state=started
+  with_items:
+      - aurweb-aurblup.timer
+      - aurweb-mkpkglists.timer
+      - aurweb-pkgmaint.timer
+      - aurweb-popupdate.timer
+      - aurweb-tuvotereminder.timer
+
+- name: install AUR git gc service/timer
+  template: src={{ item }}.j2 dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  with_items:
+      - aurweb-git.service
+      - aurweb-git.timer
+
+- name: start and enable AUR git gc timer
+  service: name=aurweb-git.timer enabled=yes state=started

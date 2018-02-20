@@ -1,0 +1,9 @@
+[Unit]
+Description=Regenerate aurweb package and user lists
+Requires=mysqld.service
+After=mysqld.service
+
+[Service]
+Type=Oneshot
+User=aur
+ExecStart=/usr/local/bin/aurweb-mkpkglists

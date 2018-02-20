@@ -1,0 +1,9 @@
+[Unit]
+Description=Delete old, empty reserved aurweb pkgbases
+
+[Timer]
+OnStartupSec=2h
+OnUnitActiveSec=2h
+
+[Install]
+WantedBy=timers.target

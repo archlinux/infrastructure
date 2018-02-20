@@ -1,0 +1,9 @@
+[Unit]
+Description=Update aurweb blacklist
+
+[Timer]
+OnStartupSec=2h
+OnUnitActiveSec=2h
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,21 @@
+[global]
+error_log = syslog
+daemonize = no
+
+[{{ aurweb_user }}]
+listen = {{ aurweb_socket }}
+listen.owner = {{ aurweb_user }}
+listen.group = http
+listen.mode = 0660
+
+pm = dynamic
+pm.max_children = 80
+pm.start_servers = 20
+pm.min_spare_servers = 10
+pm.max_spare_servers = 20
+pm.max_requests = 2000
+
+php_admin_value[open_basedir] = {{aurweb_dir}}:/etc/aurweb/
+php_admin_value[upload_tmp_dir] = {{ aurweb_dir }}/uploads
+php_admin_value[session.save_path] = {{ aurweb_dir }}/sessions
+env[TMPDIR] = {{ aurweb_dir }}/uploads
