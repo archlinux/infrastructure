@@ -17,6 +17,8 @@ my @nginx_log_file_paths = glob("/var/log/nginx/*-access.log");
 
 @nginx_log_file_paths = ("./test-access.log") if $devmode;
 
+$SIG{PIPE} = 'IGNORE';
+
 sub trim {
 	my $str = shift;
 	$str =~ s/^\s+//;
@@ -32,7 +34,12 @@ sub send_zabbix {
 		open $zabbix_sender, "|-", "cat" if $devmode;
 		$zabbix_sender->autoflush();
 	}
-	printf $zabbix_sender "- %s %s\n", $key, $value;
+	my $ret = printf $zabbix_sender "- %s %s\n", $key, $value;
+	if (not $ret and $!{EPIPE}) {
+		print STDERR "Got EPIPE. Restarting zabbix_sender\n";
+		undef $zabbix_sender;
+		send_zabbix(@_);
+	}
 }
 
 sub main {
