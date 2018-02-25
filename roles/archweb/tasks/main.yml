@@ -191,6 +191,18 @@
     - daemon reload
   when: archweb_site
 
+- name: install donor_import service
+  template: src="archweb-donor_import.service.j2" dest="/etc/systemd/system/archweb-donor_import.service" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+  when: archweb_donor_import
+
+- name: install archweb donor import timer
+  template: src="archweb-donor_import.timer.j2" dest="/etc/systemd/system/archweb-donor_import.timer" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+  when: archweb_donor_import
+
 - name: deploy archweb
   template: src=archweb.ini.j2 dest=/etc/uwsgi/vassals/archweb.ini owner=archweb group=http mode=0644
   when: archweb_site

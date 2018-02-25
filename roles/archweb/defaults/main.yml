@@ -12,6 +12,8 @@ archweb_site: true
 archweb_mirrorcheck: false
 archweb_mirrorresolv: false
 archweb_pgp_import: false
+archweb_donor_import: false
+archweb_donor_maildir: '/home/donate/maildir-dumped/'
 archweb_populate_signoffs: false
 archweb_keyring: '/etc/pacman.d/gnupg/pubring.gpg'
 archweb_reporead: false
