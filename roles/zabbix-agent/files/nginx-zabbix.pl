@@ -13,7 +13,7 @@ use Time::HiRes qw(time sleep);
 
 my $interval = 30;
 my $devmode = 0;
-my @nginx_log_file_paths = glob("/var/log/nginx/*-access.log");
+my @nginx_log_file_paths = glob("/var/log/nginx/*-access.log /var/log/nginx/*/access.log");
 
 @nginx_log_file_paths = ("./test-access.log") if $devmode;
 
