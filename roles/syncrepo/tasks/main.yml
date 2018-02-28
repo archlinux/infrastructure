@@ -27,6 +27,9 @@
     - syncrepo.timer
     - rsyncd.socket
 
+- name: enable systemd ressource accounting
+  command: systemctl set-property system-rsyncd.slice CPUAccounting=yes MemoryAccounting=yes
+
 - name: set local mirror as cachedir
   lineinfile:
     dest: /etc/pacman.conf

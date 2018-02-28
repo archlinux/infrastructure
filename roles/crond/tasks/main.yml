@@ -6,3 +6,6 @@
 - name: activate cronie.service
   service: name=cronie enabled=yes state=started
 
+- name: enable systemd ressource accounting
+  command: systemctl set-property cronie CPUAccounting=yes MemoryAccounting=yes
+

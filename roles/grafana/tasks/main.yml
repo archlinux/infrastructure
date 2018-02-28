@@ -21,3 +21,6 @@
 
 - name: start and enable service
   service: name=grafana state=started enabled=true
+
+- name: enable systemd ressource accounting
+  command: systemctl set-property grafana CPUAccounting=yes MemoryAccounting=yes

@@ -15,6 +15,9 @@
 - name: start and enable the service
   service: name=mariadb state=started enabled=yes
 
+- name: enable systemd ressource accounting
+  command: systemctl set-property mariadb CPUAccounting=yes MemoryAccounting=yes
+
 - name: delete anonymous users
   mysql_user: user='' host_all=yes state='absent'
 

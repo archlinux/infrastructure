@@ -46,6 +46,12 @@
   service: name=nginx-zabbix.service enabled=yes state=started
   when: "'nginx' in group_names"
 
+- name: enable systemd ressource accounting
+  command: systemctl set-property nginx-zabbix CPUAccounting=yes MemoryAccounting=yes
+  when: "'nginx' in group_names"
+
 - name: run zabbix agent service
   service: name=zabbix-agent enabled=yes state=started
 
+- name: enable systemd ressource accounting
+  command: systemctl set-property zabbix-agent CPUAccounting=yes MemoryAccounting=yes

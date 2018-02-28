@@ -49,3 +49,6 @@
 
 - name: start spampd
   service: name=spampd enabled=yes state=started
+
+- name: enable systemd ressource accounting
+  command: systemctl set-property spampd CPUAccounting=yes MemoryAccounting=yes

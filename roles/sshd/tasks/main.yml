@@ -16,3 +16,6 @@
 
 - name: start and enable sshd
   service: name=sshd enabled=yes state=started
+
+- name: enable systemd ressource accounting
+  command: systemctl set-property sshd CPUAccounting=yes MemoryAccounting=yes

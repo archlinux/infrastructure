@@ -40,3 +40,6 @@
   service: name={{ item }} enabled=yes state=started
   with_items:
     - planet.timer
+
+- name: enable systemd ressource accounting
+  command: systemctl set-property planet CPUAccounting=yes MemoryAccounting=yes

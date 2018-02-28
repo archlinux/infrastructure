@@ -65,3 +65,6 @@
 
 - name: enable nginx
   service: name=nginx enabled=yes
+
+- name: enable systemd ressource accounting
+  command: systemctl set-property nginx CPUAccounting=yes MemoryAccounting=yes
