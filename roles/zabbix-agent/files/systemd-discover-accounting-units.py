@@ -23,6 +23,6 @@ def get_unit_prop(interface, propname):
 for u in units:
     unit_properties = dbus.Interface(bus.get_object('org.freedesktop.systemd1', u[6]), dbus_interface='org.freedesktop.DBus.Properties')
     if get_unit_prop(unit_properties, "CPUAccounting") or get_unit_prop(unit_properties, "MemoryAccounting"):
-        discovered.append({"{#UNITNAME}": u[0]})
+        discovered.append({"{#UNITNAME}": u[0].replace("@", "--AT--")})
 
 print(json.dumps({"data": discovered}));
