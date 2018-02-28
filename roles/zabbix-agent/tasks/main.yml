@@ -34,6 +34,7 @@
     - systemd-units-failed.py
     - mysql-user-stats.pl
     - nginx-zabbix.pl
+    - systemd-discover-accounting-units.py
 
 - name: copy nginx-zabbix.service
   copy: src=nginx-zabbix.service dest=/etc/systemd/system/nginx-zabbix.service owner=root group=root mode=0644
