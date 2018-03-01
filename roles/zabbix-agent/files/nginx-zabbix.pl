@@ -34,7 +34,7 @@ sub send_zabbix {
 		open $zabbix_sender, "|-", "cat" if $devmode;
 		$zabbix_sender->autoflush();
 	}
-	my $ret = printf $zabbix_sender "- %s %s\n", $key, $value;
+	my $ret = syswrite $zabbix_sender, (sprintf "- %s %s\n", $key, $value);
 	if (not $ret and $!{EPIPE}) {
 		print STDERR "Got EPIPE. Restarting zabbix_sender\n";
 		undef $zabbix_sender;
