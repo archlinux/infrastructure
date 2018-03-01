@@ -16,4 +16,4 @@ postgres_backup_dir: "/var/lib/postgres/backup"
 mysql_backup_dir: "/root/backup-mysql"
 mysql_backup_defaults: "/root/.backup-my.cnf"
 
-kanboard_version: "v1.2.0"
+kanboard_version: "v1.2.1"
