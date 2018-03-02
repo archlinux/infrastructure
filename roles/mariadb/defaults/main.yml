@@ -3,7 +3,7 @@ mariadb_skip_name_resolve: False
 mariadb_skip_networking: False
 
 mariadb_key_buffer_size: '16M'
-mariadb_max_allowed_packet: '1M'
+mariadb_max_allowed_packet: '16M'
 mariadb_table_open_cache: '64'
 mariadb_sort_buffer_size: '512K'
 mariadb_net_buffer_length: '8K'
@@ -18,7 +18,7 @@ mariadb_thread_cache_size: '16'
 
 mariadb_innodb_data_file_path: 'ibdata1:10M:autoextend'
 mariadb_innodb_buffer_pool_size: '16M'
-mariadb_innodb_log_file_size: '5M'
+mariadb_innodb_log_file_size: '64M'
 mariadb_innodb_log_buffer_size: '8M'
 mariadb_innodb_flush_log_at_trx_commit: '1'
 mariadb_innodb_stats_sample_pages: '32'
