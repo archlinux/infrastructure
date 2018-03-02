@@ -5,7 +5,7 @@
   when: 'archwiki_domain is defined'
 
 - name: install packages
-  pacman: name=git state=present
+  pacman: name=git,php-intl state=present
 
 - name: make archwiki user
   user: name="{{ archwiki_user }}" shell=/bin/false home="{{ archwiki_dir }}" createhome=no
