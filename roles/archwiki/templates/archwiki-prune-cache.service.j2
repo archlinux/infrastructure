@@ -1,0 +1,11 @@
+[Unit]
+Description=Archwiki Prune Cache Service
+
+[Service]
+Type=oneshot
+User={{ archwiki_user }}
+WorkingDirectory={{ archwiki_dir }}
+ExecStart=/usr/bin/php {{ archwiki_dir }}/public/maintenance/pruneFileCache.php -q --agedays 1
+
+[Install]
+WantedBy=multi-user.target

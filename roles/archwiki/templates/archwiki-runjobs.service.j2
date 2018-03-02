@@ -1,0 +1,11 @@
+[Unit]
+Description=Archwiki runJobs Service
+
+[Service]
+Type=oneshot
+User={{ archwiki_user }}
+WorkingDirectory={{ archwiki_dir }}
+ExecStart=/usr/bin/php {{ archwiki_dir }}/public/maintenance/runJobs.php -q
+
+[Install]
+WantedBy=multi-user.target

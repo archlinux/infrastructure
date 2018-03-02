@@ -1,0 +1,10 @@
+[Unit]
+Description=Archwiki runJobs timer
+
+[Timer]
+OnUnitActiveSec=5min
+OnBootSec=5min
+RandomizedDelaySec=1min
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,11 @@
+[Unit]
+Description=Archwiki runJobs Wait Service
+
+[Service]
+User={{ archwiki_user }}
+WorkingDirectory={{ archwiki_dir }}
+ExecStart=/usr/bin/php {{ archwiki_dir }}/public/maintenance/runJobs.php -q --wait
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
