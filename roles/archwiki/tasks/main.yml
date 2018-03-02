@@ -1,5 +1,9 @@
 ---
 
+- name: create ssl cert
+  command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{ letsencrypt_validation_dir }} -d '{{ archwiki_domain }}' creates='/etc/letsencrypt/live/{{ archwiki_domain }}/fullchain.pem'
+  when: 'archwiki_domain is defined'
+
 - name: install packages
   pacman: name=git state=present
 
@@ -61,3 +65,37 @@
 
 - name: start and enable systemd socket
   service: name=php-fpm@{{ archwiki_user }}.socket state=started enabled=true
+
+- name: install runjobs service
+  template: src="archwiki-runjobs.service.j2" dest="/etc/systemd/system/archwiki-runjobs.service" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+
+- name: install runjobs timer
+  template: src="archwiki-runjobs.timer.j2" dest="/etc/systemd/system/archwiki-runjobs.timer" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+
+- name: install prune cache service
+  template: src="archwiki-prune-cache.service.j2" dest="/etc/systemd/system/archwiki-prune-cache.service" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+
+- name: install prune cache timer
+  template: src="archwiki-prune-cache.timer.j2" dest="/etc/systemd/system/archwiki-prune-cache.timer" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+
+- name: install runjobs wait service
+  template: src="archwiki-runjobs-wait.service.j2" dest="/etc/systemd/system/archwiki-runjobs-wait.service" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+
+- name: start and enable archwiki runjobs timer
+  service: name="archwiki-runjobs.timer" enabled=yes state=started
+
+- name: start and enable archwiki prune cache timer
+  service: name="archwiki-prune-cache.timer" enabled=yes state=started
+
+- name: start and enable archwiki runjobs wait service
+  service: name="archwiki-runjobs-wait.service" enabled=yes state=started
