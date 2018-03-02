@@ -225,11 +225,17 @@
 - name: start and enable rsync
   service: name=rsyncd.socket enabled=yes state=started
 
+- name: enable systemd ressource accounting
+  command: systemctl set-property system-rsyncd.slice CPUAccounting=yes MemoryAccounting=yes
+
 - name: configure svnserve
   copy: dest=/etc/conf.d/svnserve content="SVNSERVE_ARGS=-R -r /srv/svn\n"
 
 - name: start and enable svnserve
   service: name=svnserve enabled=yes state=started
+
+- name: enable systemd ressource accounting
+  command: systemctl set-property svnserve CPUAccounting=yes MemoryAccounting=yes
 
 - name: install systemd timers
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
