@@ -28,6 +28,15 @@
 - name: fix home permissions
   file: state=directory owner="{{ archwiki_user }}" group="{{ archwiki_user }}" path="{{ archwiki_dir }}"
 
+- name: fix cache permissions
+  file: state=directory owner="{{ archwiki_user }}" group="{{ archwiki_user }}" path="{{ archwiki_dir }}/cache"
+
+- name: fix sessions permissions
+  file: state=directory owner="{{ archwiki_user }}" group="{{ archwiki_user }}" path="{{ archwiki_dir }}/sessions"
+
+- name: fix uploads permissions
+  file: state=directory owner="{{ archwiki_user }}" group="{{ archwiki_user }}" path="{{ archwiki_dir }}/uploads"
+
 - name: configure archwiki
   template: src=LocalSettings.php.j2 dest="{{ archwiki_dir }}/public/LocalSettings.php" owner="{{ archwiki_user }}" group="{{ archwiki_user }}" mode=0640
   register: config
