@@ -24,7 +24,7 @@
   file: path=/var/log/nginx/{{ archwiki_domain }} state=directory owner=root group=root mode=0755
 
 - name: clone archwiki repo
-  git: repo=https://git.archlinux.org/vhosts/{{ archwiki_domain }}.git dest="{{ archwiki_dir }}/public"
+  git: repo={{ archwiki_repository }} dest="{{ archwiki_dir }}/public" version={{ archwiki_version }}
   become: true
   become_user: "{{ archwiki_user }}"
   register: release
