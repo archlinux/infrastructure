@@ -887,6 +887,10 @@ default_socket_timeout = 60
 extension={{ ext }}.so
 {% endfor %}
 
+{% for ext in zend_extensions %}
+zend_extension={{ ext }}.so
+{% endfor %}
+
 ;;;;;;;;;;;;;;;;;;;
 ; Module Settings ;
 ;;;;;;;;;;;;;;;;;;;
