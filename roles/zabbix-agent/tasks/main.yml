@@ -33,8 +33,13 @@
   with_items:
     - systemd-units-failed.py
     - mysql-user-stats.pl
-    - nginx-zabbix.pl
     - systemd-discover-accounting-units.py
+
+- name: Install helper scripts
+  copy: src=nginx-zabbix.pl dest=/usr/local/bin/nginx-zabbix.pl mode=0755 owner=root group=root
+  notify:
+    - restart nginx-zabbix.service
+  when: "'nginx' in group_names"
 
 - name: copy nginx-zabbix.service
   copy: src=nginx-zabbix.service dest=/etc/systemd/system/nginx-zabbix.service owner=root group=root mode=0644
