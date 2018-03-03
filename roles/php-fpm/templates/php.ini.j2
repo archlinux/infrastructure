@@ -1742,10 +1742,10 @@ ldap.max_links = -1
 
 [opcache]
 ; Determines if Zend OPCache is enabled
-;opcache.enable=0
+;opcache.enable=1
 
 ; Determines if Zend OPCache is enabled for the CLI version of PHP
-;opcache.enable_cli=0
+;opcache.enable_cli=1
 
 ; The OPcache shared memory storage size.
 ;opcache.memory_consumption=64
@@ -1764,7 +1764,7 @@ ldap.max_links = -1
 ; directory to the script key, thus eliminating possible collisions between
 ; files with the same name (basename). Disabling the directive improves
 ; performance, but may break existing applications.
-;opcache.use_cwd=1
+opcache.use_cwd=1
 
 ; When disabled, you must reset the OPcache manually or restart the
 ; webserver for changes to the filesystem to take effect.
@@ -1862,10 +1862,10 @@ ldap.max_links = -1
 ;opcache.huge_code_pages=1
 
 ; Validate cached file permissions.
-;opcache.validate_permission=0
+opcache.validate_permission=1
 
 ; Prevent name collisions in chroot'ed environment.
-;opcache.validate_root=0
+opcache.validate_root=1
 
 [curl]
 ; A default value for the CURLOPT_CAINFO option. This is required to be an
