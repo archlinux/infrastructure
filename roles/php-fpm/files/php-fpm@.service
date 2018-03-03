@@ -16,6 +16,10 @@ ProtectHome=true
 ProtectSystem=full
 InaccessiblePaths=-/var/lib/mysql
 
+MemoryAccounting=yes
+CPUAccounting=yes
+IOAccounting=yes
+
 User=%i
 Group=%i
 Environment="FPM_SOCKETS=/run/php-fpm/%i.socket=3"
