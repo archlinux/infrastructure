@@ -86,7 +86,7 @@ sub main {
 			my $stat = $stat_per_host->{$host};
 			my $values = $values_per_host->{$host};
 
-			$stat->add_data($+{request_time});
+			$stat->add_data($+{request_time}) if $+{request_time} != 0;
 			$values->{request_count}++;
 
 			my $status_key = defined $values->{status}->{$+{status}} ? $+{status} : "other";
