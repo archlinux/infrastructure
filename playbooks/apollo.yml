@@ -46,4 +46,4 @@
     - { role: kanboard, tags: ["kanboard"] }
     - { role: zabbix-server, tags: ["zabbix", "zabbix-server"] }
     - { role: grafana, tags: ["grafana"] }
-    - { role: archwiki, tags ["archwiki"] }
+    - { role: archwiki, tags: ["archwiki"] }
