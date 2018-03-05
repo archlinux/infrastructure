@@ -14,8 +14,6 @@ sgp.pkgbuild.com
 
 159.122.70.8
 169.50.62.113
-169.50.62.117
-169.50.62.119
 169.50.62.125
 
 [mirrors]
@@ -47,3 +45,7 @@ dragon.archlinux.org
 
 [dragon-backup]
 luna.archlinux.org
+
+[reproducible-builds]
+169.50.62.117
+169.50.62.119
