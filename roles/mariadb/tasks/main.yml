@@ -47,3 +47,9 @@
 
 - name: install zabbix mysql config
   template: src=zabbix_agentd.my.cnf.j2 dest=/etc/zabbix/zabbix_agentd.my.cnf owner=zabbix-agent group=zabbix-agent mode=0600
+
+  # the source addresses here could be tightened up more, but it's far better
+  # than having mariadb open to the world
+- name: open firewall holes to other infrastructure hosts
+  firewalld: service=mysql permanent=true state=enabled source={{item}}
+  with_items: "{{ groups['all'] }}"

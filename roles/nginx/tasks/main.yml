@@ -68,3 +68,9 @@
 
 - name: enable systemd ressource accounting
   command: systemctl set-property nginx CPUAccounting=yes MemoryAccounting=yes
+
+- name: open firewall holes
+  firewalld: service={{item}} permanent=true state=enabled
+  with_items:
+    - http
+    - https

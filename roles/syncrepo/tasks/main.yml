@@ -53,3 +53,6 @@
     - reload nginx
   when: 'mirror_domain is defined'
   tags: ['nginx']
+
+- name: open firewall holes
+  firewalld: service=rsyncd permanent=true state=enabled

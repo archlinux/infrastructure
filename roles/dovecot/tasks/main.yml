@@ -20,3 +20,10 @@
 - name: enable systemd ressource accounting
   command: systemctl set-property dovecot CPUAccounting=yes MemoryAccounting=yes
 
+- name: open firewall holes
+  firewalld: service={{item}} permanent=true state=enabled
+  with_items:
+    - pop3
+    - pop3s
+    - imap
+    - imaps

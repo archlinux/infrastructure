@@ -70,3 +70,10 @@
   with_items:
     - compat_maps
     - compat_maps.db
+
+- name: open firewall holes
+  firewalld: service={{item}} permanent=true state=enabled
+  with_items:
+    - smtp
+    - smtp-submission
+  when: postfix_smtpd_public

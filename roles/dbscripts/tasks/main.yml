@@ -228,6 +228,9 @@
 - name: enable systemd ressource accounting
   command: systemctl set-property system-rsyncd.slice CPUAccounting=yes MemoryAccounting=yes
 
+- name: open firewall holes for rsync
+  firewalld: service=rsyncd permanent=true state=enabled
+
 - name: configure svnserve
   copy: dest=/etc/conf.d/svnserve content="SVNSERVE_ARGS=-R -r /srv/svn\n"
 
@@ -236,6 +239,9 @@
 
 - name: enable systemd ressource accounting
   command: systemctl set-property svnserve CPUAccounting=yes MemoryAccounting=yes
+
+- name: open firewall holes for svnserve
+  firewalld: port=3690/tcp permanent=true state=enabled
 
 - name: install systemd timers
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644

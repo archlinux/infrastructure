@@ -60,3 +60,6 @@
 
 - name: enable systemd ressource accounting
   command: systemctl set-property zabbix-agent CPUAccounting=yes MemoryAccounting=yes
+
+- name: open firewall holes
+  firewalld: service=zabbix-agent permanent=true state=enabled

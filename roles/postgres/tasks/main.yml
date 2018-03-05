@@ -52,3 +52,7 @@
   copy: src=/etc/letsencrypt/live/{{ inventory_hostname }}/chain.pem dest={{ postgres_ssl_ca_file }}
         remote_src=true owner=postgres group=postgres mode=0400
   when: postgres_ssl == 'on'
+
+- name: open firewall holes to known postgresql clients
+  firewalld: service=postgresql permanent=true state=enabled source={{item}}
+  with_items: "{{ postgres_ssl_hosts }}"
