@@ -58,6 +58,7 @@ sub main {
 		},
 		# counter since prog start
 		request_count => 0,
+		cached_request_count => 0,
 		# calculated values since last send
 		request_time => {
 			max => 0,
@@ -88,6 +89,7 @@ sub main {
 
 			$stat->add_data($+{request_time}) if $+{request_time} != 0;
 			$values->{request_count}++;
+			$values->{cached_request_count}++ if $+{request_time} == 0;
 
 			my $status_key = defined $values->{status}->{$+{status}} ? $+{status} : "other";
 			$values->{status}->{$status_key}++;
