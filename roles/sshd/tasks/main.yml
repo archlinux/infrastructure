@@ -19,3 +19,6 @@
 
 - name: enable systemd ressource accounting
   command: systemctl set-property sshd CPUAccounting=yes MemoryAccounting=yes
+
+- name: open firewall holes
+  firewalld: service=ssh permanent=true state=enabled

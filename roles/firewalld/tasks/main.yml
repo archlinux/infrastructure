@@ -1,0 +1,7 @@
+---
+
+- name: install firewalld
+  pacman: name=firewalld state=present
+
+- name: start and enable firewalld
+  service: name=firewalld enabled=yes state=started
