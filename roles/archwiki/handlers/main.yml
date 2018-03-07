@@ -5,3 +5,8 @@
 
 - name: restart php-fpm@archwiki
   service: name=php-fpm@{{ archwiki_user }} state=restarted
+
+- name: run wiki updatescript
+  command: php {{archwiki_dir}}/public/maintenance/update.php
+  become: true
+  become_user: "{{archwiki_user}}"

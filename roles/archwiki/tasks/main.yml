@@ -27,7 +27,8 @@
   git: repo={{ archwiki_repository }} dest="{{ archwiki_dir }}/public" version={{ archwiki_version }}
   become: true
   become_user: "{{ archwiki_user }}"
-  register: release
+  notify:
+    - run wiki updatescript
 
 - name: fix home permissions
   file: state=directory owner="{{ archwiki_user }}" group="{{ archwiki_user }}" path="{{ archwiki_dir }}"
