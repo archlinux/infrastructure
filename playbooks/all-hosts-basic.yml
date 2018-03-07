@@ -13,4 +13,4 @@
     # here. this also probably doesn't work nicely for old hosts yet
     - { role: borg-client, tags: ["borg"], when: "'borg-clients' in group_names" }
     - { role: zabbix-agent, tags: ["zabbix", "zabbix-agent"], when: "'unmanaged' not in group_names" }
-    - { role: firewalld, tags: ['firewalld'] }
+    - { role: firewalld, tags: ['firewall'] }
