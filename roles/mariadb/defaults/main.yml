@@ -1,6 +1,6 @@
 ---
 mariadb_skip_name_resolve: False
-mariadb_skip_networking: False
+mariadb_skip_networking: True
 
 mariadb_key_buffer_size: '16M'
 mariadb_max_allowed_packet: '16M'
