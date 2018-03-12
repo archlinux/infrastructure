@@ -6,8 +6,8 @@ archweb_domains_redirects:
         'master-key.archlinux.org': '/master-keys'
         'dev.archlinux.org': '/'
         'packages.archlinux.org': '/packages$1'
-archweb_repository: 'https://git.archlinux.org/archweb.git'
-archweb_version: f42f357fdf20d76bc5468ec227dac66cd0ca3ca8
+archweb_repository: 'https://github.com/archlinux/archweb.git'
+archweb_version: 7a317b73baaf1e7b81bbffb8b54642911b3fad36
 archweb_site: true
 archweb_mirrorcheck: false
 archweb_mirrorresolv: false
