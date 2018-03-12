@@ -3,7 +3,7 @@ use strict;
 use warnings;
 
 use autodie;
-use JSON;
+use JSON::XS;
 use POSIX;
 
 my $json = decode_json(`/usr/local/bin/borg list --json --format '{start}{end}' --sort-by timestamp --last 1`);

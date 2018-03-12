@@ -4,7 +4,7 @@
   pacman: name=zabbix-agent,python-dbus
 
 - name: install packages for borg monitoring
-  pacman: name=perl-json
+  pacman: name=perl-json-xs
   when: "'borg-clients' in group_names"
 
 - name: install packages for nginx monitoring
