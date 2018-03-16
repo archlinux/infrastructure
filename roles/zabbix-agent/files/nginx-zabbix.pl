@@ -17,7 +17,7 @@ my @nginx_log_file_paths = glob("/var/log/nginx/*-access.log /var/log/nginx/*/ac
 
 @nginx_log_file_paths = ("./test-access.log") if $devmode;
 
-$SIG{PIPE} = 'IGNORE';
+#$SIG{PIPE} = 'IGNORE';
 
 sub trim {
 	my $str = shift;

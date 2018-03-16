@@ -4,6 +4,7 @@ After=nginx.service
 
 [Service]
 ExecStart=/usr/local/bin/nginx-zabbix.pl
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
