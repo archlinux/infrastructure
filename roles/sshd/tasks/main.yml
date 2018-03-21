@@ -22,3 +22,4 @@
 
 - name: open firewall holes
   firewalld: service=ssh permanent=true state=enabled
+  when: configure_firewall

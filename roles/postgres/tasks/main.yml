@@ -56,3 +56,4 @@
 - name: open firewall holes to known postgresql clients
   firewalld: service=postgresql permanent=true state=enabled source={{item}}
   with_items: "{{ postgres_ssl_hosts }}"
+  when: configure_firewall

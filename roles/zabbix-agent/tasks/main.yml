@@ -71,3 +71,4 @@
 
 - name: open firewall holes
   firewalld: service=zabbix-agent permanent=true state=enabled
+  when: configure_firewall

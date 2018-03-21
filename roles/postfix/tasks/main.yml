@@ -76,4 +76,4 @@
   with_items:
     - smtp
     - smtp-submission
-  when: postfix_smtpd_public
+  when: postfix_smtpd_public and configure_firewall

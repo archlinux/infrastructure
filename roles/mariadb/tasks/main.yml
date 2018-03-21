@@ -53,3 +53,4 @@
 - name: open firewall holes to other infrastructure hosts
   firewalld: service=mysql permanent=true state="{{'disabled' if mariadb_skip_networking else 'enabled'}}" source={{item}}
   with_items: "{{ groups['all'] }}"
+  when: configure_firewall

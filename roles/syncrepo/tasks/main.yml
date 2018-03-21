@@ -56,3 +56,4 @@
 
 - name: open firewall holes
   firewalld: service=rsyncd permanent=true state=enabled
+  when: configure_firewall

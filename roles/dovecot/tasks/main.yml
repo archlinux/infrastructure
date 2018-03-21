@@ -27,3 +27,4 @@
     - pop3s
     - imap
     - imaps
+  when: configure_firewall
