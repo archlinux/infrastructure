@@ -1,7 +1,7 @@
 ---
 
 - name: install packages
-  pacman: name=zabbix-agent,python-dbus
+  pacman: name=zabbix-agent,python-dbus,perl-json
 
 - name: install packages for borg monitoring
   pacman: name=perl-json
