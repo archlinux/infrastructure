@@ -35,8 +35,8 @@ sub send_zabbix {
 		$zabbix_sender->autoflush();
 	}
 	my $ret = syswrite $zabbix_sender, (sprintf "- %s %s\n", $key, $value);
-	if (not $ret and $!{EPIPE}) {
-		print STDERR "Got EPIPE. Restarting zabbix_sender\n";
+	if (not defined $ret) {
+		print STDERR "Writing failed: '$!' Restarting zabbix_sender\n";
 		undef $zabbix_sender;
 		send_zabbix(@_);
 	}
