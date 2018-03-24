@@ -35,7 +35,7 @@ luna.archlinux.org
 
 [buildservers]
 soyuz.archlinux.org
-sgp.pkgbuild.com
+sgp.mirror.pkgbuild.com
 
 [unmanaged]
 nymeria.archlinux.org

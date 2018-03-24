@@ -1,18 +1,19 @@
 ---
 - name: setup signapore build server
-  hosts: sgp.pkgbuild.com
+  hosts: sgp.mirror.pkgbuild.com
   remote_user: root
   roles:
-    - { role: common, tags: ['common'] }
-    - { role: tools, tags: ['tools'] }
-    - { role: sshd, tags: ['sshd'] }
-    - { role: root_ssh, tags: ['root_ssh'] }
-    - { role: archusers, tags: ['archusers'] }
-    - { role: nginx, tags: ["nginx"] }
-    - { role: sudo, tags: ['sudo', 'archusers'] }
-    - { role: syncrepo, tags: ['syncrepo', 'nginx'] }
-    - { role: sogrep, tags: ['sogrep'] }
-    - { role: archbuild, tags: ['archbuild'] }
-    - { role: public_html, tags: ['public_html', 'nginx'] }
-    - { role: archweb, archweb_site: false, archweb_services: false, archweb_mirrorcheck: true, tags: ['archweb'] }
-    - { role: crond, tags: ['crond'] }
+    - { role: common }
+    - { role: tools }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: archusers }
+    - { role: nginx }
+    - { role: sudo, tags: ['archusers'] }
+    - { role: syncrepo, tags: ['nginx'] }
+    - { role: arch32_mirror, tags: ['nginx'] }
+    - { role: sogrep }
+    - { role: archbuild }
+    - { role: archweb, archweb_site: false, archweb_services: false, archweb_mirrorcheck: true }
+    - { role: crond }
+    - { role: zabbix-agent, tags: ["zabbix"] }
