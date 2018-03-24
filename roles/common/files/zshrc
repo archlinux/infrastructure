@@ -48,7 +48,7 @@ else
 fi
 local host_color="%F{green}"
 local path_color="%F{blue}"
-PROMPT="${username_color}$USERNAME%f@${host_color}%B%m%b%f ${path_color}%B%~%b%f > "
+PROMPT="${username_color}$USERNAME%f@${host_color}%B%M%b%f ${path_color}%B%~%b%f > "
 #}
 
 ## Spelling prompt
