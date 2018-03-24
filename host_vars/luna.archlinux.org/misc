@@ -1,0 +1,11 @@
+---
+configure_network: false
+filesystem: "ext4"
+
+# FIXME: this should probably be configured another way. maybe the
+# mysql/postgres roles should deploy the credentials themselves
+mysql_backup_dir: "/root/backup-mysql"
+mysql_backup_defaults: "/root/.backup-my.cnf"
+
+mariadb_users:
+  root: "{{encrypted_mariadb_users_root_password}}"
