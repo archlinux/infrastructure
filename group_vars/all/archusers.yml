@@ -158,6 +158,7 @@ arch_users:
     ssh_key: demize.pub
     groups:
       - tu
+      - multilib
   djgera:
     name: "Gerardo Exequiel Pozzi"
     ssh_key: djgera.pub
