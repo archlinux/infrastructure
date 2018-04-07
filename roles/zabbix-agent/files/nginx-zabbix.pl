@@ -18,7 +18,7 @@ my @nginx_log_file_paths = glob("/var/log/nginx/*-access.log /var/log/nginx/*/ac
 @nginx_log_file_paths = ("./test-access.log") if $devmode;
 
 #$SIG{PIPE} = 'IGNORE';
-$SIG{DIE} = sub {
+$SIG{__DIE__} = sub {
 	print STDERR "Should be dying now\n";
 	exit(2);
 };
