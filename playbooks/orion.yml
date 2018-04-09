@@ -5,7 +5,7 @@
   remote_user: root
   vars:
     archweb_db_host: 'apollo.archlinux.org'
-    dbscripts_commit: 'e53cad6e4a8284165c6d0b2c7c86f6c077be693b'
+    dbscripts_commit: '656fd6d5d8f455492b1e51add9e6e1da8f911a7c'
   roles:
     - { role: common, tags: ['common'] }
     - { role: tools, tags: ['tools'] }
