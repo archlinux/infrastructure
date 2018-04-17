@@ -17,9 +17,12 @@ my @nginx_log_file_paths = glob("/var/log/nginx/*-access.log /var/log/nginx/*/ac
 
 @nginx_log_file_paths = ("./test-access.log") if $devmode;
 
+my $logfile;
+
 #$SIG{PIPE} = 'IGNORE';
 $SIG{__DIE__} = sub {
 	print STDERR "Should be dying now\n";
+	close $logfile;
 	exit(2);
 };
 
@@ -49,7 +52,7 @@ sub send_zabbix {
 sub main {
 	die "No log files found" if @nginx_log_file_paths == 0;
 
-	open my $logfile, "-|", qw(tail -n0 -q -F), @nginx_log_file_paths;
+	open $logfile, "-|", qw(tail -n0 -q -F), @nginx_log_file_paths;
 
 	my $last_send_time = 0;
 	my $value_template = {
