@@ -1,0 +1,6 @@
+---
+
+docker_image_user: 'docker-image'
+docker_image_home: '/srv/docker-image'
+docker_image_git_dir: '/srv/docker-image/archlinux-docker'
+docker_image_time: '*-*-05 00:00:00'

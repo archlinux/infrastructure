@@ -1,0 +1,26 @@
+---
+
+- name: install docker-image dependencies
+  pacman: name=docker state=present
+
+- name: create docker-image user
+  user: name={{ docker_image_user }} shell=/bin/bash home="{{ docker_image_home }}" createhome=yes
+
+- name: clone archlinux-docker repository
+  git: repo='https://github.com/archlinux/archlinux-docker.git' dest="{{ docker_image_git_dir }}" force=yes
+
+- name: adjust permissions of git checkout
+  file: path="{{ docker_image_git_dir }}" state=directory recurse=yes owner="{{ docker_image_user }}" group="{{ docker_image_user }}"
+
+- name: install docker_image_build service
+  template: src='docker-image-build.service.j2' dest='/etc/systemd/system/docker-image-build.service' owner=root group=root mode=0644
+  notify:
+    - daemon reload
+
+- name: install docker_image_build timer
+  template: src='docker-image-build.timer.j2' dest='/etc/systemd/system/docker-image-build.timer' owner=root group=root mode=0644
+  notify:
+    - daemon reload
+
+- name: start and enable docker_image_build timer
+  service: name='docker-image-build.timer' enabled=yes state=started
