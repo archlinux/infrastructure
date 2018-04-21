@@ -22,8 +22,9 @@ my $logfile;
 #$SIG{PIPE} = 'IGNORE';
 $SIG{__DIE__} = sub {
 	print STDERR "Should be dying now\n";
-	close $logfile;
-	exit(2);
+	#close $logfile;
+	POSIX::_exit(2);
+	print STDERR "Called exit()\n";
 };
 
 sub trim {
