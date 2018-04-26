@@ -14,6 +14,7 @@ use Time::HiRes qw(time sleep);
 my $interval = 30;
 my $devmode = 0;
 my @nginx_log_file_paths = glob("/var/log/nginx/*-access.log /var/log/nginx/*/access.log");
+my $hostname_regex = qr/^.*(archlinux\.org|pkgbuild\.com)$/;
 
 @nginx_log_file_paths = ("./test-access.log") if $devmode;
 
@@ -84,7 +85,10 @@ sub main {
 		$line = trim($line);
 
 		if ($line =~ m/(?<remote_addr>\S+) (?<host>\S+) (?<remote_user>\S+) \[(?<time_local>.*?)\]\s+"(?<request>.*?)" (?<status>\S+) (?<body_bytes_sent>\S+) "(?<http_referer>.*?)" "(?<http_user_agent>.*?)" "(?<http_x_forwarded_for>\S+)"(?: (?<request_time>[\d\.]+|-))?/) {
-			my $host = $+{host};
+			my %val = %+;
+			my $host = $val{host};
+
+			next unless $host =~ m/$hostname_regex/;
 
 			if (not defined $values_per_host->{$host}) {
 				$values_per_host->{$host} = clone($value_template);
@@ -95,11 +99,11 @@ sub main {
 			my $stat = $stat_per_host->{$host};
 			my $values = $values_per_host->{$host};
 
-			$stat->add_data($+{request_time}) if $+{request_time} != 0;
+			$stat->add_data($val{request_time}) if $val{request_time} != 0;
 			$values->{request_count}++;
-			$values->{cached_request_count}++ if $+{request_time} == 0;
+			$values->{cached_request_count}++ if $val{request_time} == 0;
 
-			my $status_key = defined $values->{status}->{$+{status}} ? $+{status} : "other";
+			my $status_key = defined $values->{status}->{$val{status}} ? $val{status} : "other";
 			$values->{status}->{$status_key}++;
 		}
 
