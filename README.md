@@ -30,6 +30,15 @@ The opendkim DNS data has to be added to DNS manually. The roles verifies that t
 
 The file that has to be added to the zone is `/etc/opendkim/private/$selector.txt`.
 
+#### Updating servers
+
+The following steps should be used to update our managed servers:
+
+* pacman -Syu
+* sync
+* checkservices
+* reboot
+
 ## Servers
 
 ### vostok
