@@ -4,4 +4,4 @@
   pacman: name=firewalld state=present
 
 - name: start and enable firewalld
-  service: name=firewalld enabled=yes state=started
+  service: name=firewalld enabled={{configure_firewall}} state={{configure_firewall | ternary("started", "stopped") }}
