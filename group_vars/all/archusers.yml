@@ -428,12 +428,6 @@ arch_users:
     groups:
       - dev
       - multilib
-  tomegun:
-    name: "Tom Gundersen"
-    ssh_key: tomegun.pub
-    groups:
-      - dev
-      - multilib
   tpowa:
     name: "Tobias Powalowski"
     ssh_key: tpowa.pub
