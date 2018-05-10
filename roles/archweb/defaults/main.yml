@@ -24,6 +24,7 @@ archweb_rsync_iso_dir: '/srv/ftp/iso/'
 archweb_admins: ["('Giancarlo Razzolini', 'grazzolini@archlinux.org')",
                  "('Angel Velasquez', 'angvp@archlinux.org')",
                  "('Jelle van der Waa', 'jelle@archlinux.org')"]
+archweb_server_email: 'archweb@archlinux.org'
 
 archweb_db: 'archweb'
 archweb_db_host: 'localhost'
