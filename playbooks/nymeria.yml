@@ -15,4 +15,4 @@
     - { role: opendkim, dkim_selector: nymeria, tags: ['mail'] }
     - { role: postfix, postfix_server: false, postfix_smtpd_public: false, tags: ['mail'] }
     - { role: memcached, tags: ['memcached'] }
-    - { role: archweb, archweb_repository: "https://github.com/archlinux/archweb.git", archweb_version: "e137256183d1ed10e43f417962614cbb2aa278bc", archweb_server_email: 'archweb-dev@archlinux.org', archweb_services: false, archweb_domain: 'archweb-dev.archlinux.org', tags: ["archweb"] }
+    - { role: archweb, archweb_repository: "https://github.com/archlinux/archweb.git", archweb_version: "dec4142cb05f5423d8a5c1e78b69b7db05030658", archweb_server_email: 'archweb-dev@archlinux.org', archweb_services: false, archweb_domain: 'archweb-dev.archlinux.org', tags: ["archweb"] }
