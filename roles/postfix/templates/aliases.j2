@@ -28,3 +28,5 @@ abuse:      postmaster
 decode:     root
 
 devnull: /dev/null
+
+wiki_bounce: "|curl -d action=bouncehandler --data-urlencode email@- https://wiki.archlinux.org/api.php"

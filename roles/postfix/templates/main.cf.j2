@@ -173,6 +173,7 @@ alias_database = ${indexed}/aliases
 virtual_alias_maps =
   ${indexed}/users
   ${indexed}/mailman_compat
+  pcre:${config_directory}/users.pcre
 virtual_alias_domains =  ${indexed}/domains
 
 # reject mails to system users (nobody looks in those mailboxes)
