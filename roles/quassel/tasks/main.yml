@@ -57,7 +57,7 @@
   copy: src=givemequassel.sudoers dest=/etc/sudoers.d/givemequassel
 
 - name: install oidentd.conf
-  copy: src=oidentd.conf dest=/etc/oidentd.conf owner=root group=root mode=0755
+  copy: src=oidentd.conf dest=/etc/oidentd.conf owner=root group=root mode=0644
 
 - name: start and enable quassel
   service: name={{ item }} enabled=yes state=started
