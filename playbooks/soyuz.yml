@@ -16,6 +16,7 @@
     - { role: sudo, tags: ['sudo', 'archusers'] }
     - { role: phrik, tags: ['phrik'] }
     - { role: postgres, tags: ['postgres'] }
+    - { role: oidentd, tags: ['oidentd'] }
     - { role: quassel, quassel_domain: "quassel.archlinux.org", tags: ['quassel'] }
     - { role: matrix, matrix_domain: "matrix.archlinux.org", matrix_server_name: "archlinux.org", tags: ['matrix'] }
     - { role: syncrepo, mirror_domain: "mirror.pkgbuild.com", tags: ['syncrepo', 'nginx'] }

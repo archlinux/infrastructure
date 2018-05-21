@@ -1,0 +1,16 @@
+---
+
+- name: install oidentd
+  pacman: name=oidentd state=present
+
+- name: install oidentd.conf
+  copy: src=oidentd.conf dest=/etc/oidentd.conf owner=root group=root mode=0644
+
+- name: start and enable oidentd
+  service: name={{ item }} enabled=yes state=started
+  with_items:
+    - oidentd.socket
+
+- name: open firewall holes
+  firewalld: port=113/tcp permanent=true state=enabled
+  when: configure_firewall

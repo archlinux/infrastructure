@@ -1,7 +1,7 @@
 ---
 
 - name: install quassel
-  pacman: name=quassel-core,oidentd,python2-pexpect state=present
+  pacman: name=quassel-core,python2-pexpect state=present
 
 - name: add quassel postgres db
   postgresql_db: db=quassel
@@ -56,13 +56,9 @@
 - name: install givemequassel sudoers config
   copy: src=givemequassel.sudoers dest=/etc/sudoers.d/givemequassel
 
-- name: install oidentd.conf
-  copy: src=oidentd.conf dest=/etc/oidentd.conf owner=root group=root mode=0644
-
 - name: start and enable quassel
   service: name={{ item }} enabled=yes state=started
   with_items:
-    - oidentd.socket
     - quassel.service
     - clean-quassel.timer
 
