@@ -32,6 +32,7 @@
     - multitail
     - httpie
     - the_silver_searcher
+    - ripgrep
     - cloc
     - ipcalc
     - calc
