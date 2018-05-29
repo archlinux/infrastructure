@@ -43,7 +43,7 @@ $wgSMTP = array(
  #'password' => "my_password"       // Password to use for SMTP authentication (if being used)
 );
 
-$wgBounceHandlerInternalIPs = [{{hostvars['orion.archlinux.org']['ipv4_address']}}, {{hostvars['orion.archlinux.org']['ipv6_address']}}];
+$wgBounceHandlerInternalIPs = ["{{hostvars['orion.archlinux.org']['ipv4_address']}}", "{{hostvars['orion.archlinux.org']['ipv6_address']}}"];
 
 # End of automatically generated settings.
 
