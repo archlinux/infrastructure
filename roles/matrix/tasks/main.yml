@@ -51,7 +51,7 @@
       --no-binary :all:
       --only-binary lxml,pymacaroons-pynacl,signedjson,unpaddedbase64,canonicaljson
       -e /var/lib/synapse/synapse
-      psycopg2 systemd-python lxml
+      psycopg2 systemd-python lxml netaddr
   args:
     creates: /var/lib/synapse/venv/bin/synctl
   become: yes
