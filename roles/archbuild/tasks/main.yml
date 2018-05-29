@@ -90,14 +90,8 @@
     - clean-chroots.timer
     - clean-dests.timer
 
-- name: set makepkg.conf vars
-  lineinfile:
-    dest: /etc/makepkg.conf
-    insertafter: '^#?{{ item.key }}='
-    line: '{{ item.key }}="{{ item.value }}"'
-  with_dict:
-    MAKEFLAGS: '-j{{ ansible_processor_vcpus + 1 }}'
-    SRCDEST: /var/lib/archbuilddest/srcdest
+- name: install makepkg.conf
+  template: src=makepkg.conf.j2 dest=/etc/makepkg.conf owner=root group=root mode=0644
 
 - name: install archbuild sudoers config
   copy: src=sudoers dest=/etc/sudoers.d/archbuild
