@@ -12,6 +12,7 @@
 #RootDir     = /
 #DBPath      = /var/lib/pacman/
 #CacheDir    = /var/cache/pacman/pkg/
+CacheDir = /var/cache/pacman/pkg/ /srv/ftp/pool/packages/ /srv/ftp/pool/community/
 #LogFile     = /var/log/pacman.log
 #GPGDir      = /etc/pacman.d/gnupg/
 #HookDir     = /etc/pacman.d/hooks/
@@ -31,9 +32,9 @@ IgnorePkg = linux linux-headers linux-hardened linux-hardened-headers linux-lts 
 #NoExtract   =
 
 # Misc options
-#UseSyslog
-#Color
-#TotalDownload
+UseSyslog
+Color
+TotalDownload
 CheckSpace
 VerbosePkgLists
 
