@@ -98,9 +98,5 @@
 - name: install checkservices
   copy: src=archutils/checkservices dest=/usr/local/bin/checkservices owner=root group=root mode=0755
 
-- name: add kernel packages to IgnorePkg
-  lineinfile:
-    dest: /etc/pacman.conf
-    insertafter: '^#IgnorePkg'
-    regexp: '^IgnorePkg'
-    line: 'IgnorePkg = linux linux-headers linux-hardened linux-hardened-headers linux-lts linux-lts-headers'
+- name: install pacman config
+  template: src=pacman.conf.j2 dest=/etc/pacman.conf mode=0644 owner=root group=root
