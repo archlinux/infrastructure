@@ -20,6 +20,36 @@ http {
                       '$status $body_bytes_sent "$http_referer" '
                       '"$http_user_agent"';
 
+	log_format json_main escape=json
+		'{'
+		'"remote_addr":"$remote_addr",'
+		'"host":"$host",'
+		'"remote_user":"$remote_user",'
+		'"time_local":"$time_local",'
+		'"request":"$request",'
+		'"status": "$status",'
+		'"body_bytes_sent":"$body_bytes_sent",'
+		'"http_referrer":"$http_referer",'
+		'"http_user_agent":"$http_user_agent",'
+		'"http_x_forwarded_for":"$http_x_forwarded_for",'
+		'"request_time":"$request_time"'
+		'}';
+
+	log_format json_reduced escape=json
+		'{'
+		'"remote_addr":"$remote_addr",'
+		'"host":"$host",'
+		'"remote_user":"$remote_user",'
+		'"time_local":"$time_local",'
+		'"request":"$request",'
+		'"status": "$status",'
+		'"body_bytes_sent":"$body_bytes_sent",'
+		'"http_referrer":"$http_referer",'
+		'"http_user_agent":"$http_user_agent",'
+		'"http_x_forwarded_for":"$http_x_forwarded_for",'
+		'"request_time":"$request_time"'
+		'}';
+
     sendfile        on;
     keepalive_timeout  65;
     client_max_body_size 16M;

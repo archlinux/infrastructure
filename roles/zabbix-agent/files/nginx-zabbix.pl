@@ -84,6 +84,11 @@ sub main {
 		#print "Got line: ".$line."\n";
 		$line = trim($line);
 
+		# json log format
+		if ($line =~ m/^{.*}$/) {
+			update_stats_for_line($values_per_host, $stat_per_host, $value_template, \$modified_hostlist, decode_json($line));
+		}
+
 		# main log format
 		if ($line =~ m/(?<remote_addr>\S+) (?<host>\S+) (?<remote_user>\S+) \[(?<time_local>.*?)\]\s+"(?<request>.*?)" (?<status>\S+) (?<body_bytes_sent>\S+) "(?<http_referer>.*?)" "(?<http_user_agent>.*?)" "(?<http_x_forwarded_for>\S+)"(?: (?<request_time>[\d\.]+|-))?/) {
 			update_stats_for_line($values_per_host, $stat_per_host, $value_template, \$modified_hostlist, \%+);
