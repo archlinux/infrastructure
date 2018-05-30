@@ -4,7 +4,7 @@ server {
     server_name  {{ arch32_mirror_domain }} pool.mirror.archlinux32.org;
     root         {{ arch32_mirror_dir }};
 
-    access_log   /var/log/nginx/{{ arch32_mirror_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ arch32_mirror_domain }}/access.log reduced;
     error_log    /var/log/nginx/{{ arch32_mirror_domain }}/error.log;
 
     include snippets/letsencrypt.conf;
@@ -18,7 +18,7 @@ server {
     server_name  {{ arch32_mirror_domain }};
     root         {{ arch32_mirror_dir }};
 
-    access_log   /var/log/nginx/{{ arch32_mirror_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ arch32_mirror_domain }}/access.log reduced;
     error_log    /var/log/nginx/{{ arch32_mirror_domain }}/error.log;
 
     ssl_certificate      /etc/letsencrypt/live/{{ arch32_mirror_domain }}/fullchain.pem;

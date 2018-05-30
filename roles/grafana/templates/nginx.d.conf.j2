@@ -7,7 +7,7 @@ server {
     listen       [::]:80;
     server_name  {{ grafana_domain }};
 
-    access_log   /var/log/nginx/{{ grafana_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ grafana_domain }}/access.log reduced;
     error_log    /var/log/nginx/{{ grafana_domain }}/error.log;
 
     include snippets/letsencrypt.conf;
@@ -23,7 +23,7 @@ server {
     listen       [::]:443 ssl http2;
     server_name  {{ grafana_domain }};
 
-    access_log   /var/log/nginx/{{ grafana_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ grafana_domain }}/access.log reduced;
     error_log    /var/log/nginx/{{ grafana_domain }}/error.log;
 
     ssl_certificate      /etc/letsencrypt/live/{{ grafana_domain }}/fullchain.pem;
@@ -33,6 +33,7 @@ server {
     root {{ grafana_domain }};
 
     location / {
+        access_log   /var/log/nginx/{{ grafana_domain }}/access.log main;
 		proxy_pass http://grafana;
     }
 }

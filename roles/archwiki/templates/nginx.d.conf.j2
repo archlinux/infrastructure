@@ -7,7 +7,7 @@ server {
     listen       [::]:80;
     server_name  {{ archwiki_domain }};
 
-    access_log   /var/log/nginx/{{ archwiki_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ archwiki_domain }}/access.log reduced;
     error_log    /var/log/nginx/{{ archwiki_domain }}/error.log;
 
     include snippets/letsencrypt.conf;
@@ -23,7 +23,7 @@ server {
     listen       [::]:443 ssl http2;
     server_name  {{ archwiki_domain }};
 
-    access_log   /var/log/nginx/{{ archwiki_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ archwiki_domain }}/access.log reduced;
     error_log    /var/log/nginx/{{ archwiki_domain }}/error.log;
 
     ssl_certificate      /etc/letsencrypt/live/{{ archwiki_domain }}/fullchain.pem;
@@ -40,6 +40,7 @@ server {
 
     # special case due to our '/index.php/Main_Page' type URLs
     location ~ ^/(?:index|redirect)\.php(?:/.*)$ {
+        access_log   /var/log/nginx/{{ archwiki_domain }}/access.log main;
         fastcgi_pass   archwiki;
         fastcgi_index  index.php;
         fastcgi_split_path_info ^(.+\.php)(.*)$;
@@ -51,6 +52,7 @@ server {
 
     # normal PHP FastCGI handler
     location ~ ^/[^/]+\.php$ {
+        access_log   /var/log/nginx/{{ archwiki_domain }}/access.log main;
         fastcgi_pass   archwiki;
         fastcgi_index  index.php;
         fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;

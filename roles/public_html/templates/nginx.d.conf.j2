@@ -4,7 +4,7 @@ server {
     server_name  {{ public_domain }} www.{{ public_domain }};
     root         /srv/public_html;
 
-    access_log   /var/log/nginx/{{ public_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ public_domain }}/access.log reduced;
     error_log    /var/log/nginx/{{ public_domain }}/error.log;
 
     include snippets/letsencrypt.conf;
@@ -22,7 +22,7 @@ server {
     server_name  {{ public_domain }} www.{{ public_domain }};
     root         /srv/public_html;
 
-    access_log   /var/log/nginx/{{ public_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ public_domain }}/access.log reduced;
     error_log    /var/log/nginx/{{ public_domain }}/error.log;
 
     ssl_certificate      /etc/letsencrypt/live/{{ public_domain }}/fullchain.pem;

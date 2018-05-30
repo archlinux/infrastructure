@@ -3,7 +3,7 @@ server {
     listen       [::]:80;
     server_name  mailman.archlinux.org;
 
-    access_log   /var/log/nginx/{{ mailman_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ mailman_domain }}/access.log reduced;
     error_log    /var/log/nginx/{{ mailman_domain }}/error.log;
 
     include snippets/letsencrypt.conf;
@@ -19,7 +19,7 @@ server {
     listen       [::]:443 ssl http2;
     server_name  mailman.archlinux.org;
 
-    access_log   /var/log/nginx/{{ mailman_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ mailman_domain }}/access.log reduced;
     error_log    /var/log/nginx/{{ mailman_domain }}/error.log;
 
     ssl_certificate      /etc/letsencrypt/live/mailman.archlinux.org/fullchain.pem;
