@@ -25,7 +25,7 @@
   file: state=directory owner=security group=security path="{{ security_tracker_dir }}"
 
 - name: clone security-tracker repo
-  git: repo=https://github.com/archlinux/arch-security-tracker.git version="5cf88695ad50aa4bc344f83d2c2c2be1cbfb4f98" dest="{{ security_tracker_dir }}"
+  git: repo=https://github.com/archlinux/arch-security-tracker.git version="19bc6974ef1d001ca49211421bbe1ea345cac6fc" dest="{{ security_tracker_dir }}"
   become: true
   become_user: security
   register: release
