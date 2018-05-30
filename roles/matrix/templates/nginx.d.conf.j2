@@ -13,6 +13,7 @@ server {
     include snippets/letsencrypt.conf;
 
     location / {
+        access_log off;
         rewrite ^(.*) https://{{ matrix_domain }}$1 permanent;
     }
 }

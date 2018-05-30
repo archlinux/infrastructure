@@ -15,6 +15,7 @@ server {
     include snippets/letsencrypt.conf;
 
     location / {
+        access_log off;
         rewrite ^(.*) https://{{ domain }}$1 permanent;
     }
 }
@@ -32,6 +33,7 @@ server {
     ssl_trusted_certificate /etc/letsencrypt/live/{{ archweb_domain }}/chain.pem;
 
     location / {
+        access_log off;
         rewrite ^(.*) https://{{ archweb_domain }}
         {%- if archweb_domains_redirects -%}
             {{ archweb_domains_redirects[domain]|default('$1') }}
@@ -63,6 +65,7 @@ server {
     }
 
     location / {
+        access_log off;
         rewrite ^(.*) https://{{ archweb_domain }}$1 permanent;
     }
 }

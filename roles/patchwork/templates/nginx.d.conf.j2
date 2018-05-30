@@ -13,6 +13,7 @@ server {
     include snippets/letsencrypt.conf;
 
     location / {
+        access_log off;
         rewrite ^(.*) https://{{ patchwork_domain }}$1 permanent;
     }
 }
