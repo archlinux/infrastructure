@@ -76,11 +76,6 @@ arch_users:
     groups:
       - dev
       - tu
-  angvp:
-    name: "Ángel Velásquez"
-    ssh_key: angvp.pub
-    groups:
-      - dev
   arcanis:
     name: "Evgeniy Alekseev"
     ssh_key: arcanis.pub
