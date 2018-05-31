@@ -42,7 +42,7 @@ def main():
 
             if os.path.exists(path):
                 stat = os.stat(path)
-                dirmode = oct(stat.st_mode & 0777)
+                dirmode = oct(stat.st_mode & 0o777)
                 diruid = stat.st_uid
                 dirgid = stat.st_gid
                 permissions_incorrect = diruid != uid or dirgid != gid

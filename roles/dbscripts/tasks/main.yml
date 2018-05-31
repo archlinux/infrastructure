@@ -59,7 +59,7 @@
     pathtmpl: '/home/{user}/staging/{dirname}'
     permissions: 755
     directories: ['', 'core', 'extra', 'testing', 'staging', 'community', 'community-staging', 'community-testing',  'multilib', 'multilib-staging', 'multilib-testing']
-    users: "{{arch_users.keys()}}"
+    users: "{{arch_users.keys() | list}}"
     group: users
   tags: ["archusers"]
 
