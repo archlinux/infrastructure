@@ -3,6 +3,6 @@ Description=docker-image service for building
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/make -C {{ archboxes_git_dir }} rootfs
-User={{ archboxes_user }}
-WorkingDirectory={{ archboxes_git_dir }}
+ExecStart=/usr/bin/make -C {{ docker_image_git_dir }} rootfs
+User={{ docker_image_user }}
+WorkingDirectory={{ docker_image_git_dir }}
