@@ -26,7 +26,7 @@ tartf() {
 
 function {
   local pkgname epoch pkgver pkgrel arch
-  for pkg in *.pkg.tar.*z(N); do
+  for pkg in $(makepkg --packagelist); do
     parse $pkg
     otherpkg=( /srv/ftp/pool/*/${pkgname}-[^-]##-[^-]##-${arch}.pkg.tar.*z(Nom[1]) )
     if [[ -n $otherpkg ]]; then
