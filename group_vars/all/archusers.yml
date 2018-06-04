@@ -152,6 +152,7 @@ arch_users:
     name: "Johannes Löthberg"
     ssh_key: demize.pub
     groups:
+      - dev
       - tu
       - multilib
   djgera:
