@@ -28,7 +28,7 @@ DATABASES = {
 {% endif %}
         'NAME'    : '{{ archweb_db }}',
         'USER'    : '{{ archweb_db_site_user }}',
-        'PASSWORD': '{{ archweb_db_site_password }}',
+        'PASSWORD': '{{ vault_archweb_db_site_password }}',
         'OPTIONS' : {
             'application_name': 'archweb',
 {% if archweb_db_host != 'localhost' %}
@@ -61,7 +61,7 @@ MEDIA_ROOT = '{{ archweb_dir }}/media/img'
 MEDIA_URL = '/img/'
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '{{ archweb_secret_key }}'
+SECRET_KEY = '{{ vault_archweb_secret_key }}'
 
 # Hostnames we allow this site to be served under
 ALLOWED_HOSTS = ['{{ archweb_domain }}']

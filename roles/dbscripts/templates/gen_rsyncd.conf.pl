@@ -7,7 +7,7 @@ use Data::Dumper;
 
 # TODO put these into credentials.ini and use Config::Simple to read it
 my $user = '{{ archweb_db_dbscripts_user }}';
-my $pass = '{{ archweb_db_dbscripts_password }}';
+my $pass = '{{ vault_archweb_db_dbscripts_password }}';
 my $db = 'DBI:Pg:dbname={{ archweb_db }};host={{ archweb_db_host }}{% if postgres_ssl == 'on' %};sslmode=require{% endif %}';
 
 my $scriptdir="/etc/rsyncd-conf-genscripts";

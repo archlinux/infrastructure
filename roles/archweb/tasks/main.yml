@@ -63,10 +63,10 @@
   no_log: true
   when: archweb_site or archweb_services
   with_items:
-    - { user: "{{ archweb_db_site_user }}", password: "{{ archweb_db_site_password }}" }
-    - { user: "{{ archweb_db_services_user }}", password: "{{ archweb_db_services_password }}" }
-    - { user: "{{ archweb_db_dbscripts_user }}", password: "{{ archweb_db_dbscripts_password }}" }
-    - { user: "{{ archweb_db_backup_user }}", password: "{{ archweb_db_backup_password }}" }
+    - { user: "{{ archweb_db_site_user }}", password: "{{ vault_archweb_db_site_password }}" }
+    - { user: "{{ archweb_db_services_user }}", password: "{{ vault_archweb_db_services_password }}" }
+    - { user: "{{ archweb_db_dbscripts_user }}", password: "{{ vault_archweb_db_dbscripts_password }}" }
+    - { user: "{{ archweb_db_backup_user }}", password: "{{ vault_archweb_db_backup_password }}" }
 
 - name: create archweb db
   postgresql_db: name="{{ archweb_db }}" login_host="{{ archweb_db_host }}" login_password="{{ postgres_users.postgres }}" owner="{{ archweb_db_site_user }}"
@@ -80,7 +80,7 @@
   when: archweb_site and (db_created.changed or release.changed or config.changed or virtualenv.changed or archweb_forced_deploy)
 
 - name: db privileges for archweb users
-  postgresql_privs: database="{{ archweb_db }}" host="{{ archweb_db_host }}" login="{{ archweb_db_site_user }}" password="{{ archweb_db_site_password }}"
+  postgresql_privs: database="{{ archweb_db }}" host="{{ archweb_db_host }}" login="{{ archweb_db_site_user }}" password="{{ vault_archweb_db_site_password }}"
                     privs=CONNECT roles="{{ item }}" type=database
   when: archweb_site or archweb_services
   with_items:
@@ -89,7 +89,7 @@
     - "{{ archweb_db_backup_user }}"
 
 - name: table privileges for archweb users
-  postgresql_privs: database="{{ archweb_db }}" host="{{ archweb_db_host }}" login="{{ archweb_db_site_user }}" password="{{ archweb_db_site_password }}"
+  postgresql_privs: database="{{ archweb_db }}" host="{{ archweb_db_host }}" login="{{ archweb_db_site_user }}" password="{{ vault_archweb_db_site_password }}"
                     privs=SELECT roles="{{ item.user }}" type=table objs="{{ item.objs }}"
   when: archweb_site or archweb_services
   with_items:
@@ -98,7 +98,7 @@
     - { user: "{{ archweb_db_backup_user }}", objs: "{{ archweb_db_backup_table_objs }}" }
 
 - name: sequence privileges for archweb users
-  postgresql_privs: database="{{ archweb_db }}" host="{{ archweb_db_host }}" login="{{ archweb_db_site_user }}" password="{{ archweb_db_site_password }}"
+  postgresql_privs: database="{{ archweb_db }}" host="{{ archweb_db_host }}" login="{{ archweb_db_site_user }}" password="{{ vault_archweb_db_site_password }}"
                     privs=SELECT roles="{{ item.user }}" type=sequence objs="{{ item.objs }}"
   when: archweb_site or archweb_services
   with_items:
