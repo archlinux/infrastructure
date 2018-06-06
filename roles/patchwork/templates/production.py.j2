@@ -27,7 +27,7 @@ from .base import *  # noqa
 #      chars = string.letters + string.digits + string.punctuation
 #      print repr("".join([random.choice(chars) for i in range(0,50)]))
 
-SECRET_KEY = '{{ patchwork_secret_key }}'
+SECRET_KEY = '{{ vault_patchwork_secret_key }}'
 
 # Email
 #
@@ -64,7 +64,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': '{{ patchwork_db }}',
         'USER': '{{ patchwork_db_user }}',
-        'PASSWORD': '{{ patchwork_db_password }}',
+        'PASSWORD': '{{ vault_patchwork_db_password }}',
         'HOST': '{{ patchwork_db_host }}',
         'PORT': 5432,
     },

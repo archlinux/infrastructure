@@ -46,8 +46,8 @@
   postgresql_user: name={{ item.user }} password={{ item.password }} login_host="{{ patchwork_db_host }}" login_password="{{ vault_postgres_users.postgres }}" encrypted=yes
   no_log: true
   with_items:
-    - { user: "{{ patchwork_db_user }}", password: "{{ patchwork_db_password }}" }
-    - { user: "{{ patchwork_db_backup_user }}", password: "{{ patchwork_db_backup_password }}" }
+    - { user: "{{ patchwork_db_user }}", password: "{{ vault_patchwork_db_password }}" }
+    - { user: "{{ patchwork_db_backup_user }}", password: "{{ vault_patchwork_db_backup_password }}" }
 
 - name: create patchwork db
   postgresql_db: name="{{ patchwork_db }}" login_host="{{ patchwork_db_host }}" login_password="{{ vault_postgres_users.postgres }}" owner="{{ patchwork_db_user }}"
@@ -60,19 +60,19 @@
   when: (db_created.changed or release.changed or config.changed or virtualenv.changed or patchwork_forced_deploy)
 
 - name: db privileges for patchwork users
-  postgresql_privs: database="{{ patchwork_db }}" host="{{ patchwork_db_host }}" login="{{ patchwork_db_user }}" password="{{ patchwork_db_password }}"
+  postgresql_privs: database="{{ patchwork_db }}" host="{{ patchwork_db_host }}" login="{{ patchwork_db_user }}" password="{{ vault_patchwork_db_password }}"
                     privs=CONNECT roles="{{ item }}" type=database
   with_items:
     - "{{ patchwork_db_backup_user }}"
 
 - name: table privileges for patchwork users
-  postgresql_privs: database="{{ patchwork_db }}" host="{{ patchwork_db_host }}" login="{{ patchwork_db_user }}" password="{{ patchwork_db_password }}"
+  postgresql_privs: database="{{ patchwork_db }}" host="{{ patchwork_db_host }}" login="{{ patchwork_db_user }}" password="{{ vault_patchwork_db_password }}"
                     privs=SELECT roles="{{ item.user }}" type=table objs="{{ item.objs }}"
   with_items:
     - { user: "{{ patchwork_db_backup_user }}", objs: "{{ patchwork_db_backup_table_objs }}" }
 
 - name: sequence privileges for patchwork users
-  postgresql_privs: database="{{ patchwork_db }}" host="{{ patchwork_db_host }}" login="{{ patchwork_db_user }}" password="{{ patchwork_db_password }}"
+  postgresql_privs: database="{{ patchwork_db }}" host="{{ patchwork_db_host }}" login="{{ patchwork_db_user }}" password="{{ vault_patchwork_db_password }}"
                     privs=SELECT roles="{{ item.user }}" type=sequence objs="{{ item.objs }}"
   with_items:
     - { user: "{{ patchwork_db_backup_user }}", objs: "{{ patchwork_db_backup_sequence_objs }}" }
