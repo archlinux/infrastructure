@@ -45,7 +45,7 @@
   register: db_created
 
 - name: create flyspray db user
-  mysql_user: name={{ flyspray_db_user }} password={{ flyspray_db_password }}
+  mysql_user: name={{ flyspray_db_user }} password={{ vault_flyspray_db_password }}
               login_host="{{ flyspray_db_host }}" login_password="{{ vault_mariadb_users.root }}"
               priv="{{ flyspray_db }}.*:ALL"
   no_log: true

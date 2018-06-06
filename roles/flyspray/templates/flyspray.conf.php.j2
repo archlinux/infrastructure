@@ -1,7 +1,7 @@
 ; <?php die( 'Do not access this page directly.' ); ?>
 
 [general]
-cookiesalt="{{ flyspray_cookie_salt }}"
+cookiesalt="{{ vault_flyspray_cookie_salt }}"
 output_buffering="on"
 address_rewriting="1"
 reminder_daemon="0"
@@ -15,7 +15,7 @@ dbtype="mysqli"
 dbhost="{{ flyspray_db_host }}"
 dbname="{{ flyspray_db }}"
 dbuser="{{ flyspray_db_user }}"
-dbpass="{{ flyspray_db_password }}"
+dbpass="{{ vault_flyspray_db_password }}"
 dbprefix="flyspray_"
 
 [attachments]
