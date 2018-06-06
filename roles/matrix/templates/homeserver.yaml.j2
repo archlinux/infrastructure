@@ -136,7 +136,7 @@ database:
   args:
     dbname: synapse
     user: synapse
-    password: {{ postgres_users.synapse }}
+    password: {{ vault_postgres_users.synapse }}
     cp_min: 5
     cp_max: 10
 

@@ -10,7 +10,7 @@
   become_method: su
 
 - name: add quassel postgres user
-  postgresql_user: db=quassel name=quassel password={{ postgres_users.quassel }} encrypted=true
+  postgresql_user: db=quassel name=quassel password={{ vault_postgres_users.quassel }} encrypted=true
   become: yes
   become_user: postgres
   become_method: su
@@ -24,7 +24,7 @@
     responses:
       Username: ''
       Password:
-        - '{{ postgres_users.quassel }}'
+        - '{{ vault_postgres_users.quassel }}'
         - ''
         - ''
         - ''

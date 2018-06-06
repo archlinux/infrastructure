@@ -43,14 +43,14 @@
   no_log: true
 
 - name: create patchwork db users
-  postgresql_user: name={{ item.user }} password={{ item.password }} login_host="{{ patchwork_db_host }}" login_password="{{ postgres_users.postgres }}" encrypted=yes
+  postgresql_user: name={{ item.user }} password={{ item.password }} login_host="{{ patchwork_db_host }}" login_password="{{ vault_postgres_users.postgres }}" encrypted=yes
   no_log: true
   with_items:
     - { user: "{{ patchwork_db_user }}", password: "{{ patchwork_db_password }}" }
     - { user: "{{ patchwork_db_backup_user }}", password: "{{ patchwork_db_backup_password }}" }
 
 - name: create patchwork db
-  postgresql_db: name="{{ patchwork_db }}" login_host="{{ patchwork_db_host }}" login_password="{{ postgres_users.postgres }}" owner="{{ patchwork_db_user }}"
+  postgresql_db: name="{{ patchwork_db }}" login_host="{{ patchwork_db_host }}" login_password="{{ vault_postgres_users.postgres }}" owner="{{ patchwork_db_user }}"
   register: db_created
 
 - name: django migrate

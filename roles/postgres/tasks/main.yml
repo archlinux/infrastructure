@@ -29,7 +29,7 @@
   command: systemctl set-property postgresql CPUAccounting=yes MemoryAccounting=yes
 
 - name: set postgres user password
-  postgresql_user: name=postgres password={{ postgres_users.postgres }} encrypted=yes
+  postgresql_user: name=postgres password={{ vault_postgres_users.postgres }} encrypted=yes
   become: yes
   become_user: postgres
   become_method: su
