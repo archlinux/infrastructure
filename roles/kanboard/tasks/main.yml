@@ -24,7 +24,7 @@
     - data
 
 - name: create kanboard db user
-  postgresql_user: name={{ kanboard_db_user }} password={{ kanboard_db_password }} encrypted=true
+  postgresql_user: name={{ kanboard_db_user }} password={{ vault_kanboard_db_password }} encrypted=true
   become: yes
   become_user: postgres
   become_method: su
