@@ -4,13 +4,13 @@ as_token: {{ matrix_secrets[matrix_server_name].irc_as_token }}
 namespaces:
 
   users:
-{% for network in matrix_secrets[matrix_server_name].irc_networks.itervalues() %}
+{% for network in matrix_secrets[matrix_server_name].irc_networks.values() %}
     - exclusive: true
       regex: '@{{ network.name | regex_escape() }}_.*:{{ matrix_server_name | regex_escape() }}'
 {% endfor %}
 
   aliases:
-{% for network in matrix_secrets[matrix_server_name].irc_networks.itervalues() %}
+{% for network in matrix_secrets[matrix_server_name].irc_networks.values() %}
     - exclusive: true
       regex: '#{{ network.name | regex_escape() }}_.*:{{ matrix_server_name | regex_escape() }}'
 {% endfor %}
