@@ -77,3 +77,14 @@ The following steps should be used to update our managed servers:
 - /~user/ webhost
 - irc bot (phrik)
 - quassel core
+
+
+## Ansible repo workflows
+
+### Replace vault password and change vaulted passwords
+
+ - Generate a new key and save it as ./new-vault-pw: `pwgen -s 64 1 > new-vault-pw`
+ - `for i in $(ag ANSIBLE_VAULT -l); do ansible-vault rekey --new-vault-password-file new-vault-pw $i; done`
+ - Change the key in misc/vault-password.gpg
+ - `rm new-vault-pw`
+
