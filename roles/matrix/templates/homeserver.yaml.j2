@@ -337,7 +337,7 @@ enable_registration: False
 
 # If set, allows registration by anyone who also has the shared
 # secret, even if registration is otherwise disabled.
-registration_shared_secret: '{{ matrix_secrets[matrix_server_name].registration_shared_secret }}'
+registration_shared_secret: '{{ vault_matrix_secrets[matrix_server_name].registration_shared_secret }}'
 
 # Set the number of bcrypt rounds used to generate password hash.
 # Larger numbers increase the work factor needed to generate the hash.
@@ -377,7 +377,7 @@ room_invite_state_types:
 app_service_config_files: ['/etc/synapse/appservice-registration-irc.yaml']
 
 
-macaroon_secret_key: '{{ matrix_secrets[matrix_server_name].macaroon_secret_key }}'
+macaroon_secret_key: '{{ vault_matrix_secrets[matrix_server_name].macaroon_secret_key }}'
 
 # Used to enable access token expiration.
 expire_access_token: False
@@ -447,7 +447,7 @@ password_config:
    enabled: true
    # Uncomment and change to a secret random string for extra security.
    # DO NOT CHANGE THIS AFTER INITIAL SETUP!
-   pepper: '{{ matrix_secrets[matrix_server_name].pepper }}'
+   pepper: '{{ vault_matrix_secrets[matrix_server_name].pepper }}'
 
 
 

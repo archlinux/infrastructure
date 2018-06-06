@@ -96,7 +96,7 @@
 
 - name: install federation certificate
   copy:
-    content: '{{ matrix_secrets[matrix_server_name].federation_crt }}'
+    content: '{{ vault_matrix_secrets[matrix_server_name].federation_crt }}'
     dest: /etc/synapse/{{ matrix_server_name }}.tls.crt
     owner: root
     group: root
@@ -104,7 +104,7 @@
 
 - name: install federation key
   copy:
-    content: '{{ matrix_secrets[matrix_server_name].federation_key }}'
+    content: '{{ vault_matrix_secrets[matrix_server_name].federation_key }}'
     dest: /etc/synapse/{{ matrix_server_name }}.tls.key
     owner: root
     group: synapse
@@ -112,7 +112,7 @@
 
 - name: install signing key
   copy:
-    content: '{{ matrix_secrets[matrix_server_name].signing_key }}'
+    content: '{{ vault_matrix_secrets[matrix_server_name].signing_key }}'
     dest: /etc/synapse/{{ matrix_server_name }}.signing.key
     owner: root
     group: synapse
@@ -120,7 +120,7 @@
 
 - name: install ircpass key
   copy:
-    content: '{{ matrix_secrets[matrix_server_name].ircpass_key }}'
+    content: '{{ vault_matrix_secrets[matrix_server_name].ircpass_key }}'
     dest: /etc/synapse/{{ matrix_server_name }}.ircpass.key
     owner: root
     group: synapse
