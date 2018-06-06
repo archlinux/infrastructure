@@ -7,5 +7,5 @@ filesystem: "ext4"
 mysql_backup_dir: "/root/backup-mysql"
 mysql_backup_defaults: "/root/.backup-my.cnf"
 
-mariadb_users:
+vault_mariadb_users:
   root: "{{encrypted_mariadb_users_root_password}}"

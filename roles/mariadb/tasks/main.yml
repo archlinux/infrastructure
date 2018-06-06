@@ -31,7 +31,7 @@
   mysql_db: db=test state=absent
 
 - name: set root password
-  mysql_user: user=root host={{ item }} password={{ mariadb_users.root }}
+  mysql_user: user=root host={{ item }} password={{ vault_mariadb_users.root }}
   with_items:
     - '127.0.0.1'
     - '::1'
@@ -43,7 +43,7 @@
   no_log: true
 
 - name: configure zabbix-agent user
-  mysql_user: user={{zabbix_agent_mysql_user}} host=localhost password={{mariadb_users.zabbix_agent}}
+  mysql_user: user={{zabbix_agent_mysql_user}} host=localhost password={{vault_mariadb_users.zabbix_agent}}
 
 - name: install zabbix mysql config
   template: src=zabbix_agentd.my.cnf.j2 dest=/etc/zabbix/zabbix_agentd.my.cnf owner=zabbix-agent group=zabbix-agent mode=0600
