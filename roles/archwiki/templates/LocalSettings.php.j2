@@ -18,13 +18,13 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 ## Database settings
 $wgDBname = "{{ archwiki_db }}";
 $wgDBuser = "{{ archwiki_db_user }}";
-$wgDBpassword = "{{ archwiki_db_password }}";
+$wgDBpassword = "{{ vault_archwiki_db_password }}";
 
-$wgSecretKey = "{{ archwiki_wg_secret_key }}";
+$wgSecretKey = "{{ vault_archwiki_wg_secret_key }}";
 
 # Site upgrade key. Must be set to a string (default provided) to turn on the
 # web installer while LocalSettings.php is in place
-$wgUpgradeKey = "{{ archwiki_wg_upgrade_key }}";
+$wgUpgradeKey = "{{ vault_archwiki_wg_upgrade_key }}";
 
 # Enabled Extensions. Most extensions are enabled by including the base extension file here
 # but check specific extension documentation for more details

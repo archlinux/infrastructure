@@ -52,7 +52,7 @@
   register: db_created
 
 - name: create archwiki db user
-  mysql_user: name={{ archwiki_db_user }} password={{ archwiki_db_password }}
+  mysql_user: name={{ archwiki_db_user }} password={{ vault_archwiki_db_password }}
               login_host="{{ archwiki_db_host }}" login_password="{{ vault_mariadb_users.root }}"
               priv="{{ archwiki_db }}.*:ALL"
   no_log: true
