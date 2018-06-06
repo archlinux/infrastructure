@@ -20,7 +20,7 @@
   file: path="{{ archboxes_git_dir }}" state=directory recurse=yes owner="{{ archboxes_user }}" group="{{ archboxes_user }}"
 
 - name: replace placeholder to vagrantcloud API Key
-  replace: path="{{ archboxes_git_dir }}/vagrant.json" regexp='PLACEHOLDER' replace="{{ archboxes_apikey }}"
+  replace: path="{{ archboxes_git_dir }}/vagrant.json" regexp='PLACEHOLDER' replace="{{ vault_archboxes_apikey }}"
 
 - name: install sudoers file
   template: src=sudoers.d.j2 dest=/etc/sudoers.d/archboxes
