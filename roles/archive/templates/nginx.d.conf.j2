@@ -28,6 +28,25 @@ server {
 
     root         {{ archive_dir }};
 
+    location ~ /repos/201[3456]/.*/.*\.pkg\.tar\.xz(\.sig)? {
+        # Tricky regexp to separate the pkgname from the pkgver (both can contain "-")
+        rewrite ^/repos/.*/((.*?)-[^-/]+-[0-9]+-[^-]+.*\.pkg\.tar\.xz(\.sig)?)$ /archive.org/archlinux_pkg_$2/$1 last;
+    }
+    # archive.org download URLs look like:
+    # https://archive.org/download/archlinux_pkg_lucene__/lucene++-1.4.2-3-i686.pkg.tar.xz
+    # We need to remove @.+ in the identifier (archlinux_pkg_*) but keep it in the filename at the end.
+    location /archive.org/ {
+        # Rewrite @, + and . into _
+        # This is recursive so it will work even for multiple replacement,
+        # with up to 10 replacements for each character (nginx recursion limit).
+        # Idea from https://stackoverflow.com/a/15934256
+        rewrite ^/archive\.org/([^@]*)@(.*)/(.*)$   /archive.org/$1_$2/$3;
+        rewrite ^/archive\.org/([^\.]*)\.(.*)/(.*)$ /archive.org/$1_$2/$3;
+        rewrite ^/archive\.org/([^\+]*)\+(.*)/(.*)$ /archive.org/$1_$2/$3;
+        # Once there are no more @.+ in the identifier part, redirect to archive.org
+        rewrite ^/archive\.org/([^@\+\.]*/.*)$ https://archive.org/download/$1 redirect;
+    }
+
     autoindex on;
     autoindex_exact_size off;
 }
