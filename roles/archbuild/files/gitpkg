@@ -158,9 +158,10 @@ end
 class Repo
   SRCDEST = "/var/lib/archbuilddest/srcdest"
   DISCOVER_URLS = [
+    "https://gitlab.freedesktop.org/%.git",
     "https://anongit.freedesktop.org/git/%",
     "https://gitlab.gnome.org/GNOME/%.git",
-    "https://git.gnome.org/browse/%",
+    "https://gitlab.gnome.org/%.git",
     "https://github.com/%",
   ]
 
