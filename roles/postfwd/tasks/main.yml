@@ -11,7 +11,3 @@
 - name: start and enable postfwd
   service: name=postfwd enabled=yes state=started
 
-- name: enable systemd ressource accounting
-  command: systemctl set-property postfwd CPUAccounting=yes MemoryAccounting=yes
-
-

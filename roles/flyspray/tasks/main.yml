@@ -59,6 +59,3 @@
 
 - name: start and enable systemd socket
   service: name=php-fpm@flyspray.socket state=started enabled=true
-
-- name: enable systemd ressource accounting
-  command: systemctl set-property php-fpm@flyspray CPUAccounting=yes MemoryAccounting=yes

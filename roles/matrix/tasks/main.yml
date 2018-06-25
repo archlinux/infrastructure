@@ -150,8 +150,3 @@
     - synapse.service
     - matrix-appservice-irc.service
 
-- name: enable systemd ressource accounting
-  command: systemctl set-property {{item}} CPUAccounting=yes MemoryAccounting=yes
-  with_items:
-    - synapse
-    - matrix-appservice-irc

@@ -17,9 +17,6 @@
 - name: start and enable dovecot
   service: name=dovecot enabled=yes state=started
 
-- name: enable systemd ressource accounting
-  command: systemctl set-property dovecot CPUAccounting=yes MemoryAccounting=yes
-
 - name: open firewall holes
   firewalld: service={{item}} permanent=true state=enabled
   with_items:

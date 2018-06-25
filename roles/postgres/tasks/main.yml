@@ -25,9 +25,6 @@
 - name: start and enable postgres
   service: name=postgresql enabled=yes state=started
 
-- name: enable systemd ressource accounting
-  command: systemctl set-property postgresql CPUAccounting=yes MemoryAccounting=yes
-
 - name: set postgres user password
   postgresql_user: name=postgres password={{ vault_postgres_users.postgres }} encrypted=yes
   become: yes

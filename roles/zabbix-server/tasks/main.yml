@@ -63,8 +63,3 @@
 - name: start and enable systemd socket
   service: name=php-fpm@zabbix-web.socket state=started enabled=true
 
-- name: enable systemd ressource accounting php-fpm
-  command: systemctl set-property php-fpm@zabbix-web CPUAccounting=yes MemoryAccounting=yes
-
-- name: enable systemd ressource accounting zabbix-server
-  command: systemctl set-property zabbix-server-pgsql CPUAccounting=yes MemoryAccounting=yes

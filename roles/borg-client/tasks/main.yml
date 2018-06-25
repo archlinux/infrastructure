@@ -61,6 +61,3 @@
 
 - name: activate systemd timers for backup
   service: name=borg-backup.timer enabled=yes state=started
-
-- name: enable systemd ressource accounting
-  command: systemctl set-property borg-backup CPUAccounting=yes MemoryAccounting=yes

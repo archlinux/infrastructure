@@ -48,9 +48,6 @@
 - name: start and enable systemd socket
   service: name=php-fpm@kanboard.socket state=started enabled=true
 
-- name: enable systemd ressource accounting
-  command: systemctl set-property php-fpm@kanboard CPUAccounting=yes MemoryAccounting=yes
-
 - name: install systemd timers for kanboard cronjob
   template: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:

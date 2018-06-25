@@ -66,9 +66,6 @@
 - name: enable nginx
   service: name=nginx enabled=yes
 
-- name: enable systemd ressource accounting
-  command: systemctl set-property nginx CPUAccounting=yes MemoryAccounting=yes
-
 - name: open firewall holes
   firewalld: service={{item}} permanent=true state=enabled
   with_items:

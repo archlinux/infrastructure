@@ -69,6 +69,3 @@
 
 - name: start and enable security-tracker timer
   service: name="security-tracker-update.timer" enabled=yes state=started
-
-- name: enable systemd ressource accounting
-  command: systemctl set-property security-tracker-update CPUAccounting=yes MemoryAccounting=yes

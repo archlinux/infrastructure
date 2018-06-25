@@ -13,6 +13,3 @@
 
 - name: Active service
   service: name=unbound state=started enabled=yes
-
-- name: enable systemd ressource accounting
-  command: systemctl set-property unbound CPUAccounting=yes MemoryAccounting=yes

@@ -225,9 +225,6 @@
 - name: start and enable rsync
   service: name=rsyncd.socket enabled=yes state=started
 
-- name: enable systemd ressource accounting
-  command: systemctl set-property system-rsyncd.slice CPUAccounting=yes MemoryAccounting=yes
-
 - name: open firewall holes for rsync
   firewalld: service=rsyncd permanent=true state=enabled
   when: configure_firewall
@@ -237,9 +234,6 @@
 
 - name: start and enable svnserve
   service: name=svnserve enabled=yes state=started
-
-- name: enable systemd ressource accounting
-  command: systemctl set-property svnserve CPUAccounting=yes MemoryAccounting=yes
 
 - name: open firewall holes for svnserve
   firewalld: port=3690/tcp permanent=true state=enabled
