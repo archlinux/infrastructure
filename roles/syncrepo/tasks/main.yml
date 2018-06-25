@@ -34,13 +34,6 @@
     regexp: '^CacheDir'
     line: 'CacheDir = /var/cache/pacman/pkg/ /srv/ftp/pool/packages/ /srv/ftp/pool/community/'
 
-- name: install local mirror
-  lineinfile:
-    dest: /etc/pacman.d/mirrorlist
-    line: 'Server = file:///srv/ftp/$repo/os/$arch'
-    insertbefore: BOF
-    create: true
-
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ mirror_domain }} state=directory owner=root group=root mode=0755
 
