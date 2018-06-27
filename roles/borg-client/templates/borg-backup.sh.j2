@@ -49,3 +49,5 @@ borg prune -v {{ backup_host }}:{{ backup_dir }} --keep-daily=7 --keep-weekly=4 
 if [[ -d "$snapshotdir" ]]; then
 	delete_snapshot
 fi
+
+borg-restore.pl --update-cache
