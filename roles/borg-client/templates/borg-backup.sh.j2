@@ -50,4 +50,4 @@ if [[ -d "$snapshotdir" ]]; then
 	delete_snapshot
 fi
 
-borg-restore.pl --update-cache
+/usr/bin/vendor_perl/borg-restore.pl --update-cache
