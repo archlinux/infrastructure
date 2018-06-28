@@ -1,6 +1,8 @@
 # We set the repo in the /usr/local/bin/borg wrapper which is enough
 $borg_repo = "";
 
+$cache_path_base = "/root/.cache/borg-restore.pl";
+
 {% if filesystem == "btrfs" %}
 @backup_prefixes = (
 	{regex => "^/", replacement => "backup-snap/"},
