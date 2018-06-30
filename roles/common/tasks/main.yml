@@ -38,6 +38,18 @@
     - restart networkd
   when: configure_network
 
+- name: create symlink to resolv.conf
+  file: src=/run/systemd/resolve/resolv.conf dest=/etc/resolv.conf state=link force=yes
+  when: configure_network
+
+- name: start networkd
+  service: name=systemd-networkd state=started enabled=yes
+  when: configure_network
+
+- name: start resolved
+  service: name=systemd-resolved state=started enabled=yes
+  when: configure_network
+
 - name: configure default qdisc
   sysctl:
     name: net.core.default_qdisc

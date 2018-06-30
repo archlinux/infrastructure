@@ -8,6 +8,7 @@
     - { role: sshd }
     - { role: root_ssh }
     - { role: nginx }
+    - { role: unbound }
     - { role: syncrepo, tags: ['nginx'] }
     - { role: archweb, archweb_site: false, archweb_services: false, archweb_mirrorcheck: true }
     - { role: zabbix-agent, tags: ["zabbix"] }

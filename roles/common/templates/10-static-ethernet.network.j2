@@ -1,17 +1,23 @@
 [Match]
-Name=e*
+Name={{network_interface}}
 
 [Network]
-DNS=213.133.98.98
-DNS=213.133.99.99
-DNS=213.133.100.100
+{% for server in dns_servers %}
+DNS={{server}}
+{% endfor %}
 Gateway={{ ipv4_gateway }}
+{% if ipv6_gateway is defined %}
 Gateway={{ ipv6_gateway }}
+{% endif %}
 Domains=archlinux.org.
 
 [Address]
 Address={{ ipv4_address }}{{ ipv4_netmask }}
-Peer={{ ipv4_gateway }}{{ ipv4_netmask }}
+{% if ipv4_netmask == "/32" %}
+Peer={{ ipv4_gateway }}{{ ipv4_netmask}}
+{% endif %}
 
+{% if ipv6_address is defined %}
 [Address]
 Address={{ ipv6_address }}{{ ipv6_netmask }}
+{% endif %}
