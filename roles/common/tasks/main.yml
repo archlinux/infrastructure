@@ -39,7 +39,7 @@
   when: configure_network
 
 - name: create symlink to resolv.conf
-  file: src=/run/systemd/resolve/resolv.conf dest=/etc/resolv.conf state=link force=yes
+  file: src=/run/systemd/resolve/stub-resolv.conf dest=/etc/resolv.conf state=link force=yes
   when: configure_network
 
 - name: start networkd
