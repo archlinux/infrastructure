@@ -1,0 +1,32 @@
+---
+
+- name: Update pacman website
+  hosts: localhost
+  vars:
+      pacman_version: "5.1.0"
+      archweb_dir: '/srv/http/archweb'
+  tasks:
+      - name: Create temp dir
+        tempfile: state=directory suffix=pacman
+        register: tempdir
+
+      - name: fetch pacman tarball
+        get_url: url=https://sources.archlinux.org/other/pacman/pacman-{{pacman_version}}.tar.gz dest={{tempdir.path}}/pacman.tar.gz
+
+
+      - name: create extraction dir
+        file: path={{tempdir.path}}/pacman state=directory
+
+      - name: unpack tarball
+        unarchive: src={{tempdir.path}}/pacman.tar.gz dest={{tempdir.path}}/pacman/
+
+      - name: configure
+        shell: ./configure chdir={{tempdir.path}}/pacman/pacman-{{pacman_version}}
+
+      - name: make
+        make: chdir={{tempdir.path}}/pacman/pacman-{{pacman_version}}/doc target=website
+
+      - name: upload website
+        unarchive: src={{tempdir.path}}/pacman/pacman-{{pacman_version}}/doc/website.tar.gz dest={{archweb_dir}}/archlinux.org/pacman mode=0644
+        delegate_to: apollo.archlinux.org
+
