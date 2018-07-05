@@ -146,10 +146,6 @@
 - name: install rsync.conf.proto
   template: src=rsyncd.conf.proto.j2 dest=/etc/rsyncd-conf-genscripts/rsyncd.conf.proto owner=root group=root mode=0644
 
-- name: install rsyncd.secrets
-  copy: src=rsyncd.secrets dest=/etc/rsyncd.secrets owner=root group=root mode=0600
-  no_log: true
-
 - name: configure gen_rsyncd.conf.pl
   template: src=gen_rsyncd.conf.pl dest=/etc/rsyncd-conf-genscripts/gen_rsyncd.conf.pl owner=root group=root mode=0700
   no_log: true
