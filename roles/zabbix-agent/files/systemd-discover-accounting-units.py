@@ -68,7 +68,6 @@ combined = '|'.join(unit_whitelist_regexes)
 unit_whitelist_compiled = re.compile('^('+combined+')$')
 
 for u in units:
-    unit_properties = dbus.Interface(bus.get_object('org.freedesktop.systemd1', u[6]), dbus_interface='org.freedesktop.DBus.Properties')
     if unit_whitelist_compiled.match(u[0]):
         discovered.append({"{#UNITNAME}": u[0].replace("@", "--AT--")})
 
