@@ -8,6 +8,8 @@ server {
 
     satisfy  any;
 
+    access_log   /var/log/nginx/{{ repos_domain }}/access.log reduced;
+
     location /lastupdate {
         allow all;
     }
@@ -56,6 +58,8 @@ server {
     ssl_trusted_certificate /etc/letsencrypt/live/{{ repos_domain }}/chain.pem;
 
     satisfy  any;
+
+    access_log   /var/log/nginx/{{ repos_domain }}/access.log reduced;
 
     location /lastupdate {
         allow all;
