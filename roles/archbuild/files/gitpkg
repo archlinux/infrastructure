@@ -405,14 +405,12 @@ if gitify
     check: case
     when meson
       <<~END
-        cd build
-        meson test
+        meson test -C build
       END
     when pbr.has_func?(:check)
     when autotools
       <<~END
-        cd #{localname}
-        make check
+        make -C #{localname} check
       END
     end,
 
