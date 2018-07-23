@@ -12,5 +12,11 @@ systemd1_manager = dbus.Interface(
 )
 
 units = systemd1_manager.ListUnits()
-for unit in filter(lambda u: u[3] == "failed" and u[0] not in ignore, units):
+for unit in filter(
+    lambda u: u[3] == "failed"
+    and u[0] not in ignore
+    and not u[0].startswith("user@")
+    and not u[0].startswith("user-runtime-dir@"),
+    units,
+):
     print(unit[0])
