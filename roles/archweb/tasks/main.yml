@@ -197,6 +197,31 @@
     - daemon reload
   when: archweb_donor_import
 
+- name: create maildir dump dir
+  file: path={{ archweb_donor_maildir }}/{{ item }} recurse=yes state=directory
+  with_items:
+    - cur
+    - new
+  when: archweb_donor_import
+
+- name: install dump donor mail service
+  template: src="archweb-dump_donor_mail.service.j2" dest="/etc/systemd/system/archweb-dump_donor_mail.service" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+  when: archweb_donor_import
+
+- name: install dump donor mail timer
+  template: src="archweb-dump_donor_mail.timer.j2" dest="/etc/systemd/system/archweb-dump_donor_mail.timer" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+  when: archweb_donor_import
+
+- name: install archweb donor mail dump script
+  template: src="dump-mails.sh.j2" dest="/usr/local/bin/dump-mails.sh" owner=root group=root mode=0755
+  notify:
+    - daemon reload
+  when: archweb_donor_import
+
 - name: deploy archweb
   template: src=archweb.ini.j2 dest=/etc/uwsgi/vassals/archweb.ini owner=archweb group=http mode=0644
   when: archweb_site
@@ -235,3 +260,11 @@
 - name: start and enable archweb populate_signoffs timer
   service: name="archweb-populate_signoffs.timer" enabled=yes state=started
   when: archweb_services or archweb_populate_signoffs
+
+- name: start and enable archweb donor_import timer
+  service: name="archweb-donor_import.timer" enabled=yes state=started
+  when: archweb_donor_import
+
+- name: start and enable archweb dump donor timer
+  service: name="archweb-dump_donor_mail.timer" enabled=yes state=started
+  when: archweb_donor_import

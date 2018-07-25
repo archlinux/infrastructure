@@ -1,0 +1,10 @@
+[Unit]
+Description=archweb donor_import timer
+
+[Timer]
+OnUnitActiveSec=1w
+OnBootSec=15min
+RandomizedDelaySec=1h
+
+[Install]
+WantedBy=timers.target

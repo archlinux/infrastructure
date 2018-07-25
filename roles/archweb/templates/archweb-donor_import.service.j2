@@ -1,0 +1,13 @@
+[Unit]
+Description=archweb donor_import service
+After=network.target
+
+[Service]
+Type=oneshot
+User=archweb
+WorkingDirectory={{ archweb_dir }}
+ExecStart={{ archweb_dir }}/env/bin/python manage.py donor_import {{ archweb_donor_maildir }}
+Nice=5
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,11 @@
+[Unit]
+Description=dump donate mail service
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/dump-mails.sh
+Nice=5
+
+[Install]
+WantedBy=multi-user.target
