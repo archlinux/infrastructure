@@ -11,21 +11,19 @@
 # If you wish to use different paths, uncomment and update the paths.
 #RootDir     = /
 #DBPath      = /var/lib/pacman/
-#CacheDir    = /var/cache/pacman/pkg/
-CacheDir = /var/cache/pacman/pkg/ /srv/ftp/pool/packages/ /srv/ftp/pool/community/
+CacheDir     = /var/cache/pacman/pkg/ /srv/ftp/pool/packages/ /srv/ftp/pool/community/
 #LogFile     = /var/log/pacman.log
 #GPGDir      = /etc/pacman.d/gnupg/
 #HookDir     = /etc/pacman.d/hooks/
-HoldPkg     = pacman glibc
-#XferCommand = /usr/bin/curl -C - -f %u > %o
+HoldPkg      = pacman glibc
+#XferCommand = /usr/bin/curl -L -C - -f -o %o %u
 #XferCommand = /usr/bin/wget --passive-ftp -c -O %o %u
 #CleanMethod = KeepInstalled
 #UseDelta    = 0.7
 Architecture = auto
 
 # Pacman won't upgrade packages listed in IgnorePkg and members of IgnoreGroup
-#IgnorePkg   =
-IgnorePkg = linux linux-headers linux-hardened linux-hardened-headers linux-lts linux-lts-headers
+IgnorePkg    = linux linux-headers linux-hardened linux-hardened-headers linux-lts linux-lts-headers
 #IgnoreGroup =
 
 #NoUpgrade   =
