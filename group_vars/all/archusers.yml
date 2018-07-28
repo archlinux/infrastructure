@@ -212,6 +212,11 @@ arch_users:
       - dev
       - tu
       - multilib
+  ffy00:
+    name: "Filipe Laíns"
+    ssh_key: ffy00.pub
+    groups:
+      - tu
   foutrelis:
     name: "Evangelos Foutras"
     ssh_key: foutrelis.pub
