@@ -37,11 +37,6 @@ arch_users:
       - dev
       - tu
       - multilib
-  ambrevar:
-    name: "Pierre Neidhardt"
-    ssh_key: ambrevar.pub
-    groups:
-      - tu
   anatolik:
     name: "Anatol Pomozov"
     ssh_key: anatolik.pub
