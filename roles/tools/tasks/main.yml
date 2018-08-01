@@ -50,6 +50,7 @@
     - p7zip
     - unzip
     - setconf
+    - fish
 
 - name: start vnstatd
   service: name=vnstat state=started enabled=true
