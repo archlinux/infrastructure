@@ -65,7 +65,7 @@
     path: '/var/lib/{{ "/".join(item) }}'
     owner: root
     group: root
-    mode: 0775
+    mode: 0777
   with_nested:
     - [archbuilddest]
     - [srcdest]
@@ -78,10 +78,10 @@
   with_nested:
     - [srcdest]
     - ['user::rwx',
-       'group::r-x',
+       'group::rwx',
        'group:dev:rwx',
        'group:tu:rwx',
-       'other::r-x',
+       'other::rwx',
        'mask::rwx',
        'default:user::rwx',
        'default:group::r-x',
