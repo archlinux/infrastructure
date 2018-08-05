@@ -49,3 +49,8 @@ $wgBounceHandlerInternalIPs = ["{{hostvars['orion.archlinux.org']['ipv4_address'
 
 # Add more configuration in the file included below.
 require( "LocalSettings.archlinux.org.php" );
+
+$wgDebugLogFile = "/dev/null";
+$wgDebugLogGroups = array(
+	'BounceHandler' => '/var/log/archwiki/bouncehandler.log',
+	);

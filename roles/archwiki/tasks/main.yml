@@ -23,6 +23,9 @@
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ archwiki_domain }} state=directory owner=root group=root mode=0755
 
+- name: make debug log dir
+  file: path=/var/log/archwiki state=directory owner={{archwiki_user}} group=root mode=0700
+
 - name: clone archwiki repo
   git: repo={{ archwiki_repository }} dest="{{ archwiki_dir }}/public" version={{ archwiki_version }}
   become: true

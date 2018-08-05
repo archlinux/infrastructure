@@ -15,7 +15,7 @@ pm.min_spare_servers = 5
 pm.max_spare_servers = 30
 pm.max_requests = 2000
 
-php_admin_value[open_basedir] = {{ archwiki_dir }}:/usr/bin/diff3:/usr/bin/diff
+php_admin_value[open_basedir] = {{ archwiki_dir }}:/usr/bin/diff3:/usr/bin/diff:/var/log/archwiki
 php_admin_value[session.save_path] = {{ archwiki_dir }}/sessions
 php_admin_value[upload_tmp_dir] = {{ archwiki_dir }}/uploads
 env[TMPDIR] = {{ archwiki_dir }}/uploads
