@@ -124,3 +124,8 @@ scache    unix  -       -       n       -       1       scache
 patchwork   unix  -       n       n       -       -       pipe
   flags=DFRX user={{postfix_patchwork_user}} argv={{postfix_patchwork_mail_handler}}
 {% endif %}
+
+{% if postfix_server %}
+wiki_bouncehandler unix - n       n       -       -       pipe
+  flags=DFRX user={{postfix_wiki_bounce_user}} argv=/usr/bin/systemd-cat {{postfix_wiki_bounce_mail_handler}} {{postfix_wiki_bounce_config}}
+{% endif %}

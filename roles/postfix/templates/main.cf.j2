@@ -182,6 +182,7 @@ local_recipient_maps =
   $alias_maps
   ${indexed}/mailman_compat
   ${indexed}/relay_transport_map
+  pcre:${config_directory}/transport.pcre
 relocated_maps = ${indexed}/relocated
 {% endif %}
 
@@ -193,10 +194,15 @@ relay_domains =
 transport_maps =
   ${indexed}/transport
   ${indexed}/relay_transport_map
+  pcre:${config_directory}/transport.pcre
   #${indexed}/temporary_mailman_maps
 
 {% if postfix_patchwork_enabled %}
 patchwork_destination_recipient_limit = 1
+{% endif %}
+
+{% if postfix_server %}
+wiki_bouncehandler_destination_recipient_limit = 1
 {% endif %}
 
 authorized_mailq_users = root

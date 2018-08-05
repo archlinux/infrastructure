@@ -11,6 +11,7 @@
     - main.cf
     - master.cf
     - transport
+    - transport.pcre
     - aliases
     - relay_transport_map
     - users.pcre
@@ -59,6 +60,21 @@
 - name: install postfix cert renewal hook
   template: src=letsencrypt.hook.d.j2 dest=/etc/letsencrypt/hook.d/postfix owner=root group=root mode=0755
   when: postfix_smtpd_public
+
+- name: install bouncehandler config
+  template: src=wiki-bouncehandler.conf.j2 dest={{postfix_wiki_bounce_config}} owner={{postfix_wiki_bounce_user}} group=root mode=0600
+  when: postfix_server
+
+- name: install packages for bounce handler
+  pacman: name=perl-mediawiki-api,perl-config-simple state=present
+  when: postfix_server
+
+- name: install bouncehandler script
+  copy: src=bouncehandler.pl dest={{postfix_wiki_bounce_mail_handler}} owner=root group=root mode=0755
+  when: postfix_server
+
+- name: make bouncehandler user
+  user: name={{postfix_wiki_bounce_user}} shell=/bin/false skeleton=/var/empty state={{"present" if postfix_server else "absent"}}
 
 - name: start and enable postfix
   service: name=postfix enabled=yes state=started
