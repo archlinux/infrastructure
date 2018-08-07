@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer for docker-image.service
+
+[Timer]
+OnCalendar={{ docker_image_time }}
+Persistent=true
+Unit=docker-image.service
+
+[Install]
+WantedBy=timers.target
