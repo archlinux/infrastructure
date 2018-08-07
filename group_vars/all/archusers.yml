@@ -6,6 +6,7 @@ arch_groups:
   - fellows
   - multilib
   - archboxes-sudo
+  - docker-image-sudo
 
 arch_users:
   aaron:
