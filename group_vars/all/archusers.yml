@@ -370,6 +370,7 @@ arch_users:
     ssh_key: sangy.pub
     groups:
       - tu
+      - docker-image-sudo
   schiv:
     name: "Ray Rashif"
     ssh_key: schiv.pub
