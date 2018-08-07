@@ -25,3 +25,4 @@
     - { role: public_html, public_domain: "pkgbuild.com", tags: ['public_html', 'nginx'] }
     - { role: crond, tags: ['crond'] }
     - { role: arch-boxes, tags: ['arch-boxes'] }
+    - { role: docker-image }
