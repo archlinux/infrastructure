@@ -198,7 +198,7 @@
   when: archweb_donor_import
 
 - name: create maildir dump dir
-  file: path={{ archweb_donor_maildir }}/{{ item }} recurse=yes state=directory
+  file: path={{ archweb_donor_maildir }}/{{ item }} recurse=yes state=directory owner=archweb group=users mode=0755
   with_items:
     - cur
     - new
