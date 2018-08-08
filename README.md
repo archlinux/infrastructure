@@ -12,7 +12,7 @@ The provisioning script configures a sane basic systemd with sshd. By design, it
 After the provisioning script has run, it is safe to reboot.
 
 Once in the new system, run the regular playbook: `ansible-playbook playbooks/$hostname.yml`. This
-playbook is the one regularily used for adminstrating the server and is entirely idempotent.
+playbook is the one regularity used for administrating the server and is entirely idempotent.
 
 ##### Note about first time certificates
 
