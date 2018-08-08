@@ -79,6 +79,11 @@ The following steps should be used to update our managed servers:
 - quassel core
 
 
+### nymeria
+
+#### Services
+- archweb staging env (archweb-dev.archlinux.org)
+
 ## Ansible repo workflows
 
 ### Replace vault password and change vaulted passwords
