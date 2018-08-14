@@ -1,0 +1,165 @@
+# 159.122.70.8
+1024 SHA256:5yrR2CAO4IoA5zK/u/2bNXV/vjJCdDIou4cHrPy6GA4 root@archlinux (DSA)
+256 SHA256:7MwUKiox99hR1EEfpK6ZWtrhJ54klqCG9Y5NR8ZPfJY root@archlinux (ECDSA)
+256 SHA256:eJo6fJCfC0Uj1u5v4UAXNuXStyv+k9Mt0Cc7iJyricc root@archlinux (ED25519)
+2048 SHA256:5IMb6Dawsj68orPeRS+y9TgkodNu2auYXjj2DyrfopY root@archlinux (RSA)
+
+1024 MD5:55:9f:14:8e:ad:1e:0d:2d:08:19:e6:cb:ad:d2:c5:92 root@archlinux (DSA)
+256 MD5:b9:d2:ea:ea:0e:7b:dd:db:b6:bb:59:e4:d0:d7:aa:a4 root@archlinux (ECDSA)
+256 MD5:4a:01:62:ce:4c:f6:3a:93:24:7b:e2:d3:b7:ea:d3:f8 root@archlinux (ED25519)
+2048 MD5:29:c9:81:09:23:03:1c:26:af:50:9c:4a:fa:b5:da:29 root@archlinux (RSA)
+
+# 169.50.62.117
+1024 SHA256:L16HBYUCY04dcc0A+pSZBYwktwhFkk7jZIyKWlEAByA root@archlinux (DSA)
+256 SHA256:C7dfr0woXiasu5JcW0nXLA4/d2ERePlqNs4+ezuRkR4 root@archlinux (ECDSA)
+256 SHA256:jNrWFp/hSt22kyRAoRAYvga2YG+6aS0DEIDCPbIxcTY root@archlinux (ED25519)
+2048 SHA256:2t7LJ6uSQpk6eVhivIu1c5qw659wNKXCXOn0wVC7tEc root@archlinux (RSA)
+
+1024 MD5:d0:82:2d:aa:c0:ac:b9:07:e7:b8:91:0d:92:b2:ae:38 root@archlinux (DSA)
+256 MD5:c1:40:f1:c7:cd:c0:08:bd:dc:a0:01:66:f3:ef:a0:d4 root@archlinux (ECDSA)
+256 MD5:9c:47:85:f4:e4:19:42:92:7a:b1:dd:de:f5:3e:74:d6 root@archlinux (ED25519)
+2048 MD5:e4:e1:d2:00:1b:96:9c:60:60:ac:a1:32:97:3b:1d:7c root@archlinux (RSA)
+
+# 169.50.62.119
+1024 SHA256:vQa2qPFZi5uaG4xFGU9TBTAl/ojG0mPV+VjrpQBjid8 root@archlinux (DSA)
+256 SHA256:IQeaJ5RyVuxahJLEplC1bp/9TEfbvc3moHFCXQnjwsQ root@archlinux (ECDSA)
+256 SHA256:AIYSDQNuqtWJTF5qs2nEon8zoJYP6mGNFrWvuNHVyyY root@archlinux (ED25519)
+2048 SHA256:SU6wcg6UJsyqB4tDTECIupsqzz36DVm5cdjvDy2pOLU root@archlinux (RSA)
+
+1024 MD5:46:8d:e8:5a:9e:a4:a4:80:cd:08:c4:d1:2d:81:e0:09 root@archlinux (DSA)
+256 MD5:d0:48:7c:9b:2c:6c:29:f4:aa:2c:f7:e8:2d:ff:66:4f root@archlinux (ECDSA)
+256 MD5:be:ca:42:e7:aa:ed:7b:20:ea:0c:c0:05:0d:07:13:fa root@archlinux (ED25519)
+2048 MD5:4a:d4:7b:c7:78:7b:90:33:45:5a:99:1a:8d:15:32:8d root@archlinux (RSA)
+
+# 169.50.62.125
+1024 SHA256:v11IkBs2iNsgfaOOXoY4Yzk+UZohGS8RzApHmKKA6tM root@archlinux (DSA)
+256 SHA256:p4wjp/S6+nO9lyoPvpNc4sY97jJg6RXvYW3ozBe3yco root@archlinux (ECDSA)
+256 SHA256:YXm13437g8Dn1H0/5UZVs9FQuInHuae8JQaaMxu5dNM root@archlinux (ED25519)
+2048 SHA256:fT3bmQCw3h2QOGWz9HAfOxNZu7NDAM1dex2k75rU6n0 root@archlinux (RSA)
+
+1024 MD5:0d:40:31:b2:00:ab:aa:24:c0:79:57:f0:ba:53:99:72 root@archlinux (DSA)
+256 MD5:57:7c:bf:8a:2e:d5:e4:4e:e2:13:33:47:ab:e1:13:6e root@archlinux (ECDSA)
+256 MD5:7f:a9:c8:d7:af:e4:b4:7f:fa:ba:7f:09:85:b0:13:23 root@archlinux (ED25519)
+2048 MD5:4e:53:05:87:1b:98:8b:d0:6c:af:63:97:94:04:aa:ba root@archlinux (RSA)
+
+# apollo.archlinux.org
+1024 SHA256:WArxFzvhf5HknYxil2EQSHHRirM2cyjqbtLvhbQAYC8 root@apollo (DSA)
+256 SHA256:sYJfY17PE0kJ4K8fbkPK/XqRQjY1+g6hmIF7dvTbZoo root@apollo (ECDSA)
+256 SHA256:owwpolkJxPyUmmfJMfFeYIdDXiruwzaEw3bS+q6k97Q root@apollo (ED25519)
+2048 SHA256:JW9dUO95gxGJRTkV/V/1HtmLfLq8uztbWc5KAOg8Blc root@apollo (RSA)
+
+1024 MD5:90:46:7f:8e:1e:79:17:10:1e:32:79:a7:69:c6:4b:a4 root@apollo (DSA)
+256 MD5:4b:52:61:77:f7:f8:4e:75:ca:83:e6:ae:fc:6e:77:67 root@apollo (ECDSA)
+256 MD5:a7:84:8b:95:4f:53:ac:b6:9d:24:79:79:fc:c7:bf:1f root@apollo (ED25519)
+2048 MD5:77:b0:17:18:57:74:38:91:47:31:43:04:47:e9:9e:30 root@apollo (RSA)
+
+# dragon.archlinux.org
+1024 SHA256:h5ZWUEWyagwYSBf0GewpRidKG3+FA+2MSHIxPmTX3mY root@sysresccd (DSA)
+256 SHA256:U+pPgqH6PrMO1l1dyiBhoD+wXg3MPah0dM8tD9rJEDI root@sysresccd (ECDSA)
+256 SHA256:4uOSUvpFTywizwPGuwJsPf5qhe7uqNUcML14P1HRqwQ root@dragon (ED25519)
+2048 SHA256:Es/WLe4C4YkeU30u/Ql2RCk4zeLPSEhayUpmBNAWc2g root@sysresccd (RSA)
+
+1024 MD5:29:14:c9:fb:e3:fd:07:b1:b9:45:5a:bd:04:7c:7a:3c root@sysresccd (DSA)
+256 MD5:5c:a0:c1:f9:88:31:7f:9a:a3:8a:28:3c:93:5a:e5:be root@sysresccd (ECDSA)
+256 MD5:f1:a9:56:05:0a:10:5b:52:de:7a:e0:5f:a9:d1:d2:e5 root@dragon (ED25519)
+2048 MD5:7c:a9:5d:e2:82:3b:73:83:5d:c0:f7:50:cb:28:ac:78 root@sysresccd (RSA)
+
+# ind.mirror.pkgbuild.com
+1024 SHA256:nfyohw9fqhP3SRTOpsZvjVH7OP6GkqNWv+vPIa7Xr54 root@archlinux (DSA)
+256 SHA256:d5s5vHVfEh2U0oCFsvCxgidvX4Fm2BdX4EJvwcsRLqk root@archlinux (ECDSA)
+256 SHA256:aK1riVISnXpdLPlIV5gG3S5cUw3TadJTPKeCiUZCtGE root@archlinux (ED25519)
+2048 SHA256:jdqgfvYqHGkyUGRQU4CtISQ+Xkyp8dXv73UzczIhS1M root@archlinux (RSA)
+
+1024 MD5:61:25:e3:37:fa:6a:cc:8c:b5:d7:30:dc:94:dc:73:6d root@archlinux (DSA)
+256 MD5:c2:ae:65:77:38:e8:9e:92:4c:a7:29:0b:04:82:0a:52 root@archlinux (ECDSA)
+256 MD5:88:b7:be:fc:93:79:24:3e:c0:eb:76:6d:dc:03:a9:db root@archlinux (ED25519)
+2048 MD5:8f:0a:8d:2a:2b:88:94:c5:2c:fd:cc:da:68:6b:b0:c5 root@archlinux (RSA)
+
+# jpn.mirror.pkgbuild.com
+1024 SHA256:CH1c99PrdAOTd0AKjoPwZHSBvQpNvRummeW3JhG2BIQ root@archlinux (DSA)
+256 SHA256:zySS1V6LkHPihEJRDQlGA0Hd6OEEBNnXRgsMJLL4hnY root@archlinux (ECDSA)
+256 SHA256:YY8kgSj1KFRCl0zoqdI7p+wYacOpqvMJZb0sSC5Pj50 root@archlinux (ED25519)
+2048 SHA256:B2Zjycz7Zb2RvKlKjZwWwbGvfAUu1sH4oemdu48YHK4 root@archlinux (RSA)
+
+1024 MD5:4a:82:83:e6:02:f2:6c:da:b4:65:40:b7:4f:ec:97:32 root@archlinux (DSA)
+256 MD5:5b:ad:df:44:85:56:75:3e:45:76:82:36:dc:7c:52:f3 root@archlinux (ECDSA)
+256 MD5:51:37:92:2a:2e:29:3c:c6:f1:6c:5e:67:9c:64:d4:b1 root@archlinux (ED25519)
+2048 MD5:4e:ed:97:61:09:0f:ee:97:85:09:80:6d:02:5e:28:d1 root@archlinux (RSA)
+
+# luna.archlinux.org
+1024 SHA256:9Nqu9y1LhT3L3Kd6J9CSyuOc1AdGWo0eLsPxoc5bpaw root@alderaan (DSA)
+256 SHA256:L71Q91yHwmHPYYkJMDgj0xmUuw16qFOhJbBr1mzsiOI root@alderaan (ECDSA)
+256 SHA256:HQ03dn6EasJHNDlt51KpQpFkT3yBX83x7BoIkA1iv2k root@alderaan.archlinux.org (ED25519)
+2048 SHA256:Ju+yWiMb/2O+gKQ9RJCDqvRg7l+Q95KFAeqM5sr6l2s root@alderaan (RSA)
+
+1024 MD5:f2:56:a9:3c:4d:f9:b7:88:7f:e4:a6:7c:eb:55:c0:15 root@alderaan (DSA)
+256 MD5:11:d1:4c:ae:9a:4f:15:06:d7:c8:0a:b4:08:02:aa:95 root@alderaan (ECDSA)
+256 MD5:1d:92:08:da:8e:a1:fb:1c:c5:65:00:c8:15:a4:87:32 root@alderaan.archlinux.org (ED25519)
+2048 MD5:c4:7f:00:d4:5e:c7:23:45:97:bb:40:ec:15:ce:7c:a9 root@alderaan (RSA)
+
+# mex.mirror.pkgbuild.com
+1024 SHA256:y+9SJHeqq+b/bd0X7wcO1ZJd7sF2sXEIn0CusIWuBqI root@archlinux (DSA)
+256 SHA256:uCmWVlQcF2H9BSzvzPfhYqQNYQRRlftOoei+wfKd7z8 root@archlinux (ECDSA)
+256 SHA256:DyYTm8jLSn8nbw0+CVy9CV51GsF71v1WWQn9r9Da2RM root@archlinux (ED25519)
+2048 SHA256:Sc9lyiJO8No+C8iVGipoj2i84x/a7hzwqxo4++QtTBc root@archlinux (RSA)
+
+1024 MD5:95:6b:c8:99:0b:65:f6:1e:0b:93:25:74:b0:17:45:45 root@archlinux (DSA)
+256 MD5:4e:d4:70:2f:b3:1a:01:7c:77:26:6c:d8:44:78:18:cf root@archlinux (ECDSA)
+256 MD5:7a:f0:c7:48:72:84:e1:b9:ec:9a:5f:6b:d3:8a:59:1e root@archlinux (ED25519)
+2048 MD5:a9:b6:d4:1e:26:13:29:00:4a:06:80:bc:8f:b7:fc:33 root@archlinux (RSA)
+
+# nymeria.archlinux.org
+1024 SHA256:/69v4HjmGl4R4cMEczk5LafLPrBMKt1bXZ79hCcU6Gk root@nymeria (DSA)
+256 SHA256:d/MCovRQoUSoq9MLt7kPlQRxhFbpg2siX+BjMLm0sMk root@nymeria (ECDSA)
+256 SHA256:+dou6jxtb+FqpQGJvEnyrgqVXLYTXXmKKnBRCOgNjCk root@nymeria (ED25519)
+2048 SHA256:DBbIfIB8qBogZqLleC9nIk/bJ2qj/myfNMUJ6s1zBVI root@nymeria (RSA)
+
+1024 MD5:92:82:93:1f:20:7d:b8:ac:59:ad:1b:15:8e:b5:dd:68 root@nymeria (DSA)
+256 MD5:98:af:9a:30:47:bc:b4:23:bd:2f:f0:4e:cb:c3:b1:b0 root@nymeria (ECDSA)
+256 MD5:e3:20:55:bd:15:83:b6:cb:3a:7a:7e:86:f2:fc:7d:87 root@nymeria (ED25519)
+2048 MD5:3f:ab:d5:47:36:33:56:0b:e8:f4:58:36:a0:3b:e2:fd root@nymeria (RSA)
+
+# orion.archlinux.org
+1024 SHA256:Y7XP+fTQZAEDgmCHuSqFc0MmNUmCPJYRZs/7iq6viK8 root@mnt (DSA)
+256 SHA256:2gH/IGaZ/pOnpt4+VY0twd4+hUOraUWRceJiNQxnbxs root@mnt (ECDSA)
+256 SHA256:G4mz3jsK8XZymCDjUE7TKhA3Kz/eC+q4gHlnhCWyVB4 root@mnt (ED25519)
+2048 SHA256:PxFPKc82M5wShxNX+62FmZPKJBACz4n7epevqEDOUUw root@mnt (RSA)
+
+1024 MD5:67:a7:23:42:0c:22:74:30:ea:e2:89:4a:68:8c:a7:d6 root@mnt (DSA)
+256 MD5:47:ce:6f:89:fa:06:ab:d5:94:e1:e1:95:94:40:68:5c root@mnt (ECDSA)
+256 MD5:95:53:ec:52:c3:78:e8:5d:43:c6:2f:bc:d9:7e:9a:4c root@mnt (ED25519)
+2048 MD5:ff:9d:c3:b0:ee:c9:89:32:72:0c:d8:fb:cc:5d:ae:75 root@mnt (RSA)
+
+# sgp.mirror.pkgbuild.com
+1024 SHA256:QBRQhEogdaNxh5qQ4gcWUVogLHlKl2UgkFeuLKo2Yfg root@archlinux (DSA)
+256 SHA256:L++5VPgYgdIyUxBrDLiMFgk4STac5qK/oy52Z7RI+zk root@archlinux (ECDSA)
+256 SHA256:RzBulK5yTquShynMsGAdobAPbPwBQgD2sLb/XvynoS8 root@archlinux (ED25519)
+2048 SHA256:qWATIVKCQVS8+/lf3u20ov/NjjIcCh0yrSoz1JJIcbY root@archlinux (RSA)
+
+1024 MD5:33:a2:aa:ed:da:9c:78:b2:9d:64:cc:ce:72:39:14:a6 root@archlinux (DSA)
+256 MD5:15:fc:62:4d:8c:3c:1f:d5:b9:4c:15:d5:0e:b8:39:1a root@archlinux (ECDSA)
+256 MD5:25:a6:b4:cb:f6:c5:27:3a:0d:c6:47:1e:2f:d5:72:db root@archlinux (ED25519)
+2048 MD5:4d:09:b7:bc:d0:af:b9:1c:b4:0d:67:88:16:c7:c0:1c root@archlinux (RSA)
+
+# soyuz.archlinux.org
+1024 SHA256:7i6dEbYWr2waZYiZWruAf3IDkITWPLYZAb/vuA+L+cA root@soyuz (DSA)
+256 SHA256:GHQlxoizbgrUL2ZQY7eOewIYuNzJY2aR73+7CNgdBto root@soyuz (ECDSA)
+256 SHA256:ZKKPcOJexD4KP+iCIQc5qMHuu0f1INZh9S3/K0heUdU root@soyuz (ED25519)
+2048 SHA256:UpXXVnuxzD51LphEErdSbn5s6VWRDE/j2JK7Ldes/xs root@soyuz (RSA)
+
+1024 MD5:0d:9f:83:0b:35:f2:76:9e:90:84:17:3b:24:5f:72:4c root@soyuz (DSA)
+256 MD5:0a:66:44:0f:6d:5c:c4:33:d9:31:9c:c3:22:d0:d0:63 root@soyuz (ECDSA)
+256 MD5:e0:43:1d:3c:63:ac:a7:ca:eb:b0:17:e8:ec:f3:c0:38 root@soyuz (ED25519)
+2048 MD5:89:d5:e2:5b:32:b3:65:8d:50:a9:3e:ba:79:27:2f:0a root@soyuz (RSA)
+
+# vostok.archlinux.org
+1024 SHA256:FddVsY5JTplRbgQA3m3XA3bYbQ9SOQ8i/gZBlj4NUss root@vostok (DSA)
+256 SHA256:VNBI73QTTzMskhFYissdeC5ZxzsqONu0DuudJWkbxiI root@vostok (ECDSA)
+256 SHA256:NaPE8gB9f0CHLpDf8PexYFKA9OYQ0h6tcG5dIjr7NPw root@vostok (ED25519)
+2048 SHA256:Ap2YWeHDxUVub9qSxEVh1FgefWvjDGDBGjPfHIs/Pv0 root@vostok (RSA)
+
+1024 MD5:52:26:17:aa:59:ce:9b:ef:89:3f:8a:56:04:ed:29:a7 root@vostok (DSA)
+256 MD5:34:cb:51:e7:9f:e0:4c:eb:00:5c:8b:59:9d:ab:4c:60 root@vostok (ECDSA)
+256 MD5:15:11:f7:63:1b:e1:9b:52:e1:c6:87:ac:0f:1e:fb:4a root@vostok (ED25519)
+2048 MD5:b0:03:6c:cc:4d:bf:7c:e9:8b:3f:98:4f:80:ea:4e:56 root@vostok (RSA)
+
