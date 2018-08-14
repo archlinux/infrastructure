@@ -63,5 +63,5 @@
     - clean-quassel.timer
 
 - name: open firewall holes
-  firewalld: port=4242/tcp permanent=true state=enabled
+  firewalld: port=4242/tcp permanent=true state=enabled immediate=yes
   when: configure_firewall

@@ -49,4 +49,4 @@
     - { role: archwiki, tags: ["archwiki"] }
   tasks:
     - name: open firewall hole for hefurd
-      firewalld: port=6969/tcp permanent=true state=enabled
+      firewalld: port=6969/tcp permanent=true state=enabled immediate=yes

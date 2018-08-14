@@ -67,7 +67,7 @@
   service: name=nginx enabled=yes
 
 - name: open firewall holes
-  firewalld: service={{item}} permanent=true state=enabled
+  firewalld: service={{item}} permanent=true state=enabled immediate=yes
   with_items:
     - http
     - https

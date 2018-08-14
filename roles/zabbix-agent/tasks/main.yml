@@ -63,5 +63,5 @@
   service: name=zabbix-agent enabled=yes state=started
 
 - name: open firewall holes
-  firewalld: service=zabbix-agent permanent=true state=enabled
+  firewalld: service=zabbix-agent permanent=true state=enabled immediate=yes
   when: configure_firewall

@@ -18,7 +18,7 @@
   service: name=dovecot enabled=yes state=started
 
 - name: open firewall holes
-  firewalld: service={{item}} permanent=true state=enabled
+  firewalld: service={{item}} permanent=true state=enabled immediate=yes
   with_items:
     - pop3
     - pop3s
