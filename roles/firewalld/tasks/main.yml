@@ -1,7 +1,12 @@
 ---
 
 - name: install firewalld
-  pacman: name=firewalld state=present
+  pacman:
+    name: firewalld
+    state: present
 
 - name: start and enable firewalld
-  service: name=firewalld enabled={{configure_firewall}} state={{configure_firewall | ternary("started", "stopped") }}
+  service:
+    name: firewalld
+    enabled: "{{configure_firewall}}"
+    state: "{{configure_firewall | ternary('started', 'stopped') }}"
