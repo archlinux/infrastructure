@@ -12,5 +12,5 @@
     - oidentd.socket
 
 - name: open firewall holes
-  firewalld: port=113/tcp permanent=true state=enabled
+  firewalld: port=113/tcp permanent=true state=enabled immediate=yes
   when: configure_firewall
