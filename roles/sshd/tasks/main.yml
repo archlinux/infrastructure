@@ -18,5 +18,5 @@
   service: name=sshd enabled=yes state=started
 
 - name: open firewall holes
-  firewalld: service=ssh permanent=true state=enabled
+  firewalld: service=ssh permanent=true state=enabled immediate=yes
   when: configure_firewall

@@ -51,6 +51,6 @@
   when: postgres_ssl == 'on'
 
 - name: open firewall holes to known postgresql clients
-  firewalld: service=postgresql permanent=true state=enabled source={{item}}
+  firewalld: service=postgresql permanent=true state=enabled source={{item}} immediate=yes
   with_items: "{{ postgres_ssl_hosts }}"
   when: configure_firewall
