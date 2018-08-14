@@ -6,9 +6,9 @@
   roles:
     - { role: common, tags: ['common'] }
     - { role: tools, tags: ['tools'] }
+    - { role: firewalld, tags: ['firewall'] }
     # reconfiguring sshd may break the AUR on luna (unchecked)
     #- { role: sshd, tags: ['sshd'] }
     - { role: root_ssh, tags: ['root_ssh'] }
     - { role: borg-client, tags: ["borg"], when: "'borg-clients' in group_names" }
     - { role: zabbix-agent, tags: ["zabbix", "zabbix-agent"], when: "'unmanaged' not in group_names" }
-    - { role: firewalld, tags: ['firewall'] }
