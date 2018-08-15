@@ -15,3 +15,9 @@ tcp_rmem: "10240 87380 33554432"
 tcp_wmem: "10240 87380 33554432"
 
 mail_domain: "mail.archlinux.org"
+
+configure_firewall: true
+
+# this is needed to make ansible find the firewalld python
+# module when deploying firewalld tasks
+ansible_python_interpreter: /usr/bin/python3.6
