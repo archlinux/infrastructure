@@ -9,3 +9,9 @@ mysql_backup_defaults: "/root/.backup-my.cnf"
 
 vault_mariadb_users:
   root: "{{encrypted_mariadb_users_root_password}}"
+
+configure_firewall: true
+
+# this is needed to make ansible find the firewalld python
+# module when deploying firewalld tasks
+ansible_python_interpreter: /usr/bin/python3.6

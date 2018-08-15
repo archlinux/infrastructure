@@ -8,3 +8,9 @@ ipv6_netmask: "/128"
 ipv4_gateway: "5.9.158.161"
 ipv6_gateway: "fe80::1"
 filesystem: ext4
+
+configure_firewall: true
+
+# this is needed to make ansible find the firewalld python
+# module when deploying firewalld tasks
+ansible_python_interpreter: /usr/bin/python3.7
