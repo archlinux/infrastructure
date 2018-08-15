@@ -63,3 +63,6 @@
 - name: start and enable systemd socket
   service: name=php-fpm@zabbix-web.socket state=started enabled=true
 
+- name: open firewall holes
+  firewalld: service=zabbix-server permanent=true state=enabled immediate=yes
+  when: configure_firewall
