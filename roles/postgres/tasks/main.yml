@@ -50,7 +50,18 @@
         remote_src=true owner=postgres group=postgres mode=0400
   when: postgres_ssl == 'on'
 
-- name: open firewall holes to known postgresql clients
-  firewalld: service=postgresql permanent=true state=enabled source={{item}} immediate=yes
-  with_items: "{{ postgres_ssl_hosts }}"
+- name: open firewall holes to known postgresql ipv4 clients
+  firewalld: permanent=true state=enabled immediate=yes
+    rich_rule="rule family=ipv4 source address={{item}} port protocol=tcp port=5432 accept"
+  with_items: "{{ postgres_ssl_hosts4 }}"
   when: configure_firewall
+  tags:
+    - firewall
+
+- name: open firewall holes to known postgresql ipv6 clients
+  firewalld: permanent=true state=enabled immediate=yes
+    rich_rule="rule family=ipv4 source address={{item}} port protocol=tcp port=5432 accept"
+  with_items: "{{ postgres_ssl_hosts6 }}"
+  when: configure_firewall
+  tags:
+    - firewall
