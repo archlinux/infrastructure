@@ -1,0 +1,27 @@
+---
+
+- name: setup luna
+  hosts: luna.archlinux.org
+  remote_user: root
+  tasks:
+    - name: open firewall holes for services
+      firewalld: service={{item}} permanent=true state=enabled immediate=yes
+      with_items:
+        - zabbix-agent
+        - http
+        - https
+        - rsyncd
+        - smtp
+        - git
+      when: configure_firewall
+      tags:
+        - firewall
+
+    - name: open firewall holes for ports
+      firewalld: port={{item}} permanent=true state=enabled immediate=yes
+      with_items:
+        - 6969/tcp
+        - 4949/tcp
+      when: configure_firewall
+      tags:
+        - firewall

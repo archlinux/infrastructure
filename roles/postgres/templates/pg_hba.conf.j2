@@ -90,6 +90,13 @@ host    sameuser        all             ::1/128                 md5
 #local   replication     all                                     peer
 #host    replication     all             127.0.0.1/32            md5
 #host    replication     all             ::1/128                 md5
-{% for host in postgres_ssl_hosts %}
+
+# IPv4 Remote Clients
+{% for host in postgres_ssl_hosts4 %}
+hostssl all             all             {{ host }}              md5
+{% endfor %}
+
+# IPv6 Remote Clients
+{% for host in postgres_ssl_hosts6 %}
 hostssl all             all             {{ host }}              md5
 {% endfor %}

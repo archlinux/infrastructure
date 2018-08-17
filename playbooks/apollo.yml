@@ -7,11 +7,15 @@
 - name: "prepare postgres ssl hosts list"
   hosts: apollo.archlinux.org
   tasks:
-      - set_fact: postgres_ssl_hosts="{{ [orion4] + [orion6] + detected_ips}}"
+      - set_fact: postgres_ssl_hosts4="{{ [orion4] + detected_ips}}"
         vars:
-            orion4: "{{ hostvars['orion.archlinux.org']['ipv4_address'] }}{{ hostvars['orion.archlinux.org']['ipv4_netmask'] }}"
-            orion6: "{{ hostvars['orion.archlinux.org']['ipv6_address'] }}{{ hostvars['orion.archlinux.org']['ipv6_netmask'] }}"
+            orion4: "{{ hostvars['orion.archlinux.org']['ipv4_address'] }}"
             detected_ips: "{{ groups['mirrors'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | map('regex_replace', '^(.*)$', '\\1/32') | list}}"
+        tags: ["postgres"]
+      - set_fact: postgres_ssl_hosts6="{{ [orion6] + detected_ips}}"
+        vars:
+            orion6: "{{ hostvars['orion.archlinux.org']['ipv6_address'] }}"
+            detected_ips: "{{ groups['mirrors'] | map('extract', hostvars, ['ansible_default_ipv6', 'address']) | map('regex_replace', '^(.*)$', '\\1/32') | list}}"
         tags: ["postgres"]
 
 - name: setup apollo
@@ -49,4 +53,4 @@
     - { role: archwiki, tags: ["archwiki"] }
   tasks:
     - name: open firewall hole for hefurd
-      firewalld: port=6969/tcp permanent=true state=enabled
+      firewalld: port=6969/tcp permanent=true state=enabled immediate=yes

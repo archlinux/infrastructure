@@ -10,3 +10,9 @@ default_qdisc: "fq"
 tcp_congestion_control: "bbr"
 filesystem: btrfs
 postgres_backup_dir: "/var/lib/postgres/backup"
+
+configure_firewall: true
+
+# this is needed to make ansible find the firewalld python
+# module when deploying firewalld tasks
+ansible_python_interpreter: /usr/bin/python3.7

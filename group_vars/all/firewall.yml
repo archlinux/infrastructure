@@ -1,4 +1,0 @@
----
-# disable firewall because python2 module is not avaible and the tasks fail
-# https://github.com/ansible/ansible/issues/24855
-configure_firewall: false

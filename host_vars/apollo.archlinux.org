@@ -17,3 +17,9 @@ mysql_backup_dir: "/root/backup-mysql"
 mysql_backup_defaults: "/root/.backup-my.cnf"
 
 kanboard_version: "v1.2.5"
+
+configure_firewall: true
+
+# this is needed to make ansible find the firewalld python
+# module when deploying firewalld tasks
+ansible_python_interpreter: /usr/bin/python3.6
