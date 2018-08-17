@@ -227,6 +227,8 @@
 - name: open firewall holes for rsync
   firewalld: service=rsyncd permanent=true state=enabled immediate=yes
   when: configure_firewall
+  tags:
+    - firewall
 
 - name: configure svnserve
   copy: dest=/etc/conf.d/svnserve content="SVNSERVE_ARGS=-R -r /srv/svn\n"
@@ -237,6 +239,8 @@
 - name: open firewall holes for svnserve
   firewalld: port=3690/tcp permanent=true state=enabled immediate=yes
   when: configure_firewall
+  tags:
+    - firewall
 
 - name: install systemd timers
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644

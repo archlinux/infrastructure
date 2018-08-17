@@ -91,3 +91,5 @@
     - smtp
     - smtp-submission
   when: postfix_smtpd_public and configure_firewall
+  tags:
+    - firewall

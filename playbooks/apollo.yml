@@ -54,3 +54,5 @@
   tasks:
     - name: open firewall hole for hefurd
       firewalld: port=6969/tcp permanent=true state=enabled immediate=yes
+      tags:
+        - firewall

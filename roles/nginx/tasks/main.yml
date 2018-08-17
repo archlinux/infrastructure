@@ -72,3 +72,5 @@
     - http
     - https
   when: configure_firewall
+  tags:
+    - firewall
