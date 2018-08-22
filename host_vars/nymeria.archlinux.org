@@ -4,8 +4,8 @@ hostname: "nymeria"
 
 ipv4_address: "89.238.67.251"
 ipv4_netmask: "/24"
-ipv6_address: "fe80::ba29:59bd:f152:49ba"
+ipv6_address: "2a00:1828:2000:547::2"
 ipv6_netmask: "/64"
 ipv4_gateway: "89.238.67.1"
-ipv6_gateway: "fe80::1"
+ipv6_gateway: "2a00:1828:2000:547::1"
 filesystem: ext4
