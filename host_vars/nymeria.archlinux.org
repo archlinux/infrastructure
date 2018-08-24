@@ -9,3 +9,5 @@ ipv6_netmask: "/64"
 ipv4_gateway: "89.238.67.1"
 ipv6_gateway: "2a00:1828:2000:547::1"
 filesystem: ext4
+
+archweb_rsync_iso_origin: 'repos.archlinux.org::kitchensink_tier1/iso/'
