@@ -1,6 +1,6 @@
 ---
 - name: install packages
-  pacman: name=gcc,git,python,python-psycopg2,sudo,uwsgi-plugin-python state=present
+  pacman: name=gcc,git,python,python-psycopg2,sudo,uwsgi-plugin-python,python-pip state=present
 
 - name: make patchwork user
   user: name=patchwork shell=/bin/false home="{{ patchwork_dir }}" skeleton=/var/empty
