@@ -1,22 +1,18 @@
 ---
 
-- name: gather mirror facts
-  hosts: mirrors
-  tasks: []
-
 - name: "prepare postgres ssl hosts list"
   hosts: apollo.archlinux.org
   tasks:
       - set_fact: postgres_ssl_hosts4="{{ [orion4] + detected_ips}}"
         vars:
-            orion4: "{{ hostvars['orion.archlinux.org']['ipv4_address'] }}"
-            detected_ips: "{{ groups['mirrors'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | map('regex_replace', '^(.*)$', '\\1/32') | list}}"
-        tags: ["postgres"]
+            orion4: "{{ hostvars['orion.archlinux.org']['ipv4_address'] }}/32"
+            detected_ips: "{{ groups['mirrors'] | map('extract', hostvars, ['ipv4_address']) | select() | map('regex_replace', '^(.+)$', '\\1/32') | list}}"
+        tags: ["postgres", "firewall"]
       - set_fact: postgres_ssl_hosts6="{{ [orion6] + detected_ips}}"
         vars:
-            orion6: "{{ hostvars['orion.archlinux.org']['ipv6_address'] }}"
-            detected_ips: "{{ groups['mirrors'] | map('extract', hostvars, ['ansible_default_ipv6', 'address']) | map('regex_replace', '^(.*)$', '\\1/32') | list}}"
-        tags: ["postgres"]
+            orion6: "{{ hostvars['orion.archlinux.org']['ipv6_address'] }}/128"
+            detected_ips: "{{ groups['mirrors'] | map('extract', hostvars, ['ipv6_address']) | select() | map('regex_replace', '^(.+)$', '\\1/128') | list}}"
+        tags: ["postgres", "firewall"]
 
 - name: setup apollo
   hosts: apollo.archlinux.org
