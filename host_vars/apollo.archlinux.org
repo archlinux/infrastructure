@@ -22,4 +22,4 @@ configure_firewall: true
 
 # this is needed to make ansible find the firewalld python
 # module when deploying firewalld tasks
-ansible_python_interpreter: /usr/bin/python3.6
+ansible_python_interpreter: /usr/bin/python3.7
