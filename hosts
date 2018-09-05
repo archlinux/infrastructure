@@ -41,12 +41,6 @@ sgp.mirror.pkgbuild.com
 [staging]
 nymeria.archlinux.org
 
-[unmanaged]
-dragon.archlinux.org
-
-[dragon-backup]
-luna.archlinux.org
-
 [reproducible-builds]
 169.50.62.117
 169.50.62.119

@@ -53,17 +53,6 @@
 256 MD5:a7:84:8b:95:4f:53:ac:b6:9d:24:79:79:fc:c7:bf:1f root@apollo (ED25519)
 2048 MD5:77:b0:17:18:57:74:38:91:47:31:43:04:47:e9:9e:30 root@apollo (RSA)
 
-# dragon.archlinux.org
-1024 SHA256:h5ZWUEWyagwYSBf0GewpRidKG3+FA+2MSHIxPmTX3mY root@sysresccd (DSA)
-256 SHA256:U+pPgqH6PrMO1l1dyiBhoD+wXg3MPah0dM8tD9rJEDI root@sysresccd (ECDSA)
-256 SHA256:4uOSUvpFTywizwPGuwJsPf5qhe7uqNUcML14P1HRqwQ root@dragon (ED25519)
-2048 SHA256:Es/WLe4C4YkeU30u/Ql2RCk4zeLPSEhayUpmBNAWc2g root@sysresccd (RSA)
-
-1024 MD5:29:14:c9:fb:e3:fd:07:b1:b9:45:5a:bd:04:7c:7a:3c root@sysresccd (DSA)
-256 MD5:5c:a0:c1:f9:88:31:7f:9a:a3:8a:28:3c:93:5a:e5:be root@sysresccd (ECDSA)
-256 MD5:f1:a9:56:05:0a:10:5b:52:de:7a:e0:5f:a9:d1:d2:e5 root@dragon (ED25519)
-2048 MD5:7c:a9:5d:e2:82:3b:73:83:5d:c0:f7:50:cb:28:ac:78 root@sysresccd (RSA)
-
 # ind.mirror.pkgbuild.com
 1024 SHA256:nfyohw9fqhP3SRTOpsZvjVH7OP6GkqNWv+vPIa7Xr54 root@archlinux (DSA)
 256 SHA256:d5s5vHVfEh2U0oCFsvCxgidvX4Fm2BdX4EJvwcsRLqk root@archlinux (ECDSA)

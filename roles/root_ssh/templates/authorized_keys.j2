@@ -2,6 +2,3 @@
 {% for user in root_ssh_keys | sort -%}
 	{{ lookup('file', '../pubkeys/' + user) }}
 {% endfor %}
-{% if 'dragon-backup' in group_names %}
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCpfiW5/R2D95beJsIs1lxD5d2TeW4yJFHs4v38Qtsg3506MlBpyaMUdKOtilAfKoBBsLEuB3dPFa9at0CBLAG0/vk5A8dr543HhcZDx6XIaCenW+NeCvg3hln6tqtk7Wh+O0OaIE/ZNmGu6hQb0Q+myur2asd7behonYeUOsNvPVuc8aIHOdswYvXa+yhM70+i6sAc+BBM3v/cXXmUWFO+wIV4G7CqLbTeL2/O+Bv5gvQHwEZ1Xnc0ktksvLDZ8qNGD9Zlm5KmvCVAjJuqeMHuwtFhq/DtoS6R0RzvD2a0algYlyJtmfrs90Na49nGWdTDL91/kyGuezLCEUv1vCq0bYhQcTD+ltpo/rgxDYXyNKeV1bs7jN0O5+Z9hMUrgPuKDLwPdc0cqmHmM2fOjtYq1eoOxOPnbPvWTwOApRSoY0StSOBMjDd9PQYJdstvJNZ0mN+pbzIMd/oZeczcQVrBnWRt4GdQZiyEKvnnABPs9K1jlEKg+UCHw5Hu0EN6gzKxLbPT2Rfy6wVdQboHbtBs65tLLiAZQuldeFqFHpICJLXGHMAnKVhZyR4L9TQAwTrE5l7RRz4+MPhMx5poIqzWk5omit42PqdzRm58Xke+tKqA3D5mfCVKZwCvxvIMlbGFZUpTHU0Wl5cY6DyBjf9yThcp6Pz2p2tTlASrfxZraQ== root@dragon backup key
-{% endif %}
