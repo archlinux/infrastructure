@@ -1,5 +1,5 @@
 ---
-- name: setup signapore build server
+- name: setup singapore build server
   hosts: sgp.mirror.pkgbuild.com
   remote_user: root
   roles:
