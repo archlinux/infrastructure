@@ -172,12 +172,6 @@ arch_users:
     groups:
       - tu
       - multilib
-  eric:
-    name: "Eric Bélanger"
-    ssh_key: eric.pub
-    groups:
-      - dev
-      - multilib
   eschwartz:
     name: "Eli Schwartz"
     ssh_key: eschwartz.pub
