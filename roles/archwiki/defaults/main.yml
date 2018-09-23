@@ -3,7 +3,7 @@ archwiki_dir: '/srv/http/archwiki'
 archwiki_domain: 'wiki.archlinux.org'
 archwiki_user: 'archwiki'
 archwiki_repository: 'https://git.archlinux.org/vhosts/wiki.archlinux.org.git'
-archwiki_version: 57692389bde1df1bcf39d09ba68be8a59164218b
+archwiki_version: 93d4fc9de0b2461b8183f8eb71d146ac9971eb66
 archwiki_pacman_string: BIQC4LJNFYQCAIBAEAQCAIBAEAQCAIBAEAQCAICQMFRW2YLOEB3DKLRRFYYSALJANRUWEYLMOBWS
 
 archwiki_socket: '/run/php-fpm/archwiki.socket'
