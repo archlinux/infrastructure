@@ -1,3 +1,5 @@
 updates.spamassassin.org
-sought.rules.yerp.org
-sa.zmi.at
+
+# temporarily disabled due to missing compatability with SA 3.4.2 (missing sha256/512 checksum files)
+#sought.rules.yerp.org
+#sa.zmi.at
