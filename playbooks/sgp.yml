@@ -17,3 +17,5 @@
     - { role: archweb, archweb_site: false, archweb_services: false, archweb_mirrorcheck: true }
     - { role: crond }
     - { role: zabbix-agent, tags: ["zabbix"] }
+    - { role: public_html, public_domain: "sgp.pkgbuild.com", tags: ['public_html', 'nginx'] }
+
