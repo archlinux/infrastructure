@@ -117,7 +117,7 @@
   template: src=pacman.conf.j2 dest=/etc/pacman.conf mode=0644 owner=root group=root
 
 - name: install custom paccache.service
-  copy: src=paccache.service dest=/etc/systemd/system/paccache.service owner=root group=root mode=644
+  copy: src=paccache.service dest=/etc/systemd/system/paccache.service owner=root group=root mode=0644
 
 - name: enable paccache timer
   systemd: name=paccache.timer enabled=yes state=started daemon_reload=yes
