@@ -1,6 +1,6 @@
 ---
 - name: install mariadb
-  pacman: name=mariadb,mysql-python state=present
+  pacman: name=mariadb,python-mysqlclient state=present
 
 - name: initialize mariadb
   command: mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
