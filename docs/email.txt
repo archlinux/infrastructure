@@ -1,0 +1,4 @@
+# Adding new archlinux.org email addresses
+
+Login to orion and edit `/etc/postfix/users`, add the new email address in the
+appropriate category and run `postmap /etc/postfix/users`.
