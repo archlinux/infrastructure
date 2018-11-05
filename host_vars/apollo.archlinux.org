@@ -10,6 +10,8 @@ ipv4_gateway: "138.201.81.193"
 ipv6_gateway: "fe80::1"
 filesystem: btrfs
 
+dns_servers: ["127.0.0.1"]
+
 # FIXME: this should probably be configured another way. maybe the
 # mysql/postgres roles should deploy the credentials themselves
 postgres_backup_dir: "/var/lib/postgres/backup"
