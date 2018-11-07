@@ -2,3 +2,7 @@
 
 Login to orion and edit `/etc/postfix/users`, add the new email address in the
 appropriate category and run `postmap /etc/postfix/users`.
+
+If the user wants to forward email, either enter the destination directly in
+the /etc/postfix/users file or enter a username and then put the destination
+into `~username/.forward` so that they can edit it themselves.
