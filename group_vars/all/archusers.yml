@@ -144,6 +144,11 @@ arch_users:
     groups:
       - dev
       - multilib
+  dbermond:
+    name: "Daniel Bermond"
+    ssh_key: dbermond.pub
+    groups:
+      - tu
   demize:
     name: "Johannes Löthberg"
     ssh_key: demize.pub
