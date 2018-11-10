@@ -25,3 +25,5 @@
       when: configure_firewall
       tags:
         - firewall
+  roles:
+    - nginx
