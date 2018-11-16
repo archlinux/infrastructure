@@ -35,10 +35,18 @@
   template: src=pgpass.j2 dest="{{zabbix_pgpass}}" owner=zabbix-server group=zabbix-server mode=600
   no_log: true
 
+
+- name: check if zabbix db contains tables
+  shell: psql -U {{zabbix_db_user}} {{zabbix_db_name}} -c '\d' | grep -P '\(\d+ rows\)'
+  become_user: zabbix-server
+  become: yes
+  register: table_is_populated
+
 - name: install database schema
   shell: psql -U "{{zabbix_db_user}}" "{{zabbix_db_name}}" < "/usr/share/zabbix-server/postgresql/{{item}}"
   become_user: zabbix-server
   become: yes
+  when: not table_is_populated
   with_items:
     - schema.sql
     - images.sql
