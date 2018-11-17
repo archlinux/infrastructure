@@ -10,6 +10,7 @@ WorkingDirectory={{ archweb_dir }}
 ExecStart={{ archweb_dir }}/env/bin/python manage.py mirrorcheck --location {{ location }}
 {% endfor %}
 Nice=5
+RuntimeMaxSec=3600
 
 [Install]
 WantedBy=multi-user.target
