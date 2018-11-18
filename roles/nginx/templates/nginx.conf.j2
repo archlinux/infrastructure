@@ -4,8 +4,10 @@ load_module /usr/lib/nginx/modules/ngx_http_brotli_filter_module.so;
 load_module /usr/lib/nginx/modules/ngx_http_brotli_static_module.so;
 
 events {
-    worker_connections  1024;
+    worker_connections  2048;
 }
+
+worker_rlimit_nofile 2048;
 
 error_log syslog:server=unix:/dev/log,nohostname info;
 
