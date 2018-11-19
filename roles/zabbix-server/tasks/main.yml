@@ -41,12 +41,14 @@
   become_user: zabbix-server
   become: yes
   register: table_is_populated
+  failed_when: ( table_is_populated.rc not in [ 0, 1 ] )
+  changed_when: table_is_populated.rc != 0
 
 - name: install database schema
   shell: psql -U "{{zabbix_db_user}}" "{{zabbix_db_name}}" < "/usr/share/zabbix-server/postgresql/{{item}}"
   become_user: zabbix-server
   become: yes
-  when: not table_is_populated
+  when: table_is_populated.rc != 0
   with_items:
     - schema.sql
     - images.sql
