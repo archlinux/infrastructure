@@ -86,15 +86,6 @@ max_connections = {{ postgres_max_connections }}			# (change requires restart)
 # - Authentication -
 
 #authentication_timeout = 1min		# 1s-600s
-ssl = {{ postgres_ssl }}				# (change requires restart)
-#ssl_ciphers = 'HIGH:MEDIUM:+3DES:!aNULL' # allowed SSL ciphers
-ssl_prefer_server_ciphers = {{ postgres_ssl_prefer_server_ciphers }}
-#ssl_ecdh_curve = 'prime256v1'
-#ssl_dh_params_file = ''
-ssl_cert_file = '{{ postgres_ssl_cert_file }}'
-ssl_key_file = '{{ postgres_ssl_key_file }}'
-ssl_ca_file = '{{ postgres_ssl_ca_file }}'
-#ssl_crl_file = ''
 #password_encryption = md5		# md5 or scram-sha-256
 #db_user_namespace = off
 
@@ -104,6 +95,17 @@ ssl_ca_file = '{{ postgres_ssl_ca_file }}'
 
 # - SSL -
 
+ssl = {{ postgres_ssl }}
+ssl_cert_file = '{{ postgres_ssl_cert_file }}'
+ssl_key_file = '{{ postgres_ssl_key_file }}'
+ssl_ca_file = '{{ postgres_ssl_ca_file }}'
+#ssl_crl_file = ''
+#ssl_ciphers = 'HIGH:MEDIUM:+3DES:!aNULL' # allowed SSL ciphers
+ssl_prefer_server_ciphers = {{ postgres_ssl_prefer_server_ciphers }}
+#ssl_ecdh_curve = 'prime256v1'
+#ssl_dh_params_file = ''
+#ssl_passphrase_command = ''
+#ssl_passphrase_command_supports_reload = off
 
 
 #------------------------------------------------------------------------------
