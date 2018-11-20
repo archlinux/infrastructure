@@ -336,6 +336,11 @@ arch_users:
       - dev
       - tu
       - multilib
+  maximbaz:
+    name: "Maxim Baz"
+    ssh_key: maximbaz.pub
+    groups:
+      - tu
   mtorromeo:
     name: "Massimiliano Torromeo"
     ssh_key: mtorromeo.pub
