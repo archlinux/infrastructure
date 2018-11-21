@@ -65,3 +65,6 @@
   when: configure_firewall
   tags:
     - firewall
+
+- name: copy postgresql upgrade script
+  copy: src=upgrade_pg.sh dest=/usr/local/bin/upgrade_pg.sh mode=0755 owner=root group=root
