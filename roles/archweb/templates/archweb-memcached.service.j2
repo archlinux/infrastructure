@@ -8,9 +8,14 @@ Group=memcached
 # Remove '-l 127.0.0.1' to listen on all addresses
 ExecStart=/usr/bin/memcached -s /run/memcached/archweb.sock -o modern
 Restart=always
+NoNewPrivileges=yes
 PrivateTmp=yes
+ProtectHome=true
 PrivateDevices=yes
 ProtectSystem=full
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
 MemoryDenyWriteExecute=yes
 
 [Install]
