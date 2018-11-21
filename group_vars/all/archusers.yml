@@ -19,6 +19,11 @@ arch_users:
     ssh_key: aginiewicz.pub
     groups:
       - tu
+  ainola:
+    name: "Brett Cornwall"
+    ssh_key: ainola.pub
+    groups:
+      - tu
   alad:
     name: "Alad Wenter"
     ssh_key: alad.pub
