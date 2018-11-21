@@ -11,6 +11,14 @@ ExecStart={{ archweb_dir }}/env/bin/python manage.py mirrorcheck --location {{ l
 {% endfor %}
 Nice=5
 RuntimeMaxSec=3600
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
 
 [Install]
 WantedBy=multi-user.target
