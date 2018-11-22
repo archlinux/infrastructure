@@ -10,7 +10,8 @@ WorkingDirectory={{ archweb_dir }}
 ExecStart={{ archweb_dir }}/env/bin/python manage.py mirrorcheck --location {{ location }}
 {% endfor %}
 Nice=5
-RuntimeMaxSec=3600
+TimeoutStopSec=3600
+
 NoNewPrivileges=yes
 ProtectSystem=strict
 ProtectHome=true
