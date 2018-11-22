@@ -7,6 +7,16 @@ Type=oneshot
 User=archweb
 WorkingDirectory={{ archweb_dir }}
 ExecStart={{ archweb_dir }}/env/bin/python manage.py mirrorresolv
+Nice=5
+
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
 
 [Install]
 WantedBy=multi-user.target
