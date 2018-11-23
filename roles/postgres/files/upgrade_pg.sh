@@ -13,6 +13,11 @@ if [[ ${to_major} -ne 11 ]]; then
 fi
 export FROM_VERSION="$(cat /var/lib/postgres/data/PG_VERSION)"
 
+if [[ "$FROM_VERSION" == "$TO_VERSION" ]]; then
+	echo "WARNING: from and to versions are equal. Have you already updated?! Aborting..."
+	exit 1
+fi
+
 # free space check
 used_space=$(df --local --output=pcent /var/lib/postgres/ | grep -Po '[0-9]{1,3}(?=%)')
 if [[ ${used_space} -ge 50 ]]; then
