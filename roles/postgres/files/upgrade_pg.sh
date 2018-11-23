@@ -6,6 +6,8 @@ TO_VERSION=$(pacman -Q postgresql | grep -Po '(?<=postgresql )[0-9]+\.[0-9]')
 to_major=$(echo "$TO_VERSION" | awk -F'.' '{print $1}')
 to_minor=$(echo "$TO_VERSION" | awk -F'.' '{print $2}')
 if [[ ${to_major} -ne 11 ]]; then
+	# NOTE: When this happens you should check the changelog and add any
+	# necessary changes here. Then bump the version check.
 	echo "WARNING: major upgrade detected, aborting..."
 	exit 1
 fi
