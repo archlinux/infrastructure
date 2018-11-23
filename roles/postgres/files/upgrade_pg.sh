@@ -36,8 +36,9 @@ su - postgres -c 'mkdir /var/lib/postgres/data'
 su - postgres -c "initdb --locale $LANG -E UTF8 -D /var/lib/postgres/data"
 vimdiff "/var/lib/postgres/data/pg_hba.conf" "/var/lib/postgres/data-${FROM_VERSION}/pg_hba.conf"
 vimdiff "/var/lib/postgres/data/postgresql.conf" "/var/lib/postgres/data-${FROM_VERSION}/postgresql.conf"
-#cp -avx "/var/lib/postgres/data-${FROM_VERSION}/server.crt" "/var/lib/postgres/data/server.crt"
-#cp -avx "/var/lib/postgres/data-${FROM_VERSION}/server.key" "/var/lib/postgres/data/server.key"
+for file in fullchain.pem chain.pem privkey.pem; do
+	cp -avx "/var/lib/postgres/data-${FROM_VERSION}/$file" "/var/lib/postgres/data/$file"
+done
 systemctl stop postgresql.service
 su - postgres -c "pg_upgrade -b /opt/pgsql-${FROM_VERSION}/bin/ -B /usr/bin/ -d /var/lib/postgres/data-${FROM_VERSION} -D /var/lib/postgres/data"
 systemctl daemon-reload
