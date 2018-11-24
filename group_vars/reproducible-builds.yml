@@ -2,3 +2,15 @@
 
 zabbix_agent_templates:
   - Template OS Linux
+
+repro_users:
+  holger:
+    name: "Holger Levsen"
+    ssh_key: holger.pub
+    groups:
+      - wheel
+  maprepi:
+    name: "Mattia Rizzolo"
+    ssh_key: maprepi.pub
+    groups:
+      - wheel
