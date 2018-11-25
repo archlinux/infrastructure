@@ -9,6 +9,9 @@ ipv4_gateway: "5.9.158.161"
 ipv6_gateway: "fe80::1"
 filesystem: ext4
 
+zabbix_agent_templates:
+  - Template OS Linux
+
 configure_firewall: true
 
 # this is needed to make ansible find the firewalld python

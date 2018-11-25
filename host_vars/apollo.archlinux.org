@@ -20,6 +20,19 @@ mysql_backup_defaults: "/root/.backup-my.cnf"
 
 kanboard_version: "v1.2.5"
 
+# TODO use a list of enabled roles or groups to enable each template and also use the same to enable each role for a machine? duplicating and manually tracking this stuff sucks, but maybe we want to deploy roles without monitoring? maybe not?
+zabbix_agent_templates:
+  - Template OS Linux
+  - Template App Borg Backup
+  - Template App HTTP Service
+  - Template App HTTPS Service
+  - Template App MySQL
+  - Template App Nginx
+  - Template App Security Tracker
+  - Template App SMTP Service
+  - Template App SSH Service
+  - Template App Zabbix Server
+
 configure_firewall: true
 
 # this is needed to make ansible find the firewalld python

@@ -11,6 +11,11 @@ tcp_congestion_control: "bbr"
 filesystem: btrfs
 postgres_backup_dir: "/var/lib/postgres/backup"
 
+zabbix_agent_templates:
+  - Template OS Linux
+  - Template App Borg Backup
+  - Template App Syncrepo
+
 configure_firewall: true
 
 # this is needed to make ansible find the firewalld python

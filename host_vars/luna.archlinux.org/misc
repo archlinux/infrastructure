@@ -10,6 +10,12 @@ mysql_backup_defaults: "/root/.backup-my.cnf"
 vault_mariadb_users:
   root: "{{encrypted_mariadb_users_root_password}}"
 
+zabbix_agent_templates:
+  - Template OS Linux
+  - Template App Mailman
+  - Template App MySQL
+  - Template App Nginx
+
 configure_firewall: true
 
 # this is needed to make ansible find the firewalld python

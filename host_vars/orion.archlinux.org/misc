@@ -17,6 +17,10 @@ tcp_wmem: "10240 87380 33554432"
 dns_servers: ["127.0.0.1"]
 mail_domain: "mail.archlinux.org"
 
+zabbix_agent_templates:
+  - Template OS Linux
+  - Template App Borg Backup
+  - Template App Nginx
 configure_firewall: true
 
 # this is needed to make ansible find the firewalld python

@@ -23,6 +23,35 @@
 - name: fix permissions of PSK file
   file: path=/etc/zabbix/zabbix_agentd.psk owner=zabbix-agent group=zabbix-agent mode=600
 
+- name: fetch PSK
+  command: cat /etc/zabbix/zabbix_agentd.psk
+  check_mode: no
+  register: zabbix_agent_psk
+
+- name: Set host config in zabbix
+  local_action:
+    module: zabbix_host
+    server_url: "https://{{zabbix_agent_server}}"
+    login_user: "{{vault_zabbix_admin_user}}"
+    login_password: "{{vault_zabbix_admin_password}}"
+    host_name: "{{inventory_hostname}}"
+    visible_name: "{{inventory_hostname}}"
+    link_templates: "{{zabbix_agent_templates}}"
+    status: enabled
+    state: present
+    inventory_mode: disabled
+    interfaces:
+      - type: 1
+        main: 1
+        useip: "{{zabbix_agent_useip}}"
+        ip: "{{zabbix_agent_ip}}"
+        dns: "{{inventory_hostname}}"
+        port: 10050
+    tls_psk_identity: "PSK{{inventory_hostname}}"
+    tls_accept: 2
+    tls_connect: 2
+    tls_psk: "{{zabbix_agent_psk.stdout}}"
+
 - name: install agent config
   template: src=zabbix_agentd.conf dest=/etc/zabbix/zabbix_agentd.conf owner=zabbix-agent group=zabbix-agent mode=600
   notify:
