@@ -344,6 +344,10 @@ arch_users:
   maximbaz:
     name: "Maxim Baz"
     ssh_key: maximbaz.pub
+    additional_ssh_keys:
+      - name: maximbaz_soyuz.pub
+        hosts:
+          - soyuz.archlinux.org
     groups:
       - tu
   mtorromeo:
