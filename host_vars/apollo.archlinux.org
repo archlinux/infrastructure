@@ -33,6 +33,10 @@ zabbix_agent_templates:
   - Template App SSH Service
   - Template App Zabbix Server
 
+zabbix_agent_host_groups:
+  - Linux servers
+  - Zabbix servers
+
 configure_firewall: true
 
 # this is needed to make ansible find the firewalld python
