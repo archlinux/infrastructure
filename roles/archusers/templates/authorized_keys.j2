@@ -1,0 +1,9 @@
+#jinja2: lstrip_blocks: True
+{{ lookup('file', '../pubkeys/' + item.value.ssh_key) }}
+{% if item.value.additional_ssh_keys is defined %}
+	{% for key in item.value.additional_ssh_keys %}
+		{% if inventory_hostname in key.hosts %}
+{{ lookup('file', '../pubkeys/' + key.name) }}
+		{% endif %}
+	{% endfor %}
+{% endif %}

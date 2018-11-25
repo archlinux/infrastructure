@@ -13,13 +13,12 @@
     state: present
   with_dict: "{{ arch_users }}"
 
+- name: create .ssh directory
+  file: path=/home/{{item.key}}/.ssh state=directory owner={{item.key}} group=users mode=0700
+  with_dict: "{{ arch_users }}"
+
 - name: configure ssh keys
-  authorized_key:
-    user: "{{ item.key }}"
-    key: "{{ lookup('file', '../pubkeys/' + item.value.ssh_key) }}"
-    manage_dir: yes
-    state: present
-    exclusive: yes
+  template: src=authorized_keys.j2 dest=/home/{{item.key}}/.ssh/authorized_keys owner={{item.key}} group=users mode=0600
   when: item.value.ssh_key is defined
   with_dict: "{{ arch_users }}"
 
