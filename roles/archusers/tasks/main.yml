@@ -22,6 +22,11 @@
   when: item.value.ssh_key is defined
   with_dict: "{{ arch_users }}"
 
+- name: remove ssh keys if undefined
+  file: path=/home/{{item.key}}/.ssh/authorized_keys state=absent
+  when: item.value.ssh_key is not defined
+  with_dict: "{{ arch_users }}"
+
 - name: get list of remote users
   find: paths="/home" file_type="directory"
   register: all_users
