@@ -9,7 +9,7 @@
     name: "{{ item.key }}"
     group: users
     groups: "{{ item.value.groups | join(',') }}"
-    comment: "{{ item.value.name}}"
+    comment: "{{ item.value.name }}"
     state: present
   with_dict: "{{ arch_users }}"
 
@@ -33,5 +33,5 @@
 
 - name: disable ssh keys of disabled users
   file: path="/home/{{ item }}/.ssh/authorized_keys" state=absent
-  when: item not in "{{ arch_users }}"
+  when: item not in arch_users
   with_items: "{{ all_users.files | map(attribute='path') | map('basename') | list }}"
