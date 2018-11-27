@@ -220,6 +220,11 @@ arch_users:
   foutrelis:
     name: "Evangelos Foutras"
     ssh_key: foutrelis.pub
+    additional_ssh_keys:
+      - name: foutrelis_buildhost.pub
+        hosts:
+          - soyuz.archlinux.org
+          - sgp.mirror.pkgbuild.com
     groups:
       - dev
       - tu
