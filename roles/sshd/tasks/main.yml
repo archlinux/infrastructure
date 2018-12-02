@@ -4,7 +4,7 @@
   pacman: name=openssh state=present
 
 - name: configure sshd
-  template: src=sshd_config.j2 dest=/etc/ssh/sshd_config owner=root group=root mode=0644
+  template: src=sshd_config.j2 dest=/etc/ssh/sshd_config owner=root group=root mode=0644 validate='/usr/sbin/sshd -t -f %s'
   notify:
     - restart sshd
 
