@@ -1,3 +1,12 @@
+# Configuration for users
+
+SMTP/IMAP server: mail.archlinux.org
+SMTP port: 587 STARTTLS
+IMAP port: 143 (STARTTLS), 993 (TLS)
+
+username: the system account name
+password: set by each user themselves with `passwd` on orion
+
 # Adding new archlinux.org email addresses
 
 Login to orion and edit `/etc/postfix/users`, add the new email address in the
