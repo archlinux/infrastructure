@@ -10,6 +10,8 @@
     group: users
     groups: "{{ item.value.groups | join(',') }}"
     comment: "{{ item.value.name }}"
+    password: ""
+    update_password: on_create
     state: present
   with_dict: "{{ arch_users }}"
 
