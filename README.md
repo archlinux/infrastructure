@@ -60,6 +60,7 @@ The following steps should be used to update our managed servers:
 - bbs (bbs.archlinux.org)
 - wiki (wiki.archlinux.org)
 - aur (aur.archlinux.org)
+- flyspray (bugs.archlinux.org)
 - mailman
 - planet (planet.archlinux.org)
 - bugs (bugs.archlinux.org)
@@ -72,11 +73,14 @@ The following steps should be used to update our managed servers:
 #### Services
 - build server (pkgbuild.com)
 - releng
-- torrent tracker
+- torrent tracker (hefurd)
 - sogrep
 - /~user/ webhost
 - irc bot (phrik)
 - quassel core
+- matrix
+- docker images
+- arch boxes (packer)
 
 
 ### nymeria
