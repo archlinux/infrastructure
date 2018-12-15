@@ -8,5 +8,14 @@ Group=security
 WorkingDirectory=/srv/http/security-tracker
 ExecStart=/usr/bin/make update
 
+NoNewPrivileges=yes
+ProtectSystem=full
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+
 [Install]
 WantedBy=multi-user.target
