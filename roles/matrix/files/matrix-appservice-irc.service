@@ -1,6 +1,6 @@
 [Unit]
 Description=Matrix IRC Bridge
-Requires=synapse.service
+Wants=synapse.service
 After=network.target synapse.service
 
 [Service]
