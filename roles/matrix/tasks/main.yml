@@ -5,7 +5,7 @@
   when: 'matrix_domain is defined'
 
 - name: install packages
-  pacman: name=python2-virtualenv,git,npm
+  pacman: name=python,git,npm
 
 - name: add synapse group
   group: name=synapse system=yes gid=198
@@ -22,17 +22,9 @@
     - /var/lib/synapse/uploads
 
 - name: create venv
-  command: virtualenv2 /var/lib/synapse/venv
+  command: python -m venv /var/lib/synapse/venv
   args:
     creates: /var/lib/synapse/venv/bin/python
-  become: yes
-  become_user: synapse
-  become_method: sudo
-
-- name: download synapse
-  command: git clone https://github.com/matrix-org/synapse /var/lib/synapse/synapse
-  args:
-    creates: /var/lib/synapse/synapse/setup.py
   become: yes
   become_user: synapse
   become_method: sudo
@@ -47,11 +39,7 @@
 
 - name: install synapse
   command: >
-    /var/lib/synapse/venv/bin/pip install
-      --no-binary :all:
-      --only-binary lxml,pymacaroons-pynacl,signedjson,unpaddedbase64,canonicaljson
-      -e /var/lib/synapse/synapse
-      psycopg2 systemd-python lxml netaddr
+    /var/lib/synapse/venv/bin/pip install matrix-synapse systemd-python lxml
   args:
     creates: /var/lib/synapse/venv/bin/synctl
   become: yes
