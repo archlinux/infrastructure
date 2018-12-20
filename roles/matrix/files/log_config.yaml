@@ -17,7 +17,7 @@ handlers:
     SYSLOG_IDENTIFIER: synapse
 
 root:
-  level: WARNING
+  level: ERROR
   handlers: [journal]
 
 disable_existing_loggers: False
