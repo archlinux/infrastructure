@@ -5,7 +5,7 @@
   when: 'matrix_domain is defined'
 
 - name: install packages
-  pacman: name=python,git,npm,jemalloc
+  pacman: name=python,git,yarn,jemalloc
 
 - name: add synapse group
   group: name=synapse system=yes gid=198
@@ -47,7 +47,7 @@
   become_method: sudo
 
 - name: install matrix-appservice-irc
-  command: npm install
+  command: yarn install
   args:
     chdir: /var/lib/synapse/matrix-appservice-irc
     creates: /var/lib/synapse/matrix-appservice-irc/node_modules
