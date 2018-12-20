@@ -6,6 +6,7 @@ After=network.target postgresql.service
 [Service]
 User=synapse
 WorkingDirectory=~
+Environment=LD_PRELOAD=/usr/lib/libjemalloc.so
 ExecStart=/var/lib/synapse/venv/bin/python -m synapse.app.homeserver \
   --config-path=/etc/synapse/homeserver.yaml \
   --log-config=/etc/synapse/log_config.yaml
