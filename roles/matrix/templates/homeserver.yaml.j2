@@ -78,13 +78,9 @@ server_name: "{{ matrix_server_name }}"
 #
 # cpu_affinity: 0xFFFFFFFF
 
-# Whether to serve a web client from the HTTP/HTTPS root resource.
-web_client: False
-
-# The root directory to server for the above web client.
-# If left undefined, synapse will serve the matrix-angular-sdk web client.
-# Make sure matrix-angular-sdk is installed with pip if web_client is True
-# and web_client_location is undefined
+# The path to the web client which will be served at /_matrix/client/
+# if 'webclient' is configured under the 'listeners' configuration.
+#
 # web_client_location: "/path/to/web/root"
 
 # The public-facing base URL for the client API (not including _matrix/...)
@@ -151,8 +147,8 @@ listeners:
       -
         # List of resources to host on this listener.
         names:
-          - client     # The client-server APIs, both v1 and v2
-          #- webclient  # The bundled webclient.
+          - client       # The client-server APIs, both v1 and v2
+          # - webclient  # A web client. Requires web_client_location to be set.
 
         # Should synapse compress HTTP responses to clients that support it?
         # This should be disabled if running synapse behind a load balancer
@@ -209,13 +205,23 @@ listeners:
   # max_mau_value: 50
   # mau_trial_days: 2
   #
+  # If enabled, the metrics for the number of monthly active users will
+  # be populated, however no one will be limited. If limit_usage_by_mau
+  # is true, this is implied to be true.
+  # mau_stats_only: False
+  #
   # Sometimes the server admin will want to ensure certain accounts are
   # never blocked by mau checking. These accounts are specified here.
   #
   # mau_limit_reserved_threepids:
   # - medium: 'email'
   #   address: 'reserved_user@example.com'
-
+  #
+  # Room searching
+  #
+  # If disabled, new messages will not be indexed for searching and users
+  # will receive errors when searching for messages. Defaults to enabled.
+  # enable_search: true
 
 
 # Database configuration
@@ -322,7 +328,7 @@ thumbnail_sizes:
 # Is the preview URL API enabled?  If enabled, you *must* specify
 # an explicit url_preview_ip_range_blacklist of IPs that the spider is
 # denied from accessing.
-url_preview_enabled: True
+url_preview_enabled: true
 
 # List of IP address CIDR ranges that the URL preview spider is denied
 # from accessing.  There are no defaults: you must explicitly
@@ -477,10 +483,12 @@ allow_guest_access: False
 
 # The list of identity servers trusted to verify third party
 # identifiers by this server.
+#
+# Also defines the ID server which will be called when an account is
+# deactivated (one will be picked arbitrarily).
 trusted_third_party_id_servers:
     - matrix.org
     - vector.im
-    - riot.im
 
 # Users who register on this homeserver will automatically be joined
 # to these rooms
@@ -499,7 +507,7 @@ autocreate_auto_join_rooms: true
 
 # Enable collection and rendering of performance metrics
 enable_metrics: False
-report_stats: True
+report_stats: False
 
 
 ## API Configuration ##
@@ -514,6 +522,10 @@ room_invite_state_types:
 
 # A list of application service config file to use
 app_service_config_files: ["/etc/synapse/appservice-registration-irc.yaml"]
+
+# Whether or not to track application service IP addresses. Implicitly
+# enables MAU tracking for application service users.
+track_appservice_user_ips: False
 
 
 macaroon_secret_key: "{{ vault_matrix_secrets[matrix_server_name].macaroon_secret_key }}"
@@ -634,3 +646,134 @@ password_config:
 #         #bind_dn:
 #         #bind_password:
 #         #filter: "(objectClass=posixAccount)"
+
+
+
+# Clients requesting push notifications can either have the body of
+# the message sent in the notification poke along with other details
+# like the sender, or just the event ID and room ID (`event_id_only`).
+# If clients choose the former, this option controls whether the
+# notification request includes the content of the event (other details
+# like the sender are still included). For `event_id_only` push, it
+# has no effect.
+
+# For modern android devices the notification content will still appear
+# because it is loaded by the app. iPhone, however will send a
+# notification saying only that a message arrived and who it came from.
+#
+#push:
+#   include_content: true
+
+
+# spam_checker:
+#     module: "my_custom_project.SuperSpamChecker"
+#     config:
+#         example_option: 'things'
+
+
+# Whether to allow non server admins to create groups on this server
+enable_group_creation: false
+
+# If enabled, non server admins can only create groups with local parts
+# starting with this prefix
+# group_creation_prefix: "unofficial/"
+
+
+
+# User Directory configuration
+#
+# 'search_all_users' defines whether to search all users visible to your HS
+# when searching the user directory, rather than limiting to users visible
+# in public rooms.  Defaults to false.  If you set it True, you'll have to run
+# UPDATE user_directory_stream_pos SET stream_id = NULL;
+# on your database to tell it to rebuild the user_directory search indexes.
+#
+#user_directory:
+#   search_all_users: false
+
+
+# User Consent configuration
+#
+# for detailed instructions, see
+# https://github.com/matrix-org/synapse/blob/master/docs/consent_tracking.md
+#
+# Parts of this section are required if enabling the 'consent' resource under
+# 'listeners', in particular 'template_dir' and 'version'.
+#
+# 'template_dir' gives the location of the templates for the HTML forms.
+# This directory should contain one subdirectory per language (eg, 'en', 'fr'),
+# and each language directory should contain the policy document (named as
+# '<version>.html') and a success page (success.html).
+#
+# 'version' specifies the 'current' version of the policy document. It defines
+# the version to be served by the consent resource if there is no 'v'
+# parameter.
+#
+# 'server_notice_content', if enabled, will send a user a "Server Notice"
+# asking them to consent to the privacy policy. The 'server_notices' section
+# must also be configured for this to work. Notices will *not* be sent to
+# guest users unless 'send_server_notice_to_guests' is set to true.
+#
+# 'block_events_error', if set, will block any attempts to send events
+# until the user consents to the privacy policy. The value of the setting is
+# used as the text of the error.
+#
+# 'require_at_registration', if enabled, will add a step to the registration
+# process, similar to how captcha works. Users will be required to accept the
+# policy before their account is created.
+#
+# 'policy_name' is the display name of the policy users will see when registering
+# for an account. Has no effect unless `require_at_registration` is enabled.
+# Defaults to "Privacy Policy".
+#
+# user_consent:
+#   template_dir: res/templates/privacy
+#   version: 1.0
+#   server_notice_content:
+#     msgtype: m.text
+#     body: >-
+#       To continue using this homeserver you must review and agree to the
+#       terms and conditions at %(consent_uri)s
+#   send_server_notice_to_guests: True
+#   block_events_error: >-
+#     To continue using this homeserver you must review and agree to the
+#     terms and conditions at %(consent_uri)s
+#   require_at_registration: False
+#   policy_name: Privacy Policy
+#
+
+
+# Server Notices room configuration
+#
+# Uncomment this section to enable a room which can be used to send notices
+# from the server to users. It is a special room which cannot be left; notices
+# come from a special "notices" user id.
+#
+# If you uncomment this section, you *must* define the system_mxid_localpart
+# setting, which defines the id of the user which will be used to send the
+# notices.
+#
+# It's also possible to override the room name, the display name of the
+# "notices" user, and the avatar for the user.
+#
+# server_notices:
+#   system_mxid_localpart: notices
+#   system_mxid_display_name: "Server Notices"
+#   system_mxid_avatar_url: "mxc://server.com/oumMVlgDnLYFaPVkExemNVVZ"
+#   room_name: "Server Notices"
+
+
+
+# The `alias_creation` option controls who's allowed to create aliases
+# on this server.
+#
+# The format of this option is a list of rules that contain globs that
+# match against user_id and the new alias (fully qualified with server
+# name). The action in the first rule that matches is taken, which can
+# currently either be "allow" or "deny".
+#
+# If no rules match the request is denied.
+alias_creation_rules:
+    - user_id: "*"
+      alias: "*"
+      action: allow
