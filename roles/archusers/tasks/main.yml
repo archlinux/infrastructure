@@ -33,6 +33,7 @@
   find: paths="/home" file_type="directory"
   register: all_users
 
+  # TODO: this removes the keys of svn-packages and svn-community on orion temporarily. add some form of whitelist for those users?
 - name: disable ssh keys of disabled users
   file: path="/home/{{ item }}/.ssh/authorized_keys" state=absent
   when: item not in arch_users
