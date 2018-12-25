@@ -7,6 +7,7 @@
     - { role: common, tags: ['common'] }
     - { role: tools, tags: ['tools'] }
     - { role: firewalld, tags: ['firewall'] }
+    - { role: unbound }
     # reconfiguring sshd may break the AUR on luna (unchecked)
     #- { role: sshd, tags: ['sshd'] }
     - { role: root_ssh, tags: ['root_ssh'] }

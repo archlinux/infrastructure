@@ -6,6 +6,7 @@
     - { role: common }
     - { role: tools }
     - { role: sshd }
+    - { role: unbound }
     - { role: root_ssh }
     - { role: archusers }
     - { role: nginx }

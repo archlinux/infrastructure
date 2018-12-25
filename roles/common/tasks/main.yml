@@ -40,14 +40,18 @@
 
 - name: create symlink to resolv.conf
   file: src=/run/systemd/resolve/stub-resolv.conf dest=/etc/resolv.conf state=link force=yes
-  when: configure_network
+  when: configure_network and not (dns_servers|length == 1 and "127.0.0.1" in dns_servers)
+
+- name: create resolv.conf
+  template: src=resolv.conf.j2 dest=/etc/resolv.conf owner=root group=root mode=0644
+  when: configure_network and (dns_servers|length == 1 and "127.0.0.1" in dns_servers)
 
 - name: start networkd
   service: name=systemd-networkd state=started enabled=yes
   when: configure_network
 
 - name: start resolved
-  service: name=systemd-resolved state=started enabled=yes
+  service: name=systemd-resolved state={{"stopped" if dns_servers|length == 1 and "127.0.0.1" in dns_servers else "started"}} enabled={{"no" if dns_servers|length == 1 and "127.0.0.1" in dns_servers else "yes"}}
   when: configure_network
 
 - name: configure default qdisc
