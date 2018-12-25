@@ -1,56 +1,58 @@
 - name: install sysadmin tools
-  pacman: name={{ item }} state=present
-  with_items:
-    - lsof
-    - psmisc
-    - htop
-    - nethogs
-    - iftop
-    - rsync
-    - tmux
-    - mtr
-    - sshfs
-    - dfc
-    - tree
-    - dstat
-    - dmidecode
-    - net-tools
-    - ncdu
-    - nmap
-    - sysstat
-    - iptraf-ng
-    - vnstat
-    - screen
-    - tcpdump
-    - sudo
+  pacman:
+    state: present
+    name:
+      - lsof
+      - psmisc
+      - htop
+      - nethogs
+      - iftop
+      - rsync
+      - tmux
+      - mtr
+      - sshfs
+      - dfc
+      - tree
+      - dstat
+      - dmidecode
+      - net-tools
+      - ncdu
+      - nmap
+      - sysstat
+      - iptraf-ng
+      - vnstat
+      - screen
+      - tcpdump
+      - sudo
 
 - name: install misc utils
-  pacman: name={{ item }} state=present
-  with_items:
-    - zsh
-    - colordiff
-    - multitail
-    - httpie
-    - the_silver_searcher
-    - ripgrep
-    - cloc
-    - ipcalc
-    - calc
-    - wget
-    - neovim
-    - python2-neovim
-    - vim
-    - parallel
-    - bash-completion
-    - socat
-    - pv
-    - ccze
-    - rxvt-unicode-terminfo
-    - termite-terminfo
-    - p7zip
-    - unzip
-    - setconf
-    - fish
+  pacman:
+    state: present
+    name:
+      - zsh
+      - colordiff
+      - multitail
+      - httpie
+      - the_silver_searcher
+      - ripgrep
+      - cloc
+      - ipcalc
+      - calc
+      - wget
+      - neovim
+      - python2-neovim
+      - vim
+      - parallel
+      - bash-completion
+      - socat
+      - pv
+      - ccze
+      - rxvt-unicode-terminfo
+      - termite-terminfo
+      - p7zip
+      - unzip
+      - setconf
+      - fish
 
 - name: start vnstatd
   service: name=vnstat state=started enabled=true

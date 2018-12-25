@@ -1,22 +1,23 @@
 ---
 
 - name: install packages
-  pacman: name={{ item }} state=present
-  with_items:
-    - git
-    - python
-    - python-sqlalchemy
-    - python-flask
-    - python-flask-sqlalchemy
-    - python-flask-wtf
-    - python-flask-login
-    - python-flask-talisman
-    - python-requests
-    - python-scrypt
-    - pyalpm
-    - sqlite
-    - expac
-    - uwsgi-plugin-python
+  pacman:
+    state: present
+    name:
+      - git
+      - python
+      - python-sqlalchemy
+      - python-flask
+      - python-flask-sqlalchemy
+      - python-flask-wtf
+      - python-flask-login
+      - python-flask-talisman
+      - python-requests
+      - python-scrypt
+      - pyalpm
+      - sqlite
+      - expac
+      - uwsgi-plugin-python
 
 - name: make security user
   user: name=security shell=/bin/false home="{{ security_tracker_dir }}" createhome=no

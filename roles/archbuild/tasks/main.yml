@@ -1,9 +1,7 @@
 ---
 
 - name: install additional buildserver support packages
-  pacman: name={{item}} state=present
-  with_items:
-    - appstream-generator
+  pacman: name="appstream-generator" state=present
 
 - name: install archbuild
   pacman: name=systemd-swap,devtools,zsh,git,subversion,mercurial,bzr,xdelta3,ruby,tig,colordiff state=present
