@@ -47,8 +47,3 @@
     - { role: zabbix-server, tags: ["zabbix", "zabbix-server"] }
     - { role: grafana, tags: ["grafana"] }
     - { role: archwiki, tags: ["archwiki"] }
-  tasks:
-    - name: open firewall hole for hefurd
-      firewalld: port=6969/tcp permanent=true state=enabled immediate=yes
-      tags:
-        - firewall
