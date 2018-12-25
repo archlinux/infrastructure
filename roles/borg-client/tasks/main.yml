@@ -13,7 +13,7 @@
 
 - name: init borg repository
   command: borg init -e keyfile {{ backup_host }}:{{ backup_dir }}
-  when: borg_list | failed
+  when: borg_list is failed
   environment:
     BORG_PASSPHRASE: ""
   ignore_errors: True # This can sometimes fail if a backup is in progress :/
@@ -35,7 +35,7 @@
 
 - name: make postgres backup directory
   file: path=/var/lib/postgres/backup owner=postgres group=postgres state=directory
-  when: check_postgres_user|succeeded and postgres_backup_dir is defined
+  when: check_postgres_user is succeeded and postgres_backup_dir is defined
 
 - name: install mysql backup script
   template: src=backup-mysql.sh.j2 dest=/usr/local/bin/backup-mysql.sh owner=root group=root mode=0755
