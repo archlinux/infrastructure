@@ -11,8 +11,6 @@ tcp_congestion_control: "bbr"
 filesystem: btrfs
 postgres_backup_dir: "/var/lib/postgres/backup"
 
-dns_servers: ["127.0.0.1"]
-
 zabbix_agent_templates:
   - Template OS Linux
   - Template App Borg Backup

@@ -1,4 +1,5 @@
 dns_search_domain: "archlinux.org"
+dns_servers: ["127.0.0.1"]
 
 configure_firewall: true
 

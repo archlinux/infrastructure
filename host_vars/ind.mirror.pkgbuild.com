@@ -6,7 +6,6 @@ network_interface: "eno2"
 ipv4_address: "169.38.85.99"
 ipv4_netmask: "/26"
 ipv4_gateway: "169.38.85.65"
-dns_servers: ["127.0.0.1"]
 
 configure_firewall: true
 

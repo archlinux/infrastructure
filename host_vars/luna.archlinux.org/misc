@@ -2,8 +2,6 @@
 configure_network: false
 filesystem: "ext4"
 
-dns_servers: ["127.0.0.1"]
-
 # FIXME: this should probably be configured another way. maybe the
 # mysql/postgres roles should deploy the credentials themselves
 mysql_backup_dir: "/root/backup-mysql"

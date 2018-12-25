@@ -9,8 +9,6 @@ ipv4_gateway: "5.9.158.161"
 ipv6_gateway: "fe80::1"
 filesystem: ext4
 
-dns_servers: ["127.0.0.1"]
-
 zabbix_agent_templates:
   - Template OS Linux
 
