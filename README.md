@@ -53,6 +53,7 @@ The following steps should be used to update our managed servers:
 - repos/sync (repos.archlinux.org)
 - sources (sources.archlinux.org)
 - archive (archive.archlinux.org)
+- torrent tracker hefurd (tracker.archlinux.org)
 
 ### apollo
 
@@ -73,7 +74,6 @@ The following steps should be used to update our managed servers:
 #### Services
 - build server (pkgbuild.com)
 - releng
-- torrent tracker (hefurd)
 - sogrep
 - /~user/ webhost
 - irc bot (phrik)
