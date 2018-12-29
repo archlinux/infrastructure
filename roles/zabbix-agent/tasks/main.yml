@@ -12,8 +12,12 @@
   when: "'nginx' in group_names"
 
 - name: install mysql userstats monitoring packages
-  pacman: name=perl-dbi,perl-dbd-mysql,perl-dbd-pg,perl-json
+  pacman: name=perl-dbi,perl-dbd-mysql,perl-json
   when: "'mysql-servers' in group_names"
+
+- name: install postgresql userstats monitoring packages
+  pacman: name=perl-dbi,perl-dbd-pg,perl-json
+  when: "'postgresql-servers' in group_names"
 
 - file: path=/etc/zabbix state=directory owner=root group=root mode=755
 
