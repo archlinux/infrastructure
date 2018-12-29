@@ -30,6 +30,7 @@ zabbix_agent_templates:
   - Template App SMTP Service
   - Template App SSH Service
   - Template App Zabbix Server
+  - Template App PostgreSQL
 
 zabbix_agent_host_groups:
   - Linux servers

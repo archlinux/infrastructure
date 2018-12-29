@@ -12,7 +12,7 @@
   when: "'nginx' in group_names"
 
 - name: install mysql userstats monitoring packages
-  pacman: name=perl-dbi,perl-dbd-mysql,perl-json
+  pacman: name=perl-dbi,perl-dbd-mysql,perl-dbd-pg,perl-json
   when: "'mysql-servers' in group_names"
 
 - file: path=/etc/zabbix state=directory owner=root group=root mode=755
@@ -71,6 +71,7 @@
     - systemd-discover-accounting-units.py
     - zabbix-borg-timestamps.pl
     - mysql-dbsize-stats.pl
+    - postgresql-dbsize-stats.pl
 
 - name: Install helper scripts
   copy: src=nginx-zabbix.pl dest=/usr/local/bin/nginx-zabbix.pl mode=0755 owner=root group=root

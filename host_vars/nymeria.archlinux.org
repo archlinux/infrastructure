@@ -17,6 +17,7 @@ archweb_version: release_2018-11-23
 
 zabbix_agent_templates:
   - Template OS Linux
+  - Template App PostgreSQL
 
 configure_firewall: true
 ansible_python_interpreter: /usr/bin/python3.7
