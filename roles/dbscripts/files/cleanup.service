@@ -6,3 +6,7 @@ Type=oneshot
 User=cleanup
 ExecStart=/usr/bin/bash -c '/srv/repos/svn-community/dbscripts/cron-jobs/ftpdir-cleanup 2>&1 | /srv/repos/svn-community/dbscripts/cron-jobs/devlist-mailer "Community Cleanup" "arch-notifications@archlinux.org"'
 ExecStart=/usr/bin/bash -c '/srv/repos/svn-packages/dbscripts/cron-jobs/ftpdir-cleanup 2>&1 | /srv/repos/svn-packages/dbscripts/cron-jobs/devlist-mailer "Packages Cleanup" "arch-notifications@archlinux.org"'
+
+NoNewPrivileges=true
+ProtectHome=true
+PrivateTmp=true
