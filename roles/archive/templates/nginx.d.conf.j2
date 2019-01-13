@@ -28,6 +28,10 @@ server {
 
     root         {{ archive_dir }};
 
+    location /.all/ {
+        rewrite ^/.all/((([^/])[^/]*?)-[^-/]+-[0-9]+-[^-]+[^/]*\.pkg\.tar\.xz(\.sig)?)$ /packages/$3/$2/$1;
+    }
+
     location ~ /repos/201[3456]/.*/.*\.pkg\.tar\.xz(\.sig)? {
         # Tricky regexp to separate the pkgname from the pkgver (both can contain "-")
         rewrite ^/repos/.*/((.*?)-[^-/]+-[0-9]+-[^-]+.*\.pkg\.tar\.xz(\.sig)?)$ /archive.org/archlinux_pkg_$2/$1 last;
