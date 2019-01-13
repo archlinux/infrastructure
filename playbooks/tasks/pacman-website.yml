@@ -3,7 +3,7 @@
 - name: Update pacman website
   hosts: localhost
   vars:
-      pacman_version: "5.1.0"
+      pacman_version: "5.1.2"
       archweb_dir: '/srv/http/archweb'
   tasks:
       - name: Create temp dir
