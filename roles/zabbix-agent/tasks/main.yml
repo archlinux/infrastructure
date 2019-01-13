@@ -1,5 +1,11 @@
 ---
 
+# If you do not have python-zabbix-api installed, this will fail. Please
+# install it manually. It is needed for the tasks later in this role
+- name: install python-zabbix-api package on localhost
+  local_action: pacman name=python-zabbix-api
+  run_once: true
+
 - name: install packages
   pacman: name=zabbix-agent,python-dbus,perl-json,arch-audit
 
