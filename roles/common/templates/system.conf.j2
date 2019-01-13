@@ -23,7 +23,6 @@
 #CrashReboot=no
 #CtrlAltDelBurstAction=reboot-force
 #CPUAffinity=1 2
-#JoinControllers=cpu,cpuacct net_cls,net_prio
 #RuntimeWatchdogSec=0
 #ShutdownWatchdogSec=10min
 #WatchdogDevice=
@@ -53,7 +52,7 @@ DefaultTasksAccounting=yes
 #DefaultLimitSTACK=
 #DefaultLimitCORE=
 #DefaultLimitRSS=
-#DefaultLimitNOFILE=
+#DefaultLimitNOFILE=1024:524288
 #DefaultLimitAS=
 #DefaultLimitNPROC=
 #DefaultLimitMEMLOCK=
