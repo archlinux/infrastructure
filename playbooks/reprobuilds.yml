@@ -1,7 +1,0 @@
----
-- name: common playbook for reproducible build workers
-  hosts: reproducible-builds
-  remote_user: root
-  roles:
-    - { role: sudo }
-    - { role: reprobuilds }
