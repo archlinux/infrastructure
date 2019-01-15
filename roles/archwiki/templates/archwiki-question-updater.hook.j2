@@ -1,0 +1,9 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = pacman
+
+[Action]
+When = PostTransaction
+Exec = /usr/bin/systemctl start archwiki-question-updater.service

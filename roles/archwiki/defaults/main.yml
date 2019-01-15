@@ -4,7 +4,7 @@ archwiki_domain: 'wiki.archlinux.org'
 archwiki_user: 'archwiki'
 archwiki_repository: 'https://git.archlinux.org/vhosts/wiki.archlinux.org.git'
 archwiki_version: '1.31.1-3'
-archwiki_pacman_string: BIQC4LJNFYQCAIBAEAQCAIBAEAQCAIBAEAQCAICQMFRW2YLOEB3DKLRRFYZCALJANRUWEYLMOBWS
+archwiki_question_answer_file: '/srv/http/archwiki/registration-question-answer.txt'
 
 archwiki_socket: '/run/php-fpm/archwiki.socket'
 

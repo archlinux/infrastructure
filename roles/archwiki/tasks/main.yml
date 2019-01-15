@@ -80,6 +80,7 @@
     - archwiki-runjobs.timer
     - archwiki-prune-cache.service
     - archwiki-prune-cache.timer
+    - archwiki-question-updater.service
 
 - name: start and enable archwiki runjobs timer
   service: name="archwiki-runjobs.timer" enabled=yes state=started
@@ -89,3 +90,9 @@
 
 - name: start and enable archwiki runjobs wait service
   service: name="archwiki-runjobs-wait.service" enabled=yes state=started
+
+- name: create question answer file
+  service: name=archwiki-question-updater.service state=started
+
+- name: ensure question answer file exists and set permissions
+  file: state=file path="{{archwiki_question_answer_file}}" owner=root group=root mode=0644

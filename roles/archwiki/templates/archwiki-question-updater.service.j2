@@ -1,0 +1,6 @@
+[Unit]
+Description=Update Archwiki pacman question answer
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c 'pacman -V|base32|head -1 > "{{archwiki_question_answer_file}}"'
