@@ -1,7 +1,7 @@
 ---
 
 - name: install postgres
-  pacman: name=postgresql,python2-psycopg2 state=present
+  pacman: name=postgresql,python-psycopg2 state=present
 
 - name: initialize postgres
   become: yes
