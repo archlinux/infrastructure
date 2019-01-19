@@ -1,13 +1,19 @@
 [Unit]
 Description=Archwiki runJobs Wait Service
+After=mysqld.service
 
 [Service]
-After=mysqld.service
-Depends=mysqld.service
 User={{ archwiki_user }}
 WorkingDirectory={{ archwiki_dir }}
 ExecStart=/usr/bin/php {{ archwiki_dir }}/public/maintenance/runJobs.php -q --wait
 Restart=on-failure
+
+NoNewPrivileges=true
+ProtectHome=true
+ProtectSystem=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
 
 [Install]
 WantedBy=multi-user.target
