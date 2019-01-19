@@ -6,3 +6,12 @@ User=kanboard
 Type=oneshot
 WorkingDirectory={{kanboard_dir}}
 ExecStart=/usr/bin/php ./cli cron
+
+NoNewPrivileges=true
+TimeoutStartSec=3600
+
+ProtectHome=true
+ProtectSystem=full
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
