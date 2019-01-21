@@ -131,7 +131,6 @@ score BAYES_00 -1.0
 score BAYES_05 -0.5
 score BAYES_20 0
 score BAYES_40 1.0
-
 score BAYES_50 1.25
 #score BAYES_60 3.0
 #score BAYES_80 3.5
@@ -142,7 +141,7 @@ score BAYES_50 1.25
 score MISSING_HEADERS 1.3
 score LOTS_OF_MONEY 0.5
 score FREEMAIL_FROM 0.5
-score T_DKIM_INVALID 1.0
+score DKIM_INVALID 1.0
 
 score MONEY_FRAUD_3 0.75
 score MONEY_FRAUD_5 1.0
@@ -156,13 +155,6 @@ header    RCVD_IN_NIX_SPAM  eval:check_rbl('nix-spam-lastexternal','ix.dnsbl.man
 describe  RCVD_IN_NIX_SPAM  Listed in NIX-SPAM DNSBL (www.dnsbl.manitu.net)
 tflags    RCVD_IN_NIX_SPAM  net
 score     RCVD_IN_NIX_SPAM  3.5
-
-# YANDEX
-# also matches valid amazon emails
-# TODO: need to fix!
-#header LOCAL_YANDEX X-Mailer-RecptId =~ /[0-9]+/
-#score LOCAL_YANDEX 5
-
 
 # cancer stuff
 header   __LOCAL_DISEASE_SUBJ Subject =~ /\b(cancer|ill|doctor|survive|disease|illness|admitted|hospital)\b/i
@@ -350,7 +342,8 @@ mimeheader MSWORD_ATTACHED Content-Type =~ /ms-?word/i
 describe MSWORD_ATTACHED email contains a msword attachment
 score MSWORD_ATTACHED 1.0
 
-### whitelist / negative rules for some broken senders... ###
+### whitelist / negative rules for some senders ###
+
 # whitelist abuse reports
 header LOCAL_ABUSE_FROM From =~ /abuse@.*/
 score LOCAL_ABUSE_FROM -2
@@ -360,8 +353,6 @@ score LOCAL_ABUSE_REPLY_TO -2
 
 header LOCAL_ABUSE_TO To =~ /abuse@.*/
 score LOCAL_ABUSE_TO -2
-
-#############################################################
 
 ##################################################
 # from: https://forum.hetzner.de/thread/24022-spamassassin-filterregel/?postID=243392#post243392
