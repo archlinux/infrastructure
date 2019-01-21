@@ -7,7 +7,6 @@ ipv6_netmask: "/128"
 ipv4_gateway: "138.201.206.65"
 ipv6_gateway: "fe80::1"
 default_qdisc: "fq"
-tcp_congestion_control: "bbr"
 filesystem: btrfs
 postgres_backup_dir: "/var/lib/postgres/backup"
 

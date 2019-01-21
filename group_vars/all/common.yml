@@ -1,5 +1,6 @@
 dns_search_domain: "archlinux.org"
 dns_servers: ["127.0.0.1"]
+tcp_congestion_control: "cubic"
 
 configure_firewall: true
 
