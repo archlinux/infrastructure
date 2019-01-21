@@ -27,3 +27,4 @@
         - firewall
   roles:
     - nginx
+    - spampd
