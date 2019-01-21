@@ -15,31 +15,6 @@ server {
     }
 
 	location / {
-		# Server at velocitynet
-		allow  66.211.214.130; # dom0.archlinux.org.
-		allow  66.211.214.131; # gudrun.archlinux.org.
-		allow  66.211.214.132; # gerolde.archlinux.org.
-		allow  2001:470:1f10:717::2/128; # gerolde's tunnel IP
-
-		# Thomas' home
-		#allow  87.193.186.180; # port-87-193-186-180.static.qsc.de.
-		allow  2001:1a80:3026::/48;
-
-		# orion.archlinux.org
-		allow  88.198.91.70;
-		allow  2a01:4f8:160:6087::1;
-
-		# brynhild.archlinux.org
-		allow  176.9.18.112;
-		allow  2a01:4f8:150:1261::2;
-
-		# alberich.archlinux.org
-		allow 216.151.172.98;
-
-		# allison.archlinux.de
-		allow  138.201.131.154;
-		allow  2a01:4f8:172:2ed9::2;
-
 		auth_basic            "Restricted";
 		auth_basic_user_file  auth/dbscripts.htpasswd;
 
@@ -66,31 +41,6 @@ server {
     }
 
 	location / {
-		# Server at velocitynet
-		allow  66.211.214.130; # dom0.archlinux.org.
-		allow  66.211.214.131; # gudrun.archlinux.org.
-		allow  66.211.214.132; # gerolde.archlinux.org.
-		allow  2001:470:1f10:717::2/128; # gerolde's tunnel IP
-
-		# Thomas' home
-		#allow  87.193.186.180; # port-87-193-186-180.static.qsc.de.
-		allow  2001:1a80:3026::/48;
-
-		# orion.archlinux.org
-		allow  88.198.91.70;
-		allow  2a01:4f8:160:6087::1;
-
-		# brynhild.archlinux.org
-		allow  176.9.18.112;
-		allow  2a01:4f8:150:1261::2;
-
-		# alberich.archlinux.org
-		allow 216.151.172.98;
-
-		# allison.archlinux.de
-		allow  138.201.131.154;
-		allow  2a01:4f8:172:2ed9::2;
-
 		auth_basic            "Restricted";
 		auth_basic_user_file  auth/dbscripts.htpasswd;
 
