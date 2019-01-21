@@ -40,10 +40,13 @@
     - yerp.gpg.key
     - zmi.gpg.key
 
-- name: install SA config
-  template: src=local.cf.j2 dest=/etc/mail/spamassassin/local.cf owner=root group=root mode=0644
+- name: install SA configs
+  template: src={{item}}.j2 dest=/etc/mail/spamassassin/{{item}} owner=root group=root mode=0644
   notify:
     restart spampd
+  loop:
+    - local.cf
+    - rules-en.cf
 
 - name: check SA config validity
   command: /usr/bin/vendor_perl/spamassassin --lint
