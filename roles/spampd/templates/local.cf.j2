@@ -186,9 +186,6 @@ meta     LOCAL_BITCOIN ((__LOCAL_BITCOIN_SUBJ + __LOCAL_BITCOIN_BODY) > 0)
 describe LOCAL_BITCOIN Contains bitcoin keywords in body and/or subject
 score    LOCAL_BITCOIN 1.5
 
-header LOCAL_BITCOIN_INVESTOR From =~ /\bBTC Investor\b/i
-score LOCAL_BITCOINT_INVESTOR 2.5
-
 header __LOCAL_ARABIC_STUDENT From =~ /student.*1\./
 header __LOCAL_ARABIC_STUDENT_MAILER X-Mailer =~ /^MBM 7\.9-US$/
 meta LOCAL_ARABIC_STUDENT (__LOCAL_ARABIC_STUDENT && __LOCAL_ARABIC_STUDENT_MAILER)
