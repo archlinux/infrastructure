@@ -54,18 +54,6 @@
   service: name=systemd-resolved state={{"stopped" if dns_servers|length == 1 and "127.0.0.1" in dns_servers else "started"}} enabled={{"no" if dns_servers|length == 1 and "127.0.0.1" in dns_servers else "yes"}}
   when: configure_network
 
-- name: configure default qdisc
-  sysctl:
-    name: net.core.default_qdisc
-    value: "{{default_qdisc}}"
-    sysctl_file: /etc/sysctl.d/net.conf
-  when: default_qdisc is defined
-
-- name: apply default qdisc to interfaces
-  command: tc qdisc replace dev {{item}} root {{default_qdisc}}
-  with_items: "{{ansible_interfaces | difference('lo')}}"
-  when: default_qdisc is defined
-
 - name: configure tcp congestion control algorithm
   sysctl:
     name: net.ipv4.tcp_congestion_control

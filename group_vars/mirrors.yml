@@ -1,5 +1,4 @@
 ---
-default_qdisc: "fq"
 archweb_db_host: 'apollo.archlinux.org'
 
 # raise tcp window limits to 32MiB

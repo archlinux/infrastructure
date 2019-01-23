@@ -6,7 +6,6 @@ ipv6_address: "2a01:4f8:173:1654::1"
 ipv6_netmask: "/128"
 ipv4_gateway: "138.201.206.65"
 ipv6_gateway: "fe80::1"
-default_qdisc: "fq"
 filesystem: btrfs
 postgres_backup_dir: "/var/lib/postgres/backup"
 
