@@ -9,6 +9,8 @@ ipv6_gateway: "fe80::1"
 filesystem: btrfs
 postgres_backup_dir: "/var/lib/postgres/backup"
 
+archbuild_fs: 'btrfs'
+
 zabbix_agent_templates:
   - Template OS Linux
   - Template App Borg Backup
