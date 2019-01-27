@@ -149,6 +149,11 @@ arch_users:
     groups:
       - dev
       - multilib
+  daurnimator:
+    name: "Daurnimator"
+    ssh_key: daurnimator.pub
+    groups:
+      - tu
   dbermond:
     name: "Daniel Bermond"
     ssh_key: dbermond.pub
