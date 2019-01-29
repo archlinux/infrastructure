@@ -116,6 +116,7 @@
     dest=/srv/repos/{{ item }}/dbscripts
     repo=https://git.archlinux.org/dbscripts.git
     version={{ dbscripts_commit }} update={{ dbscripts_update }}
+    verify_commit=yes
   with_items:
     - svn-community
     - svn-packages
