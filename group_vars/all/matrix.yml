@@ -1,0 +1,4 @@
+matrix_domain: "matrix.archlinux.org"
+
+# Same as archweb_domain
+matrix_server_name: "archlinux.org"

@@ -82,6 +82,11 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ archweb_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ archweb_domain }}/chain.pem;
 
+    location /.well-known/matrix/server {
+        add_header Content-Type application/json;
+        return 200 '{"m.server": "{{ matrix_domain }}:443"}';
+    }
+
     location /robots.txt {
         alias {{ archweb_dir }}/archlinux.org/robots.txt;
     }
