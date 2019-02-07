@@ -1,19 +1,70 @@
 # vim:ft=yaml
-# PEM encoded X509 certificate for TLS.
-# You can replace the self-signed certificate that synapse
-# autogenerates on launch with your own SSL certificate + key pair
-# if you like.  Any required intermediary certificates can be
-# appended after the primary certificate in hierarchical order.
+# PEM-encoded X509 certificate for TLS.
+# This certificate, as of Synapse 1.0, will need to be a valid and verifiable
+# certificate, signed by a recognised Certificate Authority.
+#
+# See 'ACME support' below to enable auto-provisioning this certificate via
+# Let's Encrypt.
+#
 tls_certificate_path: "/etc/synapse/{{ matrix_server_name }}.tls.crt"
 
-# PEM encoded private key for TLS
+# PEM-encoded private key for TLS
 tls_private_key_path: "/etc/synapse/{{ matrix_server_name }}.tls.key"
 
-# PEM dh parameters for ephemeral keys
-tls_dh_params_path: "/etc/ssl/dhparams.pem"
+# ACME support: This will configure Synapse to request a valid TLS certificate
+# for your configured `server_name` via Let's Encrypt.
+#
+# Note that provisioning a certificate in this way requires port 80 to be
+# routed to Synapse so that it can complete the http-01 ACME challenge.
+# By default, if you enable ACME support, Synapse will attempt to listen on
+# port 80 for incoming http-01 challenges - however, this will likely fail
+# with 'Permission denied' or a similar error.
+#
+# There are a couple of potential solutions to this:
+#
+#  * If you already have an Apache, Nginx, or similar listening on port 80,
+#    you can configure Synapse to use an alternate port, and have your web
+#    server forward the requests. For example, assuming you set 'port: 8009'
+#    below, on Apache, you would write:
+#
+#    ProxyPass /.well-known/acme-challenge http://localhost:8009/.well-known/acme-challenge
+#
+#  * Alternatively, you can use something like `authbind` to give Synapse
+#    permission to listen on port 80.
+#
+acme:
+    # ACME support is disabled by default. Uncomment the following line
+    # to enable it.
+    #
+    # enabled: true
 
-# Don't bind to the https port
-no_tls: False
+    # Endpoint to use to request certificates. If you only want to test,
+    # use Let's Encrypt's staging url:
+    #     https://acme-staging.api.letsencrypt.org/directory
+    #
+    # url: https://acme-v01.api.letsencrypt.org/directory
+
+    # Port number to listen on for the HTTP-01 challenge. Change this if
+    # you are forwarding connections through Apache/Nginx/etc.
+    #
+    # port: 80
+
+    # Local addresses to listen on for incoming connections.
+    # Again, you may want to change this if you are forwarding connections
+    # through Apache/Nginx/etc.
+    #
+    # bind_addresses: ['::', '0.0.0.0']
+
+    # How many days remaining on a certificate before it is renewed.
+    #
+    # reprovision_threshold: 30
+
+# If your server runs behind a reverse-proxy which terminates TLS connections
+# (for both client and federation connections), it may be useful to disable
+# All TLS support for incoming connections. Setting no_tls to True will
+# do so (and avoid the need to give synapse a TLS private key).
+#
+# no_tls: True
 
 # List of allowed TLS fingerprints for this server to publish along
 # with the signing keys for this server. Other matrix servers that
@@ -42,6 +93,7 @@ no_tls: False
 #
 tls_fingerprints: []
 # tls_fingerprints: [{"sha256": "<base64_encoded_sha256_fingerprint>"}]
+
 
 
 ## Server ##
@@ -83,8 +135,12 @@ server_name: "{{ matrix_server_name }}"
 #
 # web_client_location: "/path/to/web/root"
 
-# The public-facing base URL for the client API (not including _matrix/...)
-# public_baseurl: https://example.com:8448/
+# The public-facing base URL that clients use to access this HS
+# (not including _matrix/...). This is the same URL a user would
+# enter into the 'custom HS URL' field on their client. If you
+# use synapse with a reverse proxy, this should be the URL to reach
+# synapse via the proxy.
+public_baseurl: https://{{ matrix_domain }}/
 
 # Set the soft limit on the number of file descriptors synapse can use
 # Zero is used to indicate synapse should set the soft limit to the
@@ -187,41 +243,41 @@ listeners:
   #   type: manhole
 
 
-  # Homeserver blocking
-  #
-  # How to reach the server admin, used in ResourceLimitError
-  # admin_contact: 'mailto:admin@server.com'
-  #
-  # Global block config
-  #
-  # hs_disabled: False
-  # hs_disabled_message: 'Human readable reason for why the HS is blocked'
-  # hs_disabled_limit_type: 'error code(str), to help clients decode reason'
-  #
-  # Monthly Active User Blocking
-  #
-  # Enables monthly active user checking
-  # limit_usage_by_mau: False
-  # max_mau_value: 50
-  # mau_trial_days: 2
-  #
-  # If enabled, the metrics for the number of monthly active users will
-  # be populated, however no one will be limited. If limit_usage_by_mau
-  # is true, this is implied to be true.
-  # mau_stats_only: False
-  #
-  # Sometimes the server admin will want to ensure certain accounts are
-  # never blocked by mau checking. These accounts are specified here.
-  #
-  # mau_limit_reserved_threepids:
-  # - medium: 'email'
-  #   address: 'reserved_user@example.com'
-  #
-  # Room searching
-  #
-  # If disabled, new messages will not be indexed for searching and users
-  # will receive errors when searching for messages. Defaults to enabled.
-  # enable_search: true
+# Homeserver blocking
+#
+# How to reach the server admin, used in ResourceLimitError
+# admin_contact: 'mailto:admin@server.com'
+#
+# Global block config
+#
+# hs_disabled: False
+# hs_disabled_message: 'Human readable reason for why the HS is blocked'
+# hs_disabled_limit_type: 'error code(str), to help clients decode reason'
+#
+# Monthly Active User Blocking
+#
+# Enables monthly active user checking
+# limit_usage_by_mau: False
+# max_mau_value: 50
+# mau_trial_days: 2
+#
+# If enabled, the metrics for the number of monthly active users will
+# be populated, however no one will be limited. If limit_usage_by_mau
+# is true, this is implied to be true.
+# mau_stats_only: False
+#
+# Sometimes the server admin will want to ensure certain accounts are
+# never blocked by mau checking. These accounts are specified here.
+#
+# mau_limit_reserved_threepids:
+# - medium: 'email'
+#   address: 'reserved_user@example.com'
+#
+# Room searching
+#
+# If disabled, new messages will not be indexed for searching and users
+# will receive errors when searching for messages. Defaults to enabled.
+# enable_search: true
 
 
 # Database configuration
@@ -328,7 +384,7 @@ thumbnail_sizes:
 # Is the preview URL API enabled?  If enabled, you *must* specify
 # an explicit url_preview_ip_range_blacklist of IPs that the spider is
 # denied from accessing.
-url_preview_enabled: true
+url_preview_enabled: True
 
 # List of IP address CIDR ranges that the URL preview spider is denied
 # from accessing.  There are no defaults: you must explicitly
@@ -454,16 +510,21 @@ enable_registration: False
 #     - email
 #     - msisdn
 
+# Explicitly disable asking for MSISDNs from the registration
+# flow (overrides registrations_require_3pid if MSISDNs are set as required)
+#
+# disable_msisdn_registration = True
+
 # Mandate that users are only allowed to associate certain formats of
 # 3PIDs with accounts on this server.
 #
 # allowed_local_3pids:
 #     - medium: email
-#       pattern: ".*@matrix\.org"
+#       pattern: '.*@matrix\.org'
 #     - medium: email
-#       pattern: ".*@vector\.im"
+#       pattern: '.*@vector\.im'
 #     - medium: msisdn
-#       pattern: "\+44"
+#       pattern: '\+44'
 
 # If set, allows registration by anyone who also has the shared
 # secret, even if registration is otherwise disabled.
@@ -480,6 +541,14 @@ bcrypt_rounds: 12
 # participate in rooms hosted on this server which have been made
 # accessible to anonymous users.
 allow_guest_access: False
+
+# The identity server which we suggest that clients should use when users log
+# in on this server.
+#
+# (By default, no suggestion is made, so it is left up to the client.
+# This setting is ignored unless public_baseurl is also set.)
+#
+default_identity_server: https://matrix.org
 
 # The list of identity servers trusted to verify third party
 # identifiers by this server.
@@ -507,7 +576,7 @@ autocreate_auto_join_rooms: true
 
 # Enable collection and rendering of performance metrics
 enable_metrics: False
-report_stats: False
+report_stats: false
 
 
 ## API Configuration ##
@@ -528,13 +597,17 @@ app_service_config_files: ["/etc/synapse/appservice-registration-irc.yaml"]
 track_appservice_user_ips: False
 
 
+# a secret which is used to sign access tokens. If none is specified,
+# the registration_shared_secret is used, if one is given; otherwise,
+# a secret key is derived from the signing key.
 macaroon_secret_key: "{{ vault_matrix_secrets[matrix_server_name].macaroon_secret_key }}"
 
 # Used to enable access token expiration.
 expire_access_token: False
 
 # a secret which is used to calculate HMACs for form values, to stop
-# falsification of values
+# falsification of values. Must be specified for the User Consent
+# forms to work.
 form_secret: "{{ vault_matrix_secrets[matrix_server_name].form_secret }}"
 
 ## Signing Keys ##
@@ -567,15 +640,48 @@ perspectives:
 
 
 
-# Enable SAML2 for registration and login. Uses pysaml2
-# config_path:      Path to the sp_conf.py configuration file
-# idp_redirect_url: Identity provider URL which will redirect
-#                   the user back to /login/saml2 with proper info.
-# See pysaml2 docs for format of config.
-#saml2_config:
-#   enabled: true
-#   config_path: "/etc/synapse/sp_conf.py"
-#   idp_redirect_url: "https://{{ matrix_domain }}/idp"
+# Enable SAML2 for registration and login. Uses pysaml2.
+#
+# saml2_config:
+#
+#   # The following is the configuration for the pysaml2 Service Provider.
+#   # See pysaml2 docs for format of config.
+#   #
+#   # Default values will be used for the 'entityid' and 'service' settings,
+#   # so it is not normally necessary to specify them unless you need to
+#   # override them.
+#
+#   sp_config:
+#     # point this to the IdP's metadata. You can use either a local file or
+#     # (preferably) a URL.
+#     metadata:
+#       # local: ["saml2/idp.xml"]
+#       remote:
+#         - url: https://our_idp/metadata.xml
+#
+#     # The following is just used to generate our metadata xml, and you
+#     # may well not need it, depending on your setup. Alternatively you
+#     # may need a whole lot more detail - see the pysaml2 docs!
+#
+#     description: ["My awesome SP", "en"]
+#     name: ["Test SP", "en"]
+#
+#     organization:
+#       name: Example com
+#       display_name:
+#         - ["Example co", "en"]
+#       url: "http://example.com"
+#
+#     contact_person:
+#       - given_name: Bob
+#         sur_name: "the Sysadmin"
+#         email_address": ["admin@example.com"]
+#         contact_type": technical
+#
+#   # Instead of putting the config inline as above, you can specify a
+#   # separate pysaml2 configuration file:
+#   #
+#   # config_path: "/var/lib/synapse/testconf/sp_conf.py"
 
 
 
