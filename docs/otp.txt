@@ -2,7 +2,7 @@
 
 You can use smartphone 2fa apps like Google Authenticator or pass-otp.
 
-## pass-otp
+## Logging in via pass-otp
 
 Install with `pacman -S pass-otp` and run `pass otp insert -i Hetzner -a
 archlinux-master-token Hetzner/archlinux-master-token -s`. You will be asked
@@ -10,8 +10,16 @@ to supply the "secret" which you can find in "misc/hetzner-password.vault" with
 the name "hetzner_master_seed". Once done, run `pass otp code
 Hetzner/archlinux-master-token` to generate an OTP you can use to log in.
 
+## Adding your own account
+
 Go to the 2fa management page: https://accounts.hetzner.com/tfa
 
 Add a new authentication method with your username and add the token of this
-key to pass as well by running something similar to `pass otp insert -i
-Hetzner -a archlinux Hetzner/archlinux -s`.
+key to either pass or an OTP tool of your choice.
+
+Make sure to put your nickname into the description so we know who that key belongs to.
+
+If you choose to use pass, you can add the key by running something
+similar to `pass otp insert -i Hetzner -a archlinux Hetzner/archlinux -s`.
+
+If you want to use your own tool, you can either scan the QR code or enter the shown string manually.
