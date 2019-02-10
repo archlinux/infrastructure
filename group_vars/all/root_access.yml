@@ -2,7 +2,6 @@
 
 # deploy tag 'sudo' when this changes
 sudo_users:
-  - allan
   - bluewind
   - bpiotrowski
   - foutrelis
