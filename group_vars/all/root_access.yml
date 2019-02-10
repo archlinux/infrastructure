@@ -1,5 +1,6 @@
 ---
 
+# deploy tag 'sudo' when this changes
 sudo_users:
   - allan
   - bluewind
@@ -13,6 +14,7 @@ sudo_users:
   - svenstaro
   - thomas
 
+# deploy tag 'root_ssh' when this changes
 root_ssh_keys:
   - bluewind.pub
   - bpiotrowski.pub
@@ -24,6 +26,7 @@ root_ssh_keys:
   - seblu.pub
   - svenstaro.pub
 
+# run playbook 'playbooks/tasks/reencrypt-vault-key.yml' when this changes
 root_gpgkeys:
   - CFA6AF15E5C74149FC1D8C086D1655C14CE1C13E # bluewind
   - F3691687D867B81B51CE07D9BBE43771487328A9 # bpiotrowski
