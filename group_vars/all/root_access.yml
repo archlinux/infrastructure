@@ -5,32 +5,32 @@ sudo_users:
   - bluewind
   - bpiotrowski
   - foutrelis
+  - fukawi2
   - heftig
   - pierre
   - root
   - seblu
   - svenstaro
   - thomas
-  - fukawi2
 
 root_ssh_keys:
   - bluewind.pub
   - bpiotrowski.pub
-  - svenstaro.pub
-  - seblu.pub
-  - heftig.pub
-  - grazzolini.pub
   - foutrelis.pub
-  - jelle.pub
   - fukawi2.pub
+  - grazzolini.pub
+  - heftig.pub
+  - jelle.pub
+  - seblu.pub
+  - svenstaro.pub
 
 root_gpgkeys:
   - CFA6AF15E5C74149FC1D8C086D1655C14CE1C13E # bluewind
   - F3691687D867B81B51CE07D9BBE43771487328A9 # bpiotrowski
-  - 8FC15A064950A99DD1BD14DD39E4B877E62EB915 # svenstaro
-  - B81B051F2D7FC867AAFF35A58DBD63B82072D77A # seblu
-  - 8218F88849AAC522E94CF470A5E9288C4FA415FA # heftig
-  - ECCAC84C1BA08A6CC8E63FBBF22FB1D78A77AEAB # grazzolini
   - 86CFFCA918CF3AF47147588051E8B148A9999C34 # foutrelis
-  - E499C79F53C96A54E572FEE1C06086337C50773E # jelle
   - 605071ECA86C954B866585C0567A6F396F2CFC03 # fukawi2
+  - ECCAC84C1BA08A6CC8E63FBBF22FB1D78A77AEAB # grazzolini
+  - 8218F88849AAC522E94CF470A5E9288C4FA415FA # heftig
+  - E499C79F53C96A54E572FEE1C06086337C50773E # jelle
+  - B81B051F2D7FC867AAFF35A58DBD63B82072D77A # seblu
+  - 8FC15A064950A99DD1BD14DD39E4B877E62EB915 # svenstaro
