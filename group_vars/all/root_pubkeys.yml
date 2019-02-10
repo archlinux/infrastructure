@@ -1,5 +1,18 @@
 ---
 
+sudo_users:
+  - allan
+  - bluewind
+  - bpiotrowski
+  - foutrelis
+  - heftig
+  - pierre
+  - root
+  - seblu
+  - svenstaro
+  - thomas
+  - fukawi2
+
 root_ssh_keys:
   - bluewind.pub
   - bpiotrowski.pub
