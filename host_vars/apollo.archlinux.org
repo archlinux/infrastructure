@@ -1,5 +1,4 @@
 ---
-
 hostname: "apollo"
 
 ipv4_address: "138.201.81.199"
@@ -9,6 +8,9 @@ ipv6_netmask: "/128"
 ipv4_gateway: "138.201.81.193"
 ipv6_gateway: "fe80::1"
 filesystem: btrfs
+system_disks:
+  - /dev/sda
+  - /dev/sdb
 
 # FIXME: this should probably be configured another way. maybe the
 # mysql/postgres roles should deploy the credentials themselves

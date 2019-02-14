@@ -1,6 +1,9 @@
 ---
 configure_network: false
 filesystem: "ext4"
+system_disks:
+  - /dev/sda
+  - /dev/sdb
 
 # FIXME: this should probably be configured another way. maybe the
 # mysql/postgres roles should deploy the credentials themselves

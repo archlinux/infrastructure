@@ -8,6 +8,9 @@ ipv6_netmask: "/128"
 ipv4_gateway: "5.9.158.161"
 ipv6_gateway: "fe80::1"
 filesystem: ext4
+system_disks:
+  - /dev/sda
+  - /dev/sdb
 
 zabbix_agent_templates:
   - Template OS Linux

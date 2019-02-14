@@ -8,62 +8,54 @@
   fail: msg="Not running in Hetzner rescue system!"
   when: "'Hetzner Rescue' not in motd_contents.stdout"
 
-- name: partition and format the disks
+- name: partition and format the disks (btrfs)
   command: mkfs.btrfs -f -L rootfs -d raid1 /dev/sda /dev/sdb
-  when: filesystem == "btrfs"
+  when: filesystem == "btrfs" and system_disks|length == 2
+
+- name: partition and format the disks (btrfs)
+  filesystem: dev="{{ system_disks[0] }}" fstype=btrfs force=yes opts="-L rootfs"
+  when: filesystem == "btrfs" and system_disks|length == 1
 
 - name: create BIOS boot partitions
-  command: sgdisk -n 1:0:10M /dev/{{ item }}
+  parted: device={{ item }} number=1 state=present part_end=10MiB flags=[boot]
   when: filesystem == "ext4"
   with_items:
-    - sda
-    - sdb
+    - "{{ system_disks }}"
 
 - name: create RAID partitions
-  command: sgdisk -n 2:0:0 /dev/{{ item }}
+  parted: device={{ item }} number=2 state=present flags=[raid]
   when: filesystem == "ext4"
   with_items:
-    - sda
-    - sdb
-
-- name: set BIOS boot partition types
-  command: sgdisk -t 1:ef02 /dev/{{ item }}
-  when: filesystem == "ext4"
-  with_items:
-    - sda
-    - sdb
-
-- name: set RAID partition types
-  command: sgdisk -t 2:fd00
-  when: filesystem == "ext4"
-  with_items:
-    - sda
-    - sdb
+    - "{{ system_disks }}"
 
 - name: create MDADM array
   command: mdadm --create --level=1 --raid-devices=2 --run /dev/md0 /dev/sda2 /dev/sdb2
-  when: filesystem == "ext4"
+  when: filesystem == "ext4" and system_disks|length == 2
 
 - name: format the MDADM array
   filesystem: dev=/dev/md0 fstype=ext4
-  when: filesystem == "ext4"
+  when: filesystem == "ext4" and system_disks|length == 2
 
 - name: mount the filesystem (btrfs)
-  mount: name=/mnt src='LABEL=rootfs' fstype=btrfs state=mounted
+  mount: src="LABEL=rootfs" path=/mnt fstype=btrfs state=mounted opts="compress=lzo"
   when: filesystem == "btrfs"
 
 - name: mount the filesystem (ext4)
   mount: name=/mnt src=/dev/md0 fstype=ext4 state=mounted
-  when: filesystem == "ext4"
+  when: filesystem == "ext4" and system_disks|length == 2
 
 - name: touch LOCK file on mountpoint
   file: path=/mnt/LOCK state=touch
 
 - name: download bootstrap image
-  unarchive:
-    src: https://mirrors.kernel.org/archlinux/iso/latest/archlinux-bootstrap-2016.09.03-x86_64.tar.gz
+  get_url:
+    url: https://mirrors.kernel.org/archlinux/iso/latest/archlinux-bootstrap-2019.02.01-x86_64.tar.gz
     dest: /tmp/
-    copy: no
+
+- name: extract boostrap image
+  command: tar xf archlinux-bootstrap-2019.02.01-x86_64.tar.gz
+  args:
+    chdir: /tmp
     creates: /tmp/root.x86_64
 
 - name: copy resolv.conf to bootstrap chroot
@@ -126,14 +118,25 @@
 - name: run mkinitcpio
   command: chroot /mnt mkinitcpio -p linux
 
-- name: configure network
+- name: configure network (static)
   template: src=10-static-ethernet.network.j2 dest=/mnt/etc/systemd/network/10-static-ethernet.network owner=root group=root mode=0644
+  when: dhcp|default(False) == False
+
+- name: configure network (dhcp)
+  template: src=10-dhcp-ethernet.network.j2 dest=/mnt/etc/systemd/network/10-dhcp-ethernet.network owner=root group=root mode=0644
+  when: dhcp|default(False) == True
+
+- name: provide default mount options (btrfs)
+  lineinfile:
+    path: /mnt/etc/default/grub
+    regexp: "^GRUB_CMDLINE_LINUX_DEFAULT="
+    line: "GRUB_CMDLINE_LINUX_DEFAULT=\"rootflags=compress=lzo\""
+  when: filesystem == "btrfs"
 
 - name: install grub
   command: chroot /mnt grub-install --recheck {{ item }}
   with_items:
-    - /dev/sda
-    - /dev/sdb
+    - "{{ system_disks }}"
 
 - name: configure grub
   command: chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
@@ -147,7 +150,7 @@
 - name: enable services inside chroot
   command: chroot /mnt systemctl enable sshd systemd-networkd systemd-resolved
 
-- set_fact: pubkey_list="{{ lookup('file', '../pubkeys/' + item) }}"
+- set_fact: pubkey_list="{{ lookup('file', "{{ playbook_dir }}/../../pubkeys/" + item) }}"
   register: pubkeys
   with_items: "{{ root_ssh_keys }}"
 
@@ -161,6 +164,9 @@
 
 - name: create symlink to resolv.conf
   file: src=/run/systemd/resolve/resolv.conf dest=/mnt/etc/resolv.conf state=link force=yes
+
+- name: clean pacman cache
+  shell: yes | chroot /mnt pacman -Scc
 
 - name: remove LOCK file on mountpoint
   file: path=/mnt/LOCK state=absent

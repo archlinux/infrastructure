@@ -7,6 +7,9 @@ ipv6_netmask: "/128"
 ipv4_gateway: "88.198.91.65"
 ipv6_gateway: "fe80::1"
 filesystem: btrfs
+system_disks:
+  - /dev/sda
+  - /dev/sdb
 
 # raise tcp window limits to 32MiB
 tcp_rmem: "10240 87380 33554432"
