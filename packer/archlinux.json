@@ -1,0 +1,22 @@
+{
+    "variables": {
+        "hetzner_cloud_api_key": null
+    },
+    "sensitive-variables": ["hetzner_cloud_api_key"],
+    "builders": [{
+        "type": "hcloud",
+        "snapshot_name": "archlinux-{{ isotime \"2006-01-02T15:04\" }}",
+        "token": "{{ user `hetzner_cloud_api_key` }}",
+        "image": "ubuntu-18.04",
+        "server_type": "cx11",
+        "ssh_username": "root",
+        "location": "nbg1",
+        "rescue": "linux64"
+    }],
+    "provisioners": [{
+        "type": "ansible",
+        "playbook_file": "playbooks/tasks/install_arch.yml",
+        "host_alias": "packer-base-image",
+        "inventory_directory": "."
+    }]
+}

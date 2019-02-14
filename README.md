@@ -24,6 +24,15 @@ it is necessary to run the following once:
 
 Note that some roles already run this automatically.
 
+##### Note about packer
+
+We use packer to build snapshots on hcloud to use as server base images.
+In order to use this, you need to install packer and then run
+
+	packer build -var $(./packer/get_hetzner_cloud_api_key.sh) packer/archlinux.json
+
+This will take some time after which a new snapshot will have been created on the primary hcloud archlinux project.
+
 ##### Note about opendkim
 
 The opendkim DNS data has to be added to DNS manually. The roles verifies that the DNS is correct before starting opendkim.
