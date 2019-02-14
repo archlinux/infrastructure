@@ -16,7 +16,12 @@
     - { role: nginx, tags: ["nginx"] }
     - { role: sudo, tags: ['sudo', 'archusers'] }
     - { role: phrik, tags: ['phrik'] }
-    - { role: postgres, tags: ['postgres'] }
+    - role: postgres
+      postgres_shared_buffers: 2GB
+      postgres_work_mem: 32MB
+      postgres_maintenance_work_mem: 1GB
+      postgres_effective_cache_size: 32GB
+      tags: ['postgres']
     - { role: oidentd, tags: ['oidentd'] }
     - { role: quassel, quassel_domain: "quassel.archlinux.org", tags: ['quassel'] }
     - { role: matrix, tags: ['matrix'] }

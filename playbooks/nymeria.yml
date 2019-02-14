@@ -10,8 +10,10 @@
     - { role: unbound }
     - { role: root_ssh, tags: ['root_ssh'] }
     - { role: nginx, tags: ["nginx"] }
-    - { role: postgres, postgres_max_connections: 1000, postgres_shared_buffers: 4096MB,
-              tags: ['postgres'] }
+    - role: postgres
+      postgres_max_connections: 1000
+      postgres_shared_buffers: 4096MB
+      tags: ['postgres']
     - { role: uwsgi, tags: ['uwsgi'] }
     - { role: opendkim, dkim_selector: nymeria, tags: ['mail'] }
     - { role: postfix, postfix_server: false, postfix_smtpd_public: false, tags: ['mail'] }

@@ -9,6 +9,9 @@ postgres_ssl_key_file: '/var/lib/postgres/data/privkey.pem'
 postgres_ssl_ca_file: '/var/lib/postgres/data/chain.pem'
 
 postgres_shared_buffers: '128MB'
+postgres_work_mem: '4MB'
+postgres_maintenance_work_mem: '64MB'
+postgres_effective_cache_size: '4GB'
 
 postgres_ssl_hosts4: []
 postgres_ssl_hosts6: []

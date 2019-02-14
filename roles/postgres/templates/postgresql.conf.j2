@@ -123,8 +123,8 @@ shared_buffers = {{ postgres_shared_buffers }}			# min 128kB
 					# (change requires restart)
 # Caution: it is not advisable to set max_prepared_transactions nonzero unless
 # you actively intend to use prepared transactions.
-#work_mem = 4MB				# min 64kB
-#maintenance_work_mem = 64MB		# min 1MB
+work_mem = {{ postgres_work_mem }}				# min 64kB
+maintenance_work_mem = {{ postgres_maintenance_work_mem }}		# min 1MB
 #autovacuum_work_mem = -1		# min 1MB, or -1 to use maintenance_work_mem
 #max_stack_depth = 2MB			# min 100kB
 dynamic_shared_memory_type = posix	# the default is the first option
@@ -331,7 +331,7 @@ min_wal_size = 80MB
 
 #min_parallel_table_scan_size = 8MB
 #min_parallel_index_scan_size = 512kB
-#effective_cache_size = 4GB
+effective_cache_size = {{ postgres_effective_cache_size }}
 
 # - Genetic Query Optimizer -
 
