@@ -33,6 +33,20 @@ In order to use this, you need to install packer and then run
 
 This will take some time after which a new snapshot will have been created on the primary hcloud archlinux project.
 
+##### Note about terraform
+
+We use terraform to provision a part of the infrastructure on hcloud.
+In order to use this, you need to install terraform and then run
+
+    terraform plan -var $(./packer/get_hetzner_cloud_api_key.sh) terraform
+
+This will show you planned changes between the current infrastructure and the desired infrastructure.
+You can then run
+
+    terraform apply -var $(./packer/get_hetzner_cloud_api_key.sh) terraform
+
+to actually apply your changes.
+
 ##### Note about opendkim
 
 The opendkim DNS data has to be added to DNS manually. The roles verifies that the DNS is correct before starting opendkim.

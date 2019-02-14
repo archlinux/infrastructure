@@ -1,3 +1,5 @@
 *.pyc
 *.retry
+*.terraform
+*.tfstate*
 /borg-keys/
