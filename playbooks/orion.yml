@@ -21,6 +21,7 @@
     - { role: archusers, tags: ['archusers'] }
     - { role: nginx, tags: ["nginx"] }
     - { role: dbscripts, repos_domain: "repos.archlinux.org", repos_rsync_domain: "rsync.archlinux.org", svntogit_repos: "/srv/svntogit/repos", postgres_ssl: 'on', tags: ['dbscripts', 'archusers'] }
+    - sogrep
     - { role: sudo, tags: ['sudo', 'archusers'] }
     - { role: archweb, archweb_site: false, archweb_services: true, archweb_donor_import: true, archweb_mirrorcheck_locations: [5, 6], tags: ['archweb'] }
     - { role: sources, sources_domain: "sources.archlinux.org", sources_dir: "/srv/sources", tags: ['sources'] }
