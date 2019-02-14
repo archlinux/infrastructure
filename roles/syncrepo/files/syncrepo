@@ -7,17 +7,32 @@
 # is run every minute. Performing a simple check via HTTP first can thus save a
 # lot of traffic.
 
+# Directory where the repo is stored locally. Example: /srv/repo
 target="/srv/ftp"
+
+# Directory where files are downloaded to before being moved in place.
+# This should be on the same filesystem as $target, but not a subdirectory of $target.
+# Example: /srv/tmp
 tmp="/srv/syncrepo-tmp"
+
+# Lockfile path
 lock="/var/lock/syncrepo.lck"
 
-# NOTE: You'll probably want to change this or set it to 0 to disable the limit
+# If you want to limit the bandwidth used by rsync set this.
+# Use 0 to disable the limit.
 # The default unit is KiB (see man rsync /--bwlimit for more)
 bwlimit=0
 
-# NOTE: Most people reading this very likely need to change this since
-# rsync.archlinux.org requires you to be a tier 1 mirror
+# The source URL of the mirror you want to sync from.
+# If you are a tier 1 mirror use rsync.archlinux.org, for example like this:
+# rsync://rsync.archlinux.org/ftp_tier1
+# Otherwise chose a tier 1 mirror from this list and use its rsync URL:
+# https://www.archlinux.org/mirrors/
 source='rsync://rsync.archlinux.org/ftp_tier1'
+
+# An HTTP(S) URL pointing to the 'lastupdate' file on your chosen mirror.
+# If you are a tier 1 mirror use: http://rsync.archlinux.org/lastupdate
+# Otherwise use the HTTP(S) URL from your chosen mirror.
 lastupdate_url='http://rsync.archlinux.org/lastupdate'
 
 #### END CONFIG
