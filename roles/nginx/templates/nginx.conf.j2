@@ -63,6 +63,8 @@ http {
     brotli on;
     brotli_types text/plain text/css application/javascript application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
 
+    http2_max_field_size 8k;
+
     index  index.php index.html index.htm;
 
     access_log syslog:server=unix:/dev/log,nohostname,tag=nginx_http main;
