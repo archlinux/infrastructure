@@ -80,7 +80,7 @@ rsync_cmd \
 	--exclude='*.links.tar.gz*' \
 	--exclude='/other' \
 	--exclude='/sources' \
-	"${source}" \
+	"${source_url}" \
 	"${target}"
 
 #echo "Last sync was $(date -d @$(cat ${target}/lastsync))"
