@@ -1,12 +1,12 @@
 #!/bin/bash
 
-NOTE: This script is a copy of the syncrepo-template.sh script in the same
-directory.  It is a copy instead of being a template because the template is
-linked in the wiki. People that follow the link and want to use the script
-should populate the variables themselves and not be influenced by the values we
-are using.
+# NOTE: This script is a copy of the syncrepo-template.sh script in the same
+# directory.  It is a copy instead of being a template because the template is
+# linked in the wiki. People that follow the link and want to use the script
+# should populate the variables themselves and not be influenced by the values we
+# are using.
 
-NOTE: If you perform changes to this script, also consider changing the template!
+# NOTE: If you perform changes to this script, also consider changing the template!
 
 # This is a simple mirroring script. To save bandwidth it first checks a
 # timestamp via HTTP and only runs rsync when the timestamp differs from the
