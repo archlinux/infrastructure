@@ -1,29 +1,27 @@
-#!/bin/zsh
-setopt extendedglob nomatch errreturn
+#!/bin/bash -e
 
-integer ret=0
+dir=/var/lib/archbuilddest/srcdest
+ret=0
+age=${1:-90}
 
-cd /var/lib/archbuilddest/srcdest
-
-files=( *(.Na+90) )
-for folder in *(/N); do
-  infolder=( $folder/**/*(.NDa-90[1]) )
-  (( ${#infolder} )) || files+=($folder)
-done
-
-(( ${#files} )) || exit 0
-
-df -HT .
-echo "<6>Deleting ${#files} files"
-
-for file in $files; do
-  if rm -rf -- $file; then
+while IFS= read -r -d $'\0' file; do
+  if rm -rf -- "$file"; then
     echo "<6>Deleted $file"
   else
     echo "<3>Error deleting $file"
     ret=1
   fi
-done
+done < <(
+  find "$dir" -maxdepth 1 -type f -atime +$age -print0
 
-df -HT .
+  rage=$((age + 1))
+  while IFS= read -r -d $'\0' folder; do
+    if [[ -z $(find "$folder" -type f -atime -$rage -print -quit) ]]; then
+      printf '%s\0' "$folder"
+    fi
+  done < <(find "$dir" -mindepth 1 -maxdepth 1 -type d -print0)
+)
+
 exit $ret
+
+# vim:set sw=2 et:
