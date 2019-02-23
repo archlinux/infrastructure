@@ -97,17 +97,6 @@
 256 MD5:7a:f0:c7:48:72:84:e1:b9:ec:9a:5f:6b:d3:8a:59:1e root@archlinux (ED25519)
 2048 MD5:a9:b6:d4:1e:26:13:29:00:4a:06:80:bc:8f:b7:fc:33 root@archlinux (RSA)
 
-# nymeria.archlinux.org
-1024 SHA256:/69v4HjmGl4R4cMEczk5LafLPrBMKt1bXZ79hCcU6Gk root@nymeria (DSA)
-256 SHA256:d/MCovRQoUSoq9MLt7kPlQRxhFbpg2siX+BjMLm0sMk root@nymeria (ECDSA)
-256 SHA256:+dou6jxtb+FqpQGJvEnyrgqVXLYTXXmKKnBRCOgNjCk root@nymeria (ED25519)
-2048 SHA256:DBbIfIB8qBogZqLleC9nIk/bJ2qj/myfNMUJ6s1zBVI root@nymeria (RSA)
-
-1024 MD5:92:82:93:1f:20:7d:b8:ac:59:ad:1b:15:8e:b5:dd:68 root@nymeria (DSA)
-256 MD5:98:af:9a:30:47:bc:b4:23:bd:2f:f0:4e:cb:c3:b1:b0 root@nymeria (ECDSA)
-256 MD5:e3:20:55:bd:15:83:b6:cb:3a:7a:7e:86:f2:fc:7d:87 root@nymeria (ED25519)
-2048 MD5:3f:ab:d5:47:36:33:56:0b:e8:f4:58:36:a0:3b:e2:fd root@nymeria (RSA)
-
 # orion.archlinux.org
 1024 SHA256:Y7XP+fTQZAEDgmCHuSqFc0MmNUmCPJYRZs/7iq6viK8 root@mnt (DSA)
 256 SHA256:2gH/IGaZ/pOnpt4+VY0twd4+hUOraUWRceJiNQxnbxs root@mnt (ECDSA)

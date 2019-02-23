@@ -33,7 +33,6 @@ luna.archlinux.org
 [postgresql-servers]
 apollo.archlinux.org
 soyuz.archlinux.org
-nymeria.archlinux.org
 
 [nginx]
 apollo.archlinux.org
@@ -43,9 +42,6 @@ orion.archlinux.org
 [buildservers]
 soyuz.archlinux.org
 sgp.mirror.pkgbuild.com
-
-[staging]
-nymeria.archlinux.org
 
 [reproducible-builds]
 repro1.pkgbuild.com

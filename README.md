@@ -106,11 +106,6 @@ The following steps should be used to update our managed servers:
 - arch boxes (packer)
 
 
-### nymeria
-
-#### Services
-- archweb staging env (archweb-dev.archlinux.org)
-
 ## Ansible repo workflows
 
 ### Replace vault password and change vaulted passwords
