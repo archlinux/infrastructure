@@ -54,14 +54,6 @@
   service: name=systemd-resolved state={{"stopped" if dns_servers|length == 1 and "127.0.0.1" in dns_servers else "started"}} enabled={{"no" if dns_servers|length == 1 and "127.0.0.1" in dns_servers else "yes"}}
   when: configure_network
 
-- name: configure tcp congestion control algorithm
-  sysctl:
-    name: net.ipv4.tcp_congestion_control
-    value: "{{tcp_congestion_control}}"
-    sysctl_set: yes
-    sysctl_file: /etc/sysctl.d/net.conf
-  when: tcp_congestion_control is defined
-
 - name: configure tcp receive window limits
   sysctl:
     name: net.ipv4.tcp_rmem
