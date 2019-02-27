@@ -99,6 +99,9 @@ enable_gzip = true
 # Set to true to log the sql calls and execution times.
 log_queries =
 
+# For "sqlite3" only. cache mode setting used for connecting to the database. (private, shared)
+;cache_mode = private
+
 #################################### Session ####################################
 [session]
 # Either "memory", "file", "redis", "mysql", "postgres", default is "file"
@@ -127,6 +130,9 @@ log_queries =
 # This enables data proxy logging, default is false
 ;logging = false
 
+# How long the data proxy should wait before timing out default is 30 (seconds)
+;timeout = 30
+
 #################################### Analytics ####################################
 [analytics]
 # Server reporting, sends usage counters to stats.grafana.org every 24 hours.
@@ -145,6 +151,9 @@ log_queries =
 # Google Analytics universal tracking code, only enabled if you specify an id here
 ;google_analytics_ua_id =
 
+# Google Tag Manager ID, only enabled if you specify an id here
+;google_tag_manager_id =
+
 #################################### Security ####################################
 [security]
 # default admin user, created on startup
@@ -156,11 +165,6 @@ admin_user = admin
 # used for signing
 ;secret_key = SW2YcwTIb9zpOOhoPsMm
 
-# Auto-login remember days
-;login_remember_days = 7
-;cookie_username = grafana_user
-;cookie_remember_name = grafana_remember
-
 # disable gravatar profile images
 ;disable_gravatar = false
 
@@ -169,6 +173,12 @@ admin_user = admin
 
 # disable protection against brute force login attempts
 ;disable_brute_force_login_protection = false
+
+# set to true if you host Grafana behind HTTPS. default is false.
+;cookie_secure = false
+
+# set cookie SameSite attribute. defaults to `lax`. can be set to "lax", "strict" and "none"
+;cookie_samesite = lax
 
 #################################### Snapshots ###########################
 [snapshots]
@@ -214,6 +224,18 @@ allow_sign_up = false
 ;viewers_can_edit = false
 
 [auth]
+# Login cookie name
+;login_cookie_name = grafana_session
+
+# The lifetime (days) an authenticated user can be inactive before being required to login at next visit. Default is 7 days,
+;login_maximum_inactive_lifetime_days = 7
+
+# The maximum lifetime (days) an authenticated user can be logged in since login time before being required to login. Default is 30 days.
+;login_maximum_lifetime_days = 30
+
+# How often should auth tokens be rotated for authenticated users when being active. The default is each 10 minutes.
+;token_rotation_interval_minutes = 10
+
 # Set to true to disable (hide) the login form, useful if you use OAuth, defaults to false
 ;disable_login_form = false
 
@@ -223,7 +245,11 @@ allow_sign_up = false
 # URL to redirect the user to after sign out
 ;signout_redirect_url =
 
-#################################### Anonymous Auth ##########################
+# Set to true to attempt login with OAuth automatically, skipping the login screen.
+# This setting is ignored if multiple OAuth providers are configured.
+;oauth_auto_login = false
+
+#################################### Anonymous Auth ######################
 [auth.anonymous]
 # enable anonymous access
 ;enabled = false
@@ -276,6 +302,10 @@ allow_sign_up = false
 ;tls_client_cert =
 ;tls_client_key =
 ;tls_client_ca =
+
+; Set to true to enable sending client_id and client_secret via POST body instead of Basic authentication HTTP header
+; This might be required if the OAuth provider is not RFC6749 compliant, only supporting credentials passed via POST payload
+;send_client_credentials_via_post = false
 
 #################################### Grafana.com Auth ####################
 [auth.grafana_com]
