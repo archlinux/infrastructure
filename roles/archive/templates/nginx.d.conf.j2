@@ -33,8 +33,7 @@ server {
     }
 
     location ~ /repos/201[3456]/.*/.*\.pkg\.tar\.xz(\.sig)? {
-        # Tricky regexp to separate the pkgname from the pkgver (both can contain "-")
-        rewrite ^/repos/.*/((.*?)-[^-/]+-[0-9]+-[^-]+.*\.pkg\.tar\.xz(\.sig)?)$ /archive.org/archlinux_pkg_$2/$1 last;
+        rewrite ^/repos/.*/((?<pkgname>[^/]+)-(?<pkgver>[^-/]+)-(?<pkgrel>[0-9]+)-(?<arch>[^-/]+)\.pkg\.tar\.xz(?<sig>\.sig)?)$ /archive.org/archlinux_pkg_$2/$1 last;
     }
     # archive.org download URLs look like:
     # https://archive.org/download/archlinux_pkg_lucene__/lucene++-1.4.2-3-i686.pkg.tar.xz
