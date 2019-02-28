@@ -29,7 +29,9 @@ server {
     root         {{ archive_dir }};
 
     location /.all/ {
-        rewrite ^/.all/((([^/])[^/]*?)-[^-/]+-[0-9]+-[^-]+[^/]*\.pkg\.tar\.xz(\.sig)?)$ /packages/$3/$2/$1;
+        location ~ ^/.all/(<?filename>(?<pkgname>(?<pkgname_first_char>[^/])[^/]+)-(?<pkgver>[^-/]+)-(?<pkgrel>[0-9]+)-(?<arch>[^-/]+)\.pkg\.tar\.xz(?<sig>\.sig)?)$ {
+            rewrite ^ /packages/$pkgname_first_char/$pkgname/$filename;
+        }
     }
 
     location ~ /repos/201[3456]/.*/.*\.pkg\.tar\.xz(\.sig)? {
