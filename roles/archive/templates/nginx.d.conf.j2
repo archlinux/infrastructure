@@ -29,13 +29,15 @@ server {
     root         {{ archive_dir }};
 
     location /.all/ {
+        # XXX: This regex is reused for /repos/ below! Change both if you change this!
         location ~ ^/.all/(<?filename>(?<pkgname>(?<pkgname_first_char>[^/])[^/]+)-(?<pkgver>[^-/]+)-(?<pkgrel>[0-9]+)-(?<arch>[^-/]+)\.pkg\.tar\.xz(?<sig>\.sig)?)$ {
             rewrite ^ /packages/$pkgname_first_char/$pkgname/$filename;
         }
     }
 
-    location ~ /repos/201[3456]/.*/.*\.pkg\.tar\.xz(\.sig)? {
-        rewrite ^/repos/.*/((?<pkgname>[^/]+)-(?<pkgver>[^-/]+)-(?<pkgrel>[0-9]+)-(?<arch>[^-/]+)\.pkg\.tar\.xz(?<sig>\.sig)?)$ /archive.org/archlinux_pkg_$2/$1 last;
+    # XXX: This regex is the same as for .all above. Change both if you change this!
+    location ~ ^/repos/201[3456]/.*/(<?filename>(?<pkgname>(?<pkgname_first_char>[^/])[^/]+)-(?<pkgver>[^-/]+)-(?<pkgrel>[0-9]+)-(?<arch>[^-/]+)\.pkg\.tar\.xz(?<sig>\.sig)?)$ {
+        rewrite ^ /archive.org/archlinux_pkg_$pkgname/$filename last;
     }
     # archive.org download URLs look like:
     # https://archive.org/download/archlinux_pkg_lucene__/lucene++-1.4.2-3-i686.pkg.tar.xz
