@@ -8,3 +8,6 @@
 
 - name: systemd daemon-reload
   command: systemctl daemon-reload
+
+- name: restart syslog-ng
+  service: name=syslog-ng@default state=restarted
