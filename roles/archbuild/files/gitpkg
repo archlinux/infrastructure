@@ -406,7 +406,7 @@ if gitify
     check: case
     when meson
       <<~END
-        meson test -C build
+        meson test -C build --print-errorlogs
       END
     when pbr.has_func?(:check)
     when autotools
@@ -464,3 +464,5 @@ end
 
 Dir.unlink "src"
 File.unlink(*Dir.glob("*.pkg.tar.xz"))
+
+# vim:set sw=2 et:
