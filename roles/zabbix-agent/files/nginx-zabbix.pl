@@ -63,6 +63,7 @@ sub main {
 			200 => 0,
 			404 => 0,
 			500 => 0,
+			502 => 0,
 			other => 0,
 		},
 		# counter since prog start
