@@ -1,6 +1,6 @@
 ---
 - name: install required packages
-  pacman: name=git,python-setuptools,python-psycopg2,python-virtualenv,uwsgi-plugin-python,gcc state=present
+  pacman: name=git,python-setuptools,python-psycopg2,uwsgi-plugin-python,gcc state=present
 
 - name: make archweb user
   user: name=archweb shell=/bin/false home="{{ archweb_dir }}" createhome=no
@@ -36,7 +36,7 @@
   register: release
 
 - name: make virtualenv
-  command: virtualenv "{{ archweb_dir }}"/env creates="{{ archweb_dir }}/env/bin/python"
+  command: python -m venv "{{ archweb_dir }}"/env creates="{{ archweb_dir }}/env/bin/python"
   become: true
   become_user: archweb
 
