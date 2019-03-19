@@ -185,8 +185,9 @@ arch_users:
     name: "David Runge"
     ssh_key: dvzrv.pub
     groups:
-      - tu
+      - dev
       - multilib
+      - tu
   eschwartz:
     name: "Eli Schwartz"
     ssh_key: eschwartz.pub
