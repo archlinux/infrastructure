@@ -1,6 +1,6 @@
 ---
 hostname: "dragon"
-
+network_interface: "eth2"
 ipv4_address: "195.201.167.210"
 ipv4_netmask: "/26"
 ipv6_address: "2a01:4f8:13a:102a::2"
