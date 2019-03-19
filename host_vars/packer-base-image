@@ -6,5 +6,3 @@ network_interface: "en*"
 filesystem: btrfs
 system_disks:
   - /dev/sda
-
-ansible_python_interpreter: /usr/bin/python3

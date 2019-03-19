@@ -1,0 +1,19 @@
+---
+hostname: "dragon"
+network_interface: "eth2"
+ipv4_address: "195.201.167.210"
+ipv4_netmask: "/26"
+ipv6_address: "2a01:4f8:13a:102a::2"
+ipv6_netmask: "/128"
+ipv4_gateway: "195.201.167.193"
+ipv6_gateway: "fe80::1"
+filesystem: btrfs
+raid_level: raid0
+system_disks:
+  - /dev/nvme0n1
+  - /dev/nvme1n1
+
+archbuild_fs: 'btrfs'
+
+zabbix_agent_templates:
+  - Template OS Linux
