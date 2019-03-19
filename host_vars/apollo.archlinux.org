@@ -37,9 +37,3 @@ zabbix_agent_templates:
 zabbix_agent_host_groups:
   - Linux servers
   - Zabbix servers
-
-configure_firewall: true
-
-# this is needed to make ansible find the firewalld python
-# module when deploying firewalld tasks
-ansible_python_interpreter: /usr/bin/python3.7
