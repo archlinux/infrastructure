@@ -9,7 +9,7 @@
   when: "'Hetzner Rescue' not in motd_contents.stdout"
 
 - name: partition and format the disks (btrfs)
-  command: mkfs.btrfs -f -L rootfs -d raid1 /dev/sda /dev/sdb
+  command: mkfs.btrfs -f -L rootfs -d {{ raid_level|default(raid1) }} {{ system_disks|join(' ') }}
   when: filesystem == "btrfs" and system_disks|length == 2
 
 - name: partition and format the disks (btrfs)
@@ -49,11 +49,11 @@
 
 - name: download bootstrap image
   get_url:
-    url: https://mirrors.kernel.org/archlinux/iso/latest/archlinux-bootstrap-2019.02.01-x86_64.tar.gz
+    url: https://mirrors.kernel.org/archlinux/iso/2019.03.01/archlinux-bootstrap-2019.03.01-x86_64.tar.gz
     dest: /tmp/
 
 - name: extract boostrap image
-  command: tar xf archlinux-bootstrap-2019.02.01-x86_64.tar.gz
+  command: tar xf archlinux-bootstrap-2019.03.01-x86_64.tar.gz
   args:
     chdir: /tmp
     creates: /tmp/root.x86_64
@@ -148,7 +148,7 @@
     line: 'hosts: files mymachines resolve myhostname'
 
 - name: enable services inside chroot
-  command: chroot /mnt systemctl enable sshd systemd-networkd systemd-resolved
+  command: chroot /mnt systemctl enable sshd systemd-networkd systemd-resolved fstrim
 
 - set_fact: pubkey_list="{{ lookup('file', "{{ playbook_dir }}/../../pubkeys/" + item) }}"
   register: pubkeys

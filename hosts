@@ -4,6 +4,7 @@ vostok.archlinux.org
 apollo.archlinux.org
 soyuz.archlinux.org
 luna.archlinux.org
+dragon.archlinux.org
 
 [pia]
 ind.mirror.pkgbuild.com
@@ -40,6 +41,7 @@ luna.archlinux.org
 orion.archlinux.org
 
 [buildservers]
+dragon.archlinux.org
 soyuz.archlinux.org
 sgp.mirror.pkgbuild.com
 
