@@ -24,6 +24,7 @@
       - screen
       - tcpdump
       - sudo
+      - glances
 
 - name: install misc utils
   pacman:
@@ -36,6 +37,7 @@
       - the_silver_searcher
       - ripgrep
       - cloc
+      - tokei
       - ipcalc
       - calc
       - wget
@@ -53,6 +55,8 @@
       - unzip
       - setconf
       - fish
+      - bat
+      - hexyl
 
 - name: start vnstatd
   service: name=vnstat state=started enabled=true
