@@ -58,6 +58,7 @@
       - bat
       - hexyl
       - stow
+      - fzf
 
 - name: start vnstatd
   service: name=vnstat state=started enabled=true
