@@ -1,7 +1,7 @@
 ---
 
-# If you do not have python-zabbix-api installed, this will fail. Please
-# install it manually. It is needed for the tasks later in this role
+# If you do not have python-zabbix-api installed (** ON YOUR LOCAL MACHINE **),
+# this will fail. Please install it; it is needed for tasks later in this role.
 - name: install python-zabbix-api package on localhost
   local_action: pacman name=python-zabbix-api
   run_once: true
