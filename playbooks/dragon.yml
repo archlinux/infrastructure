@@ -11,4 +11,6 @@
     - { role: root_ssh, tags: ['root_ssh'] }
     - { role: archusers, tags: ['archusers'] }
     - { role: sudo, tags: ['sudo', 'archusers'] }
+    - { role: syncrepo, tags: ['syncrepo'] }
+    - { role: sogrep, tags: ['sogrep'] }
     - { role: archbuild, tags: ['archbuild'] }
