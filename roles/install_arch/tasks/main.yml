@@ -150,7 +150,7 @@
   command: chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 
 - name: enable services inside chroot
-  command: chroot /mnt systemctl enable sshd systemd-networkd systemd-resolved fstrim
+  command: chroot /mnt systemctl enable sshd systemd-networkd systemd-resolved fstrim.timer
 
 - set_fact: pubkey_list="{{ lookup('file', "{{ playbook_dir }}/../../pubkeys/" + item) }}"
   register: pubkeys
