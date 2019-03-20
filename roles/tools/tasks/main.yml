@@ -59,6 +59,7 @@
       - hexyl
       - stow
       - fzf
+      - fasd
 
 - name: start vnstatd
   service: name=vnstat state=started enabled=true
