@@ -9,28 +9,6 @@
 256 MD5:4a:01:62:ce:4c:f6:3a:93:24:7b:e2:d3:b7:ea:d3:f8 root@archlinux (ED25519)
 2048 MD5:29:c9:81:09:23:03:1c:26:af:50:9c:4a:fa:b5:da:29 root@archlinux (RSA)
 
-# 169.50.62.117
-1024 SHA256:L16HBYUCY04dcc0A+pSZBYwktwhFkk7jZIyKWlEAByA root@archlinux (DSA)
-256 SHA256:C7dfr0woXiasu5JcW0nXLA4/d2ERePlqNs4+ezuRkR4 root@archlinux (ECDSA)
-256 SHA256:jNrWFp/hSt22kyRAoRAYvga2YG+6aS0DEIDCPbIxcTY root@archlinux (ED25519)
-2048 SHA256:2t7LJ6uSQpk6eVhivIu1c5qw659wNKXCXOn0wVC7tEc root@archlinux (RSA)
-
-1024 MD5:d0:82:2d:aa:c0:ac:b9:07:e7:b8:91:0d:92:b2:ae:38 root@archlinux (DSA)
-256 MD5:c1:40:f1:c7:cd:c0:08:bd:dc:a0:01:66:f3:ef:a0:d4 root@archlinux (ECDSA)
-256 MD5:9c:47:85:f4:e4:19:42:92:7a:b1:dd:de:f5:3e:74:d6 root@archlinux (ED25519)
-2048 MD5:e4:e1:d2:00:1b:96:9c:60:60:ac:a1:32:97:3b:1d:7c root@archlinux (RSA)
-
-# 169.50.62.119
-1024 SHA256:vQa2qPFZi5uaG4xFGU9TBTAl/ojG0mPV+VjrpQBjid8 root@archlinux (DSA)
-256 SHA256:IQeaJ5RyVuxahJLEplC1bp/9TEfbvc3moHFCXQnjwsQ root@archlinux (ECDSA)
-256 SHA256:AIYSDQNuqtWJTF5qs2nEon8zoJYP6mGNFrWvuNHVyyY root@archlinux (ED25519)
-2048 SHA256:SU6wcg6UJsyqB4tDTECIupsqzz36DVm5cdjvDy2pOLU root@archlinux (RSA)
-
-1024 MD5:46:8d:e8:5a:9e:a4:a4:80:cd:08:c4:d1:2d:81:e0:09 root@archlinux (DSA)
-256 MD5:d0:48:7c:9b:2c:6c:29:f4:aa:2c:f7:e8:2d:ff:66:4f root@archlinux (ECDSA)
-256 MD5:be:ca:42:e7:aa:ed:7b:20:ea:0c:c0:05:0d:07:13:fa root@archlinux (ED25519)
-2048 MD5:4a:d4:7b:c7:78:7b:90:33:45:5a:99:1a:8d:15:32:8d root@archlinux (RSA)
-
 # 169.50.62.125
 1024 SHA256:v11IkBs2iNsgfaOOXoY4Yzk+UZohGS8RzApHmKKA6tM root@archlinux (DSA)
 256 SHA256:p4wjp/S6+nO9lyoPvpNc4sY97jJg6RXvYW3ozBe3yco root@archlinux (ECDSA)
@@ -52,6 +30,17 @@
 256 MD5:4b:52:61:77:f7:f8:4e:75:ca:83:e6:ae:fc:6e:77:67 root@apollo (ECDSA)
 256 MD5:a7:84:8b:95:4f:53:ac:b6:9d:24:79:79:fc:c7:bf:1f root@apollo (ED25519)
 2048 MD5:77:b0:17:18:57:74:38:91:47:31:43:04:47:e9:9e:30 root@apollo (RSA)
+
+# dragon.archlinux.org
+1024 SHA256:B6Toehif0eXoxWA9Z67Vd0KdK1fjdouISxKLqneSCRs root@dragon (DSA)
+256 SHA256:fkrWuKgabvnJhqnFFzHeHffh2FbQVq69a0jlbE/93H8 root@dragon (ECDSA)
+256 SHA256:ueI8ETlculq7g5IdCxbAcY0NiwfL3/NEgPACCD0BDFY root@dragon (ED25519)
+2048 SHA256:KBk/rZEwB5nRtHzwgPyJJjUj8/kttrWAzftqWxhJfT0 root@dragon (RSA)
+
+1024 MD5:6d:99:86:ae:f0:78:de:1b:3e:e3:d4:0b:e4:a6:4d:3e root@dragon (DSA)
+256 MD5:af:94:59:fb:c5:19:90:34:70:e7:6d:62:dd:e2:f5:44 root@dragon (ECDSA)
+256 MD5:54:23:82:0d:e6:da:6c:d7:09:f1:f0:0f:49:5a:64:04 root@dragon (ED25519)
+2048 MD5:e1:e6:4f:72:31:a3:9a:2c:af:e0:0f:53:43:27:6b:df root@dragon (RSA)
 
 # ind.mirror.pkgbuild.com
 1024 SHA256:nfyohw9fqhP3SRTOpsZvjVH7OP6GkqNWv+vPIa7Xr54 root@archlinux (DSA)
@@ -107,6 +96,28 @@
 256 MD5:47:ce:6f:89:fa:06:ab:d5:94:e1:e1:95:94:40:68:5c root@mnt (ECDSA)
 256 MD5:95:53:ec:52:c3:78:e8:5d:43:c6:2f:bc:d9:7e:9a:4c root@mnt (ED25519)
 2048 MD5:ff:9d:c3:b0:ee:c9:89:32:72:0c:d8:fb:cc:5d:ae:75 root@mnt (RSA)
+
+# repro1.pkgbuild.com
+1024 SHA256:L16HBYUCY04dcc0A+pSZBYwktwhFkk7jZIyKWlEAByA root@archlinux (DSA)
+256 SHA256:C7dfr0woXiasu5JcW0nXLA4/d2ERePlqNs4+ezuRkR4 root@archlinux (ECDSA)
+256 SHA256:jNrWFp/hSt22kyRAoRAYvga2YG+6aS0DEIDCPbIxcTY root@archlinux (ED25519)
+2048 SHA256:2t7LJ6uSQpk6eVhivIu1c5qw659wNKXCXOn0wVC7tEc root@archlinux (RSA)
+
+1024 MD5:d0:82:2d:aa:c0:ac:b9:07:e7:b8:91:0d:92:b2:ae:38 root@archlinux (DSA)
+256 MD5:c1:40:f1:c7:cd:c0:08:bd:dc:a0:01:66:f3:ef:a0:d4 root@archlinux (ECDSA)
+256 MD5:9c:47:85:f4:e4:19:42:92:7a:b1:dd:de:f5:3e:74:d6 root@archlinux (ED25519)
+2048 MD5:e4:e1:d2:00:1b:96:9c:60:60:ac:a1:32:97:3b:1d:7c root@archlinux (RSA)
+
+# repro2.pkgbuild.com
+1024 SHA256:vQa2qPFZi5uaG4xFGU9TBTAl/ojG0mPV+VjrpQBjid8 root@archlinux (DSA)
+256 SHA256:IQeaJ5RyVuxahJLEplC1bp/9TEfbvc3moHFCXQnjwsQ root@archlinux (ECDSA)
+256 SHA256:AIYSDQNuqtWJTF5qs2nEon8zoJYP6mGNFrWvuNHVyyY root@archlinux (ED25519)
+2048 SHA256:SU6wcg6UJsyqB4tDTECIupsqzz36DVm5cdjvDy2pOLU root@archlinux (RSA)
+
+1024 MD5:46:8d:e8:5a:9e:a4:a4:80:cd:08:c4:d1:2d:81:e0:09 root@archlinux (DSA)
+256 MD5:d0:48:7c:9b:2c:6c:29:f4:aa:2c:f7:e8:2d:ff:66:4f root@archlinux (ECDSA)
+256 MD5:be:ca:42:e7:aa:ed:7b:20:ea:0c:c0:05:0d:07:13:fa root@archlinux (ED25519)
+2048 MD5:4a:d4:7b:c7:78:7b:90:33:45:5a:99:1a:8d:15:32:8d root@archlinux (RSA)
 
 # sgp.mirror.pkgbuild.com
 1024 SHA256:QBRQhEogdaNxh5qQ4gcWUVogLHlKl2UgkFeuLKo2Yfg root@archlinux (DSA)
