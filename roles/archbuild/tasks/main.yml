@@ -4,7 +4,7 @@
   pacman: name="appstream-generator" state=present
 
 - name: install archbuild
-  pacman: name=systemd-swap,devtools,zsh,git,subversion,mercurial,bzr,xdelta3,ruby,tig,colordiff state=present
+  pacman: name=devtools,zsh,git,subversion,mercurial,bzr,xdelta3,ruby,tig,colordiff state=present
 
 - name: install archbuild scripts
   copy: src={{ item }} dest=/usr/local/bin/{{ item }} owner=root group=root mode=0755
@@ -40,13 +40,9 @@
     - mkpkg@.timer
     - mkpkg@.service
 
-- name: install systemd-swap config
-  copy: src=swap.conf dest=/etc/systemd/swap.conf owner=root group=root mode=0644
-
 - name: start and enable archbuild mounts
   service: name={{ item }} enabled={{"yes" if archbuild_fs == 'tmpfs' else "no"}} state={{"started" if archbuild_fs == 'tmpfs' else "stopped"}}
   with_items:
-    - systemd-swap.service
     - var-lib-archbuild.mount
 
 - name: start and enable archbuilddest mount

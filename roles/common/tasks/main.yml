@@ -98,6 +98,20 @@
   notify:
     - systemd daemon-reload
 
+- name: install systemd-swap
+  pacman: name=systemd-swap state=present
+  when: enable_zram_swap
+
+- name: install systemd-swap config for zram
+  copy: src=zram-swap.conf dest=/etc/systemd/swap.conf owner=root group=root mode=0644
+  notify:
+    - restart systemd-swap
+  when: enable_zram_swap
+
+- name: start systemd-swap
+  service: name=systemd-swap state=started enabled=yes
+  when: enable_zram_swap
+
 - name: install logrotate
   pacman: name=logrotate state=present
 
