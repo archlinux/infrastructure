@@ -11,6 +11,7 @@ pkgname=()
 builddeps=()
 repodb=$USERNAME.db.tar.gz # repo db filename
 repodir=~/public_html/repo # repo to use. arch dir is appended
+repohost=
 srcdest=.
 usage=0
 
@@ -55,6 +56,9 @@ usage2() {
   echo '  repodir     Repo to use. Architecture dir is appended.'
   echo "                Default: $(declare -m repodir)"
   echo
+  echo '  repohost    Repo host name. Local host if empty.'
+  echo "                Default: $(declare -m repohost)"
+  echo
   echo '  srcdest     Where to find sources. Used by check_* functions.'
   echo "                Default: $(declare -m srcdest)"
   echo
@@ -75,7 +79,7 @@ usage2() {
   echo '    - for $arch:'
   echo '       - Call build() with $arch makechrootpkg_args'
   echo '          - On failure, mail logs if $mailaddr is set'
-  echo '       - Copy built packages to $repodir/$arch'
+  echo '       - Copy built packages to $repohost:$repodir/$arch'
   echo '       - Repo-remove old deltas from $repodb'
   echo '       - Remove old delta files'
   echo '       - Repo-add built packages to $repodb'
@@ -90,6 +94,9 @@ usage2() {
   echo
   echo 'mkpkg will build the package and publish it in a repository named'
   echo "  $repodir/\$arch/$repodb"
+  echo 'If $repohost is set, scp and ssh will be used to modify the repo remotely. You'
+  echo 'need to make sure mkpkg is able to ssh into this host without an authentication'
+  echo 'prompt.'
   echo
   echo 'For builds conditional on VCS updates, run check_{bzr,git,hg,svn} DIR [BRANCH]'
   echo 'from MKPKG, with DIR being a makepkg VCS source and BRANCH a branch (optional).'
@@ -141,11 +148,32 @@ build() {
 
 # Parameters: arch
 repoadd() {
-  local -a pkgs olddeltas repopkgs
+  local -a pkgs
 
   pkgs=( ${^pkgname}-[^-]##-[^-]##-($1|any).pkg.tar.xz(-om[1]) )
-  mkdir -p $repodir/$1
-  cp $pkgs $repodir/$1/
+
+  if [[ -n $repohost ]]; then
+    ssh -q $repohost mkdir -p $repodir/$1
+    scp -q $pkgs $repohost:$repodir/$1/
+    ssh -q $repohost zsh -c ":
+      setopt extendedglob nomatch
+      repodir=${repodir:q}
+      repodb=${repodb:q}
+      pkgname=(${pkgname:q})
+      pkgs=(${pkgs:q})
+      $(declare -f repoadd_remote)
+      repoadd_remote ${1:q}
+    "
+  else
+    mkdir -p $repodir/$1
+    cp $pkgs $repodir/$1/
+    repoadd_remote $1
+  fi
+}
+
+# Parameters: arch
+repoadd_remote() {
+  local -a olddeltas repopkgs
 
   pushd $repodir/$1
 
@@ -258,3 +286,5 @@ cd $packagedir
 for package; do
   mkpkg_one
 done
+
+# vim:set sw=2 et:
