@@ -53,6 +53,13 @@ The opendkim DNS data has to be added to DNS manually. The roles verifies that t
 
 The file that has to be added to the zone is `/etc/opendkim/private/$selector.txt`.
 
+
+### Finding servers requiring security updates
+
+Arch-audit can be used to find servers in need of updates for security issues.
+
+    ansible all -a "arch-audit -u"
+
 #### Updating servers
 
 The following steps should be used to update our managed servers:
