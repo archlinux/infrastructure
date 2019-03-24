@@ -7,6 +7,11 @@ It also contains git submodules so you have to run `git submodule update --init
 
 ## Requirements
 
+Install these packages:
+- ansible-git
+- terraform-git
+- terraform-provider-hcloud
+
 For the time being, to run all of this you'll need terraform-git because of the pg backend and ansible-git because of the dynamic hcloud provider module.
 This is temporary and the next releases of these packages will contain the modules in a stable version.
 
