@@ -52,5 +52,5 @@ repro2.pkgbuild.com
 [hcloud]
 state.cloud.archlinux.org
 
-[service-terraform-state]
+[terraform-state]
 state.cloud.archlinux.org

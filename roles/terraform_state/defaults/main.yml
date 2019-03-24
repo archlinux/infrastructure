@@ -1,0 +1,4 @@
+---
+
+terraform_db_user: "terraform"
+terraform_db: "terraform"
