@@ -16,5 +16,7 @@
       postgres_max_connections: 100
       postgres_ssl: 'on'
       postgres_shared_buffers: 512MB
+      postgres_ssl_hosts4: ['0.0.0.0/0']
+      postgres_ssl_hosts6: ['::/0']
       tags: ['postgres']
     - { role: terraform_state, tags: ['terraform_state'] }
