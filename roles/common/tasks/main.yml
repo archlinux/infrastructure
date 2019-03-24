@@ -13,7 +13,7 @@
   pacman: name=smartmontools state=present
 
 - name: start and enable smart
-  service: name=smartd enabled=yes state=started
+  service: name=smartd enabled={{"no" if 'hcloud' in group_names else "yes"}} state={{"stopped" if 'hcloud' in group_names else "started"}}
 
 - name: install mlocate
   pacman: name=mlocate state=present
