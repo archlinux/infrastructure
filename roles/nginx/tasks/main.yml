@@ -1,7 +1,7 @@
 ---
 
 - name: install nginx
-  pacman: name=nginx,nginx-mod-brotli,certbot state=present
+  pacman: name=nginx,nginx-mod-brotli state=present
 
 - name: install nginx.service snippet
   copy: src=nginx.service.d dest=/etc/systemd/system owner=root group=root mode=0644
@@ -37,20 +37,6 @@
 - name: create directory to store validation stuff in
   file: owner=root group=http mode=0750 path={{ letsencrypt_validation_dir }} state=directory
 
-- name: install letsencrypt hook
-  copy: src=hook.sh dest=/etc/letsencrypt/hook.sh owner=root group=root mode=0755
-
-- name: create letsencrypt hook dir
-  file: state=directory path=/etc/letsencrypt/hook.d owner=root group=root mode=0755
-
-- name: install letsencrypt renewal service
-  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
-  with_items:
-    - certbot-renewal.service
-    - certbot-renewal.timer
-  notify:
-    - daemon reload
-
 - name: install logrotate config
   copy: src=logrotate.conf dest=/etc/logrotate.d/nginx-ansible owner=root group=root mode=0644
 
@@ -59,9 +45,6 @@
   notify:
     - reload nginx
   tags: ['nginx']
-
-- name: activate letsencrypt renewal service
-  service: name=certbot-renewal.timer enabled=yes state=started
 
 - name: enable nginx
   service: name=nginx enabled=yes

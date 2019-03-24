@@ -7,6 +7,7 @@
     - { role: tools }
     - { role: sshd }
     - { role: root_ssh }
+    - { role: certbot }
     - { role: nginx }
     - { role: unbound }
     - { role: syncrepo, tags: ['nginx'] }

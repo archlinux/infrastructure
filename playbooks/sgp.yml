@@ -9,6 +9,7 @@
     - { role: unbound }
     - { role: root_ssh }
     - { role: archusers }
+    - { role: certbot }
     - { role: nginx }
     - { role: sudo, tags: ['archusers'] }
     - { role: syncrepo, tags: ['nginx'] }

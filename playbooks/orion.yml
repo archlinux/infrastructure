@@ -19,6 +19,7 @@
     - { role: postfwd, tags: ['mail', "postfwd"] }
     - { role: postfix, postfix_server: true, postfix_smtpd_public: true, tags: ['mail'] }
     - { role: archusers, tags: ['archusers'] }
+    - { role: certbot }
     - { role: nginx, tags: ["nginx"] }
     - { role: dbscripts, repos_domain: "repos.archlinux.org", repos_rsync_domain: "rsync.archlinux.org", svntogit_repos: "/srv/svntogit/repos", postgres_ssl: 'on', tags: ['dbscripts', 'archusers'] }
     - sogrep
