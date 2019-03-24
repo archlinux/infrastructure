@@ -1,3 +1,7 @@
+terraform {
+  backend "pg" {}
+}
+
 variable "hetzner_cloud_api_key" {}
 
 # Find the id using `hcloud image list`

@@ -5,6 +5,11 @@ This repository contains the complete collection of ansible playbooks and roles 
 It also contains git submodules so you have to run `git submodule update --init
 --recursive` after cloning or some tasks will fail to run.
 
+## Requirements
+
+For the time being, to run all of this you'll need terraform-git because of the pg backend and ansible-git because of the dynamic hcloud provider module.
+This is temporary and the next releases of these packages will contain the modules in a stable version.
+
 #### Instructions
 All systems are set up the same way. For the first time setup in the Hetzner rescue system,
 run the provisioning script: `ansible-playbook playbooks/tasks/install-arch.yml -l $host`.
