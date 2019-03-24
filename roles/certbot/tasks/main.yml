@@ -20,3 +20,10 @@
 - name: activate letsencrypt renewal service
   service: name=certbot-renewal.timer enabled=yes state=started
 
+- name: open firewall holes for certbot standalone authenticator
+  firewalld: service={{item}} permanent=true state=enabled immediate=yes
+  with_items:
+    - http
+  when: configure_firewall
+  tags:
+    - firewall
