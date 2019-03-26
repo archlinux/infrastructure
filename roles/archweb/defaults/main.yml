@@ -36,3 +36,6 @@ archweb_db_dbscripts_table_objs: 'mirrors_mirror,mirrors_mirrorrsync'
 archweb_db_backup_user: 'archweb_backup'
 archweb_db_backup_table_objs: 'ALL_IN_SCHEMA'
 archweb_db_backup_sequence_objs: 'ALL_IN_SCHEMA'
+
+archweb_retro_repository: 'https://git.archlinux.org/archweb-retro.git'
+archweb_retro_dir: '/srv/http/archweb-retro'

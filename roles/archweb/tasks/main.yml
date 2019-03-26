@@ -268,3 +268,15 @@
 - name: start and enable archweb dump donor timer
   service: name="archweb-dump_donor_mail.timer" enabled=yes state=started
   when: archweb_donor_import
+
+- name: create retro dir
+  file: state=directory owner=archweb group=archweb path="{{ archweb_retro_dir }}"
+  when: archweb_site
+
+- name: clone archweb-retro repo
+  git: >
+    repo={{ archweb_retro_repository }}
+    dest="{{ archweb_retro_dir }}"
+  become: true
+  become_user: archweb
+  when: archweb_site

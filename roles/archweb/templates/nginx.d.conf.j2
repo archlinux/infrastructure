@@ -139,6 +139,10 @@ server {
         alias {{ archweb_dir }}/media/img;
     }
 
+    location /retro {
+        alias {{ archweb_retro_dir }};
+    }
+
     location / {
         access_log   /var/log/nginx/{{ archweb_domain }}/access.log main;
         include uwsgi_params;
