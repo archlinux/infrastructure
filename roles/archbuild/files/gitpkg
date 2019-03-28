@@ -463,6 +463,6 @@ if gitmodules
 end
 
 Dir.unlink "src"
-File.unlink(*Dir.glob("*.pkg.tar.xz"))
+File.unlink(*Dir.glob("*.pkg.tar.*"))
 
 # vim:set sw=2 et:

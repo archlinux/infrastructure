@@ -150,7 +150,7 @@ build() {
 repoadd() {
   local -a pkgs
 
-  pkgs=( ${^pkgname}-[^-]##-[^-]##-($1|any).pkg.tar.xz(-om[1]) )
+  pkgs=( ${^pkgname}-[^-]##-[^-]##-($1|any).pkg.tar.*(-om[1]) )
 
   if [[ -n $repohost ]]; then
     ssh -q $repohost mkdir -p $repodir/$1
@@ -186,7 +186,7 @@ repoadd_remote() {
   XDELTA="-9 -S lzma" repo-add -d -q $repodb $pkgs
 
   # clean up old packages
-  repopkgs=( ${^pkgname}-[^-]##-[^-]##-($1|any).pkg.tar.xz )
+  repopkgs=( ${^pkgname}-[^-]##-[^-]##-($1|any).pkg.tar.* )
   rm -f ${repopkgs:|pkgs}
 
   popd
@@ -212,7 +212,7 @@ build_and_add() {
 
   buildargs=(-l $USERNAME-mkpkg -T)
   for dep in $builddeps; do
-    buildargs+=(-I $repodir/$1/${dep}-[^-]##-[^-]##-($1|any).pkg.tar.xz(-om[1]) )
+    buildargs+=(-I $repodir/$1/${dep}-[^-]##-[^-]##-($1|any).pkg.tar.*(-om[1]) )
   done
 
   if build $1 $buildargs &>$1.log; then
@@ -246,7 +246,7 @@ mkpkg_one() (
     exit 1
   fi
 
-  rm -f ${^pkgname}-[^-]##-[^-]##-[^-]##.pkg.tar.xz(N)
+  rm -f ${^pkgname}-[^-]##-[^-]##-[^-]##.pkg.tar.*(N)
 
   for a in $arch; do
     case $a in
