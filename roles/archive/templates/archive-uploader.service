@@ -1,0 +1,20 @@
+[Unit]
+Description=Archive.org uploader
+
+[Service]
+User={{ archive_user_name }}
+Type=oneshot
+WorkingDirectory={{ archive_user_home }}
+ExecStart=/usr/bin/find /srv/archive/packages -mindepth 2 -maxdepth 2 -type d -exec "{{ archive_repo }}/upload_pkg_internetarchive.py" {} +
+
+NoNewPrivileges=true
+# TODO enable this once the initial uploads are done
+#TimeoutStartSec=3600
+
+#BindPaths={{ archive_user_home }}
+
+#ProtectHome=true
+#ProtectSystem=full
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true

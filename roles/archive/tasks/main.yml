@@ -43,3 +43,31 @@
     owner: root
     group: root
     mode: 0755
+
+- name: install internet archive packages
+  pacman: name=python-internetarchive state=present
+
+- name: create archive user
+  user: name={{ archive_user_name }} shell=/bin/false home="{{ archive_user_home }}" createhome=yes
+
+- name: configure archive.org client
+  command: ia configure --username={{ vault_archive_username }} --password={{ vault_archive_password }} creates={{ archive_user_home }}/.config/ia.ini
+  become: yes
+  become_user: "{{ archive_user_name }}"
+
+- name: clone archive uploader code
+  git: repo=https://github.com/archlinux/arch-historical-archive.git dest="{{ archive_repo }}" version="{{ archive_uploader_version }}"
+  become: yes
+  become_user: "{{ archive_user_name }}"
+
+- name: install system service
+  template: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  loop:
+    - archive-uploader.service
+    - archive-uploader.timer
+  notify:
+    - daemon reload
+
+# TODO enable after initial upload
+#- name: start uploader timer
+  #service: name=archive-uploader.timer state=started enabled=yes
