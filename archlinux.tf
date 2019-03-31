@@ -2,7 +2,9 @@ terraform {
   backend "pg" {}
 }
 
-variable "hetzner_cloud_api_key" {}
+data "external" "hetzner_cloud_api_key" {
+  program = ["bash", "${path.module}/misc/get_hetzner_cloud_api_key_terraform.sh"]
+}
 
 # Find the id using `hcloud image list`
 variable "archlinux_image_id" {
@@ -10,17 +12,12 @@ variable "archlinux_image_id" {
 }
 
 provider "hcloud" {
-  token = "${var.hetzner_cloud_api_key}"
-}
-
-resource "hcloud_floating_ip" "bbs" {
-  type = "ipv4"
-  server_id = "${hcloud_server.bbs.id}"
+  token = "${data.external.hetzner_cloud_api_key.result.hetzner_cloud_api_key}"
 }
 
 resource "hcloud_rdns" "bbs" {
-  floating_ip_id = "${hcloud_floating_ip.bbs.id}"
-  ip_address = "${hcloud_floating_ip.bbs.ip_address}"
+  server_id = "${hcloud_server.bbs.id}"
+  ip_address = "${hcloud_server.bbs.ipv4_address}"
   dns_ptr = "bbs.archlinux.org"
 }
 
