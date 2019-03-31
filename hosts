@@ -48,9 +48,3 @@ sgp.mirror.pkgbuild.com
 [reproducible-builds]
 repro1.pkgbuild.com
 repro2.pkgbuild.com
-
-[hcloud]
-state.cloud.archlinux.org
-
-[terraform-state]
-state.cloud.archlinux.org
