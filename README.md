@@ -12,10 +12,11 @@ Install these packages:
 - terraform-git
 - terraform-provider-hcloud-snapshot
 
-For the time being, to run all of this you'll need terraform-git because of the pg backend and ansible-git because of the dynamic hcloud provider module.
+For the time being, to run all of this you'll need terraform-git and terraform-provider-hcloud-snapshot because of the pg backend.
 This is temporary and the next releases of these packages will contain the modules in a stable version.
 
-#### Instructions
+### Instructions
+
 All systems are set up the same way. For the first time setup in the Hetzner rescue system,
 run the provisioning script: `ansible-playbook playbooks/tasks/install-arch.yml -l $host`.
 The provisioning script configures a sane basic systemd with sshd. By design, it is NOT idempotent.
@@ -24,7 +25,14 @@ After the provisioning script has run, it is safe to reboot.
 Once in the new system, run the regular playbook: `HCLOUD_TOKEN=$(misc/get_hcloud_api_key_ansible.sh) ansible-playbook playbooks/$hostname.yml`.
 This playbook is the one regularity used for administrating the server and is entirely idempotent.
 
-##### Note about first time certificates
+#### Note about Ansible dynamic inventories
+
+We use a dynamic inventory script in order to automatically get information for
+all servers directly from hcloud. You don't really have to do anything to make
+this work but you should keep in mind to NOT add hcloud servers to `hosts`!
+They'll be available automatically.
+
+#### Note about first time certificates
 
 The first time a certificate is issued, you'll have to do this manually by yourself. First, configure the DNS to
 point to the new server and then run a playbook onto the server which includes the nginx role. Then on the server,
@@ -34,30 +42,40 @@ it is necessary to run the following once:
 
 Note that some roles already run this automatically.
 
-##### Note about packer
+#### Note about packer
 
 We use packer to build snapshots on hcloud to use as server base images.
 In order to use this, you need to install packer and then run
 
-	packer build -var $(./misc/get_hcloud_api_key_packer.sh) packer/archlinux.json
+	packer build -var $(./misc/get_hetzner_cloud_api_key_packer.sh) packer/archlinux.json
 
 This will take some time after which a new snapshot will have been created on the primary hcloud archlinux project.
 
-##### Note about terraform
+#### Note about terraform
 
 We use terraform to provision a part of the infrastructure on hcloud.
-In order to use this, you need to install terraform and then run
+The very first time you run terraform on your system, you'll have to init it:
 
-    terraform plan -var $(./misc/get_hcloud_api_key_packer.sh) terraform
+    terraform init -backend-config="conn_str=postgres://terraform:$(ansible-vault view group_vars/all/vault_terraform.yml | grep vault_terraform_db_password | cut -f2 -d'"')@state.cloud.archlinux.org"
+
+After making changes to the infrastructure in `archlinux.fg`, run
+
+    terraform plan
 
 This will show you planned changes between the current infrastructure and the desired infrastructure.
 You can then run
 
-    terraform apply -var $(./packer/get_hcloud_api_key_packer.sh) terraform
+    terraform apply
 
 to actually apply your changes.
 
-##### Note about opendkim
+We store terraform state on a special server that is the only hcloud server NOT
+managed by terraform so that we do not run into a chicken-egg problem. The
+state server is assumed to just exist so in an unlikely case where we have to
+entirely redo this infrastructure, the state server would have to be manually
+set up.
+
+#### Note about opendkim
 
 The opendkim DNS data has to be added to DNS manually. The roles verifies that the DNS is correct before starting opendkim.
 
@@ -121,6 +139,17 @@ The following steps should be used to update our managed servers:
 - matrix
 - docker images
 - arch boxes (packer)
+
+### dragon
+
+#### Services
+- build server (pkgbuild.com)
+- sogrep
+
+### state.cloud.archlinux.org
+
+#### Services:
+- postgres server for terraform state
 
 
 ## Ansible repo workflows
