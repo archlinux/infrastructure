@@ -1,16 +1,16 @@
 ---
 
 - name: setup terraform-state
-  hosts: terraform-state
+  hosts: state.cloud.archlinux.org
   remote_user: root
   roles:
-    - { role: common, tags: ['common'] }
-    - { role: tools, tags: ['tools'] }
-    - { role: firewalld, tags: ['firewall'] }
-    - { role: sshd, tags: ['sshd'] }
+    - { role: common }
+    - { role: tools }
+    - { role: firewalld }
+    - { role: sshd }
     - { role: unbound }
     - { role: certbot }
-    - { role: root_ssh, tags: ['root_ssh'] }
+    - { role: root_ssh }
     - role: postgres
       postgres_listen_addresses: "*"
       postgres_max_connections: 100
@@ -18,5 +18,4 @@
       postgres_shared_buffers: 512MB
       postgres_ssl_hosts4: ['0.0.0.0/0']
       postgres_ssl_hosts6: ['::/0']
-      tags: ['postgres']
-    - { role: terraform_state, tags: ['terraform_state'] }
+    - { role: terraform_state }
