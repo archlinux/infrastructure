@@ -6,7 +6,7 @@ You can use smartphone 2fa apps like Google Authenticator or pass-otp.
 
 Install with `pacman -S pass-otp` and run `pass otp insert -i Hetzner -a
 archlinux-master-token Hetzner/archlinux-master-token -s`. You will be asked
-to supply the "secret" which you can find in "misc/hetzner-password.vault" with
+to supply the "secret" which you can find in "misc/vault_hetzner.yml" with
 the name "hetzner_master_seed". Once done, run `pass otp code
 Hetzner/archlinux-master-token` to generate an OTP you can use to log in.
 
