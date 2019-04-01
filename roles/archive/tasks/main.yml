@@ -68,6 +68,5 @@
   notify:
     - daemon reload
 
-# TODO enable after initial upload
-#- name: start uploader timer
-  #service: name=archive-uploader.timer state=started enabled=yes
+- name: start uploader timer
+  service: name=archive-uploader.timer state=started enabled=yes
