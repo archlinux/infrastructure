@@ -357,6 +357,7 @@ arch_users:
   lfleischer:
     name: "Lukas Fleischer"
     ssh_key: lfleischer.pub
+    shell: /bin/zsh
     groups:
       - dev
       - tu
