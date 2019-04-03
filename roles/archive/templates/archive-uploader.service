@@ -7,6 +7,8 @@ Type=oneshot
 WorkingDirectory={{ archive_user_home }}
 ExecStart=/usr/bin/find /srv/archive/packages -mindepth 2 -maxdepth 2 -type d -exec "{{ archive_repo }}/upload_pkg_internetarchive.py" {} +
 
+LimitNOFile=8192
+
 NoNewPrivileges=true
 # TODO enable this once the initial uploads are done
 #TimeoutStartSec=3600
