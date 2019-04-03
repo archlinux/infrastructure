@@ -10,6 +10,7 @@
     group: users
     groups: "{{ item.value.groups | join(',') }}"
     comment: "{{ item.value.name }}"
+    shell: "{{ item.value.shell | default('/bin/bash') }}"
     password: ""
     update_password: on_create
     state: present

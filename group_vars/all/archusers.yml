@@ -308,6 +308,7 @@ arch_users:
   jleclanche:
     name: "Jerome Leclanche"
     ssh_key: jleclanche.pub
+    shell: /bin/zsh
     groups:
       - tu
   jlichtblau:
