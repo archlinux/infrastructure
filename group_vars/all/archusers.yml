@@ -85,6 +85,7 @@ arch_users:
   archange:
     name: "Bruno Pagani"
     ssh_key: archange.pub
+    shell: /bin/zsh
     groups:
       - tu
   arodseth:
@@ -162,6 +163,7 @@ arch_users:
   demize:
     name: "Johannes Löthberg"
     ssh_key: demize.pub
+    shell: /bin/zsh
     groups:
       - dev
       - tu
@@ -244,6 +246,7 @@ arch_users:
   foxxx0:
     name: "Thore Bödecker"
     ssh_key: foxxx0.pub
+    shell: /bin/zsh
     groups:
        - tu
   fukawi2:
@@ -439,6 +442,7 @@ arch_users:
   shibumi:
     name: "Christian Rebischke"
     ssh_key: shibumi.pub
+    shell: /bin/zsh
     groups:
       - tu
       - archboxes-sudo
