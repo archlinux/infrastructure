@@ -3,4 +3,4 @@
 archive_user_name: 'archive'
 archive_user_home: '/home/archive'
 archive_repo: '{{ archive_user_home }}/archive-uploader'
-archive_uploader_version: 'v0.9.1'
+archive_uploader_version: 'v0.10.0'
