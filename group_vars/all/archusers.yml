@@ -204,6 +204,7 @@ arch_users:
   eworm:
     name: "Christian Hesse"
     ssh_key: eworm.pub
+    shell: /bin/zsh
     groups:
       - dev
       - tu
