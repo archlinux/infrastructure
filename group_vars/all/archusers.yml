@@ -67,6 +67,7 @@ arch_users:
   anthraxx:
     name: "Levente Polyak"
     ssh_key: anthraxx.pub
+    shell: /bin/zsh
     groups:
       - dev
       - tu
@@ -118,6 +119,7 @@ arch_users:
   bluewind:
     name: "Florian Pritz"
     ssh_key: bluewind.pub
+    shell: /bin/zsh
     groups:
       - dev
       - tu
@@ -224,6 +226,7 @@ arch_users:
   ffy00:
     name: "Filipe Laíns"
     ssh_key: ffy00.pub
+    shell: /bin/fish
     groups:
       - tu
   foutrelis:
@@ -437,6 +440,7 @@ arch_users:
   seblu:
     name: "Sébastien Luttringer"
     ssh_key: seblu.pub
+    shell: /bin/zsh
     groups:
       - dev
       - tu
