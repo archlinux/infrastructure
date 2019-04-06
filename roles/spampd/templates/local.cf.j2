@@ -181,10 +181,16 @@ score    LOCAL_DATE_TLD 1.0
 
 # bitcoin
 header   __LOCAL_BITCOIN_SUBJ Subject =~ /\b(bitcoin)\b/i
-body     __LOCAL_BITCOIN_BODY /\b(bitcoin)\b/i
+body     __LOCAL_BITCOIN_BODY /\b(bitcoin|BTC)\b/i
 meta     LOCAL_BITCOIN ((__LOCAL_BITCOIN_SUBJ + __LOCAL_BITCOIN_BODY) > 0)
 describe LOCAL_BITCOIN Contains bitcoin keywords in body and/or subject
 score    LOCAL_BITCOIN 1.5
+
+header LOCAL_VIDEO_SUBJECT Subject =~ /\.mp4\b/
+score LOCAL_VIDEO_SUBJECT 0.75
+
+meta LOCAL_VIDEO_EXTORTION ((LOCAL_VIDEO_SUBJECT && LOCAL_BITCOIN))
+score LOCAL_VIDEO_EXTORTION 1.5
 
 header __LOCAL_ARABIC_STUDENT From =~ /student.*1\./
 header __LOCAL_ARABIC_STUDENT_MAILER X-Mailer =~ /^MBM 7\.9-US$/
