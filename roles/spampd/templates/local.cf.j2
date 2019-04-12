@@ -200,6 +200,9 @@ score LOCAL_ARABIC_STUDENT 2
 header LOCAL_SPAM1 Subject =~ /Reclame sus facturas impagadas/
 score LOCAL_SPAM1 2.5
 
+header LOCAL_ANON_HACKER From =~ /(anoniemehacker.club|hackeranonim.top)/
+score LOCAL_ANON_HACKER 2.5
+
 # Attachments
 loadplugin Mail::SpamAssassin::Plugin::MIMEHeader
 
