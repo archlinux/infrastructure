@@ -82,8 +82,13 @@ ChallengeResponseAuthentication no
 # and ChallengeResponseAuthentication to 'no'.
 UsePAM yes
 
+{% if 'buildservers' in group_names and inventory_hostname in groups['buildservers'] %}
 #AllowAgentForwarding yes
 #AllowTcpForwarding yes
+{% else %}
+AllowAgentForwarding no
+AllowTcpForwarding no
+{% endif %}
 #GatewayPorts no
 #X11Forwarding no
 #X11DisplayOffset 10
@@ -120,7 +125,9 @@ StreamLocalBindUnlink yes
 #	PermitTTY no
 #	ForceCommand cvs server
 
+{% if 'buildservers' in group_names and inventory_hostname in groups['buildservers'] %}
 Match User root
         X11Forwarding no
         AllowAgentForwarding no
         AllowTcpForwarding no
+{% endif %}
