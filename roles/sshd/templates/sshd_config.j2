@@ -119,3 +119,8 @@ StreamLocalBindUnlink yes
 #	AllowTcpForwarding no
 #	PermitTTY no
 #	ForceCommand cvs server
+
+Match User root
+        X11Forwarding no
+        AllowAgentForwarding no
+        AllowTcpForwarding no
