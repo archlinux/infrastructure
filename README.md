@@ -8,7 +8,7 @@ It also contains git submodules so you have to run `git submodule update --init
 ## Requirements
 
 Install these packages:
-- ansible-git
+- hcloud-python
 - terraform-git
 - terraform-provider-hcloud-snapshot
 
