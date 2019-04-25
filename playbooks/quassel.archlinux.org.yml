@@ -15,4 +15,5 @@
       postgres_max_connections: 100
       postgres_ssl: 'off'
       postgres_shared_buffers: 512MB
+      postgres_effective_cache_size: 1GB
     - { role: quassel, quassel_domain: "quassel.archlinux.org" }
