@@ -1,0 +1,18 @@
+---
+
+- name: setup quassl serverj
+  hosts: quassel.archlinux.org
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: tools }
+    - { role: firewalld }
+    - { role: sshd }
+    - { role: unbound }
+    - { role: root_ssh }
+    - { role: certbot }
+    - role: postgres
+      postgres_max_connections: 100
+      postgres_ssl: 'off'
+      postgres_shared_buffers: 512MB
+    - { role: quassel, quassel_domain: "quassel.archlinux.org" }
