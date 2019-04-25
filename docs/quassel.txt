@@ -16,5 +16,5 @@ tbd.
 ## Migration quassel
 
 1. Stop the quassel service
-2. sudo -u postgres pg_dump -F c --file=quassel.dump quassel
+2. sudo -u postgres pg_dump -F c quassel >quassel.dump
 3. sudo -u postgres pg_restore -d quassel --clean --exit-on-error <quassel.dump
