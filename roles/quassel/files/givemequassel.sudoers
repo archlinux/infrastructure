@@ -1,1 +1,0 @@
-%users ALL = (quassel) NOPASSWD: /usr/local/bin/givemequassel ""

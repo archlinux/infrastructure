@@ -50,12 +50,6 @@
 - name: install quassel.service snippet
   copy: src=quassel.service.d dest=/etc/systemd/system/quassel.service.d/local.conf owner=root group=root mode=0644
 
-- name: install givemequassel script
-  copy: src=givemequassel dest=/usr/local/bin/givemequassel owner=root group=root mode=0755
-
-- name: install givemequassel sudoers config
-  copy: src=givemequassel.sudoers dest=/etc/sudoers.d/givemequassel
-
 - name: start and enable quassel
   service: name={{ item }} enabled=yes state=started
   with_items:

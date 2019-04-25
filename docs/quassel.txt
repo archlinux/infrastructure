@@ -11,7 +11,7 @@ ilines@freenode.net.
 
 ## Add a user
 
-tbd.
+1. sudo -u quassel quasselcore --configdir=/var/lib/quassel --add-user
 
 ## Migration quassel
 
