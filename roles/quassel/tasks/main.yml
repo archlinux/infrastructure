@@ -63,7 +63,10 @@
     - clean-quassel.timer
 
 - name: open firewall holes
-  firewalld: port=4242/tcp permanent=true state=enabled immediate=yes
+  firewalld: port={{ item }} permanent=true state=enabled immediate=yes
+  with_items:
+    - 4242/tcp
+    - 113/tcp
   when: configure_firewall
   tags:
     - firewall

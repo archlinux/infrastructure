@@ -1,6 +1,6 @@
 ---
 
-- name: setup quassl serverj
+- name: setup quassel serverj
   hosts: quassel.archlinux.org
   remote_user: root
   roles:
