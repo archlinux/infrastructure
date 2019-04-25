@@ -1,7 +1,7 @@
 ---
 
 - name: install quassel
-  pacman: name=quassel-core,python2-pexpect state=present
+  pacman: name=quassel-core,python-pexpect state=present
 
 - name: add quassel postgres db
   postgresql_db: db=quassel
