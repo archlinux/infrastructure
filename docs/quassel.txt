@@ -1,0 +1,20 @@
+# Quassel
+
+We offer a Quassel instance for Arch team members who can not easily run their own bouncer.
+
+## Freenode restrictions
+
+Freenode restricts or limits multiple connections from the same IP Address.
+Every quassel user users a separate connection so we currently have an
+excemption for 20 connections. If we want to raise this limit we have to email
+ilines@freenode.net.
+
+## Add a user
+
+tbd.
+
+## Migration quassel
+
+1. Stop the quassel service
+2. sudo -u postgres pg_dump -F c --file=quassel.dump quassel
+3. sudo -u postgres pg_restore -d quassel --clean --exit-on-error <quassel.dump
