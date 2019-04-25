@@ -26,3 +26,9 @@ resource "hcloud_server" "bbs" {
   image = "${var.archlinux_image_id}"
   server_type = "cx11"
 }
+
+resource "hcloud_server" "quassel" {
+  name = "quassel.archlinux.org"
+  image = "${var.archlinux_image_id}"
+  server_type = "cx11"
+}
