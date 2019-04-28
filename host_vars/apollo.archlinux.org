@@ -28,7 +28,6 @@ zabbix_agent_templates:
   - Template App HTTPS Service
   - Template App MySQL
   - Template App Nginx
-  - Template App Security Tracker
   - Template App SMTP Service
   - Template App SSH Service
   - Template App Zabbix Server
