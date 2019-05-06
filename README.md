@@ -135,7 +135,6 @@ The following steps should be used to update our managed servers:
 - sogrep
 - /~user/ webhost
 - irc bot (phrik)
-- quassel core
 - matrix
 - docker images
 - arch boxes (packer)
@@ -151,6 +150,10 @@ The following steps should be used to update our managed servers:
 #### Services:
 - postgres server for terraform state
 
+### quassel.archlinux.org
+
+#### Services:
+- quassel core
 
 ## Ansible repo workflows
 
