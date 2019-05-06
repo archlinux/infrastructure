@@ -1,0 +1,16 @@
+---
+
+- name: set restricted access to kernel logs
+  copy: src=50-dmesg-restrict.conf dest=/etc/sysctl.d/50-dmesg-restrict.conf
+  notify:
+    - apply sysctl settings
+
+- name: set ptrace scope, restrict ptrace to CAP_SYS_PTRACE
+  copy: src=50-ptrace-restrict.conf dest=/etc/sysctl.d/50-ptrace-restrict.conf
+  notify:
+    - apply sysctl settings
+
+- name: set restricted access to kernel pointers in proc fs
+  copy: src=50-kptr-restrict.conf dest=/etc/sysctl.d/50-kptr-restrict.conf
+  notify:
+    - apply sysctl settings

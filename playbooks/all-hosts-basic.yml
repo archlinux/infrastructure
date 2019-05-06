@@ -13,3 +13,4 @@
     - { role: root_ssh, tags: ['root_ssh'] }
     - { role: borg-client, tags: ["borg"], when: "'borg-clients' in group_names" }
     - { role: zabbix-agent, tags: ["zabbix", "zabbix-agent"], when: "'unmanaged' not in group_names" }
+    - { role: hardening }
