@@ -12,7 +12,6 @@ sudo_users:
   - root
   - seblu
   - svenstaro
-  - thomas
 
 # deploy tag 'root_ssh' when this changes
 root_ssh_keys:
