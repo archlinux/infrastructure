@@ -21,7 +21,7 @@ if ($mode eq "userstat" and not defined $dbname) {
 my $db = DBI->connect("DBI:Pg:");
 
 if ($mode eq "userstat") {
-	print encode_json($db->selectrow_hashref("SELECT tup_fetched,tup_returned,tup_inserted,tup_deleted,tup_updated,numbackends,deadlocks from pg_stat_database where datname = ?;", undef, $dbname));
+	print encode_json($db->selectrow_hashref("SELECT tup_fetched,tup_returned,tup_inserted,tup_deleted,tup_updated,deadlocks,idx_scan,seq_scan,blks_hit,blks_read from pg_stat_database where datname = ?;", undef, $dbname));
 } elsif ($mode eq "discover") {
 	print encode_json({
 		data => $db->selectall_arrayref("SELECT datname \"{#DATNAME}\" FROM pg_database;", {Slice => {}})
