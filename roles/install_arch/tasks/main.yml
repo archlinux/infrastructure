@@ -37,7 +37,7 @@
   when: filesystem == "ext4" and system_disks|length == 2
 
 - name: mount the filesystem (btrfs)
-  mount: src="LABEL=rootfs" path=/mnt fstype=btrfs state=mounted opts="compress=lzo"
+  mount: src="{{ system_disks[0] }}" path=/mnt fstype=btrfs state=mounted opts="compress=lzo"
   when: filesystem == "btrfs"
 
 - name: mount the filesystem (ext4)
