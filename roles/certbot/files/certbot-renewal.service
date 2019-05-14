@@ -7,4 +7,3 @@ ExecStart=/usr/bin/certbot renew --rsa-key-size 4096 \
     --pre-hook   "/etc/letsencrypt/hook.sh pre"      \
     --post-hook  "/etc/letsencrypt/hook.sh post"     \
     --renew-hook "/etc/letsencrypt/hook.sh renew"
-ExecStartPost=/bin/systemctl reload nginx.service

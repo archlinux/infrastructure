@@ -22,6 +22,9 @@
   notify:
     - reload nginx
 
+- name: install cert renewal hook
+  template: src=letsencrypt.hook.d.j2 dest=/etc/letsencrypt/hook.d/nginx owner=root group=root mode=0755
+
 - name: create nginx.d directory
   file: state=directory path=/etc/nginx/nginx.d owner=root group=root mode=0755
 
