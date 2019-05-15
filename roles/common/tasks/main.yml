@@ -133,7 +133,7 @@
     - dircolors
 
 - name: install checkservices
-  copy: src=archutils/checkservices dest=/usr/local/bin/checkservices owner=root group=root mode=0755
+  copy: src=contrib/admin/checkservices dest=/usr/local/bin/checkservices owner=root group=root mode=0755
 
 - name: install pacman-contrib
   pacman: name=pacman-contrib state=installed

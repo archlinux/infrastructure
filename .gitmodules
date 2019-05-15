@@ -1,3 +1,3 @@
-[submodule "roles/common/files/archutils"]
-	path = roles/common/files/archutils
-	url = https://github.com/seblu/archutils.git
+[submodule "roles/common/files/contrib"]
+	path = roles/common/files/contrib
+	url = https://github.com/archlinux/contrib
