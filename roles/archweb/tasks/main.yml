@@ -10,21 +10,21 @@
 
 - name: set archweb groups
   user: name=archweb groups=uwsgi
-  when: archweb_site
+  when: archweb_site|bool
 
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/archweb.conf owner=root group=root mode=644
   notify: reload nginx
-  when: archweb_site
+  when: archweb_site|bool
   tags: ['nginx']
 
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ archweb_domain }} state=directory owner=root group=root mode=0755
-  when: archweb_site
+  when: archweb_site|bool
 
 - name: make rsync iso dir
   file: path={{ archweb_rsync_iso_dir }} state=directory owner=archweb group=archweb
-  when: archweb_site
+  when: archweb_site|bool
 
 - name: clone archweb repo
   git: >
@@ -48,7 +48,7 @@
 
 - name: create media dir
   file: state=directory owner=archweb group=archweb path="{{ archweb_dir }}/media"
-  when: archweb_site
+  when: archweb_site|bool
 
 - name: fix home permissions
   file: state=directory owner=archweb group=archweb path="{{ archweb_dir }}"
@@ -171,60 +171,60 @@
   template: src="archweb-memcached.service.j2" dest="/etc/systemd/system/archweb-memcached.service" owner=root group=root mode=0644
   notify:
     - daemon reload
-  when: archweb_site
+  when: archweb_site|bool
 
 - name: install archweb rsync iso service
   template: src="archweb-rsync_iso.service.j2" dest="/etc/systemd/system/archweb-rsync_iso.service" owner=root group=root mode=0644
   notify:
     - daemon reload
-  when: archweb_site
+  when: archweb_site|bool
 
 - name: install archweb rsync iso timer
   template: src="archweb-rsync_iso.timer.j2" dest="/etc/systemd/system/archweb-rsync_iso.timer" owner=root group=root mode=0644
   notify:
     - daemon reload
-  when: archweb_site
+  when: archweb_site|bool
 
 - name: install donor_import service
   template: src="archweb-donor_import.service.j2" dest="/etc/systemd/system/archweb-donor_import.service" owner=root group=root mode=0644
   notify:
     - daemon reload
-  when: archweb_donor_import
+  when: archweb_donor_import|bool
 
 - name: install archweb donor import timer
   template: src="archweb-donor_import.timer.j2" dest="/etc/systemd/system/archweb-donor_import.timer" owner=root group=root mode=0644
   notify:
     - daemon reload
-  when: archweb_donor_import
+  when: archweb_donor_import|bool
 
 - name: create maildir dump dir
   file: path={{ archweb_donor_maildir }}/{{ item }} recurse=yes state=directory owner=archweb group=users mode=0755
   with_items:
     - cur
     - new
-  when: archweb_donor_import
+  when: archweb_donor_import|bool
 
 - name: install dump donor mail service
   template: src="archweb-dump_donor_mail.service.j2" dest="/etc/systemd/system/archweb-dump_donor_mail.service" owner=root group=root mode=0644
   notify:
     - daemon reload
-  when: archweb_donor_import
+  when: archweb_donor_import|bool
 
 - name: install dump donor mail timer
   template: src="archweb-dump_donor_mail.timer.j2" dest="/etc/systemd/system/archweb-dump_donor_mail.timer" owner=root group=root mode=0644
   notify:
     - daemon reload
-  when: archweb_donor_import
+  when: archweb_donor_import|bool
 
 - name: install archweb donor mail dump script
   template: src="dump-mails.sh.j2" dest="/usr/local/bin/dump-mails.sh" owner=root group=root mode=0755
   notify:
     - daemon reload
-  when: archweb_donor_import
+  when: archweb_donor_import|bool
 
 - name: deploy archweb
   template: src=archweb.ini.j2 dest=/etc/uwsgi/vassals/archweb.ini owner=archweb group=http mode=0644
-  when: archweb_site
+  when: archweb_site|bool
 
 - name: deploy new release
   become: true
@@ -235,11 +235,11 @@
 
 - name: start and enable archweb memcached service
   service: name="archweb-memcached.service" enabled=yes state=started
-  when: archweb_site
+  when: archweb_site|bool
 
 - name: start and enable archweb rsync iso timer
   service: name="archweb-rsync_iso.timer" enabled=yes state=started
-  when: archweb_site
+  when: archweb_site|bool
 
 - name: start and enable archweb reporead service
   service: name="archweb-reporead.service" enabled=yes state=started
@@ -263,15 +263,15 @@
 
 - name: start and enable archweb donor_import timer
   service: name="archweb-donor_import.timer" enabled=yes state=started
-  when: archweb_donor_import
+  when: archweb_donor_import|bool
 
 - name: start and enable archweb dump donor timer
   service: name="archweb-dump_donor_mail.timer" enabled=yes state=started
-  when: archweb_donor_import
+  when: archweb_donor_import|bool
 
 - name: create retro dir
   file: state=directory owner=archweb group=archweb path="{{ archweb_retro_dir }}"
-  when: archweb_site
+  when: archweb_site|bool
 
 - name: clone archweb-retro repo
   git: >
@@ -279,4 +279,4 @@
     dest="{{ archweb_retro_dir }}"
   become: true
   become_user: archweb
-  when: archweb_site
+  when: archweb_site|bool
