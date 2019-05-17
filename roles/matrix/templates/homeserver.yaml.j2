@@ -56,7 +56,21 @@ public_baseurl: https://{{ matrix_domain }}/
 
 # Set to false to disable presence tracking on this homeserver.
 #
-use_presence: true
+#use_presence: false
+
+# Whether to require authentication to retrieve profile data (avatars,
+# display names) of other users through the client API. Defaults to
+# 'false'. Note that profile data is also available via the federation
+# API, so this setting is of limited value if federation is enabled on
+# the server.
+#
+#require_auth_for_profile_requests: true
+
+# If set to 'true', requires authentication to access the server's
+# public rooms directory through the client API, and forbids any other
+# homeserver to fetch it via federation. Defaults to 'false'.
+#
+#restrict_public_rooms_to_local_users: true
 
 # The GC threshold parameters to pass to `gc.set_threshold`, if defined
 #
@@ -125,8 +139,8 @@ use_presence: true
 #
 # Valid resource names are:
 #
-#   client: the client-server API (/_matrix/client). Also implies 'media' and
-#       'static'.
+#   client: the client-server API (/_matrix/client), and the synapse admin
+#       API (/_synapse/admin). Also implies 'media' and 'static'.
 #
 #   consent: user consent forms (/_matrix/consent). See
 #       docs/consent_tracking.md.
@@ -225,6 +239,14 @@ listeners:
 #  - medium: 'email'
 #    address: 'reserved_user@example.com'
 
+# Used by phonehome stats to group together related servers.
+#server_context: context
+
+# Whether to require a user to be in the room to add an alias to it.
+# Defaults to 'true'.
+#
+#require_membership_for_aliases: false
+
 
 ## TLS ##
 
@@ -245,6 +267,40 @@ tls_certificate_path: "/etc/synapse/{{ matrix_server_name }}.tls.crt"
 # PEM-encoded private key for TLS
 #
 tls_private_key_path: "/etc/synapse/{{ matrix_server_name }}.tls.key"
+
+# Whether to verify TLS certificates when sending federation traffic.
+#
+# This currently defaults to `false`, however this will change in
+# Synapse 1.0 when valid federation certificates will be required.
+#
+#federation_verify_certificates: true
+
+# Skip federation certificate verification on the following whitelist
+# of domains.
+#
+# This setting should only be used in very specific cases, such as
+# federation over Tor hidden services and similar. For private networks
+# of homeservers, you likely want to use a private CA instead.
+#
+# Only effective if federation_verify_certicates is `true`.
+#
+#federation_certificate_verification_whitelist:
+#  - lon.example.com
+#  - *.domain.com
+#  - *.onion
+
+# List of custom certificate authorities for federation traffic.
+#
+# This setting should only normally be used within a private network of
+# homeservers.
+#
+# Note that this list will replace those that are provided by your
+# operating environment. Certificates must be in PEM format.
+#
+#federation_custom_ca_list:
+#  - myCA1.pem
+#  - myCA2.pem
+#  - myCA3.pem
 
 # ACME support: This will configure Synapse to request a valid TLS certificate
 # for your configured `server_name` via Let's Encrypt.
@@ -516,7 +572,7 @@ url_preview_enabled: true
 # (0.0.0.0 and :: are always blacklisted, whether or not they are explicitly
 # listed here, since they correspond to unroutable addresses.)
 #
-# This must be specified if url_preview_enabled is set. It is recommended that 
+# This must be specified if url_preview_enabled is set. It is recommended that
 # you uncomment the following list as a starting point.
 #
 url_preview_ip_range_blacklist:
@@ -642,6 +698,32 @@ url_preview_ip_range_blacklist:
 #
 #enable_registration: false
 
+# Optional account validity configuration. This allows for accounts to be denied
+# any request after a given period.
+#
+# ``enabled`` defines whether the account validity feature is enabled. Defaults
+# to False.
+#
+# ``period`` allows setting the period after which an account is valid
+# after its registration. When renewing the account, its validity period
+# will be extended by this amount of time. This parameter is required when using
+# the account validity feature.
+#
+# ``renew_at`` is the amount of time before an account's expiry date at which
+# Synapse will send an email to the account's email address with a renewal link.
+# This needs the ``email`` and ``public_baseurl`` configuration sections to be
+# filled.
+#
+# ``renew_email_subject`` is the subject of the email sent out with the renewal
+# link. ``%(app)s`` can be used as a placeholder for the ``app_name`` parameter
+# from the ``email`` section.
+#
+#account_validity:
+#  enabled: True
+#  period: 6w
+#  renew_at: 1w
+#  renew_email_subject: "Renew your %(app)s account"
+
 # The user must provide all of the below types of 3PID when registering.
 #
 #registrations_require_3pid:
@@ -663,6 +745,10 @@ url_preview_ip_range_blacklist:
 #    pattern: '.*@vector\.im'
 #  - medium: msisdn
 #    pattern: '\+44'
+
+# Enable 3PIDs lookup requests to identity servers from this server.
+#
+#enable_3pid_lookup: true
 
 # If set, allows registration of standard or admin accounts by anyone who
 # has the shared secret, even if registration is otherwise disabled.
@@ -882,7 +968,7 @@ password_config:
 
 
 
-# Enable sending emails for notification events
+# Enable sending emails for notification events or expiry notices
 # Defining a custom URL for Riot is only needed if email notifications
 # should contain links to a self-hosted installation of Riot; when set
 # the "app_name" setting is ignored.
@@ -904,6 +990,9 @@ password_config:
 #   #template_dir: res/templates
 #   notif_template_html: notif_mail.html
 #   notif_template_text: notif_mail.txt
+#   # Templates for account expiry notices.
+#   expiry_template_html: notice_expiry.html
+#   expiry_template_text: notice_expiry.txt
 #   notif_for_new_users: True
 #   riot_base_url: "http://localhost/riot"
 
