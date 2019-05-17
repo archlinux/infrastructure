@@ -39,7 +39,7 @@
 
 - name: install synapse
   command: >
-    /var/lib/synapse/venv/bin/pip install matrix-synapse systemd-python lxml
+    /var/lib/synapse/venv/bin/pip install 'matrix-synapse[postgres,systemd,url_preview]'
   args:
     creates: /var/lib/synapse/venv/bin/synctl
   become: yes
