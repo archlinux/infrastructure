@@ -24,7 +24,6 @@
       postgres_effective_cache_size: 32GB
       tags: ['postgres']
     - { role: oidentd, tags: ['oidentd'] }
-    - { role: quassel, quassel_domain: "quassel.archlinux.org", tags: ['quassel'] }
     - { role: matrix, tags: ['matrix'] }
     - { role: syncrepo, mirror_domain: "mirror.pkgbuild.com", tags: ['syncrepo', 'nginx'] }
     - { role: sogrep, tags: ['sogrep'] }
