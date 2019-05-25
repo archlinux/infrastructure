@@ -10,8 +10,7 @@ ExecStart=/usr/bin/find /srv/archive/packages -mindepth 2 -maxdepth 2 -type d -e
 LimitNOFILE=8192
 
 NoNewPrivileges=true
-# TODO enable this once the initial uploads are done
-#TimeoutStartSec=3600
+TimeoutStartSec=6h
 
 #BindPaths={{ archive_user_home }}
 
