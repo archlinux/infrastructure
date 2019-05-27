@@ -49,11 +49,11 @@
 
 - name: download bootstrap image
   get_url:
-    url: https://mirrors.kernel.org/archlinux/iso/2019.03.01/archlinux-bootstrap-2019.03.01-x86_64.tar.gz
+    url: https://mirrors.kernel.org/archlinux/iso/{{ bootstrap_version }}/archlinux-bootstrap-{{ bootstrap_version }}-x86_64.tar.gz
     dest: /tmp/
 
 - name: extract boostrap image
-  command: tar xf archlinux-bootstrap-2019.03.01-x86_64.tar.gz
+  command: tar xf archlinux-bootstrap-{{ bootstrap_version }}-x86_64.tar.gz
   args:
     chdir: /tmp
     creates: /tmp/root.x86_64

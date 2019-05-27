@@ -8,3 +8,5 @@
   remote_user: root
   roles:
     - install_arch
+  vars:
+    - bootstrap_version: "2019.05.02"
