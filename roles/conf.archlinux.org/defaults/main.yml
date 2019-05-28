@@ -1,0 +1,6 @@
+---
+
+conference_user: confweb
+conference_git: https://github.com/archlinux/conf.archlinux.org.git
+conference_domain: conf.archlinux.org
+conference_dir: /srv/http/{{ conference_domain }}

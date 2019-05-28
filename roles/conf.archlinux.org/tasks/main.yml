@@ -1,0 +1,36 @@
+---
+
+- name: install hugo, git
+  package: name=hugo,git state=present
+
+- name: create {{ conference_user }} user
+  user: name={{ conference_user }} shell=/bin/false home={{ conference_dir }} createhome=no
+
+- name: clone conf.archlinux.org website
+  git: >
+    repo={{ conference_git }}
+    dest="{{ conference_dir }}"
+    version=8fe1b86d2a13a8c8227027e310f1708c7cfc1c1a
+  register: release
+
+- name: fix home permissions
+  file: state=directory owner={{ conference_user }} group={{ conference_user }} path="{{ conference_dir }}"
+
+- name: generate conf.archlinux.org site
+  command: hugo
+  become_user: "{{conference_user}}"
+  args:
+    chdir: "{{conference_dir}}"
+  when: release.changed
+
+- name: create ssl cert
+  command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{letsencrypt_validation_dir}} -d '{{ conference_domain }}' creates='/etc/letsencrypt/live/{{ conference_domain }}/fullchain.pem'
+
+- name: make nginx log dir
+  file: path=/var/log/nginx/{{ conference_domain }} state=directory owner=root group=root mode=0755
+
+- name: set up nginx
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/conf.archlinux.org.conf owner=root group=root mode=0644
+  notify:
+    - reload nginx
+  tags: ['nginx']
