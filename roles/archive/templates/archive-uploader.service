@@ -12,15 +12,6 @@ LimitNOFILE=8192
 NoNewPrivileges=true
 TimeoutStartSec=6h
 
-# archive.org sometimes has networking issues and we
-# don't want to get alerts for those if they work again
-# next time. Let system restart use with 5 minutes delay and let the
-# unit fail if it starts 8 times within 4 hours.
-RestartSec=5m
-Restart=on-failure
-StartLimitIntervalSec=4h
-StartLimitBurst=8
-
 #BindPaths={{ archive_user_home }}
 
 #ProtectHome=true
