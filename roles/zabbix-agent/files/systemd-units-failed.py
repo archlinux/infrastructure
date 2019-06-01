@@ -16,8 +16,7 @@ for unit in filter(
     lambda u: u[3] == "failed"
     and u[0] not in ignore
     and not u[0].startswith("user@")
-    and not u[0].startswith("user-runtime-dir@")
-    and not u[0] == "archive-uploader.service",
+    and not u[0].startswith("user-runtime-dir@"),
     units,
 ):
     print(unit[0])
