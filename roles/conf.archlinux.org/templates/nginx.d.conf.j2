@@ -38,10 +38,8 @@ server {
     add_header Strict-Transport-Security $hsts_header;
 
     location /2019 {
-    	alias {{ conference_dir }}/public;
+	return 301 $scheme://$server_name;
     }
 
-    location / {
-    	alias {{ conference_dir }}/public;
-    }
+    root {{ conference_dir }}/public;
 }
