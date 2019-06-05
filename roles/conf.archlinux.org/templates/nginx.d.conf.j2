@@ -37,5 +37,11 @@ server {
     # Apply HSTS header again, since adding a header removes previous headers
     add_header Strict-Transport-Security $hsts_header;
 
-    root {{ conference_dir }}/public;
+    location /2019/ {
+    	alias {{ conference_dir }}/public;
+    }
+
+    location / {
+    	alias {{ conference_dir }}/public;
+    }
 }
