@@ -33,7 +33,7 @@ for repo in ${repos[@]}; do
 		fi
 
 		# create file lists
-		for pkg in $(find $target/$repodir -xtype f -name "*-${arch}.pkg.tar.*"); do
+		for pkg in $(find $target/$repodir -xtype f -name "*-${arch}.pkg.tar.*" ! -name "*.sig"); do
 			pkgname=$(getpkgname $pkg)
 			tmppkgdir=${tmp}/tmp/${repodir}/${pkgname}
 			mkdir -p $tmppkgdir
