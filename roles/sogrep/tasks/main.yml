@@ -3,11 +3,13 @@
 - name: install binutils
   pacman: name=binutils state=present
 
-- name: install sogrep scripts
-  copy: src={{ item }} dest=/usr/local/bin/{{ item }} owner=root group=root mode=0755
-  with_items:
-    - createlinks
-    - sogrep
+- name: install createlinks script
+  copy: src=createlinks dest=/usr/local/bin/createlinks owner=root group=root mode=0755
+
+- name: remove sogrep script (now part of devtools)
+  file:
+    path: /usr/local/bin/sogrep
+    state: absent
 
 - name: install sogrep units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
@@ -19,4 +21,3 @@
 
 - name: start and enable sogrep units
   service: name=createlinks.timer enabled=yes state=started
-
