@@ -12,9 +12,6 @@ Install these packages:
 - terraform
 - terraform-provider-hcloud
 
-For the time being, to run all of this you'll need terraform-git and terraform-provider-hcloud-snapshot because of the pg backend.
-This is temporary and the next releases of these packages will contain the modules in a stable version.
-
 ### Instructions
 
 All systems are set up the same way. For the first time setup in the Hetzner rescue system,
