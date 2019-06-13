@@ -16,25 +16,25 @@ provider "hcloud" {
 }
 
 resource "hcloud_rdns" "bbs" {
-  server_id = "${hcloud_server.bbs.id}"
+  server_id  = "${hcloud_server.bbs.id}"
   ip_address = "${hcloud_server.bbs.ipv4_address}"
-  dns_ptr = "bbs.archlinux.org"
+  dns_ptr    = "bbs.archlinux.org"
 }
 
 resource "hcloud_server" "bbs" {
-  name = "bbs.archlinux.org"
-  image = "${var.archlinux_image_id}"
+  name        = "bbs.archlinux.org"
+  image       = "${var.archlinux_image_id}"
   server_type = "cx11"
 }
 
 resource "hcloud_rdns" "quassel" {
-  server_id = "${hcloud_server.quassel.id}"
+  server_id  = "${hcloud_server.quassel.id}"
   ip_address = "${hcloud_server.quassel.ipv4_address}"
-  dns_ptr = "quassel.archlinux.org"
+  dns_ptr    = "quassel.archlinux.org"
 }
 
 resource "hcloud_server" "quassel" {
-  name = "quassel.archlinux.org"
-  image = "${var.archlinux_image_id}"
+  name        = "quassel.archlinux.org"
+  image       = "${var.archlinux_image_id}"
   server_type = "cx11"
 }
