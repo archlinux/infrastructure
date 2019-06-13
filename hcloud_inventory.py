@@ -9,10 +9,7 @@ import sys
 
 from hcloud import Client
 
-from ansible import constants as C
-from ansible.parsing.vault import VaultLib
-from ansible.cli import CLI
-from ansible.parsing.dataloader import DataLoader
+from misc.get_key import load_vault
 
 
 def parse_args():
@@ -36,14 +33,7 @@ def get_host_details(client, host):
 
 def main():
     args = parse_args()
-    loader = DataLoader()
-    vault_secret = CLI.setup_vault_secrets(
-        loader=loader,
-        vault_ids=C.DEFAULT_VAULT_IDENTITY_LIST
-    )
-    vault = VaultLib(vault_secret)
-    decrypted = vault.decrypt(open('misc/vault_hetzner.yml').read())
-    loaded = yaml.load(decrypted)
+    loaded = load_vault('misc/vault_hetzner.yml')
     client = Client(token=loaded["hetzner_cloud_api_key"])
 
     if args.list:

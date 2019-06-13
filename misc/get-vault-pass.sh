@@ -1,4 +1,2 @@
-#!/bin/bash
-
-exec gpg --batch --decrypt --quiet $(dirname $0)/vault-password.gpg
-
+#!/bin/sh
+exec gpg --batch --decrypt --quiet "$(dirname $0)/vault-password.gpg"

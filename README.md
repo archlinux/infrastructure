@@ -19,7 +19,7 @@ run the provisioning script: `ansible-playbook playbooks/tasks/install-arch.yml 
 The provisioning script configures a sane basic systemd with sshd. By design, it is NOT idempotent.
 After the provisioning script has run, it is safe to reboot.
 
-Once in the new system, run the regular playbook: `HCLOUD_TOKEN=$(misc/get_hcloud_api_key_ansible.sh) ansible-playbook playbooks/$hostname.yml`.
+Once in the new system, run the regular playbook: `HCLOUD_TOKEN=$(misc/get_key.py misc/vault_hetzner.yml hetzner_cloud_api_key) ansible-playbook playbooks/$hostname.yml`.
 This playbook is the one regularity used for administrating the server and is entirely idempotent.
 
 #### Note about Ansible dynamic inventories
@@ -44,7 +44,7 @@ Note that some roles already run this automatically.
 We use packer to build snapshots on hcloud to use as server base images.
 In order to use this, you need to install packer and then run
 
-	packer build -var $(./misc/get_hetzner_cloud_api_key_packer.sh) packer/archlinux.json
+	packer build -var $(misc/get_key.py misc/vault_hetzner.yml hetzner_cloud_api_key env) packer/archlinux.json
 
 This will take some time after which a new snapshot will have been created on the primary hcloud archlinux project.
 
@@ -53,7 +53,7 @@ This will take some time after which a new snapshot will have been created on th
 We use terraform to provision a part of the infrastructure on hcloud.
 The very first time you run terraform on your system, you'll have to init it:
 
-    terraform init -backend-config="conn_str=postgres://terraform:$(ansible-vault view group_vars/all/vault_terraform.yml | grep vault_terraform_db_password | cut -f2 -d'"')@state.cloud.archlinux.org"
+    terraform init -backend-config="conn_str=postgres://terraform:$(misc/get_key.py group_vars/all/vault_terraform.yml vault_terraform_db_password)@state.cloud.archlinux.org"
 
 After making changes to the infrastructure in `archlinux.fg`, run
 

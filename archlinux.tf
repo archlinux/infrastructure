@@ -3,7 +3,7 @@ terraform {
 }
 
 data "external" "hetzner_cloud_api_key" {
-  program = ["bash", "${path.module}/misc/get_hetzner_cloud_api_key_terraform.sh"]
+  program = ["${path.module}/misc/get_key.py", "misc/vault_hetzner.yml", "hetzner_cloud_api_key", "json"]
 }
 
 # Find the id using `hcloud image list`
