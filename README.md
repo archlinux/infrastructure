@@ -8,9 +8,7 @@ It also contains git submodules so you have to run `git submodule update --init
 ## Requirements
 
 Install these packages:
-- hcloud-python
 - terraform
-- terraform-provider-hcloud
 
 ### Instructions
 
