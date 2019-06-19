@@ -1,1 +1,4 @@
+---
 filesystem: btrfs
+zabbix_agent_templates:
+  - Template App PostgreSQL
