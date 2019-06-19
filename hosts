@@ -35,6 +35,8 @@ luna.archlinux.org
 [postgresql-servers]
 apollo.archlinux.org
 soyuz.archlinux.org
+state.cloud.archlinux.org
+quassel.archlinux.org
 
 [nginx]
 apollo.archlinux.org
