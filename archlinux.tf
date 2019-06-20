@@ -38,3 +38,15 @@ resource "hcloud_server" "quassel" {
   image       = "${var.archlinux_image_id}"
   server_type = "cx11"
 }
+
+resource "hcloud_rdns" "phrik" {
+  server_id  = "${hcloud_server.phrik.id}"
+  ip_address = "${hcloud_server.phrik.ipv4_address}"
+  dns_ptr    = "phrik.archlinux.org"
+}
+
+resource "hcloud_server" "phrik" {
+  name        = "phrik.archlinux.org"
+  image       = "${var.archlinux_image_id}"
+  server_type = "cx11"
+}
