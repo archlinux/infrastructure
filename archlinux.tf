@@ -15,18 +15,6 @@ provider "hcloud" {
   token = "${data.external.hetzner_cloud_api_key.result.hetzner_cloud_api_key}"
 }
 
-resource "hcloud_rdns" "bbs" {
-  server_id  = "${hcloud_server.bbs.id}"
-  ip_address = "${hcloud_server.bbs.ipv4_address}"
-  dns_ptr    = "bbs.archlinux.org"
-}
-
-resource "hcloud_server" "bbs" {
-  name        = "bbs.archlinux.org"
-  image       = "${var.archlinux_image_id}"
-  server_type = "cx11"
-}
-
 resource "hcloud_rdns" "quassel" {
   server_id  = "${hcloud_server.quassel.id}"
   ip_address = "${hcloud_server.quassel.ipv4_address}"
