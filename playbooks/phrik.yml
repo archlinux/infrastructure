@@ -1,0 +1,13 @@
+---
+
+- name: setup phrik bot server
+  hosts: phrik.archlinux.org
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: tools }
+    - { role: archusers }
+    - { role: phrik }
+    - { role: sshd }
+    - { role: unbound }
+    - { role: root_ssh }
