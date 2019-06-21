@@ -1,5 +1,8 @@
 ---
 
+- name: install phrik utilities
+  pacman: name=git state=present
+
 - name: add phrik group
   group: name=phrik gid=1100 state=present
 
