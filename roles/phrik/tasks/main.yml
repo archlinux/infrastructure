@@ -17,3 +17,11 @@
 
 - name: install phrik sudoers config
   copy: src=sudoers dest=/etc/sudoers.d/phrik
+
+- name: install phrik systemd service
+  copy: src=phrik.service dest=/etc/systemd/system/phrik.service
+  notify:
+    - daemon reload
+
+- name: start and enable phrik service
+  service: name="phrik.service" enabled=yes state=started

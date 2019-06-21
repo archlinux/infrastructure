@@ -1,0 +1,12 @@
+[Unit]
+Description=The official Arch Linux IRC bot
+
+[Service]
+ExecStart=/home/phrik/venv/bin/supybot /home/phrik/phrik/phrik.conf
+Restart=on-failure
+NoNewPrivileges=true
+ProtectSystem=full
+User=phrik
+
+[Install]
+WantedBy=default.target
