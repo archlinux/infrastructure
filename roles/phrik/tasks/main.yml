@@ -9,8 +9,14 @@
 - name: add phrik user
   user: name=phrik group=phrik uid=1100 comment="phrik IRC bot" createhome=yes
 
-- name: ading users to phrik group
+- name: adding users to phrik group
   user: groups=phrik name="{{ item }}" append=yes
+  with_items:
+    - demize
+  tags: ['archusers']
+
+- name: adding users to systemd-journal group for monitoring
+  user: groups=systemd-journal name="{{ item }}" append=yes
   with_items:
     - demize
   tags: ['archusers']
