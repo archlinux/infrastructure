@@ -33,6 +33,11 @@ server {
     root {{ archwiki_dir }}/public;
     index index.php;
 
+    # Block search bot that apparently never heared the term rate limiting
+    if ($http_user_agent ~ "Bytespider$" ) {
+        return 403;
+    }
+
     location ^~ /. {
         log_not_found off;
         deny all;
