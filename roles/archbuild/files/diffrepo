@@ -3,7 +3,7 @@ setopt extendedglob nomatch
 
 parse() {
   local pkgdata
-  IFS=- read -A pkgdata <<<"${${1:t}%.pkg.tar.*}"
+  IFS=- read -A pkgdata <<<"${${1:t}%.pkg.tar*}"
   pkgname=${(j:-:)pkgdata[1,-4]}
   epoch=
   pkgver=${pkgdata[-3]}
@@ -28,7 +28,7 @@ function {
   local pkgname epoch pkgver pkgrel arch
   for pkg in $(makepkg --packagelist); do
     parse $pkg
-    otherpkg=( /srv/ftp/pool/*/${pkgname}-[^-]##-[^-]##-${arch}.pkg.tar.*(Nom[1]) )
+    otherpkg=( /srv/ftp/pool/*/${pkgname}-[^-]##-[^-]##-${arch}.pkg.tar*~*.sig(Nom[1]) )
     if [[ -n $otherpkg ]]; then
       sdiff -sw $COLUMNS <(tartf Repo $otherpkg) <(tartf Our $pkg)
       echo

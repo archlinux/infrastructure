@@ -148,32 +148,33 @@ build() {
 
 # Parameters: arch
 repoadd() {
-  local -a pkgs
+  local -a files
 
-  pkgs=( ${^pkgname}-[^-]##-[^-]##-($1|any).pkg.tar.*(-om[1]) )
+  files=( ${^pkgname}-[^-]##-[^-]##-($1|any).pkg.tar*~*.sig(-om[1]) )
+  files+=( ${^files}.sig(N) )
 
   if [[ -n $repohost ]]; then
     ssh -q $repohost mkdir -p $repodir/$1
-    scp -q $pkgs $repohost:$repodir/$1/
+    scp -q $files $repohost:$repodir/$1/
     ssh -q $repohost zsh -c ":
       setopt extendedglob nomatch
       repodir=${repodir:q}
       repodb=${repodb:q}
       pkgname=(${pkgname:q})
-      pkgs=(${pkgs:q})
+      files=(${files:q})
       $(declare -f repoadd_remote)
       repoadd_remote ${1:q}
     "
   else
     mkdir -p $repodir/$1
-    cp $pkgs $repodir/$1/
+    cp $files $repodir/$1/
     repoadd_remote $1
   fi
 }
 
 # Parameters: arch
 repoadd_remote() {
-  local -a olddeltas repopkgs
+  local -a olddeltas repofiles
 
   pushd $repodir/$1
 
@@ -183,11 +184,11 @@ repoadd_remote() {
   rm -f $olddeltas
 
   # Add to databases, with delta generation
-  XDELTA="-9 -S lzma" repo-add -d -q $repodb $pkgs
+  XDELTA="-9 -S lzma" repo-add -d -q $repodb ${files:#*.sig}
 
   # clean up old packages
-  repopkgs=( ${^pkgname}-[^-]##-[^-]##-($1|any).pkg.tar.* )
-  rm -f ${repopkgs:|pkgs}
+  repofiles=( ${^pkgname}-[^-]##-[^-]##-($1|any).pkg.tar* )
+  rm -f ${repofiles:|files}
 
   popd
 }
@@ -212,7 +213,7 @@ build_and_add() {
 
   buildargs=(-l $USERNAME-mkpkg -T)
   for dep in $builddeps; do
-    buildargs+=(-I $repodir/$1/${dep}-[^-]##-[^-]##-($1|any).pkg.tar.*(-om[1]) )
+    buildargs+=(-I $repodir/$1/${dep}-[^-]##-[^-]##-($1|any).pkg.tar*~*.sig(-om[1]) )
   done
 
   if build $1 $buildargs &>$1.log; then
@@ -246,7 +247,7 @@ mkpkg_one() (
     exit 1
   fi
 
-  rm -f ${^pkgname}-[^-]##-[^-]##-[^-]##.pkg.tar.*(N)
+  rm -f ${^pkgname}-[^-]##-[^-]##-[^-]##.pkg.tar*(N)
 
   for a in $arch; do
     case $a in
