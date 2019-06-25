@@ -1,0 +1,69 @@
+#!/bin/zsh
+setopt extendedglob nomatch
+
+die() {
+  echo $* >&2
+  exit 1
+}
+
+[[ -f PKGBUILD ]] || die "no PKGBUILD"
+
+# Need some space
+export TMPDIR=/var/tmp
+
+pkgnames=()
+arches=()
+eval $(bash -c '
+  source PKGBUILD &>/dev/null </dev/null
+  printf "pkgbase=%q\n" "${pkgbase:-$pkgname}"
+  printf "pkgnames+=(%q)\n" "${pkgname[@]}"
+  printf "arches+=(%q)\n" "${arch[@]}"
+  if [[ -n $epoch ]]; then
+    printf "version=%q\n" "$epoch:$pkgver-$pkgrel"
+  else
+    printf "version=%q\n" "$pkgver-$pkgrel"
+  fi
+')
+
+reports=()
+
+for arch in $arches; do
+  newfiles=( ${^pkgnames}-${version}-${arch}.pkg.tar*~*.sig(Nom[1]) )
+
+  if (( ${#newfiles} != ${#pkgnames} )); then
+    echo >&2 "Skipping arch ${arch}, missing packages"
+    continue
+  fi
+
+  oldfiles=( /srv/ftp/pool/*/${^pkgnames}-[^-]##-[^-]##-${arch}.pkg.tar*~*.sig(Nom[1]) )
+  tmp=$(mktemp --directory --tmpdir pkgdiffrepo.${pkgbase}-${version}-${arch}.XXXXXXXXXX)
+
+  >$tmp/new.xml <<END
+<version>${version}</version>
+<group>${pkgbase} ${arch}</group>
+<packages>
+  ${(F)newfiles}
+</packages>
+END
+
+  >$tmp/old.xml <<END
+<version>before-${version}</version>
+<group>${pkgbase} ${arch}</group>
+<packages>
+  ${(F)oldfiles}
+</packages>
+END
+
+  pkgdiff -report-path $tmp/report.html -details -width 150 $tmp/old.xml $tmp/new.xml
+  if [[ -n $tmp/report.html ]]; then
+    reports+=($tmp)
+  else
+    rm -rf $tmp
+  fi
+done
+
+TRAPINT() {}
+for tmp in $reports; do
+  elinks $tmp/report.html -config-file ./usr/local/share/elinks-pkgdiffrepo.conf
+  rm -rf $tmp
+done

@@ -4,16 +4,36 @@
   pacman: name="appstream-generator" state=present
 
 - name: install archbuild
-  pacman: name=devtools,zsh,git,subversion,mercurial,bzr,xdelta3,ruby,tig,colordiff state=present
+  pacman:
+    name:
+      - devtools
+      - zsh
+      - git
+      - subversion
+      - mercurial
+      - bzr
+      - xdelta3
+      - ruby
+      - tig
+      - colordiff
+      - pkgdiff
+      - elinks
+    state: present
 
 - name: install archbuild scripts
   copy: src={{ item }} dest=/usr/local/bin/{{ item }} owner=root group=root mode=0755
   with_items:
     - mkpkg
     - diffrepo
+    - pkgdiffrepo
     - clean-chroots
     - clean-dests
     - gitpkg
+
+- name: install archbuild config files
+  copy: src={{ item }} dest=/usr/local/share/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - elinks-pkgdiffrepo.conf
 
 - name: install archbuild units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
