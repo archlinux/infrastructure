@@ -28,7 +28,7 @@ eval $(bash -c '
 reports=()
 
 for arch in $arches; do
-  newfiles=( ${^pkgnames}-${version}-${arch}.pkg.tar*~*.sig(Nom[1]) )
+  newfiles=( ${^pkgnames}-${version}-${arch}.pkg.tar*~*.(sig|log)(Nom[1]) )
 
   if (( ${#newfiles} != ${#pkgnames} )); then
     echo >&2 "Skipping arch ${arch}, missing packages"
@@ -67,3 +67,5 @@ for tmp in $reports; do
   elinks $tmp/report.html -config-file ./usr/local/share/elinks-pkgdiffrepo.conf
   rm -rf $tmp
 done
+
+# vim:set sw=2 et:

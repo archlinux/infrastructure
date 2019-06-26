@@ -150,7 +150,7 @@ build() {
 repoadd() {
   local -a files
 
-  files=( ${^pkgname}-[^-]##-[^-]##-($1|any).pkg.tar*~*.sig(-om[1]) )
+  files=( ${^pkgname}-[^-]##-[^-]##-($1|any).pkg.tar*~*.(sig|log)(-om[1]) )
   files+=( ${^files}.sig(N) )
 
   if [[ -n $repohost ]]; then
