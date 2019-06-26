@@ -17,21 +17,21 @@ parse() {
   fi
 }
 
-tartf() {
-  local pkgname epoch pkgver pkgrel arch tag=$1 pkgfile="$2"
-  parse $pkgfile
-  echo "=== $tag $pkgname ${epoch}${pkgver}-${pkgrel} $arch ==="
-  bsdtar tf $pkgfile | sort
-}
-
 function {
   local pkgname epoch pkgver pkgrel arch
   for pkg in $(makepkg --packagelist); do
     parse $pkg
-    otherpkg=( /srv/ftp/pool/*/${pkgname}-[^-]##-[^-]##-${arch}.pkg.tar*~*.sig(Nom[1]) )
+    if [[ -n $1 ]]; then
+        otherpkg=( /srv/ftp/pool/*/${pkgname}-${1}-${arch}.pkg.tar*~*.sig(Nom[1]) )
+    else
+        otherpkg=( /srv/ftp/pool/*/${pkgname}-[^-]##-[^-]##-${arch}.pkg.tar*~*.sig(Nom[1]) )
+    fi
     if [[ -n $otherpkg ]]; then
-      sdiff -sw $COLUMNS <(tartf Repo $otherpkg) <(tartf Our $pkg)
-      echo
+      ${${(%):-%x}:A:h}/diffpkg $otherpkg $pkg
+    else
+      print -P "%F{11}%BWarning:%b No repo package found for $pkg%f"
     fi
   done
-}
+} $1
+
+# vim:set sw=2 et:

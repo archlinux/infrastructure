@@ -1,0 +1,66 @@
+#!/bin/zsh -e
+
+parse() {
+  local pkgdata
+  IFS=- read -A pkgdata <<<"${${1:t}%.pkg.tar*}"
+  pkgname=${(j:-:)pkgdata[1,-4]}
+  epoch=
+  pkgver=${pkgdata[-3]}
+  pkgrel=${pkgdata[-2]}
+  arch=${pkgdata[-1]}
+
+  IFS=: read -A pkgdata <<<$pkgver
+  if (( ${#pkgdata} > 1 )); then
+    epoch=${pkgdata[1]}:
+    pkgver=${pkgdata[2]}
+  fi
+}
+
+header() {
+  local pkgname epoch pkgver pkgrel arch pad
+  parse $1
+  shift
+  pad=$((cols/2 - ${#:-"$pkgname $epoch$pkgver-$pkgrel $arch${1:+ }$*"}))
+  (( pad > 0 )) || pad=0
+  print -P "%B$pkgname %F{10}$epoch$pkgver-$pkgrel%f $arch${1:+ }$*%b${(r:pad:)}"
+}
+
+headers() {
+  local cols=$((COLUMNS - 4))
+  print -P "$(header $1 ${*:3}) ${(l:cols%2:)}|${(l:1-cols%2:)} $(header $2 ${*:3})"
+}
+
+sdifftw() {
+  sdiff -tw $COLUMNS $( (( VERBOSE )) || echo -s) $* || :
+}
+
+tartf() {
+  bsdtar tf $* | if (( VERBOSE )); then
+    cat
+  else
+    sed -r 's|^usr/lib/modules/[0-9][^/]+|usr/lib/modules/[…]|'
+  fi | sort
+}
+
+diff_names() {
+  headers $1 $2 files
+  sdifftw <(tartf $1) <(tartf $2)
+}
+
+diff_files() {
+  headers $*
+  sdifftw <(bsdtar xOf $1 ${*:3}) <(bsdtar xOf $2 ${*:3})
+}
+
+if (( $# != 2 )); then
+  print -Pu2 "%F{9}%BError:%b Specify two packages%f"
+  exit 1
+fi
+
+diff_names $1 $2
+if (( VERBOSE )); then
+    diff_files $1 $2 .PKGINFO
+    diff_files $1 $2 .BUILDINFO
+fi
+
+# vim:set sw=2 et:
