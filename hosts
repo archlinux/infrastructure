@@ -48,6 +48,6 @@ dragon.archlinux.org
 soyuz.archlinux.org
 sgp.mirror.pkgbuild.com
 
-[reproducible-builds]
+[reproduciblebuilds]
 repro1.pkgbuild.com
 repro2.pkgbuild.com
