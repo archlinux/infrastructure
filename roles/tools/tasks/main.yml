@@ -62,6 +62,8 @@
       - fasd
       - ranger
       - vifm
+      - git
+      - perl-term-readkey
 
 - name: start vnstatd
   service: name=vnstat state=started enabled=true
