@@ -36,6 +36,8 @@
   become: yes
   become_user: synapse
   become_method: sudo
+  notify:
+    - restart matrix-appservice-irc
 
 - name: install synapse
   command: >
@@ -45,6 +47,8 @@
   become: yes
   become_user: synapse
   become_method: sudo
+  notify:
+    - restart synapse
 
 - name: install matrix-appservice-irc
   command: yarn install
@@ -54,6 +58,8 @@
   become: yes
   become_user: synapse
   become_method: sudo
+  notify:
+    - restart matrix-appservice-irc
 
 - name: add synapse postgres db
   postgresql_db: db=synapse
@@ -114,13 +120,8 @@
     - synapse.service
     - matrix-appservice-irc.service
   notify:
-    - daemon reload
-
-- name: start and enable synapse
-  service: name={{ item }} enabled=yes state=started
-  with_items:
-    - synapse.service
-    - matrix-appservice-irc.service
+    - restart synapse
+    - restart matrix-appservice-irc
 
 - name: open firewall holes
   firewalld: port=8448/tcp permanent=true state=enabled immediate=yes

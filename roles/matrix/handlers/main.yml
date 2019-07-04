@@ -1,4 +1,15 @@
 ---
 
-- name: daemon reload
-  command: systemctl daemon-reload
+- name: restart synapse
+  systemd:
+    name: synapse
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
+
+- name: restart matrix-appservice-irc
+  systemd:
+    name: matrix-appservice-irc
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
