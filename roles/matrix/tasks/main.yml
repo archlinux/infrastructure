@@ -21,34 +21,31 @@
     - /var/lib/synapse/media_store
     - /var/lib/synapse/uploads
 
-- name: create venv
-  command: python -m venv /var/lib/synapse/venv
-  args:
-    creates: /var/lib/synapse/venv/bin/python
+- name: install synapse
+  pip:
+    name:
+      - 'matrix-synapse[postgres,systemd,url_preview]'
+      - pip
+    state: latest
+    extra_args: '-U --upgrade-strategy=eager'
+    virtualenv: /var/lib/synapse/venv
+    virtualenv_command: '-m venv'
   become: yes
   become_user: synapse
   become_method: sudo
+  notify:
+    - restart synapse
 
 - name: download matrix-appservice-irc
-  command: git clone https://github.com/heftig/matrix-appservice-irc /var/lib/synapse/matrix-appservice-irc
-  args:
-    creates: /var/lib/synapse/matrix-appservice-irc/package.json
+  git:
+    repo: https://github.com/heftig/matrix-appservice-irc
+    dest: /var/lib/synapse/matrix-appservice-irc
   become: yes
   become_user: synapse
   become_method: sudo
   notify:
     - restart matrix-appservice-irc
 
-- name: install synapse
-  command: >
-    /var/lib/synapse/venv/bin/pip install 'matrix-synapse[postgres,systemd,url_preview]'
-  args:
-    creates: /var/lib/synapse/venv/bin/synctl
-  become: yes
-  become_user: synapse
-  become_method: sudo
-  notify:
-    - restart synapse
 
 - name: install matrix-appservice-irc
   command: yarn install
@@ -60,6 +57,15 @@
   become_method: sudo
   notify:
     - restart matrix-appservice-irc
+
+- name: upgrade matrix-appservice-irc
+  command: yarn upgrade
+  args:
+    chdir: /var/lib/synapse/matrix-appservice-irc
+  become: yes
+  become_user: synapse
+  become_method: sudo
+  # FIXME: Find out how to notify only when upgrade did something
 
 - name: add synapse postgres db
   postgresql_db: db=synapse
