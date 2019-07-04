@@ -8,7 +8,7 @@ It also contains git submodules so you have to run `git submodule update --init
 ## Requirements
 
 Install these packages:
-- terraform
+  - terraform
 
 ### Instructions
 
@@ -42,7 +42,7 @@ Note that some roles already run this automatically.
 We use packer to build snapshots on hcloud to use as server base images.
 In order to use this, you need to install packer and then run
 
-	packer build -var $(misc/get_key.py misc/vault_hetzner.yml hetzner_cloud_api_key env) packer/archlinux.json
+    packer build -var $(misc/get_key.py misc/vault_hetzner.yml hetzner_cloud_api_key env) packer/archlinux.json
 
 This will take some time after which a new snapshot will have been created on the primary hcloud archlinux project.
 
@@ -87,75 +87,75 @@ Arch-audit can be used to find servers in need of updates for security issues.
 
 The following steps should be used to update our managed servers:
 
-* pacman -Syu
-* manually update the kernel, since it is in IgnorePkg by default
-* sync
-* checkservices
-* reboot
+  * pacman -Syu
+  * manually update the kernel, since it is in IgnorePkg by default
+  * sync
+  * checkservices
+  * reboot
 
 ## Servers
 
 ### vostok
 
 #### Services
-- backups
+  - backups
 
 ### orion
 
 #### Services
-- repos/sync (repos.archlinux.org)
-- sources (sources.archlinux.org)
-- archive (archive.archlinux.org)
-- torrent tracker hefurd (tracker.archlinux.org)
+  - repos/sync (repos.archlinux.org)
+  - sources (sources.archlinux.org)
+  - archive (archive.archlinux.org)
+  - torrent tracker hefurd (tracker.archlinux.org)
 
 ### apollo
 
 #### Services
-- bbs (bbs.archlinux.org)
-- wiki (wiki.archlinux.org)
-- aur (aur.archlinux.org)
-- flyspray (bugs.archlinux.org)
-- mailman
-- planet (planet.archlinux.org)
-- bugs (bugs.archlinux.org)
-- archweb
-- patchwork
-- projects (projects.archlinux.org)
+  - bbs (bbs.archlinux.org)
+  - wiki (wiki.archlinux.org)
+  - aur (aur.archlinux.org)
+  - flyspray (bugs.archlinux.org)
+  - mailman
+  - planet (planet.archlinux.org)
+  - bugs (bugs.archlinux.org)
+  - archweb
+  - patchwork
+  - projects (projects.archlinux.org)
 
 ### soyuz
 
 #### Services
-- build server (pkgbuild.com)
-- releng
-- sogrep
-- /~user/ webhost
-- irc bot (phrik)
-- matrix
-- docker images
-- arch boxes (packer)
+  - build server (pkgbuild.com)
+  - releng
+  - sogrep
+  - /~user/ webhost
+  - irc bot (phrik)
+  - matrix
+  - docker images
+  - arch boxes (packer)
 
 ### dragon
 
 #### Services
-- build server (pkgbuild.com)
-- sogrep
+  - build server (pkgbuild.com)
+  - sogrep
 
 ### state.cloud.archlinux.org
 
 #### Services:
-- postgres server for terraform state
+  - postgres server for terraform state
 
 ### quassel.archlinux.org
 
 #### Services:
-- quassel core
+  - quassel core
 
 ## Ansible repo workflows
 
 ### Replace vault password and change vaulted passwords
 
- - Generate a new key and save it as ./new-vault-pw: `pwgen -s 64 1 > new-vault-pw`
- - `for i in $(ag ANSIBLE_VAULT -l); do ansible-vault rekey --new-vault-password-file new-vault-pw $i; done`
- - Change the key in misc/vault-password.gpg
- - `rm new-vault-pw`
+  - Generate a new key and save it as ./new-vault-pw: `pwgen -s 64 1 > new-vault-pw`
+  - `for i in $(ag ANSIBLE_VAULT -l); do ansible-vault rekey --new-vault-password-file new-vault-pw $i; done`
+  - Change the key in misc/vault-password.gpg
+  - `rm new-vault-pw`
 
