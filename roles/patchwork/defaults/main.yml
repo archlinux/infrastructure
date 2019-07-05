@@ -3,7 +3,7 @@ patchwork_dir: '/srv/http/patchwork'
 patchwork_domain: 'patchwork.archlinux.org'
 patchwork_forced_deploy: false
 patchwork_admins: ["('Giancarlo Razzolini', 'grazzolini@archlinux.org')"]
-patchwork_version: '9be793e8af151ce73bbd9587d5791341080363a4'
+patchwork_version: 'v2.1.4'
 patchwork_from_email: 'Arch Linux Patchwork <patchwork@patchwork.archlinux.org>'
 patchwork_notification_frequency: '10m'
 
