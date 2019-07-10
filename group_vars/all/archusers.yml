@@ -282,6 +282,7 @@ arch_users:
     additional_ssh_keys:
       - name: heftig_work.pub
         hosts:
+          - dragon.archlinux.org
           - soyuz.archlinux.org
     groups:
       - dev
