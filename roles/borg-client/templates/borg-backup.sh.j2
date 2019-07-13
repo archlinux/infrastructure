@@ -40,6 +40,7 @@ borg create -v --stats -C lz4 \
     -e /var/cache \
     -e /var/lib/archbuild \
     -e /var/lib/archbuilddest \
+    -e "$snapshotdir/var/cache" \
     -e "$snapshotdir/var/lib/archbuild" \
     -e "$snapshotdir/var/lib/archbuilddest" \
     -e "$snapshotdir/srv/archive" \
