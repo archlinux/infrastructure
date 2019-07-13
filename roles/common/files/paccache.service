@@ -3,4 +3,4 @@ Description=Discard unused packages
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/paccache -r -c /var/cache/pacman
+ExecStart=/usr/bin/paccache -r -c /var/cache/pacman/pkg
