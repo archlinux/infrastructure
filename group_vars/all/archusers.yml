@@ -89,6 +89,7 @@ arch_users:
     shell: /bin/zsh
     groups:
       - tu
+      - multilib
   arodseth:
     name: "Alexander Rødseth"
     ssh_key: arodseth.pub
