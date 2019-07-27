@@ -12,6 +12,7 @@ mysql_backup_defaults: "/root/.backup-my.cnf"
 
 vault_mariadb_users:
   root: "{{encrypted_mariadb_users_root_password}}"
+  zabbix_agent: "{{encrypted_mariadb_users_zabbix_password}}"
 
 zabbix_agent_templates:
   - Template OS Linux
