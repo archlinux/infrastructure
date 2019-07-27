@@ -8,7 +8,7 @@
     creates: /var/lib/mysql/mysql
 
 - name: configure mariadb
-  template: src=server.cnf.j2 dest=/etc/my.cnf.d
+  template: src=server.cnf.j2 dest=/etc/my.cnf.d/server.cnf
   notify:
     - restart mariadb
 
