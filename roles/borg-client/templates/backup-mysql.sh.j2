@@ -5,4 +5,4 @@ backupdir="{{mysql_backup_dir}}"
 
 [[ ! -d "$backupdir" ]] && mkdir -p "$backupdir"
 rm -rf "$backupdir"/*
-xtrabackup $mysql_opts --backup --target-dir="$backupdir"
+mariabackup $mysql_opts --backup --target-dir="$backupdir"

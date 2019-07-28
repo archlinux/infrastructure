@@ -49,8 +49,8 @@
   file: path={{mysql_backup_dir}} state=directory owner=root group=root
   when: mysql_backup_dir is defined
 
-- name: install xtrabackup for mysql backup
-  pacman: name=xtrabackup state=installed
+- name: remove xtrabackup, mariadb ships its own fork
+  pacman: name=xtrabackup state=absent
   when: mysql_backup_dir is defined
 
 - name: install systemd timers for backup
