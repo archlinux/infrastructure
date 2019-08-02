@@ -3,6 +3,9 @@
 - name: configure pacman mirror
   template: src=mirrorlist.j2 dest=/etc/pacman.d/mirrorlist owner=root group=root mode=0644
 
+- name: start and enable auditd
+  service: name=auditd enabled=yes state=started
+
 - name: remove ntp
   pacman: name=ntp state=absent
 
