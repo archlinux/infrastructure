@@ -1,0 +1,7 @@
+---
+
+- name: daemon reload
+  command: systemctl daemon-reload
+
+- name: run wkd service
+  service: name=update-wkd.service state=started

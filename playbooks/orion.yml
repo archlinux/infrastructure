@@ -28,3 +28,4 @@
     - { role: sources, sources_domain: "sources.archlinux.org", sources_dir: "/srv/sources", tags: ['sources'] }
     - { role: archive, archive_domain: "archive.archlinux.org", archive_dir: "/srv/archive", tags: ['archive'] }
     - { role: hefur, ftp_iso_dir: '/srv/ftp/iso', tags: ['torrenttracker']}
+    - wkd
