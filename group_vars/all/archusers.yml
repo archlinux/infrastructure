@@ -294,12 +294,6 @@ arch_users:
     ssh_key: idevolder.pub
     groups:
       - tu
-  ioni:
-    name: "Ionuț Mircea Bîru"
-    ssh_key: ioni.pub
-    groups:
-      - dev
-      - multilib
   jelle:
     name: "Jelle van der Waa"
     ssh_key: jelle.pub
