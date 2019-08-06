@@ -36,7 +36,7 @@ server {
     }
 
     # XXX: This regex is the same as for .all above. Change both if you change this!
-    location ~ ^/repos/201[3456]/.*/(?<filename>(?<pkgname>(?<pkgname_first_char>[^/])[^/]+)-(?<pkgver>[^-/]+)-(?<pkgrel>[0-9]+)-(?<arch>[^-/]+)\.pkg\.tar\.xz(?<sig>\.sig)?)$ {
+    location ~ ^/(?:repos/\d+/.*|packages/.*)/(?<filename>(?<pkgname>(?<pkgname_first_char>[^/])[^/]+)-(?<pkgver>[^-/]+)-(?<pkgrel>[0-9]+)-(?<arch>[^-/]+)\.pkg\.tar\.xz(?<sig>\.sig)?)$ {
         rewrite ^ /archive.org/archlinux_pkg_$pkgname/$filename last;
     }
     # archive.org download URLs look like:
