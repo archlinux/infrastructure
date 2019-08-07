@@ -16,10 +16,11 @@ mkdir -p "$workdir/openpgpkey/archlinux.org/hu"
 # Required file according to https://tools.ietf.org/html/draft-koch-openpgp-webkey-service-08#section-4.5
 touch "$workdir/openpgpkey/archlinux.org/policy"
 
-for email in $(gpg --list-options show-only-fpr-mbox --list-keys | grep '@archlinux.org' | cut -d' ' -f2); do
-	wkd_hash="$(/usr/lib/gnupg/gpg-wks-client --print-wkd-hash "$email" | cut -d' ' -f1)"
-	outfile="$workdir/openpgpkey/archlinux.org/hu/$wkd_hash"
-	gpg --export "$email" > "$outfile"
-
-	# TODO: return error if filesize of $outfile is >= 64kB; https://dev.gnupg.org/T4607#127792
+gpg --quiet --no-permission-warning --list-options show-only-fpr-mbox --list-keys | grep '@archlinux.org' | \
+while read -a fpr_email; do
+	if ! grep -q "${fpr_email[0]}" /usr/share/pacman/keyrings/archlinux-revoked; then
+		wkd_hash="$(/usr/lib/gnupg/gpg-wks-client --print-wkd-hash "${fpr_email[1]}" | cut -d' ' -f1)"
+		outfile="$workdir/openpgpkey/archlinux.org/hu/$wkd_hash"
+		gpg --no-permission-warning --export --export-options export-clean,no-export-attributes "${fpr_email[0]}" > "$outfile"
+	fi
 done
