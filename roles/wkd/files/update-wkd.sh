@@ -13,6 +13,9 @@ export GNUPGHOME=/etc/pacman.d/gnupg
 
 mkdir -p "$workdir/openpgpkey/archlinux.org/hu"
 
+# Required file according to https://tools.ietf.org/html/draft-koch-openpgp-webkey-service-08#section-4.5
+touch "$workdir/openpgpkey/archlinux.org/policy"
+
 for email in $(gpg --list-options show-only-fpr-mbox --list-keys | grep '@archlinux.org' | cut -d' ' -f2); do
 	wkd_hash="$(/usr/lib/gnupg/gpg-wks-client --print-wkd-hash "$email" | cut -d' ' -f1)"
 	outfile="$workdir/openpgpkey/archlinux.org/hu/$wkd_hash"
