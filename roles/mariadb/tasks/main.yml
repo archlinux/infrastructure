@@ -42,6 +42,8 @@
 - name: configure zabbix-agent user
   mysql_user: user={{zabbix_agent_mysql_user}} host=localhost password={{vault_mariadb_users.zabbix_agent}}
 
+# TODO: implement in ansible: grant process on *.* to 'zabbix_agent'@'localhost';
+
 - name: install zabbix mysql config
   template: src=zabbix_agentd.my.cnf.j2 dest=/etc/zabbix/zabbix_agentd.my.cnf owner=zabbix-agent group=zabbix-agent mode=0600
 
