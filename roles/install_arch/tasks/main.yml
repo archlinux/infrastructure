@@ -8,25 +8,23 @@
   fail: msg="Not running in Hetzner rescue system!"
   when: "'Hetzner Rescue' not in motd_contents.stdout"
 
+- name: create GRUB embed partitions
+  command: sgdisk -g --clear -n 1:0:+10M {{ item }} -c 1:boot -t 1:ef02
+  with_items:
+    - "{{ system_disks }}"
+
+- name: create root partitions
+  command: sgdisk -n 2:0:0 {{ item }} -c 2:root
+  with_items:
+    - "{{ system_disks }}"
+
 - name: partition and format the disks (btrfs)
-  command: mkfs.btrfs -f -L rootfs -d {{ raid_level|default(raid1) }} {{ system_disks|join(' ') }}
+  command: mkfs.btrfs -f -L root -d {{ raid_level|default(raid1) }} /dev/sda2 /dev/sdb2
   when: filesystem == "btrfs" and system_disks|length == 2
 
 - name: partition and format the disks (btrfs)
-  filesystem: dev="{{ system_disks[0] }}" fstype=btrfs force=yes opts="-L rootfs"
+  command: mkfs.btrfs -f -L root /dev/sda2
   when: filesystem == "btrfs" and system_disks|length == 1
-
-- name: create BIOS boot partitions
-  parted: device={{ item }} number=1 state=present part_end=10MiB flags=[boot]
-  when: filesystem == "ext4"
-  with_items:
-    - "{{ system_disks }}"
-
-- name: create RAID partitions
-  parted: device={{ item }} number=2 state=present flags=[raid]
-  when: filesystem == "ext4"
-  with_items:
-    - "{{ system_disks }}"
 
 - name: create MDADM array
   command: mdadm --create --level=1 --raid-devices=2 --run /dev/md0 /dev/sda2 /dev/sdb2
@@ -37,7 +35,7 @@
   when: filesystem == "ext4" and system_disks|length == 2
 
 - name: mount the filesystem (btrfs)
-  mount: src="{{ system_disks[0] }}" path=/mnt fstype=btrfs state=mounted opts="compress=lzo"
+  mount: src="/dev/sda2" path=/mnt fstype=btrfs state=mounted opts="compress=zstd"
   when: filesystem == "btrfs"
 
 - name: mount the filesystem (ext4)
@@ -91,7 +89,7 @@
   when: "'AuthenticAMD' in ansible_facts['processor']"
 
 - name: install arch base from bootstrap chroot
-  command: chroot /tmp/root.x86_64 pacstrap /mnt base base-devel btrfs-progs grub openssh python {{ ucode }} creates=/tmp/root.x86_64/mnt/bin
+  command: chroot /tmp/root.x86_64 pacstrap /mnt base btrfs-progs grub openssh python {{ ucode }} creates=/tmp/root.x86_64/mnt/bin
 
 - name: mount /proc to new chroot
   command: mount --rbind /proc /mnt/proc creates=/mnt/proc/uptime
@@ -138,7 +136,7 @@
   lineinfile:
     path: /mnt/etc/default/grub
     regexp: "^GRUB_CMDLINE_LINUX_DEFAULT="
-    line: "GRUB_CMDLINE_LINUX_DEFAULT=\"rootflags=compress=lzo\""
+    line: "GRUB_CMDLINE_LINUX_DEFAULT=\"rootflags=compress=zstd\""
   when: filesystem == "btrfs"
 
 - name: install grub

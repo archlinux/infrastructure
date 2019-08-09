@@ -9,4 +9,4 @@
   roles:
     - install_arch
   vars:
-    - bootstrap_version: "2019.05.02"
+    - bootstrap_version: "2019.08.01"
