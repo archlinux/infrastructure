@@ -32,8 +32,8 @@
     owner=root group=root mode=0644
   notify: restart nginx
 
-- name: install python2-passlib
-  pacman: name=python2-passlib
+- name: install python-passlib
+  pacman: name=python-passlib
 
 - name: create auth file
   htpasswd: >
