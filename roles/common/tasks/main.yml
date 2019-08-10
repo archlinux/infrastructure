@@ -9,9 +9,6 @@
 - name: start and enable auditd
   service: name=auditd enabled=yes state=started
 
-- name: remove ntp
-  pacman: name=ntp state=absent
-
 - name: start and enable systemd-timesyncd
   service: name=systemd-timesyncd enabled=yes state=started
 
