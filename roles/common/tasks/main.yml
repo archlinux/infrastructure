@@ -1,5 +1,8 @@
 ---
 
+- name: set hostname
+  hostname: name="{{ inventory_hostname }}"
+
 - name: configure pacman mirror
   template: src=mirrorlist.j2 dest=/etc/pacman.d/mirrorlist owner=root group=root mode=0644
 
