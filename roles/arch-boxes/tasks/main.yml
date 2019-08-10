@@ -1,7 +1,7 @@
 ---
 
 - name: install arch-boxes dependencies
-  pacman: name=packer,virtualbox,qemu-headless,virtualbox-host-modules-arch state=present
+  pacman: name=packer,virtualbox,qemu-headless,virtualbox-host-modules-arch,pyhon,python-urllib3 state=present
 
 - name: create arch-boxes user
   user: name={{ archboxes_user }} shell=/bin/bash home="{{ archboxes_home }}" createhome=yes
@@ -18,6 +18,9 @@
 
 - name: adjust permissions of git checkout
   file: path="{{ archboxes_git_dir }}" state=directory recurse=yes owner="{{ archboxes_user }}" group="{{ archboxes_user }}"
+
+- name: ensure controller.py of arch-boxes is executable
+  file: path="{{ archboxes_git_dir }}/controller.py" mode='0744'
 
 - name: replace placeholder to vagrantcloud API Key
   replace: path="{{ archboxes_git_dir }}/vagrant.json" regexp='PLACEHOLDER' replace="{{ vault_archboxes_apikey }}"
