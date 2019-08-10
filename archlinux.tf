@@ -6,9 +6,10 @@ data "external" "hetzner_cloud_api_key" {
   program = ["${path.module}/misc/get_key.py", "misc/vault_hetzner.yml", "hetzner_cloud_api_key", "json"]
 }
 
-# Find the id using `hcloud image list`
-variable "archlinux_image_id" {
-  default = "2923545"
+data "hcloud_image" "archlinux" {
+  with_selector = "custom_image=archlinux"
+  most_recent = true
+  with_status = ["available"]
 }
 
 provider "hcloud" {
@@ -23,8 +24,11 @@ resource "hcloud_rdns" "quassel" {
 
 resource "hcloud_server" "quassel" {
   name        = "quassel.archlinux.org"
-  image       = "${var.archlinux_image_id}"
+  image       = "${data.hcloud_image.archlinux.id}"
   server_type = "cx11"
+  lifecycle {
+    ignore_changes = [image]
+  }
 }
 
 resource "hcloud_rdns" "phrik" {
@@ -35,8 +39,11 @@ resource "hcloud_rdns" "phrik" {
 
 resource "hcloud_server" "phrik" {
   name        = "phrik.archlinux.org"
-  image       = "${var.archlinux_image_id}"
+  image       = "${data.hcloud_image.archlinux.id}"
   server_type = "cx11"
+  lifecycle {
+    ignore_changes = [image]
+  }
 }
 
 resource "hcloud_rdns" "bbs" {
@@ -47,6 +54,24 @@ resource "hcloud_rdns" "bbs" {
 
 resource "hcloud_server" "bbs" {
   name        = "bbs.archlinux.org"
-  image       = "${var.archlinux_image_id}"
+  image       = "${data.hcloud_image.archlinux.id}"
   server_type = "cx21"
+  lifecycle {
+    ignore_changes = [image]
+  }
+}
+
+resource "hcloud_rdns" "gitlab" {
+  server_id  = "${hcloud_server.gitlab.id}"
+  ip_address = "${hcloud_server.gitlab.ipv4_address}"
+  dns_ptr    = "gitlab.archlinux.org"
+}
+
+resource "hcloud_server" "gitlab" {
+  name        = "gitlab.archlinux.org"
+  image       = "${data.hcloud_image.archlinux.id}"
+  server_type = "cx21"
+  lifecycle {
+    ignore_changes = [image]
+  }
 }
