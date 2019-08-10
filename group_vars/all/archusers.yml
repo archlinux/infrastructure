@@ -264,6 +264,9 @@ arch_users:
     groups:
       - dev
       - multilib
+  gitlab:
+    name: ""
+    groups: []
   grazzolini:
     name: "Giancarlo Razzolini"
     ssh_key: grazzolini.pub
