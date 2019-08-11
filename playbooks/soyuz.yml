@@ -16,7 +16,6 @@
     - { role: certbot }
     - { role: nginx, tags: ["nginx"] }
     - { role: sudo, tags: ['sudo', 'archusers'] }
-    - { role: phrik, tags: ['phrik'] }
     - role: postgres
       postgres_shared_buffers: 2GB
       postgres_work_mem: 32MB
