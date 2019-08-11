@@ -25,7 +25,7 @@
         letsencrypt['contact_emails'] = ['webmaster@archlinux.org']
         gitlab_rails['lfs_enabled'] = true
         gitlab_rails['gitlab_shell_ssh_port'] = 222
-        gitlab_rails['initial_root_password'] = "{{ gitlab_root_password }}"
+        gitlab_rails['initial_root_password'] = "{{ vault_gitlab_root_password }}"
         gitlab_rails['smtp_enable'] = true
         gitlab_rails['smtp_address'] = 'mail.archlinux.org'
         gitlab_rails['smtp_port'] = 587
