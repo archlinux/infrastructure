@@ -8,12 +8,12 @@
 
 - name: create parent entry categories
   ldap_entry:
-    dn: ou={{item]],dc=archlinux,dc=org
+    dn: ou={{item}},dc=archlinux,dc=org
     objectClass:
       - top
       - organizationalUnit
     attributes:
-      ou: "{{item}}"
+      ou: {{item}}
   with_items:
     - users
     - groups
