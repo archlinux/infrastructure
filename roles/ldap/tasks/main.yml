@@ -1,9 +1,10 @@
 ---
 
 - name: install ldap
-  pacman: name=openldap state=present
+  pacman: name=389-ds-base,python-lib389 state=present
 
-
+# - name: start dirsrv service
+#   service: name=dirsrv 
 
 - name: open firewall hole
   firewalld: service=ldap permanent=true state=enabled immediate=yes
