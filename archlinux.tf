@@ -75,3 +75,18 @@ resource "hcloud_server" "gitlab" {
     ignore_changes = [image]
   }
 }
+
+resource "hcloud_rdns" "ldap" {
+  server_id  = "${hcloud_server.ldap.id}"
+  ip_address = "${hcloud_server.ldap.ipv4_address}"
+  dns_ptr    = "ldap.archlinux.org"
+}
+
+resource "hcloud_server" "ldap" {
+  name        = "ldap.archlinux.org"
+  image       = "${data.hcloud_image.archlinux.id}"
+  server_type = "cx11"
+  lifecycle {
+    ignore_changes = [image]
+  }
+}
