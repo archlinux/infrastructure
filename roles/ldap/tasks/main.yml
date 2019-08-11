@@ -1,0 +1,12 @@
+---
+
+- name: install ldap
+  pacman: name=openldap state=present
+
+
+
+- name: open firewall hole
+  firewalld: service=ldap permanent=true state=enabled immediate=yes
+  when: configure_firewall
+  tags:
+    - firewall

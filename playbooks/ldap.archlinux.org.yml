@@ -1,0 +1,12 @@
+---
+
+- name: setup LDAP server
+  hosts: ldap.archlinux.org
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: tools }
+    - { role: firewalld }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: ldap }
