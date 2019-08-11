@@ -6,6 +6,49 @@
 # - name: start dirsrv service
 #   service: name=dirsrv 
 
+- name: create parent entry categories
+  ldap_entry:
+    dn: ou={{item]],dc=archlinux,dc=org
+    objectClass:
+      - top
+      - organizationalUnit
+    attributes:
+      ou: "{{item}}"
+  with_items:
+    - users
+    - groups
+
+- name: create user entries
+  ldap_entry:
+    dn: uid={{item.key}},ou=users,dc=archlinux,dc=org
+    objectClass:
+      - top
+      - person
+      - inetOrgPerson
+      - organizationalPerson
+      - posixAccount
+    attributes:
+      uid: {{item.key}}
+      givenName: {{item.value.name}}
+  with_dict: "{{ arch_users }}"
+
+- name: create group entries
+  ldap_entry:
+    dn: cn={{item}},ou=groups,dc=archlinux,dc=org
+    objectClass:
+      - top
+      - posixGroup
+  with_items: "{{ arch_groups }}"
+
+#TODO
+#- name: associate groups with users
+#  ldap_attr:
+#    dn: cn={{ TODO GROUP HERE }},ou=groups,dc=archlinux,dc=org
+#    name: memberuid
+#    values: {{ TODO USER HERE }}
+#    state: present
+#  with_
+
 - name: open firewall hole
   firewalld: service=ldap permanent=true state=enabled immediate=yes
   when: configure_firewall
