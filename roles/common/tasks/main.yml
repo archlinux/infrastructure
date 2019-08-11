@@ -143,8 +143,9 @@
 
 - name: install pacman config
   template: src=pacman.conf.j2 dest=/etc/pacman.conf mode=0644 owner=root group=root
-  notify:
-    - update package cache
+
+- name: update package cache
+  pacman: update_cache=yes
 
 - name: install custom paccache.service
   copy: src=paccache.service dest=/etc/systemd/system/paccache.service owner=root group=root mode=0644
