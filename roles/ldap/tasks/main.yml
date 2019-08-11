@@ -1,7 +1,7 @@
 ---
 
 - name: install ldap
-  pacman: name=openldap state=present
+  pacman: name=389-ds-base state=present
 
 
 
