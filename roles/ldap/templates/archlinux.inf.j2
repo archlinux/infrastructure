@@ -1,0 +1,28 @@
+[general]
+config_version = 2
+full_machine_name = {{ inventory_hostname}}
+selinux = False
+start = False
+strict_host_checking = True
+systemd = True
+
+[slapd]
+instance_name = archlinux
+root_dn = cn=Administrator
+root_password = {{ vault_ldap_dir_manager_password }}
+port = 389
+secure_port = 636
+self_sign_cert = True
+self_sign_cert_valid_months = 24
+backup_dir = /var/lib/dirsrv/slapd-{instance_name}/bak
+cert_dir = /etc/dirsrv/slapd-{instance_name}
+config_dir = /etc/dirsrv/slapd-{instance_name}
+db_dir = /var/lib/dirsrv/slapd-{instance_name}/db
+inst_dir = /usr/lib/dirsrv/slapd-{instance_name}
+ldif_dir = /var/lib/dirsrv/slapd-{instance_name}/ldif
+lock_dir = /var/lock/dirsrv/slapd-{instance_name}
+log_dir = /var/log/dirsrv/slapd-{instance_name}
+schema_dir = /etc/dirsrv/slapd-{instance_name}/schema
+
+[backend-userroot]
+suffix = dc=archlinux,dc=org

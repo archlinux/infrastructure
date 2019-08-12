@@ -50,7 +50,10 @@
 #  with_
 
 - name: open firewall hole
-  firewalld: service=ldap permanent=true state=enabled immediate=yes
+  firewalld: port={{ item }} permanent=true state=enabled immediate=yes
   when: configure_firewall
+  with_items:
+    - 389
+    - 636
   tags:
     - firewall
