@@ -90,3 +90,18 @@ resource "hcloud_server" "ldap" {
     ignore_changes = [image]
   }
 }
+
+resource "hcloud_rdns" "matrix" {
+  server_id  = "${hcloud_server.matrix.id}"
+  ip_address = "${hcloud_server.matrix.ipv4_address}"
+  dns_ptr    = "matrix.archlinux.org"
+}
+
+resource "hcloud_server" "matrix" {
+  name        = "matrix.archlinux.org"
+  image       = "${data.hcloud_image.archlinux.id}"
+  server_type = "cx21"
+  lifecycle {
+    ignore_changes = [image]
+  }
+}
