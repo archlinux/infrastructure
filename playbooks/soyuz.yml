@@ -22,8 +22,6 @@
       postgres_maintenance_work_mem: 1GB
       postgres_effective_cache_size: 32GB
       tags: ['postgres']
-    - { role: oidentd, tags: ['oidentd'] }
-    - { role: matrix, tags: ['matrix'] }
     - { role: syncrepo, mirror_domain: "mirror.pkgbuild.com", tags: ['syncrepo', 'nginx'] }
     - { role: sogrep, tags: ['sogrep'] }
     - { role: archbuild, tags: ['archbuild'] }

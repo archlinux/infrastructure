@@ -5,7 +5,7 @@
   when: 'matrix_domain is defined'
 
 - name: install packages
-  pacman: name=python,git,yarn,jemalloc
+  pacman: name=python,git,yarn,jemalloc,gcc,pkg-config,python2
 
 - name: add synapse group
   group: name=synapse system=yes gid=198
@@ -14,12 +14,20 @@
   user: name=synapse system=yes uid=198 group=synapse home=/var/lib/synapse shell=/bin/false createhome=no
 
 - name: create synapse home
-  file: path={{ item }} state=directory owner=synapse group=synapse mode=0755
+  file: path={{ item }} state=directory owner=synapse group=synapse mode=0700
   with_items:
     - /var/lib/synapse
     - /var/lib/synapse/irc-nedb
     - /var/lib/synapse/media_store
     - /var/lib/synapse/uploads
+
+- name: make virtualenv
+  command: python -m venv /var/lib/synapse/venv
+  args:
+    creates: /var/lib/synapse/venv/bin/python
+  become: true
+  become_user: synapse
+  become_method: sudo
 
 - name: install synapse
   pip:
@@ -29,7 +37,6 @@
     state: latest
     extra_args: '-U --upgrade-strategy=eager'
     virtualenv: /var/lib/synapse/venv
-    virtualenv_command: '-m venv'
   become: yes
   become_user: synapse
   become_method: sudo
@@ -130,7 +137,10 @@
     - restart matrix-appservice-irc
 
 - name: open firewall holes
-  firewalld: port=8448/tcp permanent=true state=enabled immediate=yes
+  firewalld: port={{ item }} permanent=true state=enabled immediate=yes
+  with_items:
+    - 8848/tcp
+    - 113/tcp
   when: configure_firewall
   tags:
     - firewall

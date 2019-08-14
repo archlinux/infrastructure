@@ -1,0 +1,8 @@
+---
+filesystem: btrfs
+
+postgres_backup_dir: "/var/lib/postgres/backup"
+zabbix_agent_templates:
+  - Template OS Linux
+  - Template App Borg Backup
+  - Template App PostgreSQL
