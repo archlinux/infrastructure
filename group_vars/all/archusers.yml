@@ -147,12 +147,6 @@ arch_users:
     ssh_key: coderobe.pub
     groups:
       - tu
-  dan:
-    name: "Dan McGee"
-    ssh_key: dan.pub
-    groups:
-      - dev
-      - multilib
   daurnimator:
     name: "Daurnimator"
     ssh_key: daurnimator.pub
