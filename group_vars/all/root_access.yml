@@ -10,7 +10,6 @@ sudo_users:
   - heftig
   - pierre
   - root
-  - seblu
   - svenstaro
 
 # deploy tag 'root_ssh' when this changes
@@ -23,7 +22,6 @@ root_ssh_keys:
   - heftig.pub
   - pierre.pub
   - jelle.pub
-  - seblu.pub
   - svenstaro.pub
 
 # run playbook 'playbooks/tasks/reencrypt-vault-key.yml' when this changes
