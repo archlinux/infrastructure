@@ -27,6 +27,8 @@ apollo.archlinux.org
 soyuz.archlinux.org
 luna.archlinux.org
 state.cloud.archlinux.org
+matrix.archlinux.org
+quassel.archlinux.org
 
 [mysql-servers]
 apollo.archlinux.org
