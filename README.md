@@ -20,6 +20,10 @@ After the provisioning script has run, it is safe to reboot.
 Once in the new system, run the regular playbook: `HCLOUD_TOKEN=$(misc/get_key.py misc/vault_hetzner.yml hetzner_cloud_api_key) ansible-playbook playbooks/$hostname.yml`.
 This playbook is the one regularity used for administrating the server and is entirely idempotent.
 
+When adding a new machine you should also deploy our SSH known_hosts file and update the SSH hostkeys file in this git repo.
+For this you can simply run the `playbooks/tasks/sync-ssh-hostkeys.yml` playbook and commit the changes it makes to this git repository.
+It will also deploy any new SSH host keys to all our machines.
+
 #### Note about Ansible dynamic inventories
 
 We use a dynamic inventory script in order to automatically get information for
