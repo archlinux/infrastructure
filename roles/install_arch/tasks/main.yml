@@ -89,7 +89,7 @@
   when: "'AuthenticAMD' in ansible_facts['processor']"
 
 - name: install arch base from bootstrap chroot
-  command: chroot /tmp/root.x86_64 pacstrap /mnt base btrfs-progs grub openssh python {{ ucode }} creates=/tmp/root.x86_64/mnt/bin
+  command: chroot /tmp/root.x86_64 pacstrap /mnt base btrfs-progs grub openssh python-yaml {{ ucode }} creates=/tmp/root.x86_64/mnt/bin
 
 - name: mount /proc to new chroot
   command: mount --rbind /proc /mnt/proc creates=/mnt/proc/uptime
@@ -132,6 +132,12 @@
   template: src=10-dhcp-ethernet.network.j2 dest=/mnt/etc/systemd/network/10-dhcp-ethernet.network owner=root group=root mode=0644
   when: dhcp|default(False) == True
 
+- name: install hcloud-init
+  file: src=hcloud-init dest=/usr/local/bin/hcloud-init owner=root group=root mode=0755
+
+- name: install hcloud-init.service
+  file: src=hcloud-init.service dest=/etc/systemd/system/hcloud-init.service owner=root group=root mode=0644
+
 - name: provide default mount options (btrfs)
   lineinfile:
     path: /mnt/etc/default/grub
@@ -148,7 +154,7 @@
   command: chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 
 - name: enable services inside chroot
-  command: chroot /mnt systemctl enable sshd systemd-networkd systemd-resolved fstrim.timer
+  command: chroot /mnt systemctl enable sshd systemd-networkd systemd-resolved fstrim.timer hcloud-init
 
 - set_fact: pubkey_list="{{ lookup('file', "{{ playbook_dir }}/../../pubkeys/" + item) }}"
   register: pubkeys
@@ -163,7 +169,7 @@
   template: src=sshd_config.j2 dest=/mnt/etc/ssh/sshd_config owner=root group=root mode=0644
 
 - name: create symlink to resolv.conf
-  file: src=/run/systemd/resolve/resolv.conf dest=/mnt/etc/resolv.conf state=link force=yes
+  file: src=/run/systemd/resolve/stub-resolv.conf dest=/mnt/etc/resolv.conf state=link force=yes
 
 - name: clean pacman cache
   shell: yes | chroot /mnt pacman -Scc

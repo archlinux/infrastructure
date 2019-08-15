@@ -1,0 +1,17 @@
+[Unit]
+Description=Apply configuration from HCloud metadata
+DefaultDependencies=no
+ConditionVirtualization=kvm
+After=systemd-networkd.service
+Before=network.target multi-user.target shutdown.target
+Conflicts=shutdown.target
+Wants=systemd-networkd.service
+
+[Service]
+ExecStart=/usr/local/bin/hcloud-init
+Type=oneshot
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,44 @@
+#!/usr/bin/python
+
+import re
+import subprocess
+from pathlib import Path
+
+import requests
+import yaml
+
+data = requests.get("http://169.254.169.254/hetzner/v1/metadata")
+data.raise_for_status()
+data = yaml.load(data.text, Loader=yaml.SafeLoader)
+print("<6>Loaded HCloud metadata")
+
+
+def configure_network():
+    sections = []
+    for interface in data.get("network-config", {}).get("config", []):
+        if not re.match(r"eth0(:|$)", interface.get("name", "")):
+            continue
+
+        for subnet in interface.get("subnets", []):
+            if not subnet.get("ipv6"):
+                continue
+            if not subnet.get("type") == "static":
+                continue
+
+            sections.append(["[Address]", f"Address={subnet['address']}"])
+            sections.append(["[Route]", f"Gateway={subnet['gateway']}"])
+
+    path = Path("/etc/systemd/network/10-dhcp-ethernet.network.d/hcloud.conf")
+    content = "\n\n".join(["\n".join(s) for s in sections]) + "\n"
+
+    if path.exists() and path.read_text() == content:
+        print("<6>Network configuration unchanged")
+        return
+
+    path.parent.mkdir(exist_ok=True)
+    path.write_text(content)
+    print("<5>Installed new network configuration")
+    subprocess.check_call(["systemctl", "try-reload-or-restart", "systemd-networkd"])
+
+
+configure_network()
