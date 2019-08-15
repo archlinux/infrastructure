@@ -1,5 +1,11 @@
 ---
 
+- name: create postgres subvolume
+  command: btrfs subvol create /var/lib/postgres
+  args:
+    creates: /var/lib/postgres
+  when: filesystem == "btrfs"
+
 - name: install postgres
   pacman: name=postgresql,python-psycopg2 state=present
 
