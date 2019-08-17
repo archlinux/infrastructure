@@ -1,14 +1,24 @@
 [Unit]
-Description=Synapse Matrix Homeserver
+Description=Synapse Matrix homeserver
 Requires=postgresql.service
 After=network.target postgresql.service
 
 [Service]
+Type=notify
+NotifyAccess=main
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-abort
+
 User=synapse
+
 WorkingDirectory=~
-Environment=LD_PRELOAD=/usr/lib/libjemalloc.so
-Environment=SYNAPSE_CACHE_FACTOR=2.0
 ExecStart=/var/lib/synapse/venv/bin/python -m synapse.app.homeserver --config-path=/etc/synapse/homeserver.yaml
+SyslogIdentifier=synapse
+
+Environment=SYNAPSE_CACHE_FACTOR=2.0
+Environment=LD_PRELOAD=/usr/lib/libjemalloc.so
 
 [Install]
 WantedBy=multi-user.target
+
+# vim:set ft=systemd:
