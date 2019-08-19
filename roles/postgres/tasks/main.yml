@@ -9,21 +9,6 @@
 - name: install postgres
   pacman: name=postgresql,python-psycopg2 state=present
 
-- name: create postgres data dir
-  file:
-    path: /var/lib/postgres/data
-    state: directory
-    owner: postgres
-    group: postgres
-    mode: 0700
-
-- name: make postgres data dir nocow
-  file:
-    path: /var/lib/postgres/data
-    state: directory
-    attributes: +C
-  when: filesystem == "btrfs"
-
 - name: initialize postgres
   become: yes
   become_user: postgres
