@@ -26,13 +26,9 @@ $wgSecretKey = "{{ vault_archwiki_wg_secret_key }}";
 # web installer while LocalSettings.php is in place
 $wgUpgradeKey = "{{ vault_archwiki_wg_upgrade_key }}";
 
-# Enabled Extensions. Most extensions are enabled by including the base extension file here
-# but check specific extension documentation for more details
-# The following extensions were automatically enabled:
-require_once( "$IP/extensions/FunnyQuestion/FunnyQuestion.php" );
-$wgFunnyQuestionHash = '2341Euchah1Aev6eejoo5waf';
-$wgFunnyQuestions = array();
-$wgFunnyQuestions['en']['What is the output of "pacman -V|base32|head -1"'] = file_get_contents("{{ archwiki_question_answer_file }}");
+$wgCaptchaQuestions = [
+    'What is the output of "pacman -V|base32|head -1"' => file_get_contents("{{ archwiki_question_answer_file }}")
+];
 
 $wgSMTP = array(
  'host'     => "localhost", // could also be an IP address. Where the SMTP server is located
