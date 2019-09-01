@@ -55,6 +55,23 @@ server {
         include        fastcgi_params;
     }
 
+    # special case for '/load.php' type URLs to cache css/js in nginx to relieve php-fpm
+    location = /load.php {
+        access_log   /var/log/nginx/wiki.archlinux.org/access.log main;
+        fastcgi_pass   archwiki;
+        fastcgi_index  index.php;
+        fastcgi_split_path_info ^(.+\.php)(.*)$;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        fastcgi_param  PATH_INFO        $fastcgi_path_info;
+        fastcgi_param  HTTPS            on;
+        include        fastcgi_params;
+
+        fastcgi_cache wiki;
+        fastcgi_cache_valid 200 10m;
+
+        add_header X-Cache $upstream_cache_status;
+    }
+
     # normal PHP FastCGI handler
     location ~ ^/[^/]+\.php$ {
         access_log   /var/log/nginx/{{ archwiki_domain }}/access.log main;
