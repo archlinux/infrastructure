@@ -27,7 +27,7 @@ $wgSecretKey = "{{ vault_archwiki_wg_secret_key }}";
 $wgUpgradeKey = "{{ vault_archwiki_wg_upgrade_key }}";
 
 $wgCaptchaQuestions = [
-    'What is the output of "pacman -V|base32|head -1"' => file_get_contents("{{ archwiki_question_answer_file }}")
+    'What is the output of "pacman -V|base32|head -1"' => trim(file_get_contents("{{ archwiki_question_answer_file }}"))
 ];
 
 $wgSMTP = array(
