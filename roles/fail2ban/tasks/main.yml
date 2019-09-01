@@ -1,0 +1,14 @@
+---
+
+- name: install fail2ban
+  pacman: name=fail2ban state=present
+
+- name: install jail.local
+  template: src=jail.local.j2 dest=/etc/fail2ban/jail.local owner=root group=root mode=0644
+
+- name: install nginx-dos filter
+  template: src=nginx-dos.conf dest=/etc/fail2ban/filter.d/nginx-dos.conf owner=root group=root mode=0644
+
+- name: start and enable fail2ban service
+  service: name=fail2ban.service enabled=yes state=started
+
