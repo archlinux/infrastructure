@@ -39,6 +39,7 @@ unit_whitelist_regexes = [
         r'uwsgi@.*.service',
         r'zabbix-agent.service',
         r'zabbix-server-pgsql.service',
+        r'fail2ban.service',
         ]
 
 bus = dbus.SystemBus()
