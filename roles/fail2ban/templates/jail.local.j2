@@ -3,7 +3,7 @@ enabled = true
 filter = nginx-dos
 action = iptables-multiport[name=ReqLimit, port="http,https", protocol=tcp]
 logpath = /var/log/nginx/wiki.archlinux.org/access.log
-# 300 pages in 30 minutes
+# 400 pages in 30 minutes
 findtime = 1800
-bantime = 3600
-maxretry = 300
+bantime = 1d
+maxretry = 400
