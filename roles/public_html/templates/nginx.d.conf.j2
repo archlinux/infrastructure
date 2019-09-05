@@ -28,9 +28,14 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ public_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ public_domain }}/chain.pem;
 
-    location ~ ^/~([A-Za-z0-9]+)(/.*)? {
-        alias /home/$1/public_html$2;
+    location ~ ^/~(?<user>[A-Za-z0-9]+)(?<path>/.*)? {
+        alias /home/$user/public_html$path;
         index index.html index.htm;
         autoindex on;
+
+        location ~ /(PKGBUILD|MKPKG)$ {
+            default_type text/plain;
+            charset utf-8;
+        }
     }
 }
