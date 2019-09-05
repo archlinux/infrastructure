@@ -9,10 +9,9 @@ server {
 
     include snippets/letsencrypt.conf;
 
-    location ~ ^/~([A-Za-z0-9]+)(/.*)? {
-        alias /home/$1/public_html$2;
-        index index.html index.htm;
-        autoindex on;
+    location / {
+        access_log off;
+        rewrite ^(.*) https://$server_name$1 permanent;
     }
 }
 
