@@ -1,18 +1,6 @@
 server {
     listen       80;
     listen       [::]:80;
-    server_name  {{ wkd_domain }};
-    root         {{ wkd_dir }};
-
-    access_log   /var/log/nginx/{{ wkd_domain }}/access.log reduced;
-    error_log    /var/log/nginx/{{ wkd_domain }}/error.log;
-
-    include snippets/letsencrypt.conf;
-
-    autoindex on;
-}
-
-server {
     listen       443 ssl http2;
     listen       [::]:443 ssl http2;
     server_name  {{ wkd_domain }};
@@ -20,6 +8,8 @@ server {
 
     access_log   /var/log/nginx/{{ wkd_domain }}/access.log reduced;
     error_log    /var/log/nginx/{{ wkd_domain }}/error.log;
+
+    include snippets/letsencrypt.conf;
 
     ssl_certificate      /etc/letsencrypt/live/{{ wkd_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ wkd_domain }}/privkey.pem;

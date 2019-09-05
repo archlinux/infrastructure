@@ -1,32 +1,12 @@
 server {
     listen       80;
     listen       [::]:80;
-    server_name  {{ repos_domain }} {{repos_rsync_domain}};
-    root         /srv/ftp;
-
-    include snippets/letsencrypt.conf;
-
-    satisfy  any;
-
-    access_log   /var/log/nginx/{{ repos_domain }}/access.log reduced;
-
-    location /lastupdate {
-        allow all;
-    }
-
-	location / {
-		auth_basic            "Restricted";
-		auth_basic_user_file  auth/dbscripts.htpasswd;
-
-		autoindex  on;
-	}
-}
-
-server {
     listen       443 ssl http2;
     listen       [::]:443 ssl http2;
     server_name  {{ repos_domain }} {{repos_rsync_domain}};
     root         /srv/ftp;
+
+    include snippets/letsencrypt.conf;
 
     ssl_certificate      /etc/letsencrypt/live/{{ repos_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ repos_domain }}/privkey.pem;
