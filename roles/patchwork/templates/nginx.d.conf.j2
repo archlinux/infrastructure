@@ -14,7 +14,7 @@ server {
 
     location / {
         access_log off;
-        rewrite ^(.*) https://{{ patchwork_domain }}$1 permanent;
+        return 301 https://$server_name$request_uri;
     }
 }
 

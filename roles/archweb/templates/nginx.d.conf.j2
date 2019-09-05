@@ -16,7 +16,7 @@ server {
 
     location / {
         access_log off;
-        rewrite ^(.*) https://{{ domain }}$1 permanent;
+        return 301 https://$server_name$request_uri;
     }
 }
 
@@ -34,12 +34,12 @@ server {
 
     location / {
         access_log off;
-        rewrite ^(.*) https://{{ archweb_domain }}
+        return 301 https://{{ archweb_domain }}
         {%- if archweb_domains_redirects -%}
-            {{ archweb_domains_redirects[domain]|default('$1') }}
+            {{ archweb_domains_redirects[domain]|default('$request_uri') }}
         {%- else -%}
-           $1
-        {%- endif %} permanent;
+           $request_uri
+        {%- endif %};
     }
 }
 {% endfor %}
@@ -66,7 +66,7 @@ server {
 
     location / {
         access_log off;
-        rewrite ^(.*) https://{{ archweb_domain }}$1 permanent;
+        return 301 https://$server_name$request_uri;
     }
 }
 

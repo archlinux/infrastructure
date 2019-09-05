@@ -5,7 +5,7 @@ archweb_alternate_domains: ['archlinux.org', 'master-key.archlinux.org', 'dev.ar
 archweb_domains_redirects:
         'master-key.archlinux.org': '/master-keys'
         'dev.archlinux.org': '/'
-        'packages.archlinux.org': '/packages$1'
+        'packages.archlinux.org': '/packages$request_uri'
 archweb_repository: 'https://github.com/archlinux/archweb.git'
 archweb_version: release_2019-08-01
 archweb_site: true

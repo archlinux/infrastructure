@@ -10,7 +10,7 @@ server {
 
     location / {
         access_log off;
-        rewrite ^(.*) https://{{ mailman_domain }}$1 permanent;
+        return 301 https://{{ mailman_domain }}$request_uri;
     }
 }
 
@@ -28,6 +28,6 @@ server {
 
     location / {
         access_log off;
-        rewrite ^(.*) https://{{ mailman_domain }}$1 permanent;
+        return 301 https://{{ mailman_domain }}$request_uri;
     }
 }
