@@ -1,5 +1,5 @@
 upstream grafana {
-	server localhost:3000;
+    server localhost:3000;
 }
 
 server {
@@ -34,6 +34,6 @@ server {
 
     location / {
         access_log   /var/log/nginx/{{ grafana_domain }}/access.log main;
-		proxy_pass http://grafana;
+        proxy_pass http://grafana;
     }
 }
