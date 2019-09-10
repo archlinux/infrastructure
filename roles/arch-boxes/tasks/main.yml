@@ -23,6 +23,7 @@
   file: path="{{ archboxes_git_dir }}/controller.py" mode='0744'
 
 - name: replace placeholder to vagrantcloud API Key
+  no_log: true
   replace: path="{{ archboxes_git_dir }}/vagrant.json" regexp='PLACEHOLDER' replace="{{ vault_archboxes_apikey }}"
 
 - name: install sudoers file
