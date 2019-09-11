@@ -56,9 +56,5 @@
 - name: make docker0 interface trusted
   firewalld: interface=docker0 zone=trusted permanent=true state=enabled immediate=yes
   when: configure_firewall
-  with_items:
-    - "80/tcp"
-    - "443/tcp"
-    - "222/tcp"
   tags:
     - firewall
