@@ -1,0 +1,48 @@
+---
+
+- name: install dependencies
+  pacman: name=docker,python-docker,python-gitlab,gitlab-runner state=present
+
+- name: start docker
+  service: name=docker enabled=yes state=started
+
+- name: open firewall holes
+  firewalld: port={{ item }} permanent=true state=enabled immediate=yes
+  when: configure_firewall
+  with_items:
+    - "8093/tcp"
+  tags:
+    - firewall
+
+- name: make docker0 interface trusted
+  firewalld: interface=docker0 zone=trusted permanent=true state=enabled immediate=yes
+  when: configure_firewall
+  tags:
+    - firewall
+
+- name: register gitlab-runner
+  command: >
+    gitlab-runner register
+    --non-interactive
+    --url=https://gitlab.archlinux.org/
+    --docker-image=alpine:latest
+    --tag-list=docker
+    --registration-token="{{ vault_gitlab_runner_registration_token }}"
+    --executor=docker
+    --description="{{ inventory_hostname }}"
+    --run-untagged=true
+    --docker-tlsverify=true
+    --locked=false
+    --access-level=not_protected
+  args:
+    creates: /etc/gitlab-runner/config.toml
+
+- name: increase concurrency
+  lineinfile:
+    path: /etc/gitlab-runner/config.toml
+    regexp: '^concurrent = .*'
+    line: concurrent = 100
+  notify: restart gitlab runner
+
+- name: enable and start gitlab runner service
+  service: name=gitlab-runner state=started enabled=yes

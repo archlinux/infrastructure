@@ -1,0 +1,5 @@
+---
+network_interface: "eno2"
+ipv4_address: "159.122.70.8"
+ipv4_netmask: "/26"
+ipv4_gateway: "159.122.70.1"

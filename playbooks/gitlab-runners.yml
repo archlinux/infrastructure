@@ -1,0 +1,9 @@
+---
+- name: setup gitlab-runners
+  hosts: gitlab-runners
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: gitlab-runner }
