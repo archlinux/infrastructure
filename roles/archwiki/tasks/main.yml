@@ -20,6 +20,9 @@
     - reload nginx
   tags: ['nginx']
 
+- name: configure robots.txt
+  copy: src=robots.txt dest="{{ archwiki_dir }}/robots.txt" owner=root group=root mode=0644
+
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ archwiki_domain }} state=directory owner=root group=root mode=0755
 

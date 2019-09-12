@@ -38,6 +38,10 @@ server {
         return 403;
     }
 
+    location /robots.txt {
+	alias {{ archwiki_dir }}/robots.txt;
+    }
+
     location ^~ /. {
         log_not_found off;
         deny all;
