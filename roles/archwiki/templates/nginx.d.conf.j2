@@ -88,7 +88,7 @@ server {
 
     # whitelist known OK directories
     location ~ ^/(?:skins|resources|images|extensions/ArchLinux/modules)/ {
-        expires 7d;
+        expires 30d;
         add_header Pragma public;
         add_header Cache-Control "public, must-revalidate, proxy-revalidate";
     }
