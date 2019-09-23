@@ -2,3 +2,9 @@
 
 - name: daemon reload
   command: systemctl daemon-reload
+
+- name: upgrade database
+  become: true
+  become_user: security
+  command: /usr/bin/make db-upgrade chdir="{{ security_tracker_dir }}"
+  listen: post security-tracker deploy

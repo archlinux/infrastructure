@@ -16,6 +16,7 @@
       - git
       - python
       - python-sqlalchemy
+      - python-sqlalchemy-continuum
       - python-flask
       - python-flask-sqlalchemy
       - python-flask-wtf
@@ -35,19 +36,30 @@
 - name: fix home permissions
   file: state=directory owner=security group=security path="{{ security_tracker_dir }}"
 
+- name: copy security-tracker units
+  copy: src="{{ item }}" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
+  with_items:
+    - security-tracker-update.timer
+    - security-tracker-update.service
+  notify:
+    - daemon reload
+
+- name: disable security-tracker timer
+  service: name="security-tracker-update.timer" enabled=no state=stopped
+  when: maintenance is defined
+
 - name: clone security-tracker repo
-  git: repo=https://github.com/archlinux/arch-security-tracker.git version="fa5acdf20f30b070fe388340b464dae58d30e23f" dest="{{ security_tracker_dir }}"
+  git: repo=https://github.com/archlinux/arch-security-tracker.git version="{{ security_tracker_version }}" dest="{{ security_tracker_dir }}" force=true
   become: true
   become_user: security
   register: release
+  notify:
+    - post security-tracker deploy
 
 - name: run initial setup
   become: true
   become_user: security
   command: /usr/bin/make chdir="{{ security_tracker_dir }}" creates=*.db
-
-- name: fix home permissions
-  file: state=directory owner=security group=security path="{{ security_tracker_dir }}"
 
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest="{{ security_tracker_nginx_conf }}" owner=root group=root mode=644
@@ -58,14 +70,6 @@
 
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ security_tracker_domain }} state=directory owner=root group=root mode=0755
-
-- name: copy security-tracker units
-  copy: src="{{ item }}" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
-  with_items:
-    - security-tracker-update.timer
-    - security-tracker-update.service
-  notify:
-    - daemon reload
 
 - name: configure security-tracker
   template: src=20-user.local.conf.j2 dest={{ security_tracker_dir }}/config/20-user.local.conf owner=security group=security mode=0640
@@ -81,3 +85,4 @@
 
 - name: start and enable security-tracker timer
   service: name="security-tracker-update.timer" enabled=yes state=started
+  when: maintenance is not defined
