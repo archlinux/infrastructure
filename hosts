@@ -57,3 +57,6 @@ runner2.archlinux.org
 [reproduciblebuilds]
 repro1.pkgbuild.com
 repro2.pkgbuild.com
+
+[memcached]
+apollo.archlinux.org

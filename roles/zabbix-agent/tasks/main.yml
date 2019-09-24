@@ -25,6 +25,17 @@
   pacman: name=perl-dbi,perl-dbd-pg,perl-json
   when: "'postgresql-servers' in group_names"
 
+- name: install memcached monitoring packages
+  pacman: name=python-memcached
+  when: "'memcached' in group_names"
+
+- name: adding existing zabbix-agent to memcached group
+  user:
+    name: zabbix-agent
+    groups: memcached
+    append: yes
+  when: "'memcached' in group_names"
+
 - file: path=/etc/zabbix state=directory owner=root group=root mode=755
 
 - name: create host PSK
@@ -83,6 +94,7 @@
     - mysql-dbsize-stats.pl
     - postgresql-dbsize-stats.pl
     - postgresql-user-stats.pl
+    - memcached-stats.py
 
 - name: Install helper scripts
   copy: src=nginx-zabbix.pl dest=/usr/local/bin/nginx-zabbix.pl mode=0755 owner=root group=root

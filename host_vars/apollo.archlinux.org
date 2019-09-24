@@ -32,6 +32,7 @@ zabbix_agent_templates:
   - Template App SSH Service
   - Template App Zabbix Server
   - Template App PostgreSQL
+  - Template App Memcached
 
 zabbix_agent_host_groups:
   - Linux servers
