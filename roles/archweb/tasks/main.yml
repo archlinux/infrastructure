@@ -168,7 +168,7 @@
   when: archweb_services or archweb_pgp_import
 
 - name: install archweb memcached service
-  template: src="archweb-memcached.service.j2" dest="/etc/systemd/system/archweb-memcached.service" owner=root group=root mode=0644
+  template: src="archweb-memcached.service.j2" dest="/etc/systemd/system/archwiki-memcached.service" owner=root group=root mode=0644
   notify:
     - daemon reload
   when: archweb_site|bool

@@ -5,7 +5,7 @@
   when: 'archwiki_domain is defined'
 
 - name: install packages
-  pacman: name=git,php-intl,php-apcu state=present
+  pacman: name=git,php-intl state=present
 
 - name: make archwiki user
   user: name="{{ archwiki_user }}" shell=/bin/false home="{{ archwiki_dir }}" createhome=no
@@ -70,8 +70,8 @@
   notify:
     - restart php-fpm@{{ archwiki_user }}
 
-- name: set php-apcu value
-  copy: src=20-apcu.ini dest=/etc/php/conf.d/20-apcu.ini
+- name: install archwiki memcached service
+  template: src="archwiki-memcached.service.j2" dest="/etc/systemd/system/archwiki-memcached.service" owner=root group=root mode=0644
 
 - name: start and enable systemd socket
   service: name=php-fpm@{{ archwiki_user }}.socket state=started enabled=true
@@ -87,6 +87,7 @@
     - archwiki-prune-cache.service
     - archwiki-prune-cache.timer
     - archwiki-question-updater.service
+    - archwiki-memcached.service
 
 - name: start and enable archwiki runjobs timer
   service: name="archwiki-runjobs.timer" enabled=yes state=started
@@ -99,6 +100,9 @@
 
 - name: create question answer file
   service: name=archwiki-question-updater.service state=started
+
+- name: start and enable archwiki memcached
+  service: name=archwiki-memcached.service state=started
 
 - name: ensure question answer file exists and set permissions
   file: state=file path="{{archwiki_question_answer_file}}" owner=root group=root mode=0644
