@@ -1,0 +1,3 @@
+---
+maintenance_logs_dir: '/var/log/nginx/maintenance'
+maintenance_http_dir: '/srv/http/maintenance'
