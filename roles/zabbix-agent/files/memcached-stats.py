@@ -17,13 +17,13 @@ def stats(socket):
         print(json.dumps({}))
     else:
         data = stats[0][1]
-        data['hit_rate'] = 0
-        data['cache_rate'] = 0
+        data['hit_rate'] = "0"
+        data['cache_rate'] = "0"
 
         # Calculate hit rate
         try:
-            data['hit_rate'] = round(float(data['get_hits']) / float(data['cmd_get']) * 100)
-            data['cache_rate'] = round(float(data['bytes']) / float(data['limit_maxbytes']) * 100)
+            data['hit_rate'] = str(round(float(data['get_hits']) / float(data['cmd_get']) * 100))
+            data['cache_rate'] = str(round(float(data['bytes']) / float(data['limit_maxbytes']) * 100))
         except ZeroDivisionError:
             pass
 
