@@ -1,18 +1,5 @@
 #!/usr/bin/python
 
-'''
-Metrics:
-
-- uptime - time memcached is alive
-- listen_disabled_num - the number of times: the max number of connections is reachedand:ii
-- conn_yields -  Number of times a client connection was throttled.
-- hits - get_hits / cmd_get. It indicates how efficient your Memcached server is.
-- fill - used bytes / limit_maxbytes - Fill percentage
-- evictions - an eviction is when an item that still has time to live is removed from the cache because a brand new item needs to be allocated
-- command flush - the flush_all command invalidates all items in the database
-- connections_total - total number of connections
-'''
-
 import argparse
 import json
 import os
@@ -29,7 +16,13 @@ def stats(socket):
     if not stats:
         print(json.dumps({}))
     else:
-        print(json.dumps(stats[0][1]))
+        data = stats[0][1]
+
+        # Calculate hit rate
+        data['hit_rate'] = round(float(data['get_hits']) / float(data['cmd_get']) * 100)
+        data['cache_rate'] = round(float(data['bytes']) / float(data['limit_maxbytes']) * 100)
+
+        print(json.dumps(data))
 
 
 def discover():
