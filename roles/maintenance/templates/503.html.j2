@@ -33,9 +33,8 @@
 		<h2>Don't Panic!</h2>
 		<p>The {{ service_name.lower() }} is down due to maintenance. We will be back soon. In the meantime you might get help at the following sites:</p>
 		<ul id="sitelinks">
-                  {% for link in service_other_links %}
-                        <li><a href="{{ link['link'] }}">{{ link['name'].capitalize() }}</a></li>
-                  {% endfor %}
+                        <li><a href="https://bbs.archlinux.org">Forums</a></li>
+                        <li><a href="https://wiki.archlinux.org">Wiki</a></li>
 			<li>IRC: #archlinux on freenode</li>
 		</ul>
 		<div>
