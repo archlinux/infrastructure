@@ -80,6 +80,27 @@ The opendkim DNS data has to be added to DNS manually. The roles verifies that t
 
 The file that has to be added to the zone is `/etc/opendkim/private/$selector.txt`.
 
+### Putting a service in maintenance mode
+
+Most web services with a nginx configuration, can be put into a maintenance mode, by running the playbook with a maintenance variable:
+
+    ansible-playbook -e maintenance=true playbooks/<playbook.yml>
+
+This also works with a tag:
+
+    ansible-playbook -t <tag> -e maintenance=true playbooks/<playbook.yml>
+
+As long as you pass the maintenance variable to the playbook run, the web service will stay in maintenance mode. As soon as you stop
+passing it on the command line and run the playbook again, the regular nginx configuration should resume and the service should accept
+requests by the end of the run.
+
+Passing maintenance=false, will also prevent the regular nginx configuration from resuming, but will not put the service into maintence
+mode.
+
+Keep in mind that passing the maintenance variable to the whole playbook, without any tag, will make all the web services that have the
+maintenance mode in them, to be put in maintenance mode. Use tags to affect only the services you want.
+
+Documentation on how to add the maintenance mode to a web service is inside docs/maintenance.txt
 
 ### Finding servers requiring security updates
 
