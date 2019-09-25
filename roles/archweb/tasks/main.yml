@@ -6,7 +6,7 @@
     service_name: "site"
     service_domain: "{{ archweb_domain }}"
     service_alternate_domains: "{{ archweb_alternate_domains }}"
-    service_nginx_conf: "/etc/nginx/nginx.d/archweb.conf"
+    service_nginx_conf: "{{ archweb_nginx_conf }}"
   when: maintenance is defined
 
 - name: install required packages
@@ -23,7 +23,7 @@
   when: archweb_site|bool
 
 - name: set up nginx
-  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/archweb.conf owner=root group=root mode=644
+  template: src=nginx.d.conf.j2 dest="{{ archweb_nginx_conf }}" owner=root group=root mode=644
   notify: reload nginx
   when: archweb_site|bool and maintenance is not defined
   tags: ['nginx']

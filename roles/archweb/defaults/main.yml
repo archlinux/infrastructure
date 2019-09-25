@@ -6,6 +6,7 @@ archweb_domains_redirects:
         'master-key.archlinux.org': '/master-keys'
         'dev.archlinux.org': '/'
         'packages.archlinux.org': '/packages$request_uri'
+archweb_nginx_conf: '/etc/nginx/nginx.d/archweb.conf'
 archweb_repository: 'https://github.com/archlinux/archweb.git'
 archweb_version: release_2019-09-11
 archweb_site: true
