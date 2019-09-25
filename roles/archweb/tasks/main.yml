@@ -1,4 +1,14 @@
 ---
+- name: run maintenance mode
+  include_role:
+    name: maintenance
+  vars:
+    service_name: "site"
+    service_domain: "{{ archweb_domain }}"
+    service_alternate_domains: "{{ archweb_alternate_domains }}"
+    service_nginx_conf: "/etc/nginx/nginx.d/archweb.conf"
+  when: maintenance is defined
+
 - name: install required packages
   pacman: name=git,python-setuptools,python-psycopg2,uwsgi-plugin-python,gcc state=present
 
@@ -15,7 +25,7 @@
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/archweb.conf owner=root group=root mode=644
   notify: reload nginx
-  when: archweb_site|bool
+  when: archweb_site|bool and maintenance is not defined
   tags: ['nginx']
 
 - name: make nginx log dir
