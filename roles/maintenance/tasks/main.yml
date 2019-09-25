@@ -27,3 +27,6 @@
     group: root
     mode: 644
   when: maintenance is defined and maintenance|bool
+
+- name: force reload nginx
+  meta: flush_handlers
