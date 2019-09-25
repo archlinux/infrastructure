@@ -1,4 +1,13 @@
 ---
+- name: run maintenance mode
+  include_role:
+    name: maintenance
+  vars:
+    service_name: "wiki"
+    service_domain: "{{ archwiki_domain }}"
+    service_alternate_domains: []
+    service_nginx_conf: "{{ archwiki_nginx_conf }}"
+  when: maintenance is defined
 
 - name: create ssl cert
   command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{ letsencrypt_validation_dir }} -d '{{ archwiki_domain }}' creates='/etc/letsencrypt/live/{{ archwiki_domain }}/fullchain.pem'
@@ -15,9 +24,10 @@
   file: state=directory owner="{{ archwiki_user }}" group="{{ archwiki_user }}" path="{{ archwiki_dir }}"
 
 - name: set up nginx
-  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/archwiki.conf owner=root group=root mode=644
+  template: src=nginx.d.conf.j2 dest="{{ archwiki_nginx_conf }}" owner=root group=root mode=644
   notify:
     - reload nginx
+  when: maintenance is not defined
   tags: ['nginx']
 
 - name: configure robots.txt
