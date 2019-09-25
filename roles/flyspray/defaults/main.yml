@@ -1,6 +1,7 @@
 ---
 flyspray_dir: '/srv/http/flyspray'
 flyspray_domain: 'bugs.archlinux.org'
+flyspray_nginx_conf: '/etc/nginx/nginx.d/flyspray.conf'
 flyspray_user: 'flyspray'
 
 flyspray_db: 'flyspray'

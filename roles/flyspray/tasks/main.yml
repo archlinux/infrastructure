@@ -1,4 +1,13 @@
 ---
+- name: run maintenance mode
+  include_role:
+    name: maintenance
+  vars:
+    service_name: "Bugtracker"
+    service_domain: "{{ flyspray_domain }}"
+    service_alternate_domains: []
+    service_nginx_conf: "{{ flyspray_nginx_conf }}"
+  when: maintenance is defined
 
 - name: install git
   pacman: name=git state=present
@@ -11,9 +20,10 @@
   file: state=directory owner="{{ flyspray_user }}" group="{{ flyspray_user }}" path="{{ flyspray_dir }}"
 
 - name: set up nginx
-  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/flyspray.conf owner=root group=root mode=644
+  template: src=nginx.d.conf.j2 dest="{{ flyspray_nginx_conf }}" owner=root group=root mode=644
   notify:
     - reload nginx
+  when: maintenance is not defined
   tags: ['nginx']
 
 - name: make nginx log dir
