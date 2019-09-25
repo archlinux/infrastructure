@@ -1,4 +1,13 @@
 ---
+- name: run maintenance mode
+  include_role:
+    name: maintenance
+  vars:
+    service_name: "security tracker"
+    service_domain: "{{ security_tracker_domain }}"
+    service_alternate_domains: []
+    service_nginx_conf: "{{ security_tracker_nginx_conf }}"
+  when: maintenance is defined
 
 - name: install packages
   pacman:
@@ -41,9 +50,10 @@
   file: state=directory owner=security group=security path="{{ security_tracker_dir }}"
 
 - name: set up nginx
-  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/security-tracker.conf owner=root group=root mode=644
+  template: src=nginx.d.conf.j2 dest="{{ security_tracker_nginx_conf }}" owner=root group=root mode=644
   notify:
     - reload nginx
+  when: maintenance is not defined
   tags: ['nginx']
 
 - name: make nginx log dir
