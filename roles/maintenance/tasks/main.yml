@@ -1,0 +1,29 @@
+---
+- name: create the maintenance logs dir
+  file: path={{ maintenance_logs_dir }} state=directory owner=root group=root mode=0755
+
+- name: create the maintenance http dir
+  file: path={{ maintenance_http_dir }} state=directory owner=root group=root mode=0755
+
+- name: create the service http root dir
+  file: path={{ maintenance_http_dir }}/{{ service_domain }} state=directory owner=root group=root mode=0755
+  when: maintenance is defined and maintenance|bool
+
+- name: set up nginx maintenance mode
+  template:
+    src: nginx-maintenance.conf.j2
+    dest: "{{ service_nginx_conf }}"
+    owner: root
+    group: root
+    mode: 644
+  notify: reload nginx
+  when: maintenance is defined and maintenance|bool
+
+- name: create the 503 html file
+  template:
+    src: 503.html.j2
+    dest: "{{ maintenance_http_dir }}/{{ service_domain }}/503.html"
+    owner: root
+    group: root
+    mode: 644
+  when: maintenance is defined and maintenance|bool
