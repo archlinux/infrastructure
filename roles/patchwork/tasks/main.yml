@@ -1,4 +1,14 @@
 ---
+- name: run maintenance mode
+  include_role:
+    name: maintenance
+  vars:
+    service_name: "patchwork"
+    service_domain: "{{ patchwork_domain }}"
+    service_alternate_domains: []
+    service_nginx_conf: "{{ patchwork_nginx_conf }}"
+  when: maintenance is defined
+
 - name: install packages
   pacman: name=gcc,git,python,python-psycopg2,sudo,uwsgi-plugin-python,python-pip state=present
 
@@ -9,9 +19,10 @@
   user: name=patchwork groups=uwsgi
 
 - name: set up nginx
-  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/patchwork.conf owner=root group=root mode=644
+  template: src=nginx.d.conf.j2 dest="{{ patchwork_nginx_conf }}" owner=root group=root mode=644
   notify:
     - reload nginx
+  when: maintenance is not defined
   tags: ['nginx']
 
 - name: make nginx log dir
