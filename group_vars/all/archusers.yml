@@ -165,6 +165,11 @@ arch_users:
       - dev
       - tu
       - multilib
+  diabonas:
+    name: "Jonas Witschel"
+    ssh_key: diabonas.pub
+    groups:
+      - tu
   djgera:
     name: "Gerardo Exequiel Pozzi"
     ssh_key: djgera.pub
