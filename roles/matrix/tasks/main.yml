@@ -5,7 +5,7 @@
   when: 'matrix_domain is defined'
 
 - name: install packages
-  pacman: name=python,git,yarn,jemalloc,gcc,pkg-config,python2
+  pacman: name=python,git,npm,make,jemalloc,gcc,pkg-config,python2
 
 - name: add synapse group
   group: name=synapse system=yes gid=198
@@ -53,26 +53,15 @@
   notify:
     - restart matrix-appservice-irc
 
-
 - name: install matrix-appservice-irc
-  command: yarn install
-  args:
-    chdir: /var/lib/synapse/matrix-appservice-irc
-    creates: /var/lib/synapse/matrix-appservice-irc/node_modules
+  npm:
+    path: /var/lib/synapse/matrix-appservice-irc
+    production: yes
   become: yes
   become_user: synapse
   become_method: sudo
   notify:
     - restart matrix-appservice-irc
-
-- name: upgrade matrix-appservice-irc
-  command: yarn upgrade
-  args:
-    chdir: /var/lib/synapse/matrix-appservice-irc
-  become: yes
-  become_user: synapse
-  become_method: sudo
-  # FIXME: Find out how to notify only when upgrade did something
 
 - name: add synapse postgres db
   postgresql_db: db=synapse
