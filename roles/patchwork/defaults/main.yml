@@ -4,7 +4,7 @@ patchwork_domain: 'patchwork.archlinux.org'
 patchwork_nginx_conf: '/etc/nginx/nginx.d/patchwork.conf'
 patchwork_forced_deploy: false
 patchwork_admins: ["('Giancarlo Razzolini', 'grazzolini@archlinux.org')"]
-patchwork_version: 'v2.1.4'
+patchwork_version: 'v2.1.5'
 patchwork_from_email: 'Arch Linux Patchwork <patchwork@patchwork.archlinux.org>'
 patchwork_notification_frequency: '10m'
 
