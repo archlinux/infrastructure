@@ -112,7 +112,7 @@
   service: name=archwiki-question-updater.service state=started
 
 - name: start and enable archwiki memcached
-  service: name=archwiki-memcached.service state=started
+  service: name=archwiki-memcached.service enabled=yes state=started
 
 - name: ensure question answer file exists and set permissions
   file: state=file path="{{archwiki_question_answer_file}}" owner=root group=root mode=0644

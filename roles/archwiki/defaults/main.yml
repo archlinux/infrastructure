@@ -9,6 +9,7 @@ archwiki_question_answer_file: '/srv/http/archwiki/registration-question-answer.
 
 archwiki_socket: '/run/php-fpm/archwiki.socket'
 archwiki_memcached_socket: '/run/memcached/archwiki.sock'
+archwiki_memcached_memory: 2048
 
 archwiki_db: 'archwiki'
 archwiki_db_host: 'localhost'
