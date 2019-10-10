@@ -120,3 +120,18 @@ resource "hcloud_server" "ciprototype" {
     ignore_changes = [image]
   }
 }
+
+resource "hcloud_rdns" "acccounts" {
+  server_id  = "${hcloud_server.accounts.id}"
+  ip_address = "${hcloud_server.accounts.ipv4_address}"
+  dns_ptr    = "accounts.archlinux.org"
+}
+
+resource "hcloud_server" "accounts" {
+  name        = "accounts.archlinux.org"
+  image       = "${data.hcloud_image.archlinux.id}"
+  server_type = "cx11"
+  lifecycle {
+    ignore_changes = [image]
+  }
+}
