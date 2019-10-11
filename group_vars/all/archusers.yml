@@ -456,11 +456,6 @@ arch_users:
     groups:
       - tu
       - multilib
-  stativ:
-    name: "Lukas Jirkovsky"
-    ssh_key: stativ.pub
-    groups:
-      - tu
   svenstaro:
     name: "Sven-Hendrik Haase"
     ssh_key: svenstaro.pub
