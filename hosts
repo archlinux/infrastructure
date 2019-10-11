@@ -11,14 +11,15 @@ ind.mirror.pkgbuild.com
 jpn.mirror.pkgbuild.com
 mex.mirror.pkgbuild.com
 sgp.mirror.pkgbuild.com
+ger.mirror.pkgbuild.com
 runner1.archlinux.org
-runner2.archlinux.org
 
 [mirrors]
 ind.mirror.pkgbuild.com
 jpn.mirror.pkgbuild.com
 mex.mirror.pkgbuild.com
 sgp.mirror.pkgbuild.com
+ger.mirror.pkgbuild.com
 
 [borg-clients]
 orion.archlinux.org
@@ -52,7 +53,6 @@ sgp.mirror.pkgbuild.com
 
 [gitlab-runners]
 runner1.archlinux.org
-runner2.archlinux.org
 
 [reproduciblebuilds]
 repro1.pkgbuild.com
