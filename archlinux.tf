@@ -120,3 +120,18 @@ resource "hcloud_server" "accounts" {
     ignore_changes = [image]
   }
 }
+
+resource "hcloud_rdns" "mirror" {
+  server_id  = "${hcloud_server.mirror.id}"
+  ip_address = "${hcloud_server.mirror.ipv4_address}"
+  dns_ptr    = "mirror.pkgbuild.com"
+}
+
+resource "hcloud_server" "mirror" {
+  name        = "mirror.pkgbuild.com"
+  image       = "${data.hcloud_image.archlinux.id}"
+  server_type = "cx11"
+  lifecycle {
+    ignore_changes = [image]
+  }
+}
