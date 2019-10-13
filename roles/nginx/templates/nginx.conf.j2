@@ -2,6 +2,7 @@ worker_processes  auto;
 
 load_module /usr/lib/nginx/modules/ngx_http_brotli_filter_module.so;
 load_module /usr/lib/nginx/modules/ngx_http_brotli_static_module.so;
+include toplevel-snippets/*.conf;
 
 events {
     worker_connections 2048;

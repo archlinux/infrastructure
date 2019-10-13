@@ -11,8 +11,11 @@
   notify:
     - restart nginx
 
-- name: snippets directory
-  file: state=directory path=/etc/nginx/snippets owner=root group=root mode=0755
+- name: snippets directories
+  file: state=directory path=/etc/nginx/{{ item }} owner=root group=root mode=0755
+  with_items:
+    - toplevel-snippets
+    - snippets
 
 - name: copy snippets
   template: src={{ item }} dest=/etc/nginx/snippets owner=root group=root mode=0644
