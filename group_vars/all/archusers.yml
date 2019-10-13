@@ -450,6 +450,11 @@ arch_users:
     groups:
       - tu
       - archboxes-sudo
+  kpcyrd:
+    name: "Kpcyrd"
+    ssh_key: kpcyrd.pub
+    groups:
+      - tu
   spupykin:
     name: "Sergej Pupykin"
     ssh_key: spupykin.pub
