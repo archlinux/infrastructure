@@ -1,6 +1,6 @@
 ---
 
-- name: setup mirror load balancer
+- name: setup mirror load balancer (using geoip)
   hosts: mirror.pkgbuild.com
   remote_user: root
   roles:
