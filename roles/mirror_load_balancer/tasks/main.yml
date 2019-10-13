@@ -1,0 +1,10 @@
+---
+
+- name: install nginx-mod-geoip2
+  pacman: name=nginx-mod-geoip2 state=present
+
+- name: install mirror.pkgbuild.com.conf
+  template: src=mirror.pkgbuild.com.conf.j2 dest=/etc/nginx/nginx.d/mirror.pkgbuild.com.conf owner=root group=root mode=0644
+  notify:
+    - reload nginx
+  tags: ['nginx']

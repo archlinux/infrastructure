@@ -1,0 +1,51 @@
+geoip2 GeoLite2-City.mmdb {
+   $geoip2_data_continent_name source=$remote_addr continent names en;
+}
+
+map $geoip2_data_continent_name $preferred_upstream {
+    default EU_upstream;
+    'Europe' EU_upstream;
+    'North America' US_upstream;
+    'Oceania' OC_upstream;
+    'Asia' AS_upstream;
+}
+
+upstream EU_upstream {
+    server ger.mirror.pkgbuild.com max_fails=3 fail_timeout=600s;
+    server mex.mirror.pkgbuild.com backup max_fails=3 fail_timeout=600s;
+}
+
+upstream US_upstream {
+    server mex.mirror.pkgbuild.com max_fails=3 fail_timeout=600s;
+    server ger.mirror.pkgbuild.com backup max_fails=3 fail_timeout=600s;
+}
+
+upstream OC_upstream {
+    server sgp.mirror.pkgbuild.com max_fails=3 fail_timeout=600s;
+    server ind.mirror.pkgbuild.com backup max_fails=3 fail_timeout=600s;
+}
+
+upstream AS_upstream {
+    server jpn.mirror.pkgbuild.com max_fails=3 fail_timeout=600s;
+    server sgp.mirror.pkgbuild.com backup max_fails=3 fail_timeout=600s;
+}
+
+server {
+    listen       80;
+    listen       [::]:80;
+    listen       443 ssl http2;
+    listen       [::]:443 ssl http2;
+    server_name  {{ mirror_domain }};
+    root         /srv/ftp;
+
+    access_log   /var/log/nginx/{{ mirror_domain }}/access.log reduced;
+    error_log    /var/log/nginx/{{ mirror_domain }}/error.log;
+
+    include snippets/letsencrypt.conf;
+
+    ssl_certificate      /etc/letsencrypt/live/{{ mirror_domain }}/fullchain.pem;
+    ssl_certificate_key  /etc/letsencrypt/live/{{ mirror_domain }}/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/{{ mirror_domain }}/chain.pem;
+
+    autoindex on;
+}
