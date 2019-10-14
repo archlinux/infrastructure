@@ -1,30 +1,30 @@
 ---
 - name: create user
   user: >
-    name=php-fluxbb home="{{ fluxbb_dir }}"
+    name=fluxbb home="{{ fluxbb_dir }}"
     shell=/bin/false system=yes createhome=no
 
 - name: clone fluxbb
   git:
     repo: https://git.archlinux.org/vhosts/bbs.archlinux.org.git/
-    dest: {{ fluxbb_dir }}
+    dest: "{{ fluxbb_dir }}"
 
 - name: fix home permissions
   file: >
-    state=directory owner=php-fluxbb group=php-fluxbb recurse=yes
+    state=directory owner=fluxbb group=fluxbb recurse=yes
     path="{{ fluxbb_dir }}"
   changed_when: False
 
 - name: create mariadb database
-  mysql_db: name=forum state=present
+  mysql_db: name=fluxbb state=present
 
 - name: create mariadb user
   mysql_user: >
-    user=forum host=localhost password={{ mariadb_users.fluxbb }}
+    user=fluxbb host=localhost password={{ mariadb_users.fluxbb }}
     priv='fluxbb.*:ALL'
 
 - name: create nginx log directory
-  file: path=/var/log/nginx/forum owner=root group=root mode=0644
+  file: path=/var/log/nginx/{{ fluxbb_domain }} state=directory owner=root group=root mode=0755
 
 - name: configure nginx
   template: >
@@ -37,7 +37,7 @@
 
 - name: create auth file
   htpasswd: >
-    path=/etc/nginx/auth/forum
+    path=/etc/nginx/auth/fluxx
     name={{ fluxbb_htpasswd.username }}
     password={{ fluxbb_htpasswd.password }}
     owner=root group=http mode=0640
@@ -45,7 +45,7 @@
 - name: install forum config
   template: >
     src=config.php.j2 dest={{ fluxbb_dir }}/config.php
-    owner=php-fluxbb group=php-fluxbb mode=400
+    owner=fluxbb group=fluxbb mode=400
 
 - name: configure php-fpm
   template: >
@@ -54,4 +54,4 @@
   notify: restart php-fpm@fluxbb
 
 - name: start and enable systemd socket
-  service: name=php-fpm@fluxbb.socket state=running enabled=true
+  service: name=php-fpm@fluxbb.socket state=started enabled=true
