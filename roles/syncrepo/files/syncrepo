@@ -77,7 +77,6 @@ if ! tty -s && [[ -f "$target/lastupdate" ]] && diff -b <(curl -Ls "$lastupdate_
 fi
 
 rsync_cmd \
-	--exclude='*.links.tar.gz*' \
 	--exclude='/other' \
 	--exclude='/sources' \
 	"${source_url}" \
