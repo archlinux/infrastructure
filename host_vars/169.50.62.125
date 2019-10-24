@@ -1,6 +1,0 @@
----
-configure_network: true
-network_interface: "eno2"
-ipv4_address: "169.50.62.125"
-ipv4_netmask: "/26"
-ipv4_gateway: "169.50.62.65"
