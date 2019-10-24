@@ -13,12 +13,14 @@
       - name: fetch pacman tarball
         get_url: url=https://sources.archlinux.org/other/pacman/pacman-{{pacman_version}}.tar.gz dest={{tempdir.path}}/pacman.tar.gz
 
-
       - name: create extraction dir
         file: path={{tempdir.path}}/pacman state=directory
 
       - name: unpack tarball
         unarchive: src={{tempdir.path}}/pacman.tar.gz dest={{tempdir.path}}/pacman/
+
+      - name: grab missing file from cgit
+        get_url: url=https://git.archlinux.org/pacman.git/plain/doc/pacman-conf.8.asciidoc?h=v{{pacman_version}} dest={{tempdir.path}}/pacman/pacman-{{pacman_version}}/doc/pacman-conf.8.asciidoc
 
       - name: configure
         shell: ./configure chdir={{tempdir.path}}/pacman/pacman-{{pacman_version}}
