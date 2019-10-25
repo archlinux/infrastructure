@@ -8,7 +8,7 @@ archweb_domains_redirects:
         'packages.archlinux.org': '/packages$request_uri'
 archweb_nginx_conf: '/etc/nginx/nginx.d/archweb.conf'
 archweb_repository: 'https://github.com/archlinux/archweb.git'
-archweb_version: release_2019-09-11
+archweb_version: release_2019-10-25
 archweb_site: true
 archweb_mirrorcheck: false
 archweb_mirrorresolv: false
