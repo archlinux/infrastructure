@@ -170,11 +170,6 @@ arch_users:
     ssh_key: diabonas.pub
     groups:
       - tu
-  djgera:
-    name: "Gerardo Exequiel Pozzi"
-    ssh_key: djgera.pub
-    groups:
-      - dev
   donate:
     name: ""
     groups: []
