@@ -57,4 +57,4 @@
     - { role: grafana, tags: ["grafana"] }
     - { role: archwiki, tags: ["archwiki"] }
     - { role: conf.archlinux.org }
-    - { role: fail2ban }
+    - { role: fail2ban, tags: ["fail2ban"] }

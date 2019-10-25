@@ -37,3 +37,7 @@ zabbix_agent_templates:
 zabbix_agent_host_groups:
   - Linux servers
   - Zabbix servers
+
+fail2ban_jails:
+  - nginx
+  - postfix
