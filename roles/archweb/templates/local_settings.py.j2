@@ -63,6 +63,9 @@ MEDIA_URL = '/img/'
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '{{ vault_archweb_secret_key }}'
 
+# Mailman poster password for announcements
+MAILMAN_PASSWORD = '{{ vault_archweb_mailman_password }}'
+
 # Hostnames we allow this site to be served under
 ALLOWED_HOSTS = ['{{ archweb_domain }}']
 
