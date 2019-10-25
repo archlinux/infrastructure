@@ -20,6 +20,11 @@ hosts allow = 127.0.0.1
 # DENY THE REST
 hosts deny = *
 
+[archive]
+	path = /srv/archive
+	comment = archive
+	hosts allow = {{ hostvars['ger.mirror.pkgbuild.com']['ipv4_address'] }}
+
 [temp-archive]
 	path = /srv/archive
 	comment = temporary endpoint for the archive

@@ -1,0 +1,10 @@
+[Unit]
+Description=Minutely archive sync
+
+[Timer]
+OnCalendar=minutely
+AccuracySec=1m
+Persistent=true
+
+[Install]
+WantedBy=timers.target

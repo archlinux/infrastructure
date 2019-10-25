@@ -1,0 +1,19 @@
+---
+- name: install rsync
+  pacman: name=rsync state=present
+
+- name: install syncarchive script
+  copy: src=syncarchive dest=/usr/local/bin/syncarchive owner=root group=root mode=0755
+
+- name: install syncarchive units
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - syncarchive.timer
+    - syncarchive.service
+  notify:
+    - daemon reload
+
+- name: start and enable syncarchive units
+  service: name={{ item }} enabled=yes state=started
+  with_items:
+    - syncarchive.timer

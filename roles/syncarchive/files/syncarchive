@@ -1,0 +1,36 @@
+#!/bin/bash
+
+target="/srv/archive"
+tmp="/srv/syncarchive-tmp"
+lock="/var/lock/syncarchive.lck"
+source_url='rsync://rsync.archlinux.org/archive'
+lastupdate_url='https://archive.archlinux.org/repos/last/lastupdate'
+
+[ ! -d "${target}" ] && mkdir -p "${target}"
+[ ! -d "${tmp}" ] && mkdir -p "${tmp}"
+
+exec 9>"${lock}"
+flock -n 9 || exit
+
+rsync_cmd() {
+	local -a cmd=(rsync -rtlH --safe-links --delete-after ${VERBOSE} "--timeout=600" "--contimeout=60" -p \
+		--delay-updates --no-motd "--temp-dir=${tmp}")
+
+	if stty &>/dev/null; then
+		cmd+=(-h -v --progress)
+	else
+		cmd+=("--info=name1")
+	fi
+
+	"${cmd[@]}" "$@"
+}
+
+# if we are called without a tty (cronjob) only run when there are changes
+if ! tty -s && [[ -f "$target/lastupdate" ]] && diff -b <(curl -Ls "$lastupdate_url") "$target/lastupdate" >/dev/null; then
+	exit 0
+fi
+
+rsync_cmd \
+    --exclude=".well-known" \
+	"${source_url}" \
+	"${target}"

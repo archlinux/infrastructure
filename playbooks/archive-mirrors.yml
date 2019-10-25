@@ -1,0 +1,14 @@
+---
+- name: common playbook for archive-mirrors
+  hosts: archive-mirrors
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: tools }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: certbot }
+    - { role: nginx }
+    - { role: unbound }
+    - { role: syncarchive, tags: ['nginx'] }
+    - { role: zabbix-agent, tags: ["zabbix"] }

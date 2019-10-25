@@ -21,6 +21,9 @@ mex.mirror.pkgbuild.com
 sgp.mirror.pkgbuild.com
 ger.mirror.pkgbuild.com
 
+[archive-mirrors]
+ger.mirror.pkgbuild.com
+
 [borg-clients]
 orion.archlinux.org
 apollo.archlinux.org
