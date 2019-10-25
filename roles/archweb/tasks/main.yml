@@ -41,6 +41,7 @@
     repo={{ archweb_repository }}
     dest="{{ archweb_dir }}"
     version={{ archweb_version }}
+    verify_commit=true
   become: true
   become_user: archweb
   register: release
