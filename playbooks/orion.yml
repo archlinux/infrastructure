@@ -29,3 +29,4 @@
     - { role: archive, archive_domain: "archive.archlinux.org", archive_dir: "/srv/archive", tags: ['archive'] }
     - { role: hefur, ftp_iso_dir: '/srv/ftp/iso', tags: ['torrenttracker']}
     - wkd
+    - { role: fail2ban, tags: ["fail2ban"] }

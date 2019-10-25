@@ -99,6 +99,16 @@
     - archwiki-question-updater.service
     - archwiki-memcached.service
 
+- name: install fail2ban rate-limit filter
+  template: src=fail2ban.filter.j2 dest=/etc/fail2ban/filter.d/nginx-dos.local owner=root group=root mode=0644
+  tags:
+    - fail2ban
+
+- name: install fail2ban rate-limit jail
+  template: src=fail2ban.jail.j2 dest=/etc/fail2ban/jail.d/nginx-dos.local owner=root group=root mode=0644
+  tags:
+    - fail2ban
+
 - name: start and enable archwiki runjobs timer
   service: name="archwiki-runjobs.timer" enabled=yes state=started
 

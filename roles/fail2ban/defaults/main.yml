@@ -1,0 +1,14 @@
+# by default all jails are disabled
+# override this variable in a host/group file to define which jails to enable
+fail2ban_jails:
+  sshd: false
+  postfix: false
+  dovecot: false
+
+# use variables for these directives so they can be overridden at a host or
+# group level as required. note that there cannot be a space between the
+# integer and the unit (eg "15min" == good, "15 min" == bad).
+# refer to `man jail.conf`
+fail2ban_findtime: 15min
+fail2ban_bantime: 1day
+fail2ban_maxretry: 5

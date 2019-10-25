@@ -1,14 +1,77 @@
----
-
 - name: install fail2ban
-  pacman: name=fail2ban state=present
+  package:
+    name: "fail2ban"
+    state: "present"
+  notify:
+    - restart fail2ban
 
-- name: install jail.local
-  template: src=jail.local.j2 dest=/etc/fail2ban/jail.local owner=root group=root mode=0644
+- name: install systemd unit override file
+  template:
+    src: "fail2ban.service.j2"
+    dest: "/etc/systemd/system/fail2ban.service.d/override.conf"
+    owner: "root"
+    group: "root"
+    mode: 0644
 
-- name: install nginx-dos filter
-  template: src=nginx-dos.conf dest=/etc/fail2ban/filter.d/nginx-dos.conf owner=root group=root mode=0644
+- name: install local config files
+  template:
+    src: "{{item}}.j2"
+    dest: "/etc/fail2ban/{{item}}"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  with_items:
+    - "fail2ban.local"
+    - "jail.local"
+  notify:
+    - restart fail2ban
 
-- name: start and enable fail2ban service
-  service: name=fail2ban.service enabled=yes state=started
+- name: install firewallcmd-allports.local
+  template:
+    src: "firewallcmd-allports.local.j2"
+    dest: "/etc/fail2ban/action.d/firewallcmd-allports.local"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  notify:
+    - restart fail2ban
 
+- name: install sshd jail
+  when: fail2ban_jails.sshd
+  template:
+    src: "sshd.jail.j2"
+    dest: "/etc/fail2ban/jail.d/sshd.local"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  notify:
+    - reload fail2ban jails
+
+- name: install postfix jail
+  when: fail2ban_jails.postfix
+  template:
+    src: "postfix.jail.j2"
+    dest: "/etc/fail2ban/jail.d/postfix.local"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  notify:
+    - reload fail2ban jails
+
+- name: install dovecot jail
+  when: fail2ban_jails.dovecot
+  template:
+    src: "dovecot.jail.j2"
+    dest: "/etc/fail2ban/jail.d/dovecot.local"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  notify:
+    - reload fail2ban jails
+
+- name: start and enable service
+  systemd:
+    name: "fail2ban.service"
+    enabled: yes
+    state: started
+    daemon-reload: yes

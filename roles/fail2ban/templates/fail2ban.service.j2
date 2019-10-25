@@ -1,0 +1,6 @@
+# the user journal files exceeds MaxNOFiles so increase the
+# maximum number of open files
+# Refer: https://github.com/fail2ban/fail2ban/issues/2208
+
+[Service]
+LimitNOFILE=8192

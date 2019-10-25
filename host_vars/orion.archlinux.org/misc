@@ -22,3 +22,8 @@ zabbix_agent_templates:
   - Template App Borg Backup
   - Template App Nginx
   - Template App Archive
+
+fail2ban_jails:
+  sshd: true
+  postfix: true
+  dovecot: true

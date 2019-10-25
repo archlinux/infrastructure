@@ -1,9 +1,30 @@
-[wiki-nginx-dos]
-enabled = true
-filter = nginx-dos
-action = iptables-multiport[name=ReqLimit, port="http,https", protocol=tcp]
-logpath = /var/log/nginx/wiki.archlinux.org/access.log
-# 400 pages in 30 minutes
-findtime = 1800
-bantime = 1d
-maxretry = 400
+#
+# {{ansible_managed}}
+#
+
+[DEFAULT]
+findtime = {{fail2ban_findtime}}
+bantime  = {{fail2ban_bantime}}
+maxretry = {{fail2ban_maxretry}}
+
+# don't trust dns
+usedns = no
+
+# if f2b ever needs to send emails, send them to root and make sure the sender
+# address clearly identifies the host the message originated from
+destemail = root
+sender = fail2ban@{{ansible_fqdn}}
+
+# use firewalld to manage bans - if we don't specify this, then fail2ban will
+# default to use iptables, which we don't want as our systems are running
+# firewalld with nftables backend.
+#
+# check current rules added to firewalld while fail2ban is running:
+#   firewall-cmd --direct --get-all-rules
+# useful runtime commands include:
+#   fail2ban-client set <JAIL> banip <IP>
+#   fail2ban-cleint set <JAIL> unbanip <IP>
+#   fail2ban-client set unban <IP>
+#   fail2ban-client set unban --all
+# see `fail2ban-client help` for full list of runtime commands
+banaction = firewallcmd-allports
