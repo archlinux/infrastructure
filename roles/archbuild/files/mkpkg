@@ -80,8 +80,6 @@ usage2() {
   echo '       - Call build() with $arch makechrootpkg_args'
   echo '          - On failure, mail logs if $mailaddr is set'
   echo '       - Copy built packages to $repohost:$repodir/$arch'
-  echo '       - Repo-remove old deltas from $repodb'
-  echo '       - Remove old delta files'
   echo '       - Repo-add built packages to $repodb'
   echo '       - Remove old package files'
   echo '    - Remove duplicate log files'
@@ -174,17 +172,12 @@ repoadd() {
 
 # Parameters: arch
 repoadd_remote() {
-  local -a olddeltas repofiles
+  local -a repofiles
 
   pushd $repodir/$1
 
-  # clean up old deltas, keep 2 newest
-  olddeltas=( ${^pkgname}-[^-]##-[^-]##_to_[^-]##-[^-]##-($1|any).delta(-Nom[3,-1]) )
-  repo-remove -q $repodb $olddeltas &>/dev/null || :
-  rm -f $olddeltas
-
-  # Add to databases, with delta generation
-  XDELTA="-9 -S lzma" repo-add -d -q $repodb ${files:#*.sig}
+  # Add to databases
+  repo-add -q $repodb ${files:#*.sig}
 
   # clean up old packages
   repofiles=( ${^pkgname}-[^-]##-[^-]##-($1|any).pkg.tar* )
