@@ -1,8 +1,5 @@
 ---
 
-- name: install additional buildserver support packages
-  pacman: name="appstream-generator" state=present
-
 - name: install archbuild
   pacman:
     name:
@@ -12,12 +9,12 @@
       - subversion
       - mercurial
       - bzr
-      - xdelta3
       - ruby
       - tig
       - colordiff
       - pkgdiff
       - elinks
+      - appstream-generator
     state: present
 
 - name: install archbuild scripts
