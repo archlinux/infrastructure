@@ -47,6 +47,9 @@
     src=config.php.j2 dest={{ fluxbb_dir }}/config.php
     owner=fluxbb group=fluxbb mode=400
 
+- name: install php-apcu
+  pacman: name=python-apcu
+
 - name: configure php-fpm
   template: >
     src=php-fpm.conf.j2 dest=/etc/php/php-fpm.d/fluxbb.conf

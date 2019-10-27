@@ -1,5 +1,0 @@
----
-dependencies:
-  - { role: nginx, tags: ['nginx'] }
-  - { role: mariadb, tags: ['mariadb'] }
-  - { role: php-fpm, tags: ['php-fpm'] }

@@ -26,3 +26,7 @@ php_admin_value[opcache.max_accelerated_files] = 200
 php_admin_value[opcache.revalidate_freq] = 60
 php_admin_value[opcache.fast_shutdown] = 1
 php_admin_value[disable_functions] = passthru, exec, proc_open, shell_exec, system, popen
+
+php_admin_value[apc.shm_size] = 1024M
+php_admin_value[apc.ttl] = 1800
+php_admin_value[apc.entries_hint] = 0
