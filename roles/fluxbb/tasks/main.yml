@@ -20,7 +20,7 @@
 
 - name: create mariadb user
   mysql_user: >
-    user=fluxbb host=localhost password={{ mariadb_users.fluxbb }}
+    user=fluxbb host=localhost password={{ fluxbb_db_password }}
     priv='fluxbb.*:ALL'
 
 - name: create nginx log directory

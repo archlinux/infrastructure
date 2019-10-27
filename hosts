@@ -33,6 +33,7 @@ state.cloud.archlinux.org
 matrix.archlinux.org
 quassel.archlinux.org
 phrik.archlinux.org
+bbs.archlinux.org
 
 [mysql-servers]
 apollo.archlinux.org

@@ -1,8 +1,7 @@
 ---
 
 - name: setup bbs.archlinux.org
-  #hosts: bbs.archlinux.org
-  hosts: 116.203.93.142
+  hosts: bbs.archlinux.org
   remote_user: root
   roles:
     - { role: common }
@@ -16,5 +15,5 @@
               mariadb_innodb_file_per_table: True }
     - { role: sudo }
     - { role: uwsgi }
-    - { role: php-fpm, php_extensions: ['iconv', 'intl', 'mysqli'], zend_extensions: ['opcache'] }
+    - { role: php-fpm }
     - { role: fluxbb }
