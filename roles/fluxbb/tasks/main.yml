@@ -8,6 +8,7 @@
   git:
     repo: https://git.archlinux.org/vhosts/bbs.archlinux.org.git/
     dest: "{{ fluxbb_dir }}"
+    version: "{{ fluxbb_version }}"
 
 - name: fix home permissions
   file: >
@@ -48,7 +49,7 @@
     owner=fluxbb group=fluxbb mode=400
 
 - name: install php-apcu
-  pacman: name=python-apcu
+  pacman: name=php-apcu,php-apcu-bc,php-intl
 
 - name: configure php-fpm
   template: >
