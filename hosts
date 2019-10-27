@@ -38,6 +38,7 @@ bbs.archlinux.org
 [mysql-servers]
 apollo.archlinux.org
 luna.archlinux.org
+bbs.archlinux.org
 
 [postgresql-servers]
 apollo.archlinux.org
