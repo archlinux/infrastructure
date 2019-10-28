@@ -25,11 +25,6 @@ hosts deny = *
 	comment = archive
 	hosts allow = {{ hostvars['ger.mirror.pkgbuild.com']['ipv4_address'] }}
 
-[temp-archive]
-	path = /srv/archive
-	comment = temporary endpoint for the archive
-	hosts allow = 192.111.146.210
-
 # Just the release/stable iso/packages (for most mirrors)
 [ftp]
 	path = /srv/ftp
