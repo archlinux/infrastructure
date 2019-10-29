@@ -6,5 +6,22 @@
 - name: reload postfix
   command: postfix reload
 
+- name: postmap additional files
+  command: postmap /etc/postfix/{{item}}
+  with_items:
+    - access_client
+    - access_sender
+    - access_sender-post-filter
+    - access_helo
+    - access_recipient
+    - transport
+    - relocated
+    - relay_transport_map
+    - domains
+    - mailman_compat
+
+- name: update aliases db
+  command: postalias /etc/postfix/aliases
+
 - name: postmap relay_passwords
   command: postmap /etc/postfix/relay_passwords

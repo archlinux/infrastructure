@@ -15,6 +15,8 @@
     - aliases
     - relay_transport_map
     - users.pcre
+  notify:
+    - update aliases db
 
 - name: install additional files
   copy: src={{item}} dest=/etc/postfix/{{item}} owner=root group=root mode=0644
@@ -29,23 +31,8 @@
     - relocated
     - domains
     - mailman_compat
-
-- name: update aliases db
-  command: postalias /etc/postfix/aliases
-
-- name: postmap additional files
-  command: postmap /etc/postfix/{{item}}
-  with_items:
-    - access_client
-    - access_sender
-    - access_sender-post-filter
-    - access_helo
-    - access_recipient
-    - transport
-    - relocated
-    - relay_transport_map
-    - domains
-    - mailman_compat
+  notify:
+    - postmap additional files
 
 - name: create dhparam 2048
   command: openssl dhparam -out /etc/postfix/dh2048.pem 2048 creates=/etc/postfix/dh2048.pem
