@@ -85,6 +85,35 @@
     - compat_maps
     - compat_maps.db
 
+- name: install extra packages for relaying via smarthost
+  when: postfix_relayhost != ""
+  package:
+    name: cyrus-sasl
+    state: present
+
+- name: install relay_passwords file
+  when: postfix_relayhost != ""
+  template:
+    src: relay_passwords.j2
+    dest: /etc/postfix/relay_passwords
+    mode: 0640
+    owner: root
+    group: postfix
+  notify:
+    - postmap relay_passwords
+
+- name: create user account on orion to relay with
+  delegate_to: orion.archlinux.org
+  when: postfix_relayhost != ""
+  user:
+    name: "{{inventory_hostname_short}}"
+    comment: "SMTP Relay Account for {{inventory_hostname}}"
+    group: nobody
+    password: ""
+    shell: /sbin/nologin
+    update_password: on_create
+    create_home: no
+
 - name: open firewall holes
   firewalld: service={{item}} permanent=true state=enabled immediate=yes
   with_items:

@@ -10,6 +10,9 @@ append_dot_mydomain = no
 {% if postfix_smtpd_public %}
 smtpd_tls_cert_file = /etc/letsencrypt/live/{{mail_domain}}/fullchain.pem
 smtpd_tls_key_file = /etc/letsencrypt/live/{{mail_domain}}/privkey.pem
+{% else %}
+smtpd_tls_cert_file = /etc/letsencrypt/live/{{inventory_hostname}}/fullchain.pem
+smtpd_tls_key_file = /etc/letsencrypt/live/{{inventory_hostname}}/privkey.pem
 {% endif %}
 
 smtpd_tls_dh1024_param_file = /etc/postfix/dh2048.pem
@@ -70,25 +73,12 @@ debug_peer_list =
 
 smtp_connection_cache_on_demand = yes
 
-smtpd_milters=unix:/var/spool/opendkim/opendkim
-non_smtpd_milters=unix:/var/spool/opendkim/opendkim
-
-# Pass internal mails through filters so they get signed by opendkim
-# XXX: Be careful not to have filters that may reject mails!
-internal_mail_filter_classes = bounce
-
 # custom restriction classes
 policy_check =
 # postfwd
 {% if postfix_smtpd_public %}
   check_policy_service inet:127.0.0.1:10040
 {% endif %}
-
-submission_recipient_restrictions=
-# allow postmaster
-  check_recipient_access ${indexed}/access_recipient,
-  permit_sasl_authenticated,
-  reject
 
 smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
 
@@ -141,6 +131,17 @@ unknown_address_reject_code = 550
 
 smtpd_reject_footer = For assistance contact <postmaster@archlinux.org>. Please provide the following information in your problem report: time ($localtime), client ($client_address) and server ($server_name).
 
+{% if postfix_relayhost %}
+# relay all outbound mail via {{postfix_relayhost}}
+# the square brackets prevents postfix from trying to lookup mx records
+relayhost = [{{postfix_relayhost}}]:587
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = ${indexed}/relay_passwords
+# allow plaintext authentication only over tls secured connections
+smtp_sasl_security_options = noanonymous, noplaintext
+smtp_sasl_tls_security_options = noanonymous
+{% endif %}
+
 {% if postfix_server %}
 smtpd_sasl_auth_enable = yes
 smtpd_tls_auth_only = yes
@@ -152,6 +153,19 @@ smtpd_sasl_path = /var/run/dovecot/auth-client
 smtpd_tls_received_header = yes
 # needed for SA
 smtpd_sasl_authenticated_header = yes
+
+submission_recipient_restrictions=
+# allow postmaster
+  check_recipient_access ${indexed}/access_recipient,
+  permit_sasl_authenticated,
+  reject
+
+smtpd_milters=unix:/var/spool/opendkim/opendkim
+non_smtpd_milters=unix:/var/spool/opendkim/opendkim
+
+# Pass internal mails through filters so they get signed by opendkim
+# XXX: Be careful not to have filters that may reject mails!
+internal_mail_filter_classes = bounce
 {% endif %}
 
 {% if postfix_server %}

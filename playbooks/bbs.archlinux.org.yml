@@ -16,3 +16,4 @@
     - { role: php-fpm, php_extensions: ['apcu', 'iconv', 'intl', 'mysqli'], zend_extensions: ['opcache'], tags: ["php-fpm"] }
     - { role: fluxbb }
     - { role: borg-client, tags: ["borg"] }
+    - { role: postfix, tags: ["postfix"], postfix_relayhost: "orion.archlinux.org" }

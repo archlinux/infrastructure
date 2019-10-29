@@ -1,2 +1,5 @@
 # This is overridden for the actual mail server which uses mail.archlinux.org.
 mail_domain: "{{inventory_hostname}}"
+
+# password used by postfix for relaying to a central smtp server
+postfix_relay_password: "{{vault_postfix_relay_password}}"

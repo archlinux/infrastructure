@@ -6,3 +6,5 @@
 - name: reload postfix
   command: postfix reload
 
+- name: postmap relay_passwords
+  command: postmap /etc/postfix/relay_passwords

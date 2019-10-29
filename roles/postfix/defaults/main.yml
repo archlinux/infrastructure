@@ -8,6 +8,8 @@ postfix_patchwork_mail_handler: "/usr/local/bin/patchwork-parsemail-wrapper.sh"
 
 mail_domain: "mail.archlinux.org"
 
+postfix_relayhost: ""
+
 postfix_wiki_bounce_mail_handler: "/usr/local/bin/wiki-bouncehandler.pl"
 postfix_wiki_bounce_user: "wiki_bouncehandler"
 postfix_wiki_bounce_config: "/etc/wiki-bouncehandler.conf"
