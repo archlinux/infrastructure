@@ -1,17 +1,19 @@
-# skip lower rate limiting for certain users
-# TODO: populate this from a variable if the feature is used
+# lower rate limit for certain authenticated users
 &&SASL_WHITELIST {
+	# other servers relay via orion using authentication. username is the
+	# hostname part of the fqdn
+{% for host in groups['all'] %}
+	sasl_username={{ hostvars[host].inventory_hostname_short }}
+{% endfor %}
+	# add other usernames to bypass rate-limits here:
 	sasl_username=devnull;
 };
 
-# skip lower rate limiting for certain users
-# sasl_username != doesn't work for whatever reason
+# lower rate limit for certain users
 id=SaslWhitelist;
 	protocol_state==END-OF-MESSAGE;
 	&&SASL_WHITELIST;
-	action=rcpt(sasl_username/300/21600/REJECT You can only send to 300 recipients per 6h per user)
-
-# skip lower rate limiting for certain users
+	action=rcpt(sasl_username/300/10800/REJECT You can only send to 300 recipients per 3h per user)
 id=SaslWhitelist2;
 	protocol_state==END-OF-MESSAGE;
 	&&SASL_WHITELIST;
