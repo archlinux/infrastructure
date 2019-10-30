@@ -5,6 +5,14 @@
   notify:
     - restart fail2ban
 
+- name: create systemd unit override path
+  file:
+    path: "/etc/systemd/system/fail2ban.service.d"
+    state: "directory"
+    owner: "root"
+    group: "root"
+    mode: 0755
+
 - name: install systemd unit override file
   template:
     src: "fail2ban.service.j2"

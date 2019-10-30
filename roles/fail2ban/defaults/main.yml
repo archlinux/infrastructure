@@ -4,6 +4,7 @@ fail2ban_jails:
   sshd: false
   postfix: false
   dovecot: false
+  nginx: false
 
 # use variables for these directives so they can be overridden at a host or
 # group level as required. note that there cannot be a space between the

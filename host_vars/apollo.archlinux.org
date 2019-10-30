@@ -39,5 +39,7 @@ zabbix_agent_host_groups:
   - Zabbix servers
 
 fail2ban_jails:
-  - nginx
-  - postfix
+  sshd: true
+  postfix: true
+  dovecot: false
+  nginx: true
