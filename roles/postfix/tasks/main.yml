@@ -17,6 +17,7 @@
     - users.pcre
   notify:
     - restart postfix
+    - postmap additional files
     - update aliases db
 
 - name: install additional files

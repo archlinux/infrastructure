@@ -1,3 +1,7 @@
+#
+# {{ansible_managed}}
+#
+
 compatibility_level = 2
 
 smtpd_banner = $myhostname ESMTP $mail_name
@@ -73,14 +77,13 @@ debug_peer_list =
 
 smtp_connection_cache_on_demand = yes
 
+smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
+
+{% if postfix_smtpd_public %}
 # custom restriction classes
 policy_check =
-{% if postfix_smtpd_public %}
 # postfwd (rate-limiting)
   check_policy_service inet:127.0.0.1:10040
-{% endif %}
-
-smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
 
 smtpd_recipient_restrictions =
 # policy services
@@ -122,6 +125,7 @@ post_queue_smtpd_recipient_restrictions =
   check_sender_access ${indexed}/access_sender-post-filter,
   permit_mynetworks,
   reject
+{% endif %}
 
 address_verify_map = ${default_database_type}:/var/lib/postfix/verify_cache
 
