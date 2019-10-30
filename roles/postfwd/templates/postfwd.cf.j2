@@ -9,11 +9,11 @@
 	sasl_username=devnull;
 };
 
-# lower rate limit for certain users
+# lower rate limit for certain users (360/3600 == average 1 email every 10 seconds)
 id=SaslWhitelist;
 	protocol_state==END-OF-MESSAGE;
 	&&SASL_WHITELIST;
-	action=rcpt(sasl_username/300/10800/REJECT You can only send to 300 recipients per 3h per user)
+	action=rcpt(sasl_username/360/3600/REJECT You can only send to 360 recipients per 1h per user)
 id=SaslWhitelist2;
 	protocol_state==END-OF-MESSAGE;
 	&&SASL_WHITELIST;
