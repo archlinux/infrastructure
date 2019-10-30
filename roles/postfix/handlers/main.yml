@@ -1,7 +1,9 @@
 ---
 
 - name: restart postfix
-  service: name=postfix state=restarted
+  service:
+    name: postfix
+    state: restarted
 
 - name: reload postfix
   command: postfix reload

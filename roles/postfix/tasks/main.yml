@@ -16,6 +16,7 @@
     - relay_transport_map
     - users.pcre
   notify:
+    - restart postfix
     - update aliases db
 
 - name: install additional files
