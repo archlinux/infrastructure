@@ -75,8 +75,8 @@ smtp_connection_cache_on_demand = yes
 
 # custom restriction classes
 policy_check =
-# postfwd
 {% if postfix_smtpd_public %}
+# postfwd (rate-limiting)
   check_policy_service inet:127.0.0.1:10040
 {% endif %}
 
@@ -117,6 +117,7 @@ smtpd_end_of_data_restrictions =
   $policy_check
 
 # needed to put our users on HOLD
+# this is used in master.cf as an argument to smtpd_recipient_restrictions
 post_queue_smtpd_recipient_restrictions =
   check_sender_access ${indexed}/access_sender-post-filter,
   permit_mynetworks,
