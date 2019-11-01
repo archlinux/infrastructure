@@ -131,6 +131,17 @@ arch-dev-request@archlinux.org arch-dev-request@lists.archlinux.org
 arch-dev-subscribe@archlinux.org arch-dev-subscribe@lists.archlinux.org
 arch-dev-unsubscribe@archlinux.org arch-dev-unsubscribe@lists.archlinux.org
 
+arch-tu@archlinux.org arch-tu@lists.archlinux.org
+arch-tu-admin@archlinux.org arch-tu-admin@lists.archlinux.org
+arch-tu-bounces@archlinux.org arch-tu-bounces@lists.archlinux.org
+arch-tu-confirm@archlinux.org arch-tu-confirm@lists.archlinux.org
+arch-tu-join@archlinux.org arch-tu-join@lists.archlinux.org
+arch-tu-leave@archlinux.org arch-tu-leave@lists.archlinux.org
+arch-tu-owner@archlinux.org arch-tu-owner@lists.archlinux.org
+arch-tu-request@archlinux.org arch-tu-request@lists.archlinux.org
+arch-tu-subscribe@archlinux.org arch-tu-subscribe@lists.archlinux.org
+arch-tu-unsubscribe@archlinux.org arch-tu-unsubscribe@lists.archlinux.org
+
 repoman@archlinux.org repoman@lists.archlinux.org
 repoman-admin@archlinux.org repoman-admin@lists.archlinux.org
 repoman-bounces@archlinux.org repoman-bounces@lists.archlinux.org
