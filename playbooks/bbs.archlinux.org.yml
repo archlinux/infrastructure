@@ -14,6 +14,6 @@
               mariadb_innodb_file_per_table: True }
     - { role: sudo }
     - { role: php-fpm, php_extensions: ['apcu', 'iconv', 'intl', 'mysqli'], zend_extensions: ['opcache'], tags: ["php-fpm"] }
-    - { role: fluxbb }
+    - { role: fluxbb, tags: ["fluxbb"] }
     - { role: borg-client, tags: ["borg"] }
     - { role: postfix, tags: ["postfix"], postfix_relayhost: "orion.archlinux.org" }
