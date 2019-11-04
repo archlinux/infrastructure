@@ -35,6 +35,11 @@ server {
 
     location ~ /extern\.php {
         limit_req zone=rsslimit burst=10 nodelay;
+        fastcgi_pass   unix:/run/php-fpm/fluxbb.socket;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        fastcgi_param  HTTPS            on;
+        include        fastcgi_params;
     }
 
     location ~ ^/(?:config|header|footer)\.php {
