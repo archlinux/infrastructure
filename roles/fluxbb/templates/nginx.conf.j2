@@ -1,4 +1,6 @@
 server {
+    listen 80;
+    listen [::]:80;
     server_name  {{ fluxbb_domain }};
 
     access_log   /var/log/nginx/{{ fluxbb_domain }}/access.log;
