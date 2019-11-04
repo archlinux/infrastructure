@@ -9,6 +9,16 @@
 	sasl_username=devnull;
 };
 
+# no rate-limit for some authenticated users
+# luna is handling mailman and other services that distribute a lot of mail.
+&&NO_RATE_LIMIT_USERS {
+        sasl_username=luna
+};
+id=NoRateLimit;
+        protocol_state==END-OF-MESSAGE;
+        &&NO_RATE_LIMIT_USERS;
+        action=dunno;
+
 # lower rate limit for certain users (360/3600 == average 1 email every 10 seconds)
 id=SaslWhitelist;
 	protocol_state==END-OF-MESSAGE;
