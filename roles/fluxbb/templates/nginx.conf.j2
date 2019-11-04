@@ -17,6 +17,7 @@ server {
 # limit to 1 requests per minute, with a burst defined when we use this
 # limiter in the location directive below
 limit_req_zone $binary_remote_addr zone=rsslimit:8m rate=1r/m;
+limit_req_status 429;
 
 server {
     listen 443 ssl http2;
