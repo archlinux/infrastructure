@@ -126,3 +126,9 @@
 
 - name: ensure question answer file exists and set permissions
   file: state=file path="{{archwiki_question_answer_file}}" owner=root group=root mode=0644
+
+- name: create pacman.d hooks dir
+  file: state=directory owner=root group=root path=/etc/pacman.d/hooks
+
+- name: install archwiki question updater hook
+  template: src=archwiki-question-updater.hook.j2 dest=/etc/pacman.d/hooks/archwiki-question-updater.hook owner=root group=root mode=0644
