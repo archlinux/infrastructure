@@ -30,3 +30,6 @@
     - spampd
     - { role: mariadb, mariadb_innodb_buffer_pool_size: '64M', mariadb_table_open_cache: '256', mariadb_query_cache_type: '0',
               mariadb_innodb_file_per_table: True }
+# luna is hosting mailman lists; this postfix role does not cater to this yet
+# TODO: make postfix role handle mailman config?
+#    - { role: postfix, tags: ["postfix"], postfix_relayhost: "orion.archlinux.org" }
