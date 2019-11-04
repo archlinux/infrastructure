@@ -13,6 +13,7 @@ server {
 
 server {
     listen 443 ssl http2;
+    listen [::]:443 ssl http2;
     server_name {{ fluxbb_domain }};
     root {{ fluxbb_dir }};
     index index.php;
