@@ -16,6 +16,9 @@
 - name: fix home permissions
   file: state=directory owner={{ conference_user }} group={{ conference_user }} path="{{ conference_dir }}"
 
+- name: create static conf.archlinux.org dir
+  file: state=directory owner={{ conference_user }} group={{ conference_user }} path="{{ static_conference_dir }}"
+
 - name: generate conf.archlinux.org site
   command: hugo
   become_user: "{{conference_user}}"
@@ -26,11 +29,23 @@
 - name: create ssl cert
   command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{letsencrypt_validation_dir}} -d '{{ conference_domain }}' creates='/etc/letsencrypt/live/{{ conference_domain }}/fullchain.pem'
 
+- name: create ssl cert
+  command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{letsencrypt_validation_dir}} -d '{{ static_conference_domain }}' creates='/etc/letsencrypt/live/{{ static_conference_domain }}/fullchain.pem'
+
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ conference_domain }} state=directory owner=root group=root mode=0755
 
+- name: make nginx log dir
+  file: path=/var/log/nginx/{{ static_conference_domain }} state=directory owner=root group=root mode=0755
+
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/conf.archlinux.org.conf owner=root group=root mode=0644
+  notify:
+    - reload nginx
+  tags: ['nginx']
+
+- name: set up nginx
+  template: src=static.nginx.d.conf.j2 dest=/etc/nginx/nginx.d/static.conf.archlinux.org.conf owner=root group=root mode=0644
   notify:
     - reload nginx
   tags: ['nginx']
