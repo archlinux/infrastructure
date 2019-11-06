@@ -3,7 +3,7 @@
 #
 
 [wiki-nginx-dos]
-enabled = true
+enabled = false
 filter = nginx-dos
 action = iptables-multiport[name=ReqLimit, port="http,https", protocol=tcp]
 logpath = /var/log/nginx/wiki.archlinux.org/access.log

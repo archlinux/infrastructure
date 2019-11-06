@@ -101,11 +101,15 @@
 
 - name: install fail2ban rate-limit filter
   template: src=fail2ban.filter.j2 dest=/etc/fail2ban/filter.d/nginx-dos.local owner=root group=root mode=0644
+  notify:
+    - restart fail2ban
   tags:
     - fail2ban
 
 - name: install fail2ban rate-limit jail
   template: src=fail2ban.jail.j2 dest=/etc/fail2ban/jail.d/nginx-dos.local owner=root group=root mode=0644
+  notify:
+    - restart fail2ban
   tags:
     - fail2ban
 
