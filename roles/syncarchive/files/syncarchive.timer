@@ -2,7 +2,7 @@
 Description=Minutely archive sync
 
 [Timer]
-OnCalendar=minutely
+OnCalendar=00/4:00
 AccuracySec=1m
 Persistent=true
 
