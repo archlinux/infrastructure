@@ -43,3 +43,5 @@ fail2ban_jails:
   postfix: true
   dovecot: false
   nginx: true
+
+fastcgi_cache: wiki
