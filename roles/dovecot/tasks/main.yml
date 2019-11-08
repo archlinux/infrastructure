@@ -11,6 +11,9 @@
   notify:
     - reload dovecot
 
+- name: install PAM config
+  copy: src=pam.d.dovecot dest=/etc/pam.d/dovecot mode=0644 owner=root group=root
+
 - name: install dovecot cert renewal hook
   template: src=letsencrypt.hook.d.j2 dest=/etc/letsencrypt/hook.d/dovecot owner=root group=root mode=0755
 
