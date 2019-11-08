@@ -1,5 +1,5 @@
 [Unit]
-Description=Minutely archive sync
+Description=Sync archive every 4 hours
 
 [Timer]
 OnCalendar=00/4:00
