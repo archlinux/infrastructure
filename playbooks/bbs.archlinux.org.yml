@@ -17,3 +17,4 @@
     - { role: fluxbb, tags: ["fluxbb"] }
     - { role: borg-client, tags: ["borg"] }
     - { role: postfix, tags: ["postfix"], postfix_relayhost: "orion.archlinux.org" }
+    - { role: fail2ban, tags: ["fail2ban"] }

@@ -10,3 +10,9 @@ zabbix_agent_templates:
 
 mysql_backup_dir: "/root/backup-mysql"
 mysql_backup_defaults: "/root/.backup-my.cnf"
+
+fail2ban_jails:
+  sshd: true
+  postfix: false
+  dovecot: false
+  nginx: false
