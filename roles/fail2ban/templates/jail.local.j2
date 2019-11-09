@@ -28,3 +28,11 @@ sender = fail2ban@{{ansible_fqdn}}
 #   fail2ban-client set unban --all
 # see `fail2ban-client help` for full list of runtime commands
 banaction = firewallcmd-allports
+
+# "ignoreip" can be a list of IP addresses, CIDR masks or DNS hosts. Fail2ban
+# will not ban a host which matches an address in this list. Several addresses
+# can be defined using space (and/or comma) separator.
+ignoreip = 127.0.0.1/8 ::1
+{% for host in groups['all'] %}
+    {{ hostvars[host]['inventory_hostname'] }}
+{% endfor %}
