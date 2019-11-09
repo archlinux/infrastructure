@@ -8,6 +8,8 @@
     - { role: firewalld }
     - { role: sshd }
     - { role: root_ssh }
+    - { role: sudo }
+    - { role: zabbix-agent, when: "'unmanaged' not in group_names" }
     - { role: certbot }
     - { role: nginx }
     - { role: mirror_load_balancer }
