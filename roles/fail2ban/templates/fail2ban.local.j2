@@ -4,9 +4,5 @@
 
 [Definition]
 
-# reduce logging verbosity by default; if we need to debug we can set it
-# temporarily higher by using: fail2ban-client set loglevel INFO
-loglevel = WARNING
-
 # we need to override the default pid path to /run instead of /var/run
 pidfile = /run/fail2ban/fail2ban.pid
