@@ -98,9 +98,9 @@
     name: "{{inventory_hostname_short}}"
     comment: "SMTP Relay Account for {{inventory_hostname}}"
     group: nobody
-    password: ""
+    password: "{{ postfix_relay_password | password_hash('sha512') }}"
     shell: /sbin/nologin
-    update_password: on_create
+    update_password: always
     create_home: no
 
 - name: open firewall holes
