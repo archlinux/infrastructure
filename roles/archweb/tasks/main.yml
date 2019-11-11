@@ -42,6 +42,7 @@
     dest="{{ archweb_dir }}"
     version={{ archweb_version }}
     verify_commit=true
+    gpg_whitelist={{ archweb_pgp_key }}
   become: true
   become_user: archweb
   register: release

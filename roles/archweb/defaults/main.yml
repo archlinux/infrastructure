@@ -9,6 +9,7 @@ archweb_domains_redirects:
 archweb_nginx_conf: '/etc/nginx/nginx.d/archweb.conf'
 archweb_repository: 'https://github.com/archlinux/archweb.git'
 archweb_version: release_2019-10-25
+archweb_pgp_key: ['E499C79F53C96A54E572FEE1C06086337C50773E']
 archweb_site: true
 archweb_mirrorcheck: false
 archweb_mirrorresolv: false
