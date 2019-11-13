@@ -13,6 +13,8 @@ mex.mirror.pkgbuild.com
 sgp.mirror.pkgbuild.com
 ger.mirror.pkgbuild.com
 runner1.archlinux.org
+repro1.pkgbuild.com
+repro2.pkgbuild.com
 
 [mirrors]
 ind.mirror.pkgbuild.com
