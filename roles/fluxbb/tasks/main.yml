@@ -16,6 +16,11 @@
     path="{{ fluxbb_dir }}"
   changed_when: False
 
+- name: create uploads directory
+  file: >
+    state=directory owner=fluxbb group=fluxbb
+    path="{{ fluxbb_dir }}/uploads"
+
 - name: create mariadb database
   mysql_db: name=fluxbb state=present
 
