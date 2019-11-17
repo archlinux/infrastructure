@@ -10,7 +10,7 @@
   git: >
     repo={{ conference_git }}
     dest="{{ conference_dir }}"
-    version=8fe1b86d2a13a8c8227027e310f1708c7cfc1c1a
+    version={{ conference_version }}
   register: release
 
 - name: fix home permissions
