@@ -282,6 +282,9 @@ arch_users:
         hosts:
           - dragon.archlinux.org
           - soyuz.archlinux.org
+      - name: heftig_dragon.pub
+        hosts:
+          - homedir.archlinux.org
     groups:
       - dev
       - tu
