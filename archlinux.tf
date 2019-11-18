@@ -137,3 +137,23 @@ resource "hcloud_server" "mirror" {
   }
 }
 
+resource "hcloud_rdns" "homedir" {
+  server_id  = hcloud_server.homedir.id
+  ip_address = hcloud_server.homedir.ipv4_address
+  dns_ptr    = "homedir.archlinux.org"
+}
+
+resource "hcloud_server" "homedir" {
+  name        = "homedir.archlinux.org"
+  image       = data.hcloud_image.archlinux.id
+  server_type = "cx11"
+  lifecycle {
+    ignore_changes = [image]
+  }
+}
+
+resource "hcloud_volume" "homedir" {
+  name = "homedir"
+  size = 100
+  server_id = hcloud_server.homedir.id
+}
