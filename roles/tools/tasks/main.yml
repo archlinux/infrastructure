@@ -42,7 +42,7 @@
       - calc
       - wget
       - neovim
-      - python-neovim
+      - python-pynvim
       - vim
       - parallel
       - bash-completion
