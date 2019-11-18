@@ -107,8 +107,10 @@ scache    unix  -       -       n       -       1       scache
         -o smtpd_tls_security_level=none
 {% endif %}
 
-{% if postfix_server %}
-# injection port that provides dkim signatures to mails coming in. same as above but milters enabled
+# a port listening on localhost only to allow local services (eg, webapps etc)
+# to relay mail without waiting for filtering checks etc that are applied to
+# port 25 connections. specifically, flyspray seems to send emails sequentially
+# so any delays in delivery cause noticable delays for users on the web ui.
 127.0.0.1:10027 inet n  -       n       -        -      smtpd
         -o syslog_name=postfix/dkim-injector
         -o smtpd_authorized_xforward_hosts=127.0.0.0/8
@@ -123,7 +125,6 @@ scache    unix  -       -       n       -       1       scache
         -o smtpd_tls_auth_only=no
         -o smtpd_reject_footer=
         -o smtpd_tls_security_level=none
-{% endif %}
 
 {% if postfix_patchwork_enabled %}
 patchwork   unix  -       n       n       -       -       pipe
