@@ -6,7 +6,7 @@
       - file: path="{{playbook_dir}}/../../borg-keys/" state=directory
 
 - name: fetch borg keys
-  hosts: borg-clients
+  hosts: borg_clients
   tasks:
       - name: fetch borg key
         command: "/usr/local/bin/borg key export :: /dev/stdout"

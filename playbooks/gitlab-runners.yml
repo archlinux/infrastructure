@@ -1,6 +1,6 @@
 ---
 - name: setup gitlab-runners
-  hosts: gitlab-runners
+  hosts: gitlab_runners
   remote_user: root
   roles:
     - { role: common }

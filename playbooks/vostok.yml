@@ -9,4 +9,4 @@
     - { role: sshd, tags: ['sshd'] }
     - { role: unbound }
     - { role: root_ssh, tags: ['root_ssh'] }
-    - { role: borg-server, backup_dir: "/backup", backup_clients: "{{groups['borg-clients']}}", tags: ["borg"] }
+    - { role: borg-server, backup_dir: "/backup", backup_clients: "{{groups['borg_clients']}}", tags: ["borg"] }

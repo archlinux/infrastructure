@@ -11,7 +11,7 @@
 
 - name: install packages for borg monitoring
   pacman: name=perl-json
-  when: "'borg-clients' in group_names"
+  when: "'borg_clients' in group_names"
 
 - name: install packages for nginx monitoring
   pacman: name=perl-json,perl-clone,perl-statistics-descriptive
@@ -19,11 +19,11 @@
 
 - name: install mysql userstats monitoring packages
   pacman: name=perl-dbi,perl-dbd-mysql,perl-json
-  when: "'mysql-servers' in group_names"
+  when: "'mysql_servers' in group_names"
 
 - name: install postgresql userstats monitoring packages
   pacman: name=perl-dbi,perl-dbd-pg,perl-json
-  when: "'postgresql-servers' in group_names"
+  when: "'postgresql_servers' in group_names"
 
 - name: install memcached monitoring packages
   pacman: name=python-memcached

@@ -23,14 +23,14 @@ mex.mirror.pkgbuild.com
 sgp.mirror.pkgbuild.com
 ger.mirror.pkgbuild.com
 
-[archive-mirrors]
+[archive_mirrors]
 ind.mirror.pkgbuild.com
 jpn.mirror.pkgbuild.com
 mex.mirror.pkgbuild.com
 sgp.mirror.pkgbuild.com
 ger.mirror.pkgbuild.com
 
-[borg-clients]
+[borg_clients]
 orion.archlinux.org
 apollo.archlinux.org
 soyuz.archlinux.org
@@ -41,12 +41,12 @@ quassel.archlinux.org
 phrik.archlinux.org
 bbs.archlinux.org
 
-[mysql-servers]
+[mysql_servers]
 apollo.archlinux.org
 luna.archlinux.org
 bbs.archlinux.org
 
-[postgresql-servers]
+[postgresql_servers]
 apollo.archlinux.org
 soyuz.archlinux.org
 state.archlinux.org
@@ -63,7 +63,7 @@ dragon.archlinux.org
 soyuz.archlinux.org
 sgp.mirror.pkgbuild.com
 
-[gitlab-runners]
+[gitlab_runners]
 runner1.archlinux.org
 
 [reproduciblebuilds]

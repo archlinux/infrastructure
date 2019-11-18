@@ -1,6 +1,6 @@
 ---
 - name: common playbook for archive-mirrors
-  hosts: archive-mirrors
+  hosts: archive_mirrors
   remote_user: root
   roles:
     - { role: common }
