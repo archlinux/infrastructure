@@ -229,7 +229,7 @@
 256 MD5:e0:43:1d:3c:63:ac:a7:ca:eb:b0:17:e8:ec:f3:c0:38 root@soyuz (ED25519)
 2048 MD5:89:d5:e2:5b:32:b3:65:8d:50:a9:3e:ba:79:27:2f:0a root@soyuz (RSA)
 
-# state.cloud.archlinux.org
+# state.archlinux.org
 1024 SHA256:4oNX8CksPEgIzibu+ETa2OVVPBX2pzcvcVUa60NbHiQ root@archlinux-packer (DSA)
 256 SHA256:uR7EDdVrvkZf43eNmumOeu2MeZn4oMB39ad9kHoobkk root@archlinux-packer (ECDSA)
 256 SHA256:Ydzb7NVfbhdfyNXoylx4qWsIS3dJ8oHS+8FDVsZBQPE root@archlinux-packer (ED25519)

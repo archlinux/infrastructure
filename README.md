@@ -55,7 +55,7 @@ This will take some time after which a new snapshot will have been created on th
 We use terraform to provision a part of the infrastructure on hcloud.
 The very first time you run terraform on your system, you'll have to init it:
 
-    terraform init -backend-config="conn_str=postgres://terraform:$(misc/get_key.py group_vars/all/vault_terraform.yml vault_terraform_db_password)@state.cloud.archlinux.org"
+    terraform init -backend-config="conn_str=postgres://terraform:$(misc/get_key.py group_vars/all/vault_terraform.yml vault_terraform_db_password)@state.archlinux.org"
 
 After making changes to the infrastructure in `archlinux.fg`, run
 
@@ -165,7 +165,7 @@ The following steps should be used to update our managed servers:
   - build server (pkgbuild.com)
   - sogrep
 
-### state.cloud.archlinux.org
+### state.archlinux.org
 
 #### Services:
   - postgres server for terraform state

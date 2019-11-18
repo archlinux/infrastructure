@@ -35,7 +35,7 @@ orion.archlinux.org
 apollo.archlinux.org
 soyuz.archlinux.org
 luna.archlinux.org
-state.cloud.archlinux.org
+state.archlinux.org
 matrix.archlinux.org
 quassel.archlinux.org
 phrik.archlinux.org
@@ -49,7 +49,7 @@ bbs.archlinux.org
 [postgresql-servers]
 apollo.archlinux.org
 soyuz.archlinux.org
-state.cloud.archlinux.org
+state.archlinux.org
 quassel.archlinux.org
 
 [nginx]

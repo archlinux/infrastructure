@@ -1,7 +1,7 @@
 ---
 
 - name: setup terraform-state
-  hosts: state.cloud.archlinux.org
+  hosts: state.archlinux.org
   remote_user: root
   roles:
     - { role: common }
