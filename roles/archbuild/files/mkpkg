@@ -154,7 +154,7 @@ repoadd() {
   if [[ -n $repohost ]]; then
     ssh -q $repohost mkdir -p $repodir/$1
     scp -q $files $repohost:$repodir/$1/
-    ssh -q $repohost zsh -c ":
+    ssh -q $repohost zsh -c ${(q):-":
       setopt extendedglob nomatch
       repodir=${repodir:q}
       repodb=${repodb:q}
@@ -162,7 +162,7 @@ repoadd() {
       files=(${files:q})
       $(declare -f repoadd_remote)
       repoadd_remote ${1:q}
-    "
+    "}
   else
     mkdir -p $repodir/$1
     cp $files $repodir/$1/
