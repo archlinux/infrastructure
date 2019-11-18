@@ -221,7 +221,7 @@ arch_users:
   ffy00:
     name: "Filipe Laíns"
     ssh_key: ffy00.pub
-    shell: /bin/fish
+    shell: /bin/bash
     groups:
       - tu
   foutrelis:
@@ -429,6 +429,10 @@ arch_users:
   scimmia:
     name: "Doug Newgard"
     ssh_key: scimmia.pub
+    groups: []
+  morganamilo:
+    name: "Morgan Adamiec"
+    ssh_key: morganamilo.pub
     groups: []
   seblu:
     name: "Sébastien Luttringer"
