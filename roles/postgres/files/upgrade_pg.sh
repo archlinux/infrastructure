@@ -34,6 +34,7 @@ pacman -S --needed postgresql-old-upgrade
 chown postgres:postgres /var/lib/postgres/
 su - postgres -c "mv /var/lib/postgres/data /var/lib/postgres/data-$FROM_VERSION"
 su - postgres -c 'mkdir /var/lib/postgres/data'
+su - postgres -c 'chattr -f +C /var/lib/postgres/data' || :
 su - postgres -c 'initdb --locale en_US.UTF-8 -E UTF8 -D /var/lib/postgres/data'
 vimdiff /var/lib/postgres/{data,data-$FROM_VERSION}/pg_hba.conf
 vimdiff /var/lib/postgres/{data,data-$FROM_VERSION}/postgresql.conf

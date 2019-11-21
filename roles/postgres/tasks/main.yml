@@ -9,6 +9,15 @@
 - name: install postgres
   pacman: name=postgresql,python-psycopg2 state=present
 
+- name: create nocow database directory
+  file:
+    state: directory
+    owner: postgres
+    group: postgres
+    attributes: "+C"
+    path: /var/lib/postgres/data
+  when: filesystem == "btrfs"
+
 - name: initialize postgres
   become: yes
   become_user: postgres
