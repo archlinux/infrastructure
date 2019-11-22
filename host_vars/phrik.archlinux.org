@@ -3,3 +3,10 @@ filesystem: btrfs
 zabbix_agent_templates:
   - Template OS Linux
   - Template App Borg Backup
+arch_users:
+  demize:
+    name: "Johannes Löthberg"
+    ssh_key: demize.pub
+    shell: /bin/zsh
+    groups:
+      - tu

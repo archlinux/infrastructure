@@ -24,6 +24,9 @@
 - name: install phrik sudoers config
   copy: src=sudoers dest=/etc/sudoers.d/phrik
 
+- name: install polkit rule for restarting phrik
+  copy: src=20-manage-phrik.rules dest=/etc/polkit-1/rules.d/20-manage-phrik.rules
+
 - name: install phrik systemd service
   copy: src=phrik.service dest=/etc/systemd/system/phrik.service
   notify:

@@ -147,6 +147,11 @@ The following steps should be used to update our managed servers:
   - patchwork
   - projects (projects.archlinux.org)
 
+### phrik.archlinux.org
+   - phrik (irc bot) users in the phrik group defined in
+     the hosts vars and re-used the archusers role. Users
+     in the phrik group are allowed to restar the irc bot.
+
 ### soyuz
 
 #### Services
@@ -154,7 +159,6 @@ The following steps should be used to update our managed servers:
   - releng
   - sogrep
   - /~user/ webhost
-  - irc bot (phrik)
   - matrix
   - docker images
   - arch boxes (packer)
