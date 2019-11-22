@@ -154,14 +154,14 @@ repoadd() {
   if [[ -n $repohost ]]; then
     ssh -q $repohost mkdir -p $repodir/$1
     scp -q $files $repohost:$repodir/$1/
-    ssh -q $repohost zsh -c ${(q):-":
+    ssh -q $repohost zsh -c ${(qq):-":
       setopt extendedglob nomatch
-      repodir=${repodir:q}
-      repodb=${repodb:q}
-      pkgname=(${pkgname:q})
-      files=(${files:q})
+      repodir=${(q)repodir}
+      repodb=${(q)repodb}
+      pkgname=(${"${(@q)pkgname}"})
+      files=(${"${(@q)files}"})
       $(declare -f repoadd_remote)
-      repoadd_remote ${1:q}
+      repoadd_remote ${(q)1}
     "}
   else
     mkdir -p $repodir/$1
