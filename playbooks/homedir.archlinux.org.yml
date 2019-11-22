@@ -13,3 +13,4 @@
     - { role: archusers }
     - { role: public_html, public_domain: "pkgbuild.com", tags: ['public_html', 'nginx'] }
     - { role: borg-client, tags: ["borg"] }
+    - { role: zabbix-agent, tags: ["zabbix"] }
