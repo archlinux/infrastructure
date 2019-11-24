@@ -38,7 +38,10 @@ su - postgres -c 'chattr -f +C /var/lib/postgres/data' || :
 su - postgres -c 'initdb --locale en_US.UTF-8 -E UTF8 -D /var/lib/postgres/data'
 vimdiff /var/lib/postgres/{data,data-$FROM_VERSION}/pg_hba.conf
 vimdiff /var/lib/postgres/{data,data-$FROM_VERSION}/postgresql.conf
-cp -avxt /var/lib/postgres/data /var/lib/postgres/data-$FROM_VERSION/{fullchain,chain,privkey}.pem
+for f in {fullchain,chain,privkey}.pem; do
+	[[ -e $f ]] || continue
+	cp -avx /var/lib/postgres/data-$FROM_VERSION/$f /var/lib/postgres/data/$f
+done
 
 systemctl stop postgresql.service
 su - postgres -c "pg_upgrade -b /opt/pgsql-$FROM_VERSION/bin/ -B /usr/bin/ \
