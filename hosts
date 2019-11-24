@@ -42,6 +42,9 @@ phrik.archlinux.org
 bbs.archlinux.org
 homedir.archlinux.org
 
+[public_html]
+homedir.archlinux.org
+
 [mysql_servers]
 apollo.archlinux.org
 luna.archlinux.org

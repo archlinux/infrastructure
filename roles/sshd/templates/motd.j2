@@ -26,3 +26,13 @@ Data on this system is regularly backed up automatically.
   pkgbuild.com was moved to a [1mnew server[0m (again)! This one has 48 threads and
   a RAID0 btrfs NVMe. Should make things pretty fast.
 {% endif %}
+
+{% if 'public_html' in group_names %}
+[1;32mUsage Info[0m
+  This server provides the ability for members of the Arch team to host Arch related content
+  in their own ~/public_html
+  The http will require read access to your home directory and permissions on public_html:
+  - setfacl -m user:http:x ~
+  - setfacl -m user:http:rx ~/public_html
+{% endif %}
+
