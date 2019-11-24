@@ -10,7 +10,7 @@
   when: maintenance is defined
 
 - name: install required packages
-  pacman: name=git,python-setuptools,python-psycopg2,uwsgi-plugin-python,gcc state=present
+  pacman: name=git,python-setuptools,python-psycopg2,llvm-libs,uwsgi-plugin-python state=present
 
 - name: make archweb user
   user: name=archweb shell=/bin/false home="{{ archweb_dir }}" createhome=no
@@ -48,7 +48,7 @@
   register: release
 
 - name: make virtualenv
-  command: python -m venv "{{ archweb_dir }}"/env creates="{{ archweb_dir }}/env/bin/python"
+  command: python -m venv --system-site-packages "{{ archweb_dir }}"/env creates="{{ archweb_dir }}/env/bin/python"
   become: true
   become_user: archweb
 
