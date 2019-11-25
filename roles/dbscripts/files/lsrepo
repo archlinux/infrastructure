@@ -42,7 +42,7 @@ class DBParser:
 
         log.debug("Parsing line %r, state %r", line, state)
 
-        if state is "parsing":
+        if state == "parsing":
             if line == "%NAME%":
                 self._state = "name"
                 self._add_package()
@@ -50,13 +50,13 @@ class DBParser:
                 self._state = "base"
             elif line == "%VERSION%":
                 self._state = "version"
-        elif state is "name":
+        elif state == "name":
             self._name = line
             self._state = "parsing"
-        elif state is "base":
+        elif state == "base":
             self._base = line
             self._state = "parsing"
-        elif state is "version":
+        elif state == "version":
             self._version = line
             self._state = "parsing"
         else:
@@ -76,7 +76,7 @@ class DBParser:
     def __exit__(self, exc_type, exc, exc_tb):
         if exc is not None:
             return
-        if self._state is not "done":
+        if self._state != "done":
             warn("parsing result discarded")
         self._state = "finalized"
         self._add_package()
@@ -178,10 +178,10 @@ finally:
     loop.close()
 
 
-if args.mode is "bases":
+if args.mode == "bases":
     for base in set(bases(repos)):
         print(base)
-elif args.mode is "names":
+elif args.mode == "names":
     for name in {n for p in packages(repos) for n in p["names"]}:
         print(name)
 else:
