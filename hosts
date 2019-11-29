@@ -41,6 +41,7 @@ quassel.archlinux.org
 phrik.archlinux.org
 bbs.archlinux.org
 homedir.archlinux.org
+bugs.archlinux.org
 
 [public_html]
 homedir.archlinux.org
@@ -49,6 +50,7 @@ homedir.archlinux.org
 apollo.archlinux.org
 luna.archlinux.org
 bbs.archlinux.org
+bugs.archlinux.org
 
 [postgresql_servers]
 apollo.archlinux.org
@@ -61,6 +63,7 @@ apollo.archlinux.org
 luna.archlinux.org
 orion.archlinux.org
 bbs.archlinux.org
+bugs.archlinux.org
 
 [buildservers]
 dragon.archlinux.org

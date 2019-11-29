@@ -157,3 +157,18 @@ resource "hcloud_volume" "homedir" {
   size = 100
   server_id = hcloud_server.homedir.id
 }
+
+resource "hcloud_rdns" "bugs" {
+  server_id  = hcloud_server.bugs.id
+  ip_address = hcloud_server.bugs.ipv4_address
+  dns_ptr    = "bugs.archlinux.org"
+}
+
+resource "hcloud_server" "bugs" {
+  name        = "bugs.archlinux.org"
+  image       = data.hcloud_image.archlinux.id
+  server_type = "cx11"
+  lifecycle {
+    ignore_changes = [image]
+  }
+}
