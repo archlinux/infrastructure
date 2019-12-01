@@ -49,7 +49,6 @@
       security_tracker_nginx_conf: '/etc/nginx/nginx.d/security-tracker.conf'
       security_tracker_dir: "/srv/http/security-tracker"
       tags: ["security_tracker"]
-    - { role: flyspray, tags: ["flyspray"] }
     - { role: mailman, mailman_domain: "lists.archlinux.org", tags: ["mailman"] }
     - { role: patchwork, tags: ["patchwork"] }
     - { role: kanboard, tags: ["kanboard"] }
