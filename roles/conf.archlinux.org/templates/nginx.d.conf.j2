@@ -41,5 +41,9 @@ server {
         return 301 $scheme://$server_name;
     }
 
+    location /reports/archconf2019 {
+        return 301 $scheme://$server_name/reports/archconf_2019;
+    }
+
     root {{ conference_dir }}/public;
 }
