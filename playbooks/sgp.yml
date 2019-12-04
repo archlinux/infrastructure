@@ -15,7 +15,6 @@
     - { role: syncrepo, tags: ['nginx'] }
     - { role: arch32_mirror, tags: ['nginx'] }
     - { role: sogrep }
-    - { role: archbuild }
     - { role: archweb, archweb_site: false, archweb_services: false, archweb_mirrorcheck: true }
     - { role: crond }
     - { role: zabbix-agent, tags: ["zabbix"] }
