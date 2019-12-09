@@ -16,6 +16,17 @@ ProtectHome=true
 ProtectSystem=full
 InaccessiblePaths=-/var/lib/mysql
 
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+
+RestrictRealtime=true
+RestrictNamespaces=true
+
+# Restricts the set of socket address families accessible to the processes of this unit.
+# Protects against vulnerabilities such as CVE-2016-8655
+RestrictAddressFamilies=AF_INET AF_INET6 AF_NETLINK AF_UNIX
+
 MemoryAccounting=yes
 CPUAccounting=yes
 IOAccounting=yes
