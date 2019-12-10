@@ -101,6 +101,7 @@
     password: "{{ postfix_relay_password | password_hash('sha512') }}"
     shell: /sbin/nologin
     update_password: always
+    home: / # Set home directory so shadow.service does not fail
     create_home: no
 
 - name: open firewall holes
