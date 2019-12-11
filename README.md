@@ -27,7 +27,7 @@ It will also deploy any new SSH host keys to all our machines.
 #### Note about GPG keys
 
 The root_access.yml file contains the root_gpgkeys variable that determine the users that have access to the vault, as well as the borg backup keys.
-All the keys should be on the local user gpg keyring and at *minimum* be locally signed with --lsign-key. This is necessary for running either the reencrypt-vault-key
+All the keys should be on the local user gpg keyring and at **minimum** be locally signed with --lsign-key. This is necessary for running either the reencrypt-vault-key
 or the fetch-bork-keys tasks.
 
 #### Note about Ansible dynamic inventories
@@ -196,13 +196,13 @@ The following steps should be used to update our managed servers:
 
 ### Re-encrypting the vault after adding or removing a new GPG key
 
-  - Make sure you have all the GPG keys *at least* locally signed
-  - Run the playbooks/tasks/reencrypt-vault-key.yml playbook and make sure it does not have *any* failed task
+  - Make sure you have all the GPG keys **at least** locally signed
+  - Run the playbooks/tasks/reencrypt-vault-key.yml playbook and make sure it does not have **any** failed task
   - Test that the vault is working by running ansible-vault view on any encrypted vault file
   - Commit and push your changes
 
 ### Fetching the borg keys for local storage
 
-  - Make sure you have all the GPG keys *at least* locally signed
+  - Make sure you have all the GPG keys **at least** locally signed
   - Run the playbooks/tasks/fetch-borg-keys.yml playbook
   - Make sure the playbook runs successfully and check the keys under the borg-keys directory
