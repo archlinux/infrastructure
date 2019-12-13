@@ -1,11 +1,12 @@
 ---
 archweb_dir: '/srv/http/archweb'
 archweb_domain: 'www.archlinux.org'
-archweb_alternate_domains: ['archlinux.org', 'master-key.archlinux.org', 'dev.archlinux.org', 'packages.archlinux.org']
+archweb_alternate_domains: ['archlinux.org', 'master-key.archlinux.org', 'dev.archlinux.org', 'packages.archlinux.org', 'ipxe.archlinux.org']
 archweb_domains_redirects:
         'master-key.archlinux.org': '/master-keys'
         'dev.archlinux.org': '/'
         'packages.archlinux.org': '/packages$request_uri'
+        'ipxe.archlinux.org': '$request_uri'
 archweb_nginx_conf: '/etc/nginx/nginx.d/archweb.conf'
 archweb_repository: 'https://github.com/archlinux/archweb.git'
 archweb_version: release_2019-12-02
