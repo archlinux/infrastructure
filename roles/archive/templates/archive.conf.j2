@@ -12,8 +12,8 @@ ARCHIVE_USER=archive
 ARCHIVE_GROUP=archive
 
 # Package extensions
-PKGEXT='.pkg.tar.xz'
-PKGSIG="$PKGEXT.sig"
+PKGREGEX='\.pkg\.tar(\.(gz|bz2|xz|zst|lrz|lzo|Z|lz4|lz))?'
+PKGSIGREGEX="$PKGREGEX\.sig"
 
 # Umask used when archiving
 UMASK=022
