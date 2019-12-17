@@ -80,6 +80,10 @@ state server is assumed to just exist so in an unlikely case where we have to
 entirely redo this infrastructure, the state server would have to be manually
 set up.
 
+#### SMTP Configuration
+
+All hosts should be relaying email through our primary mx host (currently 'orion'). See docs/email.txt for full details.
+
 #### Note about opendkim
 
 The opendkim DNS data has to be added to DNS manually. The roles verifies that the DNS is correct before starting opendkim.
