@@ -18,7 +18,7 @@ postgres_backup_dir: "/var/lib/postgres/backup"
 mysql_backup_dir: "/root/backup-mysql"
 mysql_backup_defaults: "/root/.backup-my.cnf"
 
-kanboard_version: "v1.2.12"
+kanboard_version: "v1.2.13"
 
 # TODO use a list of enabled roles or groups to enable each template and also use the same to enable each role for a machine? duplicating and manually tracking this stuff sucks, but maybe we want to deploy roles without monitoring? maybe not?
 zabbix_agent_templates:
