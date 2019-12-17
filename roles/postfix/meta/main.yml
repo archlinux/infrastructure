@@ -1,0 +1,3 @@
+dependencies:
+  - role: postfwd
+    delegate_to: orion.archlinux.org
