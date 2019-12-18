@@ -1,7 +1,8 @@
 Cmnd_Alias ARCHBUILD = /usr/sbin/makechrootpkg, /usr/sbin/mkarchroot, \
                        /usr/bin/*-i686-build,          /usr/bin/*-x86_64-build, \
                        /usr/sbin/arch-nspawn, /usr/local/bin/syncrepo, /usr/bin/multilib-build, \
-                       /usr/bin/multilib-testing-build,    /usr/bin/multilib-staging-build
+                       /usr/bin/multilib-testing-build,    /usr/bin/multilib-staging-build, \
+                       /usr/bin/makerepropkg
 
 Defaults!ARCHBUILD     env_keep+=SOURCE_DATE_EPOCH
 
