@@ -67,7 +67,7 @@ SECRET_KEY = '{{ vault_archweb_secret_key }}'
 MAILMAN_PASSWORD = '{{ vault_archweb_mailman_password }}'
 
 # Hostnames we allow this site to be served under
-ALLOWED_HOSTS = ['{{ archweb_domain }}']
+ALLOWED_HOSTS = [{% for host in archweb_allowed_hosts %}'{{ host }}', {% endfor -%}]
 
 ## CDN settings
 CDN_ENABLED = False
