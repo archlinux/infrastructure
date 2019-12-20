@@ -1,0 +1,49 @@
+server {
+    listen       80;
+    listen       [::]:80;
+    server_name  {{ domain['domain_name'] }};
+
+    access_log   /var/log/nginx/{{ archweb_domain }}/access.log reduced;
+    error_log    /var/log/nginx/{{ archweb_domain }}/error.log;
+
+    include snippets/letsencrypt.conf;
+
+    location / {
+        access_log off;
+        return 301 https://$server_name$request_uri;
+    }
+}
+
+server {
+    listen       443 ssl http2;
+    listen       [::]:443 ssl http2;
+    server_name  {{ domain['domain_name'] }};
+
+    access_log   /var/log/nginx/{{ archweb_domain }}/access.log reduced;
+    error_log    /var/log/nginx/{{ archweb_domain }}/error.log;
+
+    ssl_ciphers AES128-SHA:AES256-SHA:AES128-SHA256:AES256-SHA256;
+
+    ssl_certificate      /etc/letsencrypt/live/{{ archweb_domain }}/fullchain.pem;
+    ssl_certificate_key  /etc/letsencrypt/live/{{ archweb_domain }}/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/{{ archweb_domain }}/chain.pem;
+
+    location /releng/netboot {
+        access_log   /var/log/nginx/{{ archweb_domain }}/access.log main;
+        include uwsgi_params;
+        uwsgi_pass archweb;
+    }
+
+    # Cache django's css, js and png files.
+    location /static {
+        expires 30d;
+        add_header Pragma public;
+        add_header Cache-Control "public";
+        alias /srv/http/archweb/collected_static;
+    }
+
+    location / {
+        access_log off;
+        return 301 https://{{ archweb_domain }}$request_uri;
+    }
+}
