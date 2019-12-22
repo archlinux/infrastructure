@@ -14,3 +14,9 @@
   copy: src=50-kptr-restrict.conf dest=/etc/sysctl.d/50-kptr-restrict.conf
   notify:
     - apply sysctl settings
+
+- name: set kernel lockdown to restricted
+  copy: src=50-lockdown.conf dest=/etc/tmpfiles.d/50-kernel-lockdown.conf
+  when: "'hcloud' in group_names"
+  notify:
+    - apply sysctl settings
