@@ -172,3 +172,18 @@ resource "hcloud_server" "bugs" {
     ignore_changes = [image]
   }
 }
+
+resource "hcloud_rdns" "aur-dev" {
+  server_id  = hcloud_server.aur-dev.id
+  ip_address = hcloud_server.aur-dev.ipv4_address
+  dns_ptr    = "aur-dev.archlinux.org"
+}
+
+resource "hcloud_server" "aur-dev" {
+  name        = "aur-dev.archlinux.org"
+  image       = data.hcloud_image.archlinux.id
+  server_type = "cx11"
+  lifecycle {
+    ignore_changes = [image]
+  }
+}
