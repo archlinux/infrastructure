@@ -95,6 +95,7 @@
     - postgresql-dbsize-stats.pl
     - postgresql-user-stats.pl
     - memcached-stats.py
+    - zabbix-btrfs-subvolume.sh
 
 - name: Install helper scripts
   copy: src=nginx-zabbix.pl dest=/usr/local/bin/nginx-zabbix.pl mode=0755 owner=root group=root
