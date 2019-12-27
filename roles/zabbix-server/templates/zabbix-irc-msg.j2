@@ -1,0 +1,7 @@
+#!/bin/sh
+
+sender=$1
+subject=$2
+body=$3
+
+echo $subject | nc -c localhost 12345

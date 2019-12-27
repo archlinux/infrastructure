@@ -17,3 +17,4 @@ archbuild_fs: 'btrfs'
 
 zabbix_agent_templates:
   - Template OS Linux
+  - Template Btrfs
