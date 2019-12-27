@@ -162,17 +162,6 @@ The following steps should be used to update our managed servers:
      the hosts vars and re-used the archusers role. Users
      in the phrik group are allowed to restar the irc bot.
 
-### soyuz
-
-#### Services
-  - build server (pkgbuild.com)
-  - releng
-  - sogrep
-  - /~user/ webhost
-  - matrix
-  - docker images
-  - arch boxes (packer)
-
 ### dragon
 
 #### Services
