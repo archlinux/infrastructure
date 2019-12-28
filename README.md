@@ -165,8 +165,9 @@ The following steps should be used to update our managed servers:
 ### dragon
 
 #### Services
-  - build server (pkgbuild.com)
+  - build server
   - sogrep
+  - arch-boxes (packer)
 
 ### state.archlinux.org
 
@@ -177,6 +178,11 @@ The following steps should be used to update our managed servers:
 
 #### Services:
   - quassel core
+
+## homedir.archlinux.org
+
+#### Services:
+  - ~/user/ webhost
 
 ## Ansible repo workflows
 
