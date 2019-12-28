@@ -2,7 +2,6 @@
 orion.archlinux.org
 vostok.archlinux.org
 apollo.archlinux.org
-soyuz.archlinux.org
 luna.archlinux.org
 dragon.archlinux.org
 
@@ -33,7 +32,6 @@ ger.mirror.pkgbuild.com
 [borg_clients]
 orion.archlinux.org
 apollo.archlinux.org
-soyuz.archlinux.org
 luna.archlinux.org
 state.archlinux.org
 matrix.archlinux.org
@@ -54,7 +52,6 @@ bugs.archlinux.org
 
 [postgresql_servers]
 apollo.archlinux.org
-soyuz.archlinux.org
 state.archlinux.org
 quassel.archlinux.org
 
@@ -67,7 +64,6 @@ bugs.archlinux.org
 
 [buildservers]
 dragon.archlinux.org
-soyuz.archlinux.org
 sgp.mirror.pkgbuild.com
 
 [gitlab_runners]

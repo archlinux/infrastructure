@@ -218,17 +218,6 @@
 256 MD5:25:a6:b4:cb:f6:c5:27:3a:0d:c6:47:1e:2f:d5:72:db root@archlinux (ED25519)
 2048 MD5:4d:09:b7:bc:d0:af:b9:1c:b4:0d:67:88:16:c7:c0:1c root@archlinux (RSA)
 
-# soyuz.archlinux.org
-1024 SHA256:7i6dEbYWr2waZYiZWruAf3IDkITWPLYZAb/vuA+L+cA root@soyuz (DSA)
-256 SHA256:GHQlxoizbgrUL2ZQY7eOewIYuNzJY2aR73+7CNgdBto root@soyuz (ECDSA)
-256 SHA256:ZKKPcOJexD4KP+iCIQc5qMHuu0f1INZh9S3/K0heUdU root@soyuz (ED25519)
-2048 SHA256:UpXXVnuxzD51LphEErdSbn5s6VWRDE/j2JK7Ldes/xs root@soyuz (RSA)
-
-1024 MD5:0d:9f:83:0b:35:f2:76:9e:90:84:17:3b:24:5f:72:4c root@soyuz (DSA)
-256 MD5:0a:66:44:0f:6d:5c:c4:33:d9:31:9c:c3:22:d0:d0:63 root@soyuz (ECDSA)
-256 MD5:e0:43:1d:3c:63:ac:a7:ca:eb:b0:17:e8:ec:f3:c0:38 root@soyuz (ED25519)
-2048 MD5:89:d5:e2:5b:32:b3:65:8d:50:a9:3e:ba:79:27:2f:0a root@soyuz (RSA)
-
 # state.archlinux.org
 1024 SHA256:4oNX8CksPEgIzibu+ETa2OVVPBX2pzcvcVUa60NbHiQ root@archlinux-packer (DSA)
 256 SHA256:uR7EDdVrvkZf43eNmumOeu2MeZn4oMB39ad9kHoobkk root@archlinux-packer (ECDSA)
