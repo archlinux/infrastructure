@@ -231,7 +231,6 @@ arch_users:
       - name: foutrelis_buildhost.pub
         hosts:
           - dragon.archlinux.org
-          - soyuz.archlinux.org
           - sgp.mirror.pkgbuild.com
     groups:
       - dev
@@ -275,7 +274,6 @@ arch_users:
       - name: heftig_work.pub
         hosts:
           - dragon.archlinux.org
-          - soyuz.archlinux.org
       - name: heftig_dragon.pub
         hosts:
           - homedir.archlinux.org
@@ -359,10 +357,6 @@ arch_users:
   maximbaz:
     name: "Maxim Baz"
     ssh_key: maximbaz.pub
-    additional_ssh_keys:
-      - name: maximbaz_soyuz.pub
-        hosts:
-          - soyuz.archlinux.org
     groups:
       - tu
   mtorromeo:
