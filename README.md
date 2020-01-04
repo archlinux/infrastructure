@@ -205,3 +205,23 @@ The following steps should be used to update our managed servers:
   - Make sure you have all the GPG keys **at least** locally signed
   - Run the playbooks/tasks/fetch-borg-keys.yml playbook
   - Make sure the playbook runs successfully and check the keys under the borg-keys directory
+
+## Backup documentation
+
+Backups should be checked now and then. Some common tasks:
+
+### Listing current backups per server
+
+    borg list borg@vostok.archlinux.org:/backup/<hostname>
+
+Example
+
+    borg list borg@vostok.archlinux.org:/backup/homedir.archlinux.org
+
+### Listing files in a backup
+
+    borg list borg@vostok.archlinux.org:/backup/<hostname>::<archive name>
+
+Example
+
+    borg list borg@vostok.archlinux.org:/backup/homedir.archlinux.org::20191127-084357
