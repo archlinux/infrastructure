@@ -1,44 +1,44 @@
+# Log configuration for Synapse.
+#
+# This is a YAML file containing a standard Python logging configuration
+# dictionary. See [1] for details on the valid settings.
+#
+# [1]: https://docs.python.org/3.7/library/logging.config.html#configuration-dictionary-schema
+
 version: 1
 
 formatters:
-  fmt:
-    format: '%(asctime)s - %(name)s - %(lineno)d - %(levelname)s - %(request)s- %(message)s'
-  journal_fmt:
-    format: '%(name)s: [%(request)s] %(message)s'
+    precise:
+        format: '%(asctime)s - %(name)s - %(lineno)d - %(levelname)s - %(request)s - %(message)s'
+    journal_fmt:
+        format: '%(name)s: [%(request)s] %(message)s'
 
 filters:
-  context:
-    (): synapse.logging.context.LoggingContextFilter
-    request: ""
+    context:
+        (): synapse.logging.context.LoggingContextFilter
+        request: ""
 
 handlers:
-  # example output to console
-  console:
-    class: logging.StreamHandler
-    formatter: fmt
-    filters: [context]
-
-  # output to systemd journal
-  journal:
-    class: systemd.journal.JournalHandler
-    formatter: journal_fmt
-    filters: [context]
-    SYSLOG_IDENTIFIER: synapse
-
-root:
-    level: INFO
-    handlers: [journal]
+    console:
+        class: logging.StreamHandler
+        formatter: precise
+        filters: [context]
+    journal:
+        class: systemd.journal.JournalHandler
+        formatter: journal_fmt
+        filters: [context]
+        SYSLOG_IDENTIFIER: synapse
 
 loggers:
     synapse:
         level: INFO
-
     synapse.storage.SQL:
         # beware: increasing this to DEBUG will make synapse log sensitive
         # information such as access tokens.
         level: INFO
 
-    # example of enabling debugging for a component:
-    #
-    # synapse.federation.transport.server:
-    #    level: DEBUG
+root:
+    level: INFO
+    handlers: [journal]
+
+disable_existing_loggers: false
