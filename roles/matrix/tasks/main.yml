@@ -55,7 +55,6 @@
 - name: install matrix-appservice-irc
   npm:
     path: /var/lib/synapse/matrix-appservice-irc
-    production: yes
   become: yes
   become_user: synapse
   become_method: sudo

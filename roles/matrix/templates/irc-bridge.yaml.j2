@@ -32,6 +32,14 @@ homeserver:
   # Default: true
   enablePresence: true
 
+  # Which port should the appservice bind to. Takes priority over the one provided in the
+  # command line! Optional.
+  # bindPort: 9999
+
+  # Use this option to force the appservice to listen on another hostname for transactions.
+  # This is NOT your synapse hostname. E.g. use 127.0.0.1 to only listen locally. Optional.
+  # bindHostname: 0.0.0.0
+
 # Configuration specific to the IRC service
 ircService:
   servers:
@@ -204,6 +212,10 @@ ircService:
         # circumstances.
         # exclude: ["#foo", "#bar"]
 
+      # excludedUsers:
+      #   - regex: "@.*:evilcorp.com"
+      #     kickReason: "We don't like Evilcorp"
+
       # Configuration for controlling how Matrix and IRC membership lists are
       # synced.
       membershipLists:
@@ -246,16 +258,10 @@ ircService:
         # 1:many mappings from IRC channels to room IDs on this IRC server.
         # The matrix room must already exist. Your matrix client should expose
         # the room ID in a "settings" page for the room.
-{% for channel, rooms in settings.mappings.items() %}
+{% for channel, config in settings.mappings.items() %}
         '{{ channel }}':
-{% for room in rooms %}
-          - '{{ room }}'
-{% endfor %}
-{% endfor %}
-
-      mappings_keys:
-{% for channel, key in settings.mappings_keys.items() %}
-        '{{ channel }}': '{{ key }}'
+          roomIds: ['{{ config.room }}']
+          key: '{{ config.key }}'
 {% endfor %}
 
       # Configuration for virtual matrix users. The following variables are
@@ -370,7 +376,7 @@ ircService:
   # only.
   logging:
     # Level to log on console/logfile. One of error|warn|info|debug
-    level: warn
+    level: "info"
     # The file location to log to. This is relative to the project directory.
     #logfile: "debug.log"
     # The file location to log errors to. This is relative to the project
@@ -382,8 +388,6 @@ ircService:
     # to rotations.
     maxFiles: 5
 
-  # Optional. Enable Prometheus metrics. If this is enabled, you MUST install `prom-client`:
-  #   $ npm install prom-client@6.3.0
   # Metrics will then be available via GET /metrics on the bridge listening port (-p).
   metrics:
     # Whether to actually enable the metric endpoint. Default: false
@@ -394,11 +398,6 @@ ircService:
       - "1h"
       - "1d"
       - "1w"
-
-  # The nedb database URI to connect to. This is the name of the directory to
-  # dump .db files to. This is relative to the project directory.
-  # Required.
-  databaseUri: 'nedb:///var/lib/synapse/irc-nedb'
 
   # Configuration options for the debug HTTP API. To access this API, you must
   # append ?access_token=$APPSERVICE_TOKEN (from the registration file) to the requests.
@@ -473,3 +472,23 @@ advanced:
   # accidentally overloading the homeserver. Defaults to 1000, which should be
   # enough for the vast majority of use cases.
   maxHttpSockets: 1000
+  # Max size of an appservice transaction payload, in bytes. Defaults to 10Mb
+  maxTxnSize: 10000000
+
+# Capture information to a sentry.io instance
+sentry:
+  enabled: false
+  dsn: "https://<key>@sentry.io/<project>"
+  # Optional. A tag to specify the production environment. Not set by default
+  # environment: ""
+  # Optional. A tag to specify the server name. Not set by default
+  # serverName: ""
+
+# Use an external database to store bridge state.
+database:
+  # database engine (must be 'postgres' or 'nedb'). Default: nedb
+  engine: "nedb"
+   # Either a PostgreSQL connection string, or a path to the NeDB storage directory.
+   # For postgres, it must start with postgres://
+   # For NeDB, it must start with nedb://. The path is relative to the project directory.
+  connectionString: "nedb:///var/lib/synapse/irc-nedb"
