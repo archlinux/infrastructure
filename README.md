@@ -143,21 +143,36 @@ The following steps should be used to update our managed servers:
   - archive (archive.archlinux.org)
   - torrent tracker hefurd (tracker.archlinux.org)
 
+### luna
+
+#### Services
+
+  - aur (aur.archlinux.org)
+  - mailman
+  - projects (projects.archlinux.org)
+
 ### apollo
 
 #### Services
-  - bbs (bbs.archlinux.org)
   - wiki (wiki.archlinux.org)
-  - aur (aur.archlinux.org)
-  - flyspray (bugs.archlinux.org)
-  - mailman
   - planet (planet.archlinux.org)
   - bugs (bugs.archlinux.org)
   - archweb
   - patchwork
-  - projects (projects.archlinux.org)
+
+## bugs.archlinux.org
+
+#### Services
+  - flyspray
+
+## bbs.archlinux.org
+
+#### Services
+  - bbs
 
 ### phrik.archlinux.org
+
+#### Services
    - phrik (irc bot) users in the phrik group defined in
      the hosts vars and re-used the archusers role. Users
      in the phrik group are allowed to restar the irc bot.
