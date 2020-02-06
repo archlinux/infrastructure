@@ -57,6 +57,7 @@ apollo.archlinux.org
 luna.archlinux.org
 bbs.archlinux.org
 bugs.archlinux.org
+aur-dev.archlinux.org
 
 [postgresql_servers]
 apollo.archlinux.org
@@ -70,6 +71,7 @@ luna.archlinux.org
 orion.archlinux.org
 bbs.archlinux.org
 bugs.archlinux.org
+aur-dev.archlinux.org
 
 [buildservers]
 dragon.archlinux.org
