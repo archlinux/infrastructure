@@ -1,0 +1,10 @@
+---
+
+- name: daemon reload
+  command: systemctl daemon-reload
+
+- name: restart php-fpm@aurweb
+  service: name=php-fpm@{{ aurweb_user }} state=restarted
+
+- name: restart sshd
+  service: name=sshd state=restarted
