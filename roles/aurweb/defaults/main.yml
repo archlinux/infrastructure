@@ -11,7 +11,11 @@ aurweb_version: 'live'
 aurweb_db: 'aur'
 aurweb_db_host: 'localhost'
 aurweb_db_user: 'aur'
-aurweb_db_password: 'aur'
 
-aurweb_user: 'aurweb'
+aurweb_user: 'aur'
 aurweb_socket: '/run/php-fpm/{{aurweb_user}}.socket'
+
+aurweb_cache: 'apc'
+aurweb_cache_pkginfo_ttl: '86400'
+aurweb_request_limt: '4000'
+aurweb_window_length: '86400'
