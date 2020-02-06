@@ -5,5 +5,5 @@ After=mysqld.service
 
 [Service]
 Type=Oneshot
-User=aur
+User={{ aurweb_user }}
 ExecStart=/usr/local/bin/aurweb-tuvotereminder

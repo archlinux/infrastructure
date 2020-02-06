@@ -120,8 +120,8 @@ StreamLocalBindUnlink yes
 #	PermitTTY no
 #	ForceCommand cvs server
 
-Match User aur
+Match User {{ aurweb_user }}
         PasswordAuthentication no
         AuthorizedKeysCommand /usr/local/bin/aurweb-git-auth "%t" "%k"
-        AuthorizedKeysCommandUser aur
+        AuthorizedKeysCommandUser {{ aurweb_user }}
         AcceptEnv AUR_OVERWRITE

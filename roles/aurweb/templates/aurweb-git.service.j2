@@ -3,7 +3,7 @@ Description=Git gc AUR
 
 [Service]
 Type=Oneshot
-User=aur
+User={{ aurweb_user }}
 WorkingDirectory={{ aurweb_git_dir }}
 ExecStart=/usr/bin/git gc
 Nice=5
