@@ -1,6 +1,6 @@
 ---
 - name: install required packages
-  pacman: name=git,sudo,python-mysql-connector,python-pygit2,python-srcinfo,python-bleach,python-markdown,make,asciidoc state=present
+  pacman: name=git,sudo,python-mysql-connector,python-pygit2,python-srcinfo,python-bleach,python-markdown,pyalpm,make,asciidoc,php-apcu state=present
 
 - name: make aur user
   user: name="{{ aurweb_user }}" shell=/bin/bash createhome=yes
@@ -17,42 +17,49 @@
   become_user: "{{aurweb_user}}"
   register: release
 
+- name: clone Trusted User documentation repo
+  git: >
+    repo={{ tubylaws_repository }}
+    dest="{{ aurweb_dir }}/tu-bylaws"
+    version={{ tubylaws_version }}
+  become: true
+  become_user: "{{ aurweb_user }}"
+  register: release
+
+- name: create necessary directories
+  file: path={{ aurweb_dir}}/{{ item }} state=directory owner={{ aurweb_user }} group={{ aurweb_user }}
+  with_items:
+    - 'aurblup'
+    - 'sessions'
+    - 'uploads'
+    - 'web/html/trusted-user'
+
 - name: create aur db
-  mysql_db: name="{{ aurweb_db }}" login_host="{{ aurweb_db_host }}" login_password="{{ mariadb_users.root }}" encoding=utf8
+  mysql_db: name="{{ aurweb_db }}" login_host="{{ aurweb_db_host }}" login_password="{{ vault_mariadb_users.root }}" encoding=utf8
   register: db_created
+  no_log: true
 
 - name: create aur db user
-  mysql_user: name={{ aurweb_db_user }} password={{ aurweb_db_password }}
-              login_host="{{ aurweb_db_host }}" login_password="{{ mariadb_users.root }}"
+  mysql_user: name={{ aurweb_db_user }} password={{ vault_aurweb_db_password }}
+              login_host="{{ aurweb_db_host }}" login_password="{{ vault_mariadb_users.root }}"
               priv="{{ aurweb_db }}.*:ALL"
-
-- name: enable innodb_large_prefix
-  mysql_variables:
-    login_host: "{{ aurweb_db_host }}"
-    login_password: "{{ mariadb_users.root }}"
-    variable: innodb_large_prefix
-    value: 1
-
-- name: enable innodb_file_format
-  mysql_variables:
-    login_host: "{{ aurweb_db_host }}"
-    login_password: "{{ mariadb_users.root }}"
-    variable: innodb_file_format
-    value: Barracuda
+  no_log: true
 
 - name: check if db is imported
-  shell: mysql -u {{ aurweb_db_user }} -p{{ aurweb_db_password }} -e "SELECT ID FROM Users" {{ aurweb_db }}
+  shell: mysql -u {{ aurweb_db_user }} -p{{ vault_aurweb_db_password }} -e "SELECT ID FROM Users" {{ aurweb_db }}
   ignore_errors: true
   register: db_imported
+  no_log: true
 
 - name: import aur sql db
   mysql_db:
     state: import
     name: "{{ aurweb_db }}"
     login_host: "{{ aurweb_db_host }}"
-    login_password: "{{ mariadb_users.root }}"
+    login_password: "{{ vault_mariadb_users.root }}"
     target: "{{ aurweb_dir }}/schema/aur-schema.sql"
   when: db_imported.rc != 0
+  no_log: true
 
 - name: create aurweb conf dir
   file: path={{ aurweb_conf_dir }} state=directory
@@ -73,6 +80,18 @@
       chdir: "{{ aurweb_dir }}/doc"
   become: true
   become_user: "{{aurweb_user}}"
+
+- name: Generate Trusted User documentation
+  make:
+    chdir: "{{ aurweb_dir }}/tu-bylaws"
+  become: true
+  become_user: "{{ aurweb_user }}"
+
+- name: Install Trusted User documentation
+  copy: src={{ aurweb_dir }}/tu-bylaws/tu-bylaws.html dest={{ aurweb_dir }}/web/html/trusted-user/tu-bylaws.html remote_src=yes
+
+- name: Install Trusted User documentation symlink
+  file: src=tu-bylaws.html dest={{ aurweb_dir }}/web/html/trusted-user/TUbylaws.html state=link
 
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/aurweb.conf owner=root group=root mode=644
@@ -116,7 +135,6 @@
   become_user: "{{aurweb_user}}"
   when: git_config.stdout.find('^refs/') == -1
 
-
 - name: configure git transfer.hideRefs second
   command: git config --local --add transfer.hideRefs '!refs/'
   args:
@@ -139,9 +157,11 @@
     dest: "{{ aurweb_git_dir }}/hooks/update"
     state: link
 
-- name: install AUR maintenance services/timers
-  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+- name: install AUR systemd service and timers
+  template: src={{ item }}.j2 dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
+      - aurweb-git.service
+      - aurweb-git.timer
       - aurweb-aurblup.service
       - aurweb-aurblup.timer
       - aurweb-mkpkglists.service
@@ -153,23 +173,15 @@
       - aurweb-tuvotereminder.service
       - aurweb-tuvotereminder.timer
 
-- name: start and enable AUR maintenance timers
+- name: start and enable AUR systemd timers
   service: name={{ item }} enabled=yes state=started
   with_items:
-      - aurweb-aurblup.timer
-      - aurweb-mkpkglists.timer
-      - aurweb-pkgmaint.timer
-      - aurweb-popupdate.timer
-      - aurweb-tuvotereminder.timer
-
-- name: install AUR git gc service/timer
-  template: src={{ item }}.j2 dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
-  with_items:
-      - aurweb-git.service
-      - aurweb-git.timer
-
-- name: start and enable AUR git gc timer
-  service: name=aurweb-git.timer enabled=yes state=started
+       - aurweb-git.timer
+       - aurweb-aurblup.timer
+       - aurweb-mkpkglists.timer
+       - aurweb-pkgmaint.timer
+       - aurweb-popupdate.timer
+       - aurweb-tuvotereminder.timer
 
 - name: configure sshd
   template: src=sshd_config.j2 dest=/etc/ssh/sshd_config owner=root group=root mode=0644 validate='/usr/sbin/sshd -t -f %s'
