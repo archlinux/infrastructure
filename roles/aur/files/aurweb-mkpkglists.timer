@@ -1,9 +1,0 @@
-[Unit]
-Description=Regenerate aurweb package and user lists
-
-[Timer]
-OnStartupSec=5m
-OnUnitActiveSec=5m
-
-[Install]
-WantedBy=timers.target

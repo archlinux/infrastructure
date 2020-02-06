@@ -1,9 +1,0 @@
-[Unit]
-Description=Update aurweb per-package popularity counts
-Requires=mysqld.service
-After=mysqld.service
-
-[Service]
-Type=Oneshot
-User=aur
-ExecStart=/usr/local/bin/aurweb-popupdate

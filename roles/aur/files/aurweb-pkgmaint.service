@@ -1,9 +1,0 @@
-[Unit]
-Description=Delete old, empty reserved aurweb pkgbases
-Requires=mysqld.service
-After=mysqld.service
-
-[Service]
-Type=Oneshot
-User=aur
-ExecStart=/usr/local/bin/aurweb-pkgmaint

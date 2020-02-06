@@ -1,9 +1,0 @@
-[Unit]
-Description=Update aurweb per-package popularity counts
-
-[Timer]
-OnStartupSec=2h
-OnUnitActiveSec=2h
-
-[Install]
-WantedBy=timers.target

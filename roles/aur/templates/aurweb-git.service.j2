@@ -1,9 +1,0 @@
-[Unit]
-Description=Git gc AUR
-
-[Service]
-Type=Oneshot
-User=aur
-WorkingDirectory={{ aurweb_git_dir }}
-ExecStart=/usr/bin/git gc
-Nice=5

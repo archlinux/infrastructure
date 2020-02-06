@@ -1,9 +1,0 @@
-[Unit]
-Description=Send aurweb TU vote reminder emails
-
-[Timer]
-OnStartupSec=12h
-OnUnitActiveSec=12h
-
-[Install]
-WantedBy=timers.target

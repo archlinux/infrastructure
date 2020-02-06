@@ -1,9 +1,0 @@
-[Unit]
-Description=Send aurweb TU vote reminder emails
-Requires=mysqld.service
-After=mysqld.service
-
-[Service]
-Type=Oneshot
-User=aur
-ExecStart=/usr/local/bin/aurweb-tuvotereminder
