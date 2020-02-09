@@ -3,7 +3,7 @@
 - name: Update pacman website
   hosts: localhost
   vars:
-      pacman_version: "5.2.0"
+      pacman_version: "5.2.1"
       archweb_dir: '/srv/http/archweb'
   tasks:
       - name: Create temp dir
@@ -18,9 +18,6 @@
 
       - name: unpack tarball
         unarchive: src={{tempdir.path}}/pacman.tar.gz dest={{tempdir.path}}/pacman/
-
-      - name: grab missing file from cgit
-        get_url: url=https://git.archlinux.org/pacman.git/plain/doc/pacman-conf.8.asciidoc?h=v{{pacman_version}} dest={{tempdir.path}}/pacman/pacman-{{pacman_version}}/doc/pacman-conf.8.asciidoc
 
       - name: configure
         shell: ./configure chdir={{tempdir.path}}/pacman/pacman-{{pacman_version}}
