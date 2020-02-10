@@ -1,14 +1,4 @@
 ---
-- name: run maintenance mode
-  include_role:
-    name: maintenance
-  vars:
-    service_name: "site"
-    service_domain: "{{ aurweb_domain }}"
-    service_alternate_domains: []
-    service_nginx_conf: "{{ aurweb_nginx_conf }}"
-  when: maintenance is defined
-
 - name: install required packages
   pacman: name=git,sudo,python-mysql-connector,python-pygit2,python-srcinfo,python-bleach,python-markdown,pyalpm,make,asciidoc,php-apcu,php-apcu-bc state=present
 
