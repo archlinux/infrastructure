@@ -1,6 +1,16 @@
 ---
+- name: run maintenance mode
+  include_role:
+    name: maintenance
+  vars:
+    service_name: "site"
+    service_domain: "{{ aurweb_domain }}"
+    service_alternate_domains: []
+    service_nginx_conf: "{{ aurweb_nginx_conf }}"
+  when: maintenance is defined
+
 - name: install required packages
-  pacman: name=git,sudo,python-mysql-connector,python-pygit2,python-srcinfo,python-bleach,python-markdown,pyalpm,make,asciidoc,php-apcu state=present
+  pacman: name=git,sudo,python-mysql-connector,python-pygit2,python-srcinfo,python-bleach,python-markdown,pyalpm,make,asciidoc,php-apcu,php-apcu-bc state=present
 
 - name: make aur user
   user: name="{{ aurweb_user }}" shell=/bin/bash createhome=yes
@@ -81,6 +91,13 @@
   become: true
   become_user: "{{aurweb_user}}"
 
+- name: Generate Translations
+  make:
+      chdir: "{{ aurweb_dir }}/po"
+      target: "install"
+  become: true
+  become_user: "{{aurweb_user}}"
+
 - name: Generate Trusted User documentation
   make:
     chdir: "{{ aurweb_dir }}/tu-bylaws"
@@ -94,7 +111,7 @@
   file: src=tu-bylaws.html dest={{ aurweb_dir }}/web/html/trusted-user/TUbylaws.html state=link
 
 - name: set up nginx
-  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/aurweb.conf owner=root group=root mode=644
+  template: src=nginx.d.conf.j2 dest={{ aurweb_nginx_conf }} owner=root group=root mode=644
   notify: reload nginx
   tags: ['nginx']
 

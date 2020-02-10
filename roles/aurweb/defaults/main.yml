@@ -7,6 +7,7 @@ aurweb_dir: '/srv/http/aurweb'
 aurweb_conf_dir: '/etc/aurweb'
 aurweb_git_dir: "{{ aurweb_dir }}/aur.git"
 aurweb_git_hook: '/usr/local/bin/aurweb-git-update'
+aurweb_nginx_conf: '/etc/nginx/nginx.d/aurweb.conf'
 aurweb_version: 'live'
 tubylaws_version: 'proposal-117'
 
