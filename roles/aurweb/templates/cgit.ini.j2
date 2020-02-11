@@ -1,6 +1,6 @@
 [uwsgi]
 plugins = cgi
-socket = /run/uwsgi/cgit.sock
+socket = {{ cgit_socket }}
 chown-socket = {{ aurweb_user }}:http
 chmod-socket = 770
 threads = 4
