@@ -4,6 +4,7 @@ socket = {{ cgit_socket }}
 chown-socket = {{ aurweb_user }}:http
 chmod-socket = 770
 threads = 4
+daemonize = /var/log/uwsgi/cgit-aurweb.log
 
 cgi = /usr/share/webapps/cgit-aurweb/cgit.cgi
 uid = {{ aurweb_user }}

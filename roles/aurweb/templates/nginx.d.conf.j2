@@ -1,5 +1,13 @@
 upstream aurweb {
-    server unix://{{aurweb_socket}};
+    server unix://{{ aurweb_socket }};
+}
+
+upstream cgit {
+    server unix://{{ cgit_socket }};
+}
+
+upstream smartgit {
+    server unix://{{ smartgit_socket }};
 }
 
 server {
@@ -32,16 +40,51 @@ server {
     root    {{ aurweb_dir }}/web/html;
     index   index.php;
 
-    location ~ ^/[^/]+\.php($|/) {
-         fastcgi_pass   aurweb;
-         fastcgi_index  index.php;
-         fastcgi_split_path_info ^(/[^/]+\.php)(/.*)$;
-         fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
-         fastcgi_param  PATH_INFO        $fastcgi_path_info;
-         include        fastcgi_params;
+    location ~ ^/trusted-user/ {
+        break;
     }
-  
+
+    location ~ "^/([a-z0-9][a-z0-9.+_-]*?)(\.git)?/(git-(receive|upload)-pack|HEAD|info/refs|objects/(info/(http-)?alternates|packs)|[0-9a-f]{2}/[0-9a-f]{38}|pack/pack-[0-9a-f]{40}\.(pack|idx))$" {
+        include      uwsgi_params;
+        uwsgi_pass   smartgit;
+        uwsgi_param  SCRIPT_FILENAME /usr/lib/git-core/git-http-backend;
+        uwsgi_param  PATH_INFO /aur.git/$3;
+        uwsgi_param  GIT_HTTP_EXPORT_ALL "";
+        uwsgi_param  GIT_NAMESPACE $1;
+        uwsgi_param  GIT_PROJECT_ROOT {{ aurweb_dir }};
+    }
+
+    location ~ ^/cgit {
+        include uwsgi_params;
+        rewrite ^/cgit/([^?/]+/[^?]*)?(?:\?(.*))?$ /cgit.cgi?url=$1&$2 last;
+        uwsgi_modifier1 9;
+        uwsgi_param CGIT_CONFIG {{ aurweb_conf_dir }}/cgitrc;
+        uwsgi_pass cgit;
+    }
+
+    location ~ ^/[^/]+\.php($|/) {
+        fastcgi_pass   aurweb;
+        fastcgi_index  index.php;
+        fastcgi_split_path_info ^(/[^/]+\.php)(/.*)$;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        fastcgi_param  PATH_INFO        $fastcgi_path_info;
+        fastcgi_param  HTTPS            on;
+        include        fastcgi_params;
+
+        # Cache PHP Requests
+        #fastcgi_cache aur;
+        #fastcgi_cache_valid 200 5m;
+        #add_header X-Cache $upstream_cache_status;
+
+        # Required for caching to work
+        #fastcgi_ignore_headers "Cache-Control" "Expires" "Set-Cookie";
+
+        # Only apply cache when set
+        #fastcgi_cache_bypass $no_cache;
+        #fastcgi_no_cache $no_cache;
+    }
+
     location ~ .* {
-         rewrite ^/(.*)$ /index.php/$1 last;
-    } 
+        rewrite ^/(.*)$ /index.php/$1 last;
+    }
 }

@@ -13,6 +13,8 @@ enable-maintenance = 0
 localedir = {{ aurweb_dir }}/web/locale/
 cache = {{ aurweb_cache }}
 cache_pkginfo_ttl = {{ aurweb_cache_pkginfo_ttl }}
+git_clone_uri_anon = https://{{ aurweb_domain }}/%s.git
+git_clone_uri_priv = ssh://{{ aurweb_user }}@{{ aurweb_domain }}/%s.git
 
 [ratelimit]
 request_limit = {{ aurweb_request_limt }}
@@ -21,6 +23,7 @@ window_length = {{ aurweb_window_length }}
 [serve]
 repo-path = {{ aurweb_git_dir }}
 git-shell-cmd = /usr/bin/sh
+ssh-cmdline = ssh {{ aurweb_user }}@{{ aurweb_domain }}
 
 [aurblup]
 db-path = {{ aurweb_dir }}/aurblup

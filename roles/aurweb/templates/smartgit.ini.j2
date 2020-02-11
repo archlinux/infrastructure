@@ -1,0 +1,9 @@
+[uwsgi]
+plugins = cgi
+socket = {{ smartgit_socket }}
+chown-socket = {{ aurweb_user }}:http
+threads = 4
+cgi = /usr/lib/git-core/git-http-backend
+uid = {{ aurweb_user }}
+gid = http
+daemonize = /var/log/uwsgi/smartgit-aurweb.log
