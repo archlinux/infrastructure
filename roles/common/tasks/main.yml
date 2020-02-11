@@ -1,5 +1,9 @@
 ---
 
+- name: set fact for local dns resolver in use
+  set_fact:
+    host_has_local_dns_resolver: "{{dns_servers|length == 1 and '127.0.0.1' in dns_servers}}"
+
 - name: install inetutils for hostname
   pacman: name=inetutils state=present update_cache=yes
 
@@ -48,19 +52,24 @@
 
 - name: create symlink to resolv.conf
   file: src=/run/systemd/resolve/stub-resolv.conf dest=/etc/resolv.conf state=link force=yes
-  when: configure_network and not (dns_servers|length == 1 and "127.0.0.1" in dns_servers)
+  when: configure_network and not host_has_local_dns_resolver
 
 - name: create resolv.conf
   template: src=resolv.conf.j2 dest=/etc/resolv.conf owner=root group=root mode=0644
-  when: configure_network and (dns_servers|length == 1 and "127.0.0.1" in dns_servers)
+  when: configure_network and host_has_local_dns_resolver
 
 - name: start networkd
   service: name=systemd-networkd state=started enabled=yes
   when: configure_network
 
 - name: start resolved
-  service: name=systemd-resolved state={{"stopped" if dns_servers|length == 1 and "127.0.0.1" in dns_servers else "started"}} enabled={{"no" if dns_servers|length == 1 and "127.0.0.1" in dns_servers else "yes"}}
+  service:
+    name: systemd-resolved
+    state: "{{'stopped' if host_has_local_dns_resolver else 'started'}}"
+    enabled: "{{'no' if host_has_local_dns_resolver else 'yes'}}"
   when: configure_network
+  tags:
+    - this
 
 - name: configure tcp receive window limits
   sysctl:
