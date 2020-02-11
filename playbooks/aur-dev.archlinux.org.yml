@@ -14,6 +14,7 @@
               mariadb_innodb_file_per_table: True }
     - { role: sudo }
     - { role: php-fpm, php_extensions: ['apcu', 'iconv', 'mysqli', 'pdo_mysql'], zend_extensions: ['opcache'] }
+    - { role: uwsgi, tags: ["uwsgi"] }
     - { role: borg-client, tags: ["borg"] }
     - { role: postfix, postfix_relayhost: "orion.archlinux.org" }
     - { role: fail2ban }
