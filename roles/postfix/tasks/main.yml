@@ -5,8 +5,6 @@
 
 - name: install template configs
   template: src={{item}}.j2 dest=/etc/postfix/{{item}} owner=root group=root mode=0644
-  notify:
-    - reload postfix
   with_items:
     - main.cf
     - master.cf
@@ -75,13 +73,13 @@
     - compat_maps.db
 
 - name: install extra packages for relaying via smarthost
-  when: postfix_relayhost != ""
+  when: postfix_relayhost
   package:
     name: cyrus-sasl
     state: present
 
 - name: install relay_passwords file
-  when: postfix_relayhost != ""
+  when: postfix_relayhost
   template:
     src: relay_passwords.j2
     dest: /etc/postfix/relay_passwords
@@ -93,7 +91,7 @@
 
 - name: create user account on orion to relay with
   delegate_to: orion.archlinux.org
-  when: postfix_relayhost != ""
+  when: postfix_relayhost
   user:
     name: "{{inventory_hostname_short}}"
     comment: "SMTP Relay Account for {{inventory_hostname}}"
