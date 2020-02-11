@@ -1,0 +1,10 @@
+[uwsgi]
+plugins = cgi
+socket = /run/uwsgi/cgit.sock
+chown-socket = http:http
+chmod-socket = 770
+threads = 4
+
+cgi = /usr/share/webapps/cgit-aurweb/cgit.cgi
+uid = {{ aurweb_user }}
+gid = {{ aurweb_user }}
