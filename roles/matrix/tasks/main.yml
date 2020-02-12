@@ -134,7 +134,6 @@
 - name: open firewall holes
   firewalld: port={{ item }} permanent=true state=enabled immediate=yes
   with_items:
-    - 8848/tcp
     - 113/tcp
   when: configure_firewall
   tags:
