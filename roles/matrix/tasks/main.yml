@@ -44,7 +44,7 @@
 
 - name: download matrix-appservice-irc
   git:
-    repo: https://github.com/heftig/matrix-appservice-irc
+    repo: https://github.com/matrix-org/matrix-appservice-irc
     dest: /var/lib/synapse/matrix-appservice-irc
   become: yes
   become_user: synapse
