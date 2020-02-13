@@ -2,6 +2,7 @@
 plugins = cgi
 socket = {{ smartgit_socket }}
 chown-socket = {{ aurweb_user }}:http
+chmod-socket = 770
 threads = 4
 cgi = /usr/lib/git-core/git-http-backend
 uid = {{ aurweb_user }}
