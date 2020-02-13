@@ -1,0 +1,26 @@
+[Unit]
+Description=archweb update planet service
+After=network.target
+
+[Service]
+Type=oneshot
+User=archweb
+WorkingDirectory={{ archweb_dir }}
+ExecStart={{ archweb_dir }}/env/bin/python manage.py update_planet -v3
+
+ProtectSystem=full
+PrivateTmp=true
+PrivateDevices=true
+
+ProtectHostname=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+
+NoNewPrivileges=true
+RestrictRealtime=true
+MemoryDenyWriteExecute=true
+
+[Install]
+WantedBy=multi-user.target

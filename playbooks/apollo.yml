@@ -43,7 +43,7 @@
     - { role: uwsgi, tags: ['uwsgi'] }
     - { role: php-fpm, php_extensions: ['bcmath', 'curl', 'gd', 'iconv', 'intl', 'mysqli', 'pdo_pgsql', 'pgsql', 'sockets', 'zip'], zend_extensions: ['opcache'], tags: ["php-fpm"] }
     - { role: memcached, tags: ['memcached'] }
-    - { role: archweb, tags: ["archweb"] }
+    - { role: archweb, archweb_planet: true, tags: ["archweb"] }
     - role: security_tracker
       security_tracker_domain: "security.archlinux.org"
       security_tracker_nginx_conf: '/etc/nginx/nginx.d/security-tracker.conf'

@@ -165,6 +165,18 @@
     - daemon reload
   when: archweb_services or archweb_populate_signoffs
 
+- name: install planet service
+  template: src="archweb-planet.service.j2" dest="/etc/systemd/system/archweb-planet.service" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+  when: archweb_planet
+
+- name: install planet timer
+  template: src="archweb-planet.timer.j2" dest="/etc/systemd/system/archweb-planet.timer" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+  when: archweb_planet
+
 - name: install pgp_import service
   template: src="archweb-pgp_import.service.j2" dest="/etc/systemd/system/archweb-pgp_import.service" owner=root group=root mode=0644
   notify:
@@ -272,6 +284,10 @@
 - name: start and enable archweb populate_signoffs timer
   service: name="archweb-populate_signoffs.timer" enabled=yes state=started
   when: archweb_services or archweb_populate_signoffs
+
+- name: start and enable archweb planet timer
+  service: name="archweb-planet.timer" enabled=yes state=started
+  when: archweb_planet
 
 - name: start and enable archweb donor_import timer
   service: name="archweb-donor_import.timer" enabled=yes state=started
