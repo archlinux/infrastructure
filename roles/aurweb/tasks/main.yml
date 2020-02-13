@@ -6,8 +6,7 @@
       - asciidoc
       - highlight
       - make
-      - php-apcu
-      - php-apcu-bc
+      - php-memcached
       - pyalpm
       - python-bleach
       - python-markdown
@@ -150,9 +149,6 @@
 - name: start and enable systemd socket
   service: name=php-fpm@{{ aurweb_user }}.socket state=started enabled=true
 
-- name: install apcu configuration
-  template: src=apcu.ini.j2 dest=/etc/php/conf.d/apcu.ini
-
 - name: install cgit configuration
   template: src=cgitrc.j2 dest="{{ aurweb_conf_dir }}/cgitrc"
 
@@ -227,6 +223,7 @@
       - aurweb-git.timer
       - aurweb-aurblup.service
       - aurweb-aurblup.timer
+      - aurweb-memcached.service
       - aurweb-mkpkglists.service
       - aurweb-mkpkglists.timer
       - aurweb-pkgmaint.service
@@ -236,11 +233,12 @@
       - aurweb-tuvotereminder.service
       - aurweb-tuvotereminder.timer
 
-- name: start and enable AUR systemd timers
+- name: start and enable AUR systemd services and timers
   service: name={{ item }} enabled=yes state=started
   with_items:
        - aurweb-git.timer
        - aurweb-aurblup.timer
+       - aurweb-memcached.service
        - aurweb-mkpkglists.timer
        - aurweb-pkgmaint.timer
        - aurweb-popupdate.timer

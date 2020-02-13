@@ -20,10 +20,9 @@ aurweb_socket: '/run/php-fpm/{{aurweb_user}}.socket'
 cgit_socket: '/run/uwsgi/cgit.sock'
 smartgit_socket: '/run/uwsgi/smartgit.sock'
 
-aurweb_cache: 'apc'
+aurweb_cache: 'memcache'
 aurweb_cache_pkginfo_ttl: '86400'
 aurweb_request_limt: '4000'
 aurweb_window_length: '86400'
-aurweb_apc_shm_size: '1024M'
-aurweb_apc_ttl: '1800'
-aurweb_apc_entries_hint: '0'
+aurweb_memcached_host: 'localhost'
+aurweb_memcached_memory: 2048
