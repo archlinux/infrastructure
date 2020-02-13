@@ -12,13 +12,14 @@ archweb_domains_templates:
 archweb_allowed_hosts: ["{{ archweb_domain }}", 'ipxe.archlinux.org']
 archweb_nginx_conf: '/etc/nginx/nginx.d/archweb.conf'
 archweb_repository: 'https://github.com/archlinux/archweb.git'
-archweb_version: release_2019-12-18
+archweb_version: release_2020-02-13
 archweb_pgp_key: ['E499C79F53C96A54E572FEE1C06086337C50773E']
 archweb_site: true
 archweb_mirrorcheck: false
 archweb_mirrorresolv: false
 archweb_pgp_import: false
 archweb_donor_import: false
+archweb_planet: false
 archweb_donor_maildir: '/var/lib/archweb/donate'
 archweb_populate_signoffs: false
 archweb_keyring: '/etc/pacman.d/gnupg/pubring.gpg'
