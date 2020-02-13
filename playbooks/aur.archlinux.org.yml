@@ -13,7 +13,8 @@
     - { role: mariadb, mariadb_innodb_buffer_pool_size: '64M', mariadb_table_open_cache: '256', mariadb_query_cache_type: '0',
               mariadb_innodb_file_per_table: True }
     - { role: sudo }
-    - { role: php-fpm, php_extensions: ['apc', 'apcu', 'iconv', 'mysqli', 'pdo_mysql'], zend_extensions: ['opcache'], tags: ["php-fpm"] }
+    - { role: php-fpm, php_extensions: ['iconv', 'memcached', 'mysqli', 'pdo_mysql'], zend_extensions: ['opcache'], tags: ["php-fpm"] }
+    - { role: memcached, tags: ['memcached'] }
     - { role: uwsgi, tags: ["uwsgi"] }
     - { role: borg-client, tags: ["borg"] }
     - { role: postfix, tags: ["postfix"], postfix_relayhost: "orion.archlinux.org" }
