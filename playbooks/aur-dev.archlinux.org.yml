@@ -6,7 +6,7 @@
   roles:
     - { role: common }
     - { role: tools }
-    - { role: sshd }
+    - { role: sshd, sshd_enable_includes: true }
     - { role: root_ssh }
     - { role: certbot }
     - { role: nginx }
