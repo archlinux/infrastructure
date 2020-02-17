@@ -14,6 +14,10 @@
 - name: install motd
   template: src=motd.j2 dest=/etc/motd owner=root group=root mode=0644
 
+- name: Create the includes dir
+  file: path="{{ sshd_includes_dir }}" state=directory mode=0600
+  when: sshd_enable_includes
+
 - name: start and enable sshd
   service: name=sshd enabled=yes state=started
 

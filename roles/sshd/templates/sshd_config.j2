@@ -118,6 +118,10 @@ Subsystem	sftp	/usr/lib/ssh/sftp-server
 # unlink forwarded sockets; for gpg agent forwarding
 StreamLocalBindUnlink yes
 
+{% if sshd_enable_includes %}
+Include {{ sshd_includes_dir }}/*
+{% endif -%}
+
 # Example of overriding settings on a per-user basis
 #Match User anoncvs
 #	X11Forwarding no
