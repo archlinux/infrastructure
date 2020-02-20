@@ -25,7 +25,6 @@
     - { role: borg-client, tags: ["borg"] }
     - { role: certbot }
     - { role: nginx, tags: ["nginx"] }
-    - { role: planet, planet_domain: "planet.archlinux.org", planet_dir: "/srv/http/planet", tags: ["planet"] }
     - { role: spampd, tags: ["mail", "spampd"] }
     - { role: unbound, tags: ["mail", "unbound"] }
     - { role: postfix, postfix_relayhost: "orion.archlinux.org", postfix_smtpd_public: true, postfix_patchwork_enabled: true, tags: ["mail", "postfix"] }

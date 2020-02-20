@@ -155,7 +155,6 @@ The following steps should be used to update our managed servers:
 
 #### Services
   - wiki (wiki.archlinux.org)
-  - planet (planet.archlinux.org)
   - bugs (bugs.archlinux.org)
   - archweb
   - patchwork

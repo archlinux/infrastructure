@@ -1,18 +1,19 @@
 ---
 archweb_dir: '/srv/http/archweb'
 archweb_domain: 'www.archlinux.org'
-archweb_alternate_domains: ['archlinux.org', 'master-key.archlinux.org', 'dev.archlinux.org', 'packages.archlinux.org', 'ipxe.archlinux.org']
+archweb_alternate_domains: ['archlinux.org', 'master-key.archlinux.org', 'dev.archlinux.org', 'packages.archlinux.org', 'ipxe.archlinux.org', 'planet.archlinux.org']
 archweb_domains_redirects:
         'archlinux.org': '$request_uri'
         'master-key.archlinux.org': '/master-keys'
         'dev.archlinux.org': '/'
         'packages.archlinux.org': '/packages$request_uri'
+        'planet.archlinux.org': '/planet$request_uri'
 archweb_domains_templates:
         'ipxe.archlinux.org': 'ipxe.archlinux.org.j2'
 archweb_allowed_hosts: ["{{ archweb_domain }}", 'ipxe.archlinux.org']
 archweb_nginx_conf: '/etc/nginx/nginx.d/archweb.conf'
 archweb_repository: 'https://github.com/archlinux/archweb.git'
-archweb_version: release_2020-02-13
+archweb_version: 5f9b0bd41e269b8ad1c7ea977769d72df6d46b28
 archweb_pgp_key: ['E499C79F53C96A54E572FEE1C06086337C50773E']
 archweb_site: true
 archweb_mirrorcheck: false

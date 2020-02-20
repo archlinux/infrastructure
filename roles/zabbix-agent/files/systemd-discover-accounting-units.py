@@ -23,7 +23,6 @@ unit_whitelist_regexes = [
         r'opendkim.service',
         r'php-fpm.service',
         r'php-fpm@.*.service',
-        r'planet.service',
         r'postfix.service',
         r'postfwd.service',
         r'postgresql.service',
