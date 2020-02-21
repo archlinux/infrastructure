@@ -425,6 +425,10 @@ arch_users:
     name: "Morgan Adamiec"
     ssh_key: morganamilo.pub
     groups: []
+  freswa:
+    name: "Frederik Schwan"
+    ssh_key: freswa.pub
+    groups: []
   seblu:
     name: "Sébastien Luttringer"
     ssh_key: seblu.pub
