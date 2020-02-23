@@ -50,10 +50,6 @@ arch_users:
       - dev
       - tu
       - multilib
-  andrea:
-    name: "Andrea Scarpino"
-    ssh_key: andrea.pub
-    groups: []
   andrew:
     name: "Andrew Gregory"
     ssh_key: andrew.pub
