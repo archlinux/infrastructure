@@ -33,6 +33,10 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ fluxbb_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ fluxbb_domain }}/chain.pem;
 
+    location /.git {
+        deny all;
+    }
+
     location ~ /extern\.php {
         limit_req zone=rsslimit burst=10 nodelay;
         fastcgi_pass   unix:/run/php-fpm/fluxbb.socket;

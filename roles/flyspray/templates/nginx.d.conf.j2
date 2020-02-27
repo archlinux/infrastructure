@@ -32,6 +32,10 @@ server {
 
     root {{ flyspray_dir }};
 
+    location /.git {
+        deny all;
+    }
+
     location /setup {
         deny all;
     }
