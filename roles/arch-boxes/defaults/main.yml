@@ -4,4 +4,4 @@ archboxes_user: 'archboxes'
 archboxes_home: '/srv/arch-boxes'
 archboxes_git_dir: '/srv/arch-boxes/arch-boxes'
 archboxes_time: '*-*-* 04:00:00'
-archboxes_version: "1.4.0"
+archboxes_version: "1.5.0"
