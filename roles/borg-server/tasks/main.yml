@@ -25,7 +25,7 @@
     mode: 0700
   with_items: "{{ backup_clients }}"
 
-- name: fetch ssh keys
+- name: fetch ssh keys from each borg client machine
   command: cat /root/.ssh/id_rsa.pub
   register: ssh_keys
   delegate_to: "{{ item }}"

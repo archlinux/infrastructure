@@ -7,22 +7,26 @@
   template: src=borg-restore.cfg.j2 dest=/etc/borg-restore.cfg owner=root group=root mode=0644
 
 - name: check if borg repository already exists
-  command: borg list {{ backup_host }}:{{ backup_dir }}
+  command: borg list {{ item['host'] }}:{{ item['dir'] }}
   register: borg_list
   ignore_errors: True
+  loop: "{{ backup_hosts }}"
 
 - name: init borg repository
-  command: borg init -e keyfile {{ backup_host }}:{{ backup_dir }}
+  command: borg init -e keyfile {{ item['host'] }}:{{ item['dir'] }}
   when: borg_list is failed
   environment:
     BORG_PASSPHRASE: ""
   ignore_errors: True # This can sometimes fail if a backup is in progress :/
+  loop: "{{ backup_hosts }}"
 
-- name: install scripts
-  template: src={{item}}.j2 dest=/usr/local/bin/{{item}} owner=root group=root mode=0755
-  with_items:
-    - borg-backup.sh
-    - borg
+- name: install convenience scripts
+  template: src=borg.j2 dest=/usr/local/bin/borg{{ item['suffix'] }} owner=root group=root mode=0755
+  loop: "{{ backup_hosts }}"
+
+- name: install borg backup scripts
+  template: src=borg-backup.sh.j2 dest=/usr/local/bin/borg-backup{{ item['suffix'] }}.sh owner=root group=root mode=0755
+  loop: "{{ backup_hosts }}"
 
 - name: install postgres backup script
   template: src=backup-postgres.sh.j2 dest=/usr/local/bin/backup-postgres.sh owner=root group=root mode=0755
@@ -42,22 +46,22 @@
   when: mysql_backup_dir is defined
 
 - name: install mysql backup config
-  template: src=backup-my.cnf.j2 dest={{mysql_backup_defaults}}
+  template: src=backup-my.cnf.j2 dest={{ mysql_backup_defaults }}
   when: mysql_backup_defaults is defined
 
 - name: create mysql backup directory
-  file: path={{mysql_backup_dir}} state=directory owner=root group=root
+  file: path={{ mysql_backup_dir }} state=directory owner=root group=root
   when: mysql_backup_dir is defined
 
 - name: remove xtrabackup, mariadb ships its own fork
   pacman: name=xtrabackup state=absent
   when: mysql_backup_dir is defined
 
-- name: install systemd timers for backup
-  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+- name: install systemd timer and service for backup
+  template: src={{ item }}.j2 dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
     - borg-backup.timer
     - borg-backup.service
 
 - name: activate systemd timers for backup
-  service: name=borg-backup.timer enabled=yes state=started
+  systemd: name=borg-backup.timer enabled=yes state=started daemon-reload=yes

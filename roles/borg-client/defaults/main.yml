@@ -1,3 +1,8 @@
 ---
-backup_host: "borg@vostok.archlinux.org"
-backup_dir: "/backup/{{inventory_hostname}}"
+backup_hosts:
+  - host: "borg@vostok.archlinux.org"
+    dir: "/backup/{{ inventory_hostname }}"
+    suffix: ""
+  - host: "{{ rsync_net_username }}@ch-s012.rsync.net"
+    dir: "backup/{{ inventory_hostname }}"
+    suffix: "-offsite"
