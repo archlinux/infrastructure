@@ -1,0 +1,21 @@
+---
+
+# We have to set up the rsync.net account in a weird fashion because
+# they don't support ansible directly (no Python and such).
+- name: create the root backup directory at {{ backup_dir }}
+  raw: mkdir -p {{ backup_dir }}
+
+- name: fetch ssh keys from each borg client machine
+  command: cat /root/.ssh/id_rsa.pub
+  register: client_ssh_keys
+  delegate_to: "{{ item }}"
+  with_items: "{{ backup_clients }}"
+  remote_user: root
+
+- local_action: tempfile state=file
+  register: tempfile
+
+- local_action: copy content="{{ lookup('template', 'authorized_keys.j2')}}" dest="{{ tempfile.path }}"
+
+- name: upload authorized_keys file
+  local_action: command scp "{{ tempfile.path }}" "{{ rsync_net_username }}@{{ inventory_hostname }}":.ssh/authorized_keys

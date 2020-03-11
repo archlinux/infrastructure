@@ -10,7 +10,7 @@
     - { role: sshd }
     - { role: unbound }
     - { role: root_ssh }
-    - { role: borg-client }
+    - { role: borg-client, tags: ["borg"] }
     - { role: certbot }
     - { role: nginx }
     - role: postgres

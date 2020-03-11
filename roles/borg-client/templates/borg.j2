@@ -1,3 +1,3 @@
 #!/bin/bash
 
-BORG_REPO="{{ backup_host }}:{{ backup_dir }}" exec /usr/bin/borg "$@"
+BORG_REPO="{{ item['host'] }}:{{ item['dir'] }}" exec /usr/bin/borg "$@"

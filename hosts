@@ -5,6 +5,9 @@ apollo.archlinux.org
 luna.archlinux.org
 dragon.archlinux.org
 
+[rsync_net]
+ch-s012.rsync.net
+
 [pia]
 ind.mirror.pkgbuild.com
 jpn.mirror.pkgbuild.com
@@ -40,6 +43,11 @@ phrik.archlinux.org
 bbs.archlinux.org
 homedir.archlinux.org
 bugs.archlinux.org
+aur-dev.archlinux.org
+
+[borg_hosts]
+vostok.archlinux.org
+ch-s012.rsync.net
 
 [public_html]
 homedir.archlinux.org

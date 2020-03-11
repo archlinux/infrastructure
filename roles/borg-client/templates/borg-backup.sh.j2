@@ -60,8 +60,8 @@ borg create -v --stats -C lz4 \
     -e "$backup_mountdir/var/lib/archbuild" \
     -e "$backup_mountdir/var/lib/archbuilddest" \
     -e "$backup_mountdir/srv/archive" \
-    {{ backup_host }}:{{ backup_dir }}::$(date "+%Y%m%d-%H%M%S") "$backup_mountdir"
-borg prune -v {{ backup_host }}:{{ backup_dir }} --keep-daily=7 --keep-weekly=4 --keep-monthly=6
+    {{ item['host'] }}:{{ item['dir'] }}::$(date "+%Y%m%d-%H%M%S") "$backup_mountdir"
+borg prune -v {{ item['host'] }}:{{ item['dir'] }} --keep-daily=7 --keep-weekly=4 --keep-monthly=6
 
 if is_btrfs "$src"; then
     umount -R "$backup_mountdir"
