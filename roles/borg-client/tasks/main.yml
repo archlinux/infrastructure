@@ -53,10 +53,6 @@
   file: path={{ mysql_backup_dir }} state=directory owner=root group=root
   when: mysql_backup_dir is defined
 
-- name: remove xtrabackup, mariadb ships its own fork
-  pacman: name=xtrabackup state=absent
-  when: mysql_backup_dir is defined
-
 - name: install systemd timer and service for backup
   template: src={{ item }}.j2 dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
