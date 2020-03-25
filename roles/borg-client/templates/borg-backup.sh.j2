@@ -26,7 +26,9 @@ if is_btrfs "$src"; then
     list_of_btrfs_submounts=$(findmnt -Rl -o target,fstype,options / | grep btrfs | grep -v "subvol=\/[[:alnum:]]" | cut -d ' ' -f1)
 
     if [[ -d "$backup_mountdir" ]]; then
-        umount -R "$backup_mountdir"
+        if [[ $(findmnt -M "$backup_mountdir") ]]; then
+            umount -R "$backup_mountdir"
+        fi
         rmdir "$backup_mountdir"
     fi
     mkdir "$backup_mountdir"
