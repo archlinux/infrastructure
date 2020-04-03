@@ -198,6 +198,13 @@ The following steps should be used to update our managed servers:
 #### Services:
   - ~/user/ webhost
 
+## mirror.pkgbuild.com
+
+### Services
+  - Load balancer for PIA mirrors across the world. Uses Maxmind's GeoIP City
+    database for routing users to their nearest mirror. Account information is
+    stored in the ansible vault.
+
 ## Ansible repo workflows
 
 ### Replace vault password and change vaulted passwords
