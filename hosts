@@ -11,8 +11,6 @@ ch-s012.rsync.net
 [pia]
 ind.mirror.pkgbuild.com
 jpn.mirror.pkgbuild.com
-mex.mirror.pkgbuild.com
-sgp.mirror.pkgbuild.com
 ger.mirror.pkgbuild.com
 runner1.archlinux.org
 repro1.pkgbuild.com
@@ -21,15 +19,11 @@ repro2.pkgbuild.com
 [mirrors]
 ind.mirror.pkgbuild.com
 jpn.mirror.pkgbuild.com
-mex.mirror.pkgbuild.com
-sgp.mirror.pkgbuild.com
 ger.mirror.pkgbuild.com
 
 [archive_mirrors]
 ind.mirror.pkgbuild.com
 jpn.mirror.pkgbuild.com
-mex.mirror.pkgbuild.com
-sgp.mirror.pkgbuild.com
 ger.mirror.pkgbuild.com
 
 [borg_clients]
@@ -72,7 +66,6 @@ bugs.archlinux.org
 
 [buildservers]
 dragon.archlinux.org
-sgp.mirror.pkgbuild.com
 
 [gitlab_runners]
 runner1.archlinux.org
