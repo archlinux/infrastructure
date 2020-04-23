@@ -1,0 +1,11 @@
+[http]
+# it is highly recommended to bind to localhost and setup nginx as a reverse proxy for https
+bind_addr = "127.0.0.1:8080"
+
+[auth]
+# set the generated secret for administration here
+#cookie = "{{ vault_rebuilderd_auth_cookie }}"
+
+[worker]
+# set the generated secret for our workers here
+signup_secret = "{{ vault_rebuilderd_signup_secret }}"
