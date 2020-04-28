@@ -205,6 +205,12 @@ The following steps should be used to update our managed servers:
     database for routing users to their nearest mirror. Account information is
     stored in the ansible vault.
 
+## reproducible.archlinux.org
+
+### Services
+  - Runs a master rebuilderd instance with two PIA workers (repro1.pkgbuild.com
+    and repro2.pkgbuild.com).
+
 ## Ansible repo workflows
 
 ### Replace vault password and change vaulted passwords
