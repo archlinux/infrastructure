@@ -26,13 +26,9 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ rebuilderd_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ rebuilderd_domain }}/chain.pem;
 
-    location /api {
-	    proxy_pass http://127.0.0.1:8080;
-    }
+    root /srv/http/repro;
 
-    location / {
-	    access_log off;
-	    default_type text/plain;
-	    return 200 'Arch Linux Rebuilderd Instance https://wiki.archlinux.org/index.php/Rebuilderd';
+    location /api {
+	    proxy_pass http://127.0.0.1:8484;
     }
 }
