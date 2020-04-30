@@ -9,6 +9,7 @@ It also contains git submodules so you have to run `git submodule update --init
 
 Install these packages:
   - terraform
+  - terraform-provider-keycloak
 
 ### Instructions
 
@@ -58,13 +59,24 @@ This will take some time after which a new snapshot will have been created on th
 
 #### Note about terraform
 
-We use terraform to provision a part of the infrastructure on hcloud.
+We use terraform in two ways:
+
+    1) To provision a part of the infrastructure on hcloud (and possibly other service providers in the future)
+    2) To declaratively configure applications
+
+For both of these, we have set up a separate terraform script. The reason for that is that sadly terraform can't have
+providers depend on other providers so we can't declaratively state that we want to configure software on a server which
+itself needs to be provisioned first. Therefore, we use a two-stage process. Generally speaking, scenario 1) is configured in
+`tf-stage1` and 2) is in `tf-stage2`. Maybe in the future, we can just have a single terraform script for everything
+but for the time being, this is what we're stuck with.
+
 The very first time you run terraform on your system, you'll have to init it:
 
-    terraform init -backend-config="conn_str=postgres://terraform:$(misc/get_key.py group_vars/all/vault_terraform.yml vault_terraform_db_password)@state.archlinux.org"
+    terraform init -backend-config="conn_str=postgres://terraform:$(../misc/get_key.py group_vars/all/vault_terraform.yml vault_terraform_db_password)@state.archlinux.org"
 
-After making changes to the infrastructure in `archlinux.fg`, run
+After making changes to the infrastructure in `tf-stage1/archlinux.fg`, run
 
+    cd tf-stage1
     terraform plan
 
 This will show you planned changes between the current infrastructure and the desired infrastructure.
@@ -73,6 +85,9 @@ You can then run
     terraform apply
 
 to actually apply your changes.
+
+The same applies to changed application configuration in which case you'd run
+it inside of `tf-stage2` instead of `tf-stage1`.
 
 We store terraform state on a special server that is the only hcloud server NOT
 managed by terraform so that we do not run into a chicken-egg problem. The
@@ -193,10 +208,24 @@ The following steps should be used to update our managed servers:
 #### Services:
   - quassel core
 
-## homedir.archlinux.org
+### homedir.archlinux.org
 
 #### Services:
   - ~/user/ webhost
+  
+### accounts.archlinux.org
+
+This server is /special/. It runs keycloak and is central to our unified Arch Linux account management world.
+It has an Ansible playbook for the keycloak service but that only installs the package and starts it but it's configured via a secondary Terraform file only for keycloak `keycloak.tf`.
+The reason for doing it this way is that Terraform support for Keycloak is much superior and it's declarative too which is great for making sure that no old config remains in the case of config changes.
+
+So to set up this server from scratch, run:
+
+  - `terraform apply tf-first-stage`
+  - `terraform apply tf-second-stage`
+
+#### Services:
+  - keycloak
 
 ## mirror.pkgbuild.com
 
@@ -252,3 +281,8 @@ Example
 Example
 
     borg list borg@vostok.archlinux.org:/backup/homedir.archlinux.org::20191127-084357
+
+## One-shots
+
+A bunch of once-only admin task scripts can be found in `one-shots/`.
+We try to minimize the amount of manual one-shot admin work we have to do but sometimes for some migrations it might be necessary to have such scripts.

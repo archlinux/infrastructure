@@ -8,3 +8,12 @@
     - { role: firewalld }
     - { role: sshd }
     - { role: root_ssh }
+    - { role: certbot }
+    - { role: nginx }
+    - role: postgres
+      postgres_shared_buffers: 500MB
+      postgres_work_mem: 32MB
+      postgres_maintenance_work_mem: 1GB
+      postgres_effective_cache_size: 1GB
+    - { role: keycloak }
+    - { role: borg-client, tags: ["borg"] }

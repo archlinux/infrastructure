@@ -14,6 +14,9 @@ arch_users:
     ssh_key: aaron.pub
     groups:
       - dev
+  accounts:
+    name: ""
+    groups: []
   aginiewicz:
     name: "Andrzej Giniewicz"
     ssh_key: aginiewicz.pub
@@ -227,6 +230,7 @@ arch_users:
       - name: foutrelis_buildhost.pub
         hosts:
           - dragon.archlinux.org
+          - sgp.mirror.pkgbuild.com
     groups:
       - dev
       - tu
