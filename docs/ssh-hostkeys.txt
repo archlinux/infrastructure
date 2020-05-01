@@ -53,17 +53,6 @@
 256 MD5:d6:d3:a9:2e:c1:7d:69:c1:9a:21:c9:6f:30:53:e6:74 root@archlinux-packer (ED25519)
 3072 MD5:06:6d:1f:87:6b:fb:60:b3:a8:c7:64:37:15:b5:b5:6c root@archlinux-packer (RSA)
 
-# ciprototype.archlinux.org
-1024 SHA256:f0cmzd2NU98fsVEc/WBXK7cDw+KCBd3V3TddYOZAnPw root@archlinux-packer (DSA)
-256 SHA256:CHg9VczcKVRyINPb6jEp8HYqW8DeNRrYUU76A1ym5TE root@archlinux-packer (ECDSA)
-256 SHA256:gjgByh4lZngPUliTZlAkubaxL54Lm1u39tCBLoXmBhw root@archlinux-packer (ED25519)
-3072 SHA256:0KG6AnD9kgNjxQf3i7bDlIfCDEEZexVwQ/nP5+Mn/so root@archlinux-packer (RSA)
-
-1024 MD5:c5:0b:43:3c:38:5b:30:58:b8:d8:4a:69:56:1d:30:59 root@archlinux-packer (DSA)
-256 MD5:56:46:25:b9:ff:ef:4d:19:4c:1b:a1:db:91:12:17:1f root@archlinux-packer (ECDSA)
-256 MD5:49:2a:3f:29:95:13:1b:f1:33:16:50:ff:57:ec:cf:8f root@archlinux-packer (ED25519)
-3072 MD5:15:c3:fc:0b:39:bf:f9:68:7c:cc:31:c5:21:c3:8a:dd root@archlinux-packer (RSA)
-
 # dragon.archlinux.org
 1024 SHA256:B6Toehif0eXoxWA9Z67Vd0KdK1fjdouISxKLqneSCRs root@dragon (DSA)
 256 SHA256:fkrWuKgabvnJhqnFFzHeHffh2FbQVq69a0jlbE/93H8 root@dragon (ECDSA)

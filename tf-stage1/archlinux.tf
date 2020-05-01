@@ -93,21 +93,6 @@ resource "hcloud_server" "matrix" {
   }
 }
 
-resource "hcloud_rdns" "ciprototype" {
-  server_id  = hcloud_server.ciprototype.id
-  ip_address = hcloud_server.ciprototype.ipv4_address
-  dns_ptr    = "ciprototype.archlinux.org"
-}
-
-resource "hcloud_server" "ciprototype" {
-  name        = "ciprototype.archlinux.org"
-  image       = data.hcloud_image.archlinux.id
-  server_type = "cx21"
-  lifecycle {
-    ignore_changes = [image]
-  }
-}
-
 resource "hcloud_rdns" "acccounts" {
   server_id  = hcloud_server.accounts.id
   ip_address = hcloud_server.accounts.ipv4_address
