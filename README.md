@@ -212,7 +212,7 @@ The following steps should be used to update our managed servers:
 
 #### Services:
   - ~/user/ webhost
-  
+
 ### accounts.archlinux.org
 
 This server is /special/. It runs keycloak and is central to our unified Arch Linux account management world.
@@ -240,8 +240,9 @@ So to set up this server from scratch, run:
 ## reproducible.archlinux.org
 
 ### Services
-  - Runs a master rebuilderd instance with two PIA workers (repro1.pkgbuild.com
-    and repro2.pkgbuild.com).
+  - Runs a master rebuilderd instance with two PIA workers (repro1.pkgbuild.com,
+    repro2.pkgbuild.com and repro3.pkgbuild.com).
+    repro3.pkgbuild.com is packet.net machine which runs Ubuntu.
 
 ## Ansible repo workflows
 
