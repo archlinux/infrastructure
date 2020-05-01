@@ -221,8 +221,11 @@ The reason for doing it this way is that Terraform support for Keycloak is much 
 
 So to set up this server from scratch, run:
 
-  - `terraform apply tf-first-stage`
-  - `terraform apply tf-second-stage`
+  - `cd tf-stage1`
+  - `terraform apply`
+  - `cd ../tf-stage2`
+  - `terraform import keycloak_realm.master master`
+  - `terraform apply`
 
 #### Services:
   - keycloak
