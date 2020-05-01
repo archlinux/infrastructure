@@ -31,13 +31,15 @@ server {
     location /.all/ {
         # XXX: This regex is reused for /repos/ below! Change both if you change this!
         location ~ ^/.all/(?<filename>(?<pkgname>(?<pkgname_first_char>[^/])[^/]*)-(?<pkgver>[^-/]+)-(?<pkgrel>[0-9.]+)-(?<arch>[^-/]+)\.pkg\.tar(|\.(gz|bz2|xz|zst|lrz|lzo|Z|lz4|lz))(?<sig>\.sig)?)$ {
-            rewrite ^ /packages/$pkgname_first_char/$pkgname/$filename;
+            # https://stackoverflow.com/questions/22512112/nginx-rewrite-proxy-if-file-not-exists
+            try_files $uri @archive1;
         }
     }
 
     # XXX: This regex is the same as for .all above. Change both if you change this!
     location ~ ^/(?:repos/\d+/.*|packages/.*)/(?<filename>(?<pkgname>(?<pkgname_first_char>[^/])[^/]*)-(?<pkgver>[^-/]+)-(?<pkgrel>[0-9.]+)-(?<arch>[^-/]+)\.pkg\.tar(|\.(gz|bz2|xz|zst|lrz|lzo|Z|lz4|lz))(?<sig>\.sig)?)$ {
-        rewrite ^ /archive.org/archlinux_pkg_$pkgname/$filename last;
+        # https://stackoverflow.com/questions/22512112/nginx-rewrite-proxy-if-file-not-exists
+        try_files $uri @archive2;
     }
     # archive.org download URLs look like:
     # https://archive.org/download/archlinux_pkg_lucene__/lucene++-1.4.2-3-i686.pkg.tar.xz
@@ -52,6 +54,14 @@ server {
         rewrite ^/archive\.org/([^\+]*)\+(.*)/(.*)$ /archive.org/$1_$2/$3;
         # Once there are no more @.+ in the identifier part, redirect to archive.org
         rewrite ^/archive\.org/([^@\+\.]*/.*)$ https://archive.org/download/$1 redirect;
+    }
+
+    location @archive1 {
+        rewrite ^ /packages/$pkgname_first_char/$pkgname/$filename;
+    }
+
+    location @archive2 {
+        rewrite ^ /archive.org/archlinux_pkg_$pkgname/$filename last;
     }
 
     autoindex on;
