@@ -9,7 +9,7 @@
     - restart keycloak
 
 - name: create an admin user
-  command: /opt/keycloak/bin/add-user-keycloak.sh -u "{{ vault_keycloak_admin_user }}" -p "{{ vault_keycloak_admin_password }}"
+  command: /opt/keycloak/bin/add-user-keycloak.sh -r master -u "{{ vault_keycloak_admin_user }}" -p "{{ vault_keycloak_admin_password }}"
   args:
     creates: /opt/keycloak/standalone/configuration/keycloak-add-user.json
 

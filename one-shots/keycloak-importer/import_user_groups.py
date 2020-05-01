@@ -20,9 +20,9 @@ CLIENT_ID = "admin-cli"
 KEYCLOAK_ADMIN_USERNAME = os.environ["KEYCLOAK_ADMIN_USERNAME"]
 KEYCLOAK_ADMIN_PASSWORD = os.environ["KEYCLOAK_ADMIN_PASSWORD"]
 KEYCLOAK_URL = "https://accounts.archlinux.org/auth"
-KEYCLOAK_REALM = "master"
+KEYCLOAK_REALM = "archlinux"
 
-REALM_URL = f"{KEYCLOAK_URL}/realms/{KEYCLOAK_REALM}"
+REALM_URL = f"{KEYCLOAK_URL}/realms/master"
 FETCH_TOKEN_URL = f"{REALM_URL}/protocol/openid-connect/token"
 API_BASE_URL = f"{KEYCLOAK_URL}/admin/realms/{KEYCLOAK_REALM}"
 

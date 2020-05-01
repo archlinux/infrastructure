@@ -34,4 +34,8 @@ server {
         proxy_set_header Host $host;
         proxy_ssl_verify       off;
     }
+
+    location = / {
+        return 301 https://$server_name/auth/;
+    }
 }

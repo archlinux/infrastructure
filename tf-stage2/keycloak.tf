@@ -34,8 +34,8 @@ variable "gitlab_instance" {
   }
 }
 
-resource "keycloak_realm" "master" {
-  realm = "master"
+resource "keycloak_realm" "archlinux" {
+  realm = "archlinux"
   enabled = true
   remember_me = true
   display_name = "Arch Linux"
@@ -59,7 +59,7 @@ resource "keycloak_realm" "master" {
 }
 
 resource "keycloak_saml_client" "saml_gitlab" {
-  realm_id = "master" // "${keycloak_realm.realm.id}"
+  realm_id = "archlinux" // "${keycloak_realm.realm.id}"
   client_id = "saml_gitlab"
 
   name = "Arch Linux Accounts"
@@ -84,7 +84,7 @@ resource "keycloak_saml_client" "saml_gitlab" {
 
 
 resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_email" {
-  realm_id = "master"
+  realm_id = "archlinux"
   client_id = keycloak_saml_client.saml_gitlab.id
 
   name = "email"
@@ -96,7 +96,7 @@ resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_email" {
 
 
 resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_name" {
-  realm_id = "master"
+  realm_id = "archlinux"
   client_id = keycloak_saml_client.saml_gitlab.id
 
   name = "name"
@@ -108,7 +108,7 @@ resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_name" {
 
 
 resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_first_name" {
-  realm_id = "master"
+  realm_id = "archlinux"
   client_id = keycloak_saml_client.saml_gitlab.id
 
   name = "first_name"
@@ -120,7 +120,7 @@ resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_first_name" 
 
 
 resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_last_name" {
-  realm_id = "master"
+  realm_id = "archlinux"
   client_id = keycloak_saml_client.saml_gitlab.id
 
   name = "last_name"
@@ -138,18 +138,18 @@ variable "arch_groups" {
 resource "keycloak_group" "arch_groups" {
   for_each = var.arch_groups
 
-  realm_id = "master"
+  realm_id = "archlinux"
   name = each.value
 }
 
 resource "keycloak_role" "devops" {
-  realm_id = "master"
+  realm_id = "archlinux"
   name = "DevOps"
   description = "DevOps role"
 }
 
 resource "keycloak_group_roles" "group_roles" {
-  realm_id = "master"
+  realm_id = "archlinux"
   group_id = keycloak_group.arch_groups["DevOps"].id
   role_ids = [
     keycloak_role.devops.id
@@ -161,7 +161,7 @@ output "gitlab_saml_configuration" {
     issuer = keycloak_saml_client.saml_gitlab.client_id
     assertion_consumer_service_url = var.gitlab_instance.saml_redirect_url
     admin_groups = [keycloak_role.devops.name]
-    idp_sso_target_url = "https://accounts.archlinux.org/auth/realms/master/protocol/saml/clients/${keycloak_saml_client.saml_gitlab.client_id}"
+    idp_sso_target_url = "https://accounts.archlinux.org/auth/realms/archlinux/protocol/saml/clients/${keycloak_saml_client.saml_gitlab.client_id}"
     signing_certificate_fingerprint = keycloak_saml_client.saml_gitlab.signing_certificate
   }
 }
