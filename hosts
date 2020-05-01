@@ -68,7 +68,6 @@ bugs.archlinux.org
 
 [buildservers]
 dragon.archlinux.org
-sgp.mirror.pkgbuild.com
 
 [gitlab_runners]
 runner1.archlinux.org

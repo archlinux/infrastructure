@@ -240,17 +240,6 @@
 256 MD5:7f:a9:c8:d7:af:e4:b4:7f:fa:ba:7f:09:85:b0:13:23 root@archlinux (ED25519)
 2048 MD5:4e:53:05:87:1b:98:8b:d0:6c:af:63:97:94:04:aa:ba root@archlinux (RSA)
 
-# sgp.mirror.pkgbuild.com
-1024 SHA256:QBRQhEogdaNxh5qQ4gcWUVogLHlKl2UgkFeuLKo2Yfg root@archlinux (DSA)
-256 SHA256:L++5VPgYgdIyUxBrDLiMFgk4STac5qK/oy52Z7RI+zk root@archlinux (ECDSA)
-256 SHA256:RzBulK5yTquShynMsGAdobAPbPwBQgD2sLb/XvynoS8 root@archlinux (ED25519)
-2048 SHA256:qWATIVKCQVS8+/lf3u20ov/NjjIcCh0yrSoz1JJIcbY root@archlinux (RSA)
-
-1024 MD5:33:a2:aa:ed:da:9c:78:b2:9d:64:cc:ce:72:39:14:a6 root@archlinux (DSA)
-256 MD5:15:fc:62:4d:8c:3c:1f:d5:b9:4c:15:d5:0e:b8:39:1a root@archlinux (ECDSA)
-256 MD5:25:a6:b4:cb:f6:c5:27:3a:0d:c6:47:1e:2f:d5:72:db root@archlinux (ED25519)
-2048 MD5:4d:09:b7:bc:d0:af:b9:1c:b4:0d:67:88:16:c7:c0:1c root@archlinux (RSA)
-
 # state.archlinux.org
 1024 SHA256:4oNX8CksPEgIzibu+ETa2OVVPBX2pzcvcVUa60NbHiQ root@archlinux-packer (DSA)
 256 SHA256:uR7EDdVrvkZf43eNmumOeu2MeZn4oMB39ad9kHoobkk root@archlinux-packer (ECDSA)

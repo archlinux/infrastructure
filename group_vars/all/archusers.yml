@@ -230,7 +230,6 @@ arch_users:
       - name: foutrelis_buildhost.pub
         hosts:
           - dragon.archlinux.org
-          - sgp.mirror.pkgbuild.com
     groups:
       - dev
       - tu
