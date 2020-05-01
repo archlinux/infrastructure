@@ -24,5 +24,8 @@
 - name: enable and start rebuilderd
   systemd: name=rebuilderd enabled=yes state=started
 
-- name: enable and start rebuilderd timer
+- name: enable and start rebuilderd core timer
   systemd: name=rebuilderd-sync@archlinux-core.timer enabled=yes state=started
+
+- name: enable and start rebuilderd extra timer
+  systemd: name=rebuilderd-sync@archlinux-extra.timer enabled=yes state=started
