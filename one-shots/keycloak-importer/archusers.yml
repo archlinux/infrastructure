@@ -1,0 +1,508 @@
+---
+
+arch_groups:
+  - dev
+  - tu
+  - devops
+  - fellows
+  - multilib
+  - archboxes-sudo
+  - docker-image-sudo
+
+arch_users:
+  # aaron:
+  #   name: "Aaron Griffin"
+  #   ssh_key: aaron.pub
+  #   groups:
+  #     - dev
+  # aginiewicz:
+  #   name: "Andrzej Giniewicz"
+  #   ssh_key: aginiewicz.pub
+  #   groups:
+  #     - tu
+  # ainola:
+  #   name: "Brett Cornwall"
+  #   ssh_key: ainola.pub
+  #   groups:
+  #     - tu
+  # alad:
+  #   name: "Alad Wenter"
+  #   ssh_key: alad.pub
+  #   groups:
+  #     - tu
+  # allan:
+  #   name: "Allan McRae"
+  #   ssh_key: allan.pub
+  #   groups:
+  #     - dev
+  #     - multilib
+  #     - tu
+  # alucryd:
+  #   name: "Maxime Gauduin"
+  #   ssh_key: alucryd.pub
+  #   groups:
+  #     - dev
+  #     - tu
+  #     - multilib
+  # anatolik:
+  #   name: "Anatol Pomozov"
+  #   ssh_key: anatolik.pub
+  #   groups:
+  #     - dev
+  #     - tu
+  #     - multilib
+  # andrea:
+  #   name: "Andrea Scarpino"
+  #   ssh_key: andrea.pub
+  #   groups: []
+  # andrew:
+  #   name: "Andrew Gregory"
+  #   ssh_key: andrew.pub
+  #   groups:
+  #     - dev
+  # andrewsc:
+  #   name: "Andrew Crerar"
+  #   ssh_key: andrewsc.pub
+  #   groups:
+  #     - tu
+  # anthraxx:
+  #   name: "Levente Polyak"
+  #   ssh_key: anthraxx.pub
+  #   shell: /bin/zsh
+  #   groups:
+  #     - dev
+  #     - devops
+  #     - tu
+  #     - multilib
+  # andyrtr:
+  #   name: "Andreas Radke"
+  #   ssh_key: andyrtr.pub
+  #   groups:
+  #     - dev
+  #     - tu
+  # arcanis:
+  #   name: "Evgeniy Alekseev"
+  #   ssh_key: arcanis.pub
+  #   groups:
+  #     - tu
+  # archange:
+  #   name: "Bruno Pagani"
+  #   ssh_key: archange.pub
+  #   shell: /bin/zsh
+  #   groups:
+  #     - tu
+  #     - multilib
+  # arodseth:
+  #   name: "Alexander Rødseth"
+  #   ssh_key: arodseth.pub
+  #   groups:
+  #     - tu
+  #     - multilib
+  # arojas:
+  #   name: "Antonio Rojas"
+  #   ssh_key: arojas.pub
+  #   groups:
+  #     - dev
+  #     - tu
+  #     - multilib
+  # aur-notify:
+  #   name: ""
+  #   groups: []
+  # bgyorgy:
+  #   name: "Balló György"
+  #   ssh_key: bgyorgy.pub
+  #   groups:
+  #     - tu
+  # bisson:
+  #   name: "Gaëtan Bisson"
+  #   ssh_key: bisson.pub
+  #   groups:
+  #     - dev
+  #     - tu
+  # bluewind:
+  #   name: "Florian Pritz"
+  #   ssh_key: bluewind.pub
+  #   shell: /bin/zsh
+  #   groups:
+  #     - dev
+  #     - devops
+  #     - tu
+  #     - multilib
+  # bpiotrowski:
+  #   name: "Bartłomiej Piotrowski"
+  #   ssh_key: bpiotrowski.pub
+  #   groups:
+  #     - dev
+  #     - devops
+  #     - tu
+  #     - multilib
+  # cbehan:
+  #   name: "Connor Behan"
+  #   ssh_key: cbehan.pub
+  #   groups:
+  #     - tu
+  # cesura:
+  #   name: "Brad Fanella"
+  #   ssh_key: cesura.pub
+  #   groups:
+  #     - tu
+  # coderobe:
+  #   name: "Robin Broda"
+  #   ssh_key: coderobe.pub
+  #   groups:
+  #     - tu
+  # daurnimator:
+  #   name: "Daurnimator"
+  #   ssh_key: daurnimator.pub
+  #   groups:
+  #     - tu
+  # dbermond:
+  #   name: "Daniel Bermond"
+  #   ssh_key: dbermond.pub
+  #   groups:
+  #     - tu
+  # demize:
+  #   name: "Johannes Löthberg"
+  #   ssh_key: demize.pub
+  #   shell: /bin/zsh
+  #   groups:
+  #     - dev
+  #     - tu
+  #     - multilib
+  # diabonas:
+  #   name: "Jonas Witschel"
+  #   ssh_key: diabonas.pub
+  #   groups:
+  #     - tu
+  # donate:
+  #   name: ""
+  #   groups: []
+  # dreisner:
+  #   name: "Dave Reisner"
+  #   ssh_key: dreisner.pub
+  #   groups:
+  #     - dev
+  #     - multilib
+  #     - tu
+  # dvzrv:
+  #   name: "David Runge"
+  #   ssh_key: dvzrv.pub
+  #   groups:
+  #     - dev
+  #     - multilib
+  #     - tu
+  # eschwartz:
+  #   name: "Eli Schwartz"
+  #   ssh_key: eschwartz.pub
+  #   groups:
+  #     - tu
+  #     - multilib
+  # escondida:
+  #   name: "Ivy Foster"
+  #   ssh_key: escondida.pub
+  #   groups:
+  #     - tu
+  # eworm:
+  #   name: "Christian Hesse"
+  #   ssh_key: eworm.pub
+  #   shell: /bin/zsh
+  #   groups:
+  #     - dev
+  #     - tu
+  #     - multilib
+  # farseerfc:
+  #   name: "Jiachen Yang"
+  #   ssh_key: farseerfc.pub
+  #   groups:
+  #     - tu
+  # felixonmars:
+  #   name: "Felix Yan"
+  #   ssh_key: felixonmars.pub
+  #   groups:
+  #     - dev
+  #     - tu
+  #     - multilib
+  # ffy00:
+  #   name: "Filipe Laíns"
+  #   ssh_key: ffy00.pub
+  #   shell: /bin/bash
+  #   groups:
+  #     - tu
+  # foutrelis:
+  #   name: "Evangelos Foutras"
+  #   ssh_key: foutrelis.pub
+  #   additional_ssh_keys:
+  #     - name: foutrelis_buildhost.pub
+  #       hosts:
+  #         - dragon.archlinux.org
+  #         - sgp.mirror.pkgbuild.com
+  #   groups:
+  #     - dev
+  #     - devops
+  #     - tu
+  #     - multilib
+  # foxboron:
+  #   name: "Morten Linderud"
+  #   ssh_key: foxboron.pub
+  #   groups:
+  #     - tu
+  # foxxx0:
+  #   name: "Thore Bödecker"
+  #   ssh_key: foxxx0.pub
+  #   shell: /bin/zsh
+  #   groups:
+  #      - tu
+  # fukawi2:
+  #   name: "Phillip Smith"
+  #   ssh_key: fukawi2.pub
+  #   groups:
+  #     - devops
+  # giovanni:
+  #   name: ""
+  #   ssh_key: giovanni.pub
+  #   groups:
+  #     - dev
+  #     - multilib
+  # gitlab:
+  #   name: ""
+  #   groups: []
+  # grazzolini:
+  #   name: "Giancarlo Razzolini"
+  #   ssh_key: grazzolini.pub
+  #   groups:
+  #     - dev
+  #     - devops
+  #     - multilib
+  #     - tu
+  # heftig:
+  #   name: "Jan Steffens"
+  #   ssh_key: heftig.pub
+  #   additional_ssh_keys:
+  #     - name: heftig_work.pub
+  #       hosts:
+  #         - dragon.archlinux.org
+  #     - name: heftig_dragon.pub
+  #       hosts:
+  #         - homedir.archlinux.org
+  #   groups:
+  #     - dev
+  #     - devops
+  #     - tu
+  #     - multilib
+  # idevolder:
+  #   name: "Ike Devolder"
+  #   ssh_key: idevolder.pub
+  #   groups:
+  #     - tu
+  jelle:
+    name: "Jelle van der Waa"
+    ssh_key: jelle.pub
+    groups:
+      - dev
+      - devops
+      - tu
+      - multilib
+  # jgc:
+  #   name: "Jan de Groot"
+  #   ssh_key: jgc.pub
+  #   groups:
+  #     - dev
+  #     - multilib
+  #     - tu
+  # jleclanche:
+  #   name: "Jerome Leclanche"
+  #   ssh_key: jleclanche.pub
+  #   shell: /bin/zsh
+  #   groups:
+  #     - tu
+  # jlichtblau:
+  #   name: "Jaroslav Lichtblau"
+  #   ssh_key: jlichtblau.pub
+  #   groups:
+  #     - tu
+  # jouke:
+  #   name: "Jouke Witteveen"
+  #   ssh_key: jouke.pub
+  #   groups:
+  #     - ""
+  # jsteel:
+  #   name: "Jonathan Steel"
+  #   ssh_key: jsteel.pub
+  #   groups:
+  #     - tu
+  # juergen:
+  #   name: "Jürgen Hötzel"
+  #   ssh_key: juergen.pub
+  #   groups:
+  #     - dev
+  #     - multilib
+  #     - tu
+  # kgizdov:
+  #   name: "Konstantin Gizdov"
+  #   ssh_key: kgizdov.pub
+  #   groups:
+  #     - tu
+  # kkeen:
+  #   name: "Kyle Keen"
+  #   ssh_key: kkeen.pub
+  #   groups:
+  #     - tu
+  #     - multilib
+  # lcarlier:
+  #   name: "Laurent Carlier"
+  #   ssh_key: lcarlier.pub
+  #   groups:
+  #     - dev
+  #     - tu
+  #     - multilib
+  # lfleischer:
+  #   name: "Lukas Fleischer"
+  #   ssh_key: lfleischer.pub
+  #   shell: /bin/zsh
+  #   groups:
+  #     - dev
+  #     - tu
+  #     - multilib
+  # maximbaz:
+  #   name: "Maxim Baz"
+  #   ssh_key: maximbaz.pub
+  #   groups:
+  #     - tu
+  # mtorromeo:
+  #   name: "Massimiliano Torromeo"
+  #   ssh_key: mtorromeo.pub
+  #   groups:
+  #     - tu
+  # muflone:
+  #   name: "Fabio Castelli"
+  #   ssh_key: muflone.pub
+  #   groups:
+  #     - tu
+  # nicohood:
+  #   name: "NicoHood"
+  #   ssh_key: nicohood.pub
+  #   groups:
+  #     - tu
+  # pierre:
+  #   name: "Pierre Schmitz"
+  #   ssh_key: pierre.pub
+  #   groups:
+  #     - dev
+  #     - multilib
+  #     - tu
+  # polyzen:
+  #   name: "Daniel M. Capella"
+  #   ssh_key: polyzen.pub
+  #   groups:
+  #     - tu
+  # remy:
+  #   name: "Rémy Oudompheng"
+  #   ssh_key: remy.pub
+  #   groups:
+  #     - dev
+  #     - tu
+  # ronald:
+  #   name: "Ronald van Haren"
+  #   ssh_key: ronald.pub
+  #   groups:
+  #     - dev
+  #     - tu
+  # sangy:
+  #   name: "Santiago Torres-Arias"
+  #   ssh_key: sangy.pub
+  #   groups:
+  #     - tu
+  #     - docker-image-sudo
+  # schiv:
+  #   name: "Ray Rashif"
+  #   ssh_key: schiv.pub
+  #   groups:
+  #     - dev
+  #     - tu
+  #     - multilib
+  # schuay:
+  #   name: "Jakob Gruber"
+  #   ssh_key: schuay.pub
+  #   groups:
+  #     - tu
+  #     - multilib
+  # scimmia:
+  #   name: "Doug Newgard"
+  #   ssh_key: scimmia.pub
+  #   groups: []
+  # morganamilo:
+  #   name: "Morgan Adamiec"
+  #   ssh_key: morganamilo.pub
+  #   groups: []
+  # seblu:
+  #   name: "Sébastien Luttringer"
+  #   ssh_key: seblu.pub
+  #   shell: /bin/zsh
+  #   groups:
+  #     - dev
+  #     - tu
+  #     - multilib
+  # shibumi:
+  #   name: "Christian Rebischke"
+  #   ssh_key: shibumi.pub
+  #   shell: /bin/zsh
+  #   groups:
+  #     - tu
+  #     - archboxes-sudo
+  # kpcyrd:
+  #   name: "Kpcyrd"
+  #   ssh_key: kpcyrd.pub
+  #   groups:
+  #     - tu
+  # spupykin:
+  #   name: "Sergej Pupykin"
+  #   ssh_key: spupykin.pub
+  #   groups:
+  #     - tu
+  #     - multilib
+  # svenstaro:
+  #   name: "Sven-Hendrik Haase"
+  #   ssh_key: svenstaro.pub
+  #   groups:
+  #     - dev
+  #     - devops
+  #     - tu
+  #     - multilib
+  # tensor5:
+  #   name: "Nicola Squartini"
+  #   ssh_key: tensor5.pub
+  #   groups:
+  #     - tu
+  # thomas:
+  #   name: "Thomas Bächler"
+  #   ssh_key: thomas.pub
+  #   groups:
+  #     - dev
+  #     - multilib
+  # tpowa:
+  #   name: "Tobias Powalowski"
+  #   ssh_key: tpowa.pub
+  #   groups:
+  #     - dev
+  #     - multilib
+  #     - tu
+  # wild:
+  #   name: "Dan Printzell"
+  #   ssh_key: wild.pub
+  #   groups:
+  #     - tu
+  # xyne:
+  #   name: "Xyne"
+  #   ssh_key: xyne.pub
+  #   groups:
+  #     - tu
+  # yan12125:
+  #   name: "Chih-Hsuan Yen"
+  #   ssh_key: yan12125.pub
+  #   groups:
+  #     - tu
+  # zorun:
+  #   name: "Baptiste Jonglez"
+  #   ssh_key: zorun.pub
+  #   groups:
+  #     - tu

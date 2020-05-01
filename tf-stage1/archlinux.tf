@@ -1,10 +1,11 @@
 terraform {
   backend "pg" {
+    schema_name = "terraform_remote_state_stage1"
   }
 }
 
 data "external" "hetzner_cloud_api_key" {
-  program = ["${path.module}/misc/get_key.py", "misc/vault_hetzner.yml", "hetzner_cloud_api_key", "json"]
+  program = ["${path.module}/../misc/get_key.py", "misc/vault_hetzner.yml", "hetzner_cloud_api_key", "json"]
 }
 
 data "hcloud_image" "archlinux" {
@@ -71,7 +72,7 @@ resource "hcloud_rdns" "gitlab" {
 resource "hcloud_server" "gitlab" {
   name        = "gitlab.archlinux.org"
   image       = data.hcloud_image.archlinux.id
-  server_type = "cx21"
+  server_type = "cx31"
   lifecycle {
     ignore_changes = [image]
   }
@@ -117,6 +118,10 @@ resource "hcloud_server" "accounts" {
   name        = "accounts.archlinux.org"
   image       = data.hcloud_image.archlinux.id
   server_type = "cx11"
+  provisioner "local-exec" {
+    working_dir = ".."
+    command = "ansible-playbook --ssh-extra-args '-o StrictHostKeyChecking=no' playbooks/accounts.archlinux.org.yml"
+  }
   lifecycle {
     ignore_changes = [image]
   }
@@ -181,6 +186,36 @@ resource "hcloud_rdns" "aur-dev" {
 
 resource "hcloud_server" "aur-dev" {
   name        = "aur-dev.archlinux.org"
+  image       = data.hcloud_image.archlinux.id
+  server_type = "cx11"
+  lifecycle {
+    ignore_changes = [image]
+  }
+}
+
+resource "hcloud_rdns" "mailman3" {
+  server_id  = hcloud_server.mailman3.id
+  ip_address = hcloud_server.mailman3.ipv4_address
+  dns_ptr    = "mailman3.archlinux.org"
+}
+
+resource "hcloud_server" "mailman3" {
+  name        = "mailman3.archlinux.org"
+  image       = data.hcloud_image.archlinux.id
+  server_type = "cx11"
+  lifecycle {
+    ignore_changes = [image]
+  }
+}
+
+resource "hcloud_rdns" "reproducible" {
+  server_id  = hcloud_server.reproducible.id
+  ip_address = hcloud_server.reproducible.ipv4_address
+  dns_ptr    = "reproducible.archlinux.org"
+}
+
+resource "hcloud_server" "reproducible" {
+  name        = "reproducible.archlinux.org"
   image       = data.hcloud_image.archlinux.id
   server_type = "cx11"
   lifecycle {
