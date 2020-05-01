@@ -10,6 +10,7 @@
     owner: archive
     group: archive
     mode: 0755
+  when: not archive_nginx_only
 
 - name: setup archive configuration
   template:
@@ -18,12 +19,15 @@
     owner: root
     group: root
     mode: 0644
+  when: not archive_nginx_only
 
 - name: setup archive timer
   systemd: name=archive.timer enabled=yes state=started
+  when: not archive_nginx_only
 
 - name: setup archive-hardlink timer
   systemd: name=archive-hardlink.timer enabled=yes state=started
+  when: not archive_nginx_only
 
 - name: set up nginx
   template:
@@ -46,19 +50,23 @@
 
 - name: install internet archive packages
   pacman: name=python-internetarchive state=present
+  when: not archive_nginx_only
 
 - name: create archive user
   user: name={{ archive_user_name }} shell=/bin/false home="{{ archive_user_home }}" createhome=yes
+  when: not archive_nginx_only
 
 - name: configure archive.org client
   command: ia configure --username={{ vault_archive_username }} --password={{ vault_archive_password }} creates={{ archive_user_home }}/.config/ia.ini
   become: yes
   become_user: "{{ archive_user_name }}"
+  when: not archive_nginx_only
 
 - name: clone archive uploader code
   git: repo=https://github.com/archlinux/arch-historical-archive.git dest="{{ archive_repo }}" version="{{ archive_uploader_version }}"
   become: yes
   become_user: "{{ archive_user_name }}"
+  when: not archive_nginx_only
 
 - name: install system service
   template: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
@@ -67,6 +75,8 @@
     - archive-uploader.timer
   notify:
     - daemon reload
+  when: not archive_nginx_only
 
 - name: start uploader timer
   service: name=archive-uploader.timer state=started enabled=yes
+  when: not archive_nginx_only
