@@ -12,9 +12,20 @@
         command: "/usr/local/bin/borg key export :: /dev/stdout"
         register: borg_key
 
+      - name: fetch borg offsite key
+        command: "/usr/local/bin/borg-offsite key export :: /dev/stdout"
+        register: borg_offsite_key
+
       - name: save borg key
         shell: gpg --batch --armor --encrypt --output - >"{{playbook_dir}}/../../borg-keys/{{inventory_hostname}}.gpg" {% for userid in root_gpgkeys %}--recipient {{userid}} {% endfor %}
         args:
             stdin: "{{borg_key.stdout}}"
+            chdir: "{{playbook_dir}}/../.."
+        delegate_to: localhost
+
+      - name: save borg offsite key
+        shell: gpg --batch --armor --encrypt --output - >"{{playbook_dir}}/../../borg-keys/{{inventory_hostname}}-offsite.gpg" {% for userid in root_gpgkeys %}--recipient {{userid}} {% endfor %}
+        args:
+            stdin: "{{borg_offsite_key.stdout}}"
             chdir: "{{playbook_dir}}/../.."
         delegate_to: localhost
