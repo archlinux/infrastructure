@@ -1,13 +1,13 @@
 # accounts.archlinux.org
-1024 SHA256:wKsZHC2Gc1I2NqloqGGZG9VJi8AD6QvMRzTN8UxRWZg root@archlinux-packer (DSA)
-256 SHA256:agqAqFncYFxrKtHeT4GOzKOdBQ72vutVoi44B+shAPQ root@archlinux-packer (ECDSA)
-256 SHA256:nId6jHW1cWQE4JZolGDGoy8miQV0I9NcmsXwC/WrfeA root@archlinux-packer (ED25519)
-3072 SHA256:H+QddiCCMbVlYeTK0plKwLNw4djtcVfAprHi+S6Soqs root@archlinux-packer (RSA)
+1024 SHA256:ZyPiw22zz8BkrqOdyjdWxacrRyWEU+XAC8Zv40LPTwQ root@archlinux-packer (DSA)
+256 SHA256:cZIrrAmh0eWRWbH+dKhMa368QgAOcNN8a/9akqmzk1o root@archlinux-packer (ECDSA)
+256 SHA256:vIGpFyvl9XvHn21j952inWYCKoxD4VvuLChD9JgnsrM root@archlinux-packer (ED25519)
+3072 SHA256:Qrzu96bHlG/72Cm38bxKns9EWw06GVEcm3GjpjT2ViQ root@archlinux-packer (RSA)
 
-1024 MD5:0a:0b:40:08:21:57:1a:60:ea:9c:d2:6e:26:fe:f1:5a root@archlinux-packer (DSA)
-256 MD5:86:be:86:50:8c:11:43:de:07:89:f3:c5:c2:ae:e4:3d root@archlinux-packer (ECDSA)
-256 MD5:07:73:26:f4:27:f2:c1:90:8d:13:f5:d1:95:51:83:50 root@archlinux-packer (ED25519)
-3072 MD5:1b:10:0b:4c:b2:64:0c:fb:45:df:58:f6:cc:f9:fe:b6 root@archlinux-packer (RSA)
+1024 MD5:2d:1b:56:f8:83:a7:c3:a0:0c:16:4d:ff:02:25:d8:2a root@archlinux-packer (DSA)
+256 MD5:72:01:5a:4a:a8:e9:36:8e:55:ee:16:d7:63:91:09:8d root@archlinux-packer (ECDSA)
+256 MD5:e7:c7:62:0a:d1:b7:24:62:08:15:73:18:9c:9e:5e:a7 root@archlinux-packer (ED25519)
+3072 MD5:9b:04:00:69:a4:f2:62:c3:80:8e:a8:b1:80:ad:a7:9d root@archlinux-packer (RSA)
 
 # apollo.archlinux.org
 1024 SHA256:WArxFzvhf5HknYxil2EQSHHRirM2cyjqbtLvhbQAYC8 root@apollo (DSA)
@@ -217,6 +217,17 @@
 256 MD5:d0:48:7c:9b:2c:6c:29:f4:aa:2c:f7:e8:2d:ff:66:4f root@archlinux (ECDSA)
 256 MD5:be:ca:42:e7:aa:ed:7b:20:ea:0c:c0:05:0d:07:13:fa root@archlinux (ED25519)
 2048 MD5:4a:d4:7b:c7:78:7b:90:33:45:5a:99:1a:8d:15:32:8d root@archlinux (RSA)
+
+# reproducible.archlinux.org
+1024 SHA256:3HoA8rGGureKWKaIZst+Dc6f7yrf3Wfn5PO1HFMl35E root@archlinux-packer (DSA)
+256 SHA256:Yp3GHPq6GZZWUBv13XPiXciAbDFPH4XnEVHzR3/whUw root@archlinux-packer (ECDSA)
+256 SHA256:iaHMiY0e78zB87AKbPPgy5qa6yquDY7iHWhB2TFxISg root@archlinux-packer (ED25519)
+3072 SHA256:PJdfY4CN2PwjwfS3OKHDUsadw6tE34dijV41j6vun5A root@archlinux-packer (RSA)
+
+1024 MD5:85:6b:97:a1:62:5f:a0:f2:c4:20:44:ba:e8:fe:0b:25 root@archlinux-packer (DSA)
+256 MD5:a5:9a:16:cc:8b:eb:c4:70:b1:86:17:9b:a8:46:e7:4b root@archlinux-packer (ECDSA)
+256 MD5:1c:37:46:02:c8:ea:3a:dd:5e:41:66:05:5e:18:27:6a root@archlinux-packer (ED25519)
+3072 MD5:42:0a:57:89:2a:ae:e6:c5:c1:ae:6a:a2:bd:3d:5f:dc root@archlinux-packer (RSA)
 
 # runner1.archlinux.org
 1024 SHA256:v11IkBs2iNsgfaOOXoY4Yzk+UZohGS8RzApHmKKA6tM root@archlinux (DSA)
