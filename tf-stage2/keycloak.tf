@@ -99,7 +99,6 @@ resource "keycloak_openid_client" "openid_gitlab" {
   ]
 }
 
-
 resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_email" {
   realm_id = "archlinux"
   client_id = keycloak_saml_client.saml_gitlab.id
@@ -110,7 +109,6 @@ resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_email" {
   saml_attribute_name = "email"
   saml_attribute_name_format = "Basic"
 }
-
 
 resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_first_name" {
   realm_id = "archlinux"
@@ -123,7 +121,6 @@ resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_first_name" 
   saml_attribute_name_format = "Basic"
 }
 
-
 resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_last_name" {
   realm_id = "archlinux"
   client_id = keycloak_saml_client.saml_gitlab.id
@@ -131,7 +128,18 @@ resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_last_name" {
   name = "last_name"
   user_property = "LastName"
   friendly_name = "Last Name"
-  saml_attribute_name = "last_name" // maybe just name
+  saml_attribute_name = "last_name"
+  saml_attribute_name_format = "Basic"
+}
+
+resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_username" {
+  realm_id = "archlinux"
+  client_id = keycloak_saml_client.saml_gitlab.id
+
+  name = "username"
+  user_property = "Username"
+  friendly_name = "Username"
+  saml_attribute_name = "username"
   saml_attribute_name_format = "Basic"
 }
 
