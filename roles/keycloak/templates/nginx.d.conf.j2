@@ -36,6 +36,6 @@ server {
     }
 
     location = / {
-        return 301 https://$server_name/auth/;
+        return 301 https://$server_name/auth/realms/archlinux/account;
     }
 }

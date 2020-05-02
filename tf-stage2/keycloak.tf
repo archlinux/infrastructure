@@ -42,6 +42,7 @@ resource "keycloak_realm" "archlinux" {
 
   reset_password_allowed = true
   verify_email = true
+  login_with_email_allowed = true
 
   smtp_server {
     host = "mail.archlinux.org"
@@ -80,6 +81,22 @@ resource "keycloak_saml_client" "saml_gitlab" {
   idp_initiated_sso_url_name = "saml_gitlab"
 
   assertion_consumer_post_url = var.gitlab_instance.saml_redirect_url
+}
+
+// This client is only used for the return URL redirect hack!
+// See roles/gitlab/tasks/main.yml
+resource "keycloak_openid_client" "openid_gitlab" {
+  realm_id = "archlinux"
+  client_id = "openid_gitlab"
+
+  name = "Arch Linux Accounts"
+  enabled = true
+
+  access_type = "PUBLIC"
+  standard_flow_enabled = true
+  valid_redirect_uris = [
+    "https://gitlab.archlinux.org"
+  ]
 }
 
 

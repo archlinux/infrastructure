@@ -22,7 +22,7 @@
       # 1. In order to figure out what needs to go into 'idp_cert_fingerprint', run
       # one-shots/keycloak-keyfetcher/get_fingerprint.sh and copy the resulting SHA1 fingerprint into that field.
       # 2. In order to logout properly we need to configure the "After sign out path" and set it to
-      # https://accounts.archlinux.org/auth/realms/master/protocol/openid-connect/logout?redirect_uri=https%3A//gitlab.archlinux.org
+      # https://accounts.archlinux.org/auth/realms/archlinux/protocol/openid-connect/logout?redirect_uri=https%3A//gitlab.archlinux.org
       # https://gitlab.com/gitlab-org/gitlab/issues/14414
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'https://{{ gitlab_domain }}'
@@ -30,6 +30,7 @@
         letsencrypt['contact_emails'] = ['webmaster@archlinux.org']
         gitlab_rails['lfs_enabled'] = true
         gitlab_rails['gitlab_shell_ssh_port'] = 222
+        gitlab_rails['gitlab_default_can_create_group'] = false
         gitlab_rails['initial_root_password'] = "{{ vault_gitlab_root_password }}"
         gitlab_rails['smtp_enable'] = true
         gitlab_rails['smtp_address'] = 'mail.archlinux.org'
@@ -54,9 +55,9 @@
             admin_groups: ['DevOps'],
             args: {
               assertion_consumer_service_url: 'https://gitlab.archlinux.org/users/auth/saml/callback',
-              idp_cert_fingerprint: '83:AB:61:8E:8C:8A:78:F6:D9:A6:8E:25:6F:DA:04:4D:77:0E:CD:B2',
-              idp_sso_target_url: 'https://accounts.archlinux.org/auth/realms/master/protocol/saml/clients/saml_gitlab',
-              idp_slo_target_url: 'https://accounts.archlinux.org/auth/realms/master/protocol/saml',
+              idp_cert_fingerprint: '75:43:93:1D:7A:F3:B6:16:51:FA:90:3C:E6:46:93:EA:DF:B6:28:8B',
+              idp_sso_target_url: 'https://accounts.archlinux.org/auth/realms/archlinux/protocol/saml/clients/saml_gitlab',
+              idp_slo_target_url: 'https://accounts.archlinux.org/auth/realms/archlinux/protocol/saml',
               issuer: 'saml_gitlab',
               attribute_statements: {
                 first_name: ['first_name'],
