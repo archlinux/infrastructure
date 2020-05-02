@@ -200,17 +200,17 @@ The following steps should be used to update our managed servers:
 
 ### state.archlinux.org
 
-#### Services:
+#### Services
   - postgres server for terraform state
 
 ### quassel.archlinux.org
 
-#### Services:
+#### Services
   - quassel core
 
 ### homedir.archlinux.org
 
-#### Services:
+#### Services
   - ~/user/ webhost
 
 ### accounts.archlinux.org
@@ -227,7 +227,7 @@ So to set up this server from scratch, run:
   - `terraform import keycloak_realm.master master`
   - `terraform apply`
 
-#### Services:
+#### Services
   - keycloak
 
 ### mirror.pkgbuild.com
@@ -243,6 +243,20 @@ So to set up this server from scratch, run:
   - Runs a master rebuilderd instance with two PIA workers (repro1.pkgbuild.com,
     repro2.pkgbuild.com and repro3.pkgbuild.com).
     repro3.pkgbuild.com is packet.net machine which runs Ubuntu.
+
+### runner1.archlinux.org
+
+Slow-ish PIA box with spinning disks.
+
+#### Services
+  - GitLab runner
+
+### runner2.archlinux.org
+
+Medium-fast-ish packet.net box with Debian on it. Is currently maintained manually.
+
+#### Services
+  - GitLab runner
 
 ## Ansible repo workflows
 
