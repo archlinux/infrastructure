@@ -112,18 +112,6 @@ resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_email" {
 }
 
 
-resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_name" {
-  realm_id = "archlinux"
-  client_id = keycloak_saml_client.saml_gitlab.id
-
-  name = "name"
-  user_property = "Username"
-  friendly_name = "Username"
-  saml_attribute_name = "name"
-  saml_attribute_name_format = "Basic"
-}
-
-
 resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_first_name" {
   realm_id = "archlinux"
   client_id = keycloak_saml_client.saml_gitlab.id
