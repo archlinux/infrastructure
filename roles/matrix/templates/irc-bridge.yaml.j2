@@ -3,7 +3,7 @@
 homeserver:
   # The URL to the home server for client-server API calls, also used to form the
   # media URLs as displayed in bridged IRC channels:
-  url: 'https://{{ matrix_domain }}'
+  url: "https://{{ matrix_domain }}"
   #
   # The URL of the homeserver hosting media files. This is only used to transform
   # mxc URIs to http URIs when bridging m.room.[file|image] events. Optional. By
@@ -25,7 +25,7 @@ homeserver:
 
   # The 'domain' part for user IDs on this home server. Usually (but not always)
   # is the "domain name" part of the HS URL.
-  domain: '{{ matrix_server_name }}'
+  domain: "{{ matrix_server_name }}"
 
   # Should presence be enabled for matrix clients on this bridge. If disabled on the
   # homeserver then it should also be disabled here to avoid excess traffic.
@@ -45,13 +45,13 @@ ircService:
   servers:
 {% for address, settings in vault_matrix_secrets[matrix_server_name].irc_networks.items() %}
     # The address of the server to connect to.
-    '{{ address }}':
+    "{{ address }}":
       # A human-readable short name. This is used to label IRC status rooms
       # where matrix users control their connections.
       # E.g. 'ExampleNet IRC Bridge status'.
       # It is also used in the Third Party Lookup API as the instance `desc`
       # property, where each server is an instance.
-      name: '{{ matrix_server_name }}—{{ settings.name }}'
+      name: "{{ matrix_server_name }}—{{ settings.name }}"
 
       additionalAddresses: []
       #
@@ -139,9 +139,9 @@ ircService:
         #      See https://github.com/matrix-org/matrix-appservice-irc/issues/55
         enabled: true
         # The nickname to give the AS bot.
-        nick: '{{ settings.nick }}'
+        nick: "{{ settings.nick }}"
         # The password to give to NickServ or IRC Server for this nick. Optional.
-        password: '{{ settings.password }}'
+        password: "{{ settings.password }}"
         #
         # Join channels even if there are no Matrix users on the other side of
         # the bridge. Set to false to prevent the bot from joining channels which have no
@@ -201,7 +201,7 @@ ircService:
         # $CHANNEL => The IRC channel (e.g. "#python")
         # This MUST have $CHANNEL somewhere in it.
         # Default: '#irc_$SERVER_$CHANNEL'
-        aliasTemplate: '#{{ settings.name }}_$CHANNEL'
+        aliasTemplate: "#{{ settings.name }}_$CHANNEL"
         # A list of user IDs which the AS bot will send invites to in response
         # to a !join. Only applies if joinRule is 'invite'. Default: []
         # whitelist:
@@ -259,9 +259,9 @@ ircService:
         # The matrix room must already exist. Your matrix client should expose
         # the room ID in a "settings" page for the room.
 {% for channel, config in settings.mappings.items() %}
-        '{{ channel }}':
-          roomIds: ['{{ config.room }}']
-          key: '{{ config.key }}'
+        "{{ channel }}":
+          roomIds: ["{{ config.room }}"]
+          key: "{{ config.key }}"
 {% endfor %}
 
       # Configuration for virtual matrix users. The following variables are
@@ -273,7 +273,7 @@ ircService:
         # MUST have $NICK somewhere in it.
         # Optional. Default: "@$SERVER_$NICK".
         # Example: "@irc.example.com_Alice:example.com"
-        userTemplate: '@{{ settings.name }}_$NICK'
+        userTemplate: "@{{ settings.name }}_$NICK"
         # The display name to use for created matrix clients. This should have
         # $NICK somewhere in it if it is specified. Can also use $SERVER to
         # insert the IRC domain.
@@ -294,7 +294,7 @@ ircService:
         # The template to apply to every IRC client nick. This MUST have either
         # $DISPLAY or $USERID or $LOCALPART somewhere in it.
         # Optional. Default: "M-$DISPLAY". Example: "M-Alice".
-        nickTemplate: '$DISPLAY|M'
+        nickTemplate: "$DISPLAY|M"
         # True to allow virtual IRC clients to change their nick on this server
         # by issuing !nick <server> <nick> commands to the IRC AS bot.
         # This is completely freeform: it will NOT follow the nickTemplate.
@@ -351,7 +351,7 @@ ircService:
         # so check before setting this value. Some modes may not work as intended
         # through the bridge e.g. caller ID as there is no way to /ACCEPT.
         # Default: "" (no user modes)
-        userModes: '{{ settings.user_modes }}'
+        userModes: "{{ settings.user_modes }}"
 
 {% endfor %}
   # Set information about the bridged channel in the room state, so that client's may
@@ -452,7 +452,7 @@ ircService:
   # for storage in the database. Passwords are stored by using the admin room command
   # `!storepass server.name passw0rd. When a connection is made to IRC on behalf of
   # the Matrix user, this password will be sent as the server password (PASS command).
-  passwordEncryptionKeyPath: '/etc/synapse/{{ matrix_server_name }}.ircpass.key'
+  passwordEncryptionKeyPath: "/etc/synapse/{{ matrix_server_name }}.ircpass.key"
 
   # Config for Matrix -> IRC bridging
   matrixHandler:
