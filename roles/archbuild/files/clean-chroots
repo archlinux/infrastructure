@@ -13,6 +13,14 @@ echo "<6>Deleting ${#chroots} chroots"
 
 if btrfs filesystem df . &>/dev/null; then
   remove() {
+    local subvol
+
+    test -d $1
+    find $1 -mindepth 1 -xdev -depth -inum 256 -print0 |
+      while IFS= read -d $'\0' -r subvol; do
+        remove $subvol
+      done
+
     btrfs sub del -- $1 &>/dev/null
   }
 else
@@ -41,3 +49,5 @@ done
 
 df -HT .
 exit $ret
+
+# vim:set sw=2 et:
