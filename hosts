@@ -71,6 +71,7 @@ dragon.archlinux.org
 
 [gitlab_runners]
 runner1.archlinux.org
+runner2.archlinux.org
 
 [reproduciblebuilds]
 repro1.pkgbuild.com
