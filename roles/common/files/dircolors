@@ -1,6 +1,6 @@
 # Configuration file for dircolors, a utility to help you set the
 # LS_COLORS environment variable used by GNU ls with the --color option.
-# Copyright (C) 1996-2019 Free Software Foundation, Inc.
+# Copyright (C) 1996-2020 Free Software Foundation, Inc.
 # Copying and distribution of this file, with or without modification,
 # are permitted provided the copyright notice and this notice are preserved.
 # The keywords COLOR, OPTIONS, and EIGHTBIT (honored by the
@@ -92,7 +92,6 @@ EXEC 01;32
 .t7z 01;31
 .zip 01;31
 .z 01;31
-.Z 01;31
 .dz 01;31
 .gz 01;31
 .lrz 01;31
@@ -150,6 +149,7 @@ EXEC 01;32
 .m2v 01;35
 .mkv 01;35
 .webm 01;35
+.webp 01;35
 .ogm 01;35
 .mp4 01;35
 .m4v 01;35
@@ -173,8 +173,6 @@ EXEC 01;32
 .cgm 01;35
 .emf 01;35
 # https://wiki.xiph.org/MIME_Types_and_File_Extensions
-.axv 01;35
-.anx 01;35
 .ogv 01;35
 .ogx 01;35
 # audio formats
@@ -191,7 +189,6 @@ EXEC 01;32
 .ra 00;36
 .wav 00;36
 # https://wiki.xiph.org/MIME_Types_and_File_Extensions
-.axa 00;36
 .oga 00;36
 .opus 00;36
 .spx 00;36
