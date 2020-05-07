@@ -87,7 +87,7 @@ resource "hcloud_rdns" "matrix" {
 resource "hcloud_server" "matrix" {
   name        = "matrix.archlinux.org"
   image       = data.hcloud_image.archlinux.id
-  server_type = "cx21"
+  server_type = "cpx31"
   lifecycle {
     ignore_changes = [image]
   }
