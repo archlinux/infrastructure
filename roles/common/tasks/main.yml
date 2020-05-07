@@ -24,8 +24,12 @@
   when: "'hcloud' not in group_names"
 
 - name: start and enable smart
-  service: name=smartd enabled="yes" state="started"
+  service: name=smartd enabled=yes state=started
   when: "'hcloud' not in group_names"
+
+- name: start and enable btrfs scrub timer
+  service: name=btrfs-scrub@-.timer enabled=yes state=started
+  when: filesystem == "btrfs"
 
 - name: install mlocate
   pacman: name=mlocate state=present
