@@ -1,0 +1,9 @@
+image: "archlinux:latest"
+
+before_script:
+  - pacman -Syu --needed --noconfirm ansible-lint
+
+ansible-lint:
+  script:
+    # - ansible-lint playbooks/*
+    - ansible-lint roles/*
