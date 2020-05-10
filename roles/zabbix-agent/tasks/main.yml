@@ -53,27 +53,27 @@
 - name: Set host config in zabbix
   local_action:
     module: zabbix_host
-    server_url: "https://{{zabbix_agent_server}}"
-    login_user: "{{vault_zabbix_admin_user}}"
-    login_password: "{{vault_zabbix_admin_password}}"
-    host_name: "{{inventory_hostname}}"
-    host_groups: "{{zabbix_agent_host_groups}}"
-    visible_name: "{{inventory_hostname}}"
-    link_templates: "{{zabbix_agent_templates}}"
+    server_url: "https://{{ zabbix_agent_server }}"
+    login_user: "{{ vault_zabbix_admin_user }}"
+    login_password: "{{ vault_zabbix_admin_password }}"
+    host_name: "{{ inventory_hostname }}"
+    host_groups: "{{ zabbix_agent_host_groups }}"
+    visible_name: "{{ inventory_hostname }}"
+    link_templates: "{{ zabbix_agent_templates }}"
     status: enabled
     state: present
     inventory_mode: disabled
     interfaces:
       - type: 1
         main: 1
-        useip: "{{zabbix_agent_useip}}"
-        ip: "{{zabbix_agent_ip}}"
-        dns: "{{inventory_hostname}}"
+        useip: "{{ zabbix_agent_useip }}"
+        ip: "{{ zabbix_agent_ip }}"
+        dns: "{{ inventory_hostname }}"
         port: 10050
-    tls_psk_identity: "PSK{{inventory_hostname}}"
+    tls_psk_identity: "PSK{{ inventory_hostname }}"
     tls_accept: 2
     tls_connect: 2
-    tls_psk: "{{zabbix_agent_psk.stdout}}"
+    tls_psk: "{{ zabbix_agent_psk.stdout }}"
 
 - name: install agent config
   template: src=zabbix_agentd.conf dest=/etc/zabbix/zabbix_agentd.conf owner=zabbix-agent group=zabbix-agent mode=600
@@ -85,7 +85,7 @@
   when: zabbix_agent_mysql_user is defined
 
 - name: Install helper scripts
-  copy: src={{item}} dest=/usr/local/bin/{{item}} mode=0755 owner=root group=root
+  copy: src={{ item }} dest=/usr/local/bin/{{ item }} mode=0755 owner=root group=root
   with_items:
     - systemd-units-failed.py
     - mysql-user-stats.pl
