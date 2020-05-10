@@ -5,8 +5,7 @@ before_script:
 
 ansible-lint:
   script:
-    # fix weird ansible bug
-    # https://github.com/trailofbits/algo/issues/1637
+    # Fix weird ansible bug: https://github.com/trailofbits/algo/issues/1637
     # This probably happens due to gitlab-runner mounting the git repo into the container
     - chmod o-w .
     - ansible-lint 
