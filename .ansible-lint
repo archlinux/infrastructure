@@ -1,0 +1,4 @@
+exclude_paths:
+  - misc
+skip_list:
+  - '204'
