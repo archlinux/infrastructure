@@ -2,7 +2,7 @@
 
 - name: set fact for local dns resolver in use
   set_fact:
-    host_has_local_dns_resolver: "{{dns_servers|length == 1 and '127.0.0.1' in dns_servers}}"
+    host_has_local_dns_resolver: "{{ dns_servers|length == 1 and '127.0.0.1' in dns_servers }}"
 
 - name: install inetutils for hostname
   pacman: name=inetutils state=present update_cache=yes
@@ -78,7 +78,7 @@
 - name: configure tcp receive window limits
   sysctl:
     name: net.ipv4.tcp_rmem
-    value: "{{tcp_rmem}}"
+    value: "{{ tcp_rmem }}"
     sysctl_set: yes
     sysctl_file: /etc/sysctl.d/net.conf
   when: tcp_rmem is defined
@@ -86,13 +86,13 @@
 - name: configure tcp send window limits
   sysctl:
     name: net.ipv4.tcp_wmem
-    value: "{{tcp_wmem}}"
+    value: "{{ tcp_wmem }}"
     sysctl_set: yes
     sysctl_file: /etc/sysctl.d/net.conf
   when: tcp_wmem is defined
 
 - name: configure journald
-  template: src={{item}}.j2 dest=/etc/systemd/{{item}} owner=root group=root mode=644
+  template: src={{ item }}.j2 dest=/etc/systemd/{{ item }} owner=root group=root mode=644
   with_items:
     - journald.conf
   notify:
@@ -146,7 +146,7 @@
   file: path=/root/.zsh state=directory owner=root group=root mode=0700
 
 - name: install root shell config
-  copy: src={{item}} dest=/root/.{{item}} owner=root group=root mode=0644
+  copy: src={{ item }} dest=/root/.{{ item }} owner=root group=root mode=0644
   with_items:
     - zshrc
     - dircolors
