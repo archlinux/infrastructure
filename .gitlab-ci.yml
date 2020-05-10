@@ -1,11 +1,20 @@
 image: "archlinux:latest"
 
 before_script:
-  - pacman -Syu --needed --noconfirm ansible-lint
+  - pacman -Syu --needed --noconfirm ansible-lint terraform terraform-provider-keycloak
 
 ansible-lint:
   script:
     # Fix weird ansible bug: https://github.com/trailofbits/algo/issues/1637
     # This probably happens due to gitlab-runner mounting the git repo into the container
     - chmod o-w .
-    - ansible-lint 
+    - ansible-lint
+
+terraform-validate:
+  script:
+    - cd tf-stage1
+    - terraform init -backend=false
+    - terraform validate
+    - cd ../tf-stage2
+    - terraform init -backend=false
+    - terraform validate
