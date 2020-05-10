@@ -25,4 +25,7 @@ mariadb_innodb_stats_sample_pages: '32'
 mariadb_innodb_thread_concurrency: '8'
 mariadb_innodb_file_per_table: False
 
-zabbix_agent_mysql_user: "zabbix_agent"
+zabbix_agent_mysql_user: 'zabbix_agent'
+
+mysql_backup_dir: '/root/backup-mysql'
+mysql_backup_defaults: '/root/.backup-my.cnf'
