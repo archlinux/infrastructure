@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+# Script to backup Gitlab running in a Docker container
+#
+# https://docs.gitlab.com/omnibus/settings/backups.html#creating-backups-for-gitlab-instances-in-docker-containers
+#
+
+backupdir="{{ gitlab_backupdir }}"
+
+echo "emptying backup directory ${backupdir}"
+
+# Verify that the gitlab_backupdir in ansible was defined, otherwise we will rm /* and remove the previous backup
+rm -r "${backupdir:?backup dir unset}/"*
+
+docker exec gitlab gitlab-backup create SKIP=tar

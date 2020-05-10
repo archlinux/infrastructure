@@ -53,6 +53,10 @@
   file: path={{ mysql_backup_dir }} state=directory owner=root group=root
   when: mysql_backup_dir is defined
 
+- name: install gitlab backup script
+  template: src=backup-gitlab.sh.j2 dest=/usr/local/bin/backup-gitlab.sh owner=root group=root mode=0755
+  when: inventory_hostname == "gitlab.archlinux.org"
+
 - name: install systemd timer and service for backup
   template: src={{ item }}.j2 dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:

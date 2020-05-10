@@ -49,6 +49,10 @@ if systemctl is-active mysqld || systemctl is-active mariadb; then
     /usr/local/bin/backup-mysql.sh || true
 fi
 
+{% if inventory_hostname == "gitlab.archlinux.org" %}
+systemctl is-active docker && /usr/local/bin/backup-gitlab.sh
+{% endif %}
+
 borg create -v --stats -C lz4 \
     -e /proc \
     -e /sys \
@@ -58,9 +62,16 @@ borg create -v --stats -C lz4 \
     -e /var/cache \
     -e /var/lib/archbuild \
     -e /var/lib/archbuilddest \
+    -e /var/lib/docker \
+    -e "$backup_mountdir/proc" \
+    -e "$backup_mountdir/sys" \
+    -e "$backup_mountdir/dev" \
+    -e "$backup_mountdir/run" \
+    -e "$backup_mountdir/tmp" \
     -e "$backup_mountdir/var/cache" \
     -e "$backup_mountdir/var/lib/archbuild" \
     -e "$backup_mountdir/var/lib/archbuilddest" \
+    -e "$backup_mountdir/var/lib/docker" \
     -e "$backup_mountdir/srv/archive" \
     {{ item['host'] }}:{{ item['dir'] }}::$(date "+%Y%m%d-%H%M%S") "$backup_mountdir"
 borg prune -v {{ item['host'] }}:{{ item['dir'] }} --keep-daily=7 --keep-weekly=4 --keep-monthly=6
