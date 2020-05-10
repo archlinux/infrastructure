@@ -14,7 +14,6 @@ system_disks:
 
 # FIXME: this should probably be configured another way. maybe the
 # mysql/postgres roles should deploy the credentials themselves
-postgres_backup_dir: "/var/lib/postgres/backup"
 mysql_backup_dir: "/root/backup-mysql"
 mysql_backup_defaults: "/root/.backup-my.cnf"
 

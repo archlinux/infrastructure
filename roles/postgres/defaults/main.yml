@@ -15,3 +15,5 @@ postgres_effective_cache_size: '4GB'
 
 postgres_ssl_hosts4: []
 postgres_ssl_hosts6: []
+
+postgres_backup_dir: '/root/backup-postgres'

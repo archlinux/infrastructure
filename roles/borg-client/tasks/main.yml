@@ -38,7 +38,7 @@
   ignore_errors: True
 
 - name: make postgres backup directory
-  file: path=/var/lib/postgres/backup owner=postgres group=postgres state=directory
+  file: path={{ postgres_backup_dir }} owner=root group=root state=directory
   when: check_postgres_user is succeeded and postgres_backup_dir is defined
 
 - name: install mysql backup script
