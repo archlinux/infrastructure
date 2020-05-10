@@ -26,18 +26,18 @@
   become_method: su
 
 - name: create zabbix db
-  postgresql_db: db="{{zabbix_db_name}}" owner={{zabbix_db_user}}
+  postgresql_db: db="{{ zabbix_db_name }}" owner={{ zabbix_db_user }}
   become: yes
   become_user: postgres
   become_method: su
 
 - name: create zabbix .pgpass
-  template: src=pgpass.j2 dest="{{zabbix_pgpass}}" owner=zabbix-server group=zabbix-server mode=600
+  template: src=pgpass.j2 dest="{{ zabbix_pgpass }}" owner=zabbix-server group=zabbix-server mode=600
   no_log: true
 
 
 - name: check if zabbix db contains tables
-  shell: psql -U {{zabbix_db_user}} {{zabbix_db_name}} -c '\d' | grep -P '\(\d+ rows\)'
+  shell: psql -U {{ zabbix_db_user }} {{ zabbix_db_name }} -c '\d' | grep -P '\(\d+ rows\)'
   become_user: zabbix-server
   become: yes
   register: table_is_populated
@@ -45,7 +45,7 @@
   changed_when: table_is_populated.rc != 0
 
 - name: install database schema
-  shell: psql -U "{{zabbix_db_user}}" "{{zabbix_db_name}}" < "/usr/share/zabbix-server/postgresql/{{item}}"
+  shell: psql -U "{{ zabbix_db_user }}" "{{ zabbix_db_name }}" < "/usr/share/zabbix-server/postgresql/{{ item }}"
   become_user: zabbix-server
   become: yes
   when: table_is_populated.rc != 0
