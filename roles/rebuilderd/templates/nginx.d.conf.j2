@@ -26,7 +26,18 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ rebuilderd_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ rebuilderd_domain }}/chain.pem;
 
-    root /srv/http/repro;
+    # Security headers
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Xss-Protection "1; mode=block" always;
+    add_header Referrer-Policy "same-origin";
+    add_header Feature-Policy "geolocation 'none' ;midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; speaker 'none'; fullscreen 'none'; payment 'none';";
+    add_header Content-Security-Policy "default-src 'self';";
+    add_header X-Content-Type-Options "nosniff" always;
+
+    # Apply HSTS header again, since adding a header removes previous headers
+    add_header Strict-Transport-Security $hsts_header;
+
+    root {{ rebuilder_website_loc }};
 
     location /api {
 	    proxy_pass http://127.0.0.1:8484;
