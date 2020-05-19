@@ -1,0 +1,3 @@
+worker_app: synapse.app.appservice
+
+# vim:ft=yaml sw=2 et:

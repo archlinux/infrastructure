@@ -82,8 +82,12 @@
   notify:
     - restart synapse
 
-- name: install log config
-  copy: src=log_config.yaml dest=/etc/synapse/log_config.yaml owner=root group=root mode=0644
+- name: install static config
+  copy: src={{ item }} dest=/etc/synapse/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - log_config.yaml
+    - worker-appservice.yaml
+    - worker-federation_sender.yaml
   notify:
     - restart synapse
 
@@ -123,13 +127,35 @@
   when: 'matrix_domain is defined'
   tags: ['nginx']
 
-- name: install matrix units
+- name: install synapse units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
     - synapse.service
-    - matrix-appservice-irc.service
+    - synapse-worker@.service
   notify:
     - restart synapse
+
+- name: install matrix-appservice-irc units
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - matrix-appservice-irc.service
+  notify:
+    - restart matrix-appservice-irc
+
+- name: enable synapse units
+  service: name={{ item }} enabled=yes
+  with_items:
+    - synapse.service
+    - synapse-worker@appservice.service
+    - synapse-worker@federation_sender.service
+  notify:
+    - restart synapse
+
+- name: enable matrix-appservice-irc units
+  service: name={{ item }} enabled=yes
+  with_items:
+    - matrix-appservice-irc.service
+  notify:
     - restart matrix-appservice-irc
 
 - name: open firewall holes

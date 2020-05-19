@@ -1,5 +1,18 @@
 # vim:ft=yaml sw=2 et:
 
+# Worker config
+worker_app: synapse.app.homeserver
+worker_log_config: "/etc/synapse/log_config.yaml"
+worker_replication_host: 127.0.0.1
+worker_replication_port: 9092
+worker_replication_http_port: 9093
+
+# Delegate to federation_sender worker
+send_federation: false
+
+# Delegate to appservice worker
+notify_appservices: false
+
 ################################################################################
 
 # Configuration file for Synapse.
@@ -230,6 +243,17 @@ listeners:
     #  "/_matrix/my/custom/endpoint":
     #    module: my_module.CustomRequestHandler
     #    config: {}
+
+  - port: 9092
+    type: replication
+    bind_addresses: ['::1', '127.0.0.1']
+
+  - port: 9093
+    type: http
+    bind_addresses: ['::1', '127.0.0.1']
+    resources:
+      - names: [replication]
+        compress: false
 
   # Turn on the twisted ssh manhole service on localhost on the given
   # port.

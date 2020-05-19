@@ -1,0 +1,3 @@
+worker_app: synapse.app.federation_sender
+
+# vim:ft=yaml sw=2 et:
