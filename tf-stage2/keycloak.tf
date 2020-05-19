@@ -156,6 +156,11 @@ resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_username" {
   saml_attribute_name_format = "Basic"
 }
 
+resource "keycloak_group" "archlinux_staff" {
+  realm_id = "archlinux"
+  name = "Arch Linux Staff"
+}
+
 variable "arch_groups" {
   type = set(string)
   default = ["DevOps", "Developers", "Trusted Users"]
@@ -165,6 +170,7 @@ resource "keycloak_group" "arch_groups" {
   for_each = var.arch_groups
 
   realm_id = "archlinux"
+  parent_id = keycloak_group.archlinux_staff.id
   name = each.value
 }
 
