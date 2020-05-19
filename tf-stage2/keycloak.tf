@@ -43,6 +43,7 @@ resource "keycloak_realm" "archlinux" {
   reset_password_allowed = true
   verify_email = true
   login_with_email_allowed = true
+  password_policy = "length(8) and notUsername"
 
   smtp_server {
     host = "mail.archlinux.org"
@@ -55,6 +56,18 @@ resource "keycloak_realm" "archlinux" {
     auth {
       username = data.external.keycloak_smtp_user.result.vault_keycloak_smtp_user
       password = data.external.keycloak_smtp_password.result.vault_keycloak_smtp_password
+    }
+  }
+
+  security_defenses {
+    brute_force_detection {
+      permanent_lockout                 = false
+      max_login_failures                = 30
+      wait_increment_seconds            = 60
+      quick_login_check_milli_seconds   = 1000
+      minimum_quick_login_wait_seconds  = 60
+      max_failure_wait_seconds          = 900
+      failure_reset_time_seconds        = 43200
     }
   }
 }
