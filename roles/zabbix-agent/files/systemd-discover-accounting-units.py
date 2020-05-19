@@ -10,7 +10,6 @@ unit_whitelist_regexes = [
         r'arch-boxes.service',
         r'borg-backup.service',
         r'createlinks.service',
-        r'cronie.service',
         r'dovecot.service',
         r'fcgiwrap-.*.service',
         r'grafana.service',
