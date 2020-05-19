@@ -88,6 +88,7 @@
     - log_config.yaml
     - worker-appservice.yaml
     - worker-federation_sender.yaml
+    - worker-media_repository.yaml
   notify:
     - restart synapse
 
@@ -148,6 +149,7 @@
     - synapse.service
     - synapse-worker@appservice.service
     - synapse-worker@federation_sender.service
+    - synapse-worker@media_repository.service
   notify:
     - restart synapse
 
