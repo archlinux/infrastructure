@@ -419,7 +419,7 @@ if gitify
     when meson
       <<~END
         arch-meson #{localname} build
-        ninja -C build
+        meson compile -C build
       END
     end,
 
