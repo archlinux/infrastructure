@@ -269,9 +269,6 @@ arch_users:
     name: "Jan Steffens"
     ssh_key: heftig.pub
     additional_ssh_keys:
-      - name: heftig_work.pub
-        hosts:
-          - dragon.archlinux.org
       - name: heftig_dragon.pub
         hosts:
           - homedir.archlinux.org
