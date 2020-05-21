@@ -28,7 +28,7 @@
         external_url 'https://{{ gitlab_domain }}'
         letsencrypt['enable'] = true
         letsencrypt['contact_emails'] = ['webmaster@archlinux.org']
-        gitlab_rails['lfs_enabled'] = true
+        gitlab_rails['lfs_enabled'] = false
         gitlab_rails['gitlab_shell_ssh_port'] = 222
         gitlab_rails['gitlab_default_can_create_group'] = false
         gitlab_rails['initial_root_password'] = "{{ vault_gitlab_root_password }}"
