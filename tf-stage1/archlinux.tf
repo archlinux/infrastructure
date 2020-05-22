@@ -72,7 +72,7 @@ resource "hcloud_rdns" "gitlab" {
 resource "hcloud_server" "gitlab" {
   name        = "gitlab.archlinux.org"
   image       = data.hcloud_image.archlinux.id
-  server_type = "cx31"
+  server_type = "cx51"
   lifecycle {
     ignore_changes = [image]
   }
