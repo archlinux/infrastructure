@@ -67,5 +67,21 @@
   notify:
     - restart php-fpm@flyspray
 
+- name: install fail2ban register ban filter
+  template: src=fail2ban.filter.j2 dest=/etc/fail2ban/filter.d/nginx-flyspray-register.local owner=root group=root mode=0644
+  notify:
+    - restart fail2ban
+  tags:
+    - fail2ban
+
+- name: install fail2ban register ban jail
+  template: src=fail2ban.jail.j2 dest=/etc/fail2ban/jail.d/nginx-flyspray-register.local owner=root group=root mode=0644
+  notify:
+    - restart fail2ban
+  tags:
+    - fail2ban
+
+
+
 - name: start and enable systemd socket
   service: name=php-fpm@flyspray.socket state=started enabled=true

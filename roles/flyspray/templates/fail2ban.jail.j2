@@ -1,0 +1,9 @@
+[nginx-flyspray-register]
+# bots regsiter 1 account per 10 minutes.
+
+enabled = true
+filter = nginx-flyspray-register
+logpath = /var/log/nginx/bugs.archlinux.org/access.log
+findtime = 14400 # 4 hours
+bantime = 1d
+maxretry = 20
