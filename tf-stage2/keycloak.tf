@@ -156,7 +156,7 @@ resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_username" {
   saml_attribute_name_format = "Basic"
 }
 
-resource "keycloak_group" "archlinux_staff" {
+resource "keycloak_group" "staff" {
   realm_id = "archlinux"
   name = "Arch Linux Staff"
 }
@@ -170,21 +170,35 @@ resource "keycloak_group" "arch_groups" {
   for_each = var.arch_groups
 
   realm_id = "archlinux"
-  parent_id = keycloak_group.archlinux_staff.id
+  parent_id = keycloak_group.staff.id
   name = each.value
 }
 
 resource "keycloak_role" "devops" {
   realm_id = "archlinux"
   name = "DevOps"
-  description = "DevOps role"
+  description = "Role held by members of the DevOps group"
 }
 
-resource "keycloak_group_roles" "group_roles" {
+resource "keycloak_role" "staff" {
+  realm_id = "archlinux"
+  name = "Staff"
+  description = "Role held by all Arch Linux staff"
+}
+
+resource "keycloak_group_roles" "devops" {
   realm_id = "archlinux"
   group_id = keycloak_group.arch_groups["DevOps"].id
   role_ids = [
     keycloak_role.devops.id
+  ]
+}
+
+resource "keycloak_group_roles" "staff" {
+  realm_id = "archlinux"
+  group_id = keycloak_group.staff.id
+  role_ids = [
+    keycloak_role.staff.id
   ]
 }
 
