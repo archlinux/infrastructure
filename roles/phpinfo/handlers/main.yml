@@ -1,3 +1,0 @@
----
-- name: restart php-fpm@phpinfo
-  systemd: name=php-fpm@phpinfo.service state=restarted
