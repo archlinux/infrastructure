@@ -25,6 +25,7 @@
       - tcpdump
       - sudo
       - glances
+      - cloud-utils
 
 - name: install misc utils
   pacman:
