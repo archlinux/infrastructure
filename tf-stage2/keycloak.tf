@@ -45,6 +45,8 @@ resource "keycloak_realm" "archlinux" {
   login_with_email_allowed = true
   password_policy = "length(8) and notUsername"
 
+  browser_flow = "Arch Browser"
+
   smtp_server {
     host = "mail.archlinux.org"
     from = "accounts@archlinux.org"
@@ -228,6 +230,9 @@ resource "keycloak_group_roles" "externalcontributor" {
 
 // Try misc/kcadm_wrapper.sh get authentication/flows/{{ your flow alias}}/executions
 // to make this a whole lot easier.
+// NOTE: We use the `depends_on` calls to properly order the executions and subflows inside the
+// flow. This has to be done until https://github.com/mrparkers/terraform-provider-keycloak/issues/296
+// is fixed. :(
 resource "keycloak_authentication_flow" "arch_browser_flow" {
   realm_id = "archlinux"
   alias = "Arch Browser"
@@ -239,6 +244,7 @@ resource "keycloak_authentication_execution" "cookie" {
   parent_flow_alias = keycloak_authentication_flow.arch_browser_flow.alias
   authenticator = "auth-cookie"
   requirement = "ALTERNATIVE"
+  depends_on = [keycloak_authentication_flow.arch_browser_flow]
 }
 
 resource "keycloak_authentication_execution" "identity_provider_redirector" {
@@ -246,6 +252,7 @@ resource "keycloak_authentication_execution" "identity_provider_redirector" {
   parent_flow_alias = keycloak_authentication_flow.arch_browser_flow.alias
   authenticator = "identity-provider-redirector"
   requirement = "ALTERNATIVE"
+  depends_on = [keycloak_authentication_execution.cookie]
 }
 
 resource "keycloak_authentication_subflow" "subforms" {
@@ -253,6 +260,7 @@ resource "keycloak_authentication_subflow" "subforms" {
   alias = "subforms"
   parent_flow_alias = keycloak_authentication_flow.arch_browser_flow.alias
   requirement = "ALTERNATIVE"
+  depends_on = [keycloak_authentication_execution.identity_provider_redirector]
 }
 
 resource "keycloak_authentication_execution" "username_password_form" {
@@ -267,6 +275,7 @@ resource "keycloak_authentication_subflow" "userconfigured_conditional_otp" {
   alias = "User-configured Conditional OTP"
   parent_flow_alias = keycloak_authentication_subflow.subforms.alias
   requirement = "CONDITIONAL"
+  depends_on = [keycloak_authentication_execution.username_password_form]
 }
 
 resource "keycloak_authentication_execution" "userconfigured_conditional_otp_condition" {
@@ -288,6 +297,7 @@ resource "keycloak_authentication_execution" "forced_otp_for_staff" {
   parent_flow_alias = keycloak_authentication_subflow.subforms.alias
   authenticator = "auth-conditional-otp-form"
   requirement = "REQUIRED"
+  depends_on = [keycloak_authentication_subflow.userconfigured_conditional_otp]
 }
 
 resource "keycloak_authentication_execution_config" "forced_otp_for_staff_config" {
@@ -305,6 +315,7 @@ resource "keycloak_authentication_execution" "forced_otp_for_externalcontributor
   parent_flow_alias = keycloak_authentication_subflow.subforms.alias
   authenticator = "auth-conditional-otp-form"
   requirement = "REQUIRED"
+  depends_on = [keycloak_authentication_execution.forced_otp_for_staff]
 }
 
 resource "keycloak_authentication_execution_config" "forced_otp_for_externalcontributors_config" {
