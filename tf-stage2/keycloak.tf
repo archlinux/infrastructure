@@ -156,9 +156,21 @@ resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_username" {
   saml_attribute_name_format = "Basic"
 }
 
+// This is the super group in which we put the other Arch groups.
+// We want to end up with this structure:
+// Arch Linux Staff
+// |- DevOps
+// |- Developers
+// |- Trusted Users
+// External Contributors
 resource "keycloak_group" "staff" {
   realm_id = "archlinux"
   name = "Arch Linux Staff"
+}
+
+resource "keycloak_group" "externals" {
+  realm_id = "archlinux"
+  name = "External Contributors"
 }
 
 variable "arch_groups" {
@@ -186,6 +198,12 @@ resource "keycloak_role" "staff" {
   description = "Role held by all Arch Linux staff"
 }
 
+resource "keycloak_role" "externals" {
+  realm_id = "archlinux"
+  name = "External Contributors"
+  description = "Role held by external contributors working on Arch Linux projects without further access"
+}
+
 resource "keycloak_group_roles" "devops" {
   realm_id = "archlinux"
   group_id = keycloak_group.arch_groups["DevOps"].id
@@ -199,6 +217,14 @@ resource "keycloak_group_roles" "staff" {
   group_id = keycloak_group.staff.id
   role_ids = [
     keycloak_role.staff.id
+  ]
+}
+
+resource "keycloak_group_roles" "externals" {
+  realm_id = "archlinux"
+  group_id = keycloak_group.externals.id
+  role_ids = [
+    keycloak_role.externals.id
   ]
 }
 
