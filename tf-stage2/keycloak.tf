@@ -73,7 +73,7 @@ resource "keycloak_realm" "archlinux" {
 }
 
 resource "keycloak_saml_client" "saml_gitlab" {
-  realm_id = "archlinux" // "${keycloak_realm.realm.id}"
+  realm_id = "archlinux"
   client_id = "saml_gitlab"
 
   name = "Arch Linux Accounts"
@@ -82,15 +82,13 @@ resource "keycloak_saml_client" "saml_gitlab" {
   sign_documents = true
   sign_assertions = true
 
-  // access_type = "CONFIDENTIAL"
   valid_redirect_uris = [
     var.gitlab_instance.saml_redirect_url
   ]
 
   root_url = var.gitlab_instance.root_url
-  base_url = "/" // needed?
-  master_saml_processing_url = var.gitlab_instance.saml_redirect_url // needed?
-  // idp_initiated_sso_url_name = self.client_id
+  base_url = "/"
+  master_saml_processing_url = var.gitlab_instance.saml_redirect_url
   idp_initiated_sso_url_name = "saml_gitlab"
 
   assertion_consumer_post_url = var.gitlab_instance.saml_redirect_url
