@@ -166,7 +166,7 @@ resource "keycloak_group" "staff" {
   name = "Arch Linux Staff"
 }
 
-resource "keycloak_group" "externals" {
+resource "keycloak_group" "externalcontributors" {
   realm_id = "archlinux"
   name = "External Contributors"
 }
@@ -196,9 +196,9 @@ resource "keycloak_role" "staff" {
   description = "Role held by all Arch Linux staff"
 }
 
-resource "keycloak_role" "externals" {
+resource "keycloak_role" "externalcontributor" {
   realm_id = "archlinux"
-  name = "External Contributors"
+  name = "External Contributor"
   description = "Role held by external contributors working on Arch Linux projects without further access"
 }
 
@@ -218,12 +218,103 @@ resource "keycloak_group_roles" "staff" {
   ]
 }
 
-resource "keycloak_group_roles" "externals" {
+resource "keycloak_group_roles" "externalcontributor" {
   realm_id = "archlinux"
-  group_id = keycloak_group.externals.id
+  group_id = keycloak_group.externalcontributors.id
   role_ids = [
-    keycloak_role.externals.id
+    keycloak_role.externalcontributor.id
   ]
+}
+
+// Try misc/kcadm_wrapper.sh get authentication/flows/{{ your flow alias}}/executions
+// to make this a whole lot easier.
+resource "keycloak_authentication_flow" "arch_browser_flow" {
+  realm_id = "archlinux"
+  alias = "Arch Browser"
+  description = "Customized Browser flow that forces all users with the 'Staff' role to use OTP."
+}
+
+resource "keycloak_authentication_execution" "cookie" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_flow.arch_browser_flow.alias
+  authenticator = "auth-cookie"
+  requirement = "ALTERNATIVE"
+}
+
+resource "keycloak_authentication_execution" "identity_provider_redirector" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_flow.arch_browser_flow.alias
+  authenticator = "identity-provider-redirector"
+  requirement = "ALTERNATIVE"
+}
+
+resource "keycloak_authentication_subflow" "subforms" {
+  realm_id = "archlinux"
+  alias = "subforms"
+  parent_flow_alias = keycloak_authentication_flow.arch_browser_flow.alias
+  requirement = "ALTERNATIVE"
+}
+
+resource "keycloak_authentication_execution" "username_password_form" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.subforms.alias
+  authenticator = "auth-username-password-form"
+  requirement = "REQUIRED"
+}
+
+resource "keycloak_authentication_subflow" "userconfigured_conditional_otp" {
+  realm_id = "archlinux"
+  alias = "User-configured Conditional OTP"
+  parent_flow_alias = keycloak_authentication_subflow.subforms.alias
+  requirement = "CONDITIONAL"
+}
+
+resource "keycloak_authentication_execution" "userconfigured_conditional_otp_condition" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.userconfigured_conditional_otp.alias
+  authenticator = "conditional-user-configured"
+  requirement = "REQUIRED"
+}
+
+resource "keycloak_authentication_execution" "userconfigured_conditional_otp_form" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.userconfigured_conditional_otp.alias
+  authenticator = "auth-otp-form"
+  requirement = "REQUIRED"
+}
+
+resource "keycloak_authentication_execution" "forced_otp_for_staff" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.subforms.alias
+  authenticator = "auth-conditional-otp-form"
+  requirement = "REQUIRED"
+}
+
+resource "keycloak_authentication_execution_config" "forced_otp_for_staff_config" {
+  realm_id = "archlinux"
+  execution_id = keycloak_authentication_execution.forced_otp_for_staff.id
+  alias = "forced_otp_for_staff_config"
+  config = {
+    forceOtpRole = "Staff",
+    defaultOtpOutcome = "skip"
+  }
+}
+
+resource "keycloak_authentication_execution" "forced_otp_for_externalcontributors" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.subforms.alias
+  authenticator = "auth-conditional-otp-form"
+  requirement = "REQUIRED"
+}
+
+resource "keycloak_authentication_execution_config" "forced_otp_for_externalcontributors_config" {
+  realm_id = "archlinux"
+  execution_id = keycloak_authentication_execution.forced_otp_for_externalcontributors.id
+  alias = "forced_otp_for_externalcontributorsconfig"
+  config = {
+    forceOtpRole = "External Contributor",
+    defaultOtpOutcome = "skip"
+  }
 }
 
 output "gitlab_saml_configuration" {
