@@ -39,6 +39,7 @@
 
 - name: verify website release
   command: /usr/bin/gpg --verify {{ rebuilder_website_asc }} {{ rebuilder_website_tar }}
+  when: not rebuilder_release_dir.stat.exists
 
 - name: unpack website to /srv
   unarchive: src={{ rebuilder_website_tar }} dest={{ rebuilder_website_base }} remote_src=yes owner=root group=root mode=0755
@@ -54,8 +55,9 @@
 - name: enable and start rebuilderd
   systemd: name=rebuilderd enabled=yes state=started
 
-- name: enable and start rebuilderd core timer
-  systemd: name=rebuilderd-sync@archlinux-core.timer enabled=yes state=started
-
-- name: enable and start rebuilderd extra timer
-  systemd: name=rebuilderd-sync@archlinux-extra.timer enabled=yes state=started
+- name: enable and start rebuilderd {{ item }} timer
+  systemd: name=rebuilderd-sync@archlinux-{{ item }}.timer enabled=yes state=started
+  with_items:
+    - core
+    - extra
+    - testing
