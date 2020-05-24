@@ -207,3 +207,18 @@ resource "hcloud_server" "reproducible" {
     ignore_changes = [image]
   }
 }
+
+resource "hcloud_rdns" "monitoring" {
+  server_id  = hcloud_server.monitoring.id
+  ip_address = hcloud_server.monitoring.ipv4_address
+  dns_ptr    = "monitoring.archlinux.org"
+}
+
+resource "hcloud_server" "monitoring" {
+  name        = "monitoring.archlinux.org"
+  image       = data.hcloud_image.archlinux.id
+  server_type = "cx11"
+  lifecycle {
+    ignore_changes = [image]
+  }
+}
