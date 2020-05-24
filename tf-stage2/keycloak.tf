@@ -270,34 +270,12 @@ resource "keycloak_authentication_execution" "username_password_form" {
   requirement = "REQUIRED"
 }
 
-resource "keycloak_authentication_subflow" "userconfigured_conditional_otp" {
-  realm_id = "archlinux"
-  alias = "User-configured Conditional OTP"
-  parent_flow_alias = keycloak_authentication_subflow.subforms.alias
-  requirement = "CONDITIONAL"
-  depends_on = [keycloak_authentication_execution.username_password_form]
-}
-
-resource "keycloak_authentication_execution" "userconfigured_conditional_otp_condition" {
-  realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow.userconfigured_conditional_otp.alias
-  authenticator = "conditional-user-configured"
-  requirement = "REQUIRED"
-}
-
-resource "keycloak_authentication_execution" "userconfigured_conditional_otp_form" {
-  realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow.userconfigured_conditional_otp.alias
-  authenticator = "auth-otp-form"
-  requirement = "REQUIRED"
-}
-
 resource "keycloak_authentication_execution" "forced_otp_for_staff" {
   realm_id = "archlinux"
   parent_flow_alias = keycloak_authentication_subflow.subforms.alias
   authenticator = "auth-conditional-otp-form"
-  requirement = "REQUIRED"
-  depends_on = [keycloak_authentication_subflow.userconfigured_conditional_otp]
+  requirement = "ALTERNATIVE"
+  depends_on = [keycloak_authentication_execution.username_password_form]
 }
 
 resource "keycloak_authentication_execution_config" "forced_otp_for_staff_config" {
@@ -314,7 +292,7 @@ resource "keycloak_authentication_execution" "forced_otp_for_externalcontributor
   realm_id = "archlinux"
   parent_flow_alias = keycloak_authentication_subflow.subforms.alias
   authenticator = "auth-conditional-otp-form"
-  requirement = "REQUIRED"
+  requirement = "ALTERNATIVE"
   depends_on = [keycloak_authentication_execution.forced_otp_for_staff]
 }
 
@@ -326,6 +304,28 @@ resource "keycloak_authentication_execution_config" "forced_otp_for_externalcont
     forceOtpRole = "External Contributor",
     defaultOtpOutcome = "skip"
   }
+}
+
+resource "keycloak_authentication_subflow" "userconfigured_conditional_otp" {
+  realm_id = "archlinux"
+  alias = "User-configured Conditional OTP"
+  parent_flow_alias = keycloak_authentication_subflow.subforms.alias
+  requirement = "CONDITIONAL"
+  depends_on = [keycloak_authentication_execution.forced_otp_for_externalcontributors]
+}
+
+resource "keycloak_authentication_execution" "userconfigured_conditional_otp_condition" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.userconfigured_conditional_otp.alias
+  authenticator = "conditional-user-configured"
+  requirement = "REQUIRED"
+}
+
+resource "keycloak_authentication_execution" "userconfigured_conditional_otp_form" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.userconfigured_conditional_otp.alias
+  authenticator = "auth-otp-form"
+  requirement = "REQUIRED"
 }
 
 output "gitlab_saml_configuration" {
