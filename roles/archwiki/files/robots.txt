@@ -1,4 +1,5 @@
 User-agent: *
+Disallow: /index.php?
 Disallow: /index.php?diff=
 Disallow: /index.php?oldid=
 Disallow: /index.php?curid=
