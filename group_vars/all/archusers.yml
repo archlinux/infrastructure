@@ -249,12 +249,6 @@ arch_users:
     name: "Phillip Smith"
     ssh_key: fukawi2.pub
     groups: []
-  giovanni:
-    name: ""
-    ssh_key: giovanni.pub
-    groups:
-      - dev
-      - multilib
   gitlab:
     name: ""
     groups: []

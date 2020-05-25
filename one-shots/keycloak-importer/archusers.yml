@@ -256,12 +256,6 @@ arch_users:
   #   ssh_key: fukawi2.pub
   #   groups:
   #     - devops
-  # giovanni:
-  #   name: ""
-  #   ssh_key: giovanni.pub
-  #   groups:
-  #     - dev
-  #     - multilib
   # gitlab:
   #   name: ""
   #   groups: []
