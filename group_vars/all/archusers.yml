@@ -459,12 +459,6 @@ arch_users:
     ssh_key: tensor5.pub
     groups:
       - tu
-  thomas:
-    name: "Thomas Bächler"
-    ssh_key: thomas.pub
-    groups:
-      - dev
-      - multilib
   tpowa:
     name: "Tobias Powalowski"
     ssh_key: tpowa.pub

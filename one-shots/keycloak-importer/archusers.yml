@@ -412,13 +412,6 @@ arch_users:
   #   groups:
   #     - tu
   #     - docker-image-sudo
-  # schiv:
-  #   name: "Ray Rashif"
-  #   ssh_key: schiv.pub
-  #   groups:
-  #     - dev
-  #     - tu
-  #     - multilib
   # schuay:
   #   name: "Jakob Gruber"
   #   ssh_key: schuay.pub
@@ -472,12 +465,6 @@ arch_users:
   #   ssh_key: tensor5.pub
   #   groups:
   #     - tu
-  # thomas:
-  #   name: "Thomas Bächler"
-  #   ssh_key: thomas.pub
-  #   groups:
-  #     - dev
-  #     - multilib
   # tpowa:
   #   name: "Tobias Powalowski"
   #   ssh_key: tpowa.pub
