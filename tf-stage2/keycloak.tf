@@ -238,22 +238,23 @@ resource "keycloak_group_roles" "externalcontributor" {
 // Arch Browser flow
 // |- Cookie (A)
 // |- Identity Provider Redirector (A)
-// |- Password and OTP subflow (A)
+// |- Password and OTP Subflow (A)
 //   |- Username Password Form (R)
-//   |- OTP subflow (R)
+//   |- OTP Subflow (R)
 //      |- External Contributor subflow (A)
 //      |  |- External Contributor conditional subflow (C)
 //      |     |- Condition - User Role (External Contributor) (R)
 //      |     |- OTP Form (R)
-//      |- Staff subflow (A)
+//      |- Staff Subflow (A)
 //      |  |- Staff conditional subflow (C)
 //      |     |- Condition - User Role (Staff) (R)
 //      |     |- OTP Form (R)
-//      |- OTP opt-in subflow (A)
+//      |- OTP opt-in Subflow (A)
 //      |  |- OTP opt-in conditional subflow (C)
 //      |     |- Condition - User Configured (R)
 //      |     |- OTP Form (R)
-//      |- Browser Redirect/Refresh (R)
+//      |- Fallthrough Subflow (A)
+//         |- Browser Redirect/Refresh (R)
 //
 // We have the Browser Redirect/Refresh execution at the end as a hack an as an effective "always true" fallthrough no-op.
 // Otherwise we'll get a runtime exception as it could happen that none of the Conditions in the Alternative subflows
@@ -262,7 +263,7 @@ resource "keycloak_group_roles" "externalcontributor" {
 resource "keycloak_authentication_flow" "arch_browser_flow" {
   realm_id = "archlinux"
   alias = "Arch Browser"
-  description = "Customized Browser flow that forces all users with the 'Staff' role to use OTP."
+  description = "Customized Browser flow that forces users of some roles to use OTP."
 }
 
 resource "keycloak_authentication_execution" "cookie" {
