@@ -20,6 +20,14 @@ data "external" "keycloak_smtp_password" {
   program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_keycloak.yml", "vault_keycloak_smtp_password", "json"]
 }
 
+data "external" "google_recaptcha_site_key" {
+  program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_google.yml", "vault_google_recaptcha_site_key", "json"]
+}
+
+data "external" "google_recaptcha_secret_key" {
+  program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_google.yml", "vault_google_recaptcha_secret_key", "json"]
+}
+
 provider "keycloak" {
   client_id = "admin-cli"
   username = data.external.keycloak_admin_user.result.vault_keycloak_admin_user
@@ -46,6 +54,7 @@ resource "keycloak_realm" "archlinux" {
   password_policy = "length(8) and notUsername"
 
   browser_flow = "Arch Browser"
+  registration_flow = "Arch Registration"
 
   smtp_server {
     host = "mail.archlinux.org"
@@ -62,6 +71,15 @@ resource "keycloak_realm" "archlinux" {
   }
 
   security_defenses {
+    headers {
+      x_frame_options                     = "ALLOW-FROM https://www.google.com"
+      content_security_policy             = "frame-src 'self' https://www.google.com; frame-ancestors 'self'; object-src 'none';"
+      content_security_policy_report_only = ""
+      x_content_type_options              = "nosniff"
+      x_robots_tag                        = "none"
+      x_xss_protection                    = "1; mode=block"
+      strict_transport_security           = "max-age=31536000; includeSubDomains"
+    }
     brute_force_detection {
       permanent_lockout                 = false
       max_login_failures                = 30
@@ -228,6 +246,66 @@ resource "keycloak_group_roles" "externalcontributor" {
   ]
 }
 
+// Add new custom registration flow with reCAPTCHA
+resource "keycloak_authentication_flow" "arch_registration_flow" {
+  realm_id = "archlinux"
+  alias = "Arch Registration"
+  description = "Customized Registration flow that forces enables ReCAPTCHA."
+}
+
+resource "keycloak_authentication_subflow" "registration_form" {
+  realm_id = "archlinux"
+  alias = "Registration Form"
+  parent_flow_alias = keycloak_authentication_flow.arch_registration_flow.alias
+  provider_id = "form-flow"
+  authenticator = "registration-page-form"
+  requirement = "REQUIRED"
+}
+
+resource "keycloak_authentication_execution" "registration_user_creation" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.registration_form.alias
+  authenticator = "registration-user-creation"
+  requirement = "REQUIRED"
+}
+
+resource "keycloak_authentication_execution" "registration_profile_action" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.registration_form.alias
+  authenticator = "registration-profile-action"
+  requirement = "REQUIRED"
+  depends_on = [keycloak_authentication_execution.registration_user_creation]
+}
+
+resource "keycloak_authentication_execution" "registration_password_action" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.registration_form.alias
+  authenticator = "registration-password-action"
+  requirement = "REQUIRED"
+  depends_on = [keycloak_authentication_execution.registration_profile_action]
+}
+
+resource "keycloak_authentication_execution" "registration_recaptcha_action" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.registration_form.alias
+  authenticator = "registration-recaptcha-action"
+  requirement = "REQUIRED"
+  depends_on = [keycloak_authentication_execution.registration_password_action]
+}
+
+resource "keycloak_authentication_execution_config" "registration_recaptcha_action_config" {
+  realm_id = "archlinux"
+  alias = "reCAPTCHA config"
+  execution_id = keycloak_authentication_execution.registration_recaptcha_action.id
+  config = {
+    "useRecaptchaNet" = "false",
+    "site.key" = data.external.google_recaptcha_site_key.result.vault_google_recaptcha_site_key
+    "secret" = data.external.google_recaptcha_secret_key.result.vault_google_recaptcha_secret_key
+  }
+}
+
+// Add new custom browser login flow with forced OTP for some user roles
+//
 // Try misc/kcadm_wrapper.sh get authentication/flows/{{ your flow alias}}/executions
 // to make this a whole lot easier.
 // NOTE: We use the `depends_on` calls to properly order the executions and subflows inside the
