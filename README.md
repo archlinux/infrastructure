@@ -10,6 +10,7 @@ It also contains git submodules so you have to run `git submodule update --init
 Install these packages:
   - terraform
   - terraform-provider-keycloak
+  - python-typer
 
 ### Instructions
 
@@ -53,7 +54,7 @@ Note that some roles already run this automatically.
 We use packer to build snapshots on hcloud to use as server base images.
 In order to use this, you need to install packer and then run
 
-    packer build -var $(misc/get_key.py misc/vault_hetzner.yml hetzner_cloud_api_key env) packer/archlinux.json
+    packer build -var $(misc/get_key.py misc/vault_hetzner.yml hetzner_cloud_api_key --format env) packer/archlinux.json
 
 This will take some time after which a new snapshot will have been created on the primary hcloud archlinux project.
 

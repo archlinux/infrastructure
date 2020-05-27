@@ -4,34 +4,33 @@ terraform {
   }
 }
 
-data "external" "keycloak_admin_user" {
-  program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_keycloak.yml", "vault_keycloak_admin_user", "json"]
+data "external" "vault_keycloak" {
+  program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_keycloak.yml",
+    "vault_keycloak_admin_user",
+    "vault_keycloak_admin_password",
+    "vault_keycloak_smtp_user",
+    "vault_keycloak_smtp_password",
+    "--format", "json"]
 }
 
-data "external" "keycloak_admin_password" {
-  program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_keycloak.yml", "vault_keycloak_admin_password", "json"]
+data "external" "vault_google" {
+  program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_google.yml",
+    "vault_google_recaptcha_site_key",
+    "vault_google_recaptcha_secret_key",
+    "--format", "json"]
 }
 
-data "external" "keycloak_smtp_user" {
-  program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_keycloak.yml", "vault_keycloak_smtp_user", "json"]
-}
-
-data "external" "keycloak_smtp_password" {
-  program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_keycloak.yml", "vault_keycloak_smtp_password", "json"]
-}
-
-data "external" "google_recaptcha_site_key" {
-  program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_google.yml", "vault_google_recaptcha_site_key", "json"]
-}
-
-data "external" "google_recaptcha_secret_key" {
-  program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_google.yml", "vault_google_recaptcha_secret_key", "json"]
+data "external" "vault_github" {
+  program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_github.yml",
+    "vault_github_oauth_app_client_id",
+    "vault_github_oauth_app_client_secret",
+    "--format", "json"]
 }
 
 provider "keycloak" {
   client_id = "admin-cli"
-  username = data.external.keycloak_admin_user.result.vault_keycloak_admin_user
-  password = data.external.keycloak_admin_password.result.vault_keycloak_admin_password
+  username = data.external.vault_keycloak.result.vault_keycloak_admin_user
+  password = data.external.vault_keycloak.result.vault_keycloak_admin_password
   url = "https://accounts.archlinux.org"
 }
 
@@ -65,8 +64,8 @@ resource "keycloak_realm" "archlinux" {
     starttls = true
 
     auth {
-      username = data.external.keycloak_smtp_user.result.vault_keycloak_smtp_user
-      password = data.external.keycloak_smtp_password.result.vault_keycloak_smtp_password
+      username = data.external.vault_keycloak.result.vault_keycloak_smtp_user
+      password = data.external.vault_keycloak.result.vault_keycloak_smtp_password
     }
   }
 
@@ -89,6 +88,24 @@ resource "keycloak_realm" "archlinux" {
       max_failure_wait_seconds          = 900
       failure_reset_time_seconds        = 43200
     }
+  }
+}
+
+resource "keycloak_oidc_identity_provider" "realm_identity_provider" {
+  realm = "archlinux"
+  alias = "github"
+  provider_id = "github"
+  authorization_url = "https://accounts.archlinux.org/auth/realms/archlinux/broker/github/endpoint"
+  client_id = data.external.vault_github.result.vault_github_oauth_app_client_id
+  client_secret = data.external.vault_github.result.vault_github_oauth_app_client_secret
+  token_url = ""
+  default_scopes = ""
+  enabled = false
+  trust_email = false
+  store_token = false
+  backchannel_supported = false
+  extra_config = {
+    syncMode = "IMPORT"
   }
 }
 
@@ -299,8 +316,8 @@ resource "keycloak_authentication_execution_config" "registration_recaptcha_acti
   execution_id = keycloak_authentication_execution.registration_recaptcha_action.id
   config = {
     "useRecaptchaNet" = "false",
-    "site.key" = data.external.google_recaptcha_site_key.result.vault_google_recaptcha_site_key
-    "secret" = data.external.google_recaptcha_secret_key.result.vault_google_recaptcha_secret_key
+    "site.key" = data.external.vault_google.result.vault_google_recaptcha_site_key
+    "secret" = data.external.vault_google.result.vault_google_recaptcha_secret_key
   }
 }
 

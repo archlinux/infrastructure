@@ -5,7 +5,7 @@ terraform {
 }
 
 data "external" "hetzner_cloud_api_key" {
-  program = ["${path.module}/../misc/get_key.py", "misc/vault_hetzner.yml", "hetzner_cloud_api_key", "json"]
+  program = ["${path.module}/../misc/get_key.py", "misc/vault_hetzner.yml", "hetzner_cloud_api_key", "--format", "json"]
 }
 
 data "hcloud_image" "archlinux" {

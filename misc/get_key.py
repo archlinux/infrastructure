@@ -1,13 +1,16 @@
 #!/usr/bin/python3
 
-from contextlib import contextmanager
-from enum import Enum
-from pathlib import Path
-import argparse
 import json
 import os
 import sys
+from contextlib import contextmanager
+from enum import Enum
+from pathlib import Path
+from typing import List
+import typer
 import yaml
+
+app = typer.Typer()
 
 
 @contextmanager
@@ -45,7 +48,7 @@ def load_vault(path):
         )
 
 
-class Output(Enum):
+class OutputFormat(str, Enum):
     BARE = "bare"
     ENV = "env"
     JSON = "json"
@@ -54,37 +57,31 @@ class Output(Enum):
         return self.value
 
 
-def parse_args():
-    parser = argparse.ArgumentParser(
-        description="Retrieve a password from an Ansible vault."
-    )
-    parser.add_argument(dest="vault", type=Path, help="vault to open")
-    parser.add_argument(dest="key", help="key to extract")
-    parser.add_argument(
-        dest="output",
-        nargs="?",
-        type=Output,
-        choices=Output,
-        default=Output.BARE,
-        help="style of output",
-    )
-    return parser.parse_args()
+def main(
+    vault: Path = typer.Argument(...),
+    keys: List[str] = typer.Argument(...),
+    format: OutputFormat = typer.Option(
+        OutputFormat.BARE, show_default=True, help="Output format"
+    ),
+):
+    """
+    Get a bunch of entries from the vault located at VAULT.
 
+    Use KEYS to choose which keys in the vault you want to output.
+    """
+    vault = load_vault(vault)
+    filtered = {vault_key: vault[vault_key] for vault_key in keys}
 
-def main():
-    args = parse_args()
-    value = load_vault(args.vault)[args.key]
-
-    if args.output == Output.BARE:
-        print(value)
-    elif args.output == Output.ENV:
-        print(f"{args.key}={value}")
-    elif args.output == Output.JSON:
-        json.dump({args.key: value}, sys.stdout)
+    if format == OutputFormat.BARE:
+        for secret in filtered.values():
+            print(secret)
+    elif format == OutputFormat.ENV:
+        for key, secret in filtered.items():
+            print(f"{key}={secret}")
+    elif format == OutputFormat.JSON:
+        json.dump(filtered, sys.stdout)
         print()
-    else:
-        assert False
 
 
 if __name__ == "__main__":
-    main()
+    typer.run(main)
