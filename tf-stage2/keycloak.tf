@@ -193,7 +193,7 @@ resource "keycloak_group" "externalcontributors" {
 
 variable "arch_groups" {
   type = set(string)
-  default = ["DevOps", "Developers", "Trusted Users"]
+  default = ["DevOps", "Developers", "Trusted Users", "Support"]
 }
 
 resource "keycloak_group" "arch_groups" {
