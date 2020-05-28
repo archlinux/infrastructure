@@ -15,7 +15,6 @@ WorkingDirectory=~
 ExecStart=/var/lib/synapse/venv/bin/python -m synapse.app.%i --config-path=/etc/synapse/homeserver.yaml --config-path=/etc/synapse/worker-%i.yaml
 SyslogIdentifier=synapse-worker-%i
 
-Environment=SYNAPSE_CACHE_FACTOR=1.0
 Environment=LD_PRELOAD=/usr/lib/libjemalloc.so
 
 [Install]
