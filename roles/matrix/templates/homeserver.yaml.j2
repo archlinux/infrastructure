@@ -1787,11 +1787,11 @@ password_config:
 email:
   # The hostname of the outgoing SMTP server to use. Defaults to 'localhost'.
   #
-  #smtp_host: mail.server
+  smtp_host: localhost
 
   # The port on the mail server for outgoing SMTP. Defaults to 25.
   #
-  #smtp_port: 587
+  smtp_port: 10027
 
   # Username/password for authentication to the SMTP server. By default, no
   # authentication is attempted.
@@ -1816,7 +1816,7 @@ email:
   # Note that the placeholder must be written '%(app)s', including the
   # trailing 's'.
   #
-  #notif_from: "Your Friendly %(app)s homeserver <noreply@example.com>"
+  notif_from: "Arch Linux %(app)s server <noreply@archlinux.org>"
 
   # app_name defines the default value for '%(app)s' in notif_from. It
   # defaults to 'Matrix'.
@@ -1826,7 +1826,7 @@ email:
   # Uncomment the following to enable sending emails for messages that the user
   # has missed. Disabled by default.
   #
-  #enable_notifs: true
+  enable_notifs: true
 
   # Uncomment the following to disable automatic subscription to email
   # notifications for new users. Enabled by default.

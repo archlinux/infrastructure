@@ -18,6 +18,8 @@
       postgres_work_mem: 64MB
       postgres_maintenance_work_mem: 1GB
       postgres_effective_cache_size: 3GB
+    - role: postfix
+      postfix_relayhost: "orion.archlinux.org"
     - { role: matrix, tags: ['matrix'] }
     - { role: zabbix-agent, tags: ["zabbix"] }
     - { role: fail2ban, tags: ["fail2ban"] }
