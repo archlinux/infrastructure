@@ -20,3 +20,4 @@
       postgres_effective_cache_size: 3GB
     - { role: matrix, tags: ['matrix'] }
     - { role: zabbix-agent, tags: ["zabbix"] }
+    - { role: fail2ban, tags: ["fail2ban"] }
