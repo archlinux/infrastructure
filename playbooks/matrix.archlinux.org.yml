@@ -19,3 +19,4 @@
       postgres_maintenance_work_mem: 1GB
       postgres_effective_cache_size: 3GB
     - { role: matrix, tags: ['matrix'] }
+    - { role: zabbix-agent, tags: ["zabbix"] }
