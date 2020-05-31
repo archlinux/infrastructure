@@ -187,7 +187,7 @@ ircService:
         # This should be set to the same thing as namespaces.users.group_id in irc_registration.
         # This does not alter existing rooms.
         # Leaving this option empty will not set the event.
-        groupId: ""
+        groupId: "+{{ settings.name }}:{{ matrix_server_name }}"
         # Should created Matrix rooms be federated? If false, only users on the
         # HS attached to this AS will be able to interact with this room.
         # Default: true.
