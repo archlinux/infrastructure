@@ -222,3 +222,12 @@ resource "hcloud_server" "monitoring" {
     ignore_changes = [image]
   }
 }
+
+resource "hcloud_server" "svn2gittest" {
+  name        = "svn2gittest"
+  image       = data.hcloud_image.archlinux.id
+  server_type = "cx11"
+  lifecycle {
+    ignore_changes = [image]
+  }
+}
