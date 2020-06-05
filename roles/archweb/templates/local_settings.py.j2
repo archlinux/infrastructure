@@ -69,7 +69,4 @@ MAILMAN_PASSWORD = '{{ vault_archweb_mailman_password }}'
 # Hostnames we allow this site to be served under
 ALLOWED_HOSTS = [{% for host in archweb_allowed_hosts %}'{{ host }}', {% endfor -%}]
 
-## CDN settings
-CDN_ENABLED = False
-
 # vim: set ts=4 sw=4 et:
