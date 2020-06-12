@@ -73,10 +73,12 @@
   loop:
     - archive-uploader.service
     - archive-uploader.timer
-  notify:
-    - daemon reload
   when: not archive_nginx_only
 
 - name: start uploader timer
-  service: name=archive-uploader.timer state=started enabled=yes
+  systemd:
+    name: archive-uploader.timer
+    enabled: yes
+    state: started
+    daemon_reload: yes
   when: not archive_nginx_only

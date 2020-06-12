@@ -1,8 +1,5 @@
 ---
 
-- name: daemon reload
-  command: systemctl daemon-reload
-
 - name: upgrade database
   become: true
   become_user: security

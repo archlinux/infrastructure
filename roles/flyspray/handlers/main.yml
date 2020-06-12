@@ -1,7 +1,0 @@
----
-
-- name: daemon reload
-  command: systemctl daemon-reload
-
-- name: restart php-fpm@flyspray
-  service: name=php-fpm@flyspray state=restarted

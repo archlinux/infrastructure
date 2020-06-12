@@ -93,5 +93,9 @@
   when: release.changed
 
 - name: start and enable security-tracker timer
-  service: name="security-tracker-update.timer" enabled=yes state=started
+  systemd:
+    name: security-tracker-update.timer
+    enabled: yes
+    state: started
+    daemon_reload: yes
   when: maintenance is not defined

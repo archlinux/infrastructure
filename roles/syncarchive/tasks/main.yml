@@ -10,10 +10,12 @@
   with_items:
     - syncarchive.timer
     - syncarchive.service
-  notify:
-    - daemon reload
 
 - name: start and enable syncarchive units
-  service: name={{ item }} enabled=yes state=started
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+    daemon_reload: yes
   with_items:
     - syncarchive.timer

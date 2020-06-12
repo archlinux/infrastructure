@@ -15,14 +15,16 @@
   with_items:
     - syncrepo.timer
     - syncrepo.service
-  notify:
-    - daemon reload
 
 - name: install rsyncd config
   copy: src=rsyncd.conf dest=/etc/rsyncd.conf owner=root group=root mode=0644
 
 - name: start and enable syncrepo units
-  service: name={{ item }} enabled=yes state=started
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+    daemon_reload: yes
   with_items:
     - syncrepo.timer
     - rsyncd.socket

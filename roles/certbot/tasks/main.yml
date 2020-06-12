@@ -14,11 +14,13 @@
   with_items:
     - certbot-renewal.service
     - certbot-renewal.timer
-  notify:
-    - daemon reload
 
 - name: activate letsencrypt renewal service
-  service: name=certbot-renewal.timer enabled=yes state=started
+  systemd:
+    name: certbot-renewal.timer
+    enabled: yes
+    state: started
+    daemon_reload: yes
 
 - name: open firewall holes for certbot standalone authenticator
   firewalld: service={{ item }} permanent=true state=enabled immediate=yes

@@ -1,8 +1,5 @@
 ---
 
-- name: daemon reload
-  command: systemctl daemon-reload
-
 - name: restart php-fpm@archwiki
   service: name=php-fpm@{{ archwiki_user }} state=restarted
 

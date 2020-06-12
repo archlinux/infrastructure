@@ -1,8 +1,5 @@
 ---
 
-- name: systemd daemon reload
-  command: systemctl daemon-reload
-
 - name: restart spampd
   service: name=spampd state=restarted
 

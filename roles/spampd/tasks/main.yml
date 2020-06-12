@@ -57,13 +57,16 @@
 - name: activate systemd timers
   service: name={{ item }} enabled=yes state=started
   with_items:
-    sa-update.timer
+    - sa-update.timer
 
 - name: remove override directory
   file: path=/etc/systemd/system/spampd.service.d/ state=absent
   notify:
-    - systemd daemon reload
     - restart spampd
 
 - name: start spampd
-  service: name=spampd enabled=yes state=started
+  systemd:
+    name: spampd
+    enabled: yes
+    state: started
+    daemon_reload: yes

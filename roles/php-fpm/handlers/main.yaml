@@ -1,3 +1,4 @@
 ---
 - name: daemon reload
-  command: systemctl daemon-reload
+  systemd:
+    reload-daemon: yes

@@ -257,12 +257,15 @@
   when: archweb_site and (release.changed or config.changed or virtualenv.changed or archweb_forced_deploy)
   notify: restart archweb memcached
 
-- name: start and enable archweb memcached service
-  service: name="archweb-memcached.service" enabled=yes state=started
-  when: archweb_site|bool
-
-- name: start and enable archweb rsync iso timer
-  service: name="archweb-rsync_iso.timer" enabled=yes state=started
+- name: start and enable archweb memcached service and archweb-rsync_iso timer
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+    daemon_reload: yes
+  with_items:
+    - archweb-memcached.service
+    - archweb-rsync_iso.timer
   when: archweb_site|bool
 
 - name: start and enable archweb reporead service
@@ -289,12 +292,15 @@
   service: name="archweb-planet.timer" enabled=yes state=started
   when: archweb_planet
 
-- name: start and enable archweb donor_import timer
-  service: name="archweb-donor_import.timer" enabled=yes state=started
-  when: archweb_donor_import|bool
-
-- name: start and enable archweb dump donor timer
-  service: name="archweb-dump_donor_mail.timer" enabled=yes state=started
+- name: start and enable archweb donor_import and archweb-dump_donor_mail timer
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+    daemon_reload: yes
+  with_items:
+    - archweb-donor_import.timer
+    - archweb-dump_donor_mail.timer
   when: archweb_donor_import|bool
 
 - name: create retro dir

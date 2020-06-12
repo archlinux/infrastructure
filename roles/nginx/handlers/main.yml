@@ -5,6 +5,3 @@
 
 - name: reload nginx
   service: name=nginx state=reloaded
-
-- name: daemon reload
-  command: systemctl daemon-reload

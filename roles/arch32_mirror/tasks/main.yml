@@ -15,13 +15,13 @@
   with_items:
     - syncrepo_arch32.timer
     - syncrepo_arch32.service
-  notify:
-    - daemon reload
 
 - name: start and enable syncrepo unit
-  service: name={{ item }} enabled=yes state=started
-  with_items:
-    - syncrepo_arch32.timer
+  systemd:
+    name: syncrepo_arch32.timer
+    enabled: yes
+    state: started
+    daemon_reload: yes
 
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ arch32_mirror_domain }} state=directory owner=root group=root mode=0755

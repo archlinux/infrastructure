@@ -29,11 +29,13 @@
 
 - name: install phrik systemd service
   copy: src=phrik.service dest=/etc/systemd/system/phrik.service
-  notify:
-    - daemon reload
 
-- name: start and enable pkgfile service
-  service: name="pkgfile-update.service" enabled=yes state=started
-
-- name: start and enable phrik service
-  service: name="phrik.service" enabled=yes state=started
+- name: start and enable pkgfile and phrikservice
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+    daemon_reload: yes
+  with_items:
+    - pkgfile-update.service
+    - phrik.service

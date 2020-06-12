@@ -121,8 +121,12 @@
   file: path=/etc/uwsgi/vassals/patchwork.ini state=touch
   when: (release.changed or config.changed or virtualenv.changed or patchwork_forced_deploy)
 
-- name: start and enable patchwork memcached service
-  service: name="patchwork-memcached.service" enabled=yes state=started
-
-- name: start and enable patchwork notification timer
-  service: name="patchwork-notification.timer" enabled=yes state=started
+- name: start and enable patchwork memcached service and notification timer
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+    daemon_reload: yes
+  with_items:
+    - patchwork-memcached.service
+    - patchwork-notification.timer

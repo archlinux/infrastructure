@@ -97,20 +97,23 @@
     - archwiki-question-updater.service
     - archwiki-memcached.service
 
-- name: start and enable archwiki runjobs timer
-  service: name="archwiki-runjobs.timer" enabled=yes state=started
-
-- name: start and enable archwiki prune cache timer
-  service: name="archwiki-prune-cache.timer" enabled=yes state=started
-
-- name: start and enable archwiki runjobs wait service
-  service: name="archwiki-runjobs-wait.service" enabled=yes state=started
+- name: start and enable archwiki timers and services
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+    daemon_reload: yes
+  with_items:
+    - archwiki-runjobs.timer
+    - archwiki-prune-cache.timer
+    - archwiki-runjobs-wait.service
+    - archwiki-memcached.service
 
 - name: create question answer file
-  service: name=archwiki-question-updater.service state=started
-
-- name: start and enable archwiki memcached
-  service: name=archwiki-memcached.service enabled=yes state=started
+  systemd:
+    name: archwiki-question-updater.service
+    state: started
+    daemon_reload: yes
 
 - name: ensure question answer file exists and set permissions
   file: state=file path="{{ archwiki_question_answer_file }}" owner=root group=root mode=0644

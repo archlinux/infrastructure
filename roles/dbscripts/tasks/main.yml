@@ -201,6 +201,8 @@
   become_user: svntogit
   register: git_config_username
   changed_when: "git_config_username.rc == 0"
+  tags:
+  - skip_ansible_lint
 
 - name: configure svntogit git user email
   command: git config --global user.name = 'svntogit@repos.archlinux.org'
@@ -208,6 +210,8 @@
   become_user: svntogit
   register: git_config_email
   changed_when: "git_config_email.rc == 0"
+  tags:
+  - skip_ansible_lint
 
 - name: template arch-svntogit
   copy: src=update-repos.sh dest=/srv/svntogit/update-repos.sh owner=root group=root mode=0755
@@ -222,6 +226,8 @@
     - packages
   become: yes
   become_user: svntogit
+  tags:
+  - skip_ansible_lint
 
 - name: add svntogit public remotes
   command: git remote add public ssh://git.archlinux.org/srv/git/svntogit/{{ item }}.git chdir=/srv/svntogit/repos/{{ item }}
@@ -233,6 +239,8 @@
   ignore_errors: yes
   register: git_public_remote
   changed_when: "git_public_remote.rc == 0"
+  tags:
+  - skip_ansible_lint
 
   # The following command also serves as a way to get the data the first time the repo is set up
 - name: configure svntogit pull upstream branch
@@ -244,6 +252,8 @@
   become_user: svntogit
   register: git_pull_upstream
   changed_when: "git_pull_upstream.rc == 0"
+  tags:
+  - skip_ansible_lint
 
 - name: configure svntogit push upstream branch
   command: git push -u public master chdir=/srv/svntogit/repos/{{ item }}
@@ -254,6 +264,8 @@
   become_user: svntogit
   register: git_push_master
   changed_when: "git_push_master.rc == 0"
+  tags:
+  - skip_ansible_lint
 
 - name: fix svntogit home permissions
   file: path="/srv/svntogit" state=directory owner=svntogit group=svntogit mode=0775
