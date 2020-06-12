@@ -13,12 +13,17 @@
   remote_user: root
   changed_when: client_ssh_keys.changed
 
-- local_action: tempfile state=file
+- name: create tempfile
+  tempfile: state=file
   register: tempfile
+  delegate_to: localhost
 
-- local_action: copy content="{{ lookup('template', 'authorized_keys.j2')}}" dest="{{ tempfile.path }}"
+- name: fill tempfile
+  copy: content="{{ lookup('template', 'authorized_keys.j2') }}" dest="{{ tempfile.path }}"
+  delegate_to: localhost
 
 - name: upload authorized_keys file
-  local_action: command scp "{{ tempfile.path }}" "{{ rsync_net_username }}@{{ inventory_hostname }}":.ssh/authorized_keys
+  command: scp "{{ tempfile.path }}" "{{ rsync_net_username }}@{{ inventory_hostname }}":.ssh/authorized_keys
+  delegate_to: localhost
   register: scp
   changed_when: "scp.rc == 0"

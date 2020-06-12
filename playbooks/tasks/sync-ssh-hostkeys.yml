@@ -16,20 +16,20 @@
   hosts: localhost
   tasks:
       - name: store hostkeys
-        local_action:
-            module: copy
-            dest: "{{ playbook_dir }}/../../docs/ssh-hostkeys.txt"
-            content: "{% for host in query('inventory_hostnames', 'all,!rsync_net,!localhost') | sort %}# {{ host }}\n{{ hostvars[host].ssh_hostkeys.stdout }}\n\n{% endfor %}"
+        copy:
+          dest: "{{ playbook_dir }}/../../docs/ssh-hostkeys.txt"
+          content: "{% for host in query('inventory_hostnames', 'all,!rsync_net,!localhost') | sort %}# {{ host }}\n{{ hostvars[host].ssh_hostkeys.stdout }}\n\n{% endfor %}"
+        delegate_to: localhost
       - name: store known_hosts
-        local_action:
-            module: copy
-            dest: "{{ playbook_dir }}/../../docs/ssh-known_hosts.txt"
-            content: "{% for host in query('inventory_hostnames', 'all,!rsync_net,!localhost') | sort %}# {{ host }}\n{{ hostvars[host].known_hosts.stdout }}\n\n{% endfor %}"
+        copy:
+          dest: "{{ playbook_dir }}/../../docs/ssh-known_hosts.txt"
+          content: "{% for host in query('inventory_hostnames', 'all,!rsync_net,!localhost') | sort %}# {{ host }}\n{{ hostvars[host].known_hosts.stdout }}\n\n{% endfor %}"
+        delegate_to: localhost
       - name: manually append rsync.net host keys
-        local_action:
-            module: lineinfile
-            path: "{{ playbook_dir }}/../../docs/ssh-known_hosts.txt"
-            line: "{% for host in query('inventory_hostnames', 'rsync_net') | sort %}# {{ host }}\n{{ hostvars[host].known_host }}\n\n{% endfor %}"
+        lineinfile:
+          path: "{{ playbook_dir }}/../../docs/ssh-known_hosts.txt"
+          line: "{% for host in query('inventory_hostnames', 'rsync_net') | sort %}# {{ host }}\n{{ hostvars[host].known_host }}\n\n{% endfor %}"
+        delegate_to: localhost
 
 - name: upload known_hosts to all nodes
   hosts: all,!rsync_net

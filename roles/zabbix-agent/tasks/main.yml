@@ -3,8 +3,9 @@
 # If you do not have python-zabbix-api installed (** ON YOUR LOCAL MACHINE **),
 # this will fail. Please install it; it is needed for tasks later in this role.
 - name: install python-zabbix-api package on localhost
-  local_action: pacman name=python-zabbix-api
+  pacman: name=python-zabbix-api
   run_once: true
+  delegate_to: localhost
 
 - name: install packages
   pacman: name=zabbix-agent,python-dbus,perl-json,arch-audit
@@ -52,8 +53,7 @@
   changed_when: false
 
 - name: Set host config in zabbix
-  local_action:
-    module: zabbix_host
+  zabbix_host:
     server_url: "https://{{ zabbix_agent_server }}"
     login_user: "{{ vault_zabbix_admin_user }}"
     login_password: "{{ vault_zabbix_admin_password }}"
@@ -75,6 +75,7 @@
     tls_accept: 2
     tls_connect: 2
     tls_psk: "{{ zabbix_agent_psk.stdout }}"
+  delegate_to: localhost
 
 - name: install agent config
   template: src=zabbix_agentd.conf dest=/etc/zabbix/zabbix_agentd.conf owner=zabbix-agent group=zabbix-agent mode=600
