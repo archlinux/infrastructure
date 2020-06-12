@@ -21,6 +21,8 @@
 
       - name: configure
         command: ./configure chdir={{ tempdir.path }}/pacman/pacman-{{ pacman_version }}
+        register: configure
+        changed_when: "configure.rc == 0"
 
       - name: make
         make: chdir={{ tempdir.path }}/pacman/pacman-{{ pacman_version }}/doc target=website

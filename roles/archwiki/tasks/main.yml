@@ -37,7 +37,7 @@
   file: path=/var/log/nginx/{{ archwiki_domain }} state=directory owner=root group=root mode=0755
 
 - name: make debug log dir
-  file: path=/var/log/archwiki state=directory owner={{archwiki_user}} group=root mode=0700
+  file: path=/var/log/archwiki state=directory owner={{ archwiki_user }} group=root mode=0700
 
 - name: clone archwiki repo
   git: repo={{ archwiki_repository }} dest="{{ archwiki_dir }}/public" version={{ archwiki_version }}
@@ -87,7 +87,7 @@
   service: name=php-fpm@{{ archwiki_user }}.socket state=started enabled=true
 
 - name: install systemd services/timers
-  template: src="{{item}}.j2" dest="/etc/systemd/system/{{item}}" owner=root group=root mode=0644
+  template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
   loop:
     - archwiki-runjobs.service
     - archwiki-runjobs-wait.service
