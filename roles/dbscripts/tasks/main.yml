@@ -72,44 +72,74 @@
     - /srv/repos/svn-community
     - /srv/repos/svn-packages
 
-- file: path="/srv/repos/svn-community/package-cleanup" state=directory owner=svn-community group=tu mode=0775
-- acl: name=/srv/repos/svn-community/package-cleanup entry="user:cleanup:rwx" state=present
-- acl: name=/srv/repos/svn-community/package-cleanup entry="default:user::rwx" state=present
-- acl: name=/srv/repos/svn-community/package-cleanup entry="default:user:cleanup:rwx" state=present
-- acl: name=/srv/repos/svn-community/package-cleanup entry="default:group::rwx" state=present
-- acl: name=/srv/repos/svn-community/package-cleanup entry="default:other::r-x" state=present
+- name: create svn-community/package-cleanup directory
+  file: path="/srv/repos/svn-community/package-cleanup" state=directory owner=svn-community group=tu mode=0775
+- name: add acl user:cleanup:rwx to /srv/repos/svn-community/package-cleanup
+  acl: name=/srv/repos/svn-community/package-cleanup entry="user:cleanup:rwx" state=present
+- name: add acl default:user::rwx to /srv/repos/svn-community/package-cleanup
+  acl: name=/srv/repos/svn-community/package-cleanup entry="default:user::rwx" state=present
+- name: add acl default:user:cleanup:rwx to /srv/repos/svn-community/package-cleanup
+  acl: name=/srv/repos/svn-community/package-cleanup entry="default:user:cleanup:rwx" state=present
+- name: add acl default:group::rwx to /srv/repos/svn-community/package-cleanup
+  acl: name=/srv/repos/svn-community/package-cleanup entry="default:group::rwx" state=present
+- name: add acl default:other::r-x to /srv/repos/svn-community/package-cleanup
+  acl: name=/srv/repos/svn-community/package-cleanup entry="default:other::r-x" state=present
 
-- file: path="/srv/repos/svn-packages/package-cleanup" state=directory owner=svn-packages group=dev mode=0775
-- acl: name=/srv/repos/svn-packages/package-cleanup entry="user:cleanup:rwx" state=present
-- acl: name=/srv/repos/svn-packages/package-cleanup entry="default:user::rwx" state=present
-- acl: name=/srv/repos/svn-packages/package-cleanup entry="default:user:cleanup:rwx" state=present
-- acl: name=/srv/repos/svn-packages/package-cleanup entry="default:group::rwx" state=present
-- acl: name=/srv/repos/svn-packages/package-cleanup entry="default:other::r-x" state=present
+- name: create svn-packages/package-cleanup directory
+  file: path="/srv/repos/svn-packages/package-cleanup" state=directory owner=svn-packages group=dev mode=0775
+- name: add acl user:cleanup:rwx to /srv/repos/svn-packages/package-cleanup
+  acl: name=/srv/repos/svn-packages/package-cleanup entry="user:cleanup:rwx" state=present
+- name: add acl default:user::rwx to /srv/repos/svn-packages/package-cleanup
+  acl: name=/srv/repos/svn-packages/package-cleanup entry="default:user::rwx" state=present
+- name: add acl default:user:cleanup:rwx to /srv/repos/svn-packages/package-cleanup
+  acl: name=/srv/repos/svn-packages/package-cleanup entry="default:user:cleanup:rwx" state=present
+- name: add acl default:group::rwx to /srv/repos/svn-packages/package-cleanup
+  acl: name=/srv/repos/svn-packages/package-cleanup entry="default:group::rwx" state=present
+- name: add acl default:other::r-x to /srv/repos/svn-packages/package-cleanup
+  acl: name=/srv/repos/svn-packages/package-cleanup entry="default:other::r-x" state=present
 
-- file: path="/srv/repos/svn-community/source-cleanup" state=directory owner=sourceballs group=svn-community mode=0755
-- file: path="/srv/repos/svn-packages/source-cleanup" state=directory owner=sourceballs group=svn-packages mode=0755
+- name: create svn-community/source-cleanup directory
+  file: path="/srv/repos/svn-community/source-cleanup" state=directory owner=sourceballs group=svn-community mode=0755
+- name: create svn-packages/source-cleanup directory
+  file: path="/srv/repos/svn-packages/source-cleanup" state=directory owner=sourceballs group=svn-packages mode=0755
 
-- file: path="/srv/repos/svn-community/svn" state=directory owner=svn-community group=svn-community mode=0755
-- acl: name=/srv/repos/svn-community/svn entry="default:user::rwx" state=present
-- acl: name=/srv/repos/svn-community/svn entry="default:group::r-x" state=present
-- acl: name=/srv/repos/svn-community/svn entry="default:other::r-x" state=present
+- name: create svn-community/svn directory
+  file: path="/srv/repos/svn-community/svn" state=directory owner=svn-community group=svn-community mode=0755
+- name: add acl default:user::rwx to /srv/repos/svn-community/svn
+  acl: name=/srv/repos/svn-community/svn entry="default:user::rwx" state=present
+- name: add acl default:group::r-x to /srv/repos/svn-community/svn
+  acl: name=/srv/repos/svn-community/svn entry="default:group::r-x" state=present
+- name: add acl default:other::r-x to /srv/repos/svn-community/svn
+  acl: name=/srv/repos/svn-community/svn entry="default:other::r-x" state=present
 
-- file: path="/srv/repos/svn-packages/svn" state=directory owner=svn-packages group=svn-packages mode=0755
-- acl: name=/srv/repos/svn-packages/svn entry="default:user::rwx" state=present
-- acl: name=/srv/repos/svn-packages/svn entry="default:group::r-x" state=present
-- acl: name=/srv/repos/svn-packages/svn entry="default:other::r-x" state=present
+- name: create svn-packages/svn directory
+  file: path="/srv/repos/svn-packages/svn" state=directory owner=svn-packages group=svn-packages mode=0755
+- name: add acl default:user::rwx to /srv/repos/svn-packages/svn
+  acl: name=/srv/repos/svn-packages/svn entry="default:user::rwx" state=present
+- name: add acl default:group::r-x to /srv/repos/svn-packages/svn
+  acl: name=/srv/repos/svn-packages/svn entry="default:group::r-x" state=present
+- name: add acl default:other::r-x to /srv/repos/svn-packages/svn
+  acl: name=/srv/repos/svn-packages/svn entry="default:other::r-x" state=present
 
-- file: path="/srv/repos/svn-community/tmp" state=directory owner=svn-community group=tu mode=1775
-- acl: name=/srv/repos/svn-community/tmp entry="user:sourceballs:rwx" state=present
+- name: create svn-community/tmp directory
+  file: path="/srv/repos/svn-community/tmp" state=directory owner=svn-community group=tu mode=1775
+- name: add acl user:sourceballs:rwx to /srv/repos/svn-community/tmp
+  acl: name=/srv/repos/svn-community/tmp entry="user:sourceballs:rwx" state=present
 
-- file: path="/srv/repos/svn-packages/tmp" state=directory owner=svn-packages group=dev mode=1775
-- acl: name=/srv/repos/svn-packages/tmp entry="user:sourceballs:rwx" state=present
+- name: create svn-packages/tmp directory
+  file: path="/srv/repos/svn-packages/tmp" state=directory owner=svn-packages group=dev mode=1775
+- name: add acl user:sourceballs:rwx to /srv/repos/svn-packages/tmp
+  acl: name=/srv/repos/svn-packages/tmp entry="user:sourceballs:rwx" state=present
 
-- file: path="/srv/ftp/lastsync" state=touch owner=ftp group=ftp mode=0644
+- name: touch /srv/ftp/lastsync file
+  file: path="/srv/ftp/lastsync" state=touch owner=ftp group=ftp mode=0644
 
-- file: path="/srv/ftp/lastupdate" state=touch owner=ftp group=ftp mode=0644
-- acl: name=/srv/ftp/lastupdate entry="group:tu:rw-" state=present
-- acl: name=/srv/ftp/lastupdate entry="group:dev:rw-" state=present
+- name: touch /srv/ftp/lastupdate file
+  file: path="/srv/ftp/lastupdate" state=touch owner=ftp group=ftp mode=0644
+- name: add acl group:tu:rw- to /srv/ftp/lastupdate
+  acl: name=/srv/ftp/lastupdate entry="group:tu:rw-" state=present
+- name: add acl group:dev:rw- to /srv/ftp/lastupdate
+  acl: name=/srv/ftp/lastupdate entry="group:dev:rw-" state=present
 
 - name: clone dbscripts git repo
   git: >

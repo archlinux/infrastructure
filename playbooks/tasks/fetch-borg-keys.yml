@@ -3,7 +3,8 @@
 - name: prepare local storage directory
   hosts: 127.0.0.1
   tasks:
-      - file: path="{{playbook_dir}}/../../borg-keys/" state=directory
+      - name: create borg-keys directory
+        file: path="{{ playbook_dir }}/../../borg-keys/" state=directory
 
 - name: fetch borg keys
   hosts: borg_clients

@@ -3,7 +3,8 @@
 - name: install packages
   pacman: name=zabbix-server,zabbix-frontend-php,irccat,gnu-netcat
 
-- file: path=/etc/zabbix state=directory owner=root group=root mode=755
+- name: set zabbix directory permissions in /etc
+  file: path=/etc/zabbix state=directory owner=root group=root mode=755
 
 - name: install server config
   template: src=zabbix_server.conf dest=/etc/zabbix/zabbix_server.conf owner=zabbix-server group=zabbix-server mode=600

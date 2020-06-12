@@ -36,7 +36,8 @@
     append: yes
   when: "'memcached' in group_names"
 
-- file: path=/etc/zabbix state=directory owner=root group=root mode=755
+- name: set zabbix directory permissions in /etc
+  file: path=/etc/zabbix state=directory owner=root group=root mode=755
 
 - name: create host PSK
   shell: umask 077; openssl rand -hex 64 > /etc/zabbix/zabbix_agentd.psk creates=/etc/zabbix/zabbix_agentd.psk

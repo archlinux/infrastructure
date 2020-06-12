@@ -158,11 +158,13 @@
 - name: enable services inside chroot
   command: chroot /mnt systemctl enable sshd systemd-networkd systemd-resolved fstrim.timer hcloud-init
 
-- set_fact: pubkey_list="{{ lookup('file', "{{ playbook_dir }}/../../pubkeys/" + item) }}"
+- name: assign pubkey list to fact
+  set_fact: pubkey_list="{{ lookup('file', "{{ playbook_dir }}/../../pubkeys/" + item) }}"
   register: pubkeys
   with_items: "{{ root_ssh_keys }}"
 
-- set_fact: pubkey_string={{ pubkeys.results | map(attribute='ansible_facts.pubkey_list') | join('\n') }}
+- name: assign pubkey string to fact
+  set_fact: pubkey_string={{ pubkeys.results | map(attribute='ansible_facts.pubkey_list') | join('\n') }}
 
 - name: add authorized key for root
   authorized_key: user=root key="{{ pubkey_string }}" path=/tmp/root.x86_64/mnt/root/.ssh/authorized_keys exclusive=yes
