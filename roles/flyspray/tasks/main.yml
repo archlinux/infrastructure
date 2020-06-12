@@ -34,7 +34,10 @@
   when: not user_created.changed
 
 - name: clone flyspray repo
-  git: repo=https://git.archlinux.org/vhosts/bugs.archlinux.org.git dest="{{ flyspray_dir }}"
+  git:
+    repo: https://git.archlinux.org/vhosts/bugs.archlinux.org.git
+    version: "{{ flyspray_commit }}"
+    dest: "{{ flyspray_dir }}"
   become: true
   become_user: "{{ flyspray_user }}"
   register: release
