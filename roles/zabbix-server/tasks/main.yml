@@ -38,7 +38,7 @@
 
 
 - name: check if zabbix db contains tables
-  shell: psql -U {{ zabbix_db_user }} {{ zabbix_db_name }} -c '\d' | grep -P '\(\d+ rows\)'
+  shell: set -o pipefail && psql -U {{ zabbix_db_user }} {{ zabbix_db_name }} -c '\d' | grep -P '\(\d+ rows\)'
   become_user: zabbix-server
   become: yes
   register: table_is_populated

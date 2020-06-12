@@ -7,7 +7,7 @@
         shell: "for type in sha256 md5; do for file in /etc/ssh/ssh_host_*.pub; do ssh-keygen -l -f $file -E $type; done; echo; done"
         register: ssh_hostkeys
       - name: fetch known_hosts
-        shell: "ssh-keyscan 127.0.0.1 2>/dev/null | sed 's#^127.0.0.1#{{ inventory_hostname }}#'"
+        shell: "set -o pipefail && ssh-keyscan 127.0.0.1 2>/dev/null | sed 's#^127.0.0.1#{{ inventory_hostname }}#'"
         register: known_hosts
 
 - name: store hostkeys

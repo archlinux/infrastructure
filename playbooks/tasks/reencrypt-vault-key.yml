@@ -3,4 +3,4 @@
   hosts: 127.0.0.1
   tasks:
       - name: reencrypt vault key
-        shell: gpg --decrypt --batch --quiet "{{playbook_dir}}/../../misc/vault-password.gpg" | gpg --batch --armor --encrypt --output - {% for userid in root_gpgkeys %}--recipient {{userid}} {% endfor %} | sponge "{{playbook_dir}}/../../misc/vault-password.gpg"
+        shell: set -o pipefail && gpg --decrypt --batch --quiet "{{playbook_dir}}/../../misc/vault-password.gpg" | gpg --batch --armor --encrypt --output - {% for userid in root_gpgkeys %}--recipient {{userid}} {% endfor %} | sponge "{{playbook_dir}}/../../misc/vault-password.gpg"
