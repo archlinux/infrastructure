@@ -1,7 +1,7 @@
 ---
 
 - name: create ssl cert
-  command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{letsencrypt_validation_dir}} -d '{{ matrix_domain }}' creates='/etc/letsencrypt/live/{{ matrix_domain }}/fullchain.pem'
+  command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{ letsencrypt_validation_dir }} -d '{{ matrix_domain }}' creates='/etc/letsencrypt/live/{{ matrix_domain }}/fullchain.pem'
   when: 'matrix_domain is defined'
 
 - name: install packages

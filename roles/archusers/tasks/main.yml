@@ -17,16 +17,16 @@
   with_dict: "{{ arch_users }}"
 
 - name: create .ssh directory
-  file: path=/home/{{item.key}}/.ssh state=directory owner={{item.key}} group=users mode=0700
+  file: path=/home/{{ item.key }}/.ssh state=directory owner={{ item.key }} group=users mode=0700
   with_dict: "{{ arch_users }}"
 
 - name: configure ssh keys
-  template: src=authorized_keys.j2 dest=/home/{{item.key}}/.ssh/authorized_keys owner={{item.key}} group=users mode=0600
+  template: src=authorized_keys.j2 dest=/home/{{ item.key }}/.ssh/authorized_keys owner={{ item.key }} group=users mode=0600
   when: item.value.ssh_key is defined
   with_dict: "{{ arch_users }}"
 
 - name: remove ssh keys if undefined
-  file: path=/home/{{item.key}}/.ssh/authorized_keys state=absent
+  file: path=/home/{{ item.key }}/.ssh/authorized_keys state=absent
   when: item.value.ssh_key is not defined
   with_dict: "{{ arch_users }}"
 

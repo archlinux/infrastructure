@@ -8,8 +8,8 @@
 
 - name: clone archlinux-docker repository
   become: yes
-  become_user: "{{docker_image_user}}"
-  git: repo="{{docker_image_git_remote}}" version="{{ docker_image_git_tag }}" dest="{{ docker_image_git_dir }}" force=yes
+  become_user: "{{ docker_image_user }}"
+  git: repo="{{ docker_image_git_remote }}" version="{{ docker_image_git_tag }}" dest="{{ docker_image_git_dir }}" force=yes
 
 - name: install sudoers file
   template: src=sudoers.d.j2 dest=/etc/sudoers.d/docker-image

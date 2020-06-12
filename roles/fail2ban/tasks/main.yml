@@ -23,8 +23,8 @@
 
 - name: install local config files
   template:
-    src: "{{item}}.j2"
-    dest: "/etc/fail2ban/{{item}}"
+    src: "{{ item }}.j2"
+    dest: "/etc/fail2ban/{{ item }}"
     owner: "root"
     group: "root"
     mode: 0644

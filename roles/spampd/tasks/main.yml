@@ -35,13 +35,13 @@
   file: path=/etc/mail/spamassassin/sa-update-keys mode=700 owner=root group=root state=directory
 
 - name: add gpg keys to SA keyring
-  command: /usr/bin/vendor_perl/sa-update --import "/etc/mail/spamassassin/{{item}}"
+  command: /usr/bin/vendor_perl/sa-update --import "/etc/mail/spamassassin/{{ item }}"
   with_items:
     - yerp.gpg.key
     - zmi.gpg.key
 
 - name: install SA configs
-  template: src={{item}}.j2 dest=/etc/mail/spamassassin/{{item}} owner=root group=root mode=0644
+  template: src={{ item }}.j2 dest=/etc/mail/spamassassin/{{ item }} owner=root group=root mode=0644
   notify:
     restart spampd
   loop:

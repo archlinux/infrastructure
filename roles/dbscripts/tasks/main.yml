@@ -19,7 +19,7 @@
   copy: src=sudoers.d dest=/etc/sudoers.d/dbscripts owner=root group=root mode=0600
 
 - name: create ssl cert
-  command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{letsencrypt_validation_dir}} -d '{{ repos_domain }}' creates='/etc/letsencrypt/live/{{ repos_domain }}/fullchain.pem'
+  command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{ letsencrypt_validation_dir }} -d '{{ repos_domain }}' creates='/etc/letsencrypt/live/{{ repos_domain }}/fullchain.pem'
 
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ repos_domain }} state=directory owner=root group=root mode=0755
@@ -41,7 +41,7 @@
     name: "{{ item.key }}"
     group: users
     groups: "{{ item.value.groups | join(',') }}"
-    comment: "{{ item.value.name}}"
+    comment: "{{ item.value.name }}"
     state: present
   with_dict: "{{ arch_users }}"
 
@@ -62,7 +62,7 @@
     pathtmpl: '/home/{user}/staging/{dirname}'
     permissions: 755
     directories: ['', 'core', 'extra', 'testing', 'staging', 'community', 'community-staging', 'community-testing',  'multilib', 'multilib-staging', 'multilib-testing']
-    users: "{{arch_users.keys() | list}}"
+    users: "{{ arch_users.keys() | list }}"
     group: users
   tags: ["archusers"]
 

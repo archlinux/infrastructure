@@ -11,21 +11,21 @@
         register: tempdir
 
       - name: fetch pacman tarball
-        get_url: url=https://sources.archlinux.org/other/pacman/pacman-{{pacman_version}}.tar.gz dest={{tempdir.path}}/pacman.tar.gz
+        get_url: url=https://sources.archlinux.org/other/pacman/pacman-{{ pacman_version }}.tar.gz dest={{ tempdir.path }}/pacman.tar.gz
 
       - name: create extraction dir
-        file: path={{tempdir.path}}/pacman state=directory
+        file: path={{ tempdir.path }}/pacman state=directory
 
       - name: unpack tarball
-        unarchive: src={{tempdir.path}}/pacman.tar.gz dest={{tempdir.path}}/pacman/
+        unarchive: src={{ tempdir.path }}/pacman.tar.gz dest={{ tempdir.path }}/pacman/
 
       - name: configure
-        shell: ./configure chdir={{tempdir.path}}/pacman/pacman-{{pacman_version}}
+        shell: ./configure chdir={{ tempdir.path }}/pacman/pacman-{{ pacman_version }}
 
       - name: make
-        make: chdir={{tempdir.path}}/pacman/pacman-{{pacman_version}}/doc target=website
+        make: chdir={{ tempdir.path }}/pacman/pacman-{{ pacman_version }}/doc target=website
 
       - name: upload website
-        unarchive: src={{tempdir.path}}/pacman/pacman-{{pacman_version}}/doc/website.tar.gz dest={{archweb_dir}}/archlinux.org/pacman mode=0644
+        unarchive: src={{ tempdir.path }}/pacman/pacman-{{ pacman_version }}/doc/website.tar.gz dest={{ archweb_dir }}/archlinux.org/pacman mode=0644
         delegate_to: apollo.archlinux.org
 

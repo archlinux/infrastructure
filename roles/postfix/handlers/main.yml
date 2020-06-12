@@ -9,7 +9,7 @@
   command: postfix reload
 
 - name: postmap additional files
-  command: postmap /etc/postfix/{{item}}
+  command: postmap /etc/postfix/{{ item }}
   with_items:
     - access_client
     - access_sender

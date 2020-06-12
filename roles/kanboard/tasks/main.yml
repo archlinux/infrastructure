@@ -7,7 +7,7 @@
   user: name=kanboard shell=/bin/false home="{{ kanboard_dir }}" createhome=no
 
 - name: clone kanboard git repo
-  git: repo=https://github.com/kanboard/kanboard.git dest="{{kanboard_dir}}" version={{kanboard_version}}
+  git: repo=https://github.com/kanboard/kanboard.git dest="{{ kanboard_dir }}" version={{ kanboard_version }}
 
 - name: install nginx config
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/kanboard.conf owner=root group=root mode=644
@@ -19,7 +19,7 @@
   file: path=/var/log/nginx/{{ kanboard_domain }} state=directory owner=root group=root mode=0755
 
 - name: make dirs for webuser
-  file: path="{{kanboard_dir}}/{{item}}" owner=kanboard mode=700 state=directory
+  file: path="{{ kanboard_dir }}/{{ item }}" owner=kanboard mode=700 state=directory
   with_items:
     - data
 
@@ -30,13 +30,13 @@
   become_method: su
 
 - name: create kanboard db
-  postgresql_db: db="{{kanboard_db}}"
+  postgresql_db: db="{{ kanboard_db }}"
   become: yes
   become_user: postgres
   become_method: su
 
 - name: install kanboard config
-  template: src=config.php.j2 dest="{{kanboard_dir}}/config.php" owner=root group=kanboard mode=640
+  template: src=config.php.j2 dest="{{ kanboard_dir }}/config.php" owner=root group=kanboard mode=640
 
 - name: configure php-fpm
   template:

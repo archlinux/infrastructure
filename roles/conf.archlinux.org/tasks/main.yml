@@ -23,14 +23,14 @@
   command: hugo
   become_user: "{{conference_user}}"
   args:
-    chdir: "{{conference_dir}}"
+    chdir: "{{ conference_dir }}"
   when: release.changed
 
 - name: create ssl cert
-  command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{letsencrypt_validation_dir}} -d '{{ conference_domain }}' creates='/etc/letsencrypt/live/{{ conference_domain }}/fullchain.pem'
+  command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{ letsencrypt_validation_dir }} -d '{{ conference_domain }}' creates='/etc/letsencrypt/live/{{ conference_domain }}/fullchain.pem'
 
 - name: create ssl cert
-  command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{letsencrypt_validation_dir}} -d '{{ static_conference_domain }}' creates='/etc/letsencrypt/live/{{ static_conference_domain }}/fullchain.pem'
+  command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{ letsencrypt_validation_dir }} -d '{{ static_conference_domain }}' creates='/etc/letsencrypt/live/{{ static_conference_domain }}/fullchain.pem'
 
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ conference_domain }} state=directory owner=root group=root mode=0755

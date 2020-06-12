@@ -40,7 +40,7 @@
   no_log: true
 
 - name: configure zabbix-agent user
-  mysql_user: user={{zabbix_agent_mysql_user}} host=localhost password={{vault_mariadb_users.zabbix_agent}}
+  mysql_user: user={{ zabbix_agent_mysql_user }} host=localhost password={{ vault_mariadb_users.zabbix_agent }}
 
 # TODO: implement in ansible: grant process on *.* to 'zabbix_agent'@'localhost';
 

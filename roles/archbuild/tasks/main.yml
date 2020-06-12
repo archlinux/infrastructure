@@ -59,7 +59,7 @@
     - mkpkg@.service
 
 - name: start and enable archbuild mounts
-  service: name={{ item }} enabled={{"yes" if archbuild_fs == 'tmpfs' else "no"}} state={{"started" if archbuild_fs == 'tmpfs' else "stopped"}}
+  service: name={{ item }} enabled={{ "yes" if archbuild_fs == 'tmpfs' else "no" }} state={{ "started" if archbuild_fs == 'tmpfs' else "stopped" }}
   with_items:
     - var-lib-archbuild.mount
 

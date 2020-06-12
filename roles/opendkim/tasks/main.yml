@@ -17,15 +17,15 @@
 
 - file: path="/etc/opendkim/private" state=directory owner=root group=root mode=0700
 
-- name: generate DKIM key for {{dkim_selector}}
-  command: opendkim-genkey -r -s {{dkim_selector}} -d archlinux.org --bits=4096
+- name: generate DKIM key for {{ dkim_selector }}
+  command: opendkim-genkey -r -s {{ dkim_selector }} -d archlinux.org --bits=4096
   args:
-    creates: /etc/opendkim/private/{{dkim_selector}}.private
+    creates: /etc/opendkim/private/{{ dkim_selector }}.private
     chdir: /etc/opendkim/private
 
 # see README.md for instruction on how to add the key to DNS. This will fail unless the key in DNS is correct!
 - name: verify key in dns
-  command: opendkim-testkey  -d archlinux.org -s {{dkim_selector}} -k /etc/opendkim/private/{{dkim_selector}}.private -vvv
+  command: opendkim-testkey -d archlinux.org -s {{ dkim_selector }} -k /etc/opendkim/private/{{ dkim_selector }}.private -vvv
   tags:
     - dkimverify
 

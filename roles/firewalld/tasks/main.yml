@@ -13,8 +13,8 @@
 - name: start and enable firewalld
   service:
     name: firewalld
-    enabled: "{{configure_firewall}}"
-    state: "{{configure_firewall | ternary('started', 'stopped') }}"
+    enabled: "{{ configure_firewall }}"
+    state: "{{ configure_firewall | ternary('started', 'stopped') }}"
 
 - name: disable default dhcpv6-client rule
   firewalld:

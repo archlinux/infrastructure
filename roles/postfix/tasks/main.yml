@@ -4,7 +4,7 @@
   pacman: name=postfix state=present
 
 - name: install template configs
-  template: src={{item}}.j2 dest=/etc/postfix/{{item}} owner=root group=root mode=0644
+  template: src={{ item }}.j2 dest=/etc/postfix/{{ item }} owner=root group=root mode=0644
   with_items:
     - main.cf
     - master.cf
@@ -19,7 +19,7 @@
     - update aliases db
 
 - name: install additional files
-  copy: src={{item}} dest=/etc/postfix/{{item}} owner=root group=root mode=0644
+  copy: src={{ item }} dest=/etc/postfix/{{ item }} owner=root group=root mode=0644
   with_items:
     - access_client
     - access_sender
@@ -49,7 +49,7 @@
   when: postfix_smtpd_public
 
 - name: install bouncehandler config
-  template: src=wiki-bouncehandler.conf.j2 dest={{postfix_wiki_bounce_config}} owner={{postfix_wiki_bounce_user}} group=root mode=0600
+  template: src=wiki-bouncehandler.conf.j2 dest={{ postfix_wiki_bounce_config }} owner={{ postfix_wiki_bounce_user }} group=root mode=0600
   when: postfix_server
 
 - name: install packages for bounce handler
@@ -57,17 +57,17 @@
   when: postfix_server
 
 - name: install bouncehandler script
-  copy: src=bouncehandler.pl dest={{postfix_wiki_bounce_mail_handler}} owner=root group=root mode=0755
+  copy: src=bouncehandler.pl dest={{ postfix_wiki_bounce_mail_handler }} owner=root group=root mode=0755
   when: postfix_server
 
 - name: make bouncehandler user
-  user: name={{postfix_wiki_bounce_user}} shell=/bin/false skeleton=/var/empty state={{"present" if postfix_server else "absent"}}
+  user: name={{ postfix_wiki_bounce_user }} shell=/bin/false skeleton=/var/empty state={{ "present" if postfix_server else "absent" }}
 
 - name: start and enable postfix
   service: name=postfix enabled=yes state=started
 
 - name: remove old files
-  file: path={{item}} state=absent
+  file: path={{ item }} state=absent
   with_items:
     - compat_maps
     - compat_maps.db
@@ -93,8 +93,8 @@
   delegate_to: orion.archlinux.org
   when: postfix_relayhost != ""
   user:
-    name: "{{inventory_hostname_short}}"
-    comment: "SMTP Relay Account for {{inventory_hostname}}"
+    name: "{{ inventory_hostname_short }}"
+    comment: "SMTP Relay Account for {{ inventory_hostname }}"
     group: nobody
     password: "{{ postfix_relay_password | password_hash('sha512') }}"
     shell: /sbin/nologin
@@ -103,7 +103,7 @@
     create_home: no
 
 - name: open firewall holes
-  firewalld: service={{item}} permanent=true state=enabled immediate=yes
+  firewalld: service={{ item }} permanent=true state=enabled immediate=yes
   with_items:
     - smtp
     - smtp-submission
