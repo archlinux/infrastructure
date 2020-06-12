@@ -33,7 +33,7 @@
     name:
       - 'matrix-synapse[postgres,systemd,url_preview]'
       - pip
-    state: latest
+    state: "{{ matrix_pip_version }}"
     extra_args: '-U --upgrade-strategy=eager'
     virtualenv: /var/lib/synapse/venv
   become: yes
