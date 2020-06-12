@@ -238,7 +238,7 @@
   file: src=/run/systemd/resolve/stub-resolv.conf dest=/mnt/etc/resolv.conf state=link force=yes
 
 - name: clean pacman cache
-  shell: yes | chroot /mnt pacman -Scc
+  command: chroot /mnt pacman -Scc --noconfirm
   register: chroot_pacman_clean_cache
   changed_when: "chroot_pacman_clean_cache.rc == 0"
 

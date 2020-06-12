@@ -20,7 +20,7 @@
         unarchive: src={{ tempdir.path }}/pacman.tar.gz dest={{ tempdir.path }}/pacman/
 
       - name: configure
-        shell: ./configure chdir={{ tempdir.path }}/pacman/pacman-{{ pacman_version }}
+        command: ./configure chdir={{ tempdir.path }}/pacman/pacman-{{ pacman_version }}
 
       - name: make
         make: chdir={{ tempdir.path }}/pacman/pacman-{{ pacman_version }}/doc target=website

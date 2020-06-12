@@ -4,6 +4,8 @@
 # they don't support ansible directly (no Python and such).
 - name: create the root backup directory at {{ backup_dir }}
   raw: mkdir -p {{ backup_dir }}
+  tags:
+    - skip_ansible_lint
 
 - name: fetch ssh keys from each borg client machine
   command: cat /root/.ssh/id_rsa.pub
