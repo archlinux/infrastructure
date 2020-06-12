@@ -19,7 +19,7 @@
     state: "directory"
     owner: "root"
     group: "root"
-    mode: 755
+    mode: 0755
 
 - name: install service unit override file
   template:

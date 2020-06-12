@@ -15,7 +15,7 @@
     dest: "{{ service_nginx_conf }}"
     owner: root
     group: root
-    mode: 644
+    mode: 0644
   notify: reload nginx
   when: maintenance is defined and maintenance|bool
 
@@ -25,7 +25,7 @@
     dest: "{{ maintenance_http_dir }}/{{ service_domain }}/503.html"
     owner: root
     group: root
-    mode: 644
+    mode: 0644
   when: maintenance is defined and maintenance|bool
 
 - name: force reload nginx
