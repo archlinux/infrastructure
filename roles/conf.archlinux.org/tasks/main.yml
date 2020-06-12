@@ -21,7 +21,8 @@
 
 - name: generate conf.archlinux.org site
   command: hugo
-  become_user: "{{conference_user}}"
+  become: yes
+  become_user: "{{ conference_user }}"
   args:
     chdir: "{{ conference_dir }}"
   when: release.changed
