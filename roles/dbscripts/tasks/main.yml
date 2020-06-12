@@ -186,6 +186,8 @@
 
 - name: generate mirror config
   command: /etc/rsyncd-conf-genscripts/gen_rsyncd.conf.pl
+  register: gen_rsyncd
+  changed_when: "gen_rsyncd.rc == 0"
 
 - name: install svnlog
   copy: src=svnlog dest=/usr/local/bin/svnlog owner=root group=root mode=0755
@@ -197,11 +199,15 @@
   command: git config --global user.name = 'svntogit'
   become: yes
   become_user: svntogit
+  register: git_config_username
+  changed_when: "git_config_username.rc == 0"
 
 - name: configure svntogit git user email
   command: git config --global user.name = 'svntogit@repos.archlinux.org'
   become: yes
   become_user: svntogit
+  register: git_config_email
+  changed_when: "git_config_email.rc == 0"
 
 - name: template arch-svntogit
   copy: src=update-repos.sh dest=/srv/svntogit/update-repos.sh owner=root group=root mode=0755
@@ -225,6 +231,8 @@
   become: yes
   become_user: svntogit
   ignore_errors: yes
+  register: git_public_remote
+  changed_when: "git_public_remote.rc == 0"
 
   # The following command also serves as a way to get the data the first time the repo is set up
 - name: configure svntogit pull upstream branch
@@ -234,6 +242,8 @@
     - packages
   become: yes
   become_user: svntogit
+  register: git_pull_upstream
+  changed_when: "git_pull_upstream.rc == 0"
 
 - name: configure svntogit push upstream branch
   command: git push -u public master chdir=/srv/svntogit/repos/{{ item }}
@@ -242,6 +252,8 @@
     - packages
   become: yes
   become_user: svntogit
+  register: git_push_master
+  changed_when: "git_push_master.rc == 0"
 
 - name: fix svntogit home permissions
   file: path="/srv/svntogit" state=directory owner=svntogit group=svntogit mode=0775

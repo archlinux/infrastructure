@@ -6,9 +6,11 @@
       - name: fetch hostkey checksums
         shell: "for type in sha256 md5; do for file in /etc/ssh/ssh_host_*.pub; do ssh-keygen -l -f $file -E $type; done; echo; done"
         register: ssh_hostkeys
+        changed_when: ssh_hostkeys | length > 0
       - name: fetch known_hosts
         shell: "set -o pipefail && ssh-keyscan 127.0.0.1 2>/dev/null | sed 's#^127.0.0.1#{{ inventory_hostname }}#'"
         register: known_hosts
+        changed_when: known_hosts | length > 0
 
 - name: store hostkeys
   hosts: localhost

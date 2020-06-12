@@ -39,6 +39,8 @@
   with_items:
     - yerp.gpg.key
     - zmi.gpg.key
+  register: sa-update
+  changed_when: "sa-update.rc == 0"
 
 - name: install SA configs
   template: src={{ item }}.j2 dest=/etc/mail/spamassassin/{{ item }} owner=root group=root mode=0644
@@ -50,6 +52,7 @@
 
 - name: check SA config validity
   command: /usr/bin/vendor_perl/spamassassin --lint
+  changed_when: false
 
 - name: activate systemd timers
   service: name={{ item }} enabled=yes state=started

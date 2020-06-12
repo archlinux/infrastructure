@@ -54,6 +54,8 @@
   command: /usr/bin/gpg --keyserver keys.openpgp.org --recv "{{ item }}"
   with_items:
     - E240B57E2C4630BA768E2F26FC1B547C8D8172C8
+  register: gpg
+  changed_when: "gpg.rc == 0"
 
 - name: clone security-tracker repo
   git: repo=https://github.com/archlinux/arch-security-tracker.git version="{{ security_tracker_version }}" dest="{{ security_tracker_dir }}" force=true verify_commit=true

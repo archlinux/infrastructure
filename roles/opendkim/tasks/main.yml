@@ -30,6 +30,7 @@
   command: opendkim-testkey -d archlinux.org -s {{ dkim_selector }} -k /etc/opendkim/private/{{ dkim_selector }}.private -vvv
   tags:
     - dkimverify
+  changed_when: false
 
 - name: start and enable opendkim
   service: name=opendkim enabled=yes state=started

@@ -6,6 +6,8 @@
 # https://github.com/ansible/ansible/issues/11024
 - name: remove all users from wheel group
   command: groupmems -g wheel --purge
+  register: groupmems
+  changed_when: "groupmems.rc == 0"
 
 - name: add sudo users to wheel
   user: name="{{ item }}" append=yes groups=wheel

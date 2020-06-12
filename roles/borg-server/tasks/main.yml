@@ -30,6 +30,7 @@
   register: ssh_keys
   delegate_to: "{{ item }}"
   with_items: "{{ backup_clients }}"
+  changed_when: ssh_keys.stdout | length > 0
 
 - name: allow certain clients to connect
   authorized_key:
