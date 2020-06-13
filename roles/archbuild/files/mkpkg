@@ -153,7 +153,7 @@ repoadd() {
 
   if [[ -n $repohost ]]; then
     ssh -q $repohost mkdir -p $repodir/$1
-    scp -q $files $repohost:$repodir/$1/
+    scp -q ./${^files} $repohost:$repodir/$1/
     ssh -q $repohost zsh -c ${(qq):-":
       setopt extendedglob nomatch
       repodir=${(q)repodir}
