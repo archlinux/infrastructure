@@ -3,7 +3,7 @@
 - name: restart networkd
   systemd:
     name: systemd-networkd
-    state: resarted
+    state: restarted
     daemon_reload: yes
 
 - name: restart journald

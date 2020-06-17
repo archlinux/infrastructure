@@ -59,6 +59,7 @@
   unarchive:
     src: /tmp/archlinux-bootstrap-{{ bootstrap_version }}-x86_64.tar.gz
     dest: /tmp
+    remote_src: yes
     creates: /tmp/root.x86_64
 
 - name: copy resolv.conf to bootstrap chroot
@@ -71,7 +72,7 @@
     opts: rbind
     state: mounted
     fstype: none
-    fstab: /dev/null
+    fstab: /tmp/dummyfstab
 
 - name: mount /sys to bootstrap chroot
   mount:
@@ -80,7 +81,7 @@
     opts: rbind
     state: mounted
     fstype: none
-    fstab: /dev/null
+    fstab: /tmp/dummyfstab
 
 - name: mount /dev to bootstrap chroot
   mount:
@@ -89,7 +90,7 @@
     opts: rbind
     state: mounted
     fstype: none
-    fstab: /dev/null
+    fstab: /tmp/dummyfstab
 
 - name: mount /mnt to bootstrap chroot
   mount:
@@ -98,7 +99,7 @@
     opts: rbind
     state: mounted
     fstype: none
-    fstab: /dev/null
+    fstab: /tmp/dummyfstab
 
 - name: configure pacman mirror
   template: src=mirrorlist.j2 dest=/tmp/root.x86_64/etc/pacman.d/mirrorlist owner=root group=root mode=0644
@@ -133,7 +134,7 @@
     opts: rbind
     state: mounted
     fstype: none
-    fstab: /dev/null
+    fstab: /dev/dummyfstab
 
 - name: mount /sys to new chroot
   mount:
@@ -142,7 +143,7 @@
     opts: rbind
     state: mounted
     fstype: none
-    fstab: /dev/null
+    fstab: /dev/dummyfstab
 
 - name: mount /dev to new chroot
   mount:
@@ -151,8 +152,7 @@
     opts: rbind
     state: mounted
     fstype: none
-    fstab: /dev/null
-  when: not stat_result_dev.stat.exists
+    fstab: /dev/dummyfstab
 
 - name: generate mdadm.conf
   shell: mdadm --detail --scan >> /mnt/etc/mdadm.conf

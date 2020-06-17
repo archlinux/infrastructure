@@ -96,7 +96,7 @@
   with_items:
     - journald.conf
   notify:
-    - restarted journald
+    - restart journald
 
 - name: install syslog-ng
   pacman: name=syslog-ng state=present
