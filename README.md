@@ -283,6 +283,22 @@ Medium-fast-ish packet.net box with Debian on it. Is currently maintained manual
 
 ## Backup documentation
 
+Adding a new server to be backed up goes as following:
+
+* Make sure the new servers host key is synced to docs/ssh-known_hosts.txt if not run:
+  ansible-playbook playbooks/tasks/sync-ssh-hostkeys.yml
+
+* Add the server to [borg-clients] in hosts
+
+* Run the borg role on vostok to allow the new machine to create backups
+  ansibe-playbook playbooks/vostok.yml -t borg
+
+* Run the borg role for rsync.net to allow the new machine to create backups
+  ansibe-playbook playbooks/rsync.net.yml
+
+* Run the borg role on the new machine to initialize the repository
+  ansibe-playbook playbooks/$machine.yml -t borg
+
 Backups should be checked now and then. Some common tasks:
 
 ### Listing current backups per server
