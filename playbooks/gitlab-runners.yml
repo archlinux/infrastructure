@@ -4,7 +4,7 @@
   remote_user: root
   roles:
     - { role: common }
-    - { role: firewalld, tags: ['firewall'] }
+    - { role: firewalld }
     - { role: sshd }
     - { role: root_ssh }
     - { role: gitlab-runner }

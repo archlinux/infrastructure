@@ -20,6 +20,6 @@
       postgres_effective_cache_size: 3GB
     - role: postfix
       postfix_relayhost: "orion.archlinux.org"
-    - { role: matrix, tags: ['matrix'] }
+    - { role: matrix }
     - { role: zabbix-agent, tags: ["zabbix"] }
-    - { role: fail2ban, tags: ["fail2ban"] }
+    - { role: fail2ban }

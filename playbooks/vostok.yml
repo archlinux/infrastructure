@@ -4,9 +4,9 @@
   hosts: vostok.archlinux.org
   remote_user: root
   roles:
-    - { role: common, tags: ['common'] }
-    - { role: tools, tags: ['tools'] }
-    - { role: sshd, tags: ['sshd'] }
+    - { role: common }
+    - { role: tools }
+    - { role: sshd }
     - { role: unbound }
-    - { role: root_ssh, tags: ['root_ssh'] }
+    - { role: root_ssh }
     - { role: borg-server, backup_dir: "/backup", backup_clients: "{{ groups['borg_clients'] }}", tags: ["borg"] }

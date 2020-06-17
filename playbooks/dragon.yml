@@ -4,15 +4,15 @@
   hosts: dragon.archlinux.org
   remote_user: root
   roles:
-    - { role: common, tags: ['common'] }
-    - { role: tools, tags: ['tools'] }
-    - { role: sshd, tags: ['sshd'] }
+    - { role: common }
+    - { role: tools }
+    - { role: sshd }
     - { role: unbound }
-    - { role: root_ssh, tags: ['root_ssh'] }
-    - { role: archusers, tags: ['archusers'] }
-    - { role: sudo, tags: ['sudo', 'archusers'] }
-    - { role: syncrepo, tags: ['syncrepo'] }
-    - { role: sogrep, tags: ['sogrep'] }
-    - { role: archbuild, tags: ['archbuild'] }
-    - { role: arch-boxes, tags: ['arch-boxes'] }
+    - { role: root_ssh }
+    - { role: archusers }
+    - { role: sudo, tags: ['archusers'] }
+    - { role: syncrepo }
+    - { role: sogrep }
+    - { role: archbuild }
+    - { role: arch-boxes }
     - { role: docker-image }
