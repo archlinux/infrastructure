@@ -311,7 +311,7 @@
   git:
     repo: "{{ archweb_retro_repository }}"
     dest: "{{ archweb_retro_dir }}"
-    version: "{{ archweb_commit_hash }}"
+    version: "{{ archweb_retro_commit_hash }}"
   become: true
   become_user: archweb
   when: archweb_site|bool
