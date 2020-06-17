@@ -3,7 +3,7 @@
 - name: read /etc/motd
   command: cat /etc/motd
   register: motd_contents
-  changed_when: cat.stdout | length > 0
+  changed_when: motd_contents.stdout | length > 0
 
 - name: check whether we're running in the Hetzner rescue system
   fail: msg="Not running in Hetzner rescue system!"
@@ -13,12 +13,14 @@
   command: sgdisk -g --clear -n 1:0:+10M {{ item }} -c 1:boot -t 1:ef02
   with_items:
     - "{{ system_disks }}"
+  register: sgdisk
   changed_when: "sgdisk.rc == 0"
 
 - name: create root partitions
   command: sgdisk -n 2:0:0 {{ item }} -c 2:root
   with_items:
     - "{{ system_disks }}"
+  register: sgdisk
   changed_when: "sgdisk.rc == 0"
 
 - name: partition and format the disks (btrfs)
