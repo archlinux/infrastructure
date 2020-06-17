@@ -1,0 +1,20 @@
+---
+
+- name: install bugbot utilities
+  pacman: name=python-irc,python-beautifulsoup4,python-lxml state=present
+
+- name: clone bugbot source
+  git:
+    repo: https://gitlab.archlinux.org/archlinux/bugbot.git
+    dest: /srv/bugbot
+
+- name: install env file
+  template: src=bugbot.j2 dest=/srv/bugbot/env owner=root group=root mode=0600
+
+- name: install bugbot systemd service
+  copy: src=bugbot.service dest=/etc/systemd/system/bugbot.service
+  notify:
+    - daemon reload
+
+- name: start and enable bugbot service
+  service: name="bugbot.service" enabled=yes state=started

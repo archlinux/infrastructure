@@ -1,0 +1,12 @@
+[Unit]
+Description=The official Arch Linux IRC bugbot
+
+[Service]
+EnvironmentFile=/srv/bugbot/env
+ExecStart=/srv/bugbot/bugbot.py
+Restart=on-failure
+ProtectSystem=full
+DynamicUser=yes
+
+[Install]
+WantedBy=default.target
