@@ -30,7 +30,7 @@
     --registration-token="{{ vault_gitlab_runner_registration_token }}"
     --executor=docker
     --description="{{ inventory_hostname }}"
-    --run-untagged=true
+    --run-untagged=false
     --docker-tlsverify=true
     --locked=false
     --access-level=not_protected
