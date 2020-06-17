@@ -210,7 +210,7 @@
   lineinfile:
     path: /mnt/etc/default/grub
     regexp: "^GRUB_CMDLINE_LINUX_DEFAULT="
-    line: "GRUB_CMDLINE_LINUX_DEFAULT=\"rootflags=compress=zstd\""
+    line: "GRUB_CMDLINE_LINUX_DEFAULT=\"rootflags=compress-force=zstd\""
   when: filesystem == "btrfs"
 
 - name: install grub
