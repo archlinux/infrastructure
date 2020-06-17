@@ -414,7 +414,9 @@ arch_users:
   freswa:
     name: "Frederik Schwan"
     ssh_key: freswa.pub
-    groups: []
+    groups:
+      - tu
+      - multilib
   seblu:
     name: "Sébastien Luttringer"
     ssh_key: seblu.pub
