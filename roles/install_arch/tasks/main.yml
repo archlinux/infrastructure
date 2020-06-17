@@ -24,15 +24,15 @@
   changed_when: "sgdisk.rc == 0"
 
 - name: partition and format the disks (btrfs RAID)
-  command: mkfs.btrfs -f -L root -d {{ raid_level|default('raid1') }} -m {{ raid_level|default('raid1') }} -O no-holes {{ system_disks | map('regex_replace', '^(.*)$', '\1p2') | join(' ') }}
-  when: filesystem == "btrfs" and system_disks|length == 2
+  command: mkfs.btrfs -f -L root -d {{ raid_level|default('raid1') }} -m {{ raid_level|default('raid1') }} -O no-holes {{ system_disks | map('regex_replace', '^(.*)$', '\g<1>p2' if 'nvme' in system_disks[0] else '\g<1>2') | join(' ') }}
+  when: filesystem == "btrfs" and system_disks|length >= 2
 
 - name: partition and format the disks (btrfs single)
-  command: mkfs.btrfs -f -L root -d single -m single -O no-holes {{ system_disks[0] }}p2
+  command: mkfs.btrfs -f -L root -d single -m single -O no-holes {{ system_disks[0] }}{{ 'p2' if 'nvme' in system_disks[0] else '2' }}
   when: filesystem == "btrfs" and system_disks|length == 1
 
 - name: create MDADM array
-  command: mdadm --create --level=1 --raid-devices=2 --run /dev/md0 {{ system_disks | map('regex_replace', '(.*)', '^\1p2$') | join(' ') }}
+  command: mdadm --create --level=1 --raid-devices=2 --run /dev/md0 {{ system_disks | map('regex_replace', '^(.*)$', '\g<1>p2' if 'nvme' in system_disks[0] else '\g<1>2') | join(' ') }}
   when: filesystem != "btrfs" and system_disks|length == 2
 
 - name: format the MDADM array
@@ -40,7 +40,7 @@
   when: filesystem != "btrfs" and system_disks|length == 2
 
 - name: mount the filesystem (btrfs)
-  mount: src="{{ system_disks[0] }}p2" path=/mnt state=mounted fstype=btrfs opts="compress=zstd,space_cache=v2"
+  mount: src="{{ system_disks[0] }}{{ 'p2' if 'nvme' in system_disks[0] else '2' }}" path=/mnt state=mounted fstype=btrfs opts="compress=zstd,space_cache=v2"
   when: filesystem == "btrfs"
 
 - name: mount the filesystem (ext4 RAID)
