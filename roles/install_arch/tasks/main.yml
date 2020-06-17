@@ -23,28 +23,28 @@
   register: sgdisk
   changed_when: "sgdisk.rc == 0"
 
-- name: partition and format the disks (btrfs)
-  command: mkfs.btrfs -f -L root -d {{ raid_level|default(raid1) }} -m {{ raid_level|default(raid1) }} -O no-holes /dev/sda2 /dev/sdb2
+- name: partition and format the disks (btrfs RAID)
+  command: mkfs.btrfs -f -L root -d {{ raid_level|default('raid1') }} -m {{ raid_level|default('raid1') }} -O no-holes {{ system_disks | map('regex_replace', '^(.*)$', '\1p2') | join(' ') }}
   when: filesystem == "btrfs" and system_disks|length == 2
 
-- name: partition and format the disks (btrfs)
-  command: mkfs.btrfs -f -L root -d single -m single -O no-holes /dev/sda2
+- name: partition and format the disks (btrfs single)
+  command: mkfs.btrfs -f -L root -d single -m single -O no-holes {{ system_disks[0] }}p2
   when: filesystem == "btrfs" and system_disks|length == 1
 
 - name: create MDADM array
-  command: mdadm --create --level=1 --raid-devices=2 --run /dev/md0 /dev/sda2 /dev/sdb2
+  command: mdadm --create --level=1 --raid-devices=2 --run /dev/md0 {{ system_disks | map('regex_replace', '(.*)', '^\1p2$') | join(' ') }}
   when: filesystem != "btrfs" and system_disks|length == 2
 
 - name: format the MDADM array
-  filesystem: dev=/dev/md0 fstype={{ filesystem|default(ext4) }}
+  filesystem: dev=/dev/md0 fstype={{ filesystem|default('ext4') }}
   when: filesystem != "btrfs" and system_disks|length == 2
 
 - name: mount the filesystem (btrfs)
-  mount: src="/dev/sda2" path=/mnt state=mounted fstype=btrfs opts="compress=zstd,space_cache=v2"
+  mount: src="{{ system_disks[0] }}p2" path=/mnt state=mounted fstype=btrfs opts="compress=zstd,space_cache=v2"
   when: filesystem == "btrfs"
 
-- name: mount the filesystem
-  mount: name=/mnt src=/dev/md0 state=mounted fstype={{ filesystem|default(ext4) }}
+- name: mount the filesystem (ext4 RAID)
+  mount: name=/mnt src=/dev/md0 state=mounted fstype={{ filesystem|default('ext4') }}
   when: filesystem != "btrfs" and system_disks|length == 2
 
 - name: touch LOCK file on mountpoint
