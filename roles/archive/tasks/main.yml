@@ -76,4 +76,3 @@
     enabled: yes
     state: started
     daemon_reload: yes
-  when: not archive_nginx_only
