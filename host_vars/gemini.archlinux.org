@@ -16,5 +16,8 @@ system_disks:
   - /dev/sdd
 raid_level: "raid6"
 
+archive_domain: archive.archlinux.org
+archive_nginx_only: true
+
 zabbix_agent_templates:
   - Template OS Linux

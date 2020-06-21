@@ -10,3 +10,8 @@
     - { role: sshd }
     - { role: root_ssh }
     - { role: borg-client, tags: ['borg'] }
+    - { role: sudo, tags: ['archusers'] }
+    - { role: zabbix-agent }
+    - { role: certbot }
+    - { role: nginx }
+    - { role: archive }
