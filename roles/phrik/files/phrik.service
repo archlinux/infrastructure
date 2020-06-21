@@ -9,4 +9,4 @@ ProtectSystem=full
 User=phrik
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target
