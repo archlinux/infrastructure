@@ -49,7 +49,7 @@
     mode: 0755
 
 - name: install internet archive packages
-  pacman: name=python-internetarchive state=present
+  pacman: name=python-internetarchive,python-xtarfile state=present
 
 - name: create archive user
   user: name={{ archive_user_name }} shell=/bin/false home="{{ archive_user_home }}" createhome=yes
