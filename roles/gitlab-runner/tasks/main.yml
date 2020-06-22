@@ -2,9 +2,16 @@
 
 - name: install dependencies
   pacman: name=docker,python-docker,python-gitlab,gitlab-runner state=present
+  when: ansible_facts['os_family'] == "Arch Linux"
+  notify: restart gitlab-runner
+
+- name: install dependencies
+  apt: name=docker-ce,gitlab-runner state=present update_cache=yes
+  when: ansible_facts['os_family'] == "Debian"
+  notify: restart gitlab-runner
 
 - name: start docker
-  service: name=docker enabled=yes state=started
+  systemd: name=docker enabled=yes state=started daemon_reload=yes
 
 - name: open firewall holes
   firewalld: port={{ item }} permanent=true state=enabled immediate=yes
@@ -42,7 +49,7 @@
     path: /etc/gitlab-runner/config.toml
     regexp: '^concurrent = .*'
     line: concurrent = 100
-  notify: restart gitlab runner
+  notify: restart gitlab-runner
 
 - name: enable and start gitlab runner service
-  service: name=gitlab-runner state=started enabled=yes
+  systemd: name=gitlab-runner state=started enabled=yes daemon_reload=yes
