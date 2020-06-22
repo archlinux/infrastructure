@@ -5,5 +5,7 @@ skip_list:
   - '204'
   # Do not recommend running tasks as handlers
   - '503'
-  # do not force galaxy info in meta/main.yml
+  # Do not force galaxy info in meta/main.yml
   - '701'
+  # Allow package versions to be specified as 'latest'
+  - '403'
