@@ -20,6 +20,7 @@ A new entry will pop up which has a button titled "Copy SSH public key". Click t
 
 Then go to https://github.com/archlinux/myproject/settings/keys and add a new deploy key.
 Give it the title "gitlab.archlinux.org" so we know where it's from and then paste the
-public key you copied from GitLab just now.
+public key you copied from GitLab just now. Check "Allow write access" and
+click "Add key".
 
 Your push mirror should now work.
