@@ -1,4 +1,4 @@
-# DO NOT CHANGE rsync.conf, CHANGE rsync.conf.proto INSTEAD! 
+# DO NOT CHANGE rsync.conf, CHANGE rsync.conf.proto INSTEAD!
 # Hosts are managed by archweb, talk to someone that has permission to
 # play with mirrors to get new IP addresses added.
 
@@ -23,7 +23,7 @@ hosts deny = *
 [archive]
 	path = /srv/archive
 	comment = archive
-	hosts allow = {{ groups['archive_mirrors'] | map('extract', hostvars, ['ipv4_address']) | join(' ') }}
+	hosts allow = {{ groups['archive_mirrors'] | map('extract', hostvars, ['ipv4_address']) | join(' ') }} {{ hostvars['gemini.archlinux.org']['ipv4_address'] }} {{ hostvars['gemini.archlinux.org']['ipv6_address'] }}
 
 # Just the release/stable iso/packages (for most mirrors)
 [ftp]
@@ -73,7 +73,7 @@ hosts deny = *
 [kitchensink]
 	path = /srv/ftp
 	comment = ftp area (everything, including very old versions)
-	hosts allow = {{ hostvars['apollo.archlinux.org']['ipv4_address'] }} {{ hostvars['apollo.archlinux.org']['ipv6_address'] }}
+	hosts allow = {{ hostvars['apollo.archlinux.org']['ipv4_address'] }} {{ hostvars['apollo.archlinux.org']['ipv6_address'] }} {{ hostvars['gemini.archlinux.org']['ipv4_address'] }} {{ hostvars['gemini.archlinux.org']['ipv6_address'] }}
 
 [kitchensink_tier1]
 	path = /srv/ftp
