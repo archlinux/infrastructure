@@ -26,7 +26,6 @@
     - sogrep
     - { role: sudo, tags: ['archusers'] }
     - { role: archweb, archweb_site: false, archweb_services: true, archweb_donor_import: true, archweb_mirrorcheck_locations: [5, 6] }
-    - { role: sources, sources_domain: "sources.archlinux.org", sources_dir: "/srv/sources" }
     - { role: hefur, ftp_iso_dir: '/srv/ftp/iso', tags: ['torrenttracker']}
     - wkd
     - { role: fail2ban }
