@@ -349,7 +349,7 @@ arch_users:
     additional_ssh_keys:
       - name: maximbaz_buildhost.pub
         hosts:
-          - dragon.archlinux.org
+          - homedir.archlinux.org
     groups:
       - tu
   mtorromeo:
