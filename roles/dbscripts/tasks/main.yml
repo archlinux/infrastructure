@@ -45,11 +45,17 @@
     state: present
   with_dict: "{{ arch_users }}"
 
+- name: create .ssh directory
+  file: path=/home/svn-packages/.ssh state=directory owner=svn-packages group=svn-packages mode=0700
+
 - name: configure ssh keys for devs
   template: src=authorized_keys-group.j2 dest=/home/svn-packages/.ssh/authorized_keys owner=svn-packages group=svn-packages mode=600
   vars:
     pubkey_groups: ['dev']
   tags: ['archusers']
+
+- name: create .ssh directory
+  file: path=/home/svn-community/.ssh state=directory owner=svn-community group=svn-community mode=0700
 
 - name: configure ssh keys for TUs
   template: src=authorized_keys-group.j2 dest=/home/svn-community/.ssh/authorized_keys owner=svn-community group=svn-community mode=600
@@ -144,7 +150,7 @@
 - name: clone dbscripts git repo
   git: >
     dest=/srv/repos/{{ item }}/dbscripts
-    repo=https://git.archlinux.org/dbscripts.git
+    repo=https://github.com/archlinux/dbscripts.git
     version={{ dbscripts_commit }} update={{ dbscripts_update }}
     verify_commit=yes
   with_items:
