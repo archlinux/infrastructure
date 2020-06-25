@@ -3,9 +3,6 @@
 - name: setup orion
   hosts: orion.archlinux.org
   remote_user: root
-  vars:
-    archweb_db_host: 'apollo.archlinux.org'
-    dbscripts_commit: '20191022'
   roles:
     - { role: common }
     - { role: tools }
@@ -22,10 +19,9 @@
     - { role: archusers }
     - { role: certbot }
     - { role: nginx }
-    - { role: dbscripts, repos_domain: "repos.archlinux.org", repos_rsync_domain: "rsync.archlinux.org", svntogit_repos: "/srv/svntogit/repos", postgres_ssl: 'on', tags: ['archusers'] }
     - sogrep
     - { role: sudo, tags: ['archusers'] }
-    - { role: archweb, archweb_site: false, archweb_services: true, archweb_donor_import: true, archweb_mirrorcheck_locations: [5, 6] }
+    - { role: archweb, archweb_site: false, archweb_services: false, archweb_donor_import: true, archweb_mirrorcheck_locations: [5, 6] }
     - { role: hefur, ftp_iso_dir: '/srv/ftp/iso', tags: ['torrenttracker']}
     - wkd
     - { role: fail2ban }

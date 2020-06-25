@@ -3,6 +3,9 @@
 - name: setup gemini.archlinux.org
   hosts: gemini.archlinux.org
   remote_user: root
+  vars:
+    archweb_db_host: 'apollo.archlinux.org'
+    dbscripts_commit: '20191022'
   roles:
     - { role: common }
     - { role: tools }
@@ -14,6 +17,10 @@
     - { role: zabbix-agent }
     - { role: certbot }
     - { role: nginx }
+    - { role: dbscripts, repos_domain: "repos.archlinux.org", repos_rsync_domain: "rsync.archlinux.org", svntogit_repos: "/srv/svntogit/repos", postgres_ssl: 'on', tags: ['archusers'] }
+    - { role: archweb, archweb_site: false, archweb_services: true, archweb_mirrorcheck_locations: [5, 6] }
     - { role: sources, sources_domain: "sources.archlinux.org", sources_dir: "/srv/sources" }
     - { role: archive }
+    - { role: postfwd, tags: ['mail'] }
     - { role: fail2ban }
+    - sogrep
