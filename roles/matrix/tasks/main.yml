@@ -17,7 +17,6 @@
   file: path={{ item }} state=directory owner=synapse group=synapse mode=0700
   with_items:
     - /var/lib/synapse
-    - /var/lib/synapse/irc-nedb
     - /var/lib/synapse/media_store
 
 - name: make virtualenv
@@ -62,6 +61,11 @@
   notify:
     - restart matrix-appservice-irc
 
+- name: install pg_hba.conf
+  copy: src=pg_hba.conf dest=/var/lib/postgres/data/pg_hba.conf owner=postgres group=postgres mode=0600
+  notify:
+    - restart postgres
+
 - name: add synapse postgres db
   postgresql_db: db=synapse
   become: yes
@@ -69,7 +73,13 @@
   become_method: su
 
 - name: add synapse postgres user
-  postgresql_user: db=synapse name=synapse password={{ vault_postgres_users.synapse }} encrypted=true
+  postgresql_user: db=synapse user=synapse password={{ vault_postgres_users.synapse }}
+  become: yes
+  become_user: postgres
+  become_method: su
+
+- name: add irc postgres db
+  postgresql_db: db=irc
   become: yes
   become_user: postgres
   become_method: su
