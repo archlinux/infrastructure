@@ -21,6 +21,6 @@
     - { role: archweb, archweb_site: false, archweb_services: true, archweb_mirrorcheck_locations: [5, 6] }
     - { role: sources, sources_domain: "sources.archlinux.org", sources_dir: "/srv/sources" }
     - { role: archive }
-    - { role: postfwd, tags: ['mail'] }
+    - { role: postfix, postfix_relayhost: "orion.archlinux.org" }
     - { role: fail2ban }
     - sogrep
