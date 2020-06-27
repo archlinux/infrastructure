@@ -1,10 +1,4 @@
 rebuilderd_domain: reproducible.archlinux.org
 rebuilderd_nginx_conf: /etc/nginx/nginx.d/rebuilderd.conf
 
-rebuilder_website_release: 0.2
-rebuilder_website_gpg: E499C79F53C96A54E572FEE1C06086337C50773E
-rebuilder_website_tar: /tmp/website-{{ rebuilder_website_release }}.tar.gz
-rebuilder_website_asc: /tmp/website-{{ rebuilder_website_release }}.tar.gz.asc
-rebuilder_website_base: /srv/http/rebuilder
-rebuilder_website_loc: "{{ rebuilder_website_base }}/rebuilder-website-{{ rebuilder_website_release }}"
-rebuilder_website_url: https://github.com/jelly/archlinux-reproducible-status
+rebuilder_website_loc: /usr/share/webapps/rebuilderd-website

@@ -1,5 +1,5 @@
 - name: install required packages
-  pacman: name=rebuilderd state=present
+  pacman: name=rebuilderd,rebuilderd-website state=present
 
 - name: create ssl cert
   command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{ letsencrypt_validation_dir }} -d '{{ rebuilderd_domain }}' creates='/etc/letsencrypt/live/{{ rebuilderd_domain }}/fullchain.pem'
@@ -13,37 +13,6 @@
 
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ rebuilderd_domain }} state=directory owner=root group=root mode=0755
-
-- name: make nginx http dir
-  file: path={{ rebuilder_website_base }} state=directory owner=root group=root mode=0755
-
-- name: check latest release
-  stat: path={{ rebuilder_website_loc }}
-  register: rebuilder_release_dir
-
-- name: receive valid signing keys
-  command: /usr/bin/gpg --keyserver pool.sks-keyservers.net --recv "{{ rebuilder_website_gpg }}"
-  when: not rebuilder_release_dir.stat.exists
-
-- name: download latest rebuilderd website tar.gz
-  get_url:
-    url: "{{ rebuilder_website_url }}/releases/download/{{ rebuilder_website_release }}/rebuilder-website-{{ rebuilder_website_release }}.tar.gz"
-    dest: "{{ rebuilder_website_tar }}"
-  when: not rebuilder_release_dir.stat.exists
-
-- name: download latest rebuilderd website tar.gz.asc
-  get_url:
-    url: "{{ rebuilder_website_url }}/releases/download/{{ rebuilder_website_release }}/rebuilder-website-{{ rebuilder_website_release }}.tar.gz.asc"
-    dest: "{{ rebuilder_website_asc }}"
-  when: not rebuilder_release_dir.stat.exists
-
-- name: verify website release
-  command: /usr/bin/gpg --verify {{ rebuilder_website_asc }} {{ rebuilder_website_tar }}
-  when: not rebuilder_release_dir.stat.exists
-
-- name: unpack website to /srv
-  unarchive: src={{ rebuilder_website_tar }} dest={{ rebuilder_website_base }} remote_src=yes owner=root group=root mode=0755
-  when: not rebuilder_release_dir.stat.exists
 
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/rebuilderd.conf owner=root group=root mode=0644
