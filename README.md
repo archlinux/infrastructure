@@ -147,11 +147,6 @@ The following steps should be used to update our managed servers:
 
 ## Servers
 
-### vostok
-
-#### Services
-  - backups
-
 ### orion
 
 #### Services
@@ -291,8 +286,8 @@ Adding a new server to be backed up goes as following:
 
 * Add the server to [borg-clients] in hosts
 
-* Run the borg role on vostok to allow the new machine to create backups
-  ansibe-playbook playbooks/vostok.yml -t borg
+* Run the borg role on u236610.your-storagebox.de to allow the new machine to create backups
+  ansibe-playbook playbooks/hetzner_storagebox.yml
 
 * Run the borg role for rsync.net to allow the new machine to create backups
   ansibe-playbook playbooks/rsync.net.yml
@@ -300,23 +295,25 @@ Adding a new server to be backed up goes as following:
 * Run the borg role on the new machine to initialize the repository
   ansibe-playbook playbooks/$machine.yml -t borg
 
-Backups should be checked now and then. Some common tasks:
+Backups should be checked now and then. Some common tasks are listed below.
+You'll have to get the correct username from the vault.
 
 ### Listing current backups per server
 
-    borg list borg@vostok.archlinux.org:/backup/<hostname>
+    borg list $hetzner_storagebox_username@u236610.your-storagebox.de:backup/<hostname>
+    borg list $rsync_net_username@ch-s012.rsync.net:backup/<hostname>
 
 Example
 
-    borg list borg@vostok.archlinux.org:/backup/homedir.archlinux.org
+    borg list $hetzner_storagebox_username@u236610.your-storagebox.de:backup/homedir.archlinux.org
 
 ### Listing files in a backup
 
-    borg list borg@vostok.archlinux.org:/backup/<hostname>::<archive name>
+    borg list $hetzner_storagebox_username@u236610.your-storagebox.de:backup/<hostname>::<archive name>
 
 Example
 
-    borg list borg@vostok.archlinux.org:/backup/homedir.archlinux.org::20191127-084357
+    borg list $hetzner_storagebox_username@u236610.your-storagebox.de:backup/homedir.archlinux.org::20191127-084357
 
 ## One-shots
 

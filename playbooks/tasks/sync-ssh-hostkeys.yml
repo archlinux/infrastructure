@@ -1,7 +1,7 @@
 ---
 
 - name: fetch ssh hostkeys
-  hosts: all,!rsync_net
+  hosts: all,!rsync_net,!hetzner_storageboxes
   tasks:
       - name: fetch hostkey checksums
         shell: "for type in sha256 md5; do for file in /etc/ssh/ssh_host_*.pub; do ssh-keygen -l -f $file -E $type; done; echo; done"
@@ -18,21 +18,26 @@
       - name: store hostkeys
         copy:
           dest: "{{ playbook_dir }}/../../docs/ssh-hostkeys.txt"
-          content: "{% for host in query('inventory_hostnames', 'all,!rsync_net,!localhost') | sort %}# {{ host }}\n{{ hostvars[host].ssh_hostkeys.stdout }}\n\n{% endfor %}"
+          content: "{% for host in query('inventory_hostnames', 'all,!rsync_net,!hetzner_storageboxes,!localhost') | sort %}# {{ host }}\n{{ hostvars[host].ssh_hostkeys.stdout }}\n\n{% endfor %}"
         delegate_to: localhost
       - name: store known_hosts
         copy:
           dest: "{{ playbook_dir }}/../../docs/ssh-known_hosts.txt"
-          content: "{% for host in query('inventory_hostnames', 'all,!rsync_net,!localhost') | sort %}# {{ host }}\n{{ hostvars[host].known_hosts.stdout }}\n\n{% endfor %}"
+          content: "{% for host in query('inventory_hostnames', 'all,!rsync_net,!hetzner_storageboxes,!localhost') | sort %}# {{ host }}\n{{ hostvars[host].known_hosts.stdout }}\n\n{% endfor %}"
         delegate_to: localhost
       - name: manually append rsync.net host keys
         lineinfile:
           path: "{{ playbook_dir }}/../../docs/ssh-known_hosts.txt"
           line: "{% for host in query('inventory_hostnames', 'rsync_net') | sort %}# {{ host }}\n{{ hostvars[host].known_host }}\n\n{% endfor %}"
         delegate_to: localhost
+      - name: manually append Hetzner Storageboxes host keys
+        lineinfile:
+          path: "{{ playbook_dir }}/../../docs/ssh-known_hosts.txt"
+          line: "{% for host in query('inventory_hostnames', 'hetzner_storageboxes') | sort %}# {{ host }}\n{{ hostvars[host].known_host }}\n\n{% endfor %}"
+        delegate_to: localhost
 
 - name: upload known_hosts to all nodes
-  hosts: all,!rsync_net
+  hosts: all,!rsync_net,!hetzner_storageboxes
   tasks:
       - name: upload known_hosts
         copy: dest=/etc/ssh/ssh_known_hosts src="{{ playbook_dir }}/../../docs/ssh-known_hosts.txt"

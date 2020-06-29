@@ -1,0 +1,7 @@
+---
+
+- name: setup Hetzner storagebox account
+  hosts: u236610.your-storagebox.de
+  gather_facts: False
+  roles:
+    - { role: hetzner_storagebox, backup_dir: "backup", backup_clients: "{{ groups['borg_clients'] }}", tags: ["borg"] }

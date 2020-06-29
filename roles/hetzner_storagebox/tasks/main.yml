@@ -1,0 +1,34 @@
+---
+
+# We have to set up the Hetzner Storagebox account in a weird fashion because
+# they don't even allow direct SSH.
+- name: create the root backup directory at {{ backup_dir }}
+  expect:
+    command: bash -c "echo 'mkdir {{ backup_dir }}' | sftp -P 23 {{ hetzner_storagebox_username }}@{{ inventory_hostname }}"
+    responses:
+      (?i)password: "{{ hetzner_storagebox_password }}"
+  delegate_to: localhost
+
+- name: fetch ssh keys from each borg client machine
+  command: cat /root/.ssh/id_rsa.pub
+  register: client_ssh_keys
+  delegate_to: "{{ item }}"
+  with_items: "{{ backup_clients }}"
+  remote_user: root
+  changed_when: client_ssh_keys.changed
+
+- name: create tempfile
+  tempfile: state=file
+  register: tempfile
+  delegate_to: localhost
+
+- name: fill tempfile
+  copy: content="{{ lookup('template', 'authorized_keys.j2') }}" dest="{{ tempfile.path }}"
+  delegate_to: localhost
+
+- name: upload authorized_keys file
+  expect:
+    command: bash -c "echo -e 'mkdir .ssh \n chmod 700 .ssh \n put {{ tempfile.path }} .ssh/authorized_keys \n chmod 600 .ssh/authorized_keys' | sftp -P 23 {{ hetzner_storagebox_username }}@{{ inventory_hostname }}"
+    responses:
+      (?i)password: "{{ hetzner_storagebox_password }}"
+  delegate_to: localhost

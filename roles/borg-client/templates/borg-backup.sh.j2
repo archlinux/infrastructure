@@ -72,7 +72,6 @@ borg create -v --stats -C zstd \
     -e "$backup_mountdir/var/lib/archbuild" \
     -e "$backup_mountdir/var/lib/archbuilddest" \
     -e "$backup_mountdir/var/lib/docker" \
-    -e "$backup_mountdir/srv/archive" \
     {{ item['host'] }}:{{ item['dir'] }}::$(date "+%Y%m%d-%H%M%S") "$backup_mountdir"
 borg prune -v {{ item['host'] }}:{{ item['dir'] }} --keep-daily=7 --keep-weekly=4 --keep-monthly=6
 
