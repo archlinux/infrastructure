@@ -177,6 +177,18 @@
     - daemon reload
   when: archweb_planet
 
+- name: install rebuilderd status service
+  template: src="archweb-rebuilderd.service.j2" dest="/etc/systemd/system/archweb-rebuilderd.service" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+  when: archweb_site
+
+- name: install rebulderd timer
+  template: src="archweb-rebuilderd.timer.j2" dest="/etc/systemd/system/archweb-rebuilderd.timer" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+  when: archweb_site
+
 - name: install pgp_import service
   template: src="archweb-pgp_import.service.j2" dest="/etc/systemd/system/archweb-pgp_import.service" owner=root group=root mode=0644
   notify:
@@ -291,6 +303,10 @@
 - name: start and enable archweb planet timer
   service: name="archweb-planet.timer" enabled=yes state=started
   when: archweb_planet
+
+- name: start and enable archweb rebulderd update timer
+  service: name="archweb-rebuilderd.timer" enabled=yes state=started
+  when: archweb_site
 
 - name: start and enable archweb donor_import and archweb-dump_donor_mail timer
   systemd:
