@@ -13,8 +13,6 @@
 
 - name: install bugbot systemd service
   copy: src=bugbot.service dest=/etc/systemd/system/bugbot.service
-  notify:
-    - daemon reload
 
 - name: start and enable bugbot service
-  service: name="bugbot.service" enabled=yes state=started
+  systemd: name=bugbot.service enabled=yes state=started daemon_reload=yes
