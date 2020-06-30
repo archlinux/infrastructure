@@ -2,6 +2,7 @@
 irc_host: 'chat.freenode.net'
 irc_port: '6697'
 irc_channel: '#archlinux-bugs'
+bugbot_version: 20200630
 bugbot_admins:
   - keenerd
   - falconindy

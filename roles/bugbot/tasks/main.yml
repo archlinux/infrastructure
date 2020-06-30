@@ -7,6 +7,9 @@
   git:
     repo: https://gitlab.archlinux.org/archlinux/bugbot.git
     dest: /srv/bugbot
+    force: true
+    verify_commit: true
+    version: "{{ bugbot_version }}"
 
 - name: install env file
   template: src=bugbot.j2 dest=/srv/bugbot/env owner=root group=root mode=0600
