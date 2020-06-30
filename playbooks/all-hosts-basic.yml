@@ -1,7 +1,7 @@
 ---
 
 - name: basic setup for all hosts
-  hosts: all,!rsync_net
+  hosts: all,!hetzner_storageboxes,!rsync_net
   remote_user: root
   roles:
     - { role: common }

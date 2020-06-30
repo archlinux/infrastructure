@@ -7,3 +7,4 @@ zabbix_agent_templates:
   - Template App HTTPS Service
   - Template App Nginx
   - Template App SSH Service
+gitlab_backupdir: /srv/gitlab/data/backups
