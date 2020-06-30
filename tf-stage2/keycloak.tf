@@ -100,6 +100,7 @@ resource "keycloak_oidc_identity_provider" "realm_identity_provider" {
   client_secret = data.external.vault_github.result.vault_github_oauth_app_client_secret
   token_url = ""
   default_scopes = ""
+  post_broker_login_flow_alias = keycloak_authentication_flow.arch_post_ipr_flow.alias
   enabled = false
   trust_email = false
   store_token = false
@@ -354,6 +355,11 @@ resource "keycloak_authentication_execution_config" "registration_recaptcha_acti
 // We have the Browser Redirect/Refresh execution at the end as a hack an as an effective "always true" fallthrough no-op.
 // Otherwise we'll get a runtime exception as it could happen that none of the Conditions in the Alternative subflows
 // matches. Apparently Keycloak doesn't like that and so we'll have to give it something that's always true.
+//
+// IMPORTANT NOTE: Sometimes when changing Authentication Flows via Terraform or UI, flows can become orphaned in which
+// case they'll hang around the database doing nothing useful and blocking alias names and causing 409 CONFLICTS. If such
+// a thing happens, you'll have to get dirty and and manually clean up the authentication_flows and authentication_executions
+// tables on the Keycloak Postgres DB! Quality Red Hat software right there.
 
 resource "keycloak_authentication_flow" "arch_browser_flow" {
   realm_id = "archlinux"
@@ -377,7 +383,7 @@ resource "keycloak_authentication_execution" "identity_provider_redirector" {
   depends_on = [keycloak_authentication_execution.cookie]
 }
 
-resource "keycloak_authentication_subflow" "password_and_otp_subflow" {
+resource "keycloak_authentication_subflow" "password_and_otp" {
   realm_id = "archlinux"
   alias = "Password and OTP subflow"
   parent_flow_alias = keycloak_authentication_flow.arch_browser_flow.alias
@@ -387,7 +393,7 @@ resource "keycloak_authentication_subflow" "password_and_otp_subflow" {
 
 resource "keycloak_authentication_execution" "username_password_form" {
   realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow.password_and_otp_subflow.alias
+  parent_flow_alias = keycloak_authentication_subflow.password_and_otp.alias
   authenticator = "auth-username-password-form"
   requirement = "REQUIRED"
 }
@@ -395,7 +401,7 @@ resource "keycloak_authentication_execution" "username_password_form" {
 resource "keycloak_authentication_subflow" "otp" {
   realm_id = "archlinux"
   alias = "OTP subflow"
-  parent_flow_alias = keycloak_authentication_subflow.password_and_otp_subflow.alias
+  parent_flow_alias = keycloak_authentication_subflow.password_and_otp.alias
   requirement = "REQUIRED"
   depends_on = [keycloak_authentication_execution.username_password_form]
 }
@@ -518,6 +524,156 @@ resource "keycloak_authentication_subflow" "fallthrough" {
 resource "keycloak_authentication_execution" "fallthrough_browser_redirect_refresh" {
   realm_id = "archlinux"
   parent_flow_alias = keycloak_authentication_subflow.fallthrough.alias
+  authenticator = "no-cookie-redirect"
+  requirement = "REQUIRED"
+}
+
+// Add new custom post-Identity Provider login flow with forced OTP for some user roles
+//
+// Arch Post IPR Flow
+// |- IPR External Contributor subflow (A)
+// |  |- IPR External Contributor conditional subflow (C)
+// |     |- Condition - User Role (External Contributor) (R)
+// |     |- OTP Form (R)
+// |- IPR Staff Subflow (A)
+// |  |- Staff IPR conditional subflow (C)
+// |     |- Condition - User Role (Staff) (R)
+// |     |- OTP Form (R)
+// |- IPR OTP opt-in Subflow (A)
+// |  |- IPR OTP opt-in conditional subflow (C)
+// |     |- Condition - User Configured (R)
+// |     |- OTP Form (R)
+// |- IPR Fallthrough Subflow (A)
+//    |- Browser Redirect/Refresh (R)
+//
+// We have the Browser Redirect/Refresh execution at the end as a hack an as an effective "always true" fallthrough no-op.
+// Otherwise we'll get a runtime exception as it could happen that none of the Conditions in the Alternative subflows
+// matches. Apparently Keycloak doesn't like that and so we'll have to give it something that's always true.
+
+resource "keycloak_authentication_flow" "arch_post_ipr_flow" {
+  realm_id = "archlinux"
+  alias = "Arch Post IPR Flow"
+  description = "Post IPR login flow that forces users of some roles to use OTP."
+}
+
+resource "keycloak_authentication_subflow" "ipr_external_contributor" {
+  realm_id = "archlinux"
+  alias = "IPR External Contributor subflow"
+  parent_flow_alias = keycloak_authentication_flow.arch_post_ipr_flow.alias
+  requirement = "ALTERNATIVE"
+}
+
+resource "keycloak_authentication_subflow" "ipr_external_contributor_conditional" {
+  realm_id = "archlinux"
+  alias = "IPR External Contributor conditional"
+  parent_flow_alias = keycloak_authentication_subflow.ipr_external_contributor.alias
+  requirement = "CONDITIONAL"
+}
+
+resource "keycloak_authentication_execution" "ipr_external_contributor_conditional_user_role" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.ipr_external_contributor_conditional.alias
+  authenticator = "conditional-user-role"
+  requirement = "REQUIRED"
+}
+
+resource "keycloak_authentication_execution_config" "ipr_external_contributor_conditional_user_role_config" {
+  realm_id = "archlinux"
+  alias = "IPR External Contributor User Role Config"
+  execution_id = keycloak_authentication_execution.ipr_external_contributor_conditional_user_role.id
+  config = {
+    condUserRole = "External Contributor"
+  }
+}
+
+resource "keycloak_authentication_execution" "ipr_external_contributor_conditional_form" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.ipr_external_contributor_conditional.alias
+  authenticator = "auth-otp-form"
+  requirement = "REQUIRED"
+  depends_on = [keycloak_authentication_execution.ipr_external_contributor_conditional_user_role]
+}
+
+resource "keycloak_authentication_subflow" "ipr_staff" {
+  realm_id = "archlinux"
+  alias = "IPR Staff subflow"
+  parent_flow_alias = keycloak_authentication_flow.arch_post_ipr_flow.alias
+  requirement = "ALTERNATIVE"
+  depends_on = [keycloak_authentication_subflow.ipr_external_contributor]
+}
+
+resource "keycloak_authentication_subflow" "ipr_staff_conditional" {
+  realm_id = "archlinux"
+  alias = "IPR Staff conditional"
+  parent_flow_alias = keycloak_authentication_subflow.ipr_staff.alias
+  requirement = "CONDITIONAL"
+}
+
+resource "keycloak_authentication_execution" "ipr_staff_conditional_user_role" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.ipr_staff_conditional.alias
+  authenticator = "conditional-user-role"
+  requirement = "REQUIRED"
+}
+
+resource "keycloak_authentication_execution_config" "ipr_staff_conditional_user_role_config" {
+  realm_id = "archlinux"
+  alias = "IPR Staff User Role Config"
+  execution_id = keycloak_authentication_execution.ipr_staff_conditional_user_role.id
+  config = {
+    condUserRole = "Staff"
+  }
+}
+
+resource "keycloak_authentication_execution" "ipr_staff_conditional_form" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.ipr_staff_conditional.alias
+  authenticator = "auth-otp-form"
+  requirement = "REQUIRED"
+  depends_on = [keycloak_authentication_execution.ipr_staff_conditional_user_role]
+}
+
+resource "keycloak_authentication_subflow" "ipr_otp_opt_in" {
+  realm_id = "archlinux"
+  alias = "IPR OTP opt-in subflow"
+  parent_flow_alias = keycloak_authentication_flow.arch_post_ipr_flow.alias
+  requirement = "ALTERNATIVE"
+  depends_on = [keycloak_authentication_subflow.ipr_staff]
+}
+
+resource "keycloak_authentication_subflow" "ipr_otp_opt_in_conditional" {
+  realm_id = "archlinux"
+  alias = "IPR OTP opt-in conditional"
+  parent_flow_alias = keycloak_authentication_subflow.ipr_otp_opt_in.alias
+  requirement = "CONDITIONAL"
+}
+
+resource "keycloak_authentication_execution" "ipr_otp_opt_in_conditional_user_configured" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.ipr_otp_opt_in_conditional.alias
+  authenticator = "conditional-user-configured"
+  requirement = "REQUIRED"
+}
+
+resource "keycloak_authentication_execution" "ipr_otp_opt_in_conditional_form" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.ipr_otp_opt_in_conditional.alias
+  authenticator = "auth-otp-form"
+  requirement = "REQUIRED"
+  depends_on = [keycloak_authentication_execution.ipr_otp_opt_in_conditional_user_configured]
+}
+
+resource "keycloak_authentication_subflow" "ipr_fallthrough" {
+  realm_id = "archlinux"
+  alias = "IPR Fallthrough subflow"
+  parent_flow_alias = keycloak_authentication_flow.arch_post_ipr_flow.alias
+  requirement = "ALTERNATIVE"
+  depends_on = [keycloak_authentication_subflow.ipr_otp_opt_in]
+}
+
+resource "keycloak_authentication_execution" "ipr_fallthrough_browser_redirect_refresh" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.ipr_fallthrough.alias
   authenticator = "no-cookie-redirect"
   requirement = "REQUIRED"
 }
