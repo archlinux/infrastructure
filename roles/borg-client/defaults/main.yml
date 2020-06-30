@@ -3,6 +3,6 @@ backup_hosts:
   - host: "ssh://{{ hetzner_storagebox_username }}@u236610.your-storagebox.de:23"
     dir: "~/backup/{{ inventory_hostname }}"
     suffix: ""
-  - host: "ssh://{{ rsync_net_username }}@ch-s012.rsync.net:22"
+  - host: "ssh://{{ rsync_net_username }}@prio.ch-s012.rsync.net:22"
     dir: "~/backup/{{ inventory_hostname }}"
     suffix: "-offsite"

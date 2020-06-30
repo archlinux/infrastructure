@@ -1,7 +1,7 @@
 ---
 
 - name: setup rsync.net account
-  hosts: ch-s012.rsync.net
+  hosts: prio.ch-s012.rsync.net
   gather_facts: False
   roles:
     - { role: rsync_net, backup_dir: "backup", backup_clients: "{{ groups['borg_clients'] }}", tags: ["borg"] }

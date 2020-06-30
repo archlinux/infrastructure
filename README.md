@@ -301,7 +301,7 @@ You'll have to get the correct username from the vault.
 ### Listing current backups per server
 
     borg list $hetzner_storagebox_username@u236610.your-storagebox.de:backup/<hostname>
-    borg list $rsync_net_username@ch-s012.rsync.net:backup/<hostname>
+    borg list $rsync_net_username@prio.ch-s012.rsync.net:backup/<hostname>
 
 Example
 
