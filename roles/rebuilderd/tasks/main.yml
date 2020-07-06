@@ -26,7 +26,4 @@
 
 - name: enable and start rebuilderd {{ item }} timer
   systemd: name=rebuilderd-sync@archlinux-{{ item }}.timer enabled=yes state=started
-  with_items:
-    - core
-    - extra
-    - testing
+  with_items: "{{ suites }}"

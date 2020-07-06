@@ -1,4 +1,9 @@
 rebuilderd_domain: reproducible.archlinux.org
 rebuilderd_nginx_conf: /etc/nginx/nginx.d/rebuilderd.conf
-
 rebuilder_website_loc: /usr/share/webapps/rebuilderd-website
+
+suites:
+  - core
+  - extra
+  - testing
+  - community
