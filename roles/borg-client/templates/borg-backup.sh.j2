@@ -53,7 +53,7 @@ fi
 systemctl is-active docker && /usr/local/bin/backup-gitlab.sh
 {% endif %}
 
-borg create -v --stats -C lz4 \
+borg create -v --stats -C zstd \
     -e /proc \
     -e /sys \
     -e /dev \
