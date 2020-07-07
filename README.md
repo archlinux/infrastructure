@@ -300,20 +300,20 @@ You'll have to get the correct username from the vault.
 
 ### Listing current backups per server
 
-    borg list $hetzner_storagebox_username@u236610.your-storagebox.de:backup/<hostname>
-    borg list $rsync_net_username@prio.ch-s012.rsync.net:backup/<hostname>
+    borg list ssh://<hetzner_storagebox_username>@u236610.your-storagebox.de:23/~/backup/<hostname>
+    borg list ssh://<rsync_net_username>@prio.ch-s012.rsync.net:22/~/backup/<hostname>
 
 Example
 
-    borg list $hetzner_storagebox_username@u236610.your-storagebox.de:backup/homedir.archlinux.org
+    borg list ssh://<hetzner_storagebox_username>@u236610.your-storagebox.de:23/~/backup/homedir.archlinux.org
 
 ### Listing files in a backup
 
-    borg list $hetzner_storagebox_username@u236610.your-storagebox.de:backup/<hostname>::<archive name>
+    borg list ssh://<hetzner_storagebox_username>@u236610.your-storagebox.de:23/~/backup/<hostname>::<archive name>
 
 Example
 
-    borg list $hetzner_storagebox_username@u236610.your-storagebox.de:backup/homedir.archlinux.org::20191127-084357
+    borg list ssh://<hetzner_storagebox_username>@u236610.your-storagebox.de:23/~/backup/homedir.archlinux.org::20191127-084357
 
 ## One-shots
 
