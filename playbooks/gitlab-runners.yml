@@ -5,6 +5,7 @@
   roles:
     - { role: common }
     - { role: firewalld }
+    - { role: hardening }
     - { role: sshd }
     - { role: root_ssh }
     - { role: fail2ban }
