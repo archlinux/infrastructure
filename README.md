@@ -11,6 +11,7 @@ Install these packages:
   - terraform
   - terraform-provider-keycloak
   - python-typer
+  - moreutils (for playbooks/tasks/reencrypt-vault-key.yml)
 
 ### Instructions
 
