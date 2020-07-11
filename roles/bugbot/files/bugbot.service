@@ -8,10 +8,14 @@ Restart=on-failure
 ProtectSystem=strict
 DynamicUser=yes
 PrivateDevices=true
+PrivateUsers=true
 ProtectKernelTunables=true
 ProtectControlGroups=true
+ProtectKernelLogs=true
+ProtectKernelModules=true
 MemoryDenyWriteExecute=true
 NoNewPrivileges=true
+RestrictRealtime=true
 
 
 [Install]
