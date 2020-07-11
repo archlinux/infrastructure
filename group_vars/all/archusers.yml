@@ -259,6 +259,11 @@ arch_users:
       - dev
       - multilib
       - tu
+  hashworks:
+    name: "Hashworks"
+    ssh_key: hashworks.pub
+    groups:
+      - tu
   heftig:
     name: "Jan Steffens"
     ssh_key: heftig.pub
