@@ -69,7 +69,7 @@
 - name: create staging directories in user homes
   dbscripts_mkdirs:
     pathtmpl: '/home/{user}/staging/{dirname}'
-    permissions: 755
+    permissions: '755'
     directories: ['', 'core', 'extra', 'testing', 'staging', 'community', 'community-staging', 'community-testing',  'multilib', 'multilib-staging', 'multilib-testing']
     users: "{{ arch_users.keys() | list }}"
     group: users
@@ -149,6 +149,12 @@
   acl: name=/srv/ftp/lastupdate entry="group:tu:rw-" state=present
 - name: add acl group:dev:rw- to /srv/ftp/lastupdate
   acl: name=/srv/ftp/lastupdate entry="group:dev:rw-" state=present
+
+- name: fetch dbscripts PGP key
+  command: /usr/bin/gpg --keyserver keys.openpgp.org --auto-key-locate wkd,keyserver --locate-keys {{ item }}
+  with_items: '{{ dbscripts_pgp_emails }}'
+  register: gpg
+  changed_when: "gpg.rc == 0"
 
 - name: clone dbscripts git repo
   git: >
