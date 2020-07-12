@@ -257,6 +257,15 @@ Medium-fast-ish packet.net box with Debian on it. Is currently maintained manual
 #### Services
   - GitLab runner
 
+
+### monitoring.archlinux.org
+
+  Prometheus server which collects performance/metrics from our services and runs alertmanager
+
+### Services
+  - Prometheus
+  - Alertmanager
+
 ## Ansible repo workflows
 
 ### Replace vault password and change vaulted passwords
