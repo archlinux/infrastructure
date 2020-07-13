@@ -1,7 +1,7 @@
 ---
 
 - name: install packages
-  pacman: name=zabbix-server,zabbix-frontend-php,irccat,gnu-netcat
+  pacman: name=zabbix-server,zabbix-frontend-php
 
 - name: set zabbix directory permissions in /etc
   file: path=/etc/zabbix state=directory owner=root group=root mode=755
@@ -67,15 +67,6 @@
 
 - name: install zabbix web config
   template: src=zabbix.conf.php.j2 dest=/usr/share/webapps/zabbix/conf/zabbix.conf.php owner=zabbix-web group=zabbix-web mode=600
-
-- name: install irccat configuration
-  template: src=irccat.json.j2 dest=/etc/irccat.json owner=root group=root mode=644
-
-- name: run irccat service
-  service: name=irccat enabled=yes state=started
-
-- name: install zabbix to irc message script
-  template: src=zabbix-irc-msg.j2 dest=/usr/local/bin/zabbix-irc-msg owner=root group=root mode=755
 
 - name: run zabbix server service
   service: name=zabbix-server-pgsql enabled=yes state=started
