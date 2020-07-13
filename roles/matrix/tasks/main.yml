@@ -5,7 +5,28 @@
   when: 'matrix_domain is defined'
 
 - name: install packages
-  pacman: name=python,git,npm,make,jemalloc,gcc,pkgconf,python2
+  pacman:
+    name:
+      - freetype2
+      - gcc
+      - git
+      - jemalloc
+      - libffi
+      - libjpeg
+      - libtiff
+      - libwebp
+      - libxslt
+      - libzip
+      - make
+      - npm
+      - openssl
+      - pkgconf
+      - postgresql-libs
+      - python
+      - python2
+      - tcl
+      - tk
+      - zlib
 
 - name: add synapse group
   group: name=synapse system=yes gid=198
