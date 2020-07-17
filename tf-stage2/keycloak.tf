@@ -91,6 +91,24 @@ resource "keycloak_realm" "archlinux" {
   }
 }
 
+resource "keycloak_realm_events" "realm_events" {
+  realm_id = "archlinux"
+
+  events_enabled       = true
+  events_expiration    = 7889238  # 3 months
+
+  admin_events_enabled         = true
+  admin_events_details_enabled = true
+
+  # When omitted or left empty, keycloak will enable all event types
+  enabled_event_types = [
+  ]
+
+  events_listeners = [
+    "jboss-logging", # keycloak enables the 'jboss-logging' event listener by default.
+  ]
+}
+
 resource "keycloak_oidc_identity_provider" "realm_identity_provider" {
   realm = "archlinux"
   alias = "github"
