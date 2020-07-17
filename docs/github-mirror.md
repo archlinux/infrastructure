@@ -24,3 +24,6 @@ public key you copied from GitLab just now. Check "Allow write access" and
 click "Add key".
 
 Your push mirror should now work.
+
+Finally, in the GitHub description of the mirrored project, append " (read-only mirror)"
+so that people know it's a mirror. :)
