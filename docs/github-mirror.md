@@ -26,4 +26,5 @@ click "Add key".
 Your push mirror should now work.
 
 Finally, in the GitHub description of the mirrored project, append " (read-only mirror)"
-so that people know it's a mirror. :)
+so that people know it's a mirror. Also, in the website field put the full URL to the
+upstream repo on our GitLab.
