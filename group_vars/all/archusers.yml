@@ -260,7 +260,7 @@ arch_users:
       - multilib
       - tu
   hashworks:
-    name: "Hashworks"
+    name: "Justin Kromlinger"
     ssh_key: hashworks.pub
     groups:
       - tu
