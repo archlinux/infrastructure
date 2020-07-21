@@ -245,7 +245,7 @@
   - skip_ansible_lint
 
 - name: add svntogit public remotes
-  command: git remote add public ssh://git.archlinux.org/srv/git/svntogit/{{ item }}.git chdir=/srv/svntogit/repos/{{ item }}
+  command: git remote add public git@github.com:archlinux/svntogit-{{ item }}.git chdir=/srv/svntogit/repos/{{ item }}
   with_items:
     - community
     - packages
