@@ -34,7 +34,7 @@
   user: name="{{ aurweb_user }}" shell=/bin/bash createhome=yes
 
 - name: Create directory
-  file: path={{ aurweb_dir }} state=directory owner={{aurweb_user}} group=http mode=0775
+  file: path={{ aurweb_dir }} state=directory owner={{ aurweb_user }} group=http mode=0775
 
 - name: clone aurweb repo
   git: >
@@ -42,7 +42,7 @@
     dest="{{ aurweb_dir }}"
     version={{ aurweb_version }}
   become: true
-  become_user: "{{aurweb_user}}"
+  become_user: "{{ aurweb_user }}"
   register: release
 
 - name: clone Trusted User documentation repo
@@ -55,7 +55,7 @@
   register: tubylaws_release
 
 - name: create necessary directories
-  file: path={{ aurweb_dir}}/{{ item }} state=directory owner={{ aurweb_user }} group={{ aurweb_user }}
+  file: path={{ aurweb_dir }}/{{ item }} state=directory owner={{ aurweb_user }} group={{ aurweb_user }}
   with_items:
     - 'aurblup'
     - 'sessions'
@@ -73,11 +73,11 @@
               priv="{{ aurweb_db }}.*:ALL"
   no_log: true
 
-- name: check if db is imported
-  shell: mysql -u {{ aurweb_db_user }} -p{{ vault_aurweb_db_password }} -e "SELECT ID FROM Users" {{ aurweb_db }}
-  ignore_errors: true
+- name: check if db exists
+  mysql_db:
+    name: "{{ aurweb_db }}"
+    state: present
   register: db_imported
-  no_log: true
 
 - name: import aur sql db
   mysql_db:
@@ -86,7 +86,7 @@
     login_host: "{{ aurweb_db_host }}"
     login_password: "{{ vault_mariadb_users.root }}"
     target: "{{ aurweb_dir }}/schema/aur-schema.sql"
-  when: db_imported.rc != 0
+  when: db_imported.changed
   no_log: true
 
 - name: create aurweb conf dir
@@ -99,22 +99,23 @@
   template: src=config.j2 dest={{ aurweb_conf_dir }}/config
 
 - name: Install python module
-  shell: "python3 setup.py install --install-scripts=/usr/local/bin"
+  command: "python3 setup.py install --install-scripts=/usr/local/bin"
   args:
     chdir: "{{ aurweb_dir }}"
+    creates: /usr/local/bin/aurweb-*
 
 - name: Generate HTML documentation
   make:
       chdir: "{{ aurweb_dir }}/doc"
   become: true
-  become_user: "{{aurweb_user}}"
+  become_user: "{{ aurweb_user }}"
 
 - name: Generate Translations
   make:
       chdir: "{{ aurweb_dir }}/po"
       target: "install"
   become: true
-  become_user: "{{aurweb_user}}"
+  become_user: "{{ aurweb_user }}"
 
 - name: Generate Trusted User documentation
   make:
@@ -171,44 +172,55 @@
   when: git.changed
 
 - name: create git repo dir
-  file: path={{ aurweb_git_dir }} state=directory owner={{aurweb_user}} group=http mode=0775
+  file: path={{ aurweb_git_dir }} state=directory owner={{ aurweb_user }} group=http mode=0775
 
 - name: init git directory
   command: git init --bare {{ aurweb_git_dir }}
   args:
     creates: "{{ aurweb_git_dir }}/HEAD"
   become: true
-  become_user: "{{aurweb_user}}"
+  become_user: "{{ aurweb_user }}"
+  tags:
+    - skip_ansible_lint
 
-- shell: git config --local --get-all transfer.hideRefs
+- name: save hideRefs setting on var
+  command: git config --local --get-all transfer.hideRefs
   register: git_config
   args:
     chdir: "{{ aurweb_git_dir }}"
   failed_when: git_config.rc == 2 # FIXME: does not work.
+  tags:
+    - skip_ansible_lint
 
 - name: configure git tranfser.hideRefs
   command: git config --local transfer.hideRefs '^refs/'
   args:
     chdir: "{{ aurweb_git_dir }}"
   become: true
-  become_user: "{{aurweb_user}}"
+  become_user: "{{ aurweb_user }}"
   when: git_config.stdout.find('^refs/') == -1
+  tags:
+    - skip_ansible_lint
 
 - name: configure git transfer.hideRefs second
   command: git config --local --add transfer.hideRefs '!refs/'
   args:
     chdir: "{{ aurweb_git_dir }}"
   become: true
-  become_user: "{{aurweb_user}}"
+  become_user: "{{ aurweb_user }}"
   when: git_config.stdout.find('!refs/') == -1
+  tags:
+    - skip_ansible_lint
 
 - name: configure git transfer.hideRefs third
   command: git config --local --add transfer.hideRefs '!HEAD'
   args:
     chdir: "{{ aurweb_git_dir }}"
   become: true
-  become_user: "{{aurweb_user}}"
+  become_user: "{{ aurweb_user }}"
   when: git_config.stdout.find('!HEAD') == -1
+  tags:
+    - skip_ansible_lint
 
 - name: create symlink for git hook
   file:
