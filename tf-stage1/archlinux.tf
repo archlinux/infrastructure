@@ -163,6 +163,21 @@ resource "hcloud_server" "bugs" {
   }
 }
 
+resource "hcloud_rdns" "aur" {
+  server_id  = hcloud_server.aur.id
+  ip_address = hcloud_server.aur.ipv4_address
+  dns_ptr    = "aur.archlinux.org"
+}
+
+resource "hcloud_server" "aur" {
+  name        = "aur.archlinux.org"
+  image       = data.hcloud_image.archlinux.id
+  server_type = "cpx31"
+  lifecycle {
+    ignore_changes = [image]
+  }
+}
+
 resource "hcloud_rdns" "aur-dev" {
   server_id  = hcloud_server.aur-dev.id
   ip_address = hcloud_server.aur-dev.ipv4_address
