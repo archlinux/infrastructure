@@ -1,8 +1,8 @@
 ---
 
 aurweb_domain: 'aur.archlinux.org'
-aurweb_repository: 'https://git.archlinux.org/aurweb.git'
-tubylaws_repository: 'https://git.archlinux.org/tu-bylaws.git'
+aurweb_repository: 'https://gitlab.archlinux.org/archlinux/aurweb.git'
+tubylaws_repository: 'https://gitlab.archlinux.org/archlinux/tu-bylaws.git'
 aurweb_dir: '/srv/http/aurweb'
 aurweb_conf_dir: '/etc/aurweb'
 aurweb_git_dir: "{{ aurweb_dir }}/aur.git"
