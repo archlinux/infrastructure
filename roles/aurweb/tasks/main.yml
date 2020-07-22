@@ -8,6 +8,7 @@
       - make
       - php-memcached
       - pyalpm
+      - python-alembic
       - python-bleach
       - python-markdown
       - python-mysql-connector
@@ -73,21 +74,21 @@
               priv="{{ aurweb_db }}.*:ALL"
   no_log: true
 
-- name: check if db exists
-  mysql_db:
-    name: "{{ aurweb_db }}"
-    state: present
-  register: db_imported
+- name: initialize the database
+  command: python aurweb/initdb.py
+  args:
+    chdir: "{{ aurweb_dir }}"
+  become: true
+  become_user: "{{ aurweb_user }}"
+  when: db_created.changed
 
-- name: import aur sql db
-  mysql_db:
-    state: import
-    name: "{{ aurweb_db }}"
-    login_host: "{{ aurweb_db_host }}"
-    login_password: "{{ vault_mariadb_users.root }}"
-    target: "{{ aurweb_dir }}/schema/aur-schema.sql"
-  when: db_imported.changed
-  no_log: true
+- name: run migrations
+  command: alembic upgrade head
+  args:
+    chdir: "{{ aurweb_dir }}"
+  become: true
+  become_user: "{{ aurweb_user }}"
+  when: release.changed or db_created.changed
 
 - name: create aurweb conf dir
   file: path={{ aurweb_conf_dir }} state=directory
