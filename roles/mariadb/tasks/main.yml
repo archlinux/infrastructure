@@ -2,10 +2,17 @@
 - name: install mariadb
   pacman: name=mariadb,python-mysqlclient state=present
 
+- name: set the nocow attribute for btrfs
+  file:
+    path: "{{ mariadb_data_dir }}"
+    state: directory
+    attributes: '+C'
+  when: filesystem == 'btrfs'
+
 - name: initialize mariadb
-  command: mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+  command: mysql_install_db --user=mysql --basedir=/usr --datadir="{{ mariadb_data_dir }}"
   args:
-    creates: /var/lib/mysql/mysql
+    creates: "{{ mariadb_data_dir }}/mysql"
 
 - name: configure mariadb
   template: src=server.cnf.j2 dest=/etc/my.cnf.d/server.cnf
