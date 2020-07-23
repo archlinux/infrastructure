@@ -6,17 +6,17 @@
   roles:
     - { role: common }
     - { role: tools }
-    - { role: sshd }
+    - { role: sshd, sshd_enable_includes: true }
     - { role: root_ssh }
     - { role: certbot }
     - { role: nginx }
     - { role: mariadb, mariadb_innodb_buffer_pool_size: '64M', mariadb_table_open_cache: '256', mariadb_query_cache_type: '0',
               mariadb_innodb_file_per_table: True }
     - { role: sudo }
-    - { role: php-fpm, php_extensions: ['iconv', 'memcached', 'mysqli', 'pdo_mysql'], zend_extensions: ['opcache'], tags: ["php-fpm"] }
-    - { role: memcached, tags: ['memcached'] }
-    - { role: uwsgi, tags: ["uwsgi"] }
-    - { role: borg-client, tags: ["borg"] }
-    - { role: postfix, tags: ["postfix"], postfix_relayhost: "orion.archlinux.org" }
-    - { role: fail2ban, tags: ["fail2ban"] }
-    - { role: aurweb, tags: ["aurweb"] }
+    - { role: php-fpm, php_extensions: ['iconv', 'memcached', 'mysqli', 'pdo_mysql'], zend_extensions: ['opcache'] }
+    - { role: memcached }
+    - { role: uwsgi }
+    - { role: borg-client }
+    - { role: postfix, postfix_relayhost: "orion.archlinux.org" }
+    - { role: fail2ban }
+    - { role: aurweb }

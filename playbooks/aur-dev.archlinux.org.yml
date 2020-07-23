@@ -14,9 +14,9 @@
               mariadb_innodb_file_per_table: True }
     - { role: sudo }
     - { role: php-fpm, php_extensions: ['iconv', 'memcached', 'mysqli', 'pdo_mysql'], zend_extensions: ['opcache'] }
-    - { role: memcached, tags: ['memcached'] }
-    - { role: uwsgi, tags: ["uwsgi"] }
-    - { role: borg-client, tags: ["borg"] }
+    - { role: memcached }
+    - { role: uwsgi }
+    - { role: borg-client }
     - { role: postfix, postfix_relayhost: "orion.archlinux.org" }
     - { role: fail2ban }
     - { role: aurweb, aurweb_domain: 'aur-dev.archlinux.org', aurweb_version: 'pu' }
