@@ -5,7 +5,7 @@ After=network.target
 [Service]
 User={{ aurweb_user }}
 Group=memcached
-ExecStart=/usr/bin/memcached -l {{ aurweb_memcached_host }} -m {{ aurweb_memcached_memory }} -o modern
+ExecStart=/usr/bin/memcached -s {{ aurweb_memcached_socket }} -m {{ aurweb_memcached_memory }} -o modern
 Restart=always
 NoNewPrivileges=yes
 PrivateTmp=yes
