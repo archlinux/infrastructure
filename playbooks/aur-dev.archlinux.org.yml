@@ -16,7 +16,7 @@
     - { role: php-fpm, php_extensions: ['iconv', 'memcached', 'mysqli', 'pdo_mysql'], zend_extensions: ['opcache'] }
     - { role: memcached }
     - { role: uwsgi }
-    - { role: borg-client }
+    - { role: borg-client, tags: ["borg"] }
     - { role: postfix, postfix_relayhost: "orion.archlinux.org" }
     - { role: fail2ban }
     - { role: aurweb, aurweb_domain: 'aur-dev.archlinux.org', aurweb_version: 'pu' }
