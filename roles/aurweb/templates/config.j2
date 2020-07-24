@@ -21,6 +21,11 @@ memcache_servers = {{ aurweb_memcached_socket }}:0
 request_limit = {{ aurweb_request_limt }}
 window_length = {{ aurweb_window_length }}
 
+[fingerprints]
+Ed25519 = SHA256:RFzBCUItH9LZS0cKB5UE6ceAYhBD5C8GeOBip8Z11+4
+ECDSA = SHA256:5s5cIyReIfNNVGRFdDbe3hdYiI5OelHGpw2rOUud3Q8
+RSA =  SHA256:uTa/0PndEgPZTf76e1DFqXKJEXKsn7m9ivhLQtzGOCI
+
 [serve]
 repo-path = {{ aurweb_git_dir }}
 git-shell-cmd = /usr/bin/sh
