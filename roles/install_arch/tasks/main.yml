@@ -170,17 +170,17 @@
 
 - name: install hcloud-init
   copy: src=hcloud-init dest=/mnt/usr/local/bin/hcloud-init owner=root group=root mode=0755
-  when: "'hcloud' in group_names"
+  when: "'hcloud' in group_names or inventory_hostname == 'packer-base-image'"
 
 - name: install hcloud-init.service
   copy: src=hcloud-init.service dest=/mnt/etc/systemd/system/hcloud-init.service owner=root group=root mode=0644
-  when: "'hcloud' in group_names"
+  when: "'hcloud' in group_names or inventory_hostname == 'packer-base-image'"
 
 - name: enable hcloud-init inside chroot
   command: chroot /mnt systemctl enable hcloud-init
   register: chroot_systemd_services
   changed_when: "chroot_systemd_services.rc == 0"
-  when: "'hcloud' in group_names"
+  when: "'hcloud' in group_names or inventory_hostname == 'packer-base-image'"
 
 - name: provide default mount options (btrfs)
   lineinfile:
