@@ -4,6 +4,6 @@ Requires=mysqld.service
 After=mysqld.service
 
 [Service]
-Type=Oneshot
+Type=oneshot
 User={{ aurweb_user }}
 ExecStart=/usr/local/bin/aurweb-mkpkglists
