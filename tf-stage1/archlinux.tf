@@ -172,7 +172,7 @@ resource "hcloud_rdns" "aur" {
 resource "hcloud_server" "aur" {
   name        = "aur.archlinux.org"
   image       = data.hcloud_image.archlinux.id
-  server_type = "cpx31"
+  server_type = "cx31"
   lifecycle {
     ignore_changes = [image]
   }
