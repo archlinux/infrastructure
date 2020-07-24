@@ -159,7 +159,6 @@ The following steps should be used to update our managed servers:
 
 #### Services
 
-  - aur (aur.archlinux.org)
   - mailman
   - projects (projects.archlinux.org)
 
@@ -167,9 +166,13 @@ The following steps should be used to update our managed servers:
 
 #### Services
   - wiki (wiki.archlinux.org)
-  - bugs (bugs.archlinux.org)
   - archweb
   - patchwork
+
+## aur.archlinux.org
+
+#### Services
+  - aurweb
 
 ## bugs.archlinux.org
 
