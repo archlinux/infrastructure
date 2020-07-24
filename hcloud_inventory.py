@@ -4,7 +4,6 @@
 
 import argparse
 import json
-import yaml
 import sys
 
 from hcloud import Client
