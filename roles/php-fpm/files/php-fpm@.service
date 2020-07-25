@@ -12,7 +12,9 @@ NoNewPrivileges=true
 ;PrivateNetwork=true
 PrivateDevices=true
 
-ProtectHome=true
+# AURweb's rendercomment script git bindings requires access to /home:
+# failed to stat '/home/aur/.gitconfig
+ProtectHome=tmpfs
 ProtectSystem=full
 InaccessiblePaths=-/var/lib/mysql
 
