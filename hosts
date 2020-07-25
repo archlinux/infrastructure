@@ -83,6 +83,7 @@ dragon.archlinux.org
 runner1.archlinux.org
 runner2.archlinux.org
 secure-runner1.archlinux.org
+secure-runner2.archlinux.org
 
 [reproduciblebuilds]
 repro1.pkgbuild.com
