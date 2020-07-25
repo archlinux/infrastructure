@@ -238,6 +238,21 @@ resource "hcloud_server" "monitoring" {
   }
 }
 
+resource "hcloud_rdns" "secure-runner2" {
+  server_id  = hcloud_server.secure-runner2.id
+  ip_address = hcloud_server.secure-runner2.ipv4_address
+  dns_ptr    = "secure-runner2.archlinux.org"
+}
+
+resource "hcloud_server" "secure-runner2" {
+  name        = "secure-runner2.archlinux.org"
+  image       = data.hcloud_image.archlinux.id
+  server_type = "cx11"
+  lifecycle {
+    ignore_changes = [image]
+  }
+}
+
 resource "hcloud_server" "svn2gittest" {
   name        = "svn2gittest"
   image       = data.hcloud_image.archlinux.id
