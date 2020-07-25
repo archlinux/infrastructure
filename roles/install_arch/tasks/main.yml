@@ -32,7 +32,7 @@
   when: filesystem == "btrfs" and system_disks|length == 1
 
 - name: mount the filesystem (btrfs)
-  mount: src="{{ system_disks[0] }}{{ 'p2' if 'nvme' in system_disks[0] else '2' }}" path=/mnt state=mounted fstype=btrfs opts="compress=zstd,space_cache=v2"
+  mount: src="{{ system_disks[0] }}{{ 'p2' if 'nvme' in system_disks[0] else '2' }}" path=/mnt state=mounted fstype=btrfs opts="compress-force=zstd,space_cache=v2"
   when: filesystem == "btrfs"
 
 - name: touch LOCK file on mountpoint
