@@ -21,6 +21,8 @@ InaccessiblePaths=-/var/lib/mysql
 ProtectKernelModules=true
 ProtectKernelTunables=true
 ProtectControlGroups=true
+ProtectKernelLogs=true
+ProtectClock=true
 
 RestrictRealtime=true
 RestrictNamespaces=true
