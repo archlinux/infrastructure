@@ -46,6 +46,7 @@ gitlab.archlinux.org
 accounts.archlinux.org
 gemini.archlinux.org
 monitoring.archlinux.org
+reproducible.archlinux.org
 
 [borg_hosts]
 prio.ch-s012.rsync.net
