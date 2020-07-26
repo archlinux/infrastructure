@@ -2,12 +2,6 @@
 
 - name: install dependencies
   pacman: name=docker,python-docker,python-gitlab,gitlab-runner state=latest update_cache=yes
-  when: ansible_facts['os_family'] == "Archlinux"
-  notify: restart gitlab-runner
-
-- name: install dependencies
-  apt: name=docker-ce,gitlab-runner state=latest update_cache=yes
-  when: ansible_facts['os_family'] == "Debian"
   notify: restart gitlab-runner
 
 - name: start docker
