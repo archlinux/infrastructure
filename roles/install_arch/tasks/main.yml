@@ -5,9 +5,13 @@
   register: motd_contents
   changed_when: motd_contents.stdout | length > 0
 
-- name: check whether we're running in the Hetzner rescue system
-  fail: msg="Not running in Hetzner rescue system!"
-  when: "'Hetzner Rescue' not in motd_contents.stdout"
+- name: check whether we're running in Hetzner or Packet.net rescue environment
+  fail: msg="Not running in rescue system!"
+  when: "'Hetzner Rescue' not in motd_contents.stdout and 'Rescue environment based on Alpine Linux' not in motd_contents.stdout"
+
+- name: make sure all required packages are installed in the rescue system for installation
+  apk: name=sgdisk,btrfs-progs,tar update_cache=yes
+  when: ansible_facts['os_family'] == "Alpine"
 
 - name: create GRUB embed partitions
   command: sgdisk -g --clear -n 1:0:+10M {{ item }} -c 1:boot -t 1:ef02
