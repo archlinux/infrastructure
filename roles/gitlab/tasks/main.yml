@@ -28,6 +28,7 @@
       # https://gitlab.com/gitlab-org/gitlab/issues/14414
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'https://{{ gitlab_domain }}'
+        nginx['client_max_body_size'] = '2g'
         letsencrypt['enable'] = true
         letsencrypt['contact_emails'] = ['webmaster@archlinux.org']
         gitlab_rails['lfs_enabled'] = false
