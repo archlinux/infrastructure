@@ -16,6 +16,7 @@
       - "80:80"
       - "443:443"
       - "222:22"
+      - "5050:5050"
     pull: yes
     restart_policy: always
     env:
@@ -90,6 +91,7 @@
     - "80/tcp"
     - "443/tcp"
     - "222/tcp"
+    - "5050/tcp"
   tags:
     - firewall
 
