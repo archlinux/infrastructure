@@ -1,7 +1,7 @@
 ---
 
 - name: install grafana
-  pacman: name=grafana,grafana-zabbix state=present
+  pacman: name=grafana state=present
 
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/grafana.conf owner=root group=root mode=644
