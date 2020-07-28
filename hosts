@@ -19,6 +19,10 @@ runner1.archlinux.org
 repro1.pkgbuild.com
 repro2.pkgbuild.com
 
+[packet_net]
+runner2.archlinux.org
+repro3.pkgbuild.com
+
 [mirrors]
 ind.mirror.pkgbuild.com
 jpn.mirror.pkgbuild.com
@@ -90,6 +94,7 @@ secure-runner2.archlinux.org
 [reproduciblebuilds]
 repro1.pkgbuild.com
 repro2.pkgbuild.com
+repro3.pkgbuild.com
 
 [memcached]
 apollo.archlinux.org
