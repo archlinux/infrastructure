@@ -35,5 +35,6 @@ server {
     location / {
         access_log   /var/log/nginx/{{ grafana_domain }}/access.log main;
         proxy_pass http://grafana;
+	proxy_set_header X-Forwarded-For      $proxy_add_x_forwarded_for;
     }
 }
