@@ -21,6 +21,7 @@
     - relay_transport_map
     - domains
     - mailman_compat
+    - msa_header_checks
 
 - name: update aliases db
   command: postalias /etc/postfix/aliases

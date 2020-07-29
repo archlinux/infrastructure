@@ -22,7 +22,10 @@ localhost:smtp      inet  n       -       n       -       -       smtpd
 {% endif %}
 
 {% if postfix_server %}
+msa_cleanup unix n      -       n       -       0       cleanup
+    -o header_checks=pcre:/etc/postfix/msa_header_checks
 submission inet n       -       n       -       -       smtpd
+    -o cleanup_service_name=msa_cleanup
     -o syslog_name=postfix/submission
     -o smtpd_tls_security_level=encrypt
     -o smtpd_sasl_auth_enable=yes

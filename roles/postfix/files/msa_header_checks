@@ -1,0 +1,2 @@
+/^Received:/	IGNORE
+/^User-Agent:/	IGNORE
