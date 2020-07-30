@@ -1,6 +1,6 @@
 [Unit]
 Description=Synapse Matrix homeserver
-Requires=postgresql.service
+Requires=postgresql.service redis.service
 After=network.target postgresql.service
 
 [Service]

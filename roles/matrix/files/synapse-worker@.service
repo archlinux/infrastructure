@@ -2,6 +2,7 @@
 Description=Synapse Matrix worker (%i)
 BindsTo=synapse.service
 After=synapse.service
+AssertPathExists=/etc/synapse/worker-%i.yaml
 
 [Service]
 Type=notify
@@ -12,8 +13,8 @@ Restart=on-abort
 User=synapse
 
 WorkingDirectory=~
-ExecStart=/var/lib/synapse/venv/bin/python -m synapse.app.%i --config-path=/etc/synapse/homeserver.yaml --config-path=/etc/synapse/worker-%i.yaml
-SyslogIdentifier=synapse-worker-%i
+ExecStart=/var/lib/synapse/venv/bin/python -m synapse.app.generic_worker --config-path=/etc/synapse/homeserver.yaml --config-path=/etc/synapse/worker-%i.yaml
+SyslogIdentifier=synapse
 
 Environment=LD_PRELOAD=/usr/lib/libjemalloc.so
 

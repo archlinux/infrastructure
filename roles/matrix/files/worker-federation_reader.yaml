@@ -1,12 +1,12 @@
-worker_name: media_repository
-worker_app: synapse.app.media_repository
+worker_name: federation_reader
+worker_app: synapse.app.generic_worker
 worker_listeners:
-  - port: 8013
+  - port: 8011
     type: http
     x_forwarded: true
     bind_addresses: ['::1', '127.0.0.1']
     resources:
-      - names: [media]
+      - names: [federation]
         compress: false
 
 # vim:ft=yaml sw=2 et:

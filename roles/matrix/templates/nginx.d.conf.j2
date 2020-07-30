@@ -1,11 +1,9 @@
-upstream matrix {
-    server 127.0.0.1:8008;
+{% for name, config in matrix_nginx_config.items() %}
+upstream matrix_{{ name }} {
+    server 127.0.0.1:{{ config.port }};
 }
 
-upstream matrix_media_repository {
-    server 127.0.0.1:8013;
-}
-
+{% endfor %}
 server {
     listen       80;
     listen       [::]:80;
@@ -34,20 +32,18 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ matrix_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ matrix_domain }}/chain.pem;
 
-    location /_matrix/media {
+{% for name, config in matrix_nginx_config.items() %}
+    # {{ name }}
+{% for location in config.locations %}
+    location {{ location }} {
         access_log   /var/log/nginx/{{ matrix_domain }}/access.log main;
-        proxy_pass http://matrix_media_repository;
+        proxy_pass http://matrix_{{ name }};
         proxy_set_header X-Forwarded-For $remote_addr;
         proxy_read_timeout 900s;
     }
+{% endfor %}
 
-    location /_matrix {
-        access_log   /var/log/nginx/{{ matrix_domain }}/access.log main;
-        proxy_pass http://matrix;
-        proxy_set_header X-Forwarded-For $remote_addr;
-        proxy_read_timeout 900s;
-    }
-
+{% endfor %}
     location = / {
         add_header Content-Type text/plain;
         return 200 "Nothing to see here.";

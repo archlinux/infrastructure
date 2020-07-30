@@ -24,6 +24,7 @@
       - postgresql-libs
       - python
       - python2
+      - redis
       - tcl
       - tk
       - zlib
@@ -51,7 +52,7 @@
 - name: install synapse
   pip:
     name:
-      - 'matrix-synapse[postgres,systemd,url_preview]'
+      - 'matrix-synapse[postgres,systemd,url_preview,redis]'
       - pip
     state: latest
     extra_args: '-U --upgrade-strategy=eager'
@@ -118,6 +119,7 @@
   with_items:
     - log_config.yaml
     - worker-appservice.yaml
+    - worker-federation_reader.yaml
     - worker-federation_sender.yaml
     - worker-media_repository.yaml
   notify:
@@ -179,6 +181,7 @@
   with_items:
     - synapse.service
     - synapse-worker@appservice.service
+    - synapse-worker@federation_reader.service
     - synapse-worker@federation_sender.service
     - synapse-worker@media_repository.service
   notify:
