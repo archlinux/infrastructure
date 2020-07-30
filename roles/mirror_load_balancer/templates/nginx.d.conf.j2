@@ -5,9 +5,7 @@ geoip2 /var/lib/GeoIP/GeoLite2-City.mmdb {
 map $geoip2_data_continent_name $preferred_upstream {
     default ger.mirror.pkgbuild.com;
     'Africa' ger.mirror.pkgbuild.com;
-    'Asia' jpn.mirror.pkgbuild.com;
     'Europe' ger.mirror.pkgbuild.com;
-    'Oceania' jpn.mirror.pkgbuild.com;
 }
 
 log_format loadbalancer

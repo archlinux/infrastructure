@@ -240,9 +240,9 @@ So to set up this server from scratch, run:
 ### reproducible.archlinux.org
 
 #### Services
-  - Runs a master rebuilderd instance with two PIA workers (repro1.pkgbuild.com,
-    repro2.pkgbuild.com and repro3.pkgbuild.com).
-    repro3.pkgbuild.com is packet.net machine which runs Ubuntu.
+  - Runs a master rebuilderd instance two workers:
+        - repro1.pkgbuild.com (PIA worker)
+        - repro3.pkgbuild.com (packet.net machine which runs Ubuntu)
 
 ### runner1.archlinux.org
 

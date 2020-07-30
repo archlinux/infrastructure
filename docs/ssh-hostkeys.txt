@@ -108,17 +108,6 @@
 256 MD5:e2:34:b1:dc:24:00:45:08:4a:62:48:17:b2:69:23:2d root@archlinux-packer (ED25519)
 3072 MD5:50:c8:93:43:05:d5:73:a4:84:b1:07:66:a7:20:a5:79 root@archlinux-packer (RSA)
 
-# jpn.mirror.pkgbuild.com
-1024 SHA256:CH1c99PrdAOTd0AKjoPwZHSBvQpNvRummeW3JhG2BIQ root@archlinux (DSA)
-256 SHA256:zySS1V6LkHPihEJRDQlGA0Hd6OEEBNnXRgsMJLL4hnY root@archlinux (ECDSA)
-256 SHA256:YY8kgSj1KFRCl0zoqdI7p+wYacOpqvMJZb0sSC5Pj50 root@archlinux (ED25519)
-2048 SHA256:B2Zjycz7Zb2RvKlKjZwWwbGvfAUu1sH4oemdu48YHK4 root@archlinux (RSA)
-
-1024 MD5:4a:82:83:e6:02:f2:6c:da:b4:65:40:b7:4f:ec:97:32 root@archlinux (DSA)
-256 MD5:5b:ad:df:44:85:56:75:3e:45:76:82:36:dc:7c:52:f3 root@archlinux (ECDSA)
-256 MD5:51:37:92:2a:2e:29:3c:c6:f1:6c:5e:67:9c:64:d4:b1 root@archlinux (ED25519)
-2048 MD5:4e:ed:97:61:09:0f:ee:97:85:09:80:6d:02:5e:28:d1 root@archlinux (RSA)
-
 # luna.archlinux.org
 1024 SHA256:9Nqu9y1LhT3L3Kd6J9CSyuOc1AdGWo0eLsPxoc5bpaw root@alderaan (DSA)
 256 SHA256:L71Q91yHwmHPYYkJMDgj0xmUuw16qFOhJbBr1mzsiOI root@alderaan (ECDSA)
@@ -217,17 +206,6 @@
 256 MD5:c1:40:f1:c7:cd:c0:08:bd:dc:a0:01:66:f3:ef:a0:d4 root@archlinux (ECDSA)
 256 MD5:9c:47:85:f4:e4:19:42:92:7a:b1:dd:de:f5:3e:74:d6 root@archlinux (ED25519)
 2048 MD5:e4:e1:d2:00:1b:96:9c:60:60:ac:a1:32:97:3b:1d:7c root@archlinux (RSA)
-
-# repro2.pkgbuild.com
-1024 SHA256:vQa2qPFZi5uaG4xFGU9TBTAl/ojG0mPV+VjrpQBjid8 root@archlinux (DSA)
-256 SHA256:IQeaJ5RyVuxahJLEplC1bp/9TEfbvc3moHFCXQnjwsQ root@archlinux (ECDSA)
-256 SHA256:AIYSDQNuqtWJTF5qs2nEon8zoJYP6mGNFrWvuNHVyyY root@archlinux (ED25519)
-2048 SHA256:SU6wcg6UJsyqB4tDTECIupsqzz36DVm5cdjvDy2pOLU root@archlinux (RSA)
-
-1024 MD5:46:8d:e8:5a:9e:a4:a4:80:cd:08:c4:d1:2d:81:e0:09 root@archlinux (DSA)
-256 MD5:d0:48:7c:9b:2c:6c:29:f4:aa:2c:f7:e8:2d:ff:66:4f root@archlinux (ECDSA)
-256 MD5:be:ca:42:e7:aa:ed:7b:20:ea:0c:c0:05:0d:07:13:fa root@archlinux (ED25519)
-2048 MD5:4a:d4:7b:c7:78:7b:90:33:45:5a:99:1a:8d:15:32:8d root@archlinux (RSA)
 
 # reproducible.archlinux.org
 1024 SHA256:3HoA8rGGureKWKaIZst+Dc6f7yrf3Wfn5PO1HFMl35E root@archlinux-packer (DSA)
