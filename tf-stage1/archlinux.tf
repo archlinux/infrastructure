@@ -261,3 +261,18 @@ resource "hcloud_server" "svn2gittest" {
     ignore_changes = [image]
   }
 }
+
+resource "hcloud_rdns" "mail" {
+  server_id  = hcloud_server.monitoring.id
+  ip_address = hcloud_server.monitoring.ipv4_address
+  dns_ptr    = "mail.archlinux.org"
+}
+
+resource "hcloud_server" "mail" {
+  name        = "mail.archlinux.org"
+  image       = data.hcloud_image.archlinux.id
+  server_type = "cx11"
+  lifecycle {
+    ignore_changes = [image]
+  }
+}
