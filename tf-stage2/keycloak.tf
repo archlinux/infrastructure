@@ -381,6 +381,8 @@ resource "keycloak_authentication_execution_config" "registration_recaptcha_acti
 //      |     |- Condition - User Role (Staff) (R)
 //      |     |- OTP Form (A)
 //      |     |- WebAuthn Form (A)
+//      |     |- Force OTP Setup Subflow (A)
+//      |     |  |- OTP Form (R)
 //      |- 2FA opt-in Subflow (A)
 //      |  |- 2FA opt-in conditional subflow (C)
 //      |     |- Condition - User Configured (R)
@@ -533,7 +535,22 @@ resource "keycloak_authentication_execution" "staff_conditional_webauthn_form" {
   parent_flow_alias = keycloak_authentication_subflow.staff_conditional.alias
   authenticator = "webauthn-authenticator"
   requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution.staff_conditional_user_role]
+  depends_on = [keycloak_authentication_execution.staff_conditional_otp_form]
+}
+
+resource "keycloak_authentication_subflow" "staff_conditional_setup_otp" {
+  realm_id = "archlinux"
+  alias = "Setup OTP subflow"
+  parent_flow_alias = keycloak_authentication_subflow.staff_conditional.alias
+  requirement = "ALTERNATIVE"
+  depends_on = [keycloak_authentication_execution.staff_conditional_webauthn_form]
+}
+
+resource "keycloak_authentication_execution" "staff_conditional_setup_otp_otp_form" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.staff_conditional_setup_otp.alias
+  authenticator = "auth-otp-form"
+  requirement = "REQUIRED"
 }
 
 resource "keycloak_authentication_subflow" "_2fa_opt_in" {
@@ -602,6 +619,8 @@ resource "keycloak_authentication_execution" "fallthrough_browser_redirect_refre
 // |     |- Condition - User Role (Staff) (R)
 // |     |- OTP Form (A)
 // |     |- WebAuthn Form (A)
+// |     |- Force OTP Setup Subflow (A)
+// |     |  |- OTP Form (R)
 // |- IPR OTP opt-in Subflow (A)
 // |  |- IPR OTP opt-in conditional subflow (C)
 // |     |- Condition - User Configured (R)
@@ -710,7 +729,22 @@ resource "keycloak_authentication_execution" "ipr_staff_conditional_webauthn_for
   parent_flow_alias = keycloak_authentication_subflow.ipr_staff_conditional.alias
   authenticator = "webauthn-authenticator"
   requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution.ipr_staff_conditional_user_role]
+  depends_on = [keycloak_authentication_execution.ipr_staff_conditional_otp_form]
+}
+
+resource "keycloak_authentication_subflow" "ipr_staff_conditional_setup_otp" {
+  realm_id = "archlinux"
+  alias = "IPR Setup OTP subflow"
+  parent_flow_alias = keycloak_authentication_subflow.ipr_otp_opt_in_conditional.alias
+  requirement = "ALTERNATIVE"
+  depends_on = [keycloak_authentication_execution.ipr_staff_conditional_webauthn_form]
+}
+
+resource "keycloak_authentication_execution" "ipr_staff_conditional_setup_otp_otp_form" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.ipr_staff_conditional_setup_otp.alias
+  authenticator = "auth-otp-form"
+  requirement = "REQUIRED"
 }
 
 resource "keycloak_authentication_subflow" "ipr_otp_opt_in" {
