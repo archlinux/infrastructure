@@ -14,7 +14,6 @@
 # ==========================================================================
 {% if postfix_smtpd_public %}
 smtp      inet  n       -       n       -       -       smtpd
-    -o smtpd_proxy_filter=[127.0.0.1]:10025
     -o smtpd_client_connection_count_limit=20
     -o smtpd_proxy_options=speed_adjust
 {% else %}
@@ -30,7 +29,6 @@ submission inet n       -       n       -       -       smtpd
     -o smtpd_tls_security_level=encrypt
     -o smtpd_sasl_auth_enable=yes
     -o smtpd_recipient_restrictions=$submission_recipient_restrictions
-    -o content_filter=smtp:[127.0.0.1]:10025
     -o smtpd_client_connection_count_limit=10
     #-o smtpd_milters=unix:/var/spool/opendkim/opendkim
 {% endif %}

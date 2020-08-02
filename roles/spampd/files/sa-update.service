@@ -1,6 +1,0 @@
-[Unit]
-Description=sa-update
-
-[Service]
-Type=oneshot
-ExecStart=/usr/local/bin/sa-update.sh

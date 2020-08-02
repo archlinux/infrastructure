@@ -3,3 +3,7 @@
 - name: reload dovecot
   service: name=dovecot state=restarted
 
+- name: run sievec
+  command: /usr/bin/sievec /etc/dovecot/sieve/{{ item }}
+  loop:
+    - spam-to-folder.sieve
