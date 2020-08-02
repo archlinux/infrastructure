@@ -1,9 +1,0 @@
-# greylist for N seconds
-postgrey_delay: 120
-
-#delete entries older than N days since the last time that they have been seen
-postgrey_max_age: 35
-
-# allow only N days for the first retrial
-# append 'h' if you want to specify it in hours
-postgrey_retry_window: 24h

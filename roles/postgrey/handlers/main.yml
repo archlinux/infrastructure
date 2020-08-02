@@ -1,7 +1,0 @@
-- name: restart postgrey
-  systemd:
-    unit: postgrey.service
-    enabled: yes
-    state: restarted
-    daemon_reload: yes
-
