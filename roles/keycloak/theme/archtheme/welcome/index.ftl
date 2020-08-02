@@ -29,8 +29,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="robots" content="noindex, nofollow">
 
-    <link rel="shortcut icon" href="welcome-content/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="${resourcesCommonPath}/img/favicon.ico" />
 
+    <#if properties.stylesCommon?has_content>
+        <#list properties.stylesCommon?split(' ') as style>
+            <link href="${resourcesCommonPath}/${style}" rel="stylesheet" />
+        </#list>
+    </#if>
     <#if properties.styles?has_content>
         <#list properties.styles?split(' ') as style>
             <link href="${resourcesPath}/${style}" rel="stylesheet" />
@@ -98,10 +103,12 @@
         </div>
         <div class="col-xs-12 col-sm-4">
           <div class="card-pf h-l">
-            <h3><a href="https://wiki.archlinux.org/"><img class="doc-img" src="welcome-content/admin-console.png">Wiki <i class="fa fa-angle-right link" aria-hidden="true"></i></a></h3>
+            <h3><a href="${properties.documentationUrl}"><img class="doc-img" src="welcome-content/admin-console.png">Wiki <i class="fa fa-angle-right link" aria-hidden="true"></i></a></h3>
             <div class="description">
 
               Your source for Arch Linux documentation on the web
+
+
             </div>
           </div>
         </div>
@@ -118,6 +125,11 @@
           </div>
         </#if>
         </div>
+      </divR
+      <div class='footer'>
+        <#if properties.displayFooter = "true">
+        <a href="http://www.jboss.org"><img src="welcome-content/jboss_community.png" alt="JBoss and JBoss Community"></a>
+        </#if>
       </div>
     </div>
   </div>
