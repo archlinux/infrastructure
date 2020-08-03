@@ -9,6 +9,8 @@
         changed_when: ssh_hostkeys | length > 0
       - name: fetch known_hosts
         shell: "set -o pipefail && ssh-keyscan 127.0.0.1 2>/dev/null | sed 's#^127.0.0.1#{{ inventory_hostname }}#'"
+        args:
+          executable: /bin/bash # required for repro3.pkgbuild.com which is ubuntu and has dash as default shell
         register: known_hosts
         changed_when: known_hosts | length > 0
 
