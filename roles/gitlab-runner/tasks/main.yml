@@ -7,14 +7,6 @@
 - name: start docker
   systemd: name=docker enabled=yes state=started daemon_reload=yes
 
-- name: open firewall holes
-  firewalld: port={{ item }} permanent=true state=enabled immediate=yes
-  when: configure_firewall
-  with_items:
-    - "8093/tcp"
-  tags:
-    - firewall
-
 - name: make docker0 interface trusted
   firewalld: interface=docker0 zone=trusted permanent=true state=enabled immediate=yes
   when: configure_firewall
