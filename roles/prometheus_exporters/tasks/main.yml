@@ -3,6 +3,10 @@
 - name: install prometheus-node-exporter
   pacman: name=prometheus-node-exporter,arch-audit,pacman-contrib state=present
 
+- name: install prometheus-blackbox-exporter
+  pacman: name=prometheus-blackbox-exporter state=present
+  when: "'prometheus' in group_names"
+
 - name: install prometheus-memcached-exporter
   pacman: name=prometheus-memcached-exporter state=present
   when: "'memcached' in group_names"
@@ -65,8 +69,16 @@
   systemd: name=prometheus-borg-textcollector.timer enabled=yes daemon_reload=yes state=started
   when: "'borg_clients' in group_names"
 
+- name: install blackbox exporter configuration
+  copy: src=blackbox.yml dest=/etc/prometheus/blackbox.yml owner=root group=root mode=0755
+  when: "'prometheus' in group_names"
+
 - name: enable prometheus-node-exporter service
   systemd: name=prometheus-node-exporter enabled=yes daemon_reload=yes state=started
+
+- name: enable prometheus-blackbox-exporter service
+  systemd: name=prometheus-blackbox-exporter enabled=yes daemon_reload=yes state=started
+  when: "'prometheus' in group_names"
 
 - name: enable prometheus-memcached-exporter service
   systemd: name=prometheus-memcached-exporter enabled=yes daemon_reload=yes state=started
