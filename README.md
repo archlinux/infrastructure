@@ -153,7 +153,6 @@ The following steps should be used to update our managed servers:
   - repos/sync (repos.archlinux.org)
   - sources (sources.archlinux.org)
   - archive (archive.archlinux.org)
-  - torrent tracker hefurd (tracker.archlinux.org)
 
 ### luna
 

@@ -21,6 +21,5 @@
     - sogrep
     - { role: sudo, tags: ['archusers'] }
     - { role: archweb, archweb_site: false, archweb_services: false, archweb_donor_import: true, archweb_mirrorcheck_locations: [5, 6] }
-    - { role: hefur, ftp_iso_dir: '/srv/ftp/iso', tags: ['torrenttracker']}
     - wkd
     - { role: fail2ban }
