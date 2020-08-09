@@ -1,0 +1,14 @@
+@import 'welcome.css';
+
+body {
+    background: #fff url('../welcome-background.jpg') no-repeat center bottom fixed;
+}
+
+.welcome-header {
+	color: white;
+}
+
+.welcome-header img {
+	width: 200px;
+	margin-bottom: 10px;
+}
