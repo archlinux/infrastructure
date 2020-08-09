@@ -1,0 +1,7 @@
+@import 'styles.css';
+
+.navbar-pf .navbar-brand {
+    background-image: url('../img/archlinux-logo-light.svg');
+    background-size: 150px 50px;
+    width: 150px;
+}
