@@ -52,7 +52,9 @@ resource "keycloak_realm" "archlinux" {
   login_with_email_allowed = true
   password_policy = "length(8) and notUsername"
 
-  account_theme = "keycloak-preview"
+  login_theme = "archlinux"
+  account_theme = "archlinux"
+  admin_theme = "archlinux"
 
   browser_flow = "Arch Browser"
   registration_flow = "Arch Registration"
