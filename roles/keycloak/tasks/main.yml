@@ -13,6 +13,11 @@
   notify:
     - restart keycloak
 
+- name: copy custom theme
+  copy: src=../theme/archlinux dest=/opt/keycloak/themes
+  notify:
+    - restart keycloak
+
 - name: create an admin user
   command: /opt/keycloak/bin/add-user-keycloak.sh -r master -u "{{ vault_keycloak_admin_user }}" -p "{{ vault_keycloak_admin_password }}"
   args:
