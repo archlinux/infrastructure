@@ -1,0 +1,38 @@
+---
+- name: Local development setup for custom keycloak theme
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    ansible_python_interpreter: '{{ ansible_playbook_python }}'
+    standalone_config: '/opt/jboss/keycloak/standalone/configuration/standalone.xml'
+  handlers:
+    - name: restart keycloak
+      command: docker restart keycloak
+  tasks:
+    - name: Start keycloak container
+      docker_container:
+        name: keycloak
+        image: jboss/keycloak
+        state: started
+        restart: true
+        recreate: true
+        env:
+          KEYCLOAK_USER: admin
+          KEYCLOAK_PASSWORD: admin
+          KEYCLOAK_DEFAULT_THEME: archlinux
+          KEYCLOAK_WELCOME_THEME: archlinux
+        volumes:
+          - ./archlinux:/opt/jboss/keycloak/themes/archlinux
+        ports:
+          - '9000:8080'
+    - name: Install vim
+      command: docker exec -u root keycloak microdnf install vim
+      changed_when: false
+    - name: Disable caching
+      shell: |
+        set -o pipefail
+        docker exec keycloak sed -i 's|<cacheThemes>true</cacheThemes>|<cacheThemes>false</cacheThemes>|' {{ standalone_config }}
+        docker exec keycloak sed -i 's|<cacheTemplates>true</cacheTemplates>|<cacheTemplates>false</cacheTemplates>|' {{ standalone_config }}
+        docker exec keycloak sed -i 's|<staticMaxAge>2592000</staticMaxAge>|<staticMaxAge>-1</staticMaxAge>|' {{ standalone_config }}
+      changed_when: false
