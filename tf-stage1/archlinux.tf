@@ -112,6 +112,12 @@ resource "hcloud_server" "accounts" {
   }
 }
 
+resource "hcloud_volume" "mirror" {
+  name = "mirror"
+  size = 100
+  server_id = hcloud_server.mirror.id
+}
+
 resource "hcloud_rdns" "mirror" {
   server_id  = hcloud_server.mirror.id
   ip_address = hcloud_server.mirror.ipv4_address
