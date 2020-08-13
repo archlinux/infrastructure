@@ -263,8 +263,8 @@ resource "hcloud_server" "svn2gittest" {
 }
 
 resource "hcloud_rdns" "mail" {
-  server_id  = hcloud_server.monitoring.id
-  ip_address = hcloud_server.monitoring.ipv4_address
+  server_id  = hcloud_server.mail.id
+  ip_address = hcloud_server.mail.ipv4_address
   dns_ptr    = "mail.archlinux.org"
 }
 
