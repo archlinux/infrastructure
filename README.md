@@ -317,6 +317,12 @@ Example
 
     borg list ssh://<hetzner_storagebox_username>@u236610.your-storagebox.de:23/~/backup/homedir.archlinux.org::20191127-084357
 
+## Updating Gitlab
+
+Our Gitlab installation uses [Omnibus](https://docs.gitlab.com/omnibus/) to run Gitlab on Docker. Updating Gitlab is as simple as running the ansible gitlab playbook:
+
+    ansible-playbook playbooks/gitlab.archlinux.org -t gitlab
+
 ## One-shots
 
 A bunch of once-only admin task scripts can be found in `one-shots/`.
