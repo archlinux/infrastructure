@@ -25,8 +25,8 @@ If you want to add a new official project, here are some guidelines to follow:
 1. [ ] If the project needs a secure runner to build trusted artifacts, coordinate with
        the rest of the DevOps team and if found to be reasonable, assign a secure runner
        to a protected branch of the project.
-1. [ ] If a secure runner is used, make sure the project's `.gitlab-ci.yml` specifies one of
-       `tags: secure-general`, `tags: secure-virtualbox`, `tags: secure-kvm` depending on required capabilities.
+1. [ ] If a secure runner is used, make sure the project's `.gitlab-ci.yml` specifies
+       `tags: secure`.
 1. [ ] Make sure that the *Push Rules* in https://gitlab.archlinux.org/archlinux/arch-boxes/-/settings/repository
        reflect these values:
    - `Committer restriction`: `on`
