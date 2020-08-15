@@ -28,6 +28,19 @@ server {
 
     root {{ keycloak_domain }};
 
+    location ~ /auth/realms/[a-z]+/metrics  {
+        auth_basic "Prometheus exporter";
+        auth_basic_user_file {{ keycloak_nginx_htpasswd }};
+
+        access_log   /var/log/nginx/{{ keycloak_domain }}/access.log main;
+        proxy_set_header    Host               $host;
+        proxy_set_header    X-Real-IP          $remote_addr;
+        proxy_set_header    X-Forwarded-For    $proxy_add_x_forwarded_for;
+        proxy_set_header    X-Forwarded-Proto  $scheme;
+        proxy_ssl_verify    off;
+        proxy_pass https://localhost:{{ keycloak_port }};
+    }
+
     location / {
         access_log   /var/log/nginx/{{ keycloak_domain }}/access.log main;
         proxy_set_header    Host               $host;

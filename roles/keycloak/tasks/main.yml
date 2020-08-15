@@ -1,7 +1,7 @@
 ---
 
 - name: install keycloak
-  pacman: name=keycloak state=present
+  pacman: name=keycloak,keycloak-metrics-spi,python-passlib state=present
 
 - name: template keycloak config
   template: src=standalone.xml.j2 dest=/etc/keycloak/standalone.xml owner=keycloak group=keycloak mode=600
@@ -42,6 +42,15 @@
   become: yes
   become_user: postgres
   become_method: su
+
+- name: create htpasswd for nginx prometheus endpoint
+  htpasswd:
+    path: "{{ keycloak_nginx_htpasswd }}"
+    name: "{{ vault_keycloak_nginx_user }}"
+    password: "{{ vault_keycloak_nginx_passwd }}"
+    owner: root
+    group: http
+    mode: 0640
 
 - name: make nginx log dir
   file: path="/var/log/nginx/{{ keycloak_domain }}" state=directory owner=root mode=0755
