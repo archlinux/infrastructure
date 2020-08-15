@@ -11,6 +11,14 @@
   pacman: name=prometheus-memcached-exporter state=present
   when: "'memcached' in group_names"
 
+- name: install jq for rebuilderd-textcollector
+  pacman: name=jq state=present
+  when: "'rebuilderd' in group_names"
+
+- name: add node_exporter to rebuilderd group
+  user: name=node_exporter groups=rebuilderd append=yes
+  when: "'rebuilderd' in group_names"
+
 - name: install prometheus-mysqld-exporter
   pacman: name=prometheus-mysqld-exporter state=present
   when: "'mysql_servers' in group_names"
@@ -47,6 +55,7 @@
   with_items:
     - arch-textcollector.sh
     - borg-textcollector.sh
+    - rebuilderd-textcollector.sh
 
 - name: install arch textcollector service
   template: src=prometheus-arch-textcollector.service.j2 dest=/etc/systemd/system/prometheus-arch-textcollector.service owner=root group=root mode=600
@@ -72,6 +81,18 @@
 - name: install blackbox exporter configuration
   copy: src=blackbox.yml dest=/etc/prometheus/blackbox.yml owner=root group=root mode=0755
   when: "'prometheus' in group_names"
+
+- name: install rebuilderd textcollector service
+  template: src=prometheus-rebuilderd-textcollector.service.j2 dest=/etc/systemd/system/prometheus-rebuilderd-textcollector.service owner=root group=root mode=600
+  when: "'rebuilderd' in group_names"
+
+- name: install rebuilderd textcollector timer
+  template: src=prometheus-rebuilderd-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-rebuilderd-textcollector.timer owner=root group=root mode=600
+  when: "'rebuilderd' in group_names"
+
+- name: enable and start prometheus rebuilderd textcollector timer
+  systemd: name=prometheus-rebuilderd-textcollector.timer enabled=yes daemon_reload=yes state=started
+  when: "'rebuilderd' in group_names"
 
 - name: enable prometheus-node-exporter service
   systemd: name=prometheus-node-exporter enabled=yes daemon_reload=yes state=started

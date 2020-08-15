@@ -93,6 +93,9 @@ secure-runner2.archlinux.org
 repro1.pkgbuild.com
 repro3.pkgbuild.com
 
+[rebuilderd]
+reproducible.archlinux.org
+
 [memcached]
 apollo.archlinux.org
 aur.archlinux.org

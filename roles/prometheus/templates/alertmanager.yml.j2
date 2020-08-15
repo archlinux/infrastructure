@@ -11,9 +11,16 @@ route:
   group_wait: 30s
   group_interval: 5m
   repeat_interval: 24h
-  receiver: 'devops'
+  receiver: 'default-receiver'
+  routes:
+  - receiver: 'rebuilderd'
+    match_re:
+      service: rebuilderd
 
 receivers:
-  - name: 'devops'
+  - name: 'default-receiver'
     email_configs:
       - to: 'alerts@archlinux.org'
+  - name: 'rebuilderd'
+    email_configs:
+      - to: 'jelle@archlinux.org'

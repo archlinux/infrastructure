@@ -394,3 +394,25 @@ groups:
     annotations:
       summary: "Blackbox SSL certificate will expire soon (instance {{ $labels.instance }})"
       description: "SSL certificate expires in 3 days\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+- name: rebuilderd
+  interval: 15m
+  rules:
+  - alert: RebuilderdQueueNotEmpty
+    expr: rebuilderd_queue_length > 2000
+    for: 24h
+    labels:
+      severity: warning
+      service: rebuilderd
+    annotations:
+      summary: "Rebuilderd queue length is not empty {{ $labels.instance }})"
+      description: "Rebuilderd's queue length is now: {{ $value }}"
+  - alert: RebuilderdWorkersOffline
+    expr: rebuilderd_workers  < 4
+    for: 5m
+    labels:
+      severity: warning
+      service: rebuilderd
+    annotations:
+      summary: "Rebuilderd workers offline {{ $labels.instance }})"
+      description: "Not all rebuilder-workers are online, currently {{ $value }} workers are online"
