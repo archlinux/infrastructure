@@ -2,9 +2,6 @@
 
 This repository contains the complete collection of ansible playbooks and roles for the Arch Linux infrastructure.
 
-It also contains git submodules so you have to run `git submodule update --init
---recursive` after cloning or some tasks will fail to run.
-
 ## Requirements
 
 Install these packages:

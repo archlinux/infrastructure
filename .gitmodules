@@ -1,3 +1,0 @@
-[submodule "roles/common/files/contrib"]
-	path = roles/common/files/contrib
-	url = https://github.com/archlinux/contrib

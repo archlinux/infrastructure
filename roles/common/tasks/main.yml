@@ -151,11 +151,14 @@
     - zshrc
     - dircolors
 
-- name: install checkservices
-  copy: src=contrib/admin/checkservices dest=/usr/local/bin/checkservices owner=root group=root mode=0755
+- name: install pacman-contrib,archlinux-contrib
+  pacman: name=pacman-contrib,archlinux-contrib state=installed
 
-- name: install pacman-contrib
-  pacman: name=pacman-contrib state=installed
+- name: remove old checkservices copied script (from submodule)
+  file: path=/usr/local/bin/checkservices state=absent
+
+- name: symlink checkservices to /usr/local/bin
+  file: src=/usr/share/archlinux/contrib/admin/checkservices dest=/usr/local/bin/checkservices state=link
 
 - name: install pacman config
   template: src=pacman.conf.j2 dest=/etc/pacman.conf mode=0644 owner=root group=root
