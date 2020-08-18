@@ -34,7 +34,7 @@
   user: name=security shell=/bin/false home="{{ security_tracker_dir }}" createhome=no
 
 - name: fix home permissions
-  file: state=directory owner=security group=security path="{{ security_tracker_dir }}"
+  file: state=directory mode=0750 owner=security group=security path="{{ security_tracker_dir }}"
 
 - name: copy security-tracker units
   copy: src="{{ item }}" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
@@ -89,7 +89,7 @@
 - name: deploy new release
   become: true
   become_user: security
-  file: path=/etc/uwsgi/vassals/security-tracker.ini state=touch
+  file: path=/etc/uwsgi/vassals/security-tracker.ini state=touch owner=root group=root mode=0644
   when: release.changed
 
 - name: start and enable security-tracker timer

@@ -14,10 +14,10 @@
         get_url: url=https://sources.archlinux.org/other/pacman/pacman-{{ pacman_version }}.tar.gz dest={{ tempdir.path }}/pacman.tar.gz
 
       - name: create extraction dir
-        file: path={{ tempdir.path }}/pacman state=directory
+        file: path={{ tempdir.path }}/pacman state=directory owner=root group=root mode=0755
 
       - name: unpack tarball
-        unarchive: src={{ tempdir.path }}/pacman.tar.gz dest={{ tempdir.path }}/pacman/
+        unarchive: src={{ tempdir.path }}/pacman.tar.gz dest={{ tempdir.path }}/pacman/ owner=root group=root mode=0755
 
       - name: configure
         command: ./configure chdir={{ tempdir.path }}/pacman/pacman-{{ pacman_version }}

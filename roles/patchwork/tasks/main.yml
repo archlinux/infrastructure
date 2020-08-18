@@ -118,7 +118,7 @@
 - name: deploy new release
   become: true
   become_user: patchwork
-  file: path=/etc/uwsgi/vassals/patchwork.ini state=touch
+  file: path=/etc/uwsgi/vassals/patchwork.ini state=touch owner=root group=root mode=0644
   when: (release.changed or config.changed or virtualenv.changed or patchwork_forced_deploy)
 
 - name: start and enable patchwork memcached service and notification timer

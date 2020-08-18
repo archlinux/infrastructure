@@ -55,7 +55,7 @@
   when: configure_network
 
 - name: create symlink to resolv.conf
-  file: src=/run/systemd/resolve/stub-resolv.conf dest=/etc/resolv.conf state=link force=yes
+  file: src=/run/systemd/resolve/stub-resolv.conf dest=/etc/resolv.conf state=link force=yes owner=root group=root mode=0755
   when: configure_network and not host_has_local_dns_resolver
 
 - name: create resolv.conf

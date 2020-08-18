@@ -11,15 +11,11 @@
     version: "{{ fluxbb_version }}"
 
 - name: fix home permissions
-  file: >
-    state=directory owner=fluxbb group=fluxbb recurse=yes
-    path="{{ fluxbb_dir }}"
+  file: state=directory owner=fluxbb group=fluxbb mode=0750 recurse=yes path="{{ fluxbb_dir }}"
   changed_when: False
 
 - name: create uploads directory
-  file: >
-    state=directory owner=fluxbb group=fluxbb
-    path="{{ fluxbb_dir }}/uploads"
+  file: state=directory owner=fluxbb group=fluxbb mode=0755 path="{{ fluxbb_dir }}/uploads"
 
 - name: create mariadb database
   mysql_db: name=fluxbb state=present

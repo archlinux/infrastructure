@@ -8,7 +8,7 @@
     creates: /var/lib/mysql/mysql
 
 - name: configure mariadb
-  template: src=server.cnf.j2 dest=/etc/my.cnf.d/server.cnf
+  template: src=server.cnf.j2 dest=/etc/my.cnf.d/server.cnf owner=root group=root mode=0644
   notify:
     - restart mariadb
 
@@ -36,7 +36,7 @@
   no_log: true
 
 - name: create client configuration for root
-  template: src=client.cnf.j2 dest=/root/.my.cnf
+  template: src=client.cnf.j2 dest=/root/.my.cnf owner=root group=root mode=0644
   no_log: true
 
 - name: configure zabbix-agent user

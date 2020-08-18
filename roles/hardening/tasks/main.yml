@@ -1,22 +1,22 @@
 ---
 
 - name: set restricted access to kernel logs
-  copy: src=50-dmesg-restrict.conf dest=/etc/sysctl.d/50-dmesg-restrict.conf
+  copy: src=50-dmesg-restrict.conf dest=/etc/sysctl.d/50-dmesg-restrict.conf owner=root group=root mode=0644
   notify:
     - apply sysctl settings
 
 - name: set ptrace scope, restrict ptrace to CAP_SYS_PTRACE
-  copy: src=50-ptrace-restrict.conf dest=/etc/sysctl.d/50-ptrace-restrict.conf
+  copy: src=50-ptrace-restrict.conf dest=/etc/sysctl.d/50-ptrace-restrict.conf owner=root group=root mode=0644
   notify:
     - apply sysctl settings
 
 - name: set restricted access to kernel pointers in proc fs
-  copy: src=50-kptr-restrict.conf dest=/etc/sysctl.d/50-kptr-restrict.conf
+  copy: src=50-kptr-restrict.conf dest=/etc/sysctl.d/50-kptr-restrict.conf owner=root group=root mode=0644
   notify:
     - apply sysctl settings
 
 - name: set kernel lockdown to restricted
-  copy: src=50-lockdown.conf dest=/etc/tmpfiles.d/50-kernel-lockdown.conf
+  copy: src=50-lockdown.conf dest=/etc/tmpfiles.d/50-kernel-lockdown.conf owner=root group=root mode=0644
   when: "'hcloud' in group_names"
   notify:
     - apply sysctl settings

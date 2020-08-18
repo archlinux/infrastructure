@@ -12,7 +12,7 @@
   git: repo="{{ docker_image_git_remote }}" version="{{ docker_image_git_tag }}" dest="{{ docker_image_git_dir }}" force=yes
 
 - name: install sudoers file
-  template: src=sudoers.d.j2 dest=/etc/sudoers.d/docker-image
+  template: src=sudoers.d.j2 dest=/etc/sudoers.d/docker-image owner=root group=root mode=0440
 
 - name: install docker_image service
   template: src='docker-image.service.j2' dest='/etc/systemd/system/docker-image.service' owner=root group=root mode=0644

@@ -23,7 +23,7 @@
   delegate_to: localhost
 
 - name: fill tempfile
-  copy: content="{{ lookup('template', 'authorized_keys.j2') }}" dest="{{ tempfile.path }}"
+  copy: content="{{ lookup('template', 'authorized_keys.j2') }}" dest="{{ tempfile.path }}" mode=preserve
   delegate_to: localhost
 
 - name: upload authorized_keys file

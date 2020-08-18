@@ -109,4 +109,4 @@
   template: src=makepkg.conf.j2 dest=/etc/makepkg.conf owner=root group=root mode=0644
 
 - name: install archbuild sudoers config
-  copy: src=sudoers dest=/etc/sudoers.d/archbuild
+  copy: src=sudoers dest=/etc/sudoers.d/archbuild owner=root group=root mode=0440

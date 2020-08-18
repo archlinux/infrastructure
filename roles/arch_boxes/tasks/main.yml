@@ -17,17 +17,17 @@
   copy: src=virtualbox.conf dest=/etc/modules-load.d/virtualbox.conf owner=root group=root mode=0644
 
 - name: adjust permissions of git checkout
-  file: path="{{ archboxes_git_dir }}" state=directory recurse=yes owner="{{ archboxes_user }}" group="{{ archboxes_user }}"
+  file: path="{{ archboxes_git_dir }}" state=directory recurse=yes owner="{{ archboxes_user }}" group="{{ archboxes_user }}" mode=preserve
 
 - name: ensure controller.py of arch-boxes is executable
-  file: path="{{ archboxes_git_dir }}/controller.py" mode='0744'
+  file: path="{{ archboxes_git_dir }}/controller.py" mode=0744 owner=root group=root
 
 - name: replace placeholder to vagrantcloud API Key
   no_log: true
-  replace: path="{{ archboxes_git_dir }}/vagrant.json" regexp='PLACEHOLDER' replace="{{ vault_archboxes_apikey }}"
+  replace: path="{{ archboxes_git_dir }}/vagrant.json" regexp='PLACEHOLDER' replace="{{ vault_archboxes_apikey }}" owner=root group=root mode=0600
 
 - name: install sudoers file
-  template: src=sudoers.d.j2 dest=/etc/sudoers.d/archboxes
+  template: src=sudoers.d.j2 dest=/etc/sudoers.d/archboxes owner=root group=root mode=0440
 
 - name: install arch-boxes service
   template: src='arch-boxes.service.j2' dest='/etc/systemd/system/arch-boxes.service' owner=root group=root mode=0644

@@ -56,7 +56,7 @@
   register: tubylaws_release
 
 - name: create necessary directories
-  file: path={{ aurweb_dir }}/{{ item }} state=directory owner={{ aurweb_user }} group={{ aurweb_user }}
+  file: path={{ aurweb_dir }}/{{ item }} state=directory owner={{ aurweb_user }} group={{ aurweb_user }} mode=0755
   with_items:
     - 'aurblup'
     - 'sessions'
@@ -91,13 +91,13 @@
   when: release.changed or db_created.changed
 
 - name: create aurweb conf dir
-  file: path={{ aurweb_conf_dir }} state=directory
+  file: path={{ aurweb_conf_dir }} state=directory owner=root group=root mode=0755
 
 - name: copy aurweb configuration file
-  copy: src={{ aurweb_dir }}/conf/config.defaults dest={{ aurweb_conf_dir }}/config.defaults remote_src=yes
+  copy: src={{ aurweb_dir }}/conf/config.defaults dest={{ aurweb_conf_dir }}/config.defaults remote_src=yes owner=root group=root mode=0644
 
 - name: install custom aurweb configuration
-  template: src=config.j2 dest={{ aurweb_conf_dir }}/config
+  template: src=config.j2 dest={{ aurweb_conf_dir }}/config owner=root group=root mode=0644
 
 - name: Install python module
   command: "python3 setup.py install --install-scripts=/usr/local/bin"
@@ -126,11 +126,11 @@
   when: tubylaws_release.changed
 
 - name: Install Trusted User documentation
-  copy: src={{ aurweb_dir }}/tu-bylaws/tu-bylaws.html dest={{ aurweb_dir }}/web/html/trusted-user/tu-bylaws.html remote_src=yes
+  copy: src={{ aurweb_dir }}/tu-bylaws/tu-bylaws.html dest={{ aurweb_dir }}/web/html/trusted-user/tu-bylaws.html remote_src=yes owner={{ aurweb_user }} group=http mode=0644
   when: tubylaws_release.changed
 
 - name: Install Trusted User documentation symlink
-  file: src=tu-bylaws.html dest={{ aurweb_dir }}/web/html/trusted-user/TUbylaws.html state=link
+  file: src=tu-bylaws.html dest={{ aurweb_dir }}/web/html/trusted-user/TUbylaws.html state=link owner={{ aurweb_user }} group=http mode=0644
   when: tubylaws_release.changed
 
 - name: set up nginx
@@ -152,7 +152,7 @@
   service: name=php-fpm@{{ aurweb_user }}.socket state=started enabled=true
 
 - name: install cgit configuration
-  template: src=cgitrc.j2 dest="{{ aurweb_conf_dir }}/cgitrc"
+  template: src=cgitrc.j2 dest="{{ aurweb_conf_dir }}/cgitrc" owner=root group=root mode=0644
 
 - name: configure cgit uwsgi service
   template: src=cgit.ini.j2 dest=/etc/uwsgi/vassals/cgit.ini owner={{ aurweb_user }} group=http mode=0644
@@ -160,7 +160,7 @@
 - name: deploy new cgit release
   become: true
   become_user: "{{ aurweb_user }}"
-  file: path=/etc/uwsgi/vassals/cgit.ini state=touch
+  file: path=/etc/uwsgi/vassals/cgit.ini state=touch owner=root group=root mode=0644
   when: cgit.changed
 
 - name: configure smartgit uwsgi service
@@ -169,7 +169,7 @@
 - name: deploy new smartgit release
   become: true
   become_user: "{{ aurweb_user }}"
-  file: path=/etc/uwsgi/vassals/smartgit.ini state=touch
+  file: path=/etc/uwsgi/vassals/smartgit.ini state=touch mode=preserve
   when: git.changed
 
 - name: create git repo dir
@@ -227,6 +227,9 @@
   file:
     src: "{{ aurweb_git_hook }}"
     dest: "{{ aurweb_git_dir }}/hooks/update"
+    owner: root
+    group: root
+    mode: 0755
     state: link
 
 - name: install AUR systemd service and timers

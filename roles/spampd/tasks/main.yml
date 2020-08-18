@@ -26,7 +26,7 @@
     - systemd daemon reload
 
 - name: create pacman.d hooks dir
-  file: state=directory owner=root group=root path="/etc/pacman.d/hooks"
+  file: state=directory path="/etc/pacman.d/hooks" owner=root group=root mode=0755
 
 - name: install pacman sa-update hook
   copy: src=sa-update.hook dest=/etc/pacman.d/hooks/sa-update.hook owner=root group=root mode=0644

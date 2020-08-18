@@ -106,7 +106,7 @@
   when: "'nginx' in group_names"
 
 - name: install sudo config
-  template: src=zabbix-agent-sudoers.conf.j2 dest=/etc/sudoers.d/zabbix-agent-sudoers
+  template: src=zabbix-agent-sudoers.conf.j2 dest=/etc/sudoers.d/zabbix-agent-sudoers mode=0440 owner=root group=root
 
 - name: copy nginx-zabbix.service
   copy: src=nginx-zabbix.service dest=/etc/systemd/system/nginx-zabbix.service owner=root group=root mode=0644

@@ -14,10 +14,10 @@
   register: release
 
 - name: fix home permissions
-  file: state=directory owner={{ conference_user }} group={{ conference_user }} path="{{ conference_dir }}"
+  file: state=directory owner={{ conference_user }} group={{ conference_user }} mode=0750 path="{{ conference_dir }}"
 
 - name: create static conf.archlinux.org dir
-  file: state=directory owner={{ conference_user }} group={{ conference_user }} path="{{ static_conference_dir }}"
+  file: state=directory owner={{ conference_user }} group={{ conference_user }} mode=0755 path="{{ static_conference_dir }}"
 
 - name: generate conf.archlinux.org site
   command: hugo

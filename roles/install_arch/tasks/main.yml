@@ -40,7 +40,7 @@
   when: filesystem == "btrfs"
 
 - name: touch LOCK file on mountpoint
-  file: path=/mnt/LOCK state=touch
+  file: path=/mnt/LOCK state=touch owner=root group=root mode=0644
 
 - name: download bootstrap image
   get_url:
@@ -51,11 +51,14 @@
   unarchive:
     src: /tmp/archlinux-bootstrap-{{ bootstrap_version }}-x86_64.tar.gz
     dest: /tmp
+    owner: root
+    group: root
+    mode: 0644
     remote_src: yes
     creates: /tmp/root.x86_64
 
 - name: copy resolv.conf to bootstrap chroot
-  copy: remote_src=True src=/etc/resolv.conf dest=/tmp/root.x86_64/etc/resolv.conf
+  copy: remote_src=True src=/etc/resolv.conf dest=/tmp/root.x86_64/etc/resolv.conf owner=root group=root mode=0644
 
 - name: mount /proc to bootstrap chroot
   mount:
@@ -147,7 +150,7 @@
     fstab: /dev/dummyfstab
 
 - name: configure locale.gen
-  lineinfile: dest=/mnt/etc/locale.gen line="en_US.UTF-8 UTF-8"
+  lineinfile: dest=/mnt/etc/locale.gen line="en_US.UTF-8 UTF-8" owner=root group=root mode=0644
 
 - name: run locale-gen inside chroot
   command: chroot /mnt locale-gen
@@ -189,6 +192,9 @@
 - name: provide default mount options (btrfs)
   lineinfile:
     path: /mnt/etc/default/grub
+    owner: root
+    group: root
+    mode: 0644
     regexp: "^GRUB_CMDLINE_LINUX_DEFAULT="
     line: "GRUB_CMDLINE_LINUX_DEFAULT=\"rootflags=compress-force=zstd\""
   when: filesystem == "btrfs"
@@ -225,7 +231,7 @@
   template: src=sshd_config.j2 dest=/mnt/etc/ssh/sshd_config owner=root group=root mode=0644
 
 - name: create symlink to resolv.conf
-  file: src=/run/systemd/resolve/stub-resolv.conf dest=/mnt/etc/resolv.conf state=link force=yes
+  file: src=/run/systemd/resolve/stub-resolv.conf dest=/mnt/etc/resolv.conf state=link force=yes owner=root group=root mode=0644
 
 - name: clean pacman cache
   command: chroot /mnt pacman -Scc --noconfirm

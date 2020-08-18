@@ -33,6 +33,9 @@
 - name: increase concurrency
   lineinfile:
     path: /etc/gitlab-runner/config.toml
+    owner: root
+    group: root
+    mode: 0640
     regexp: '^concurrent = .*'
     line: concurrent = 100
   notify: restart gitlab-runner

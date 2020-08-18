@@ -22,7 +22,7 @@
   template: src=bugbot.j2 dest=/srv/bugbot/env owner=root group=root mode=0600
 
 - name: install bugbot systemd service
-  copy: src=bugbot.service dest=/etc/systemd/system/bugbot.service
+  copy: src=bugbot.service dest=/etc/systemd/system/bugbot.service owner=root group=root mode=0644
 
 - name: start and enable bugbot service
   systemd: name=bugbot.service enabled=yes state=started daemon_reload=yes

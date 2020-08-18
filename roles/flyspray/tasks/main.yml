@@ -17,7 +17,7 @@
   register: user_created
 
 - name: fix home permissions
-  file: state=directory owner="{{ flyspray_user }}" group="{{ flyspray_user }}" path="{{ flyspray_dir }}"
+  file: state=directory owner="{{ flyspray_user }}" group="{{ flyspray_user }}" path="{{ flyspray_dir }}" mode=0750
 
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest="{{ flyspray_nginx_conf }}" owner=root group=root mode=644
@@ -43,7 +43,7 @@
   register: release
 
 - name: fix home permissions
-  file: state=directory owner="{{ flyspray_user }}" group="{{ flyspray_user }}" path="{{ flyspray_dir }}"
+  file: state=directory owner="{{ flyspray_user }}" group="{{ flyspray_user }}" path="{{ flyspray_dir }}" mode=0755
 
 - name: take away setup dir write permissions
   file: state=directory owner="{{ flyspray_user }}" group="{{ flyspray_user }}" path="{{ flyspray_dir }}/setup" mode=000

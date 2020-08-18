@@ -76,7 +76,7 @@
   tags: ["archusers"]
 
 - name: create dbscripts paths
-  file: path="{{ item }}" state=directory
+  file: path="{{ item }}" state=directory owner=root group=root mode=0755
   with_items:
     - /srv/repos/svn-community
     - /srv/repos/svn-packages
@@ -167,19 +167,19 @@
     - svn-packages
 
 - name: make /srv/svn
-  file: path=/srv/svn state=directory
+  file: path=/srv/svn state=directory owner=root group=root mode=0755
 
 - name: symlink /srv/svn/community to /srv/repos/svn-community/svn
-  file: path=/srv/svn/community src=/srv/repos/svn-community/svn state=link
+  file: path=/srv/svn/community src=/srv/repos/svn-community/svn state=link owner=root group=root mode=0755
 
 - name: symlink /srv/svn/packages to /srv/repos/svn-packages/svn
-  file: path=/srv/svn/packages src=/srv/repos/svn-packages/svn state=link
+  file: path=/srv/svn/packages src=/srv/repos/svn-packages/svn state=link owner=root group=root mode=0755
 
 - name: symlink /community to /srv/repos/svn-community/dbscripts
-  file: path=/community src=/srv/repos/svn-community/dbscripts state=link
+  file: path=/community src=/srv/repos/svn-community/dbscripts state=link owner=root group=root mode=0755
 
 - name: symlink /packages to /srv/repos/svn-packages/dbscripts
-  file: path=/packages src=/srv/repos/svn-packages/dbscripts state=link
+  file: path=/packages src=/srv/repos/svn-packages/dbscripts state=link owner=root group=root mode=0755
 
 - name: put rsyncd.conf into tmpfiles
   copy: src=rsyncd-tmpfiles.d dest=/etc/tmpfiles.d/rsyncd.conf owner=root group=root mode=0644
@@ -301,7 +301,7 @@
     - firewall
 
 - name: configure svnserve
-  copy: dest=/etc/conf.d/svnserve content="SVNSERVE_ARGS=-R -r /srv/svn\n"
+  copy: dest=/etc/conf.d/svnserve owner=root group=root mode=0644 content="SVNSERVE_ARGS=-R -r /srv/svn\n"
 
 - name: start and enable svnserve
   service: name=svnserve enabled=yes state=started

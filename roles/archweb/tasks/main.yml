@@ -16,7 +16,7 @@
   user: name=archweb shell=/bin/false home="{{ archweb_dir }}" createhome=no
 
 - name: fix home permissions
-  file: state=directory owner=archweb group=archweb path="{{ archweb_dir }}"
+  file: state=directory owner=archweb group=archweb mode=0750 path="{{ archweb_dir }}"
 
 - name: set archweb groups
   user: name=archweb groups=uwsgi
@@ -33,7 +33,7 @@
   when: archweb_site|bool
 
 - name: make rsync iso dir
-  file: path={{ archweb_rsync_iso_dir }} state=directory owner=archweb group=archweb
+  file: path={{ archweb_rsync_iso_dir }} state=directory owner=archweb group=archweb mode=0755
   when: archweb_site|bool
 
 - name: clone archweb repo
@@ -59,11 +59,11 @@
   register: virtualenv
 
 - name: create media dir
-  file: state=directory owner=archweb group=archweb path="{{ archweb_dir }}/media"
+  file: state=directory owner=archweb group=archweb mode=0755 path="{{ archweb_dir }}/media"
   when: archweb_site|bool
 
 - name: fix home permissions
-  file: state=directory owner=archweb group=archweb path="{{ archweb_dir }}"
+  file: state=directory owner=archweb group=archweb mode=0750 path="{{ archweb_dir }}"
 
 - name: configure archweb
   template: src=local_settings.py.j2 dest=/srv/http/archweb/local_settings.py owner=archweb group=archweb mode=0660
@@ -196,7 +196,7 @@
   when: archweb_services or archweb_pgp_import
 
 - name: create pacman.d hooks dir
-  file: state=directory owner=root group=root path="/etc/pacman.d/hooks"
+  file: state=directory owner=root group=root mode=0750 path="/etc/pacman.d/hooks"
   when: archweb_services or archweb_pgp_import
 
 - name: install pgp_import hook
@@ -265,7 +265,7 @@
 - name: deploy new release
   become: true
   become_user: archweb
-  file: path=/etc/uwsgi/vassals/archweb.ini state=touch
+  file: path=/etc/uwsgi/vassals/archweb.ini state=touch owner=root group=root mode=0600
   when: archweb_site and (release.changed or config.changed or virtualenv.changed or archweb_forced_deploy)
   notify: restart archweb memcached
 
@@ -320,7 +320,7 @@
   when: archweb_donor_import|bool
 
 - name: create retro dir
-  file: state=directory owner=archweb group=archweb path="{{ archweb_retro_dir }}"
+  file: state=directory owner=archweb group=archweb mode=0755 path="{{ archweb_retro_dir }}"
   when: archweb_site|bool
 
 - name: clone archweb-retro repo
