@@ -217,8 +217,10 @@
   changed_when: "chroot_systemd_services.rc == 0"
 
 - name: assign pubkey list to fact
-  set_fact: pubkey_list="{{ lookup('file', "{{ playbook_dir }}/../../pubkeys/" + item) }}"
+  set_fact: pubkey_list="{{ lookup('file', playbook_dir + "/../../pubkeys/" + item) }}"
   register: pubkeys
+  vars:
+    playbook_dir: "{{ playbook_dir }}"
   with_items: "{{ root_ssh_keys }}"
 
 - name: assign pubkey string to fact
