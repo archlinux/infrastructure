@@ -10,8 +10,8 @@
     - { role: sshd }
     - { role: unbound }
     - { role: certbot }
-    - { role: borg-client, tags: ["borg"] }
-    - { role: zabbix-agent, tags: ["zabbix"] }
+    - { role: borg_client, tags: ["borg"] }
+    - { role: zabbix_agent, tags: ["zabbix"] }
     - { role: root_ssh }
     - role: postgres
       postgres_listen_addresses: "*"

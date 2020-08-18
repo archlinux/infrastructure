@@ -8,7 +8,7 @@
     - { role: tools }
     - { role: sshd }
     - { role: root_ssh }
-    - { role: borg-client, tags: ['borg'] }
+    - { role: borg_client, tags: ['borg'] }
     - { role: opendkim, dkim_selector: orion, tags: ['mail'] }
     - { role: dovecot }
     - { role: spampd, tags: ["mail"] }

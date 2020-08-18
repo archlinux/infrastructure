@@ -12,9 +12,9 @@
     - { role: firewalld }
     - { role: sshd }
     - { role: root_ssh }
-    - { role: borg-client, tags: ['borg'] }
+    - { role: borg_client, tags: ['borg'] }
     - { role: sudo, tags: ['archusers'] }
-    - { role: zabbix-agent }
+    - { role: zabbix_agent }
     - { role: certbot }
     - { role: nginx }
     - { role: dbscripts, repos_domain: "repos.archlinux.org", repos_rsync_domain: "rsync.archlinux.org", svntogit_repos: "/srv/svntogit/repos", postgres_ssl: 'on', tags: ['archusers'] }

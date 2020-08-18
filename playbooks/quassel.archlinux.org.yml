@@ -10,7 +10,7 @@
     - { role: sshd }
     - { role: unbound }
     - { role: root_ssh }
-    - { role: borg-client, tags: ["borg"] }
+    - { role: borg_client, tags: ["borg"] }
     - { role: certbot }
     - role: postgres
       postgres_max_connections: 100

@@ -9,4 +9,4 @@
     - { role: sshd }
     - { role: root_ssh }
     - { role: fail2ban }
-    - { role: gitlab-runner }
+    - { role: gitlab_runner }

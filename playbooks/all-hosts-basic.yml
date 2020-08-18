@@ -11,6 +11,6 @@
     # reconfiguring sshd may break the AUR on luna (unchecked)
     #- { role: sshd, tags: ['sshd'] }
     - { role: root_ssh }
-    - { role: borg-client, tags: ["borg"], when: "'borg_clients' in group_names" }
-    - { role: zabbix-agent, tags: ["zabbix"], when: "'unmanaged' not in group_names" }
+    - { role: borg_client, tags: ["borg"], when: "'borg_clients' in group_names" }
+    - { role: zabbix_agent, tags: ["zabbix"], when: "'unmanaged' not in group_names" }
     - { role: hardening }

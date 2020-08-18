@@ -24,7 +24,7 @@
     - { role: tools }
     - { role: sshd }
     - { role: root_ssh }
-    - { role: borg-client, tags: ["borg"] }
+    - { role: borg_client, tags: ["borg"] }
     - { role: certbot }
     - { role: nginx }
     - { role: spampd, tags: ["mail"] }
@@ -41,7 +41,7 @@
               mariadb_innodb_file_per_table: True }
     - { role: sudo }
     - { role: uwsgi }
-    - { role: php-fpm, php_extensions: ['bcmath', 'curl', 'gd', 'iconv', 'intl', 'mysqli', 'pdo_pgsql', 'pgsql', 'sockets', 'zip'], zend_extensions: ['opcache'] }
+    - { role: php_fpm, php_extensions: ['bcmath', 'curl', 'gd', 'iconv', 'intl', 'mysqli', 'pdo_pgsql', 'pgsql', 'sockets', 'zip'], zend_extensions: ['opcache'] }
     - { role: memcached }
     - { role: archweb, archweb_planet: true }
     - role: security_tracker
@@ -51,8 +51,8 @@
     - { role: mailman, mailman_domain: "lists.archlinux.org" }
     - { role: patchwork }
     - { role: kanboard }
-    - { role: zabbix-server, tags: ["zabbix"] }
+    - { role: zabbix_server, tags: ["zabbix"] }
     - { role: grafana }
     - { role: archwiki }
-    - { role: conf.archlinux.org }
+    - { role: conf_archlinux }
     - { role: fail2ban }

@@ -12,5 +12,5 @@
     - { role: unbound }
     - { role: syncrepo, tags: ['nginx'] }
     - { role: archweb, archweb_site: false, archweb_services: false, archweb_mirrorcheck: true }
-    - { role: zabbix-agent, tags: ["zabbix"] }
+    - { role: zabbix_agent, tags: ["zabbix"] }
     - { role: arch32_mirror, tags: ['nginx'] }

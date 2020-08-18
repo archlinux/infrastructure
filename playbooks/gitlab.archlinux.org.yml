@@ -10,4 +10,4 @@
     - { role: sshd }
     - { role: root_ssh }
     - { role: gitlab, gitlab_domain: "gitlab.archlinux.org" }
-    - { role: borg-client, tags: ["borg"] }
+    - { role: borg_client, tags: ["borg"] }

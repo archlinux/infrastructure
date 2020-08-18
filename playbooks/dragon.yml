@@ -14,5 +14,5 @@
     - { role: syncrepo }
     - { role: sogrep }
     - { role: archbuild }
-    - { role: arch-boxes }
-    - { role: docker-image }
+    - { role: arch_boxes }
+    - { role: docker_image }
