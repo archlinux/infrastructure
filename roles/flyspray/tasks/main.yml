@@ -42,9 +42,6 @@
   become_user: "{{ flyspray_user }}"
   register: release
 
-- name: fix home permissions
-  file: state=directory owner="{{ flyspray_user }}" group="{{ flyspray_user }}" path="{{ flyspray_dir }}" mode=0755
-
 - name: take away setup dir write permissions
   file: state=directory owner="{{ flyspray_user }}" group="{{ flyspray_user }}" path="{{ flyspray_dir }}/setup" mode=000
 
