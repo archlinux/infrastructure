@@ -1729,7 +1729,7 @@ oidc_config:
       #
       # If unset, no displayname will be set.
       #
-      display_name_template: "{{ '{{ user.given_name }} {{ user.last_name }}' }}"
+      display_name_template: "{{ '{{ user.name | default(user.preferred_username, true) }}' }}"
 
 
 
