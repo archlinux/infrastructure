@@ -138,6 +138,7 @@ resource "keycloak_saml_client" "saml_gitlab" {
   name = "Arch Linux Accounts"
   enabled = true
 
+  signature_algorithm = "RSA_SHA256"
   sign_documents = true
   sign_assertions = true
 
