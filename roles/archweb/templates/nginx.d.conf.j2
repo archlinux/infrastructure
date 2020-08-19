@@ -21,6 +21,11 @@ server {
 
     include snippets/letsencrypt.conf;
 
+    location /.well-known {
+        add_header Access-Control-Allow-Origin *;
+        return 301 https://$server_name$request_uri;
+    }
+
     location / {
         access_log off;
         return 301 https://$server_name$request_uri;
@@ -38,6 +43,11 @@ server {
     ssl_certificate      /etc/letsencrypt/live/{{ archweb_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ archweb_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ archweb_domain }}/chain.pem;
+
+    location /.well-known {
+        add_header Access-Control-Allow-Origin *;
+        return 301 https://{{ archweb_domain }}{{ domain['redirect']|default('$request_uri') }};
+    }
 
     location / {
         access_log off;
