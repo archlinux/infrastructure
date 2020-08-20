@@ -23,8 +23,16 @@
   pacman: name=smartmontools state=present
   when: "'hcloud' not in group_names"
 
+# override smartd.service with ConditionVirtualization=no
+# this should appear in the next upstream release, see https://github.com/smartmontools/smartmontools/issues/62
+- name: create drop-in directory for smartd.service
+  file: path=/etc/systemd/system/smartd.service.d state=directory owner=root group=root mode=0755
+
+- name: install drop-in snippet for smartd.service
+  copy: src=smartd-override.conf dest=/etc/systemd/system/smartd.service.d/override.conf owner=root group=root mode=0644
+
 - name: start and enable smart
-  service: name=smartd enabled=yes state=started
+  service: name=smartd enabled=yes state=started daemon_reload=yes
   when: "'hcloud' not in group_names"
 
 - name: start and enable btrfs scrub timer
