@@ -165,6 +165,7 @@ resource "keycloak_openid_client" "openid_gitlab" {
 
   access_type = "PUBLIC"
   standard_flow_enabled = true
+  full_scope_allowed = false
   valid_redirect_uris = [
     "https://gitlab.archlinux.org"
   ]
