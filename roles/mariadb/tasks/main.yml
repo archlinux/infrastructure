@@ -40,9 +40,8 @@
   no_log: true
 
 - name: configure zabbix-agent user
+  # FIXME: "zabbix_agent" is hardcoded in the password variable: {{ vault_mariadb_users.zabbix_agent }}
+  # NOTE: the zabbix-agent role uses {{zabbix_agent_mysql_password}} in the my.cnf.j2 template
   mysql_user: user={{ zabbix_agent_mysql_user }} host=localhost password={{ vault_mariadb_users.zabbix_agent }}
 
 # TODO: implement in ansible: grant process on *.* to 'zabbix_agent'@'localhost';
-
-- name: install zabbix mysql config
-  template: src=zabbix_agentd.my.cnf.j2 dest=/etc/zabbix/zabbix_agentd.my.cnf owner=zabbix-agent group=zabbix-agent mode=0600
