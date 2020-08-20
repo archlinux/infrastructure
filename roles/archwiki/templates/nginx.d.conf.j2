@@ -39,7 +39,7 @@ server {
     }
 
     location /robots.txt {
-	alias {{ archwiki_dir }}/robots.txt;
+        alias {{ archwiki_dir }}/robots.txt;
     }
 
     location ^~ /. {
@@ -61,7 +61,7 @@ server {
 
     # special case for '/load.php' type URLs to cache css/js in nginx to relieve php-fpm
     location = /load.php {
-        access_log   /var/log/nginx/wiki.archlinux.org/access.log main;
+        access_log   /var/log/nginx/{{ archwiki_domain }}/access.log main;
         fastcgi_pass   archwiki;
         fastcgi_index  index.php;
         fastcgi_split_path_info ^(.+\.php)(.*)$;
