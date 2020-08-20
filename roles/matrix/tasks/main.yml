@@ -52,7 +52,7 @@
 - name: install synapse
   pip:
     name:
-      - 'matrix-synapse[postgres,systemd,url_preview,redis,oidc]'
+      - 'matrix-synapse[postgres,systemd,url_preview,redis]'
       - pip
     state: latest
     extra_args: '-U --upgrade-strategy=eager'

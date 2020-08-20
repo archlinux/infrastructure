@@ -1625,7 +1625,7 @@ oidc_config:
   # Uncomment the following to enable authorization against an OpenID Connect
   # server. Defaults to false.
   #
-  enabled: true
+  #enabled: true
 
   # Uncomment the following to disable use of the OIDC discovery mechanism to
   # discover endpoints. Defaults to true.
@@ -1637,19 +1637,19 @@ oidc_config:
   #
   # Required if 'enabled' is true.
   #
-  issuer: "https://accounts.archlinux.org/auth/realms/archlinux"
+  #issuer: "https://accounts.example.com/"
 
   # oauth2 client id to use.
   #
   # Required if 'enabled' is true.
   #
-  client_id: "openid_matrix"
+  #client_id: "provided-by-your-issuer"
 
   # oauth2 client secret to use.
   #
   # Required if 'enabled' is true.
   #
-  client_secret: "{{ vault_matrix_openid_client_secret }}"
+  #client_secret: "provided-by-your-issuer"
 
   # auth method to use when exchanging the token.
   # Valid values are 'client_secret_basic' (default), 'client_secret_post' and
@@ -1660,7 +1660,7 @@ oidc_config:
   # list of scopes to request. This should normally include the "openid" scope.
   # Defaults to ["openid"].
   #
-  scopes: ["openid", "profile"]
+  #scopes: ["openid", "profile"]
 
   # the oauth2 authorization endpoint. Required if provider discovery is disabled.
   #
@@ -1727,7 +1727,7 @@ oidc_config:
       #
       # If unset, no displayname will be set.
       #
-      display_name_template: "{{ '{{ user.given_name }} {{ user.last_name }}' }}"
+      #display_name_template: "{{ '{{ user.given_name }} {{ user.last_name }}' }}"
 
 
 
