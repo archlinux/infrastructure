@@ -239,6 +239,18 @@ resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_username" {
 // |- DevOps
 // |- Developers
 // |- Trusted Users
+// |- Wiki
+//    |- Admins
+// |- Forum
+//    |- Admins
+//    |- Mods
+// |- Security Team
+//    |- Admins
+//    |- Members
+//    |- Reporters
+// |- Archweb
+//    |- Mirror Maintainers
+//    |- Testers
 // External Contributors
 resource "keycloak_group" "staff" {
   realm_id = "archlinux"
@@ -252,7 +264,27 @@ resource "keycloak_group" "externalcontributors" {
 
 variable "arch_groups" {
   type = set(string)
-  default = ["DevOps", "Developers", "Trusted Users", "Support"]
+  default = ["DevOps", "Developers", "Trusted Users", "Wiki", "Forum", "Security Team", "Archweb"]
+}
+
+variable "arch_wiki_groups" {
+  type = set(string)
+  default = ["Admins"]
+}
+
+variable "arch_forum_groups" {
+  type = set(string)
+  default = ["Admins", "Mods"]
+}
+
+variable "arch_securityteam_groups" {
+  type = set(string)
+  default = ["Admins", "Members", "Reporters"]
+}
+
+variable "arch_archweb_groups" {
+  type = set(string)
+  default = ["Mirror Maintainers", "Testers"]
 }
 
 resource "keycloak_group" "arch_groups" {
@@ -260,6 +292,38 @@ resource "keycloak_group" "arch_groups" {
 
   realm_id = "archlinux"
   parent_id = keycloak_group.staff.id
+  name = each.value
+}
+
+resource "keycloak_group" "arch_wiki_groups" {
+  for_each = var.arch_wiki_groups
+
+  realm_id = "archlinux"
+  parent_id = keycloak_group.arch_groups["Wiki"].id
+  name = each.value
+}
+
+resource "keycloak_group" "arch_forum_groups" {
+  for_each = var.arch_forum_groups
+
+  realm_id = "archlinux"
+  parent_id = keycloak_group.arch_groups["Forum"].id
+  name = each.value
+}
+
+resource "keycloak_group" "arch_securityteam_groups" {
+  for_each = var.arch_securityteam_groups
+
+  realm_id = "archlinux"
+  parent_id = keycloak_group.arch_groups["Security Team"].id
+  name = each.value
+}
+
+resource "keycloak_group" "arch_archweb_groups" {
+  for_each = var.arch_archweb_groups
+
+  realm_id = "archlinux"
+  parent_id = keycloak_group.arch_groups["Archweb"].id
   name = each.value
 }
 
