@@ -78,7 +78,7 @@ The very first time you run terraform on your system, you'll have to init it:
     cd tf-stage1  # and also tf-stage2
     terraform init -backend-config="conn_str=postgres://terraform:$(../misc/get_key.py group_vars/all/vault_terraform.yml vault_terraform_db_password)@state.archlinux.org"
 
-After making changes to the infrastructure in `tf-stage1/archlinux.fg`, run
+After making changes to the infrastructure in `tf-stage1/archlinux.tf`, run
 
     terraform plan
 
