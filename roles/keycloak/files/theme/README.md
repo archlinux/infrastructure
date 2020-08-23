@@ -8,32 +8,26 @@ The custom theme name is `archlinux` and is based on the default theme `keycloak
 
 There are five sections that can be customized: login, account, admin console welcome screen and email.  The email content did not need any further changes from the defaults therefore it has not been modified, everything else was customized.
 
-The theme modifications were pretty simple and mostly involved changing images from Keycloak logo to Arch Linux logo along with some background images and some element hiding and sizing fixes.
+The theme modifications were pretty simple and mostly involved replacing images from Keycloak logo to Arch Linux logo along with some background image changes and some element hiding and sizing fixes.
 
 A Keycloak theme consists of various files but for the custom theme only images, CSS stylesheets and HTML templates (FreeMarker templates) were needed to be modified to achieve the desired results.
 
 - Login screen
 
   - the background image has been changed
-
   - the Keycloak logo has been replaced with the Arch Linux logo
 
 - Welcome screen
 
   - the background image has been changed
-
   - the Keycloak logo has been replaced with the Arch Linux logo
-
   - the title text color was changed from black to white due to the dark background
-
   - the text of the panels and their associated links has been changed to refer to the Arch Linux project instead of the Keycloak one
-
   - the default footer has been hidden
 
 - Account screen
 
   - the Keycloak logo on the top left has been replaced with the Arch Linux logo
-
   - the Keycloak logo during the account console loading animation has been replaced with the Arch Linux logo
 
 - Admin console Screen
@@ -44,13 +38,13 @@ A Keycloak theme consists of various files but for the custom theme only images,
 
 - [Keycloak theming documentation](https://www.keycloak.org/docs/latest/server_development/#_themes)
 
-- [Keycloak default theme resource files]([keycloak/themes/src/main/resources/theme/keycloak at master · keycloak/keycloak · GitHub](https://github.com/keycloak/keycloak/tree/master/themes/src/main/resources/theme/keycloak))
+- [Keycloak default theme resource files](<https://github.com/keycloak/keycloak/tree/master/themes/src/main/resources/theme/keycloak>)
 
-- [Keycloak base theme resource files]([keycloak/themes/src/main/resources/theme/base at master · keycloak/keycloak · GitHub](https://github.com/keycloak/keycloak/tree/master/themes/src/main/resources/theme/base))
+- [Keycloak base theme resource files](https://github.com/keycloak/keycloak/tree/master/themes/src/main/resources/theme/base)
 
-- [Keycloak preview theme for new account system resource files]([keycloak/themes/src/main/resources/theme/keycloak-preview/account at master · keycloak/keycloak · GitHub](https://github.com/keycloak/keycloak/tree/master/themes/src/main/resources/theme/keycloak-preview/account))
+- [Keycloak preview theme for new account system resource files](https://github.com/keycloak/keycloak/tree/master/themes/src/main/resources/theme/keycloak-preview/account)
 
-- [Keycloak Docker containers main repository]([GitHub - keycloak/keycloak-containers: Docker image for Keycloak project](https://github.com/keycloak/keycloak-containers))
+- [Keycloak Docker containers main repository](https://github.com/keycloak/keycloak-containers)
 
 ## Additional notes
 
@@ -58,16 +52,13 @@ A Keycloak theme consists of various files but for the custom theme only images,
 
 - If you decide to override HTML templates bear in mind that you may need to update your custom template when upgrading to a new release. Since some HTML templates were modified, a maintenance update to the theme could be necessary.
 
-- While creating a theme it’s a good idea to disable caching as this makes it possible to edit theme resources directly from the `themes` directory without restarting Keycloak. To do this edit `standalone.xml`. For `theme` set `staticMaxAge` to `-1` and both `cacheTemplates` and `cacheThemes` to `false`. **Note**: this is done automatically by the provided Ansible playbook for local development. See the maintenance guide below for details.
+- While creating a theme it’s a good idea to disable caching as this makes it possible to edit theme resources directly from the `themes` directory without restarting Keycloak. To do this edit `standalone.xml`. For `theme` set `staticMaxAge` to `-1` and both `cacheTemplates` and `cacheThemes` to `false`. **Note**: this is done automatically by the provided `docker-compose` file for local development. See the maintenance guide below for more details.
 
 - Each section that can be modified uses a file called `theme.properties` which allows setting some configuration for the theme such as:
 
   - parent - Parent theme to extend
-
   - import - Import resources from another theme
-
   - styles - Space-separated list of styles to include
-
   - locales - Comma-separated list of supported locales
 
   The file sometimes can also include custom properties that can be used from HTML  templates. **Note**: this is quite powerful always try to use properties if at all possible to do theme alterations.
@@ -85,24 +76,17 @@ The custom theme is using the following image resources:
 Requirements:
 
 - Docker
+- Docker Compose
 
-- Ansible  
+The theme folder includes a helpful Docker Compose file (`docker-compose.yml`) to enable local theme development and maintenance via a Docker container that spins up a local Keycloak instance that can be quickly accessed and be tampered with. This means that there is no need to touch the actual running Keycloak instance to do theme modifications. It is recommend to test out theme customizations locally first before deploying them to the running instance.
 
-The theme folder includes a helpful Ansible playbook (`localdev.yml`) to enable local theme development and maintenance via a Docker container that spins up a local Keycloak instance that can be quickly accessed and be tampered with. This means that there is no need to touch the actual running Keycloak instance to do theme modifications. It is recommend to test out theme customizations locally first before deploying them to the running instance.
-
-The Ansible playbook is doing the following:
+The Docker Compose file is doing the following:
 
 - Spins up a local Keycloak server instance that can be accessed from `http://127.0.0.1:9000`
-
 - Creates a default `admin` user with the same name and password
-
 - Sets the default theme and welcome screen to the `archlinux` theme
-
 - Disables theme caching to make it possible to edit theme resources directly from the `themes` directory without restarting Keycloak
-
 - Installs vim to enable editing of the theme resources within the container
-
-- Automatically restarts and recreates the container each time is executed to test any new changes applied to the local resource files
 
 **Note**:  the directory structure of the Keycloak docker container is different from an actual running instance.
 
@@ -116,13 +100,13 @@ To start the local Keycloak instance and try out some changes:
 1. navigate into the theme directory
 
    ```shell
-   cd /roles/keycloak/theme
+   cd /roles/keycloak/files/theme
    ```
 
-2. run the Ansible playbook
+2. run the Docker Compose file in detached mode (detaching is optional)
 
    ```shell
-   ansible-playbook -i localhost, localdev.yml
+   docker-compose up -d
    ```
 
 3. edit the custom `archlinux` theme
@@ -138,3 +122,9 @@ To start the local Keycloak instance and try out some changes:
    ```
 
 **Note**: since the `archlinux` custom theme folder gets mounted within the container each time the playbook is executed, any changes you do within the container are persistent.
+
+To automatically restart and recreate the container in order to test any new changes applied to the local resource files you can run the following command:
+
+```shell
+docker-compose up -d --force-recreate
+```
