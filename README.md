@@ -63,13 +63,13 @@ This will take some time after which a new snapshot will have been created on th
 
 We use terraform in two ways:
 
-    1) To provision a part of the infrastructure on hcloud (and possibly other service providers in the future)
-    2) To declaratively configure applications
+1. To provision a part of the infrastructure on hcloud (and possibly other service providers in the future)
+2. To declaratively configure applications
 
 For both of these, we have set up a separate terraform script. The reason for that is that sadly terraform can't have
 providers depend on other providers so we can't declaratively state that we want to configure software on a server which
-itself needs to be provisioned first. Therefore, we use a two-stage process. Generally speaking, scenario 1) is configured in
-`tf-stage1` and 2) is in `tf-stage2`. Maybe in the future, we can just have a single terraform script for everything
+itself needs to be provisioned first. Therefore, we use a two-stage process. Generally speaking, scenario 1. is configured in
+`tf-stage1` and 2. is in `tf-stage2`. Maybe in the future, we can just have a single terraform script for everything
 but for the time being, this is what we're stuck with.
 
 The very first time you run terraform on your system, you'll have to init it:
