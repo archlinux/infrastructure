@@ -121,7 +121,7 @@ As long as you pass the maintenance variable to the playbook run, the web servic
 passing it on the command line and run the playbook again, the regular nginx configuration should resume and the service should accept
 requests by the end of the run.
 
-Passing maintenance=false, will also prevent the regular nginx configuration from resuming, but will not put the service into maintence
+Passing maintenance=false, will also prevent the regular nginx configuration from resuming, but will not put the service into maintenance
 mode.
 
 Keep in mind that passing the maintenance variable to the whole playbook, without any tag, will make all the web services that have the
@@ -168,17 +168,17 @@ The following steps should be used to update our managed servers:
   - archweb
   - patchwork
 
-## aur.archlinux.org
+### aur.archlinux.org
 
 #### Services
   - aurweb
 
-## bugs.archlinux.org
+### bugs.archlinux.org
 
 #### Services
   - flyspray
 
-## bbs.archlinux.org
+### bbs.archlinux.org
 
 #### Services
   - bbs
@@ -220,7 +220,7 @@ The following steps should be used to update our managed servers:
 
 ### accounts.archlinux.org
 
-This server is /special/. It runs keycloak and is central to our unified Arch Linux account management world.
+This server is _special_. It runs keycloak and is central to our unified Arch Linux account management world.
 It has an Ansible playbook for the keycloak service but that only installs the package and starts it but it's configured via a secondary Terraform file only for keycloak `keycloak.tf`.
 The reason for doing it this way is that Terraform support for Keycloak is much superior and it's declarative too which is great for making sure that no old config remains in the case of config changes.
 
@@ -244,8 +244,8 @@ So to set up this server from scratch, run:
 
 #### Services
   - Runs a master rebuilderd instance two workers:
-        - repro1.pkgbuild.com (PIA worker)
-        - repro3.pkgbuild.com (packet.net machine which runs Ubuntu)
+    - repro1.pkgbuild.com (PIA worker)
+    - repro3.pkgbuild.com (packet.net machine which runs Ubuntu)
 
 ### runner1.archlinux.org
 
@@ -273,7 +273,7 @@ Medium-fast-ish packet.net box with Debian on it. Is currently maintained manual
 ### Re-encrypting the vault after adding or removing a new GPG key
 
   - Make sure you have all the GPG keys **at least** locally signed
-  - Run the playbooks/tasks/reencrypt-vault-key.yml playbook and make sure it does not have **any** failed task
+  - Run the `playbooks/tasks/reencrypt-vault-key.yml` playbook and make sure it does not have **any** failed task
   - Test that the vault is working by running ansible-vault view on any encrypted vault file
   - Commit and push your changes
 
@@ -287,19 +287,23 @@ Medium-fast-ish packet.net box with Debian on it. Is currently maintained manual
 
 Adding a new server to be backed up goes as following:
 
-* Make sure the new servers host key is synced to docs/ssh-known_hosts.txt if not run:
-  ansible-playbook playbooks/tasks/sync-ssh-hostkeys.yml
+* Make sure the new servers host key is synced to `docs/ssh-known_hosts.txt` if not run:
+
+      ansible-playbook playbooks/tasks/sync-ssh-hostkeys.yml
 
 * Add the server to [borg-clients] in hosts
 
 * Run the borg role on u236610.your-storagebox.de to allow the new machine to create backups
-  ansibe-playbook playbooks/hetzner_storagebox.yml
+
+      ansibe-playbook playbooks/hetzner_storagebox.yml
 
 * Run the borg role for rsync.net to allow the new machine to create backups
-  ansibe-playbook playbooks/rsync.net.yml
+
+      ansibe-playbook playbooks/rsync.net.yml
 
 * Run the borg role on the new machine to initialize the repository
-  ansibe-playbook playbooks/$machine.yml -t borg
+
+      ansibe-playbook playbooks/$machine.yml -t borg
 
 Backups should be checked now and then. Some common tasks are listed below.
 You'll have to get the correct username from the vault.
