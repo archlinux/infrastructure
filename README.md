@@ -99,7 +99,7 @@ set up.
 
 #### SMTP Configuration
 
-All hosts should be relaying email through our primary mx host (currently 'orion'). See docs/email.txt for full details.
+All hosts should be relaying email through our primary mx host (currently 'orion'). See [docs/email.md](./docs/email.md) for full details.
 
 #### Note about opendkim
 
@@ -127,7 +127,7 @@ mode.
 Keep in mind that passing the maintenance variable to the whole playbook, without any tag, will make all the web services that have the
 maintenance mode in them, to be put in maintenance mode. Use tags to affect only the services you want.
 
-Documentation on how to add the maintenance mode to a web service is inside docs/maintenance.txt
+Documentation on how to add the maintenance mode to a web service is inside [docs/maintenance.md](./docs/maintenance.md).
 
 ### Finding servers requiring security updates
 
