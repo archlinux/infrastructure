@@ -208,6 +208,12 @@ The following steps should be used to update our managed servers:
 #### Services
   - quassel core
 
+### matrix.archlinux.org
+
+#### Services
+  - Matrix homeserver (Synapse)
+  - Matrix ↔ IRC bridge
+
 ### homedir.archlinux.org
 
 #### Services
