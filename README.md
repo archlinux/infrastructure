@@ -238,9 +238,7 @@ So to set up this server from scratch, run:
 ### mirror.pkgbuild.com
 
 #### Services
-  - Load balancer for PIA mirrors across the world. Uses Maxmind's GeoIP City
-    database for routing users to their nearest mirror. Account information is
-    stored in the ansible vault.
+  - Regular mirror.
 
 ### reproducible.archlinux.org
 
