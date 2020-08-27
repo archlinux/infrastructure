@@ -1230,8 +1230,8 @@ account_threepid_delegates:
 # as a publicly joinable room when the first user registers for the
 # homeserver. This behaviour can be customised with the settings below.
 #
-#auto_join_rooms:
-#  - "#example:example.com"
+auto_join_rooms:
+  - "#archlinux:archlinux.org"
 
 # Where auto_join_rooms are specified, setting this flag ensures that the
 # the rooms exist by creating them when the first user on the
@@ -1247,7 +1247,7 @@ account_threepid_delegates:
 # Defaults to true. Uncomment the following line to disable automatically
 # creating auto-join rooms.
 #
-#autocreate_auto_join_rooms: false
+autocreate_auto_join_rooms: false
 
 # Whether the auto_join_rooms that are auto-created are available via
 # federation. Only has an effect if autocreate_auto_join_rooms is true.
@@ -1291,14 +1291,14 @@ account_threepid_delegates:
 # Note that, if the room already exists, this user must be joined and
 # have the appropriate permissions to invite new members.
 #
-#auto_join_mxid_localpart: system
+auto_join_mxid_localpart: heftig
 
 # When auto_join_rooms is specified, setting this flag to false prevents
 # guest accounts from being automatically joined to the rooms.
 #
 # Defaults to true.
 #
-#auto_join_rooms_for_guests: false
+auto_join_rooms_for_guests: false
 
 
 ## Metrics ###
