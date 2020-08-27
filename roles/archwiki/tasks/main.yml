@@ -21,7 +21,16 @@
   register: user_created
 
 - name: fix home permissions
-  file: state=directory owner="{{ archwiki_user }}" group="{{ archwiki_user }}" mode=0750 path="{{ archwiki_dir }}"
+  file: state=directory owner="{{ archwiki_user }}" group="{{ archwiki_user }}" mode=0751 path="{{ archwiki_dir }}"
+
+- name: fix cache permissions
+  file: state=directory owner="{{ archwiki_user }}" group="{{ archwiki_user }}" mode=0750 path="{{ archwiki_dir }}/cache"
+
+- name: fix sessions permissions
+  file: state=directory owner="{{ archwiki_user }}" group="{{ archwiki_user }}" mode=0750 path="{{ archwiki_dir }}/sessions"
+
+- name: fix uploads permissions
+  file: state=directory owner="{{ archwiki_user }}" group="{{ archwiki_user }}" mode=0755 path="{{ archwiki_dir }}/uploads"
 
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest="{{ archwiki_nginx_conf }}" owner=root group=root mode=644
@@ -48,18 +57,6 @@
   become_user: "{{ archwiki_user }}"
   notify:
     - run wiki updatescript
-
-- name: fix home permissions
-  file: state=directory owner="{{ archwiki_user }}" group="{{ archwiki_user }}" mode=0750 path="{{ archwiki_dir }}"
-
-- name: fix cache permissions
-  file: state=directory owner="{{ archwiki_user }}" group="{{ archwiki_user }}" mode=0755 path="{{ archwiki_dir }}/cache"
-
-- name: fix sessions permissions
-  file: state=directory owner="{{ archwiki_user }}" group="{{ archwiki_user }}" mode=0755 path="{{ archwiki_dir }}/sessions"
-
-- name: fix uploads permissions
-  file: state=directory owner="{{ archwiki_user }}" group="{{ archwiki_user }}" mode=0755 path="{{ archwiki_dir }}/uploads"
 
 - name: configure archwiki
   template: src=LocalSettings.php.j2 dest="{{ archwiki_dir }}/public/LocalSettings.php" owner="{{ archwiki_user }}" group="{{ archwiki_user }}" mode=0640
