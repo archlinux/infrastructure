@@ -20,7 +20,7 @@
   file: path="{{ archboxes_git_dir }}" state=directory recurse=yes owner="{{ archboxes_user }}" group="{{ archboxes_user }}" mode=preserve
 
 - name: ensure controller.py of arch-boxes is executable
-  file: path="{{ archboxes_git_dir }}/controller.py" mode=0744 owner=root group=root
+  file: path="{{ archboxes_git_dir }}/controller.py" mode=0755 owner=root group=root
 
 - name: replace placeholder to vagrantcloud API Key
   no_log: true

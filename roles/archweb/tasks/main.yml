@@ -265,7 +265,7 @@
 - name: deploy new release
   become: true
   become_user: archweb
-  file: path=/etc/uwsgi/vassals/archweb.ini state=touch owner=root group=root mode=0600
+  file: path=/etc/uwsgi/vassals/archweb.ini state=touch owner=root group=root mode=0644
   when: archweb_site and (release.changed or config.changed or virtualenv.changed or archweb_forced_deploy)
   notify: restart archweb memcached
 
