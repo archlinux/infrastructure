@@ -14,7 +14,7 @@
     - restart keycloak
 
 - name: copy custom theme
-  copy: src=theme/archlinux dest=/opt/keycloak/themes
+  copy: src=theme/archlinux dest=/opt/keycloak/themes owner=keycloak group=keycloak mode=600
   notify:
     - restart keycloak
 
