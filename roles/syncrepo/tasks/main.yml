@@ -36,7 +36,7 @@
     regexp: '^CacheDir'
     line: 'CacheDir     = /var/cache/pacman/pkg/ /srv/ftp/pool/packages/ /srv/ftp/pool/community/'
     mode: 0644
-    user: root
+    owner: root
     group: root
 
 - name: make nginx log dir
