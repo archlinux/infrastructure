@@ -1,7 +1,7 @@
 image: "archlinux:latest"
 
 before_script:
-  - pacman -Syu --needed --noconfirm ansible-lint terraform terraform-provider-keycloak
+  - pacman -Syu --needed --noconfirm ansible-lint terraform
 
 ansible-lint:
   script:
