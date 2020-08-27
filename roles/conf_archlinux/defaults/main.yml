@@ -2,7 +2,7 @@
 
 conference_user: confweb
 conference_git: https://github.com/archlinux/conf.archlinux.org.git
-conference_version: f4c35aa6bbefe9f07d32178b18f538af5621492e
+conference_version: 25a3171519ae245e7d1cace554cf77e0c4986875
 conference_domain: conf.archlinux.org
 static_conference_domain: static.conf.archlinux.org
 conference_dir: /srv/http/{{ conference_domain }}
