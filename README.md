@@ -9,7 +9,6 @@ It also contains git submodules so you have to run `git submodule update --init
 
 Install these packages:
   - terraform
-  - terraform-provider-keycloak
   - python-typer
   - python-jmespath
   - moreutils (for playbooks/tasks/reencrypt-vault-key.yml)
