@@ -1,7 +1,0 @@
-[Unit]
-Description=arch-boxes service for deploying images and vagrant boxes
-
-[Service]
-Type=oneshot
-ExecStart={{ archboxes_git_dir }}/controller.py
-User={{ archboxes_user }}

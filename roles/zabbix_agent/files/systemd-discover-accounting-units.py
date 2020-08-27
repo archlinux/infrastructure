@@ -7,7 +7,6 @@ import re
 # regex are ancored to beginning and end of string already
 unit_whitelist_regexes = [
         r'archive-uploader.service',
-        r'arch-boxes.service',
         r'borg-backup.service',
         r'createlinks.service',
         r'dovecot.service',
