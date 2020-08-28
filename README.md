@@ -26,8 +26,8 @@ It will also deploy any new SSH host keys to all our machines.
 
 #### Note about GPG keys
 
-The root_access.yml file contains the root_gpgkeys variable that determine the users that have access to the vault, as well as the borg backup keys.
-All the keys should be on the local user gpg keyring and at **minimum** be locally signed with --lsign-key. This is necessary for running either the reencrypt-vault-key
+The `root_access.yml` file contains the `root_gpgkeys` variable that determine the users that have access to the vault, as well as the borg backup keys.
+All the keys should be on the local user gpg keyring and at **minimum** be locally signed with `--lsign-key`. This is necessary for running either the reencrypt-vault-key
 or the fetch-borg-keys tasks.
 
 #### Note about Ansible dynamic inventories
