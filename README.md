@@ -192,7 +192,6 @@ The following steps should be used to update our managed servers:
 #### Services
   - build server
   - sogrep
-  - arch-boxes (packer)
 
 ### state.archlinux.org
 
