@@ -46,6 +46,7 @@ resource "keycloak_realm" "archlinux" {
   enabled = true
   remember_me = true
   display_name = "Arch Linux"
+  display_name_html = "<div class=\"kc-logo-text\"><span>Arch Linux</span></div>"
 
   reset_password_allowed = true
   verify_email = true
