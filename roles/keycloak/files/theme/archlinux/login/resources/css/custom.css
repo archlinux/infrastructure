@@ -6,6 +6,13 @@
 
 div.kc-logo-text {
     background-image: url('../img/archlinux-logo-light.svg');
-    height: 199px;
-    width: 600px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100px;
+}
+
+@media(max-width: 767px) {
+    div.kc-logo-text {
+        height: 45px;
+    }
 }
