@@ -110,12 +110,6 @@ arch_users:
     ssh_key: bgyorgy.pub
     groups:
       - tu
-  bisson:
-    name: "Gaëtan Bisson"
-    ssh_key: bisson.pub
-    groups:
-      - dev
-      - tu
   bluewind:
     name: "Florian Pritz"
     ssh_key: bluewind.pub
