@@ -2,10 +2,20 @@
 
 .login-pf body {
     background: url("../img/login-background.jpg") no-repeat center center fixed;
+    background-size: cover;
 }
 
 div.kc-logo-text {
     background-image: url('../img/archlinux-logo-light.svg');
-    height: 199px;
-    width: 600px;
+    background-size: 100%;
+    height: 100px;
+}
+
+@media(max-width: 767px) {
+    div.kc-logo-text {
+        background-size: 100%;
+        height: 60px;
+        width: 200px;
+        margin: 0 auto;
+    }
 }
