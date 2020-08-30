@@ -14,6 +14,8 @@ div.kc-logo-text {
 @media(max-width: 767px) {
     div.kc-logo-text {
         background-size: 100%;
-        height: 45px;
+        height: 60px;
+        width: 200px;
+        margin: 0 auto;
     }
 }
