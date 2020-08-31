@@ -1,0 +1,88 @@
+---
+
+- name: install prometheus-node-exporter
+  pacman: name=prometheus-node-exporter,arch-audit,pacman-contrib state=present
+
+- name: install prometheus-memcached-exporter
+  pacman: name=prometheus-memcached-exporter state=present
+  when: "'memcached' in group_names"
+
+- name: install prometheus-mysqld-exporter
+  pacman: name=prometheus-mysqld-exporter state=present
+  when: "'mysql_servers' in group_names"
+
+- name: create prometheus mysqld database user
+  mysql_user:
+    name: '{{ prometheus_mysqld_user }}'
+    password: '{{ vault_prometheus_mysql_password }}'
+    priv: "*.*:PROCESS,REPLICATION CLIENT"
+    state: present
+  when: "'mysql_servers' in group_names"
+
+# TODO: with ansible 2.10 this can be set by mysql_user https://github.com/ansible/ansible/issues/26581
+- name: set max_user_connections for prometheus mysqld user
+  command: mysql -u root -e "ALTER USER '{{ prometheus_mysqld_user }}'@'localhost' WITH MAX_USER_CONNECTIONS 3;"
+  when: "'mysql_servers' in group_names"
+
+- name: copy prometheus mysqld exporter configuration
+  template: src=prometheus-mysqld-exporter.j2 dest=/etc/conf.d/prometheus-mysqld-exporter owner=root group=root mode=600
+  when: "'mysql_servers' in group_names"
+
+- name: enable prometheus-mysqld-exporter service
+  systemd: name=prometheus-mysqld-exporter enabled=yes daemon_reload=yes state=started
+  when: "'mysql_servers' in group_names"
+
+- name: install node exporter configuration
+  template: src=prometheus-node-exporter.env.j2 dest=/etc/conf.d/prometheus-node-exporter owner=root group=root mode=600
+
+- name: create textcollector directory
+  file: path="{{ prometheus_textfile_dir }}" state=directory owner=node_exporter group=node_exporter mode=700
+
+- name: install node exporter textcollector scripts
+  copy: src={{ item }} dest=/usr/local/bin/{{ item }} owner=root group=root mode=0755
+  with_items:
+    - arch-textcollector.sh
+    - borg-textcollector.sh
+
+- name: install arch textcollector service
+  template: src=prometheus-arch-textcollector.service.j2 dest=/etc/systemd/system/prometheus-arch-textcollector.service owner=root group=root mode=600
+
+- name: install arch textcollector timer
+  template: src=prometheus-arch-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-arch-textcollector.timer owner=root group=root mode=600
+
+- name: enable and start prometheus arch textcollector timer
+  systemd: name=prometheus-arch-textcollector.timer enabled=yes daemon_reload=yes state=started
+
+- name: install borg textcollector service
+  template: src=prometheus-borg-textcollector.service.j2 dest=/etc/systemd/system/prometheus-borg-textcollector.service owner=root group=root mode=600
+  when: "'borg_clients' in group_names"
+
+- name: install borg textcollector timer
+  template: src=prometheus-borg-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-borg-textcollector.timer owner=root group=root mode=600
+  when: "'borg_clients' in group_names"
+
+- name: enable and start prometheus borg textcollector timer
+  systemd: name=prometheus-borg-textcollector.timer enabled=yes daemon_reload=yes state=started
+  when: "'borg_clients' in group_names"
+
+- name: enable prometheus-node-exporter service
+  systemd: name=prometheus-node-exporter enabled=yes daemon_reload=yes state=started
+
+- name: enable prometheus-memcached-exporter service
+  systemd: name=prometheus-memcached-exporter enabled=yes daemon_reload=yes state=started
+  when: "'memcached' in group_names"
+
+- name: open prometheus-node-exporter ipv4 port for monitoring.archlinux.org
+  firewalld: state=enabled permanent=true immediate=yes
+        rich_rule="rule family=ipv4 source address={{ hostvars['monitoring.archlinux.org']['ipv4_address'] }} port protocol=tcp port={{ prometheus_exporter_port }} accept"
+  when: "'prometheus' not in group_names"
+
+- name: open gitlab exporter ipv4 port for monitoring.archlinux.org
+  firewalld: state=enabled permanent=true immediate=yes
+        rich_rule="rule family=ipv4 source address={{ hostvars['monitoring.archlinux.org']['ipv4_address'] }} port protocol=tcp port={{ gitlab_runner_exporter_port }} accept"
+  when: "'gitlab_runners' in group_names"
+
+- name: open prometheus mysqld exporter ipv4 port for monitoring.archlinux.org
+  firewalld: state=enabled permanent=true immediate=yes
+        rich_rule="rule family=ipv4 source address={{ hostvars['monitoring.archlinux.org']['ipv4_address'] }} port protocol=tcp port={{ prometheus_mysqld_exporter_port }} accept"
+  when: "'mysql_servers' in group_names"

@@ -1,0 +1,3 @@
+DATA_SOURCE_NAME="{{ prometheus_mysqld_user }}:{{ vault_prometheus_mysql_password }}@(localhost:3306)/"
+# TODO: review these settings
+MYSQLD_EXPORTER_ARGS="--collect.binlog_size --collect.info_schema.processlist --collect.info_schema.userstats"

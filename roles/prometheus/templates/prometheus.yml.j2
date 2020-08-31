@@ -13,3 +13,69 @@ alerting:
        - localhost:9093
 
 scrape_configs:
+  - job_name: 'node_exporter'
+    static_configs:
+    {% for host in groups['node_exporters'] %}
+
+    - targets: ['{{ host }}:{{ prometheus_exporter_port }}']
+      labels:
+        instance: "{{ host }}"
+
+    {% endfor %}
+
+  - job_name: 'gitlab_runner_exporter'
+    static_configs:
+    {% for host in groups['gitlab_runners'] %}
+
+    - targets: ['{{ host }}:{{ gitlab_runner_exporter_port }}']
+      labels:
+        instance: "{{ host }}"
+
+    {% endfor %}
+
+  - job_name: 'keycloak'
+    scheme: https
+    metrics_path: "/auth/realms/master/metrics"
+    basic_auth:
+       username: "{{ vault_keycloak_nginx_user }}"
+       password: "{{ vault_keycloak_nginx_passwd }}"
+    static_configs:
+    - targets: ['accounts.archlinux.org:443']
+      labels:
+        instance: "accounts.archlinux.org"
+
+  - job_name: 'gitlab_exporter'
+    scheme: https
+    metrics_path: "-/metrics"
+    params:
+      token: ["{{ vault_gitlab_prometheus_token }}"]
+    static_configs:
+    - targets: ['gitlab.archlinux.org:443']
+      labels:
+        instance: "gitlab.archlinux.org"
+
+  - job_name: 'mysqld_exporter'
+    static_configs:
+
+    - targets: ['aur.archlinux.org:9104']
+      labels:
+        instance: "aur.archlinux.org"
+
+  - job_name: 'blackbox'
+    metrics_path: /probe
+    scrape_interval: 15s
+    params:
+      module: [http_prometheus]
+    static_configs:
+    - targets:
+    {% for target in blackbox_targets %}
+      - {{ target }}
+    {% endfor %}
+
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9115

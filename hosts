@@ -100,3 +100,13 @@ aur-dev.archlinux.org
 
 [prometheus]
 monitoring.archlinux.org
+
+[node_exporters]
+aur.archlinux.org
+monitoring.archlinux.org
+gitlab.archlinux.org
+reproducible.archlinux.org
+runner1.archlinux.org
+runner2.archlinux.org
+secure-runner1.archlinux.org
+secure-runner2.archlinux.org

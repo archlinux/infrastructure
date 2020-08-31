@@ -9,4 +9,5 @@
     - { role: sshd }
     - { role: root_ssh }
     - { role: fail2ban }
+    - { role: prometheus_exporters }
     - { role: gitlab_runner }

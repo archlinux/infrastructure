@@ -1,1 +1,2 @@
 monitoring_domain: monitoring.archlinux.org
+gitlab_runner_exporter_port: '9252'

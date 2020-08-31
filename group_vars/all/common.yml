@@ -10,3 +10,6 @@ zabbix_agent_templates:
 # this is used by the maintenance role to get the ip address
 # of the machine running the playbook
 maintenance_remote_machine: "{{ hostvars[inventory_hostname]['ansible_env'].SSH_CLIENT.split(' ')[0] }}"
+
+# prometheus-node-exporter port
+prometheus_exporter_port: '9100'
