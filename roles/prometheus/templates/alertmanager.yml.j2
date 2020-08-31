@@ -1,0 +1,19 @@
+global:
+  resolve_timeout: 5m
+  smtp_smarthost: 'mail.archlinux.org:587'
+  smtp_from: 'alertmanager@archlinux.org'
+  smtp_require_tls: true
+  smtp_auth_username: alertmanager
+  smtp_auth_password: {{ vault_monitoring_alertmanager_smtp_pass }}
+
+route:
+  group_by: ['instance', 'severity']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 1h
+  receiver: 'devops'
+
+receivers:
+  - name: 'devops'
+    email_configs:
+      - to: 'alerts@archlinux.org'

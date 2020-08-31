@@ -97,3 +97,6 @@ repro3.pkgbuild.com
 apollo.archlinux.org
 aur.archlinux.org
 aur-dev.archlinux.org
+
+[prometheus]
+monitoring.archlinux.org

@@ -9,6 +9,9 @@ arch_groups:
   - docker-image-sudo
 
 arch_users:
+  alertmanager:
+    name: ""
+    groups: []
   aaron:
     name: "Aaron Griffin"
     ssh_key: aaron.pub

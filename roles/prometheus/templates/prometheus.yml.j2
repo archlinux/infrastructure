@@ -1,0 +1,15 @@
+global:
+  scrape_interval: 60s
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  - node.rules.yml
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+       - localhost:9093
+
+scrape_configs:
