@@ -40,6 +40,10 @@ server {
     root    {{ aurweb_dir }}/web/html;
     index   index.php;
 
+    location /robots.txt {
+        alias {{ aurweb_dir }}/robots.txt
+    }
+
     location ~ ^/trusted-user/ {
         break;
     }
