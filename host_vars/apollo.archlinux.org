@@ -36,5 +36,3 @@ fail2ban_jails:
   sshd: true
   postfix: true
   dovecot: false
-
-fastcgi_cache: wiki
