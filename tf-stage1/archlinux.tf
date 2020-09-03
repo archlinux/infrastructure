@@ -238,7 +238,8 @@ resource "hcloud_rdns" "aur_ipv6" {
 resource "hcloud_server" "aur" {
   name        = "aur.archlinux.org"
   image       = data.hcloud_image.archlinux.id
-  server_type = "cpx31"
+  server_type = "cpx41"
+  keep_disk   = true
   lifecycle {
     ignore_changes = [image]
   }
