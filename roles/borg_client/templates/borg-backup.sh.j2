@@ -23,7 +23,8 @@ delete_snapshot() {
 }
 
 if is_btrfs "$src"; then
-    list_of_btrfs_submounts=$(findmnt -Rl -o target,fstype,options / | grep btrfs | grep -v "subvol=\/[[:alnum:]]" | cut -d ' ' -f1)
+    # List all btrfs submounts we want to backup, e.g. homedir.archlinux.org with "/ /home"
+    list_of_btrfs_submounts=$(findmnt -Rl -o target,fstype,options / | grep btrfs | grep -v docker | grep -v "subvol=\/[[:alnum:]]" | cut -d ' ' -f1)
 
     if [[ -d "$backup_mountdir" ]]; then
         if [[ $(findmnt -M "$backup_mountdir") ]]; then
