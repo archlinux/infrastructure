@@ -75,7 +75,7 @@
   no_log: true
 
 - name: initialize the database
-  command: python aurweb/initdb.py
+  command: python -m aurweb.initdb
   args:
     chdir: "{{ aurweb_dir }}"
   become: true
