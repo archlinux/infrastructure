@@ -85,6 +85,13 @@ server {
         #fastcgi_no_cache $no_cache;
     }
 
+    # directories for static assets
+    location ~ ^/(?:css|js|images)/ {
+        expires 30d;
+        add_header Pragma public;
+        add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+    }
+
     location ~ .* {
         rewrite ^/(.*)$ /index.php/$1 last;
     }
