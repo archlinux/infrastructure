@@ -9,7 +9,7 @@
 - name: configure nginx
   template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf owner=root group=root mode=0644
   notify:
-    - restart nginx
+    - reload nginx
 
 - name: snippets directories
   file: state=directory path=/etc/nginx/{{ item }} owner=root group=root mode=0755

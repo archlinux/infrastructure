@@ -30,6 +30,9 @@
   when: maintenance is not defined
   tags: ['nginx']
 
+- name: remove old fastcgi cache directory
+  file: path=/etc/nginx/wikicache state=absent
+
 - name: configure robots.txt
   copy: src=robots.txt dest="{{ archwiki_dir }}/robots.txt" owner=root group=root mode=0644
 

@@ -1,3 +1,12 @@
 ---
-- name: restart firewalld
-  service: name=firewalld state=restarted
+# NOTE: hack for a systemd bug (restarting firewalld.service fails due to fail2ban.service)
+# https://github.com/systemd/systemd/issues/2830
+# https://bugzilla.opensuse.org/show_bug.cgi?id=1146856
+#- name: restart firewalld
+#  service: name=firewalld state=restarted
+- name: stop firewalld
+  service: name=firewalld state=stopped
+  listen: restart firewalld
+- name: start firewalld
+  service: name=firewalld state=started
+  listen: restart firewalld
