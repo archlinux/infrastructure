@@ -10,8 +10,7 @@
     - { role: root_ssh }
     - { role: certbot }
     - { role: nginx }
-    - { role: mariadb, mariadb_innodb_buffer_pool_size: '64M', mariadb_query_cache_type: '0',
-              mariadb_innodb_file_per_table: True }
+    - { role: mariadb, mariadb_query_cache_type: '0', mariadb_innodb_file_per_table: True }
     - { role: sudo }
     - { role: php_fpm, php_extensions: ['apcu', 'iconv', 'intl', 'mysqli'], zend_extensions: ['opcache'] }
     - { role: fluxbb }
