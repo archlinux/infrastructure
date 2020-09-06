@@ -64,6 +64,7 @@ resource "keycloak_realm" "archlinux" {
 
   browser_flow = "Arch Browser"
   registration_flow = "Arch Registration"
+  reset_credentials_flow = "Arch Reset Credentials"
 
   smtp_server {
     host = "mail.archlinux.org"
@@ -356,7 +357,7 @@ resource "keycloak_authentication_execution_config" "registration_recaptcha_acti
   }
 }
 
-// Add new custom browser login flow with forced OTP for some user roles
+// Add new custom browser login flow with WebAuthn support and forced OTP.
 //
 // Try misc/kcadm_wrapper.sh get authentication/flows/{{ your flow alias}}/executions
 // to make this a whole lot easier.
@@ -371,33 +372,10 @@ resource "keycloak_authentication_execution_config" "registration_recaptcha_acti
 // |- Password and 2FA Subflow (A)
 //   |- Username Password Form (R)
 //   |- 2FA Subflow (R)
-//      |- External Contributor subflow (A)
-//      |  |- External Contributor conditional subflow (C)
-//      |     |- Condition - User Role (External Contributor) (R)
-//      |     |- WebAuthn Form (A)
-//      |     |- OTP Form (A)
-//      |     |- External Contributor - Force OTP Setup Subflow (A)
-//      |        |- OTP Form (R)
-//      |- Staff Subflow (A)
-//      |  |- Staff conditional subflow (C)
-//      |     |- Condition - User Role (Staff) (R)
-//      |     |- WebAuthn Form (A)
-//      |     |- OTP Form (A)
-//      |     |- Staff - Force OTP Setup Subflow (A)
-//      |        |- OTP Form (R)
-//      |- 2FA opt-in Subflow (A)
-//      |  |- 2FA opt-in conditional subflow (C)
-//      |     |- Condition - User Configured (R)
-//      |     |- WebAuthn Form (A)
-//      |     |- OTP Form (A)
-//      |     |- 2FA opt-in Fallthrough Subflow (A)
-//      |        |- Browser Redirect/Refresh (R)
-//      |- Fallthrough Subflow (A)
-//         |- Browser Redirect/Refresh (R)
-//
-// We have the Browser Redirect/Refresh execution at the end as a hack an as an effective "always true" fallthrough no-op.
-// Otherwise we'll get a runtime exception as it could happen that none of the Conditions in the Alternative subflows
-// matches. Apparently Keycloak doesn't like that and so we'll have to give it something that's always true.
+//      |- WebAuthn Authenticator (A)
+//      |- OTP Form (A)
+//      |- OTP Default Subflow (A)
+//         |- OTP Form (R)
 //
 // IMPORTANT NOTE: Sometimes when changing Authentication Flows via Terraform or UI, flows can become orphaned in which
 // case they'll hang around the database doing nothing useful and blocking alias names and causing 409 CONFLICTS. If such
@@ -407,7 +385,7 @@ resource "keycloak_authentication_execution_config" "registration_recaptcha_acti
 resource "keycloak_authentication_flow" "arch_browser_flow" {
   realm_id = "archlinux"
   alias = "Arch Browser"
-  description = "Customized Browser flow that forces users of some roles to use 2FA."
+  description = "Customized Browser flow that forces 2FA."
 }
 
 resource "keycloak_authentication_execution" "cookie" {
@@ -449,363 +427,174 @@ resource "keycloak_authentication_subflow" "_2fa" {
   depends_on = [keycloak_authentication_execution.username_password_form]
 }
 
-resource "keycloak_authentication_subflow" "external_contributor" {
+resource "keycloak_authentication_execution" "webauthn_form" {
   realm_id = "archlinux"
-  alias = "External Contributor subflow"
   parent_flow_alias = keycloak_authentication_subflow._2fa.alias
-  requirement = "ALTERNATIVE"
-}
-
-resource "keycloak_authentication_subflow" "external_contributor_conditional" {
-  realm_id = "archlinux"
-  alias = "External Contributor conditional"
-  parent_flow_alias = keycloak_authentication_subflow.external_contributor.alias
-  requirement = "CONDITIONAL"
-}
-
-resource "keycloak_authentication_execution" "external_contributor_conditional_user_role" {
-  realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow.external_contributor_conditional.alias
-  authenticator = "conditional-user-role"
-  requirement = "REQUIRED"
-}
-
-resource "keycloak_authentication_execution_config" "external_contributor_conditional_user_role_config" {
-  realm_id = "archlinux"
-  alias = "External Contributor User Role Config"
-  execution_id = keycloak_authentication_execution.external_contributor_conditional_user_role.id
-  config = {
-    condUserRole = "External Contributor"
-  }
-}
-
-resource "keycloak_authentication_execution" "external_contributor_conditional_otp_form" {
-  realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow.external_contributor_conditional.alias
-  authenticator = "auth-otp-form"
-  requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution.external_contributor_conditional_user_role]
-}
-
-resource "keycloak_authentication_execution" "external_contributor_conditional_webauthn_form" {
-  realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow.external_contributor_conditional.alias
   authenticator = "webauthn-authenticator"
   requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution.external_contributor_conditional_user_role]
 }
 
-resource "keycloak_authentication_subflow" "staff" {
+resource "keycloak_authentication_execution" "otp_form" {
   realm_id = "archlinux"
-  alias = "Staff subflow"
   parent_flow_alias = keycloak_authentication_subflow._2fa.alias
-  requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_subflow.external_contributor]
-}
-
-resource "keycloak_authentication_subflow" "staff_conditional" {
-  realm_id = "archlinux"
-  alias = "Staff conditional"
-  parent_flow_alias = keycloak_authentication_subflow.staff.alias
-  requirement = "CONDITIONAL"
-}
-
-resource "keycloak_authentication_execution" "staff_conditional_user_role" {
-  realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow.staff_conditional.alias
-  authenticator = "conditional-user-role"
-  requirement = "REQUIRED"
-}
-
-resource "keycloak_authentication_execution_config" "staff_conditional_user_role_config" {
-  realm_id = "archlinux"
-  alias = "Staff User Role Config"
-  execution_id = keycloak_authentication_execution.staff_conditional_user_role.id
-  config = {
-    condUserRole = "Staff"
-  }
-}
-
-resource "keycloak_authentication_execution" "staff_conditional_otp_form" {
-  realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow.staff_conditional.alias
   authenticator = "auth-otp-form"
   requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution.staff_conditional_user_role]
+  depends_on = [keycloak_authentication_execution.webauthn_form]
 }
 
-resource "keycloak_authentication_execution" "staff_conditional_webauthn_form" {
+resource "keycloak_authentication_subflow" "otp_default" {
   realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow.staff_conditional.alias
-  authenticator = "webauthn-authenticator"
-  requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution.staff_conditional_otp_form]
-}
-
-resource "keycloak_authentication_subflow" "staff_conditional_setup_otp" {
-  realm_id = "archlinux"
-  alias = "Setup OTP subflow"
-  parent_flow_alias = keycloak_authentication_subflow.staff_conditional.alias
-  requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution.staff_conditional_webauthn_form]
-}
-
-resource "keycloak_authentication_execution" "staff_conditional_setup_otp_otp_form" {
-  realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow.staff_conditional_setup_otp.alias
-  authenticator = "auth-otp-form"
-  requirement = "REQUIRED"
-}
-
-resource "keycloak_authentication_subflow" "_2fa_opt_in" {
-  realm_id = "archlinux"
-  alias = "2FA opt-in subflow"
+  alias = "OTP Default Subflow"
   parent_flow_alias = keycloak_authentication_subflow._2fa.alias
   requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_subflow.staff]
+  depends_on = [keycloak_authentication_execution.otp_form]
 }
 
-resource "keycloak_authentication_subflow" "_2fa_opt_in_conditional" {
+resource "keycloak_authentication_execution" "otp_default_form" {
   realm_id = "archlinux"
-  alias = "2FA opt-in conditional"
-  parent_flow_alias = keycloak_authentication_subflow._2fa_opt_in.alias
-  requirement = "CONDITIONAL"
-}
-
-resource "keycloak_authentication_execution" "_2fa_opt_in_conditional_user_configured" {
-  realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow._2fa_opt_in_conditional.alias
-  authenticator = "conditional-user-configured"
-  requirement = "REQUIRED"
-}
-
-resource "keycloak_authentication_execution" "_2fa_opt_in_conditional_otp_form" {
-  realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow._2fa_opt_in_conditional.alias
+  parent_flow_alias = keycloak_authentication_subflow.otp_default.alias
   authenticator = "auth-otp-form"
-  requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution._2fa_opt_in_conditional_user_configured]
-}
-
-resource "keycloak_authentication_execution" "_2fa_opt_in_conditional_webauthn_form" {
-  realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow._2fa_opt_in_conditional.alias
-  authenticator = "webauthn-authenticator"
-  requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution._2fa_opt_in_conditional_user_configured]
-}
-
-resource "keycloak_authentication_subflow" "fallthrough" {
-  realm_id = "archlinux"
-  alias = "Fallthrough subflow"
-  parent_flow_alias = keycloak_authentication_subflow._2fa.alias
-  requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_subflow._2fa_opt_in]
-}
-
-resource "keycloak_authentication_execution" "fallthrough_browser_redirect_refresh" {
-  realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow.fallthrough.alias
-  authenticator = "no-cookie-redirect"
   requirement = "REQUIRED"
 }
 
 // Add new custom post-Identity Provider login flow with forced OTP for some user roles
 //
 // Arch Post IPR Flow
-// |- IPR External Contributor subflow (A)
-// |  |- IPR External Contributor conditional subflow (C)
-// |     |- Condition - User Role (External Contributor) (R)
-// |     |- WebAuthn Form (A)
-// |     |- OTP Form (A)
-// |     |- External Contributor - Force OTP Setup Subflow (A)
-// |        |- OTP Form (R)
-// |- IPR Staff Subflow (A)
-// |  |- Staff IPR conditional subflow (C)
-// |     |- Condition - User Role (Staff) (R)
-// |     |- WebAuthn Form (A)
-// |     |- OTP Form (A)
-// |     |- Staff - Force OTP Setup Subflow (A)
-// |        |- OTP Form (R)
-// |- IPR OTP opt-in Subflow (A)
-// |  |- IPR OTP opt-in conditional subflow (C)
-// |     |- Condition - User Configured (R)
-// |     |- WebAuthn Form (A)
-// |     |- OTP Form (A)
-// |     |- 2FA opt-in Fallthrough Subflow (A)
-// |        |- Browser Redirect/Refresh (R)
-// |- IPR Fallthrough Subflow (A)
-//    |- Browser Redirect/Refresh (R)
-//
-// We have the Browser Redirect/Refresh execution at the end as a hack an as an effective "always true" fallthrough no-op.
-// Otherwise we'll get a runtime exception as it could happen that none of the Conditions in the Alternative subflows
-// matches. Apparently Keycloak doesn't like that and so we'll have to give it something that's always true.
+// |- WebAuthn Form (A)
+// |- OTP Form (A)
+// |- IPR OTP Default Subflow (A)
+//    |- OTP Form (R)
 
 resource "keycloak_authentication_flow" "arch_post_ipr_flow" {
   realm_id = "archlinux"
   alias = "Arch Post IPR Flow"
-  description = "Post IPR login flow that forces users of some roles to use OTP."
+  description = "Post IPR login flow that forces 2FA."
 }
 
-resource "keycloak_authentication_subflow" "ipr_external_contributor" {
+resource "keycloak_authentication_execution" "ipr_webauthn_form" {
   realm_id = "archlinux"
-  alias = "IPR External Contributor subflow"
   parent_flow_alias = keycloak_authentication_flow.arch_post_ipr_flow.alias
-  requirement = "ALTERNATIVE"
-}
-
-resource "keycloak_authentication_subflow" "ipr_external_contributor_conditional" {
-  realm_id = "archlinux"
-  alias = "IPR External Contributor conditional"
-  parent_flow_alias = keycloak_authentication_subflow.ipr_external_contributor.alias
-  requirement = "CONDITIONAL"
-}
-
-resource "keycloak_authentication_execution" "ipr_external_contributor_conditional_user_role" {
-  realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow.ipr_external_contributor_conditional.alias
-  authenticator = "conditional-user-role"
-  requirement = "REQUIRED"
-}
-
-resource "keycloak_authentication_execution_config" "ipr_external_contributor_conditional_user_role_config" {
-  realm_id = "archlinux"
-  alias = "IPR External Contributor User Role Config"
-  execution_id = keycloak_authentication_execution.ipr_external_contributor_conditional_user_role.id
-  config = {
-    condUserRole = "External Contributor"
-  }
-}
-
-resource "keycloak_authentication_execution" "ipr_external_contributor_conditional_otp_form" {
-  realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow.ipr_external_contributor_conditional.alias
-  authenticator = "auth-otp-form"
-  requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution.ipr_external_contributor_conditional_user_role]
-}
-
-resource "keycloak_authentication_execution" "ipr_external_contributor_conditional_webauthn_form" {
-  realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow.ipr_external_contributor_conditional.alias
   authenticator = "webauthn-authenticator"
   requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution.ipr_external_contributor_conditional_user_role]
 }
 
-resource "keycloak_authentication_subflow" "ipr_staff" {
+resource "keycloak_authentication_execution" "ipr_otp_form" {
   realm_id = "archlinux"
-  alias = "IPR Staff subflow"
   parent_flow_alias = keycloak_authentication_flow.arch_post_ipr_flow.alias
-  requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_subflow.ipr_external_contributor]
-}
-
-resource "keycloak_authentication_subflow" "ipr_staff_conditional" {
-  realm_id = "archlinux"
-  alias = "IPR Staff conditional"
-  parent_flow_alias = keycloak_authentication_subflow.ipr_staff.alias
-  requirement = "CONDITIONAL"
-}
-
-resource "keycloak_authentication_execution" "ipr_staff_conditional_user_role" {
-  realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow.ipr_staff_conditional.alias
-  authenticator = "conditional-user-role"
-  requirement = "REQUIRED"
-}
-
-resource "keycloak_authentication_execution_config" "ipr_staff_conditional_user_role_config" {
-  realm_id = "archlinux"
-  alias = "IPR Staff User Role Config"
-  execution_id = keycloak_authentication_execution.ipr_staff_conditional_user_role.id
-  config = {
-    condUserRole = "Staff"
-  }
-}
-
-resource "keycloak_authentication_execution" "ipr_staff_conditional_otp_form" {
-  realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow.ipr_staff_conditional.alias
   authenticator = "auth-otp-form"
   requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution.ipr_staff_conditional_user_role]
+  depends_on = [keycloak_authentication_execution.ipr_webauthn_form]
 }
 
-resource "keycloak_authentication_execution" "ipr_staff_conditional_webauthn_form" {
+resource "keycloak_authentication_subflow" "ipr_otp_default" {
   realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow.ipr_staff_conditional.alias
-  authenticator = "webauthn-authenticator"
+  alias = "IPR OTP Default Subflow"
+  parent_flow_alias = keycloak_authentication_flow.arch_post_ipr_flow.alias
   requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution.ipr_staff_conditional_otp_form]
+  depends_on = [keycloak_authentication_execution.ipr_otp_form]
 }
 
-resource "keycloak_authentication_subflow" "ipr_staff_conditional_setup_otp" {
+resource "keycloak_authentication_execution" "ipr_otp_default_form" {
   realm_id = "archlinux"
-  alias = "IPR Setup OTP subflow"
-  parent_flow_alias = keycloak_authentication_subflow.ipr_otp_opt_in_conditional.alias
-  requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution.ipr_staff_conditional_webauthn_form]
-}
-
-resource "keycloak_authentication_execution" "ipr_staff_conditional_setup_otp_otp_form" {
-  realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow.ipr_staff_conditional_setup_otp.alias
+  parent_flow_alias = keycloak_authentication_subflow.ipr_otp_default.alias
   authenticator = "auth-otp-form"
   requirement = "REQUIRED"
 }
 
-resource "keycloak_authentication_subflow" "ipr_otp_opt_in" {
+// Add new custom Reset Credentials flow that asks users to verify 2FA before resetting their password
+//
+// Arch Reset Credentials
+// |- Choose User (R)
+// |- Send Reset Email (R)
+// |- Conditional Reset Credentials 2FA Subflow (C)
+//    |- Condition - User Configured (R)
+//    |- Reset Credentials 2FA Subflow (R)
+//       |- WebAuthn Form (A)
+//       |- OTP Form (A)
+//       |- Reset Credentials OTP Default Subflow (A)
+//          |- OTP Form (R)
+// |- Reset Password (R)
+
+resource "keycloak_authentication_flow" "arch_reset_credentials_flow" {
   realm_id = "archlinux"
-  alias = "IPR OTP opt-in subflow"
-  parent_flow_alias = keycloak_authentication_flow.arch_post_ipr_flow.alias
-  requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_subflow.ipr_staff]
+  alias = "Arch Reset Credentials"
+  description = "Reset credentials flow that forces 2FA verification before password reset."
 }
 
-resource "keycloak_authentication_subflow" "ipr_otp_opt_in_conditional" {
+resource "keycloak_authentication_execution" "rc_choose_user" {
   realm_id = "archlinux"
-  alias = "IPR OTP opt-in conditional"
-  parent_flow_alias = keycloak_authentication_subflow.ipr_otp_opt_in.alias
+  parent_flow_alias = keycloak_authentication_flow.arch_reset_credentials_flow.alias
+  authenticator = "reset-credentials-choose-user"
+  requirement = "REQUIRED"
+}
+
+resource "keycloak_authentication_execution" "rc_reset_email" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_flow.arch_reset_credentials_flow.alias
+  authenticator = "reset-credential-email"
+  requirement = "REQUIRED"
+  depends_on = [keycloak_authentication_execution.rc_choose_user]
+}
+
+resource "keycloak_authentication_subflow" "rc_conditional_2fa" {
+  realm_id = "archlinux"
+  alias = "Conditional Reset Credentials 2FA Subflow"
+  parent_flow_alias = keycloak_authentication_flow.arch_reset_credentials_flow.alias
   requirement = "CONDITIONAL"
+  depends_on = [keycloak_authentication_execution.rc_choose_user]
 }
 
-resource "keycloak_authentication_execution" "ipr_otp_opt_in_conditional_user_configured" {
+resource "keycloak_authentication_execution" "rc_2fa_condition" {
   realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow.ipr_otp_opt_in_conditional.alias
+  parent_flow_alias = keycloak_authentication_subflow.rc_conditional_2fa.alias
   authenticator = "conditional-user-configured"
   requirement = "REQUIRED"
 }
 
-resource "keycloak_authentication_execution" "ipr_otp_opt_in_conditional_otp_form" {
+resource "keycloak_authentication_subflow" "rc_2fa" {
   realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow.ipr_otp_opt_in_conditional.alias
-  authenticator = "auth-otp-form"
-  requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution.ipr_otp_opt_in_conditional_user_configured]
+  alias = "Reset Credentials 2FA Subflow"
+  parent_flow_alias = keycloak_authentication_subflow.rc_conditional_2fa.alias
+  requirement = "REQUIRED"
+  depends_on = [keycloak_authentication_execution.rc_2fa_condition]
 }
 
-resource "keycloak_authentication_execution" "ipr_otp_opt_in_conditional_webauthn_form" {
+resource "keycloak_authentication_execution" "rc_webauthn_form" {
   realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow.ipr_otp_opt_in_conditional.alias
+  parent_flow_alias = keycloak_authentication_subflow.rc_2fa.alias
   authenticator = "webauthn-authenticator"
   requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution.ipr_otp_opt_in_conditional_user_configured]
 }
 
-resource "keycloak_authentication_subflow" "ipr_fallthrough" {
+resource "keycloak_authentication_execution" "rc_otp_form" {
   realm_id = "archlinux"
-  alias = "IPR Fallthrough subflow"
-  parent_flow_alias = keycloak_authentication_flow.arch_post_ipr_flow.alias
+  parent_flow_alias = keycloak_authentication_subflow.rc_2fa.alias
+  authenticator = "auth-otp-form"
   requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_subflow.ipr_otp_opt_in]
+  depends_on = [keycloak_authentication_execution.rc_webauthn_form]
 }
 
-resource "keycloak_authentication_execution" "ipr_fallthrough_browser_redirect_refresh" {
+resource "keycloak_authentication_subflow" "rc_otp_default" {
   realm_id = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow.ipr_fallthrough.alias
-  authenticator = "no-cookie-redirect"
+  alias = "Reset Credentials OTP Default Subflow"
+  parent_flow_alias = keycloak_authentication_subflow.rc_2fa.alias
+  requirement = "ALTERNATIVE"
+  depends_on = [keycloak_authentication_execution.rc_otp_form]
+}
+
+resource "keycloak_authentication_execution" "rc_otp_default_form" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.rc_otp_default.alias
+  authenticator = "auth-otp-form"
   requirement = "REQUIRED"
+}
+
+resource "keycloak_authentication_execution" "rc_reset_password" {
+  realm_id = "archlinux"
+  parent_flow_alias = keycloak_authentication_flow.arch_reset_credentials_flow.alias
+  authenticator = "reset-password"
+  requirement = "REQUIRED"
+  depends_on = [keycloak_authentication_subflow.rc_conditional_2fa]
 }
 
 output "gitlab_saml_configuration" {
