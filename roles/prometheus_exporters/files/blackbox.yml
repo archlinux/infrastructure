@@ -1,0 +1,5 @@
+modules:
+  http_prometheus:
+    prober: http
+    timeout: 5s
+    http:

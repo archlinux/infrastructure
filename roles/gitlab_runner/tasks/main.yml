@@ -40,5 +40,12 @@
     line: concurrent = 100
   notify: restart gitlab-runner
 
+- name: enable prometheus exporter
+  lineinfile:
+    path: /etc/gitlab-runner/config.toml
+    insertbefore: '^concurrent'
+    line: listen_address = ":{{ gitlab_runner_exporter_port }}"
+  notify: restart gitlab-runner
+
 - name: enable and start gitlab runner service
   systemd: name=gitlab-runner state=started enabled=yes daemon_reload=yes

@@ -366,3 +366,53 @@ groups:
     annotations:
       summary: Workhorse has high error rates
       description: Workhorse route {{ $labels.route }} method {{ $labels.method }} has more than 10% errors ({{ $value | printf "%.1f" }}%) for the last 60 minutes.
+
+- name: blackbox
+  interval: 15s
+  rules:
+  - alert: BlackboxProbeFailed
+    expr: probe_success == 0
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Blackbox probe failed (instance {{ $labels.instance }})"
+      description: "Probe failed\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+  - alert: BlackboxProbeHttpFailure
+    expr: probe_http_status_code <= 199 OR probe_http_status_code >= 400
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Blackbox probe HTTP failure (instance {{ $labels.instance }})"
+      description: "HTTP status code is not 200-399\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+  - alert: BlackboxSslCertificateWillExpireSoon
+    expr: probe_ssl_earliest_cert_expiry - time() < 86400 * 3
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Blackbox SSL certificate will expire soon (instance {{ $labels.instance }})"
+      description: "SSL certificate expires in 3 days\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+- name: rebuilderd
+  interval: 15m
+  rules:
+  - alert: RebuilderdQueueNotEmpty
+    expr: rebuilderd_queue_length > 2000
+    for: 24h
+    labels:
+      severity: warning
+      service: rebuilderd
+    annotations:
+      summary: "Rebuilderd queue length is not empty {{ $labels.instance }})"
+      description: "Rebuilderd's queue length is now: {{ $value }}"
+  - alert: RebuilderdWorkersOffline
+    expr: rebuilderd_workers  < 4
+    for: 5m
+    labels:
+      severity: warning
+      service: rebuilderd
+    annotations:
+      summary: "Rebuilderd workers offline {{ $labels.instance }})"
+      description: "Not all rebuilder-workers are online, currently {{ $value }} workers are online"

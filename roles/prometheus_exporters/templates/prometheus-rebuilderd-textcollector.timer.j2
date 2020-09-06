@@ -1,0 +1,10 @@
+[Unit]
+Description=Prometheus Rebuilderd Exporter TextCollector Timer
+
+[Timer]
+OnUnitActiveSec=60m
+OnBootSec=15min
+RandomizedDelaySec=1min
+
+[Install]
+WantedBy=timers.target

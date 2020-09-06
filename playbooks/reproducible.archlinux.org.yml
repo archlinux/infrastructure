@@ -14,3 +14,4 @@
     - { role: certbot }
     - { role: nginx }
     - { role: rebuilderd }
+    - { role: prometheus_exporters }

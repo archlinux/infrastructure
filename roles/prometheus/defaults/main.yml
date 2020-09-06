@@ -1,1 +1,13 @@
 monitoring_domain: monitoring.archlinux.org
+gitlab_runner_exporter_port: '9252'
+
+blackbox_targets:
+  - https://archlinux.org
+  - https://wiki.archlinux.org
+  - https://gitlab.archlinux.org
+  - https://bbs.archlinux.org
+  - https://bugs.archlinux.org
+  - https://aur.archlinux.org
+  - https://archive.archlinux.org
+  - https://mirror.pkgbuild.com
+  - https://pkgbuild.com
