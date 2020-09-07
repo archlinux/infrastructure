@@ -15,6 +15,26 @@
   notify:
     - apply sysctl settings
 
+- name: enable JIT hardening for all users
+  copy: src=50-bpf_jit_harden.conf dest=/etc/sysctl.d/50-bpf_jit_harden.conf owner=root group=root mode=0644
+  notify:
+    - apply sysctl settings
+
+- name: disable unprivileged bpf
+  copy: src=50-unprivileged_bpf_disabled.conf dest=/etc/sysctl.d/50-unprivileged_bpf_disabled.conf owner=root group=root mode=0644
+  notify:
+    - apply sysctl settings
+
+- name: disable unprivileged userns
+  copy: src=50-unprivileged_userns_clone.conf dest=/etc/sysctl.d/50-unprivileged_userns_clone.conf owner=root group=root mode=0644
+  notify:
+    - apply sysctl settings
+
+- name: disable kexec load
+  copy: src=50-kexec_load_disabled.conf dest=/etc/sysctl.d/50-kexec_load_disabled.conf owner=root group=root mode=0644
+  notify:
+    - apply sysctl settings
+
 - name: set kernel lockdown to restricted
   copy: src=50-lockdown.conf dest=/etc/tmpfiles.d/50-kernel-lockdown.conf owner=root group=root mode=0644
   when: "'hcloud' in group_names"
