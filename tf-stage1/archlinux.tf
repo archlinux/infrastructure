@@ -86,12 +86,15 @@ resource "hetznerdns_record" "pkgbuild_com_origin_ns1" {
   type = "NS"
 }
 
-resource "hetznerdns_record" "pkgbuild_com_origin_soa" {
-  zone_id = hetznerdns_zone.pkgbuild.id
-  name = "@"
-  value = "ns1.first-ns.de. dns.hetzner.com. 2020090604 14400 1800 604800 86400"
-  type = "SOA"
-}
+# TODO: Commented currently as we have no idea how to handle SOA stuff with Terraform:
+# https://github.com/timohirt/terraform-provider-hetznerdns/issues/20
+# https://gitlab.archlinux.org/archlinux/infrastructure/-/merge_requests/62#note_4040
+# resource "hetznerdns_record" "pkgbuild_com_origin_soa" {
+#   zone_id = hetznerdns_zone.pkgbuild.id
+#   name = "@"
+#   value = "ns1.first-ns.de. dns.hetzner.com. 2020090604 14400 1800 604800 86400"
+#   type = "SOA"
+# }
 
 resource "hetznerdns_record" "pkgbuild_com_origin_txt" {
   zone_id = hetznerdns_zone.pkgbuild.id
@@ -226,12 +229,15 @@ resource "hetznerdns_record" "archlinux_org_origin_ns1" {
   type = "NS"
 }
 
-resource "hetznerdns_record" "archlinux_org_origin_soa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name = "@"
-  value = "ns1.first-ns.de. ibiru.archlinux.org. 2020072502 7200 900 1209600 86400"
-  type = "SOA"
-}
+# TODO: Commented currently as we have no idea how to handle SOA stuff with Terraform:
+# https://github.com/timohirt/terraform-provider-hetznerdns/issues/20
+# https://gitlab.archlinux.org/archlinux/infrastructure/-/merge_requests/62#note_4040
+#; resource "hetznerdns_record" "archlinux_org_origin_soa" {
+#   zone_id = hetznerdns_zone.archlinux.id
+#   name = "@"
+#   value = "ns1.first-ns.de. ibiru.archlinux.org. 2020072502 7200 900 1209600 86400"
+#   type = "SOA"
+# }
 
 resource "hetznerdns_record" "archlinux_org_origin_txt" {
   zone_id = hetznerdns_zone.archlinux.id
