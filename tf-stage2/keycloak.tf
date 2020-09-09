@@ -27,6 +27,12 @@ data "external" "vault_github" {
     "--format", "json"]
 }
 
+data "external" "vault_monitoring" {
+  program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_monitoring.yml",
+    "vault_monitoring_grafana_client_secret",
+    "--format", "json"]
+}
+
 provider "keycloak" {
   client_id = "admin-cli"
   username = data.external.vault_keycloak.result.vault_keycloak_admin_user
@@ -605,4 +611,31 @@ output "gitlab_saml_configuration" {
     idp_sso_target_url = "https://accounts.archlinux.org/auth/realms/archlinux/protocol/saml/clients/${keycloak_saml_client.saml_gitlab.client_id}"
     signing_certificate_fingerprint = keycloak_saml_client.saml_gitlab.signing_certificate
   }
+}
+
+resource "keycloak_openid_client" "grafana_openid_client" {
+  realm_id = "archlinux"
+  client_id = "openid_grafana"
+  client_secret   = data.external.vault_monitoring.result.vault_monitoring_grafana_client_secret
+
+  name = "Grafana"
+  enabled = true
+
+  access_type = "CONFIDENTIAL"
+  standard_flow_enabled = true
+  valid_redirect_uris = [
+    "https://monitoring.archlinux.org",
+    "https://monitoring.archlinux.org/login/generic_oauth"
+  ]
+}
+
+resource "keycloak_openid_user_realm_role_protocol_mapper" "user_realm_role_mapper" {
+  realm_id        = "archlinux"
+  client_id       = keycloak_openid_client.grafana_openid_client.id
+  name            = "user realms"
+
+  claim_name      = "roles"
+  multivalued     = true
+  add_to_id_token = false
+  add_to_access_token = false
 }

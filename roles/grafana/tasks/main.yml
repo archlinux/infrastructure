@@ -1,7 +1,7 @@
 ---
 
 - name: install grafana
-  pacman: name=grafana,grafana-zabbix state=present
+  pacman: name=grafana state=present
 
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/grafana.conf owner=root group=root mode=644
@@ -11,6 +11,30 @@
 
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ grafana_domain }} state=directory owner=root group=root mode=0755
+
+- name: create grafana config directory
+  file: path=/etc/grafana mode=0700 owner=grafana group=grafana state=directory
+
+- name: create grafana provisioning directory
+  file: path={{ item }} mode=0700 owner=grafana group=grafana state=directory
+  with_items:
+    - /etc/grafana/provisioning
+    - /etc/grafana/provisioning/datasources
+    - /etc/grafana/provisioning/dashboards
+    - /etc/grafana/provisioning/plugins
+    - /etc/grafana/provisioning/notifiers
+    - /var/lib/grafana/dashboards
+
+- name: install grafana datasources provisioning
+  template: src=datasources.yaml.j2 dest=/etc/grafana/provisioning/datasources/prometheus.yml owner=grafana group=root mode=0600
+  notify: restart grafana
+
+- name: install grafana dashboard provisioning
+  template: src=dashboard.yaml.j2 dest=/etc/grafana/provisioning/dashboards/dasbhoard.yml owner=grafana group=root mode=0600
+  notify: restart grafana
+
+- name: copy grafana dashboards
+  copy: src=dashboards dest=/var/lib/grafana/dashboards owner=grafana group=grafana mode=0600
 
 - name: install grafana config
   template: src=grafana.ini.j2 dest=/etc/grafana.ini owner=grafana group=root mode=0600

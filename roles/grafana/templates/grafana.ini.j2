@@ -24,7 +24,7 @@
 ;plugins = /var/lib/grafana/plugins
 
 # folder that contains provisioning config files that grafana will apply on startup and while running.
-;provisioning = conf/provisioning
+provisioning = /etc/grafana/provisioning
 
 #################################### Server ####################################
 [server]
@@ -139,14 +139,14 @@ enable_gzip = true
 # No ip addresses are being tracked, only simple counters to track
 # running instances, dashboard and error counts. It is very helpful to us.
 # Change this option to false to disable reporting.
-;reporting_enabled = true
+reporting_enabled = false
 
 # Set to false to disable all checks to https://grafana.net
 # for new vesions (grafana itself and plugins), check is used
 # in some UI views to notify that grafana or plugin update exists
 # This option does not cause any auto updates, nor send any information
 # only a GET request to http://grafana.com to get latest versions
-;check_for_updates = true
+check_for_updates = false
 
 # Google Analytics universal tracking code, only enabled if you specify an id here
 ;google_analytics_ua_id =
@@ -157,7 +157,7 @@ enable_gzip = true
 #################################### Security ####################################
 [security]
 # disable creation of admin user on first start of grafana
-;disable_initial_admin_creation = false
+disable_initial_admin_creation = true
 
 # default admin user, created on startup
 admin_user = admin
@@ -166,7 +166,7 @@ admin_user = admin
 ;admin_password = admin
 
 # used for signing
-;secret_key = SW2YcwTIb9zpOOhoPsMm
+secret_key = {{ vault_grafana_secret_key }}
 
 # disable gravatar profile images
 ;disable_gravatar = false
@@ -285,17 +285,17 @@ allow_sign_up = false
 ;token_rotation_interval_minutes = 10
 
 # Set to true to disable (hide) the login form, useful if you use OAuth, defaults to false
-;disable_login_form = false
+disable_login_form = true
 
 # Set to true to disable the signout link in the side menu. useful if you use auth.proxy, defaults to false
 ;disable_signout_menu = false
 
 # URL to redirect the user to after sign out
-;signout_redirect_url =
+signout_redirect_url = https://accounts.archlinux.org/auth/realms/archlinux/protocol/openid-connect/logout?redirect_uri=https://{{ grafana_domain }}
 
 # Set to true to attempt login with OAuth automatically, skipping the login screen.
 # This setting is ignored if multiple OAuth providers are configured.
-;oauth_auto_login = false
+oauth_auto_login = true
 
 # limit of api_key seconds to live before expiration
 ;api_key_max_seconds_to_live = -1
@@ -375,21 +375,21 @@ allow_sign_up = false
 
 #################################### Generic OAuth ##########################
 [auth.generic_oauth]
-;enabled = false
-;name = OAuth
-;allow_sign_up = true
-;client_id = some_id
-;client_secret = some_secret
-;scopes = user:email,read:org
-;email_attribute_name = email:primary
-;email_attribute_path =
-;auth_url = https://foo.bar/login/oauth/authorize
-;token_url = https://foo.bar/login/oauth/access_token
-;api_url = https://foo.bar/user
+enabled = true
+name = OAuth
+allow_sign_up = true
+client_id = openid_grafana
+client_secret = {{ vault_monitoring_grafana_client_secret }}
+scopes = openid profile email
+email_attribute_name = email:primary
+email_attribute_path = email
+auth_url = https://accounts.archlinux.org/auth/realms/archlinux/protocol/openid-connect/auth
+token_url = https://accounts.archlinux.org/auth/realms/archlinux/protocol/openid-connect/token
+api_url = https://accounts.archlinux.org/auth/realms/archlinux/protocol/openid-connect/userinfo
 ;allowed_domains =
 ;team_ids =
 ;allowed_organizations =
-;role_attribute_path =
+role_attribute_path: contains(roles[*], 'DevOps') && 'Admin' || contains(roles[*], 'Staff') && 'Viewer'
 ;tls_skip_verify_insecure = false
 ;tls_client_cert =
 ;tls_client_key =
