@@ -37,8 +37,7 @@
       postgres_max_connections: 1000
       postgres_ssl: 'on'
       postgres_shared_buffers: 4096MB
-    - { role: mariadb, mariadb_innodb_buffer_pool_size: '64M', mariadb_table_open_cache: '256', mariadb_query_cache_type: '0',
-              mariadb_innodb_file_per_table: True }
+    - { role: mariadb, mariadb_query_cache_type: '0', mariadb_innodb_file_per_table: True }
     - { role: sudo }
     - { role: uwsgi }
     - { role: php_fpm, php_extensions: ['bcmath', 'curl', 'gd', 'iconv', 'intl', 'mysqli', 'pdo_pgsql', 'pgsql', 'sockets', 'zip'], zend_extensions: ['opcache'] }
