@@ -26,7 +26,7 @@
 - name: create prometheus mysqld database user
   mysql_user:
     name: '{{ prometheus_mysqld_user }}'
-    password: '{{ vault_prometheus_mysql_password }}'
+    password: '{{ vault_monitoring_mysql_password }}'
     priv: "*.*:PROCESS,REPLICATION CLIENT"
     state: present
   when: "'mysql_servers' in group_names"
