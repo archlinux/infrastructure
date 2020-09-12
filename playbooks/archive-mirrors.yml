@@ -11,5 +11,4 @@
     - { role: nginx }
     - { role: unbound }
     - { role: syncarchive, tags: ['nginx'] }
-    - { role: zabbix_agent, tags: ["zabbix"] }
     - { role: archive, archive_nginx_only: true, archive_dir: "/srv/archive"}

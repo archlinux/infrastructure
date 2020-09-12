@@ -21,5 +21,4 @@
     - role: postfix
       postfix_relayhost: "orion.archlinux.org"
     - { role: matrix }
-    - { role: zabbix_agent, tags: ["zabbix"] }
     - { role: fail2ban }
