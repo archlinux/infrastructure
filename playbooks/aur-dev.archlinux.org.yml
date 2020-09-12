@@ -20,3 +20,4 @@
     - { role: postfix, postfix_relayhost: "orion.archlinux.org" }
     - { role: fail2ban }
     - { role: aurweb, aurweb_domain: 'aur-dev.archlinux.org', aurweb_version: 'pu' }
+    - { role: prometheus_exporters }
