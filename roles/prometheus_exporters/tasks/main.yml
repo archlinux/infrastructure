@@ -44,6 +44,10 @@
   systemd: name=prometheus-mysqld-exporter enabled=yes daemon_reload=yes state=started
   when: "'mysql_servers' in group_names"
 
+- name: copy prometheus memcached exporter configuration
+  template: src=prometheus-memcached-exporter.j2 dest=/etc/conf.d/prometheus-memcached-exporter owner=root group=root mode=600
+  when: "'memcached' in group_names"
+
 - name: install node exporter configuration
   template: src=prometheus-node-exporter.env.j2 dest=/etc/conf.d/prometheus-node-exporter owner=root group=root mode=600
 
@@ -119,3 +123,8 @@
   firewalld: state=enabled permanent=true immediate=yes
         rich_rule="rule family=ipv4 source address={{ hostvars['monitoring.archlinux.org']['ipv4_address'] }} port protocol=tcp port={{ prometheus_mysqld_exporter_port }} accept"
   when: "'mysql_servers' in group_names"
+
+- name: open prometheus memcached exporter ipv4 port for monitoring.archlinux.org
+  firewalld: state=enabled permanent=true immediate=yes
+        rich_rule="rule family=ipv4 source address={{ hostvars['monitoring.archlinux.org']['ipv4_address'] }} port protocol=tcp port={{ prometheus_memcached_exporter_port }} accept"
+  when: "'memcached' in group_names"

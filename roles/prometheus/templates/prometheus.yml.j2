@@ -61,6 +61,16 @@ scrape_configs:
       labels:
         instance: "aur.archlinux.org"
 
+  - job_name: 'memcached_exporter'
+    static_configs:
+    {% for host in groups['memcached'] %}
+
+    - targets: ['{{ host }}:{{ prometheus_memcached_exporter_port }}']
+      labels:
+        instance: "{{ host }}"
+
+    {% endfor %}
+
   - job_name: 'blackbox'
     metrics_path: /probe
     scrape_interval: 15s

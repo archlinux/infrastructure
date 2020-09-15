@@ -13,3 +13,4 @@ maintenance_remote_machine: "{{ hostvars[inventory_hostname]['ansible_env'].SSH_
 
 # prometheus-node-exporter port
 prometheus_exporter_port: '9100'
+prometheus_memcached_exporter_port: '9150'

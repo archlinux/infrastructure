@@ -1,5 +1,7 @@
 ---
 filesystem: btrfs
+memcached_socket: "/var/run/aurweb.sock"
+
 zabbix_agent_templates:
   - Template OS Linux
   - Template App Borg Backup
