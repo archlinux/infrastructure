@@ -28,6 +28,7 @@ It can also be used as a reference for adding new roles to an existing team memb
 - [ ] Run `ansible-playbook -t root_ssh playbooks/*.yml`.
 - [ ] Run `ansible-playbook playbooks/hetzner_storagebox.yml playbooks/rsync.net.yml`.
 - [ ] Assign the user to the `DevOps` group on Keycloak.
+- [ ] Add the user to the `arch-devops-private` mailing list.
 
 ## Wiki Administrator checklist
 
