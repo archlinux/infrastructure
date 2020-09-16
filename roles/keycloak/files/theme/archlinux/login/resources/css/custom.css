@@ -5,6 +5,11 @@
     background-size: cover;
 }
 
+html.login-pf {
+    background: url("../img/login-background.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
 div.kc-logo-text {
     background-image: url('../img/archlinux-logo-light.svg');
     background-size: 100%;
