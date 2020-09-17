@@ -631,6 +631,20 @@ resource "hetznerdns_record" "archlinux_org_secure_runner2_aaaa" {
   type = "AAAA"
 }
 
+resource "hetznerdns_record" "archlinux_org_svn2gittest_a" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name = "svn2gittest"
+  value = hcloud_server.svn2gittest.ipv4_address
+  type = "A"
+}
+
+resource "hetznerdns_record" "archlinux_org_svn2gittest_aaaa" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name = "svn2gittest"
+  value = hcloud_server.svn2gittest.ipv6_address
+  type = "AAAA"
+}
+
 resource "hetznerdns_record" "archlinux_org_state_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name = "state"
@@ -1199,6 +1213,18 @@ resource "hcloud_server" "secure-runner2" {
   lifecycle {
     ignore_changes = [image]
   }
+}
+
+resource "hcloud_rdns" "svn2gittest_ipv4" {
+  server_id  = hcloud_server.svn2gittest.id
+  ip_address = hcloud_server.svn2gittest.ipv4_address
+  dns_ptr    = "svn2gittest.archlinux.org"
+}
+
+resource "hcloud_rdns" "svn2gittest_ipv6" {
+  server_id  = hcloud_server.svn2gittest.id
+  ip_address = hcloud_server.svn2gittest.ipv6_address
+  dns_ptr    = "svn2gittest.archlinux.org"
 }
 
 resource "hcloud_server" "svn2gittest" {
