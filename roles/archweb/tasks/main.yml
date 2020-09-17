@@ -16,7 +16,7 @@
   user: name=archweb shell=/bin/false home="{{ archweb_dir }}" createhome=no
 
 - name: fix home permissions
-  file: state=directory owner=archweb group=archweb mode=0750 path="{{ archweb_dir }}"
+  file: state=directory owner=archweb group=archweb mode=0755 path="{{ archweb_dir }}"
 
 - name: set archweb groups
   user: name=archweb groups=uwsgi
@@ -63,7 +63,7 @@
   when: archweb_site|bool
 
 - name: fix home permissions
-  file: state=directory owner=archweb group=archweb mode=0750 path="{{ archweb_dir }}"
+  file: state=directory owner=archweb group=archweb mode=0755 path="{{ archweb_dir }}"
 
 - name: configure archweb
   template: src=local_settings.py.j2 dest=/srv/http/archweb/local_settings.py owner=archweb group=archweb mode=0660
@@ -263,8 +263,6 @@
   when: archweb_site|bool
 
 - name: deploy new release
-  become: true
-  become_user: archweb
   file: path=/etc/uwsgi/vassals/archweb.ini state=touch owner=root group=root mode=0644
   when: archweb_site and (release.changed or config.changed or virtualenv.changed or archweb_forced_deploy)
   notify: restart archweb memcached
