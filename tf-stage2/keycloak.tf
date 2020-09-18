@@ -58,11 +58,12 @@ resource "keycloak_realm" "archlinux" {
   verify_email = true
   login_with_email_allowed = true
   password_policy = "length(8) and notUsername"
-  // TODO: WebAuthn policy
-  // https://github.com/mrparkers/terraform-provider-keycloak/issues/355
-  // "Relying Party Entity Name": "Arch Linux SSO"
-  // "Relying Party ID": "accounts.archlinux.org"
-  // "Signature Algorithms": "ES256, ES384, ES512"
+
+  web_authn_policy {
+    relying_party_entity_name = "Arch Linux SSO"
+    relying_party_id          = "accounts.archlinux.org"
+    signature_algorithms      = ["ES256", "RS256", "ES512"]
+  }
 
   login_theme = "archlinux"
   account_theme = "archlinux"
