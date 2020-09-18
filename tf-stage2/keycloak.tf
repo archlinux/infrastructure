@@ -109,8 +109,12 @@ resource "keycloak_realm" "archlinux" {
   }
 }
 
-// TODO: Register webauthn-register required action
-// https://github.com/mrparkers/terraform-provider-keycloak/issues/354
+resource "keycloak_required_action" "required_action" {
+  realm_id  = "archlinux"
+  alias     = "webauthn-register"
+  enabled   = true
+  name      = "Webauthn Register"
+}
 
 resource "keycloak_realm_events" "realm_events" {
   realm_id = "archlinux"
