@@ -408,7 +408,7 @@ groups:
       summary: "Rebuilderd queue length is not empty {{ $labels.instance }})"
       description: "Rebuilderd's queue length is now: {{ $value }}"
   - alert: RebuilderdWorkersOffline
-    expr: rebuilderd_workers  < 4
+    expr: rebuilderd_workers  < 3
     for: 5m
     labels:
       severity: warning
