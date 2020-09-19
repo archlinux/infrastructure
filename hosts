@@ -12,21 +12,12 @@ prio.ch-s012.rsync.net
 [hetzner_storageboxes]
 u236610.your-storagebox.de
 
-[pia]
-ger.mirror.pkgbuild.com
-runner1.archlinux.org
-repro1.pkgbuild.com
-
 [packet_net]
 runner2.archlinux.org
 repro3.pkgbuild.com
 
 [mirrors]
-ger.mirror.pkgbuild.com
 mirror.pkgbuild.com
-
-[archive_mirrors]
-ger.mirror.pkgbuild.com
 
 [borg_clients]
 orion.archlinux.org
@@ -82,13 +73,11 @@ aur-dev.archlinux.org
 dragon.archlinux.org
 
 [gitlab_runners]
-runner1.archlinux.org
 runner2.archlinux.org
 secure-runner1.archlinux.org
 secure-runner2.archlinux.org
 
 [reproduciblebuilds]
-repro1.pkgbuild.com
 repro3.pkgbuild.com
 
 [rebuilderd]
@@ -108,7 +97,6 @@ aur-dev.archlinux.org
 monitoring.archlinux.org
 gitlab.archlinux.org
 reproducible.archlinux.org
-runner1.archlinux.org
 runner2.archlinux.org
 secure-runner1.archlinux.org
 secure-runner2.archlinux.org
