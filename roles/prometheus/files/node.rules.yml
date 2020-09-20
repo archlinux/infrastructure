@@ -387,13 +387,13 @@ groups:
       summary: "Blackbox probe HTTP failure (instance {{ $labels.instance }})"
       description: "HTTP status code is not 200-399\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
   - alert: BlackboxSslCertificateWillExpireSoon
-    expr: probe_ssl_earliest_cert_expiry - time() < 86400 * 3
+    expr: probe_ssl_earliest_cert_expiry - time() < 86400 * 25
     for: 5m
     labels:
       severity: critical
     annotations:
       summary: "Blackbox SSL certificate will expire soon (instance {{ $labels.instance }})"
-      description: "SSL certificate expires in 3 days\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      description: "SSL certificate expires in 25 days\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
 - name: rebuilderd
   interval: 15m
