@@ -259,11 +259,12 @@ Medium-fast-ish packet.net box with Debian on it. Is currently maintained manual
 
 ### monitoring.archlinux.org
 
-  Prometheus server which collects performance/metrics from our services and runs alertmanager
+  Prometheus and Grafana server which collects performance/metrics from our services and runs alertmanager.
 
 ### Services
-  - Prometheus
   - Alertmanager
+  - Grafana
+  - Prometheus
 
 ## Ansible repo workflows
 
