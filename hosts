@@ -31,7 +31,6 @@ bbs.archlinux.org
 homedir.archlinux.org
 bugs.archlinux.org
 aur.archlinux.org
-aur-dev.archlinux.org
 gitlab.archlinux.org
 accounts.archlinux.org
 gemini.archlinux.org
@@ -84,7 +83,6 @@ repro3.pkgbuild.com
 reproducible.archlinux.org
 
 [memcached]
-apollo.archlinux.org
 aur.archlinux.org
 aur-dev.archlinux.org
 
