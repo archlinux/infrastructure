@@ -240,7 +240,6 @@ So to set up this server from scratch, run:
 
 #### Services
   - Runs a master rebuilderd instance two workers:
-    - repro1.pkgbuild.com (PIA worker)
     - repro3.pkgbuild.com (packet.net machine which runs Ubuntu)
 
 ### runner1.archlinux.org
