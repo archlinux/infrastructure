@@ -62,7 +62,7 @@ resource "keycloak_realm" "archlinux" {
   web_authn_policy {
     relying_party_entity_name = "Arch Linux SSO"
     relying_party_id          = "accounts.archlinux.org"
-    signature_algorithms      = ["ES256", "RS256", "ES512"]
+    signature_algorithms      = ["ES256", "RS256", "ES512", "RS512"]
   }
 
   login_theme = "archlinux"
@@ -109,11 +109,52 @@ resource "keycloak_realm" "archlinux" {
   }
 }
 
-resource "keycloak_required_action" "required_action" {
+resource "keycloak_required_action" "configure_otp" {
+  realm_id  = "archlinux"
+  alias     = "CONFIGURE_TOTP"
+  enabled   = true
+  name      = "Configure OTP"
+  priority  = 0
+}
+
+resource "keycloak_required_action" "update_password" {
+  realm_id  = "archlinux"
+  alias     = "UPDATE_PASSWORD"
+  enabled   = true
+  name      = "Update Password"
+  priority  = 20
+}
+
+resource "keycloak_required_action" "update_profile" {
+  realm_id  = "archlinux"
+  alias     = "UPDATE_PROFILE"
+  enabled   = true
+  name      = "Update Profile"
+  priority  = 30
+}
+
+resource "keycloak_required_action" "verify_email" {
+  realm_id  = "archlinux"
+  alias     = "VERIFY_EMAIL"
+  enabled   = true
+  name      = "Verify Email"
+  priority  = 40
+}
+
+resource "keycloak_required_action" "update_user_locale" {
+  realm_id  = "archlinux"
+  alias     = "update_user_locale"
+  enabled   = true
+  name      = "Update User Locale"
+  priority  = 50
+}
+
+resource "keycloak_required_action" "webauthn_register" {
   realm_id  = "archlinux"
   alias     = "webauthn-register"
   enabled   = true
   name      = "Webauthn Register"
+  priority  = 60
 }
 
 resource "keycloak_realm_events" "realm_events" {
