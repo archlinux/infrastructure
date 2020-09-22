@@ -63,6 +63,16 @@
     - 'uploads'
     - 'web/html/trusted-user'
 
+- name: create aurweb conf dir
+  file: path={{ aurweb_conf_dir }} state=directory owner=root group=root mode=0755
+
+- name: copy aurweb configuration file
+  copy: src={{ aurweb_dir }}/conf/config.defaults dest={{ aurweb_conf_dir }}/config.defaults remote_src=yes owner=root group=root mode=0644
+
+# Note: initdb needs the config
+- name: install custom aurweb configuration
+  template: src=config.j2 dest={{ aurweb_conf_dir }}/config owner=root group=root mode=0644
+
 - name: create aur db
   mysql_db: name="{{ aurweb_db }}" login_host="{{ aurweb_db_host }}" login_password="{{ vault_mariadb_users.root }}" encoding=utf8
   register: db_created
@@ -75,7 +85,7 @@
   no_log: true
 
 - name: initialize the database
-  command: python aurweb/initdb.py
+  command: python -m aurweb.initdb
   args:
     chdir: "{{ aurweb_dir }}"
   become: true
@@ -86,18 +96,11 @@
   command: alembic upgrade head
   args:
     chdir: "{{ aurweb_dir }}"
+  environment:
+    - PYTHONPATH: .
   become: true
   become_user: "{{ aurweb_user }}"
   when: release.changed or db_created.changed
-
-- name: create aurweb conf dir
-  file: path={{ aurweb_conf_dir }} state=directory owner=root group=root mode=0755
-
-- name: copy aurweb configuration file
-  copy: src={{ aurweb_dir }}/conf/config.defaults dest={{ aurweb_conf_dir }}/config.defaults remote_src=yes owner=root group=root mode=0644
-
-- name: install custom aurweb configuration
-  template: src=config.j2 dest={{ aurweb_conf_dir }}/config owner=root group=root mode=0644
 
 - name: Install python module
   command: "python3 setup.py install --install-scripts=/usr/local/bin"
