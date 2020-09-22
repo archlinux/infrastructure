@@ -240,21 +240,74 @@ resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_username" {
 // |- Developers
 // |- Trusted Users
 // |- Wiki
-//    |- Admins
+// |  |- Admins
 // |- Forum
-//    |- Admins
-//    |- Mods
+// |  |- Admins
+// |  |- Mods
 // |- Security Team
-//    |- Admins
-//    |- Members
-//    |- Reporters
+// |  |- Admins
+// |  |- Members
+// |- IRC
+// |  |- Ops
 // |- Archweb
-//    |- Mirror Maintainers
-//    |- Testers
+// |  |- Mirrorlist Maintainers
+// |- Bug Wranglers
 // External Contributors
+// |- Security Team
+// |  |- Reporters
+// |- Archweb
+//    |- Testers
 resource "keycloak_group" "staff" {
   realm_id = "archlinux"
   name = "Arch Linux Staff"
+}
+
+resource "keycloak_group" "staff_groups" {
+  for_each = toset(["DevOps", "Developers", "Trusted Users", "Wiki", "Forum", "Security Team", "IRC", "Archweb", "Bug Wranglers"])
+
+  realm_id = "archlinux"
+  parent_id = keycloak_group.staff.id
+  name = each.value
+}
+
+resource "keycloak_group" "staff_wiki_groups" {
+  for_each = toset(["Admins"])
+
+  realm_id = "archlinux"
+  parent_id = keycloak_group.staff_groups["Wiki"].id
+  name = each.value
+}
+
+resource "keycloak_group" "staff_forum_groups" {
+  for_each = toset(["Admins", "Mods"])
+
+  realm_id = "archlinux"
+  parent_id = keycloak_group.staff_groups["Forum"].id
+  name = each.value
+}
+
+resource "keycloak_group" "staff_securityteam_groups" {
+  for_each = toset(["Admins", "Members"])
+
+  realm_id = "archlinux"
+  parent_id = keycloak_group.staff_groups["Security Team"].id
+  name = each.value
+}
+
+resource "keycloak_group" "staff_irc_groups" {
+  for_each = toset(["Ops"])
+
+  realm_id = "archlinux"
+  parent_id = keycloak_group.staff_groups["IRC"].id
+  name = each.value
+}
+
+resource "keycloak_group" "staff_archweb_groups" {
+  for_each = toset(["Mirrorlist Maintainers"])
+
+  realm_id = "archlinux"
+  parent_id = keycloak_group.staff_groups["Archweb"].id
+  name = each.value
 }
 
 resource "keycloak_group" "externalcontributors" {
@@ -262,68 +315,27 @@ resource "keycloak_group" "externalcontributors" {
   name = "External Contributors"
 }
 
-variable "arch_groups" {
-  type = set(string)
-  default = ["DevOps", "Developers", "Trusted Users", "Wiki", "Forum", "Security Team", "Archweb"]
-}
-
-variable "arch_wiki_groups" {
-  type = set(string)
-  default = ["Admins"]
-}
-
-variable "arch_forum_groups" {
-  type = set(string)
-  default = ["Admins", "Mods"]
-}
-
-variable "arch_securityteam_groups" {
-  type = set(string)
-  default = ["Admins", "Members", "Reporters"]
-}
-
-variable "arch_archweb_groups" {
-  type = set(string)
-  default = ["Mirror Maintainers", "Testers"]
-}
-
-resource "keycloak_group" "arch_groups" {
-  for_each = var.arch_groups
+resource "keycloak_group" "externalcontributors_groups" {
+  for_each = toset(["Security Team", "Archweb"])
 
   realm_id = "archlinux"
-  parent_id = keycloak_group.staff.id
+  parent_id = keycloak_group.externalcontributors.id
   name = each.value
 }
 
-resource "keycloak_group" "arch_wiki_groups" {
-  for_each = var.arch_wiki_groups
+resource "keycloak_group" "externalcontributors_securityteam_groups" {
+  for_each = toset(["Reporters"])
 
   realm_id = "archlinux"
-  parent_id = keycloak_group.arch_groups["Wiki"].id
+  parent_id = keycloak_group.externalcontributors_groups["Security Team"].id
   name = each.value
 }
 
-resource "keycloak_group" "arch_forum_groups" {
-  for_each = var.arch_forum_groups
+resource "keycloak_group" "externalcontributors_archweb_groups" {
+  for_each = toset(["Testers"])
 
   realm_id = "archlinux"
-  parent_id = keycloak_group.arch_groups["Forum"].id
-  name = each.value
-}
-
-resource "keycloak_group" "arch_securityteam_groups" {
-  for_each = var.arch_securityteam_groups
-
-  realm_id = "archlinux"
-  parent_id = keycloak_group.arch_groups["Security Team"].id
-  name = each.value
-}
-
-resource "keycloak_group" "arch_archweb_groups" {
-  for_each = var.arch_archweb_groups
-
-  realm_id = "archlinux"
-  parent_id = keycloak_group.arch_groups["Archweb"].id
+  parent_id = keycloak_group.externalcontributors_groups["Archweb"].id
   name = each.value
 }
 
@@ -347,7 +359,7 @@ resource "keycloak_role" "externalcontributor" {
 
 resource "keycloak_group_roles" "devops" {
   realm_id = "archlinux"
-  group_id = keycloak_group.arch_groups["DevOps"].id
+  group_id = keycloak_group.staff_groups["DevOps"].id
   role_ids = [
     keycloak_role.devops.id
   ]
