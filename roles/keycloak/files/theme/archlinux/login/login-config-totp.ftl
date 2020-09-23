@@ -16,18 +16,22 @@
             <p>${msg("loginTotpStep1")}</p>
 
             <ul id="kc-totp-supported-apps">
-                <li>Android</li>
-                <ul>
-                    <li><a target="_blank" rel="noopener noreferrer" href="https://getaegis.app/">Aegis</a></li>
-                    <li><a target="_blank" rel="noopener noreferrer" href="https://github.com/andOTP/andOTP">andOTP</a></li>
-                    <li><a target="_blank" rel="noopener noreferrer" href="https://github.com/helloworld1/FreeOTPPlus">FreeOTP+</a></li>
-                </ul>
-                <li>iOS</li>
-                <ul>
-                    <li><a target="_blank" rel="noopener noreferrer" href="https://authy.com/">Authy</a></li>
-                    <li><a target="_blank" rel="noopener noreferrer" href="https://lastpass.com/auth/">LastPass Authenticator</a></li>
-                    <li><a target="_blank" rel="noopener noreferrer" href="https://cooperrs.de/otpauth.html ">OTP Auth</a></li>
-                </ul>
+                <div style="margin-bottom: 10px; float: left; width: 40%">
+                    <h4>Android</h4>
+                    <ul style="margin-top: -5px;">
+                        <li><a target="_blank" rel="noopener noreferrer" href="https://getaegis.app/">Aegis</a></li>
+                        <li><a target="_blank" rel="noopener noreferrer" href="https://github.com/andOTP/andOTP">andOTP</a></li>
+                        <li><a target="_blank" rel="noopener noreferrer" href="https://github.com/helloworld1/FreeOTPPlus">FreeOTP+</a></li>
+                    </ul>
+                </div>
+                <div style="margin-bottom: 10px; float: left; width: 60%">
+                    <h4>iOS</h4>
+                    <ul style="margin-top: -5px;">
+                        <li><a target="_blank" rel="noopener noreferrer" href="https://authy.com/">Authy</a></li>
+                        <li><a target="_blank" rel="noopener noreferrer" href="https://lastpass.com/auth/">LastPass Authenticator</a></li>
+                        <li><a target="_blank" rel="noopener noreferrer" href="https://cooperrs.de/otpauth.html ">OTP Auth</a></li>
+                    </ul>
+                </div>
             </ul>
         </li>
 
