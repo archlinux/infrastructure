@@ -22,7 +22,7 @@
   service: name=sshd enabled=yes state=started
 
 - name: open firewall holes
-  firewalld: service=ssh permanent=true state=enabled immediate=yes
+  ansible.posix.firewalld: service=ssh permanent=true state=enabled immediate=yes
   when: configure_firewall is defined and configure_firewall
   tags:
     - firewall

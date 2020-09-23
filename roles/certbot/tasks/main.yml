@@ -23,7 +23,7 @@
     daemon_reload: yes
 
 - name: open firewall holes for certbot standalone authenticator
-  firewalld: service={{ item }} permanent=true state=enabled immediate=yes
+  ansible.posix.firewalld: service={{ item }} permanent=true state=enabled immediate=yes
   with_items:
     - http
   when: configure_firewall

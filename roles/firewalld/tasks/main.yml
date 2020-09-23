@@ -17,7 +17,7 @@
     state: "{{ configure_firewall | ternary('started', 'stopped') }}"
 
 - name: disable default dhcpv6-client rule
-  firewalld:
+  ansible.posix.firewalld:
     service: dhcpv6-client
     state: disabled
     immediate: yes

@@ -104,7 +104,7 @@
     create_home: no
 
 - name: open firewall holes
-  firewalld: service={{ item }} permanent=true state=enabled immediate=yes
+  ansible.posix.firewalld: service={{ item }} permanent=true state=enabled immediate=yes
   with_items:
     - smtp
     - smtp-submission

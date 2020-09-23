@@ -110,21 +110,21 @@
   when: "'memcached' in group_names"
 
 - name: open prometheus-node-exporter ipv4 port for monitoring.archlinux.org
-  firewalld: state=enabled permanent=true immediate=yes
+  ansible.posix.firewalld: state=enabled permanent=true immediate=yes
         rich_rule="rule family=ipv4 source address={{ hostvars['monitoring.archlinux.org']['ipv4_address'] }} port protocol=tcp port={{ prometheus_exporter_port }} accept"
   when: "'prometheus' not in group_names"
 
 - name: open gitlab exporter ipv4 port for monitoring.archlinux.org
-  firewalld: state=enabled permanent=true immediate=yes
+  ansible.posix.firewalld: state=enabled permanent=true immediate=yes
         rich_rule="rule family=ipv4 source address={{ hostvars['monitoring.archlinux.org']['ipv4_address'] }} port protocol=tcp port={{ gitlab_runner_exporter_port }} accept"
   when: "'gitlab_runners' in group_names"
 
 - name: open prometheus mysqld exporter ipv4 port for monitoring.archlinux.org
-  firewalld: state=enabled permanent=true immediate=yes
+  ansible.posix.firewalld: state=enabled permanent=true immediate=yes
         rich_rule="rule family=ipv4 source address={{ hostvars['monitoring.archlinux.org']['ipv4_address'] }} port protocol=tcp port={{ prometheus_mysqld_exporter_port }} accept"
   when: "'mysql_servers' in group_names"
 
 - name: open prometheus memcached exporter ipv4 port for monitoring.archlinux.org
-  firewalld: state=enabled permanent=true immediate=yes
+  ansible.posix.firewalld: state=enabled permanent=true immediate=yes
         rich_rule="rule family=ipv4 source address={{ hostvars['monitoring.archlinux.org']['ipv4_address'] }} port protocol=tcp port={{ prometheus_memcached_exporter_port }} accept"
   when: "'memcached' in group_names"

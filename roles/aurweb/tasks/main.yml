@@ -172,7 +172,12 @@
 - name: deploy new smartgit release
   become: true
   become_user: "{{ aurweb_user }}"
-  file: path=/etc/uwsgi/vassals/smartgit.ini state=touch mode=preserve
+  file:
+    path: /etc/uwsgi/vassals/smartgit.ini
+    state: touch
+    owner: "{{ aurweb_user }}"
+    group: http
+    mode: 0644
   when: git.changed
 
 - name: create git repo dir

@@ -5,7 +5,7 @@
   remote_user: root
   tasks:
     - name: open firewall holes for services
-      firewalld: service={{ item }} permanent=true state=enabled immediate=yes
+      ansible.posix.firewalld: service={{ item }} permanent=true state=enabled immediate=yes
       with_items:
         - http
         - https
@@ -17,7 +17,7 @@
         - firewall
 
     - name: open firewall holes for ports
-      firewalld: port={{ item }} permanent=true state=enabled immediate=yes
+      ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes
       with_items:
         - 6969/tcp
         - 4949/tcp

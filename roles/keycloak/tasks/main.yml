@@ -27,7 +27,7 @@
   service: name=keycloak enabled=yes state=started
 
 - name: open firewall hole
-  firewalld: port={{ item }} permanent=true state=enabled immediate=yes
+  ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes
   when: configure_firewall
   with_items:
     - 80/tcp

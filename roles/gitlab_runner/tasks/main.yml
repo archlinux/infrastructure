@@ -8,7 +8,7 @@
   systemd: name=docker enabled=yes state=started daemon_reload=yes
 
 - name: make docker0 interface trusted
-  firewalld: interface=docker0 zone=trusted permanent=true state=enabled immediate=yes
+  ansible.posix.firewalld: interface=docker0 zone=trusted permanent=true state=enabled immediate=yes
   when: configure_firewall
   tags:
     - firewall

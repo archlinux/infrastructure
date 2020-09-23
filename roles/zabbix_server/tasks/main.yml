@@ -75,7 +75,7 @@
   service: name=php-fpm@zabbix-web.socket state=started enabled=true
 
 - name: open firewall holes
-  firewalld: service=zabbix-server permanent=true state=enabled immediate=yes
+  ansible.posix.firewalld: service=zabbix-server permanent=true state=enabled immediate=yes
   when: configure_firewall
   tags:
     - firewall

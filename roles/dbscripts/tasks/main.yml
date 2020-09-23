@@ -295,7 +295,7 @@
   service: name=rsyncd.socket enabled=yes state=started
 
 - name: open firewall holes for rsync
-  firewalld: service=rsyncd permanent=true state=enabled immediate=yes
+  ansible.posix.firewalld: service=rsyncd permanent=true state=enabled immediate=yes
   when: configure_firewall
   tags:
     - firewall
@@ -307,7 +307,7 @@
   service: name=svnserve enabled=yes state=started
 
 - name: open firewall holes for svnserve
-  firewalld: port=3690/tcp permanent=true state=enabled immediate=yes
+  ansible.posix.firewalld: port=3690/tcp permanent=true state=enabled immediate=yes
   when: configure_firewall
   tags:
     - firewall

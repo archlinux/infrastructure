@@ -86,7 +86,7 @@
       - "/srv/gitlab/data:/var/opt/gitlab"
 
 - name: open firewall holes
-  firewalld: port={{ item }} permanent=true state=enabled immediate=yes
+  ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes
   when: configure_firewall
   with_items:
     - "80/tcp"
@@ -97,7 +97,7 @@
     - firewall
 
 - name: make docker0 interface trusted
-  firewalld: interface=docker0 zone=trusted permanent=true state=enabled immediate=yes
+  ansible.posix.firewalld: interface=docker0 zone=trusted permanent=true state=enabled immediate=yes
   when: configure_firewall
   tags:
     - firewall

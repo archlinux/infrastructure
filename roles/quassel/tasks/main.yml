@@ -57,7 +57,7 @@
     - clean-quassel.timer
 
 - name: open firewall holes
-  firewalld: port={{ item }} permanent=true state=enabled immediate=yes
+  ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes
   with_items:
     - 4242/tcp
     - 113/tcp
