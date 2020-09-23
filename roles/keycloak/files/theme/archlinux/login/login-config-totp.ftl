@@ -18,15 +18,15 @@
             <ul id="kc-totp-supported-apps">
                 <li>Android</li>
                 <ul>
-                    <#list ["Aegis", "andOTP", "FreeOTP+"] as android>
-                    <li>${android}</li>
-                    </#list>
+                    <li><a target="_blank" rel="noopener noreferrer" href="https://getaegis.app/">Aegis</a></li>
+                    <li><a target="_blank" rel="noopener noreferrer" href="https://github.com/andOTP/andOTP">andOTP</a></li>
+                    <li><a target="_blank" rel="noopener noreferrer" href="https://github.com/helloworld1/FreeOTPPlus">FreeOTP+</a></li>
                 </ul>
                 <li>iOS</li>
                 <ul>
-                    <#list ["Authy", "LastPass Authenticator", "OTP Auth"] as ios>
-                    <li>${ios}</li>
-                    </#list>
+                    <li><a target="_blank" rel="noopener noreferrer" href="https://authy.com/">Authy</a></li>
+                    <li><a target="_blank" rel="noopener noreferrer" href="https://lastpass.com/auth/">LastPass Authenticator</a></li>
+                    <li><a target="_blank" rel="noopener noreferrer" href="https://cooperrs.de/otpauth.html ">OTP Auth</a></li>
                 </ul>
             </ul>
         </li>
