@@ -25,9 +25,9 @@ def list_running_hosts(client):
 
 def get_host_details(client, host):
     server = client.servers.get_by_name(host)
-    return {'ansible_ssh_host': server.public_net.ipv4.ip,
-            'ansible_ssh_port': 22,
-            'ansible_ssh_user': "root"}
+    return {'ansible_host': server.public_net.ipv4.ip,
+            'ansible_port': 22,
+            'ansible_user': "root"}
 
 
 def main():
