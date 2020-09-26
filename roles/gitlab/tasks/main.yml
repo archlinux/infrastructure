@@ -12,6 +12,7 @@
     image: gitlab/gitlab-ee:latest
     domainname: "{{ gitlab_domain }}"
     hostname: "{{ gitlab_domain }}"
+    container_default_behavior: compatibility
     published_ports:
       - "80:80"
       - "443:443"
