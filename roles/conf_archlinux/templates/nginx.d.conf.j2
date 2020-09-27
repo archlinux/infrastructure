@@ -31,7 +31,7 @@ server {
     add_header X-Xss-Protection "1; mode=block" always;
     add_header Referrer-Policy "same-origin";
     add_header Feature-Policy "geolocation 'none' ;midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; speaker 'none'; fullscreen 'none'; payment 'none';";
-    add_header Content-Security-Policy "default-src 'self';";
+    add_header Content-Security-Policy "default-src https: *.media.ccc.de embed.twitch.tv kiwiirc.com 'unsafe-inline';";
     add_header X-Content-Type-Options "nosniff" always;
 
     # Apply HSTS header again, since adding a header removes previous headers
