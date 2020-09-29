@@ -439,6 +439,11 @@ arch_users:
     ssh_key: kpcyrd.pub
     groups:
       - tu
+  raster:
+    name: "Carsten Haitzler"
+    ssh_key: raster.pub
+    groups:
+      - tu
   spupykin:
     name: "Sergej Pupykin"
     ssh_key: spupykin.pub
