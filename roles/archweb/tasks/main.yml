@@ -259,11 +259,11 @@
   when: archweb_donor_import|bool
 
 - name: deploy archweb
-  template: src=archweb.ini.j2 dest=/etc/uwsgi/vassals/archweb.ini owner=archweb group=http mode=0644
+  template: src=archweb.ini.j2 dest=/etc/uwsgi/vassals/archweb.ini owner=archweb group=http mode=0640
   when: archweb_site|bool
 
 - name: deploy new release
-  file: path=/etc/uwsgi/vassals/archweb.ini state=touch owner=root group=root mode=0644
+  file: path=/etc/uwsgi/vassals/archweb.ini state=touch owner=archweb group=http mode=0640
   when: archweb_site and (release.changed or config.changed or virtualenv.changed or archweb_forced_deploy)
   notify: restart archweb memcached
 
