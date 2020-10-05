@@ -1,0 +1,54 @@
+# Lower and upper bounds of the UDP relay endpoints:
+min-port=33000
+max-port=33999
+
+# TURN REST API flag.
+use-auth-secret
+
+# 'Static' authentication secret value (a string) for TURN REST API only.
+static-auth-secret="{{ vault_matrix_secrets[matrix_server_name].turn_shared_secret }}"
+
+# The default realm to be used for the users when no explicit
+# origin/realm relationship is found in the database, or if the TURN
+# server is not using any database (just the commands-line settings
+# and the userdb file). Must be used with long-term credentials
+# mechanism or with TURN REST API.
+realm={{ matrix_domain }}
+
+# Uncomment if no TCP relay endpoints are allowed.
+no-tcp-relay
+
+# Certificate file.
+cert=/etc/letsencrypt/live/{{ matrix_domain }}/fullchain.pem
+
+# Private key file.
+pkey=/etc/letsencrypt/live/{{ matrix_domain }}/privkey.pem
+
+# Allowed OpenSSL cipher list for TLS/DTLS connections.
+cipher-list="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384"
+
+# Use custom DH TLS key, stored in PEM format in the file.
+dh-file=/etc/ssl/dhparams.pem
+
+# Flag to prevent stdout log messages.
+no-stdout-log
+
+# Option to set the log file name.
+log-file=/var/log/turnserver/turn.log
+
+# Option to redirect all log output into system log (syslog).
+syslog
+
+# Flag that can be used to disallow peers on well-known broadcast addresses (224.0.0.0 and above, and FFXX:*).
+no-multicast-peers
+
+# User name to run the process. After the initialization, the turnserver process
+# will attempt to change the current user ID to that user.
+proc-user=turnserver
+
+# Group name to run the process. After the initialization, the turnserver process
+# will attempt to change the current group ID to that group.
+proc-group=turnserver
+
+# Turn OFF the CLI support.
+no-cli

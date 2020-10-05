@@ -1,5 +1,12 @@
 ---
 
+- name: restart turnserver
+  systemd:
+    name: turnserver
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
+
 - name: restart synapse
   systemd:
     name: synapse

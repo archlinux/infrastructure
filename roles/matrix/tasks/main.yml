@@ -7,6 +7,7 @@
 - name: install packages
   pacman:
     name:
+      - coturn
       - freetype2
       - gcc
       - git
@@ -161,6 +162,14 @@
   when: 'matrix_domain is defined'
   tags: ['nginx']
 
+- name: install turnserver.conf
+  template: src=turnserver.conf.j2 dest=/etc/turnserver/turnserver.conf owner=root group=root mode=0644
+  notify:
+    - restart turnserver
+
+- name: install turnserver cert renewal hook
+  copy: src=letsencrypt.hook.d dest=/etc/letsencrypt/hook.d/turnserver owner=root group=root mode=0755
+
 - name: install synapse units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
@@ -175,6 +184,13 @@
     - matrix-appservice-irc.service
   notify:
     - restart matrix-appservice-irc
+
+- name: install turnserver units
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - turnserver.service
+  notify:
+    - restart turnserver
 
 - name: enable synapse units
   service: name={{ item }} enabled=yes
@@ -194,10 +210,24 @@
   notify:
     - restart matrix-appservice-irc
 
+- name: enable turnserver units
+  service: name={{ item }} enabled=yes
+  with_items:
+    - turnserver.service
+  notify:
+    - restart turnserver
+
 - name: open firewall holes
   ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes
   with_items:
+    # synapse's identd
     - 113/tcp
+    # turnserver
+    - 3478-3479/tcp
+    - 3478-3479/udp
+    - 5349-5350/tcp
+    - 5349-5350/udp
+    - 33000-33999/udp
   when: configure_firewall
   tags:
     - firewall

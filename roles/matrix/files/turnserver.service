@@ -1,0 +1,14 @@
+[Unit]
+Description=STUN and TURN relay server for VoIP and WebRTC
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/turnserver -o -v -c /etc/turnserver/turnserver.conf --pidfile /run/turnserver/turnserver.pid
+PIDFile=/run/turnserver/turnserver.pid
+RuntimeDirectory=turnserver
+RuntimeDirectoryMode=0700
+LogsDirectory=turnserver
+
+[Install]
+WantedBy=multi-user.target
