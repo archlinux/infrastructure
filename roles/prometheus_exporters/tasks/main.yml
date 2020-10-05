@@ -29,11 +29,8 @@
     password: '{{ vault_monitoring_mysql_password }}'
     priv: "*.*:PROCESS,REPLICATION CLIENT"
     state: present
-  when: "'mysql_servers' in group_names"
-
-# TODO: with ansible 2.10 this can be set by mysql_user https://github.com/ansible/ansible/issues/26581
-- name: set max_user_connections for prometheus mysqld user
-  command: mysql -u root -e "ALTER USER '{{ prometheus_mysqld_user }}'@'localhost' WITH MAX_USER_CONNECTIONS 3;"
+    resource_limits:
+      MAX_USER_CONNECTIONS: 3
   when: "'mysql_servers' in group_names"
 
 - name: copy prometheus mysqld exporter configuration
