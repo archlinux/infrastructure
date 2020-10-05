@@ -12,7 +12,7 @@
       - git
       - jemalloc
       - libffi
-      - libjpeg
+      - libjpeg-turbo
       - libtiff
       - libwebp
       - libxslt
