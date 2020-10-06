@@ -30,9 +30,7 @@ For monitoring our borg backups prometheus-node-exporter's textfile collector fe
 
 ### rebuilderd
 
-The rebuilderd instance Arch Linux hosts is monitored using prometheus-node-exporter's textfile collector feature which periodically collects data using a prometheus-rebuilderd-textcollector.timer. The queue length and amount of working rebuilders is collected to monitor if the rebuilderd queue keeps growing forever or rebuilderd workers stopped working.
-
-Adding monitoring for rebuilderd:
+The rebuilderd instance Arch Linux hosts is monitored using prometheus-node-exporter's textfile collector feature which periodically collects data using a prometheus-rebuilderd-textcollector.timer. The 'rebuilderd-textcollector.sh' script collects the queue length and amount of working rebuilders to monitor if the rebuilderd queue keeps growing forever or rebuilderd workers stopped working. The 'rebuilderd-status-textcollector.py' script collects the rebuilderd status good, bad and unknown packages per repository for keeping tracking of the reproducible builds progress. Adding monitoring for rebuilderd:
 
 * Add the rebuilderd instance to the `rebuilderd` group
 * Rollout exporter on host: `ansible-playbook playbooks/host.yml -t prometheus_exporters`
