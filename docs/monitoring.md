@@ -2,6 +2,7 @@
 
 All of our servers are monitored using Prometheus, exporters on the to be monitored machines have a firewall rule configured to allow connections from monitoring.archlinux.org for the specific exporter port.
 To access our monitoring system, go to https://monitoring.archlinux and log in via your Arch Linux SSO credentials.
+
 ## Adding a new host to monitoring
 
 * Add $host to node_exporters in `hosts`
@@ -29,7 +30,9 @@ For monitoring our borg backups prometheus-node-exporter's textfile collector fe
 
 ### rebuilderd
 
-The rebuilderd instance Arch Linux hosts is monitored using prometheus-node-exporter's textfile collector feature which periodically collects data using a prometheus-rebuilderd-textcollector.timer. The queue lenght and amount of working rebuilders is collected to monitor if the rebuilderd queue keeps growing forever or rebuilderd workers stopped working. Adding monitoring for rebuilderd:
+The rebuilderd instance Arch Linux hosts is monitored using prometheus-node-exporter's textfile collector feature which periodically collects data using a prometheus-rebuilderd-textcollector.timer. The queue length and amount of working rebuilders is collected to monitor if the rebuilderd queue keeps growing forever or rebuilderd workers stopped working.
+
+Adding monitoring for rebuilderd:
 
 * Add the rebuilderd instance to the `rebuilderd` group
 * Rollout exporter on host: `ansible-playbook playbooks/host.yml -t prometheus_exporters`
