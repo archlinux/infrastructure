@@ -7,6 +7,10 @@
   template: src=prometheus.yml.j2 dest=/etc/prometheus/prometheus.yml owner=root group=root mode=644
   notify: reload prometheus
 
+- name: install prometheus cli configuration
+  copy: src=prometheus.conf dest=/etc/conf.d/prometheus owner=root group=root mode=600
+  notify: reload prometheus
+
 - name: install prometheus alert configuration
   copy: src=node.rules.yml dest=/etc/prometheus/node.rules.yml owner=root group=root mode=644
   notify: reload prometheus
