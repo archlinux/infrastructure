@@ -6,6 +6,7 @@ After=network.target
 Type=oneshot
 User=node_exporter
 ExecStart=/usr/local/bin/rebuilderd-textcollector.sh {{ prometheus_textfile_dir }}
+ExecStart=/usr/local/bin/rebuilderd-status-textcollector.py {{ prometheus_textfile_dir }}
 
 NoNewPrivileges=true
 LockPersonality=true
