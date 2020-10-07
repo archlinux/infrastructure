@@ -11,24 +11,6 @@ chroots=( */^root(/Nmh+2) )
 df -HT .
 echo "<6>Deleting ${#chroots} chroots"
 
-if btrfs filesystem df . &>/dev/null; then
-  remove() {
-    local subvol
-
-    test -d $1
-    find $1 -mindepth 1 -xdev -depth -inum 256 -print0 |
-      while IFS= read -d $'\0' -r subvol; do
-        remove $subvol
-      done
-
-    btrfs sub del -- $1 &>/dev/null
-  }
-else
-  remove() {
-    rm -rf -- $1
-  }
-fi
-
 for chroot in $chroots; do
   exec 9>>| $chroot.lock
 
@@ -37,7 +19,7 @@ for chroot in $chroots; do
     continue
   fi
 
-  if remove $chroot; then
+  if rm -rf -- $chroot; then
     echo "<6>Deleted $chroot"
   else
     echo "<3>Error deleting $chroot"
