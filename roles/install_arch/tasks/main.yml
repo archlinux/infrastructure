@@ -47,13 +47,10 @@
     url: https://mirrors.kernel.org/archlinux/iso/{{ bootstrap_version }}/archlinux-bootstrap-{{ bootstrap_version }}-x86_64.tar.gz
     dest: /tmp/
 
-- name: extract boostrap image
+- name: extract boostrap image  # noqa 208
   unarchive:
     src: /tmp/archlinux-bootstrap-{{ bootstrap_version }}-x86_64.tar.gz
     dest: /tmp
-    owner: root
-    group: root
-    mode: 0644
     remote_src: yes
     creates: /tmp/root.x86_64
 
