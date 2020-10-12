@@ -1012,6 +1012,50 @@ resource "hcloud_server" "mirror" {
   }
 }
 
+# TODO: This is a temporary box!
+# Delete it in 2021.
+resource "hcloud_volume" "archconfbox" {
+  name = "archconfbox"
+  size = 800
+  server_id = hcloud_server.archconfbox.id
+}
+
+resource "hcloud_rdns" "archconfbox_ipv4" {
+  server_id  = hcloud_server.archconfbox.id
+  ip_address = hcloud_server.archconfbox.ipv4_address
+  dns_ptr    = "archconfbox.pkgbuild.com"
+}
+
+resource "hcloud_rdns" "archconfbox_ipv6" {
+  server_id  = hcloud_server.archconfbox.id
+  ip_address = hcloud_server.archconfbox.ipv6_address
+  dns_ptr    = "archconfbox.pkgbuild.com"
+}
+
+resource "hcloud_server" "archconfbox" {
+  name        = "archconfbox.pkgbuild.com"
+  image       = data.hcloud_image.archlinux.id
+  server_type = "cx11"
+  lifecycle {
+    ignore_changes = [image]
+  }
+}
+
+resource "hetznerdns_record" "pkgbuild_com_archconfbox_a" {
+  zone_id = hetznerdns_zone.pkgbuild.id
+  name = "archconfbox"
+  value = hcloud_server.archconfbox.ipv4_address
+  type = "A"
+}
+
+resource "hetznerdns_record" "pkgbuild_com_archconfbox_aaaa" {
+  zone_id = hetznerdns_zone.pkgbuild.id
+  name = "archconfbox"
+  value = hcloud_server.archconfbox.ipv6_address
+  type = "AAAA"
+}
+
+
 resource "hcloud_rdns" "homedir_ipv4" {
   server_id  = hcloud_server.homedir.id
   ip_address = hcloud_server.homedir.ipv4_address
