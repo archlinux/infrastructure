@@ -263,7 +263,7 @@ Medium-fast-ish packet.net box with Debian on it. Is currently maintained manual
 
 ### Services
   - Alertmanager
-  - Grafana
+  - [Grafana](https://monitoring.archlinux.org)
   - Prometheus
 
 ## Ansible repo workflows
