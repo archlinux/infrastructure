@@ -18,10 +18,22 @@
   notify:
     - restart keycloak
 
+- name: request a bearer token
+  uri:
+    url: http://127.0.0.1:8080/auth/realms/master/protocol/openid-connect/token
+    method: POST
+    body_format: form-urlencoded
+    body:
+      username: "{{ vault_keycloak_admin_user }}"
+      password: "{{ vault_keycloak_admin_password }}"
+      grant_type: password
+      client_id: admin-cli
+  ignore_errors: True
+  register: token
+
 - name: create an admin user
   command: /opt/keycloak/bin/add-user-keycloak.sh -r master -u "{{ vault_keycloak_admin_user }}" -p "{{ vault_keycloak_admin_password }}"
-  args:
-    creates: /opt/keycloak/standalone/configuration/keycloak-add-user.json
+  when: token.status == 401
 
 - name: start and enable keycloak
   service: name=keycloak enabled=yes state=started
