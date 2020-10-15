@@ -55,3 +55,4 @@
     - { role: archwiki }
     - { role: conf_archlinux }
     - { role: fail2ban }
+    - { role: prometheus_exporters }
