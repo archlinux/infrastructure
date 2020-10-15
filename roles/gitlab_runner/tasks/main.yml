@@ -13,6 +13,25 @@
   tags:
     - firewall
 
+- name: configure Docker daemon for IPv6
+  copy: src=daemon.json dest=/etc/docker/daemon.json owner=root group=root mode=0644
+  notify: restart docker
+
+# We want to give our gitlab-runners full IPv6 capabilities. Sadly, IPv6 and Docker aren't friends. :(
+# https://medium.com/@skleeschulte/how-to-enable-ipv6-for-docker-containers-on-ubuntu-18-04-c68394a219a2
+# https://github.com/docker/docker.github.io/blob/c0eb65aabe4de94d56bbc20249179f626df5e8c3/engine/userguide/networking/default_network/ipv6.md
+# https://github.com/moby/moby/issues/36954
+- name: add IPv6 NAT for docker
+  ansible.posix.firewalld:
+    zone: public
+    permanent: true
+    state: enabled
+    immediate: yes
+    rich_rule: rule family="ipv6" destination not address="fd00::1/80" source address="fd00::/80" masquerade
+  when: configure_firewall
+  tags:
+    - firewall
+
 - name: register gitlab-runner
   command: >
     gitlab-runner register
