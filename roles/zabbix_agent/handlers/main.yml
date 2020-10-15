@@ -1,7 +1,0 @@
----
-
-- name: restart zabbix agent
-  service: name=zabbix-agent state=restarted
-
-- name: restart nginx-zabbix.service
-  service: name=nginx-zabbix.service state=restarted

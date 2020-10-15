@@ -38,10 +38,3 @@
 - name: create client configuration for root
   template: src=client.cnf.j2 dest=/root/.my.cnf owner=root group=root mode=0644
   no_log: true
-
-- name: configure zabbix-agent user
-  # FIXME: "zabbix_agent" is hardcoded in the password variable: {{ vault_mariadb_users.zabbix_agent }}
-  # NOTE: the zabbix-agent role uses {{zabbix_agent_mysql_password}} in the my.cnf.j2 template
-  mysql_user: user={{ zabbix_agent_mysql_user }} host=localhost password={{ vault_mariadb_users.zabbix_agent }}
-
-# TODO: implement in ansible: grant process on *.* to 'zabbix_agent'@'localhost';

@@ -1,8 +1,5 @@
 ---
 
-zabbix_agent_templates:
-  - Template OS Linux
-
 repro_users:
   holger:
     name: "Holger Levsen"

@@ -17,8 +17,3 @@ system_disks:
 raid_level: "raid6"
 
 archive_domain: archive.archlinux.org
-
-zabbix_agent_templates:
-  - Template OS Linux
-  - Template App Borg Backup
-  - Template App Nginx

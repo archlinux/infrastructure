@@ -4,8 +4,3 @@ archweb_db_host: 'apollo.archlinux.org'
 # raise tcp window limits to 32MiB
 tcp_rmem: "10240 87380 33554432"
 tcp_wmem: "10240 87380 33554432"
-
-zabbix_agent_templates:
-  - Template OS Linux
-  - Template App Syncrepo
-  - Template App Syncrepo Arch32

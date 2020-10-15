@@ -1,9 +1,0 @@
----
-zabbix_agent_server: zabbix.archlinux.org
-zabbix_agent_ip: ""
-zabbix_agent_dns: "{{inventory_hostname}}"
-zabbix_agent_useip: 0
-# TODO set this as a default here once the value has been set correctly for each host. Otherwise we might remove templates from a host by accident
-#zabbix_agent_template: ['Template OS Linux']
-zabbix_agent_host_groups:
-  - Linux servers

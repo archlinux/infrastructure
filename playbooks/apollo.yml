@@ -50,7 +50,6 @@
     - { role: mailman, mailman_domain: "lists.archlinux.org" }
     - { role: patchwork }
     - { role: kanboard }
-    - { role: zabbix_server, tags: ["zabbix"] }
     - { role: grafana }
     - { role: archwiki }
     - { role: conf_archlinux }

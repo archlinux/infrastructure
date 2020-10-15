@@ -1,8 +1,0 @@
----
-
-zabbix_db_name: zabbix-server
-zabbix_db_user: zabbix-server
-zabbix_domain: zabbix.archlinux.org
-zabbix_web_dir: /usr/share/webapps/zabbix
-zabbix_pgpass: /var/lib/zabbix-server/.pgpass
-
