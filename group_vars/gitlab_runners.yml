@@ -1,6 +1,1 @@
 gitlab_runner_exporter_port: 9252
-
-fail2ban_jails:
-  sshd: true
-  postfix: false
-  dovecot: false

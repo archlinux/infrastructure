@@ -14,3 +14,4 @@
     - { role: public_html, public_domain: "pkgbuild.com", tags: ['nginx'] }
     - { role: borg_client, tags: ["borg"] }
     - { role: prometheus_exporters }
+    - { role: fail2ban }

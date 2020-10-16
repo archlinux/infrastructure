@@ -21,3 +21,4 @@
       postgres_ssl_hosts6: ['::/0']
     - { role: terraform_state }
     - { role: prometheus_exporters }
+    - { role: fail2ban }

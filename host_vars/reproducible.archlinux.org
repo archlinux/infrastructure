@@ -6,6 +6,3 @@ zabbix_agent_templates:
   - Template App Borg Backup
   - Template App HTTP Service
   - Template App HTTPS Service
-
-fail2ban_jails:
-  sshd: true
