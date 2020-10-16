@@ -37,8 +37,6 @@
       - httpie
       - the_silver_searcher
       - ripgrep
-      - cloc
-      - tokei
       - ipcalc
       - calc
       - wget

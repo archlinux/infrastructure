@@ -4,9 +4,6 @@
   set_fact:
     host_has_local_dns_resolver: "{{ dns_servers|length == 1 and '127.0.0.1' in dns_servers }}"
 
-- name: install inetutils for hostname
-  pacman: name=inetutils state=present update_cache=yes
-
 - name: set hostname
   hostname: name="{{ inventory_hostname }}"
 
