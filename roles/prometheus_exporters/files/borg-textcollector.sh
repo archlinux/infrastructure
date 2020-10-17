@@ -9,7 +9,6 @@ if (( $# != 1 )); then
   exit 1
 fi
 
-HOSTNAME=$(hostname)
 TEXTFILE_COLLECTOR_DIR=${1}
 PROM_FILE=$TEXTFILE_COLLECTOR_DIR/borg.prom
 
@@ -28,7 +27,7 @@ if [[ -f /usr/local/bin/borg ]]; then
 
   echo "# HELP borg_hetzner_last_archive_timestamp timestamp of last backup in UTC" >> $TMP_FILE
   echo "# TYPE borg_hetzner_last_archive_timestamp counter" >> $TMP_FILE
-  echo "borg_hetzner_last_archive_timestamp{host=\"${HOSTNAME}\"} $LAST_ARCHIVE_TIMESTAMP" >> $TMP_FILE;
+  echo "borg_hetzner_last_archive_timestamp $LAST_ARCHIVE_TIMESTAMP" >> $TMP_FILE;
 fi
 
 # rsync.net borg
@@ -40,7 +39,7 @@ if [[ -f /usr/local/bin/borg-offsite ]]; then
 
   echo "# HELP borg_offsite_last_archive_timestamp timestamp of last backup in UTC" >> $TMP_FILE
   echo "# TYPE borg_offsite_last_archive_timestamp counter" >> $TMP_FILE
-  echo "borg_offsite_last_archive_timestamp{host=\"${HOSTNAME}\"} $LAST_ARCHIVE_TIMESTAMP" >> $TMP_FILE;
+  echo "borg_offsite_last_archive_timestamp $LAST_ARCHIVE_TIMESTAMP" >> $TMP_FILE;
 fi
 
 mv -f $TMP_FILE $PROM_FILE
