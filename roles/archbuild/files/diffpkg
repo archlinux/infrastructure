@@ -49,7 +49,7 @@ diff_names() {
 
 diff_files() {
   headers $*
-  sdifftw <(bsdtar xOf $1 ${*:3}) <(bsdtar xOf $2 ${*:3})
+  sdifftw <(bsdtar xOqf $1 ${*:3}) <(bsdtar xOqf $2 ${*:3})
 }
 
 if (( $# != 2 )); then
