@@ -58,8 +58,8 @@ if (( $# != 2 )); then
 fi
 
 diff_names $1 $2
+diff_files $1 $2 .PKGINFO
 if (( VERBOSE )); then
-    diff_files $1 $2 .PKGINFO
     diff_files $1 $2 .BUILDINFO
 fi
 
