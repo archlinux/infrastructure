@@ -22,7 +22,7 @@ header() {
   shift
   pad=$((cols/2 - ${#:-"$pkgname $epoch$pkgver-$pkgrel $arch${1:+ }$*"}))
   (( pad > 0 )) || pad=0
-  print -P "%B$pkgname %F{10}$epoch$pkgver-$pkgrel%f $arch${1:+ }$*%b${(r:pad:)}"
+  print -P "%B$pkgname %F{10}$epoch$pkgver-$pkgrel%f %F{12}$arch%f${1:+ }$*%b${(r:pad:)}"
 }
 
 headers() {
