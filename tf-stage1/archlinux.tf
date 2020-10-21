@@ -918,6 +918,7 @@ resource "hcloud_server" "bbs" {
   }
 }
 
+
 resource "hcloud_rdns" "gitlab_ipv4" {
   server_id  = hcloud_server.gitlab.id
   ip_address = hcloud_server.gitlab.ipv4_address
@@ -938,6 +939,13 @@ resource "hcloud_server" "gitlab" {
     ignore_changes = [image]
   }
 }
+
+resource "hcloud_volume" "gitlab" {
+  name = "gitlab"
+  size = 1000
+  server_id = hcloud_server.gitlab.id
+}
+
 
 resource "hcloud_rdns" "matrix_ipv4" {
   server_id  = hcloud_server.matrix.id
