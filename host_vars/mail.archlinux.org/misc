@@ -1,0 +1,8 @@
+filesystem: btrfs
+
+mail_domain: "mail.archlinux.org"
+
+fail2ban_jails:
+  sshd: true
+  postfix: true
+  dovecot: true
