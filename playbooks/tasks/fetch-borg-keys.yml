@@ -4,7 +4,7 @@
   hosts: 127.0.0.1
   tasks:
       - name: create borg-keys directory
-        file: path="{{ playbook_dir }}/../../borg-keys/" state=directory mode=preserve  # noqa 208
+        file: path="{{ playbook_dir }}/../../borg-keys/" state=directory # noqa 208
 
 - name: fetch borg keys
   hosts: borg_clients
