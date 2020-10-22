@@ -10,54 +10,54 @@ data "external" "vault_keycloak" {
     "vault_keycloak_admin_password",
     "vault_keycloak_smtp_user",
     "vault_keycloak_smtp_password",
-    "--format", "json"]
+  "--format", "json"]
 }
 
 data "external" "vault_google" {
   program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_google.yml",
     "vault_google_recaptcha_site_key",
     "vault_google_recaptcha_secret_key",
-    "--format", "json"]
+  "--format", "json"]
 }
 
 data "external" "vault_github" {
   program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_github.yml",
     "vault_github_oauth_app_client_id",
     "vault_github_oauth_app_client_secret",
-    "--format", "json"]
+  "--format", "json"]
 }
 
 data "external" "vault_monitoring" {
   program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_monitoring.yml",
     "vault_monitoring_grafana_client_secret",
-    "--format", "json"]
+  "--format", "json"]
 }
 
 provider "keycloak" {
   client_id = "admin-cli"
-  username = data.external.vault_keycloak.result.vault_keycloak_admin_user
-  password = data.external.vault_keycloak.result.vault_keycloak_admin_password
-  url = "https://accounts.archlinux.org"
+  username  = data.external.vault_keycloak.result.vault_keycloak_admin_user
+  password  = data.external.vault_keycloak.result.vault_keycloak_admin_password
+  url       = "https://accounts.archlinux.org"
 }
 
 variable "gitlab_instance" {
   default = {
-    root_url = "https://gitlab.archlinux.org"
+    root_url          = "https://gitlab.archlinux.org"
     saml_redirect_url = "https://gitlab.archlinux.org/users/auth/saml/callback"
   }
 }
 
 resource "keycloak_realm" "archlinux" {
-  realm = "archlinux"
-  enabled = true
-  remember_me = true
-  display_name = "Arch Linux"
+  realm             = "archlinux"
+  enabled           = true
+  remember_me       = true
+  display_name      = "Arch Linux"
   display_name_html = "<div class=\"kc-logo-text\"><span>Arch Linux</span></div>"
 
-  reset_password_allowed = true
-  verify_email = true
+  reset_password_allowed   = true
+  verify_email             = true
   login_with_email_allowed = true
-  password_policy = "length(8) and notUsername"
+  password_policy          = "length(8) and notUsername"
 
   web_authn_policy {
     relying_party_entity_name = "Arch Linux SSO"
@@ -65,21 +65,21 @@ resource "keycloak_realm" "archlinux" {
     signature_algorithms      = ["ES256", "RS256", "ES512", "RS512"]
   }
 
-  login_theme = "archlinux"
+  login_theme   = "archlinux"
   account_theme = "archlinux"
-  admin_theme = "archlinux"
+  admin_theme   = "archlinux"
 
-  browser_flow = "Arch Browser"
-  registration_flow = "Arch Registration"
+  browser_flow           = "Arch Browser"
+  registration_flow      = "Arch Registration"
   reset_credentials_flow = "Arch Reset Credentials"
 
   smtp_server {
-    host = "mail.archlinux.org"
-    from = "accounts@archlinux.org"
-    port = "587"
+    host              = "mail.archlinux.org"
+    from              = "accounts@archlinux.org"
+    port              = "587"
     from_display_name = "Arch Linux Accounts"
-    ssl = false
-    starttls = true
+    ssl               = false
+    starttls          = true
 
     auth {
       username = data.external.vault_keycloak.result.vault_keycloak_smtp_user
@@ -98,70 +98,70 @@ resource "keycloak_realm" "archlinux" {
       strict_transport_security           = "max-age=31536000; includeSubDomains"
     }
     brute_force_detection {
-      permanent_lockout                 = false
-      max_login_failures                = 30
-      wait_increment_seconds            = 60
-      quick_login_check_milli_seconds   = 1000
-      minimum_quick_login_wait_seconds  = 60
-      max_failure_wait_seconds          = 900
-      failure_reset_time_seconds        = 43200
+      permanent_lockout                = false
+      max_login_failures               = 30
+      wait_increment_seconds           = 60
+      quick_login_check_milli_seconds  = 1000
+      minimum_quick_login_wait_seconds = 60
+      max_failure_wait_seconds         = 900
+      failure_reset_time_seconds       = 43200
     }
   }
 }
 
 resource "keycloak_required_action" "configure_otp" {
-  realm_id  = "archlinux"
-  alias     = "CONFIGURE_TOTP"
-  enabled   = true
-  name      = "Configure OTP"
-  priority  = 0
+  realm_id = "archlinux"
+  alias    = "CONFIGURE_TOTP"
+  enabled  = true
+  name     = "Configure OTP"
+  priority = 0
 }
 
 resource "keycloak_required_action" "update_password" {
-  realm_id  = "archlinux"
-  alias     = "UPDATE_PASSWORD"
-  enabled   = true
-  name      = "Update Password"
-  priority  = 20
+  realm_id = "archlinux"
+  alias    = "UPDATE_PASSWORD"
+  enabled  = true
+  name     = "Update Password"
+  priority = 20
 }
 
 resource "keycloak_required_action" "update_profile" {
-  realm_id  = "archlinux"
-  alias     = "UPDATE_PROFILE"
-  enabled   = true
-  name      = "Update Profile"
-  priority  = 30
+  realm_id = "archlinux"
+  alias    = "UPDATE_PROFILE"
+  enabled  = true
+  name     = "Update Profile"
+  priority = 30
 }
 
 resource "keycloak_required_action" "verify_email" {
-  realm_id  = "archlinux"
-  alias     = "VERIFY_EMAIL"
-  enabled   = true
-  name      = "Verify Email"
-  priority  = 40
+  realm_id = "archlinux"
+  alias    = "VERIFY_EMAIL"
+  enabled  = true
+  name     = "Verify Email"
+  priority = 40
 }
 
 resource "keycloak_required_action" "update_user_locale" {
-  realm_id  = "archlinux"
-  alias     = "update_user_locale"
-  enabled   = true
-  name      = "Update User Locale"
-  priority  = 50
+  realm_id = "archlinux"
+  alias    = "update_user_locale"
+  enabled  = true
+  name     = "Update User Locale"
+  priority = 50
 }
 
 resource "keycloak_required_action" "webauthn_register" {
-  realm_id  = "archlinux"
-  alias     = "webauthn-register"
-  enabled   = true
-  name      = "Webauthn Register"
-  priority  = 60
+  realm_id = "archlinux"
+  alias    = "webauthn-register"
+  enabled  = true
+  name     = "Webauthn Register"
+  priority = 60
 }
 
 resource "keycloak_realm_events" "realm_events" {
   realm_id = "archlinux"
 
-  events_enabled       = true
-  events_expiration    = 7889238  # 3 months
+  events_enabled    = true
+  events_expiration = 7889238 # 3 months
 
   admin_events_enabled         = true
   admin_events_details_enabled = true
@@ -171,47 +171,47 @@ resource "keycloak_realm_events" "realm_events" {
   ]
 
   events_listeners = [
-    "jboss-logging", # keycloak enables the 'jboss-logging' event listener by default.
+    "jboss-logging",    # keycloak enables the 'jboss-logging' event listener by default.
     "metrics-listener", # enable the prometheus exporter (keycloak-metrics-spi)
   ]
 }
 
 resource "keycloak_oidc_identity_provider" "realm_identity_provider" {
-  realm = "archlinux"
-  alias = "github"
-  provider_id = "github"
-  authorization_url = "https://accounts.archlinux.org/auth/realms/archlinux/broker/github/endpoint"
-  client_id = data.external.vault_github.result.vault_github_oauth_app_client_id
-  client_secret = data.external.vault_github.result.vault_github_oauth_app_client_secret
-  token_url = ""
-  default_scopes = ""
+  realm                        = "archlinux"
+  alias                        = "github"
+  provider_id                  = "github"
+  authorization_url            = "https://accounts.archlinux.org/auth/realms/archlinux/broker/github/endpoint"
+  client_id                    = data.external.vault_github.result.vault_github_oauth_app_client_id
+  client_secret                = data.external.vault_github.result.vault_github_oauth_app_client_secret
+  token_url                    = ""
+  default_scopes               = ""
   post_broker_login_flow_alias = keycloak_authentication_flow.arch_post_ipr_flow.alias
-  enabled = false
-  trust_email = false
-  store_token = false
-  backchannel_supported = false
+  enabled                      = false
+  trust_email                  = false
+  store_token                  = false
+  backchannel_supported        = false
   extra_config = {
     syncMode = "IMPORT"
   }
 }
 
 resource "keycloak_saml_client" "saml_gitlab" {
-  realm_id = "archlinux"
+  realm_id  = "archlinux"
   client_id = "saml_gitlab"
 
-  name = "Arch Linux Accounts"
+  name    = "Arch Linux Accounts"
   enabled = true
 
   signature_algorithm = "RSA_SHA256"
-  sign_documents = true
-  sign_assertions = true
+  sign_documents      = true
+  sign_assertions     = true
 
   valid_redirect_uris = [
     var.gitlab_instance.saml_redirect_url
   ]
 
-  root_url = var.gitlab_instance.root_url
-  base_url = "/"
+  root_url                   = var.gitlab_instance.root_url
+  base_url                   = "/"
   master_saml_processing_url = var.gitlab_instance.saml_redirect_url
   idp_initiated_sso_url_name = "saml_gitlab"
 
@@ -221,61 +221,61 @@ resource "keycloak_saml_client" "saml_gitlab" {
 // This client is only used for the return URL redirect hack!
 // See roles/gitlab/tasks/main.yml
 resource "keycloak_openid_client" "openid_gitlab" {
-  realm_id = "archlinux"
+  realm_id  = "archlinux"
   client_id = "openid_gitlab"
 
-  name = "Arch Linux Accounts"
+  name    = "Arch Linux Accounts"
   enabled = true
 
-  access_type = "PUBLIC"
+  access_type           = "PUBLIC"
   standard_flow_enabled = true
-  full_scope_allowed = false
+  full_scope_allowed    = false
   valid_redirect_uris = [
     "https://gitlab.archlinux.org"
   ]
 }
 
 resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_email" {
-  realm_id = "archlinux"
+  realm_id  = "archlinux"
   client_id = keycloak_saml_client.saml_gitlab.id
 
-  name = "email"
-  user_property = "Email"
-  friendly_name = "Email"
-  saml_attribute_name = "email"
+  name                       = "email"
+  user_property              = "Email"
+  friendly_name              = "Email"
+  saml_attribute_name        = "email"
   saml_attribute_name_format = "Basic"
 }
 
 resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_first_name" {
-  realm_id = "archlinux"
+  realm_id  = "archlinux"
   client_id = keycloak_saml_client.saml_gitlab.id
 
-  name = "first_name"
-  user_property = "FirstName"
-  friendly_name = "First Name"
-  saml_attribute_name = "first_name"
+  name                       = "first_name"
+  user_property              = "FirstName"
+  friendly_name              = "First Name"
+  saml_attribute_name        = "first_name"
   saml_attribute_name_format = "Basic"
 }
 
 resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_last_name" {
-  realm_id = "archlinux"
+  realm_id  = "archlinux"
   client_id = keycloak_saml_client.saml_gitlab.id
 
-  name = "last_name"
-  user_property = "LastName"
-  friendly_name = "Last Name"
-  saml_attribute_name = "last_name"
+  name                       = "last_name"
+  user_property              = "LastName"
+  friendly_name              = "Last Name"
+  saml_attribute_name        = "last_name"
   saml_attribute_name_format = "Basic"
 }
 
 resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_username" {
-  realm_id = "archlinux"
+  realm_id  = "archlinux"
   client_id = keycloak_saml_client.saml_gitlab.id
 
-  name = "username"
-  user_property = "Username"
-  friendly_name = "Username"
-  saml_attribute_name = "username"
+  name                       = "username"
+  user_property              = "Username"
+  friendly_name              = "Username"
+  saml_attribute_name        = "username"
   saml_attribute_name_format = "Basic"
 }
 
@@ -305,101 +305,101 @@ resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_username" {
 //    |- Testers
 resource "keycloak_group" "staff" {
   realm_id = "archlinux"
-  name = "Arch Linux Staff"
+  name     = "Arch Linux Staff"
 }
 
 resource "keycloak_group" "staff_groups" {
   for_each = toset(["DevOps", "Developers", "Trusted Users", "Wiki", "Forum", "Security Team", "IRC", "Archweb", "Bug Wranglers"])
 
-  realm_id = "archlinux"
+  realm_id  = "archlinux"
   parent_id = keycloak_group.staff.id
-  name = each.value
+  name      = each.value
 }
 
 resource "keycloak_group" "staff_wiki_groups" {
   for_each = toset(["Admins"])
 
-  realm_id = "archlinux"
+  realm_id  = "archlinux"
   parent_id = keycloak_group.staff_groups["Wiki"].id
-  name = each.value
+  name      = each.value
 }
 
 resource "keycloak_group" "staff_forum_groups" {
   for_each = toset(["Admins", "Mods"])
 
-  realm_id = "archlinux"
+  realm_id  = "archlinux"
   parent_id = keycloak_group.staff_groups["Forum"].id
-  name = each.value
+  name      = each.value
 }
 
 resource "keycloak_group" "staff_securityteam_groups" {
   for_each = toset(["Admins", "Members"])
 
-  realm_id = "archlinux"
+  realm_id  = "archlinux"
   parent_id = keycloak_group.staff_groups["Security Team"].id
-  name = each.value
+  name      = each.value
 }
 
 resource "keycloak_group" "staff_irc_groups" {
   for_each = toset(["Ops"])
 
-  realm_id = "archlinux"
+  realm_id  = "archlinux"
   parent_id = keycloak_group.staff_groups["IRC"].id
-  name = each.value
+  name      = each.value
 }
 
 resource "keycloak_group" "staff_archweb_groups" {
   for_each = toset(["Mirrorlist Maintainers"])
 
-  realm_id = "archlinux"
+  realm_id  = "archlinux"
   parent_id = keycloak_group.staff_groups["Archweb"].id
-  name = each.value
+  name      = each.value
 }
 
 resource "keycloak_group" "externalcontributors" {
   realm_id = "archlinux"
-  name = "External Contributors"
+  name     = "External Contributors"
 }
 
 resource "keycloak_group" "externalcontributors_groups" {
   for_each = toset(["Security Team", "Archweb"])
 
-  realm_id = "archlinux"
+  realm_id  = "archlinux"
   parent_id = keycloak_group.externalcontributors.id
-  name = each.value
+  name      = each.value
 }
 
 resource "keycloak_group" "externalcontributors_securityteam_groups" {
   for_each = toset(["Reporters"])
 
-  realm_id = "archlinux"
+  realm_id  = "archlinux"
   parent_id = keycloak_group.externalcontributors_groups["Security Team"].id
-  name = each.value
+  name      = each.value
 }
 
 resource "keycloak_group" "externalcontributors_archweb_groups" {
   for_each = toset(["Testers"])
 
-  realm_id = "archlinux"
+  realm_id  = "archlinux"
   parent_id = keycloak_group.externalcontributors_groups["Archweb"].id
-  name = each.value
+  name      = each.value
 }
 
 resource "keycloak_role" "devops" {
-  realm_id = "archlinux"
-  name = "DevOps"
+  realm_id    = "archlinux"
+  name        = "DevOps"
   description = "Role held by members of the DevOps group"
 }
 
 resource "keycloak_role" "staff" {
-  realm_id = "archlinux"
-  name = "Staff"
+  realm_id    = "archlinux"
+  name        = "Staff"
   description = "Role held by all Arch Linux staff"
 }
 
 resource "keycloak_role" "externalcontributor" {
-  realm_id = "archlinux"
-  name = "External Contributor"
+  realm_id    = "archlinux"
+  name        = "External Contributor"
   description = "Role held by external contributors working on Arch Linux projects without further access"
 }
 
@@ -429,59 +429,59 @@ resource "keycloak_group_roles" "externalcontributor" {
 
 // Add new custom registration flow with reCAPTCHA
 resource "keycloak_authentication_flow" "arch_registration_flow" {
-  realm_id = "archlinux"
-  alias = "Arch Registration"
+  realm_id    = "archlinux"
+  alias       = "Arch Registration"
   description = "Customized Registration flow that forces enables ReCAPTCHA."
 }
 
 resource "keycloak_authentication_subflow" "registration_form" {
-  realm_id = "archlinux"
-  alias = "Registration Form"
+  realm_id          = "archlinux"
+  alias             = "Registration Form"
   parent_flow_alias = keycloak_authentication_flow.arch_registration_flow.alias
-  provider_id = "form-flow"
-  authenticator = "registration-page-form"
-  requirement = "REQUIRED"
+  provider_id       = "form-flow"
+  authenticator     = "registration-page-form"
+  requirement       = "REQUIRED"
 }
 
 resource "keycloak_authentication_execution" "registration_user_creation" {
-  realm_id = "archlinux"
+  realm_id          = "archlinux"
   parent_flow_alias = keycloak_authentication_subflow.registration_form.alias
-  authenticator = "registration-user-creation"
-  requirement = "REQUIRED"
+  authenticator     = "registration-user-creation"
+  requirement       = "REQUIRED"
 }
 
 resource "keycloak_authentication_execution" "registration_profile_action" {
-  realm_id = "archlinux"
+  realm_id          = "archlinux"
   parent_flow_alias = keycloak_authentication_subflow.registration_form.alias
-  authenticator = "registration-profile-action"
-  requirement = "REQUIRED"
-  depends_on = [keycloak_authentication_execution.registration_user_creation]
+  authenticator     = "registration-profile-action"
+  requirement       = "REQUIRED"
+  depends_on        = [keycloak_authentication_execution.registration_user_creation]
 }
 
 resource "keycloak_authentication_execution" "registration_password_action" {
-  realm_id = "archlinux"
+  realm_id          = "archlinux"
   parent_flow_alias = keycloak_authentication_subflow.registration_form.alias
-  authenticator = "registration-password-action"
-  requirement = "REQUIRED"
-  depends_on = [keycloak_authentication_execution.registration_profile_action]
+  authenticator     = "registration-password-action"
+  requirement       = "REQUIRED"
+  depends_on        = [keycloak_authentication_execution.registration_profile_action]
 }
 
 resource "keycloak_authentication_execution" "registration_recaptcha_action" {
-  realm_id = "archlinux"
+  realm_id          = "archlinux"
   parent_flow_alias = keycloak_authentication_subflow.registration_form.alias
-  authenticator = "registration-recaptcha-action"
-  requirement = "REQUIRED"
-  depends_on = [keycloak_authentication_execution.registration_password_action]
+  authenticator     = "registration-recaptcha-action"
+  requirement       = "REQUIRED"
+  depends_on        = [keycloak_authentication_execution.registration_password_action]
 }
 
 resource "keycloak_authentication_execution_config" "registration_recaptcha_action_config" {
-  realm_id = "archlinux"
-  alias = "reCAPTCHA config"
+  realm_id     = "archlinux"
+  alias        = "reCAPTCHA config"
   execution_id = keycloak_authentication_execution.registration_recaptcha_action.id
   config = {
     "useRecaptchaNet" = "false",
-    "site.key" = data.external.vault_google.result.vault_google_recaptcha_site_key
-    "secret" = data.external.vault_google.result.vault_google_recaptcha_secret_key
+    "site.key"        = data.external.vault_google.result.vault_google_recaptcha_site_key
+    "secret"          = data.external.vault_google.result.vault_google_recaptcha_secret_key
   }
 }
 
@@ -511,78 +511,78 @@ resource "keycloak_authentication_execution_config" "registration_recaptcha_acti
 // tables on the Keycloak Postgres DB! Quality Red Hat software right there.
 
 resource "keycloak_authentication_flow" "arch_browser_flow" {
-  realm_id = "archlinux"
-  alias = "Arch Browser"
+  realm_id    = "archlinux"
+  alias       = "Arch Browser"
   description = "Customized Browser flow that forces 2FA."
 }
 
 resource "keycloak_authentication_execution" "cookie" {
-  realm_id = "archlinux"
+  realm_id          = "archlinux"
   parent_flow_alias = keycloak_authentication_flow.arch_browser_flow.alias
-  authenticator = "auth-cookie"
-  requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_flow.arch_browser_flow]
+  authenticator     = "auth-cookie"
+  requirement       = "ALTERNATIVE"
+  depends_on        = [keycloak_authentication_flow.arch_browser_flow]
 }
 
 resource "keycloak_authentication_execution" "identity_provider_redirector" {
-  realm_id = "archlinux"
+  realm_id          = "archlinux"
   parent_flow_alias = keycloak_authentication_flow.arch_browser_flow.alias
-  authenticator = "identity-provider-redirector"
-  requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution.cookie]
+  authenticator     = "identity-provider-redirector"
+  requirement       = "ALTERNATIVE"
+  depends_on        = [keycloak_authentication_execution.cookie]
 }
 
 resource "keycloak_authentication_subflow" "password_and_2fa" {
-  realm_id = "archlinux"
-  alias = "Password and 2FA subflow"
+  realm_id          = "archlinux"
+  alias             = "Password and 2FA subflow"
   parent_flow_alias = keycloak_authentication_flow.arch_browser_flow.alias
-  requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution.identity_provider_redirector]
+  requirement       = "ALTERNATIVE"
+  depends_on        = [keycloak_authentication_execution.identity_provider_redirector]
 }
 
 resource "keycloak_authentication_execution" "username_password_form" {
-  realm_id = "archlinux"
+  realm_id          = "archlinux"
   parent_flow_alias = keycloak_authentication_subflow.password_and_2fa.alias
-  authenticator = "auth-username-password-form"
-  requirement = "REQUIRED"
+  authenticator     = "auth-username-password-form"
+  requirement       = "REQUIRED"
 }
 
 resource "keycloak_authentication_subflow" "_2fa" {
-  realm_id = "archlinux"
-  alias = "2FA subflow"
+  realm_id          = "archlinux"
+  alias             = "2FA subflow"
   parent_flow_alias = keycloak_authentication_subflow.password_and_2fa.alias
-  requirement = "REQUIRED"
-  depends_on = [keycloak_authentication_execution.username_password_form]
+  requirement       = "REQUIRED"
+  depends_on        = [keycloak_authentication_execution.username_password_form]
 }
 
 resource "keycloak_authentication_execution" "webauthn_form" {
-  realm_id = "archlinux"
+  realm_id          = "archlinux"
   parent_flow_alias = keycloak_authentication_subflow._2fa.alias
-  authenticator = "webauthn-authenticator"
-  requirement = "ALTERNATIVE"
+  authenticator     = "webauthn-authenticator"
+  requirement       = "ALTERNATIVE"
 }
 
 resource "keycloak_authentication_execution" "otp_form" {
-  realm_id = "archlinux"
+  realm_id          = "archlinux"
   parent_flow_alias = keycloak_authentication_subflow._2fa.alias
-  authenticator = "auth-otp-form"
-  requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution.webauthn_form]
+  authenticator     = "auth-otp-form"
+  requirement       = "ALTERNATIVE"
+  depends_on        = [keycloak_authentication_execution.webauthn_form]
 }
 
 resource "keycloak_authentication_subflow" "otp_default" {
-  realm_id = "archlinux"
-  alias = "OTP Default Subflow"
+  realm_id          = "archlinux"
+  alias             = "OTP Default Subflow"
   parent_flow_alias = keycloak_authentication_subflow._2fa.alias
-  requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution.otp_form]
+  requirement       = "ALTERNATIVE"
+  depends_on        = [keycloak_authentication_execution.otp_form]
 }
 
 resource "keycloak_authentication_execution" "otp_default_form" {
-  realm_id = "archlinux"
+  realm_id          = "archlinux"
   parent_flow_alias = keycloak_authentication_subflow.otp_default.alias
-  authenticator = "auth-otp-form"
-  requirement = "REQUIRED"
+  authenticator     = "auth-otp-form"
+  requirement       = "REQUIRED"
 }
 
 // Add new custom post-Identity Provider login flow with forced OTP for some user roles
@@ -594,39 +594,39 @@ resource "keycloak_authentication_execution" "otp_default_form" {
 //    |- OTP Form (R)
 
 resource "keycloak_authentication_flow" "arch_post_ipr_flow" {
-  realm_id = "archlinux"
-  alias = "Arch Post IPR Flow"
+  realm_id    = "archlinux"
+  alias       = "Arch Post IPR Flow"
   description = "Post IPR login flow that forces 2FA."
 }
 
 resource "keycloak_authentication_execution" "ipr_webauthn_form" {
-  realm_id = "archlinux"
+  realm_id          = "archlinux"
   parent_flow_alias = keycloak_authentication_flow.arch_post_ipr_flow.alias
-  authenticator = "webauthn-authenticator"
-  requirement = "ALTERNATIVE"
+  authenticator     = "webauthn-authenticator"
+  requirement       = "ALTERNATIVE"
 }
 
 resource "keycloak_authentication_execution" "ipr_otp_form" {
-  realm_id = "archlinux"
+  realm_id          = "archlinux"
   parent_flow_alias = keycloak_authentication_flow.arch_post_ipr_flow.alias
-  authenticator = "auth-otp-form"
-  requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution.ipr_webauthn_form]
+  authenticator     = "auth-otp-form"
+  requirement       = "ALTERNATIVE"
+  depends_on        = [keycloak_authentication_execution.ipr_webauthn_form]
 }
 
 resource "keycloak_authentication_subflow" "ipr_otp_default" {
-  realm_id = "archlinux"
-  alias = "IPR OTP Default Subflow"
+  realm_id          = "archlinux"
+  alias             = "IPR OTP Default Subflow"
   parent_flow_alias = keycloak_authentication_flow.arch_post_ipr_flow.alias
-  requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution.ipr_otp_form]
+  requirement       = "ALTERNATIVE"
+  depends_on        = [keycloak_authentication_execution.ipr_otp_form]
 }
 
 resource "keycloak_authentication_execution" "ipr_otp_default_form" {
-  realm_id = "archlinux"
+  realm_id          = "archlinux"
   parent_flow_alias = keycloak_authentication_subflow.ipr_otp_default.alias
-  authenticator = "auth-otp-form"
-  requirement = "REQUIRED"
+  authenticator     = "auth-otp-form"
+  requirement       = "REQUIRED"
 }
 
 // Add new custom Reset Credentials flow that asks users to verify 2FA before resetting their password
@@ -644,106 +644,106 @@ resource "keycloak_authentication_execution" "ipr_otp_default_form" {
 // |- Reset Password (R)
 
 resource "keycloak_authentication_flow" "arch_reset_credentials_flow" {
-  realm_id = "archlinux"
-  alias = "Arch Reset Credentials"
+  realm_id    = "archlinux"
+  alias       = "Arch Reset Credentials"
   description = "Reset credentials flow that forces 2FA verification before password reset."
 }
 
 resource "keycloak_authentication_execution" "rc_choose_user" {
-  realm_id = "archlinux"
+  realm_id          = "archlinux"
   parent_flow_alias = keycloak_authentication_flow.arch_reset_credentials_flow.alias
-  authenticator = "reset-credentials-choose-user"
-  requirement = "REQUIRED"
+  authenticator     = "reset-credentials-choose-user"
+  requirement       = "REQUIRED"
 }
 
 resource "keycloak_authentication_execution" "rc_reset_email" {
-  realm_id = "archlinux"
+  realm_id          = "archlinux"
   parent_flow_alias = keycloak_authentication_flow.arch_reset_credentials_flow.alias
-  authenticator = "reset-credential-email"
-  requirement = "REQUIRED"
-  depends_on = [keycloak_authentication_execution.rc_choose_user]
+  authenticator     = "reset-credential-email"
+  requirement       = "REQUIRED"
+  depends_on        = [keycloak_authentication_execution.rc_choose_user]
 }
 
 resource "keycloak_authentication_subflow" "rc_conditional_2fa" {
-  realm_id = "archlinux"
-  alias = "Conditional Reset Credentials 2FA Subflow"
+  realm_id          = "archlinux"
+  alias             = "Conditional Reset Credentials 2FA Subflow"
   parent_flow_alias = keycloak_authentication_flow.arch_reset_credentials_flow.alias
-  requirement = "CONDITIONAL"
-  depends_on = [keycloak_authentication_execution.rc_choose_user]
+  requirement       = "CONDITIONAL"
+  depends_on        = [keycloak_authentication_execution.rc_choose_user]
 }
 
 resource "keycloak_authentication_execution" "rc_2fa_condition" {
-  realm_id = "archlinux"
+  realm_id          = "archlinux"
   parent_flow_alias = keycloak_authentication_subflow.rc_conditional_2fa.alias
-  authenticator = "conditional-user-configured"
-  requirement = "REQUIRED"
+  authenticator     = "conditional-user-configured"
+  requirement       = "REQUIRED"
 }
 
 resource "keycloak_authentication_subflow" "rc_2fa" {
-  realm_id = "archlinux"
-  alias = "Reset Credentials 2FA Subflow"
+  realm_id          = "archlinux"
+  alias             = "Reset Credentials 2FA Subflow"
   parent_flow_alias = keycloak_authentication_subflow.rc_conditional_2fa.alias
-  requirement = "REQUIRED"
-  depends_on = [keycloak_authentication_execution.rc_2fa_condition]
+  requirement       = "REQUIRED"
+  depends_on        = [keycloak_authentication_execution.rc_2fa_condition]
 }
 
 resource "keycloak_authentication_execution" "rc_webauthn_form" {
-  realm_id = "archlinux"
+  realm_id          = "archlinux"
   parent_flow_alias = keycloak_authentication_subflow.rc_2fa.alias
-  authenticator = "webauthn-authenticator"
-  requirement = "ALTERNATIVE"
+  authenticator     = "webauthn-authenticator"
+  requirement       = "ALTERNATIVE"
 }
 
 resource "keycloak_authentication_execution" "rc_otp_form" {
-  realm_id = "archlinux"
+  realm_id          = "archlinux"
   parent_flow_alias = keycloak_authentication_subflow.rc_2fa.alias
-  authenticator = "auth-otp-form"
-  requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution.rc_webauthn_form]
+  authenticator     = "auth-otp-form"
+  requirement       = "ALTERNATIVE"
+  depends_on        = [keycloak_authentication_execution.rc_webauthn_form]
 }
 
 resource "keycloak_authentication_subflow" "rc_otp_default" {
-  realm_id = "archlinux"
-  alias = "Reset Credentials OTP Default Subflow"
+  realm_id          = "archlinux"
+  alias             = "Reset Credentials OTP Default Subflow"
   parent_flow_alias = keycloak_authentication_subflow.rc_2fa.alias
-  requirement = "ALTERNATIVE"
-  depends_on = [keycloak_authentication_execution.rc_otp_form]
+  requirement       = "ALTERNATIVE"
+  depends_on        = [keycloak_authentication_execution.rc_otp_form]
 }
 
 resource "keycloak_authentication_execution" "rc_otp_default_form" {
-  realm_id = "archlinux"
+  realm_id          = "archlinux"
   parent_flow_alias = keycloak_authentication_subflow.rc_otp_default.alias
-  authenticator = "auth-otp-form"
-  requirement = "REQUIRED"
+  authenticator     = "auth-otp-form"
+  requirement       = "REQUIRED"
 }
 
 resource "keycloak_authentication_execution" "rc_reset_password" {
-  realm_id = "archlinux"
+  realm_id          = "archlinux"
   parent_flow_alias = keycloak_authentication_flow.arch_reset_credentials_flow.alias
-  authenticator = "reset-password"
-  requirement = "REQUIRED"
-  depends_on = [keycloak_authentication_subflow.rc_conditional_2fa]
+  authenticator     = "reset-password"
+  requirement       = "REQUIRED"
+  depends_on        = [keycloak_authentication_subflow.rc_conditional_2fa]
 }
 
 output "gitlab_saml_configuration" {
   value = {
-    issuer = keycloak_saml_client.saml_gitlab.client_id
-    assertion_consumer_service_url = var.gitlab_instance.saml_redirect_url
-    admin_groups = [keycloak_role.devops.name]
-    idp_sso_target_url = "https://accounts.archlinux.org/auth/realms/archlinux/protocol/saml/clients/${keycloak_saml_client.saml_gitlab.client_id}"
+    issuer                          = keycloak_saml_client.saml_gitlab.client_id
+    assertion_consumer_service_url  = var.gitlab_instance.saml_redirect_url
+    admin_groups                    = [keycloak_role.devops.name]
+    idp_sso_target_url              = "https://accounts.archlinux.org/auth/realms/archlinux/protocol/saml/clients/${keycloak_saml_client.saml_gitlab.client_id}"
     signing_certificate_fingerprint = keycloak_saml_client.saml_gitlab.signing_certificate
   }
 }
 
 resource "keycloak_openid_client" "grafana_openid_client" {
-  realm_id = "archlinux"
-  client_id = "openid_grafana"
-  client_secret   = data.external.vault_monitoring.result.vault_monitoring_grafana_client_secret
+  realm_id      = "archlinux"
+  client_id     = "openid_grafana"
+  client_secret = data.external.vault_monitoring.result.vault_monitoring_grafana_client_secret
 
-  name = "Grafana"
+  name    = "Grafana"
   enabled = true
 
-  access_type = "CONFIDENTIAL"
+  access_type           = "CONFIDENTIAL"
   standard_flow_enabled = true
   valid_redirect_uris = [
     "https://monitoring.archlinux.org",
@@ -752,12 +752,12 @@ resource "keycloak_openid_client" "grafana_openid_client" {
 }
 
 resource "keycloak_openid_user_realm_role_protocol_mapper" "user_realm_role_mapper" {
-  realm_id        = "archlinux"
-  client_id       = keycloak_openid_client.grafana_openid_client.id
-  name            = "user realms"
+  realm_id  = "archlinux"
+  client_id = keycloak_openid_client.grafana_openid_client.id
+  name      = "user realms"
 
-  claim_name      = "roles"
-  multivalued     = true
-  add_to_id_token = false
+  claim_name          = "roles"
+  multivalued         = true
+  add_to_id_token     = false
   add_to_access_token = false
 }
