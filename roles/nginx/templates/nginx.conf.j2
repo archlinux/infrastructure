@@ -70,6 +70,8 @@ http {
 
     http2_max_field_size 8k;
 
+    server_tokens off;
+
     index index.php index.html index.htm;
 
     access_log syslog:server=unix:/dev/log,nohostname,tag=nginx_http main;
