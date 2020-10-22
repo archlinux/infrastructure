@@ -722,6 +722,7 @@ resource "hetznerdns_record" "archlinux_org_luna2_domainkey_lists_cname" {
 resource "hetznerdns_record" "archlinux_org_mail_cname" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "mail"
+  ttl     = 600
   value   = "orion"
   type    = "CNAME"
 }
