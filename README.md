@@ -261,7 +261,7 @@ Medium-fast-ish packet.net box with Debian on it. Is currently maintained manual
 
   Prometheus and Grafana server which collects performance/metrics from our services and runs alertmanager.
 
-### Services
+#### Services
   - Alertmanager
   - [Grafana](https://monitoring.archlinux.org)
   - Prometheus
