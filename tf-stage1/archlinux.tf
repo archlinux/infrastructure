@@ -184,7 +184,7 @@ resource "hetznerdns_record" "archlinux_org_origin_mx" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "@"
   ttl     = 600
-  value   = "10 mx"
+  value   = "10 mail"
   type    = "MX"
 }
 
