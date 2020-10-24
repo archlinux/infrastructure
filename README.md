@@ -290,45 +290,10 @@ Medium-fast-ish packet.net box with Debian on it. Is currently maintained manual
 
 ## Backup documentation
 
-Adding a new server to be backed up goes as following:
+We use BorgBackup for all of our backup needs. We have a primary backup storage as well as an
+additional offsite backup.
 
-* Make sure the new servers host key is synced to `docs/ssh-known_hosts.txt` if not run:
-
-      ansible-playbook playbooks/tasks/sync-ssh-hostkeys.yml
-
-* Add the server to [borg-clients] in hosts
-
-* Run the borg role on u236610.your-storagebox.de to allow the new machine to create backups
-
-      ansibe-playbook playbooks/hetzner_storagebox.yml
-
-* Run the borg role for rsync.net to allow the new machine to create backups
-
-      ansibe-playbook playbooks/rsync.net.yml
-
-* Run the borg role on the new machine to initialize the repository
-
-      ansibe-playbook playbooks/$machine.yml -t borg
-
-Backups should be checked now and then. Some common tasks are listed below.
-You'll have to get the correct username from the vault.
-
-### Listing current backups per server
-
-    borg list ssh://<hetzner_storagebox_username>@u236610.your-storagebox.de:23/~/backup/<hostname>
-    borg list ssh://<rsync_net_username>@prio.ch-s012.rsync.net:22/~/backup/<hostname>
-
-Example
-
-    borg list ssh://<hetzner_storagebox_username>@u236610.your-storagebox.de:23/~/backup/homedir.archlinux.org
-
-### Listing files in a backup
-
-    borg list ssh://<hetzner_storagebox_username>@u236610.your-storagebox.de:23/~/backup/<hostname>::<archive name>
-
-Example
-
-    borg list ssh://<hetzner_storagebox_username>@u236610.your-storagebox.de:23/~/backup/homedir.archlinux.org::20191127-084357
+See [docs/backups.md](./docs/backups.md) for detailed backup information.
 
 ## Updating Gitlab
 
