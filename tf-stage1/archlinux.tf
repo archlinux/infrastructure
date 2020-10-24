@@ -527,6 +527,14 @@ resource "hetznerdns_record" "archlinux_org_mx_aaaa" {
   type    = "AAAA"
 }
 
+resource "hetznerdns_record" "archlinux_org_mx_txt" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "mail"
+  ttl     = 600
+  value   = "v=spf1 include:archlinux.org -all"
+  type    = "TXT"
+}
+
 resource "hetznerdns_record" "archlinux_org_openpgpkey_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "openpgpkey"
