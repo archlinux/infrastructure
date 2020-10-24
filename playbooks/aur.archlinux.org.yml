@@ -17,6 +17,6 @@
     - { role: memcached }
     - { role: uwsgi }
     - { role: borg_client, tags: ["borg"] }
-    - { role: postfix, postfix_relayhost: "orion.archlinux.org" }
+    - { role: postfix, postfix_relayhost: "mail.archlinux.org" }
     - { role: fail2ban }
     - { role: aurweb }
