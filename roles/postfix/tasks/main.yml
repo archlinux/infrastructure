@@ -90,8 +90,8 @@
   notify:
     - postmap relay_passwords
 
-- name: create user account on orion to relay with
-  delegate_to: orion.archlinux.org
+- name: create user account on mail to relay with
+  delegate_to: mail.archlinux.org
   when: postfix_relayhost | length > 0
   user:
     name: "{{ inventory_hostname_short }}"
