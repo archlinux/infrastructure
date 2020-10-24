@@ -184,7 +184,7 @@ resource "hetznerdns_record" "archlinux_org_origin_mx" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "@"
   ttl     = 600
-  value   = "10 mx"
+  value   = "10 mail"
   type    = "MX"
 }
 
@@ -223,7 +223,7 @@ resource "hetznerdns_record" "archlinux_org_origin_txt" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "@"
   ttl     = 600
-  value   = "\"v=spf1 mail ip4:66.211.214.132/28 ip4:5.9.250.164 ip6:2a01:4f8:160:3033::2 ip4:138.201.81.199/32 ip4:88.198.91.70/32 a:aur.archlinux.org a:apollo.archlinux.org ~all\""
+  value   = "\"v=spf1 a:mail ip4:66.211.214.132/28 ip4:5.9.250.164 ip6:2a01:4f8:160:3033::2 ip4:138.201.81.199/32 ip4:88.198.91.70/32 a:aur.archlinux.org a:apollo.archlinux.org ~all\""
   type    = "TXT"
 }
 
