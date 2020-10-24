@@ -183,7 +183,7 @@ resource "hetznerdns_record" "archlinux_org_origin_caa" {
 resource "hetznerdns_record" "archlinux_org_origin_mx" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "@"
-  ttl     = "600"
+  ttl     = "60"
   value   = "10 mx"
   type    = "MX"
 }
@@ -222,7 +222,7 @@ resource "hetznerdns_record" "archlinux_org_origin_ns1" {
 resource "hetznerdns_record" "archlinux_org_origin_txt" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "@"
-  ttl     = "600"
+  ttl     = "60"
   value   = "\"v=spf1 mx ip4:66.211.214.132/28 ip4:5.9.250.164 ip6:2a01:4f8:160:3033::2 ip4:138.201.81.199/32 ip4:88.198.91.70/32 a:aur.archlinux.org a:apollo.archlinux.org ?all\""
   type    = "TXT"
 }
@@ -230,7 +230,7 @@ resource "hetznerdns_record" "archlinux_org_origin_txt" {
 resource "hetznerdns_record" "archlinux_org_origin_apollo_domainkey_txt" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "apollo._domainkey"
-  ttl     = "600"
+  ttl     = "60"
   value   = "\"v=DKIM1; k=rsa; s=email; \" \"p=MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvZIf8SbjC53RDCbMjTEpo0FCuMSShlKWdwWjY1J+RpT3CL/21z4nXqVBYF1orkUScH8Nlabocraqk8lmpNBlKCUV77lk9mRsLkWhg+XjhvQXL1xfH8zAg1CntEZuaIMLUQ+5Gkw6BlO1qDRkmXS9UtV8Jt1rhjRtSrgN5lhztOCbQLRAtzKty/nMeClqsfT3nL2hbDeh+b/rYc\" \"l2veZAqiGcR2/0bnKlt+Nb5lOBY3oZiYLmZ5g+l9UXVjGUq9jGAooIWpQvuRPmin3RX31kXfr1A+mDBEexiOL1dDST2Zx7i9puXbqYH0u0IxBpweHCO5UqWx52mdXBuhs+DCo/JoZAHU/6eRzK+Sps50LgLFSzJJNfGXk5PUKdww2GHbkK3mCYfoFCpB0SADzl42+1w6YZk1yXoPdOHtChfQpCgjtddf1W8Q09pYO1/bn4l0erdFQsWb1K\" \"4wEVOCn+hHWbV42V+J3TyGxQ4AM8KQ1OPvUEabyTyqcO4evBaH7/S2wA91Z9QDjTbKmlNovs5zoxuOM/mPGPUuQMvhjoAP+rg4AwJ3Xwd3GgUcqQflcokayUYdp7F3aKp1NWAR9ibseU/XBYsSF8Ucjqzf4DJFUfrgjHUr97st7g4HUCyXrQO4tyE0ytiX8OFjjIszWLmF+B7Vup9O7k+dNz2Vj2Vyzkq1UCAwEAAQ==\""
   type    = "TXT"
 }
@@ -252,7 +252,7 @@ resource "hetznerdns_record" "archlinux_org_accounts_aaaa" {
 resource "hetznerdns_record" "archlinux_org_apollo_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "apollo"
-  ttl     = "600"
+  ttl     = "60"
   value   = "138.201.81.199"
   type    = "A"
 }
@@ -260,7 +260,7 @@ resource "hetznerdns_record" "archlinux_org_apollo_a" {
 resource "hetznerdns_record" "archlinux_org_apollo_aaaa" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "apollo"
-  ttl     = "600"
+  ttl     = "60"
   value   = "2a01:4f8:172:1d86::1"
   type    = "AAAA"
 }
@@ -289,7 +289,7 @@ resource "hetznerdns_record" "archlinux_org_aur_aaaa" {
 resource "hetznerdns_record" "archlinux_org_aur_mx" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "aur"
-  ttl     = "600"
+  ttl     = "60"
   value   = "10 mx"
   type    = "MX"
 }
@@ -297,7 +297,7 @@ resource "hetznerdns_record" "archlinux_org_aur_mx" {
 resource "hetznerdns_record" "archlinux_org_aur_txt" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "aur"
-  ttl     = "600"
+  ttl     = "60"
   value   = "\"v=spf1 a ?all\""
   type    = "TXT"
 }
@@ -431,7 +431,7 @@ resource "hetznerdns_record" "archlinux_org_lists_aaaa" {
 resource "hetznerdns_record" "archlinux_org_lists_mx" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "lists"
-  ttl     = "600"
+  ttl     = "60"
   value   = "10 luna"
   type    = "MX"
 }
@@ -439,7 +439,7 @@ resource "hetznerdns_record" "archlinux_org_lists_mx" {
 resource "hetznerdns_record" "archlinux_org_luna_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "luna"
-  ttl     = "600"
+  ttl     = "60"
   value   = "5.9.250.164"
   type    = "A"
 }
@@ -447,7 +447,7 @@ resource "hetznerdns_record" "archlinux_org_luna_a" {
 resource "hetznerdns_record" "archlinux_org_luna_aaaa" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "luna"
-  ttl     = "600"
+  ttl     = "60"
   value   = "2a01:4f8:160:3033::2"
   type    = "AAAA"
 }
@@ -455,7 +455,7 @@ resource "hetznerdns_record" "archlinux_org_luna_aaaa" {
 resource "hetznerdns_record" "archlinux_org_luna_txt" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "luna._domainkey"
-  ttl     = "600"
+  ttl     = "60"
   value   = "\"v=DKIM1; k=rsa; s=email; \" \"p=MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvXrAPvtdX8Jrk4zmyk8w9T2zdAJGe7z0+4XHWWiuzH8Zse6S7oXiS9CVaPOsu0TZqHqhuclASU7qh0NXFwWyi2xRPyJOqH2Clu7vHS3j5F4TjURFOp4/EbA0iQu4rbItl4AU11z2pGSEj5SykUsrH+jjdqzNqAG9d4lNvkTs6RRzPF3KhhY+XljaeysEyDSS4ap4E0DYcduSIX\" \"oD1exFv4SEbXThD9PC1u81w4xusnmwmfHtR7aazeqPDP+S+FqDRy2woCaQb/VMbqMYVuWTVKJ2RxFyTKredOOV2c5kzih7GViwoetll/rTqO4aVbeir9K4f6YZg85dSQtVwEat7LV+zBnQwp3ivWkrIk8VEdSsCSaJlgattBiPHsfFFv1xw4qi3h+UvfCGgz35dtlnzd/noGhNARg0Z+kaMSTjy75V1mKx5sCH0o8nAX2XU8akJfLz58Vg\" \"kTx/sfealtwNA0gTy1t1jV8q0OF5RA0IeMRgCzeH2USOZI98W+EAUsGG5653Vzmp3FJRWp1tWJwRJ0M/aZ3ka/G1iTx3rNNcadVk+4q3gz3KnlAlun+m58y8pNWKjYuxmu9xkDRwM/33rv98j0R8HZO7HFL+1vjKkxSEuzmnTQ2O9F76/OsQoDPZ1Z6nJRvK8ts8PQr4ASKohby62+1F1M8U2Xn7u84dYLUCAwEAAQ==\""
   type    = "TXT"
 }
@@ -463,7 +463,7 @@ resource "hetznerdns_record" "archlinux_org_luna_txt" {
 resource "hetznerdns_record" "archlinux_org_luna2_txt" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "luna2._domainkey"
-  ttl     = "600"
+  ttl     = "60"
   value   = "\"v=DKIM1; k=rsa; s=email; \" \"p=MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvXrAPvtdX8Jrk4zmyk8w9T2zdAJGe7z0+4XHWWiuzH8Zse6S7oXiS9CVaPOsu0TZqHqhuclASU7qh0NXFwWyi2xRPyJOqH2Clu7vHS3j5F4TjURFOp4/EbA0iQu4rbItl4AU11z2pGSEj5SykUsrH+jjdqzNqAG9d4lNvkTs6RRzPF3KhhY+XljaeysEyDSS4ap4E0DYcduSIX\" \"oD1exFv4SEbXThD9PC1u81w4xusnmwmfHtR7aazeqPDP+S+FqDRy2woCaQb/VMbqMYVuWTVKJ2RxFyTKredOOV2c5kzih7GViwoetll/rTqO4aVbeir9K4f6YZg85dSQtVwEat7LV+zBnQwp3ivWkrIk8VEdSsCSaJlgattBiPHsfFFv1xw4qi3h+UvfCGgz35dtlnzd/noGhNARg0Z+kaMSTjy75V1mKx5sCH0o8nAX2XU8akJfLz58Vg\" \"kTx/sfealtwNA0gTy1t1jV8q0OF5RA0IeMRgCzeH2USOZI98W+EAUsGG5653Vzmp3FJRWp1tWJwRJ0M/aZ3ka/G1iTx3rNNcadVk+4q3gz3KnlAlun+m58y8pNWKjYuxmu9xkDRwM/33rv98j0R8HZO7HFL+1vjKkxSEuzmnTQ2O9F76/OsQoDPZ1Z6nJRvK8ts8PQr4ASKohby62+1F1M8U2Xn7u84dYLUCAwEAAQ==\""
   type    = "TXT"
 }
@@ -485,7 +485,7 @@ resource "hetznerdns_record" "archlinux_org_master_key_a" {
 resource "hetznerdns_record" "archlinux_org_master_key_mx" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "master-key"
-  ttl     = "600"
+  ttl     = "60"
   value   = "10 mx"
   type    = "MX"
 }
@@ -514,7 +514,7 @@ resource "hetznerdns_record" "archlinux_org_monitoring_aaaa" {
 resource "hetznerdns_record" "archlinux_org_mx_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "mx"
-  ttl     = "600"
+  ttl     = "60"
   value   = "88.198.91.70"
   type    = "A"
 }
@@ -522,7 +522,7 @@ resource "hetznerdns_record" "archlinux_org_mx_a" {
 resource "hetznerdns_record" "archlinux_org_mx_aaaa" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "mx"
-  ttl     = "600"
+  ttl     = "60"
   value   = "2a01:4f8:160:6087::1"
   type    = "AAAA"
 }
@@ -530,7 +530,7 @@ resource "hetznerdns_record" "archlinux_org_mx_aaaa" {
 resource "hetznerdns_record" "archlinux_org_orion_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "orion"
-  ttl     = "600"
+  ttl     = "60"
   value   = "88.198.91.70"
   type    = "A"
 }
@@ -538,7 +538,7 @@ resource "hetznerdns_record" "archlinux_org_orion_a" {
 resource "hetznerdns_record" "archlinux_org_orion_aaaa" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "orion"
-  ttl     = "600"
+  ttl     = "60"
   value   = "2a01:4f8:160:6087::1"
   type    = "AAAA"
 }
@@ -546,7 +546,7 @@ resource "hetznerdns_record" "archlinux_org_orion_aaaa" {
 resource "hetznerdns_record" "archlinux_org_orion_txt" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "orion._domainkey"
-  ttl     = "600"
+  ttl     = "60"
   value   = "\"v=DKIM1; k=rsa; s=email; \" \"p=MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAyK/JZ94O4TXYnmDhWTdbouEsLI3cBBbocliExS9Xa1si7dWMT22y619EhtHx5hRvSlN+ur3eaUC/85MN30dEDYTxO4EnNjgNRqQlE2NHd6lpAlpfHpE2vd5YcJMcx1/gy1PBCWiGv3F6n+XpoPby0Ayy0UhklQZ/gRRuspinxACDzWCMp7prncGOF42TnU81sKAVGGAmrt6Hpz\" \"wzq218BFWbxjcEIfSR+7rJXVT2DmPxBzuic0iXJhZSHmyODf7R3eAmvHgEUnz4+tk4PyXhBzp04bkMcV/I4NWS4juPqeb5x0dl0i9YYhqDPArnxnKBSyz6ABJLY1NE+5UJaxNnGLgsimvn4qt/uWxC/TuqjhNA7LcdqMUboWEB85mhabr3WNbabOhOXgEQQfh43g/E81ddEfLlXKL69D7B5YE6QjwsqKYb+fogpXiqMjoLKp9SHvuyqX+A\" \"eFFgrX8bcP2bzGjO5M8T+kT8K+OJeqdwEXBHyBFY9cCSrekYPa9zVQltw4TR4QTacz0UTAQOFwn6M+y2guXROlfImJm6PZrbPsqPUFjaf3vVw3/TdUTA32CuXdIZc9O7PZQUjIMPI2lTX3U6XRPk9zG0PqGYkRfYnYVD+1es44zgOGU8RTe1beQXKYqv9vjMQB67hcYUPUv0ZO++TmztvUjMJPvfJT7SOkkCAwEAAQ==\" "
   type    = "TXT"
 }
