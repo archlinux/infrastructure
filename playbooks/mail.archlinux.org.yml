@@ -7,12 +7,12 @@
     - { role: sshd }
     - { role: root_ssh }
     - { role: borg_client, tags: ['borg'] }
-    - { role: opendkim, dkim_selector: mail, tags: ['mail'] }
+    - { role: certbot }
+    - { role: postfix, postfix_server: true, postfix_smtpd_public: true, tags: ['mail'] }
     - { role: dovecot }
     - { role: spampd, tags: ["mail"] }
     - { role: unbound, tags: ["mail"] }
     - { role: postfwd, tags: ['mail'] }
-    - { role: postfix, postfix_server: true, postfix_smtpd_public: true, tags: ['mail'] }
     - { role: archusers }
-    - { role: certbot }
     - { role: fail2ban }
+    - { role: opendkim, dkim_selector: mail, tags: ['mail'] }
