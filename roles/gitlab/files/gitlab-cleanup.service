@@ -1,3 +1,8 @@
+# We're only running a subset of all available cleanup tasks mentioned on
+# https://docs.gitlab.com/ee/raketasks/cleanup.html
+# For instance, we're not using LFS so we'e also not cleaning it up. Also,
+# some cleanup tasks have timing implications so take great care when adding
+# something here!
 [Unit]
 Description=GitLab Cleanup
 
