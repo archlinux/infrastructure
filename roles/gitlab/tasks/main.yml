@@ -102,3 +102,12 @@
   when: configure_firewall
   tags:
     - firewall
+
+- name: copy gitlab-cleanup timer and service
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - gitlab-cleanup.timer
+    - gitlab-cleanup.service
+
+- name: activate systemd timers for gitlab-cleanup
+  systemd: name=gitlab-cleanup.timer enabled=yes state=started daemon-reload=yes
