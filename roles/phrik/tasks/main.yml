@@ -37,5 +37,5 @@
     state: started
     daemon_reload: yes
   with_items:
-    - pkgfile-update.service
+    - pkgfile-update.timer
     - phrik.service
