@@ -57,6 +57,8 @@
   become_user: "{{ archwiki_user }}"
   notify:
     - run wiki updatescript
+    # purge the nginx cache to make sure clients get the updated assets
+    - purge nginx cache
 
 - name: configure archwiki
   template: src=LocalSettings.php.j2 dest="{{ archwiki_dir }}/public/LocalSettings.php" owner="{{ archwiki_user }}" group="{{ archwiki_user }}" mode=0640
