@@ -259,6 +259,13 @@ Medium-fast-ish packet.net Arch Linux box.
   - [Grafana](https://monitoring.archlinux.org)
   - Prometheus
 
+### openpgpkey.archlinux.org
+
+Hosts our gnupg open web key directory for fetching Arch Linux keyring keys over https.
+
+#### Services
+  - WKD
+
 ## Ansible repo workflows
 
 ### Replace vault password and change vaulted passwords

@@ -527,6 +527,20 @@ resource "hetznerdns_record" "archlinux_org_mx_aaaa" {
   type    = "AAAA"
 }
 
+resource "hetznerdns_record" "archlinux_org_openpgpkey_a" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "openpgpkey"
+  value   = hcloud_server.openpgpkey.ipv4_address
+  type    = "A"
+}
+
+resource "hetznerdns_record" "archlinux_org_openpgpkey_aaaa" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "openpgpkey"
+  value   = hcloud_server.openpgpkey.ipv6_address
+  type    = "AAAA"
+}
+
 resource "hetznerdns_record" "archlinux_org_orion_txt" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "mail._domainkey"
@@ -723,13 +737,6 @@ resource "hetznerdns_record" "archlinux_org_mailman_cname" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "mailman"
   value   = "apollo"
-  type    = "CNAME"
-}
-
-resource "hetznerdns_record" "archlinux_org_openpgpkey_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "openpgpkey"
-  value   = "orion"
   type    = "CNAME"
 }
 
@@ -1285,6 +1292,27 @@ resource "hcloud_rdns" "mail_ipv6" {
 
 resource "hcloud_server" "mail" {
   name        = "mail.archlinux.org"
+  image       = data.hcloud_image.archlinux.id
+  server_type = "cx11"
+  lifecycle {
+    ignore_changes = [image]
+  }
+}
+
+resource "hcloud_rdns" "openpgpkey_ipv4" {
+  server_id  = hcloud_server.openpgpkey.id
+  ip_address = hcloud_server.openpgpkey.ipv4_address
+  dns_ptr    = "openpgpkey.archlinux.org"
+}
+
+resource "hcloud_rdns" "openpgpkey_ipv6" {
+  server_id  = hcloud_server.openpgpkey.id
+  ip_address = hcloud_server.openpgpkey.ipv6_address
+  dns_ptr    = "openpgpkey.archlinux.org"
+}
+
+resource "hcloud_server" "openpgpkey" {
+  name        = "openpgpkey.archlinux.org"
   image       = data.hcloud_image.archlinux.id
   server_type = "cx11"
   lifecycle {
