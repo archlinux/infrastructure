@@ -242,16 +242,9 @@ So to set up this server from scratch, run:
   - Runs a master rebuilderd instance two workers:
     - repro3.pkgbuild.com (packet.net machine which runs Ubuntu)
 
-### runner1.archlinux.org
-
-Slow-ish PIA box with spinning disks.
-
-#### Services
-  - GitLab runner
-
 ### runner2.archlinux.org
 
-Medium-fast-ish packet.net box with Debian on it. Is currently maintained manually.
+Medium-fast-ish packet.net Arch Linux box.
 
 #### Services
   - GitLab runner
