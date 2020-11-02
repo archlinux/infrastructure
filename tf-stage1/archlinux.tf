@@ -1220,7 +1220,7 @@ resource "hcloud_rdns" "secure-runner2_ipv6" {
 resource "hcloud_server" "secure-runner2" {
   name        = "secure-runner2.archlinux.org"
   image       = data.hcloud_image.archlinux.id
-  server_type = "cx11"
+  server_type = "cpx31"
   lifecycle {
     ignore_changes = [image]
   }
