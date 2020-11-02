@@ -712,13 +712,6 @@ resource "hetznerdns_record" "archlinux_org_ipxe_cname" {
   type    = "CNAME"
 }
 
-resource "hetznerdns_record" "archlinux_org_kanboard_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "kanboard"
-  value   = "apollo"
-  type    = "CNAME"
-}
-
 resource "hetznerdns_record" "archlinux_org_luna2_domainkey_aur_cname" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "luna2._domainkey.aur"
