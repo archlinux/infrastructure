@@ -14,3 +14,4 @@
     - { role: certbot }
     - { role: nginx }
     - { role: grafana, grafana_domain: 'monitoring.archlinux.org' }
+    - { role: fail2ban }

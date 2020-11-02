@@ -9,8 +9,3 @@ zabbix_agent_templates:
   - Template App Nginx
   - Template App SSH Service
   - Template App PostgreSQL
-
-fail2ban_jails:
-  sshd: true
-  postfix: false
-  dovecot: false
