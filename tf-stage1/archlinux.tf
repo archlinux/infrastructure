@@ -597,20 +597,6 @@ resource "hetznerdns_record" "archlinux_org_secure_runner1_aaaa" {
   type    = "AAAA"
 }
 
-resource "hetznerdns_record" "archlinux_org_secure_runner2_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "secure-runner2"
-  value   = hcloud_server.secure-runner2.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_secure_runner2_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "secure-runner2"
-  value   = hcloud_server.secure-runner2.ipv6_address
-  type    = "AAAA"
-}
-
 resource "hetznerdns_record" "archlinux_org_svn2gittest_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "svn2gittest"
@@ -1200,27 +1186,6 @@ resource "hcloud_server" "monitoring" {
   name        = "monitoring.archlinux.org"
   image       = data.hcloud_image.archlinux.id
   server_type = "cx11"
-  lifecycle {
-    ignore_changes = [image]
-  }
-}
-
-resource "hcloud_rdns" "secure-runner2_ipv4" {
-  server_id  = hcloud_server.secure-runner2.id
-  ip_address = hcloud_server.secure-runner2.ipv4_address
-  dns_ptr    = "secure-runner2.archlinux.org"
-}
-
-resource "hcloud_rdns" "secure-runner2_ipv6" {
-  server_id  = hcloud_server.secure-runner2.id
-  ip_address = hcloud_server.secure-runner2.ipv6_address
-  dns_ptr    = "secure-runner2.archlinux.org"
-}
-
-resource "hcloud_server" "secure-runner2" {
-  name        = "secure-runner2.archlinux.org"
-  image       = data.hcloud_image.archlinux.id
-  server_type = "cpx31"
   lifecycle {
     ignore_changes = [image]
   }

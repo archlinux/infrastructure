@@ -74,7 +74,6 @@ dragon.archlinux.org
 [gitlab_runners]
 runner2.archlinux.org
 secure-runner1.archlinux.org
-secure-runner2.archlinux.org
 
 [reproduciblebuilds]
 repro3.pkgbuild.com
@@ -97,7 +96,6 @@ gitlab.archlinux.org
 reproducible.archlinux.org
 runner2.archlinux.org
 secure-runner1.archlinux.org
-secure-runner2.archlinux.org
 phrik.archlinux.org
 quassel.archlinux.org
 state.archlinux.org
