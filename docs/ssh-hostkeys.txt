@@ -262,17 +262,6 @@
 256 MD5:ae:29:1d:79:35:95:58:df:fe:0b:3a:d7:0e:78:21:83 root@secure-runner1.archlinux.org (ED25519)
 3072 MD5:e2:d2:34:cb:4d:d4:03:da:02:00:14:79:25:03:0c:00 root@secure-runner1.archlinux.org (RSA)
 
-# secure-runner2.archlinux.org
-1024 SHA256:tHv5yztps9GNQ+7ZHn4SyZek2wdRSZzyWB3gCrg5+kM root@archlinux-packer (DSA)
-256 SHA256:xNfocKLXobbP2GNj8mz5Ymw2QSkETdLmhK5gAHhx8kQ root@archlinux-packer (ECDSA)
-256 SHA256:KZBmB6CIFenj2NsJ889BW7ud04HHUiG1MCqRE3YNG1w root@archlinux-packer (ED25519)
-3072 SHA256:cb20RgqouDfYOFZhtadCyh6csbRZuckQe+LADXujJp0 root@archlinux-packer (RSA)
-
-1024 MD5:f0:b7:05:fa:22:20:1e:75:ab:c4:78:d4:2d:b9:e8:5b root@archlinux-packer (DSA)
-256 MD5:c4:d0:03:fd:e4:dc:7a:ac:04:3a:42:5d:55:86:1c:e3 root@archlinux-packer (ECDSA)
-256 MD5:2f:40:55:7a:04:22:fe:58:a5:cf:49:a4:e6:64:da:09 root@archlinux-packer (ED25519)
-3072 MD5:9f:4c:13:48:d2:93:aa:6e:9c:ac:2a:bc:69:69:2c:e3 root@archlinux-packer (RSA)
-
 # state.archlinux.org
 1024 SHA256:4oNX8CksPEgIzibu+ETa2OVVPBX2pzcvcVUa60NbHiQ root@archlinux-packer (DSA)
 256 SHA256:uR7EDdVrvkZf43eNmumOeu2MeZn4oMB39ad9kHoobkk root@archlinux-packer (ECDSA)
