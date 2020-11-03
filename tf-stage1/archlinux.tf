@@ -219,14 +219,6 @@ resource "hetznerdns_record" "archlinux_org_origin_ns1" {
 #   type = "SOA"
 # }
 
-resource "hetznerdns_record" "archlinux_org_origin_txt" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "@"
-  ttl     = 600
-  value   = "\"v=spf1 ip4:66.211.214.132/28 ip4:5.9.250.164 ip6:2a01:4f8:160:3033::2 ip4:138.201.81.199/32 ip4:88.198.91.70/32 ip4:95.216.189.61 ip6:2a01:4f9:c010:3052::1 a:aur.archlinux.org a:apollo.archlinux.org ~all\""
-  type    = "TXT"
-}
-
 resource "hetznerdns_record" "archlinux_org_origin_apollo_domainkey_txt" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "apollo._domainkey"
@@ -511,7 +503,7 @@ resource "hetznerdns_record" "archlinux_org_monitoring_aaaa" {
   type    = "AAAA"
 }
 
-resource "hetznerdns_record" "archlinux_org_mx_a" {
+resource "hetznerdns_record" "archlinux_org_mail_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "mail"
   ttl     = 600
@@ -519,7 +511,7 @@ resource "hetznerdns_record" "archlinux_org_mx_a" {
   type    = "A"
 }
 
-resource "hetznerdns_record" "archlinux_org_mx_aaaa" {
+resource "hetznerdns_record" "archlinux_org_mail_aaaa" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "mail"
   ttl     = 600
@@ -527,11 +519,34 @@ resource "hetznerdns_record" "archlinux_org_mx_aaaa" {
   type    = "AAAA"
 }
 
-resource "hetznerdns_record" "archlinux_org_mx_txt" {
+resource "hetznerdns_record" "archlinux_org_origin_txt" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "@"
+  ttl     = 600
+  value   = "\"v=spf1 ip4:66.211.214.132/28 ip4:5.9.250.164 ip6:2a01:4f8:160:3033::2 ip4:138.201.81.199/32 ip4:88.198.91.70/32 ip4:95.216.189.61 ip6:2a01:4f9:c010:3052::1 a:aur.archlinux.org a:apollo.archlinux.org ~all\""
+  type    = "TXT"
+}
+
+resource "hetznerdns_record" "archlinux_org_mail_txt" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "mail"
   ttl     = 600
   value   = "v=spf1 include:archlinux.org -all"
+  type    = "TXT"
+}
+
+resource "hetznerdns_record" "archlinux_org_domainkey_mail_txt" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "mail._domainkey"
+  ttl     = 600
+  value   = "\"v=DKIM1; k=rsa; \" \"p=MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAwq23VERpAp07Xe9vTro38q7D8HzGSi4I+vS2ZWdGeGmr9/YQs6EmoiDUWdXbThCAPhSW6RLgG62XLxnjEj9LxwyeluHKI4eMq14shwcTeRNzyrz/bTqAQouVLe3PmUo6mHWJfd4Z7k7/Kv0nmEx9cqM+IIwOjsGN28e52OCvc7NZeRqEvAJtlsV1Ren0piFvw/cuOqzo3Xgk2O\" \"T1/6PoItIQm1AYTmDBjPHvUqSa/lyr6MQYpH2EeQa7HV0l+XZmYA/tRpUE9ixwZ7+mvixMumTDRMB7Pp+WqbqXQcDodrh0H5RzxBPv11KP+09qcCZo26iBZeRb9H0CU0glIFJLWIejBY/10mOtcs68Kop2rNz3mga/Pxj9JGWndkjmLSscyPjjySHy/kakAqSafijq74ysA8nKx+MRnZYzqAwtn8sk8MF80mTZuMvHgzUn7fbG2bxVF7hc\" \"nD80OjlD+gXrl1MmiO5QfGPhsnx9SI/Bp3vo5rLayBTRCWv7QsQeU2hWi0wC/l2aG50apdPG0FJdrIQHicjx5zW+fWISbHRE3VwCI1oVejnl1E6XYmcrgeWG8O+iukfPYzEWiJ5BY8uk3bO75dFqaFH0yU7hdsC+yk+9+ZQDZKHcc0jum7C3U8SdW27af8/DkjAyoDn0g0Cj6N2QWDbZmHJfD7tY6O6Qpm8CAwEAAQ==\" "
+  type    = "TXT"
+}
+
+resource "hetznerdns_record" "archlinux_org_dmarc_txt" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "_dmarc"
+  value   = "\"v=DMARC1; p=none; rua=mailto:dmarc-reports@archlinux.org; ruf=mailto:dmarc-reports@archlinux.org;\""
   type    = "TXT"
 }
 
@@ -813,13 +828,6 @@ resource "hetznerdns_record" "archlinux_org_matrix_tcp_srv" {
   name    = "_matrix._tcp"
   value   = "10 0 8448 matrix"
   type    = "SRV"
-}
-
-resource "hetznerdns_record" "archlinux_org_dmarc_txt" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "_dmarc"
-  value   = "\"v=DMARC1; p=none; rua=mailto:dmarc-reports@archlinux.org; ruf=mailto:dmarc-reports@archlinux.org;\""
-  type    = "TXT"
 }
 
 resource "hetznerdns_record" "archlinux_org_github_challenge_archlinux" {
