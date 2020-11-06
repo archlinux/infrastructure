@@ -39,9 +39,5 @@ server {
 
     autoindex on;
 
-    location /2019 {
-        return 301 $scheme://$server_name;
-    }
-
     root {{ static_conference_dir }}/;
 }
