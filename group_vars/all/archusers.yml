@@ -169,13 +169,6 @@ arch_users:
   donate:
     name: ""
     groups: []
-  dreisner:
-    name: "Dave Reisner"
-    ssh_key: dreisner.pub
-    groups:
-      - dev
-      - multilib
-      - tu
   dvzrv:
     name: "David Runge"
     ssh_key: dvzrv.pub
