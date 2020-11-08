@@ -160,11 +160,8 @@
 - name: install pacman-contrib,archlinux-contrib
   pacman: name=pacman-contrib,archlinux-contrib state=installed
 
-- name: remove old checkservices copied script (from submodule)
+- name: remove old checkservices copied script (from submodule; archlinux-contrib provides /usr/bin/checkservices)
   file: path=/usr/local/bin/checkservices state=absent
-
-- name: symlink checkservices to /usr/local/bin
-  file: src=/usr/share/archlinux/contrib/admin/checkservices dest=/usr/local/bin/checkservices state=link owner=root group=root mode=0755
 
 - name: install pacman config
   template: src=pacman.conf.j2 dest=/etc/pacman.conf mode=0644 owner=root group=root
