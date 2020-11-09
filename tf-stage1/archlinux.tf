@@ -223,7 +223,7 @@ resource "hetznerdns_record" "archlinux_org_origin_apollo_domainkey_txt" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "apollo._domainkey"
   ttl     = 600
-  value   = "\"v=DKIM1; k=rsa; s=email; \" \"p=MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvZIf8SbjC53RDCbMjTEpo0FCuMSShlKWdwWjY1J+RpT3CL/21z4nXqVBYF1orkUScH8Nlabocraqk8lmpNBlKCUV77lk9mRsLkWhg+XjhvQXL1xfH8zAg1CntEZuaIMLUQ+5Gkw6BlO1qDRkmXS9UtV8Jt1rhjRtSrgN5lhztOCbQLRAtzKty/nMeClqsfT3nL2hbDeh+b/rYc\" \"l2veZAqiGcR2/0bnKlt+Nb5lOBY3oZiYLmZ5g+l9UXVjGUq9jGAooIWpQvuRPmin3RX31kXfr1A+mDBEexiOL1dDST2Zx7i9puXbqYH0u0IxBpweHCO5UqWx52mdXBuhs+DCo/JoZAHU/6eRzK+Sps50LgLFSzJJNfGXk5PUKdww2GHbkK3mCYfoFCpB0SADzl42+1w6YZk1yXoPdOHtChfQpCgjtddf1W8Q09pYO1/bn4l0erdFQsWb1K\" \"4wEVOCn+hHWbV42V+J3TyGxQ4AM8KQ1OPvUEabyTyqcO4evBaH7/S2wA91Z9QDjTbKmlNovs5zoxuOM/mPGPUuQMvhjoAP+rg4AwJ3Xwd3GgUcqQflcokayUYdp7F3aKp1NWAR9ibseU/XBYsSF8Ucjqzf4DJFUfrgjHUr97st7g4HUCyXrQO4tyE0ytiX8OFjjIszWLmF+B7Vup9O7k+dNz2Vj2Vyzkq1UCAwEAAQ==\""
+  value   = "\"v=DKIM1; k=rsa; s=email; \" \"p=MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvZIf8SbjC53RDCbMjTEpo0FCuMSShlKWdwWjY1J+RpT3CL/21z4nXqVBYF1orkUScH8Nlabocraqk8lmpNBlKCUV77lk9mRsLkWhg+XjhvQXL1xfH8zAg1CntEZuaIMLUQ+5Gkw6BlO1qDRkmXS9UtV8Jt1rhjRtSrgN5lhztOCbQLRAtzKty/nMeClqsfT3nL2hbDeh+b/rYc\" \"l2veZAqiGcR2/0bnKlt+Nb5lOBY3oZiYLmZ5g+l9UXVjGUq9jGAooIWpQvuRPmin3RX31kXfr1A+mDBEexiOL1dDST2Zx7i9puXbqYH0u0IxBpweHCO5UqWx52mdXBuhs+DCo/JoZAHU/6eRzK+Sps50LgLFSzJJNfGXk5PUKdww2GHbkK3mCYfoFCpB0SADzl42+1w6YZk1yXoPdOHtChfQpCgjtddf1W8Q09pYO1/bn4l0erdFQsWb1K\" \"4wEVOCn+hHWbV42V+J3TyGxQ4AM8KQ1OPvUEabyTyqcO4evBaH7/S2wA91Z9QDjTbKmlNovs5zoxuOM/mPGPUuQMvhjoAP+rg4AwJ3Xwd3GgUcqQflcokayUYdp7F3aKp1NWAR9ibseU/XBYsSF8Ucjqzf4DJFUfrgjHUr97st7g4HUCyXrQO4tyE0ytiX8OFjjIszWLmF+B7Vup9O7k+dNz2Vj2Vyzkq1UCAwEAAQ==\" "
   type    = "TXT"
 }
 
@@ -448,7 +448,7 @@ resource "hetznerdns_record" "archlinux_org_luna_txt" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "luna._domainkey"
   ttl     = 600
-  value   = "\"v=DKIM1; k=rsa; s=email; \" \"p=MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvXrAPvtdX8Jrk4zmyk8w9T2zdAJGe7z0+4XHWWiuzH8Zse6S7oXiS9CVaPOsu0TZqHqhuclASU7qh0NXFwWyi2xRPyJOqH2Clu7vHS3j5F4TjURFOp4/EbA0iQu4rbItl4AU11z2pGSEj5SykUsrH+jjdqzNqAG9d4lNvkTs6RRzPF3KhhY+XljaeysEyDSS4ap4E0DYcduSIX\" \"oD1exFv4SEbXThD9PC1u81w4xusnmwmfHtR7aazeqPDP+S+FqDRy2woCaQb/VMbqMYVuWTVKJ2RxFyTKredOOV2c5kzih7GViwoetll/rTqO4aVbeir9K4f6YZg85dSQtVwEat7LV+zBnQwp3ivWkrIk8VEdSsCSaJlgattBiPHsfFFv1xw4qi3h+UvfCGgz35dtlnzd/noGhNARg0Z+kaMSTjy75V1mKx5sCH0o8nAX2XU8akJfLz58Vg\" \"kTx/sfealtwNA0gTy1t1jV8q0OF5RA0IeMRgCzeH2USOZI98W+EAUsGG5653Vzmp3FJRWp1tWJwRJ0M/aZ3ka/G1iTx3rNNcadVk+4q3gz3KnlAlun+m58y8pNWKjYuxmu9xkDRwM/33rv98j0R8HZO7HFL+1vjKkxSEuzmnTQ2O9F76/OsQoDPZ1Z6nJRvK8ts8PQr4ASKohby62+1F1M8U2Xn7u84dYLUCAwEAAQ==\""
+  value   = "\"v=DKIM1; k=rsa; s=email; \" \"p=MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvXrAPvtdX8Jrk4zmyk8w9T2zdAJGe7z0+4XHWWiuzH8Zse6S7oXiS9CVaPOsu0TZqHqhuclASU7qh0NXFwWyi2xRPyJOqH2Clu7vHS3j5F4TjURFOp4/EbA0iQu4rbItl4AU11z2pGSEj5SykUsrH+jjdqzNqAG9d4lNvkTs6RRzPF3KhhY+XljaeysEyDSS4ap4E0DYcduSIX\" \"oD1exFv4SEbXThD9PC1u81w4xusnmwmfHtR7aazeqPDP+S+FqDRy2woCaQb/VMbqMYVuWTVKJ2RxFyTKredOOV2c5kzih7GViwoetll/rTqO4aVbeir9K4f6YZg85dSQtVwEat7LV+zBnQwp3ivWkrIk8VEdSsCSaJlgattBiPHsfFFv1xw4qi3h+UvfCGgz35dtlnzd/noGhNARg0Z+kaMSTjy75V1mKx5sCH0o8nAX2XU8akJfLz58Vg\" \"kTx/sfealtwNA0gTy1t1jV8q0OF5RA0IeMRgCzeH2USOZI98W+EAUsGG5653Vzmp3FJRWp1tWJwRJ0M/aZ3ka/G1iTx3rNNcadVk+4q3gz3KnlAlun+m58y8pNWKjYuxmu9xkDRwM/33rv98j0R8HZO7HFL+1vjKkxSEuzmnTQ2O9F76/OsQoDPZ1Z6nJRvK8ts8PQr4ASKohby62+1F1M8U2Xn7u84dYLUCAwEAAQ==\" "
   type    = "TXT"
 }
 
@@ -456,7 +456,7 @@ resource "hetznerdns_record" "archlinux_org_luna2_txt" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "luna2._domainkey"
   ttl     = 600
-  value   = "\"v=DKIM1; k=rsa; s=email; \" \"p=MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvXrAPvtdX8Jrk4zmyk8w9T2zdAJGe7z0+4XHWWiuzH8Zse6S7oXiS9CVaPOsu0TZqHqhuclASU7qh0NXFwWyi2xRPyJOqH2Clu7vHS3j5F4TjURFOp4/EbA0iQu4rbItl4AU11z2pGSEj5SykUsrH+jjdqzNqAG9d4lNvkTs6RRzPF3KhhY+XljaeysEyDSS4ap4E0DYcduSIX\" \"oD1exFv4SEbXThD9PC1u81w4xusnmwmfHtR7aazeqPDP+S+FqDRy2woCaQb/VMbqMYVuWTVKJ2RxFyTKredOOV2c5kzih7GViwoetll/rTqO4aVbeir9K4f6YZg85dSQtVwEat7LV+zBnQwp3ivWkrIk8VEdSsCSaJlgattBiPHsfFFv1xw4qi3h+UvfCGgz35dtlnzd/noGhNARg0Z+kaMSTjy75V1mKx5sCH0o8nAX2XU8akJfLz58Vg\" \"kTx/sfealtwNA0gTy1t1jV8q0OF5RA0IeMRgCzeH2USOZI98W+EAUsGG5653Vzmp3FJRWp1tWJwRJ0M/aZ3ka/G1iTx3rNNcadVk+4q3gz3KnlAlun+m58y8pNWKjYuxmu9xkDRwM/33rv98j0R8HZO7HFL+1vjKkxSEuzmnTQ2O9F76/OsQoDPZ1Z6nJRvK8ts8PQr4ASKohby62+1F1M8U2Xn7u84dYLUCAwEAAQ==\""
+  value   = "\"v=DKIM1; k=rsa; s=email; \" \"p=MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvXrAPvtdX8Jrk4zmyk8w9T2zdAJGe7z0+4XHWWiuzH8Zse6S7oXiS9CVaPOsu0TZqHqhuclASU7qh0NXFwWyi2xRPyJOqH2Clu7vHS3j5F4TjURFOp4/EbA0iQu4rbItl4AU11z2pGSEj5SykUsrH+jjdqzNqAG9d4lNvkTs6RRzPF3KhhY+XljaeysEyDSS4ap4E0DYcduSIX\" \"oD1exFv4SEbXThD9PC1u81w4xusnmwmfHtR7aazeqPDP+S+FqDRy2woCaQb/VMbqMYVuWTVKJ2RxFyTKredOOV2c5kzih7GViwoetll/rTqO4aVbeir9K4f6YZg85dSQtVwEat7LV+zBnQwp3ivWkrIk8VEdSsCSaJlgattBiPHsfFFv1xw4qi3h+UvfCGgz35dtlnzd/noGhNARg0Z+kaMSTjy75V1mKx5sCH0o8nAX2XU8akJfLz58Vg\" \"kTx/sfealtwNA0gTy1t1jV8q0OF5RA0IeMRgCzeH2USOZI98W+EAUsGG5653Vzmp3FJRWp1tWJwRJ0M/aZ3ka/G1iTx3rNNcadVk+4q3gz3KnlAlun+m58y8pNWKjYuxmu9xkDRwM/33rv98j0R8HZO7HFL+1vjKkxSEuzmnTQ2O9F76/OsQoDPZ1Z6nJRvK8ts8PQr4ASKohby62+1F1M8U2Xn7u84dYLUCAwEAAQ==\" "
   type    = "TXT"
 }
 
@@ -531,7 +531,7 @@ resource "hetznerdns_record" "archlinux_org_mail_txt" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "mail"
   ttl     = 600
-  value   = "v=spf1 include:archlinux.org -all"
+  value   = "\"v=spf1 include:archlinux.org -all\""
   type    = "TXT"
 }
 
