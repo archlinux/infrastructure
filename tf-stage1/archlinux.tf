@@ -282,7 +282,7 @@ resource "hetznerdns_record" "archlinux_org_aur_mx" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "aur"
   ttl     = 600
-  value   = "10 mx"
+  value   = "10 mail"
   type    = "MX"
 }
 
@@ -478,7 +478,7 @@ resource "hetznerdns_record" "archlinux_org_master_key_mx" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "master-key"
   ttl     = 600
-  value   = "10 mx"
+  value   = "10 mail"
   type    = "MX"
 }
 
