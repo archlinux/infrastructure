@@ -163,7 +163,7 @@
   tags: ['nginx']
 
 - name: install turnserver.conf
-  template: src=turnserver.conf.j2 dest=/etc/turnserver/turnserver.conf owner=root group=root mode=0644
+  template: src=turnserver.conf.j2 dest=/etc/turnserver/turnserver.conf owner=turnserver group=turnserver mode=0600
   notify:
     - restart turnserver
 
