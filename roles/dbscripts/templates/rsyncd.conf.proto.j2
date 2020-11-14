@@ -20,10 +20,12 @@ hosts allow = 127.0.0.1
 # DENY THE REST
 hosts deny = *
 
+{% if 'archive_mirrors' in groups %}
 [archive]
 	path = /srv/archive
 	comment = archive
 	hosts allow = {{ groups['archive_mirrors'] | map('extract', hostvars, ['ipv4_address']) | join(' ') }}
+{% endif %}
 
 # Just the release/stable iso/packages (for most mirrors)
 [ftp]
