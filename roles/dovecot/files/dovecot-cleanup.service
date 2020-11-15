@@ -1,0 +1,6 @@
+[Unit]
+Description=Daily Dovecot cleanup
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/doveadm purge -A

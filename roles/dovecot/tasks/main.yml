@@ -42,3 +42,18 @@
   when: configure_firewall
   tags:
     - firewall
+
+- name: install systemd timers
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - dovecot-cleanup.timer
+    - dovecot-cleanup.service
+
+- name: activate systemd timers
+  systemd:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+    daemon_reload: yes
+  with_items:
+    - dovecot-cleanup.timer
