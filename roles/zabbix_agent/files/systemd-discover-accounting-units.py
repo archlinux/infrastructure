@@ -27,7 +27,7 @@ unit_whitelist_regexes = [
         r'quassel.service',
         r'security-tracker-update.service',
         r'syslog-ng@.*.service',
-        r'spampd.service',
+        r'rspamd.service',
         r'sshd.service',
         r'svnserve.service',
         r'synapse.service',

@@ -44,6 +44,7 @@ plugin {
 	sieve_dir = ~/.sieve
 	sieve_global_dir = /etc/dovecot/sieve/global/
 	sieve_global_path = /etc/dovecot/sieve/default.sieve
+	sieve_before = /etc/dovecot/sieve/spam-to-folder.sieve
 
 	mail_log_events = delete undelete expunge copy mailbox_delete mailbox_rename
 	mail_log_fields = uid box msgid size

@@ -18,6 +18,14 @@
 - name: install PAM config
   copy: src=pam.d.dovecot dest=/etc/pam.d/dovecot mode=0644 owner=root group=root
 
+- name: create dovecot sieve dir
+  file: path=/etc/dovecot/sieve state=directory owner=root group=root mode=0755
+
+- name: install spam-to-folder.sieve
+  copy: src=spam-to-folder.sieve dest=/etc/dovecot/sieve/ mode=0644 owner=root group=root
+  notify:
+    - run sievec
+
 - name: install dovecot cert renewal hook
   template: src=letsencrypt.hook.d.j2 dest=/etc/letsencrypt/hook.d/dovecot owner=root group=root mode=0755
 

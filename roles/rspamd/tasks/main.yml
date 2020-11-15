@@ -1,0 +1,11 @@
+---
+- name: install rspamd
+  pacman: name=rspamd state=present
+
+- name: install config
+  copy: src=local.d/ dest=/etc/rspamd/local.d/ owner=root group=root mode=0644
+  notify:
+    - reload rspamd
+
+- name: start and enable rspamd
+  service: name=rspamd enabled=yes state=started
