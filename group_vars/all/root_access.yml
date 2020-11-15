@@ -4,6 +4,7 @@
 sudo_users:
   - root
   - foutrelis
+  - freswa
   - grazzolini
   - heftig
   - jelle
@@ -13,6 +14,7 @@ sudo_users:
 # deploy tag 'root_ssh' when this changes
 root_ssh_keys:
   - foutrelis.pub
+  - freswa.pub
   - grazzolini.pub
   - heftig.pub
   - jelle.pub
@@ -23,6 +25,7 @@ root_ssh_keys:
 # before running it, make sure to gpg --lsign-key all of the below keys
 root_gpgkeys:
   - 86CFFCA918CF3AF47147588051E8B148A9999C34 # foutrelis
+  - 05C7775A9E8B977407FE08E69D4C5AA15426DA0A # freswa
   - ECCAC84C1BA08A6CC8E63FBBF22FB1D78A77AEAB # grazzolini
   - A2FF3A36AAA56654109064AB19802F8B0D70FC30 # heftig
   - E499C79F53C96A54E572FEE1C06086337C50773E # jelle
