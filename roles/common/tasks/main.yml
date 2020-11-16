@@ -10,6 +10,9 @@
 - name: configure pacman mirror
   template: src=mirrorlist.j2 dest=/etc/pacman.d/mirrorlist owner=root group=root mode=0644
 
+- name: update package cache
+  pacman: update_cache=yes
+
 - name: start and enable auditd
   service: name=auditd enabled=yes state=started
 
