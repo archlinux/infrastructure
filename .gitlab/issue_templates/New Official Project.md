@@ -17,7 +17,8 @@ If you want to add a new official project, here are some guidelines to follow:
 1. [ ] Evaluate whether the project can sit in the official [GitLab Arch Linux group](https://gitlab.archlinux.org/archlinux)
        or whether it needs its own group. It only needs its own group if the primary
        development group is somehow detached from Arch Linux and only losely related (for instance: [pacman](https://gitlab.archlinux.org/pacman))
-1. [ ] After project creation, add the responsible people to the project in the *Members* page (https://gitlab.archlinux.org/archlinux/my-example/-/project_members)
+1. [ ] After project creation (use the GitLab import function if you migrate a repo), add the responsible people to the project
+       in the *Members* page (https://gitlab.archlinux.org/archlinux/my-example/-/project_members)
        and give them the `Developer` role. The idea is to let these people mostly manage their own project while not giving them
        enough permissions to be able to misconfigure the project.
 1. [ ] If mirroring to github.com is desired, work through the **GitHub.com mirroring checklist**
@@ -25,7 +26,7 @@ If you want to add a new official project, here are some guidelines to follow:
 1. [ ] If the project needs a secure runner to build trusted artifacts, coordinate with
        the rest of the DevOps team and if found to be reasonable, assign a secure runner
        to a protected branch of the project.
-1. [ ] If a secure runner is used, make sure the project's `.gitlab-ci.yml` specifies
+1. [ ] If a secure runner is used, create an MR to make sure the project's `.gitlab-ci.yml` specifies
        `tags: secure`.
 1. [ ] Make sure that the *Push Rules* in https://gitlab.archlinux.org/archlinux/arch-boxes/-/settings/repository
        reflect these values:
