@@ -1,3 +1,7 @@
 [worker]
 # set the generated secret for our workers here
 signup_secret = "{{ vault_rebuilderd_signup_secret }}"
+
+[schedule]
+# 1 week
+retry_delay_base = 168
