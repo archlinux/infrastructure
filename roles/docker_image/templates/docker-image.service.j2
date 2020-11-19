@@ -1,9 +1,0 @@
-[Unit]
-Description=docker-image service for building
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/make -C {{ docker_image_git_dir }} rootfs
-User={{ docker_image_user }}
-WorkingDirectory={{ docker_image_git_dir }}
-Environment="FAKECHROOT_CMD_SUBST=/usr/bin/ldconfig=/bin/true"
