@@ -1,5 +1,0 @@
----
-
-- name: restart opendkim
-  service: name=opendkim state=restarted
-

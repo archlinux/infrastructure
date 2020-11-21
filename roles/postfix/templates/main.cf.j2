@@ -165,8 +165,8 @@ submission_recipient_restrictions=
   permit_sasl_authenticated,
   reject
 
-smtpd_milters=unix:/var/spool/opendkim/opendkim inet:localhost:11332
-non_smtpd_milters=unix:/var/spool/opendkim/opendkim inet:localhost:11332
+smtpd_milters=inet:localhost:11332
+non_smtpd_milters=inet:localhost:11332
 
 # Pass internal mails through filters so they get signed by opendkim
 # XXX: Be careful not to have filters that may reject mails!
