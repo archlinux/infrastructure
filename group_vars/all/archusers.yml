@@ -108,6 +108,11 @@ arch_users:
   aur-notify:
     name: ""
     groups: []
+  bastelfreak:
+    name: "Tim Meusel"
+    ssh_key: bastelfreak.pub
+    groups:
+      - tu
   bgyorgy:
     name: "Balló György"
     ssh_key: bgyorgy.pub
