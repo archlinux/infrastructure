@@ -58,40 +58,16 @@
   copy: remote_src=True src=/etc/resolv.conf dest=/tmp/root.x86_64/etc/resolv.conf owner=root group=root mode=0644
 
 - name: mount /proc to bootstrap chroot
-  mount:
-    src: /proc
-    path: /tmp/root.x86_64/proc
-    opts: rbind
-    state: mounted
-    fstype: none
-    fstab: /tmp/dummyfstab
+  command: mount --rbind /proc /tmp/root.x86_64/proc creates=/tmp/root.x86_64/proc/uptime  # noqa 303
 
 - name: mount /sys to bootstrap chroot
-  mount:
-    src: /sys
-    path: /tmp/root.x86_64/sys
-    opts: rbind
-    state: mounted
-    fstype: none
-    fstab: /tmp/dummyfstab
+  command: mount --rbind /sys /tmp/root.x86_64/sys creates=/tmp/root.x86_64/sys/dev  # noqa 303
 
 - name: mount /dev to bootstrap chroot
-  mount:
-    src: /dev
-    path: /tmp/root.x86_64/dev
-    opts: rbind
-    state: mounted
-    fstype: none
-    fstab: /tmp/dummyfstab
+  command: mount --rbind /dev /tmp/root.x86_64/dev creates=/tmp/root.x86_64/dev/zero  # noqa 303
 
 - name: mount /mnt to bootstrap chroot
-  mount:
-    src: /mnt
-    path: /tmp/root.x86_64/mnt
-    opts: rbind
-    state: mounted
-    fstype: none
-    fstab: /tmp/dummyfstab
+  command: mount --rbind /mnt /tmp/root.x86_64/mnt creates=/tmp/root.x86_64/mnt/LOCK  # noqa 303
 
 - name: configure pacman mirror
   template: src=mirrorlist.j2 dest=/tmp/root.x86_64/etc/pacman.d/mirrorlist owner=root group=root mode=0644
@@ -120,31 +96,13 @@
     creates: /tmp/root.x86_64/mnt/bin
 
 - name: mount /proc to new chroot
-  mount:
-    src: /proc
-    path: /mnt/proc
-    opts: rbind
-    state: mounted
-    fstype: none
-    fstab: /dev/dummyfstab
+  command: mount --rbind /proc /mnt/proc creates=/mnt/proc/uptime  # noqa 303
 
 - name: mount /sys to new chroot
-  mount:
-    src: /sys
-    path: /mnt/sys
-    opts: rbind
-    state: mounted
-    fstype: none
-    fstab: /dev/dummyfstab
+  command: mount --rbind /sys /mnt/sys creates=/mnt/sys/dev  # noqa 303
 
 - name: mount /dev to new chroot
-  mount:
-    src: /dev
-    path: /mnt/dev
-    opts: rbind
-    state: mounted
-    fstype: none
-    fstab: /dev/dummyfstab
+  command: mount --rbind /dev /mnt/dev creates=/mnt/dev/zero  # noqa 303
 
 - name: configure locale.gen
   lineinfile: dest=/mnt/etc/locale.gen line="en_US.UTF-8 UTF-8" owner=root group=root mode=0644
