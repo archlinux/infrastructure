@@ -12,6 +12,3 @@ network_interface: "en*"
 system_disks:
   - /dev/nvme0n1
   - /dev/nvme1n1
-
-zabbix_agent_templates:
-  - Template OS Linux

@@ -14,7 +14,3 @@ system_disks:
   - /dev/nvme1n1
 
 archbuild_fs: 'btrfs'
-
-zabbix_agent_templates:
-  - Template OS Linux
-  - Template Btrfs

@@ -56,10 +56,14 @@ scrape_configs:
 
   - job_name: 'mysqld_exporter'
     static_configs:
+    {% for host in groups['mysql_servers'] %}
 
-    - targets: ['aur.archlinux.org:9104']
+    - targets: ['{{ host }}:{{ prometheus_mysqld_exporter_port }}']
       labels:
-        instance: "aur.archlinux.org"
+        instance: "{{ host }}"
+
+    {% endfor %}
+
 
   - job_name: 'memcached_exporter'
     static_configs:

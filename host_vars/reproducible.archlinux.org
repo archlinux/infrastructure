@@ -1,8 +1,3 @@
 ---
 
 filesystem: btrfs
-zabbix_agent_templates:
-  - Template OS Linux
-  - Template App Borg Backup
-  - Template App HTTP Service
-  - Template App HTTPS Service

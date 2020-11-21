@@ -1,11 +1,3 @@
 ---
 filesystem: btrfs
 memcached_socket: "/var/run/aurweb.sock"
-
-zabbix_agent_templates:
-  - Template OS Linux
-  - Template App Borg Backup
-  - Template App HTTP Service
-  - Template App HTTPS Service
-  - Template App MySQL
-  - Template App Nginx

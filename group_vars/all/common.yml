@@ -4,9 +4,6 @@ configure_firewall: true
 # module when deploying firewalld tasks
 ansible_python_interpreter: /usr/bin/python3
 
-zabbix_agent_templates:
-  - Template OS Linux
-
 # this is used by the maintenance role to get the ip address
 # of the machine running the playbook
 maintenance_remote_machine: "{{ hostvars[inventory_hostname]['ansible_env'].SSH_CLIENT.split(' ')[0] }}"

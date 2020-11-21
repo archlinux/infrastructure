@@ -7,10 +7,3 @@ system_disks:
 
 vault_mariadb_users:
   root: "{{encrypted_mariadb_users_root_password}}"
-  zabbix_agent: "{{encrypted_mariadb_users_zabbix_password}}"
-
-zabbix_agent_templates:
-  - Template OS Linux
-  - Template App Mailman
-  - Template App MySQL
-  - Template App Nginx

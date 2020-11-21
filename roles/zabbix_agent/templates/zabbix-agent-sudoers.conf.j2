@@ -1,2 +1,0 @@
-zabbix-agent ALL=(root) NOPASSWD: /usr/local/bin/borg list --json --format {start}{end} --sort-by timestamp --last 1, /usr/local/bin/mysql-dbsize-stats.pl, /usr/local/bin/memcached-stats.py, /usr/local/bin/zabbix-btrfs-subvolume.sh
-zabbix-agent ALL=(postgres) NOPASSWD: /usr/local/bin/postgresql-dbsize-stats.pl, /usr/local/bin/postgresql-user-stats.pl

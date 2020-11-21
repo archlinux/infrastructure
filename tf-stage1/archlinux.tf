@@ -816,13 +816,6 @@ resource "hetznerdns_record" "archlinux_org_www_cname" {
   type    = "CNAME"
 }
 
-resource "hetznerdns_record" "archlinux_org_zabbix_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "zabbix"
-  value   = "apollo"
-  type    = "CNAME"
-}
-
 resource "hetznerdns_record" "archlinux_org_matrix_tcp_srv" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "_matrix._tcp"

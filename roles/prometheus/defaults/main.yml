@@ -1,5 +1,6 @@
 monitoring_domain: monitoring.archlinux.org
 gitlab_runner_exporter_port: '9252'
+prometheus_mysqld_exporter_port: '9104'
 
 blackbox_targets:
   - https://archlinux.org

@@ -17,3 +17,4 @@
     - { role: borg_client, tags: ["borg"] }
     - { role: postfix, postfix_relayhost: "mail.archlinux.org" }
     - { role: fail2ban }
+    - { role: prometheus_exporters }
