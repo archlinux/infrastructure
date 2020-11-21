@@ -1,5 +1,5 @@
 ---
-hostname: "repro3.pkgbuild.com"
+hostname: "repro1.pkgbuild.com"
 
 ipv4_address: "147.75.81.79"
 ipv4_netmask: "/31"
@@ -12,3 +12,7 @@ network_interface: "enp1s0f0np0"
 system_disks:
   - /dev/sda
 configure_network: true
+
+rebuilderd_workers:
+ - repro11
+ - repro12

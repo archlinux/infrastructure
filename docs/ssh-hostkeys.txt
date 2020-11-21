@@ -207,17 +207,6 @@
 256 MD5:15:45:eb:91:69:df:c3:6d:9f:99:b9:13:02:94:a6:ac root@archlinux-packer (ED25519)
 2048 MD5:ca:2f:cf:5c:4d:ec:75:c3:71:76:d6:b7:b9:fa:aa:32 root@archlinux-packer (RSA)
 
-# repro3.pkgbuild.com
-1024 SHA256:TMj3Dtfd3A6F/fJmfN8O/zWIc/6vw9MYD9/X1KzYjlY root@repro3.pkgbuild.com (DSA)
-256 SHA256:OD0gODdNpAI8AvhParH5VeBNnLqzLCfIDe3qXhmKeO8 root@repro3.pkgbuild.com (ECDSA)
-256 SHA256:xH+7wNVlENrsUN+zEwpYaE0quIYNzrv5Wnkda1OMLeY root@repro3.pkgbuild.com (ED25519)
-2048 SHA256:nLn8nuwjiJE7P+55PXcKNP0X/q9YyoijfAipBpumtY8 root@repro3.pkgbuild.com (RSA)
-
-1024 MD5:21:ec:75:2f:fc:85:48:72:c5:a8:8c:dd:af:70:12:32 root@repro3.pkgbuild.com (DSA)
-256 MD5:2f:9b:bc:8b:37:e0:13:b3:8f:70:72:25:a8:16:35:57 root@repro3.pkgbuild.com (ECDSA)
-256 MD5:46:f2:00:34:63:f7:38:e3:f4:cc:13:ea:c5:fd:58:24 root@repro3.pkgbuild.com (ED25519)
-2048 MD5:7d:9d:61:02:73:8a:a1:51:73:ef:b8:b3:fb:d7:72:0f root@repro3.pkgbuild.com (RSA)
-
 # reproducible.archlinux.org
 1024 SHA256:3HoA8rGGureKWKaIZst+Dc6f7yrf3Wfn5PO1HFMl35E root@archlinux-packer (DSA)
 256 SHA256:Yp3GHPq6GZZWUBv13XPiXciAbDFPH4XnEVHzR3/whUw root@archlinux-packer (ECDSA)

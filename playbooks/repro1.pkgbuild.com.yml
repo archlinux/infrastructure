@@ -1,0 +1,15 @@
+---
+
+- name: setup repro1.pkgbuild.com
+  hosts: repro1.pkgbuild.com
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: tools }
+    - { role: firewalld }
+    - { role: sshd }
+    - { role: unbound }
+    - { role: root_ssh }
+    - { role: rebuilderd_worker }
+    - { role: prometheus_exporters }
+    - { role: fail2ban }

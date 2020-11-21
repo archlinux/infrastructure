@@ -239,8 +239,8 @@ So to set up this server from scratch, run:
 ### reproducible.archlinux.org
 
 #### Services
-  - Runs a master rebuilderd instance two workers:
-    - repro3.pkgbuild.com (packet.net machine which runs Ubuntu)
+  - Runs a master [rebuilderd](docs/rebuilderd.md) instance two workers:
+    - repro1.pkgbuild.com (packet.net Arch Linux box)
 
 ### runner2.archlinux.org
 
