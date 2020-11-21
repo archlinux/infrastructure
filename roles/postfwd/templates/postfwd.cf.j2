@@ -1,6 +1,6 @@
 # lower rate limit for certain authenticated users
 &&SASL_WHITELIST {
-	# other servers relay via orion using authentication. username is the
+	# other servers relay via mail.archlinux.org using authentication. username is the
 	# hostname part of the fqdn
 {% for host in groups['all'] %}
 	sasl_username={{ hostvars[host].inventory_hostname_short }}
