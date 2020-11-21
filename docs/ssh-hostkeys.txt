@@ -185,17 +185,6 @@
 256 MD5:fe:a1:ab:4d:f6:5d:76:f9:a3:99:be:fd:51:ee:77:ed root@archlinux-packer (ED25519)
 3072 MD5:ad:ee:a6:6d:b7:9b:f0:f7:78:9f:df:b4:53:2e:5f:9f root@archlinux-packer (RSA)
 
-# orion.archlinux.org
-1024 SHA256:Y7XP+fTQZAEDgmCHuSqFc0MmNUmCPJYRZs/7iq6viK8 root@mnt (DSA)
-256 SHA256:2gH/IGaZ/pOnpt4+VY0twd4+hUOraUWRceJiNQxnbxs root@mnt (ECDSA)
-256 SHA256:G4mz3jsK8XZymCDjUE7TKhA3Kz/eC+q4gHlnhCWyVB4 root@mnt (ED25519)
-2048 SHA256:PxFPKc82M5wShxNX+62FmZPKJBACz4n7epevqEDOUUw root@mnt (RSA)
-
-1024 MD5:67:a7:23:42:0c:22:74:30:ea:e2:89:4a:68:8c:a7:d6 root@mnt (DSA)
-256 MD5:47:ce:6f:89:fa:06:ab:d5:94:e1:e1:95:94:40:68:5c root@mnt (ECDSA)
-256 MD5:95:53:ec:52:c3:78:e8:5d:43:c6:2f:bc:d9:7e:9a:4c root@mnt (ED25519)
-2048 MD5:ff:9d:c3:b0:ee:c9:89:32:72:0c:d8:fb:cc:5d:ae:75 root@mnt (RSA)
-
 # phrik.archlinux.org
 1024 SHA256:+482UWH5/pSMZ8VoIgkGZxGOm1tZ72rI5RrZsnQHDVk root@archlinux-packer (DSA)
 256 SHA256:qL+sG+DBwRKII1uPVcFHKQUfQNd7sW0x6iop6/Ki1Og root@archlinux-packer (ECDSA)

@@ -8,13 +8,3 @@ server:
 
 remote-control:
 	control-enable: yes
-
-
-{% if inventory_hostname == "orion.archlinux.org" %}
-# nszero1.axc.nl "rate-limits" but in reality blocks our Hetzner connections from orion.
-forward-zone:
-	name: "vdwaa.nl"
-	forward-addr: 8.8.8.8
-	forward-addr: 1.1.1.1
-	forward-first: yes
-{% endif %}

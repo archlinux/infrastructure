@@ -1,5 +1,4 @@
 [hetzner]
-orion.archlinux.org
 apollo.archlinux.org
 luna.archlinux.org
 dragon.archlinux.org
@@ -20,7 +19,6 @@ repro3.pkgbuild.com
 mirror.pkgbuild.com
 
 [borg_clients]
-orion.archlinux.org
 apollo.archlinux.org
 luna.archlinux.org
 state.archlinux.org
@@ -62,7 +60,6 @@ accounts.archlinux.org
 [nginx]
 apollo.archlinux.org
 luna.archlinux.org
-orion.archlinux.org
 bbs.archlinux.org
 bugs.archlinux.org
 aur.archlinux.org

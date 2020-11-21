@@ -96,7 +96,7 @@ set up.
 
 #### SMTP Configuration
 
-All hosts should be relaying email through our primary mx host (currently 'orion'). See [docs/email.md](./docs/email.md) for full details.
+All hosts should be relaying email through our primary mx host (currently 'mail.archlinux.org'). See [docs/email.md](./docs/email.md) for full details.
 
 #### Note about opendkim
 
@@ -144,7 +144,7 @@ The following steps should be used to update our managed servers:
 
 ## Servers
 
-### orion
+### gemini
 
 #### Services
   - repos/sync (repos.archlinux.org)
