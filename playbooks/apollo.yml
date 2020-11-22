@@ -48,7 +48,6 @@
       security_tracker_dir: "/srv/http/security-tracker"
     - { role: mailman, mailman_domain: "lists.archlinux.org" }
     - { role: patchwork }
-    - { role: kanboard }
     - { role: grafana }
     - { role: archwiki }
     - { role: conf_archlinux }

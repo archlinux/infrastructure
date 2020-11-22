@@ -1,4 +1,0 @@
----
-
-- name: restart php-fpm@kanboard
-  service: name=php-fpm@kanboard state=restarted
