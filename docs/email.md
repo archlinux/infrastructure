@@ -44,3 +44,17 @@ When a new host is provisioned:
 - Any services on the new host that need to relay mail should relay using SMTP
   to `localhost` on port 10027 which bypasses any filtering/restrictions that
   are applied by postfix to port 25 traffic.
+
+# Create new DKIM keys
+
+The rspamd role expects the key to exist in the vault. To generate new keys, run
+```
+rspamadm dkim_keygen -s dkim-ed25519 -b 0 -d archlinux.org -t ed25519 -k archlinux.org.dkim-ed25519.key
+rspamadm dkim_keygen -s dkim-rsa -b 4096 -d archlinux.org -t rsa -k archlinux.org.dkim-rsa.key
+```
+the ouput gives you the DNS entries to add to the terraform files.
+The keys generated need to go to the vault:
+```
+roles/rspamd/files/archlinux.org.dkim-rsa.key
+roles/rspamd/files/archlinux.org.dkim-ed25519.key
+```
