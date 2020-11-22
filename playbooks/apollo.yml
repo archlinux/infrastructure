@@ -30,7 +30,6 @@
     - { role: rspamd, tags: ["mail"] }
     - { role: unbound, tags: ["mail"] }
     - { role: postfix, postfix_relayhost: "mail.archlinux.org", postfix_smtpd_public: true, postfix_patchwork_enabled: true, tags: ["mail"] }
-    - { role: opendkim, dkim_selector: apollo, tags: ['mail'] }
     - { role: postfwd, tags: ['mail'] }
     - role: postgres
       postgres_listen_addresses: "*"

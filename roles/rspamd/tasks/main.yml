@@ -7,5 +7,31 @@
   notify:
     - reload rspamd
 
+- name: create rspamd dkim directory
+  file: path=/var/lib/rspamd/dkim state=directory owner=rspamd group=rspamd mode=0755
+
+- name: generate DKIM keys
+  command: rspamadm dkim_keygen -s dkim-{{ item.key_type }} -b {{ item.key_length }} -d archlinux.org -t {{ item.key_type }} -k archlinux.org.dkim-{{ item.key_type }}.key > archlinux.org.dkim-{{ item.key_type }}.key.pub
+  become: yes
+  become_user: rspamd
+  args:
+    creates: /var/lib/rspamd/dkim/archlinux.org.dkim-{{ item.key_type }}.key
+    chdir: /var/lib/rspamd/dkim
+  loop:
+    - {key_type: 'ed25519', key_length: 0}
+    - {key_type: 'rsa', key_length: 4096}
+  notify:
+    - reload rspamd
+  tags:
+    - generate_dkim_keys
+
+- name: install DKIM keys
+  copy: src={{ item }} dest=/var/lib/rspamd/dkim/ owner=rspamd group=rspamd mode=0600
+  loop:
+    - archlinux.org.dkim-ed25519.key
+    - archlinux.org.dkim-rsa.key
+  notify:
+    - reload rspamd
+
 - name: start and enable rspamd
   service: name=rspamd enabled=yes state=started

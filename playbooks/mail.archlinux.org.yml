@@ -15,5 +15,4 @@
     - { role: postfwd, tags: ['mail'] }
     - { role: archusers }
     - { role: fail2ban }
-    - { role: opendkim, dkim_selector: mail, tags: ['mail'] }
     - { role: prometheus_exporters }
