@@ -8,7 +8,9 @@
     - reload rspamd
 
 - name: create rspamd dkim directory
-  file: path=/var/lib/rspamd/dkim state=directory owner=rspamd group=rspamd mode=0755
+  file: path=/var/lib/rspamd/dkim state=directory owner=rspamd group=rspamd mode=0750
+  tags:
+    - generate_dkim_keys
 
 - name: generate DKIM keys
   command: rspamadm dkim_keygen -s dkim-{{ item.key_type }} -b {{ item.key_length }} -d archlinux.org -t {{ item.key_type }} -k archlinux.org.dkim-{{ item.key_type }}.key > archlinux.org.dkim-{{ item.key_type }}.key.pub
