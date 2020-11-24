@@ -39,7 +39,7 @@ server {
 
     root {{ rebuilder_website_loc }};
 
-    location ~* (css|js)$ {
+    location ~* (css|js|svg)$ {
            expires 30d;
            add_header Pragma public;
            add_header Cache-Control "public, must-revalidate, proxy-revalidate";
