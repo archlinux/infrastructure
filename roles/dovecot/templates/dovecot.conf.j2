@@ -3,9 +3,6 @@ disable_plaintext_auth = yes
 mail_location = mdbox:~/.mdbox
 mail_plugins = $mail_plugins zlib notify mail_log
 
-# enable imap notify
-mailbox_list_index=yes
-
 # remove domain part from username and lowercase it
 auth_username_format = %Ln
 
@@ -48,6 +45,9 @@ plugin {
 
 	mail_log_events = delete undelete expunge copy mailbox_delete mailbox_rename
 	mail_log_fields = uid box msgid size
+
+	zlib_save_level = 6
+	zlib_save = gz
 }
 protocols = imap pop3 sieve lmtp
 service auth {
@@ -72,18 +72,6 @@ service pop3-login {
   inet_listener pop3 {
     port = 0
   }
-}
-
-service managesieve-login {
-	inet_listener sieve {
-		# use default port
-		#port = 4190
-	}
-	inet_listener sieve-obsolete {
-		port = 2000
-	}
-}
-service managesieve {
 }
 service lmtp {
 	unix_listener /var/spool/postfix/private/dovecot-lmtp {
@@ -112,10 +100,6 @@ protocol imap {
 	mail_max_userip_connections = 30
 	mail_plugins = $mail_plugins
 }
-protocol lda {
-	mail_plugins = $mail_plugins sieve
-	postmaster_address = postmaster@archlinux.org
-}
 protocol lmtp {
 	postmaster_address = postmaster@archlinux.org
 	mail_plugins = $mail_plugins sieve
@@ -123,10 +107,3 @@ protocol lmtp {
 protocol sieve {
 	managesieve_logout_format = bytes ( in=%i : out=%o )
 }
-plugin {
-	sieve = ~/.dovecot.sieve
-	sieve_dir = ~/.sieve
-	zlib_save_level = 6
-	zlib_save = gz
-}
-auth_failure_delay = 2s
