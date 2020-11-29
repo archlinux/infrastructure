@@ -37,6 +37,7 @@
   with_items:
     - pop3s
     - imaps
+    - managesieve
   when: configure_firewall
   tags:
     - firewall
