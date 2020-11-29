@@ -66,7 +66,7 @@
   file: state=directory owner=archweb group=archweb mode=0755 path="{{ archweb_dir }}"
 
 - name: configure archweb
-  template: src=local_settings.py.j2 dest=/srv/http/archweb/local_settings.py owner=archweb group=archweb mode=0660
+  template: src=local_settings.py.j2 dest={{ archweb_dir }}/local_settings.py owner=archweb group=archweb mode=0660
   register: config
   no_log: true
 
