@@ -30,6 +30,14 @@ submission inet n       -       n       -       -       smtpd
     -o smtpd_sasl_auth_enable=yes
     -o smtpd_recipient_restrictions=$submission_recipient_restrictions
     -o smtpd_client_connection_count_limit=10
+465        inet n       -       n       -       -       smtpd
+    -o cleanup_service_name=msa_cleanup
+    -o smtpd_tls_wrappermode=yes
+    -o syslog_name=postfix/submission
+    -o smtpd_tls_security_level=encrypt
+    -o smtpd_sasl_auth_enable=yes
+    -o smtpd_recipient_restrictions=$submission_recipient_restrictions
+    -o smtpd_client_connection_count_limit=10
 {% endif %}
 
 #smtp      inet  n       -       n       -       1       postscreen

@@ -59,8 +59,19 @@ service auth {
 	user = root
 }
 service imap-login {
+  # don't listen for plain imap
+  inet_listener imap {
+    port = 0
+  }
 	process_limit = 400
 	process_min_avail = 5
+}
+
+service pop3-login {
+  # don't listen for plain pop3
+  inet_listener pop3 {
+    port = 0
+  }
 }
 
 service managesieve-login {
