@@ -129,62 +129,47 @@
     - daemon reload
   when: archweb_services or archweb_reporead
 
-- name: install mirrorcheck service
-  template: src="archweb-mirrorcheck.service.j2" dest="/etc/systemd/system/archweb-mirrorcheck.service" owner=root group=root mode=0644
+- name: install mirrorcheck service and timer
+  template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
+  with_items:
+    - archweb-mirrorcheck.service
+    - archweb-mirrorcheck.timer
   notify:
     - daemon reload
   when: archweb_services or archweb_mirrorcheck
 
-- name: install mirrorcheck timer
-  template: src="archweb-mirrorcheck.timer.j2" dest="/etc/systemd/system/archweb-mirrorcheck.timer" owner=root group=root mode=0644
-  notify:
-    - daemon reload
-  when: archweb_services or archweb_mirrorcheck
-
-- name: install mirrorresolv service
-  template: src="archweb-mirrorresolv.service.j2" dest="/etc/systemd/system/archweb-mirrorresolv.service" owner=root group=root mode=0644
+- name: install mirrorresolv service and timer
+  template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
+  with_items:
+    - archweb-mirrorresolv.service
+    - archweb-mirrorresolv.timer
   notify:
     - daemon reload
   when: archweb_services or archweb_mirrorresolv
 
-- name: install mirrorresolv timer
-  template: src="archweb-mirrorresolv.timer.j2" dest="/etc/systemd/system/archweb-mirrorresolv.timer" owner=root group=root mode=0644
-  notify:
-    - daemon reload
-  when: archweb_services or archweb_mirrorresolv
-
-- name: install populate_signoffs service
-  template: src="archweb-populate_signoffs.service.j2" dest="/etc/systemd/system/archweb-populate_signoffs.service" owner=root group=root mode=0644
+- name: install populate_signoffs service and timer
+  template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
+  with_items:
+    - archweb-populate_signoffs.service
+    - archweb-populate_signoffs.timer
   notify:
     - daemon reload
   when: archweb_services or archweb_populate_signoffs
 
-- name: install populate_signoffs timer
-  template: src="archweb-populate_signoffs.timer.j2" dest="/etc/systemd/system/archweb-populate_signoffs.timer" owner=root group=root mode=0644
-  notify:
-    - daemon reload
-  when: archweb_services or archweb_populate_signoffs
-
-- name: install planet service
-  template: src="archweb-planet.service.j2" dest="/etc/systemd/system/archweb-planet.service" owner=root group=root mode=0644
+- name: install planet service and timer
+  template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
+  with_items:
+    - archweb-planet.service
+    - archweb-planet.timer
   notify:
     - daemon reload
   when: archweb_planet
 
-- name: install planet timer
-  template: src="archweb-planet.timer.j2" dest="/etc/systemd/system/archweb-planet.timer" owner=root group=root mode=0644
-  notify:
-    - daemon reload
-  when: archweb_planet
-
-- name: install rebuilderd status service
-  template: src="archweb-rebuilderd.service.j2" dest="/etc/systemd/system/archweb-rebuilderd.service" owner=root group=root mode=0644
-  notify:
-    - daemon reload
-  when: archweb_site
-
-- name: install rebulderd timer
-  template: src="archweb-rebuilderd.timer.j2" dest="/etc/systemd/system/archweb-rebuilderd.timer" owner=root group=root mode=0644
+- name: install rebuilderd status service and timer
+  template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
+  with_items:
+    - archweb-rebuilderd.service
+    - archweb-rebuilderd.timer
   notify:
     - daemon reload
   when: archweb_site
@@ -209,26 +194,20 @@
     - daemon reload
   when: archweb_site|bool
 
-- name: install archweb rsync iso service
-  template: src="archweb-rsync_iso.service.j2" dest="/etc/systemd/system/archweb-rsync_iso.service" owner=root group=root mode=0644
+- name: install archweb rsync iso service and timer
+  template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
+  with_items:
+    - archweb-rsync_iso.service
+    - archweb-rsync_iso.timer
   notify:
     - daemon reload
   when: archweb_site|bool
 
-- name: install archweb rsync iso timer
-  template: src="archweb-rsync_iso.timer.j2" dest="/etc/systemd/system/archweb-rsync_iso.timer" owner=root group=root mode=0644
-  notify:
-    - daemon reload
-  when: archweb_site|bool
-
-- name: install donor_import service
-  template: src="archweb-donor_import.service.j2" dest="/etc/systemd/system/archweb-donor_import.service" owner=root group=root mode=0644
-  notify:
-    - daemon reload
-  when: archweb_donor_import|bool
-
-- name: install archweb donor import timer
-  template: src="archweb-donor_import.timer.j2" dest="/etc/systemd/system/archweb-donor_import.timer" owner=root group=root mode=0644
+- name: install donor_import service and timer
+  template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
+  with_items:
+    - archweb-donor_import.service
+    - archweb-donor_import.timer
   notify:
     - daemon reload
   when: archweb_donor_import|bool
@@ -240,14 +219,11 @@
     - new
   when: archweb_donor_import|bool
 
-- name: install dump donor mail service
-  template: src="archweb-dump_donor_mail.service.j2" dest="/etc/systemd/system/archweb-dump_donor_mail.service" owner=root group=root mode=0644
-  notify:
-    - daemon reload
-  when: archweb_donor_import|bool
-
-- name: install dump donor mail timer
-  template: src="archweb-dump_donor_mail.timer.j2" dest="/etc/systemd/system/archweb-dump_donor_mail.timer" owner=root group=root mode=0644
+- name: install dump donor mail service and timer
+  template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
+  with_items:
+    - archweb-dump_donor_mail.service
+    - archweb-dump_donor_mail.timer
   notify:
     - daemon reload
   when: archweb_donor_import|bool
