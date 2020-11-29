@@ -1,0 +1,50 @@
+upstream archmanweb {
+    server unix:///run/uwsgi/archmanweb.sock;
+}
+
+server {
+    listen       80;
+    listen       [::]:80;
+    server_name  {{ archmanweb_domain }};
+
+    access_log   /var/log/nginx/{{ archmanweb_domain }}/access.log reduced;
+    error_log    /var/log/nginx/{{ archmanweb_domain }}/error.log;
+
+    include snippets/letsencrypt.conf;
+
+    location / {
+        access_log off;
+        return 301 https://$server_name$request_uri;
+    }
+}
+
+server {
+    listen       443 ssl http2;
+    listen       [::]:443 ssl http2;
+    server_name  {{ archmanweb_domain }};
+
+    access_log   /var/log/nginx/{{ archmanweb_domain }}/access.log reduced;
+    error_log    /var/log/nginx/{{ archmanweb_domain }}/error.log;
+
+    ssl_certificate      /etc/letsencrypt/live/{{ archmanweb_domain }}/fullchain.pem;
+    ssl_certificate_key  /etc/letsencrypt/live/{{ archmanweb_domain }}/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/{{ archmanweb_domain }}/chain.pem;
+
+    location /favicon.ico {
+        alias {{ archmanweb_dir }}/repo/collected_static/favicon.ico;
+    }
+
+    # Client-cache for Django's static assets
+    location /static {
+        expires 30d;
+        add_header Pragma public;
+        add_header Cache-Control "public";
+        alias {{ archmanweb_dir }}/repo/collected_static;
+    }
+
+    location / {
+        access_log   /var/log/nginx/{{ archmanweb_domain }}/access.log main;
+        include uwsgi_params;
+        uwsgi_pass archmanweb;
+    }
+}

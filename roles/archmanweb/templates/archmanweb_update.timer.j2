@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer for the archmanweb update
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+RandomizedDelaySec=1h
+
+[Install]
+WantedBy=timers.target
