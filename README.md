@@ -238,8 +238,10 @@ So to set up this server from scratch, run:
 
 ### reproducible.archlinux.org
 
+[Rebuilderd docs](./docs/rebuilderd.md)
+
 #### Services
-  - Runs a master [rebuilderd](docs/rebuilderd.md) instance two workers:
+  - Runs a master [rebuilderd](https://reproducible.archlinux.org) instance two workers:
     - repro1.pkgbuild.com (packet.net Arch Linux box)
 
 ### runner2.archlinux.org
