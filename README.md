@@ -256,7 +256,7 @@ Medium-fast-ish packet.net Arch Linux box.
 
 #### Services
   - Alertmanager
-  - [Grafana](https://monitoring.archlinux.org)
+  - [Grafana](https://monitoring.archlinux.org) and [docs/grafana.md](./docs/grafana.md)
   - Prometheus
 
 ### openpgpkey.archlinux.org
