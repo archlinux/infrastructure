@@ -19,6 +19,7 @@ mode configures nginx. There are a few examples of roles that can be used, like 
 
 The basic configuration looks like this:
 
+```
 - name: run maintenance mode
   include_role:
     name: maintenance
@@ -28,17 +29,20 @@ The basic configuration looks like this:
     service_alternate_domains: []
     service_nginx_conf: "{{ service_nginx_conf }}"
   when: maintenance is defined
+```
 
 This is best placed at the top of the tasks main file for the role, to make sure it is ran first.
 Replace <service_name> with the name of the web service. The nginx configuration is best to be set
 as a variable, to make sure the right file is used.
 
+```
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest="{{ service_nginx_conf }}" owner=root group=root mode=644
   notify:
     - reload nginx
   when: maintenance is not defined
   tags: ['nginx']
+```
 
 This causes the regular nginx configuration to only be applied when there is no maintenance variable
 on the command line.
