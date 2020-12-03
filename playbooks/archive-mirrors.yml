@@ -5,6 +5,8 @@
   roles:
     - { role: common }
     - { role: tools }
+    - { role: firewalld }
+    - { role: hardening }
     - { role: sshd }
     - { role: root_ssh }
     - { role: certbot }

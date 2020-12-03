@@ -131,6 +131,27 @@ resource "hetznerdns_record" "pkgbuild_com_mirror_aaaa" {
   type    = "AAAA"
 }
 
+resource "hetznerdns_record" "pkgbuild_com_america_a" {
+  zone_id = hetznerdns_zone.pkgbuild.id
+  name    = "america.mirror"
+  value   = "143.244.34.62"
+  type    = "A"
+}
+
+resource "hetznerdns_record" "pkgbuild_com_asia_a" {
+  zone_id = hetznerdns_zone.pkgbuild.id
+  name    = "asia.mirror"
+  value   = "84.17.57.98"
+  type    = "A"
+}
+
+resource "hetznerdns_record" "pkgbuild_com_europe_a" {
+  zone_id = hetznerdns_zone.pkgbuild.id
+  name    = "europe.mirror"
+  value   = "89.187.191.12"
+  type    = "A"
+}
+
 resource "hetznerdns_record" "pkgbuild_com_repro1_a" {
   zone_id = hetznerdns_zone.pkgbuild.id
   name    = "repro1"
@@ -143,6 +164,13 @@ resource "hetznerdns_record" "pkgbuild_com_repro1_aaaa" {
   name    = "repro1"
   value   = "2604:1380:2001:4500::1"
   type    = "AAAA"
+}
+
+resource "hetznerdns_record" "pkgbuild_com_repro2_a" {
+  zone_id = hetznerdns_zone.pkgbuild.id
+  name    = "repro2"
+  value   = "212.102.38.209"
+  type    = "A"
 }
 
 resource "hetznerdns_record" "pkgbuild_com_www_a" {
@@ -597,6 +625,13 @@ resource "hetznerdns_record" "archlinux_org_reproducible_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "reproducible"
   value   = hcloud_server.reproducible.ipv4_address
+  type    = "A"
+}
+
+resource "hetznerdns_record" "archlinux_org_runner1_a" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "runner1"
+  value   = "84.17.49.250"
   type    = "A"
 }
 
