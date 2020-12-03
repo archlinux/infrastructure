@@ -1,3 +1,6 @@
+[http]
+real_ip_header = "X-Real-IP"
+
 [worker]
 # set the generated secret for our workers here
 signup_secret = "{{ vault_rebuilderd_signup_secret }}"

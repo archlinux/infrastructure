@@ -131,16 +131,16 @@ resource "hetznerdns_record" "pkgbuild_com_mirror_aaaa" {
   type    = "AAAA"
 }
 
-resource "hetznerdns_record" "pkgbuild_com_repro3_a" {
+resource "hetznerdns_record" "pkgbuild_com_repro1_a" {
   zone_id = hetznerdns_zone.pkgbuild.id
-  name    = "repro3"
+  name    = "repro1"
   value   = "147.75.81.79"
   type    = "A"
 }
 
-resource "hetznerdns_record" "pkgbuild_com_repro3_aaaa" {
+resource "hetznerdns_record" "pkgbuild_com_repro1_aaaa" {
   zone_id = hetznerdns_zone.pkgbuild.id
-  name    = "repro3"
+  name    = "repro1"
   value   = "2604:1380:2001:4500::1"
   type    = "AAAA"
 }

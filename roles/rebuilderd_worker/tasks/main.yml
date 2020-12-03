@@ -1,0 +1,15 @@
+- name: install required packages
+  pacman: name=rebuilderd,archlinux-repro state=present
+
+- name: configure rebuilderd-worker.conf
+  template: src=rebuilderd-worker.conf.j2 dest=/etc/rebuilderd-worker.conf owner=rebuilderd group=rebuilderd mode=0660
+
+- name: create arch repro configuration dir
+  file: path=/etc/archlinux-repro state=directory owner=root group=root mode=0750
+
+- name: install archlinux-repro configuration
+  copy: src=repro.conf dest=/etc/archlinux-repro/repro.conf owner=root group=root mode=0660
+
+- name: enable and start rebuilderd-worker@{{ item }}
+  systemd: name=rebuilderd-worker@{{ item }} enabled=yes state=started
+  with_items: '{{ rebuilderd_workers }}'

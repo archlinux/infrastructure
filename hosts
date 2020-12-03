@@ -13,7 +13,7 @@ u236610.your-storagebox.de
 
 [packet_net]
 runner2.archlinux.org
-repro3.pkgbuild.com
+repro1.pkgbuild.com
 
 [mirrors]
 mirror.pkgbuild.com
@@ -73,7 +73,7 @@ runner2.archlinux.org
 secure-runner1.archlinux.org
 
 [reproduciblebuilds]
-repro3.pkgbuild.com
+repro1.pkgbuild.com
 
 [rebuilderd]
 reproducible.archlinux.org
@@ -106,3 +106,4 @@ dragon.archlinux.org
 bugs.archlinux.org
 gemini.archlinux.org
 luna.archlinux.org
+repro1.pkgbuild.com
