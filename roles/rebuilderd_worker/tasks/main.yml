@@ -1,5 +1,5 @@
 - name: install required packages
-  pacman: name=rebuilderd,archlinux-repro state=present
+  pacman: name=rebuilderd,archlinux-repro,binutils state=present
 
 - name: configure rebuilderd-worker.conf
   template: src=rebuilderd-worker.conf.j2 dest=/etc/rebuilderd-worker.conf owner=rebuilderd group=rebuilderd mode=0660
