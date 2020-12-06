@@ -1,6 +1,15 @@
 endpoint = "https://reproducible.archlinux.org"
 signup_secret = "{{ vault_rebuilderd_signup_secret }}"
 
+[build]
+timeout = 86400 # 24 hours
+## Set a maximum build log limit in bytes (default: none).
+## When reaching this limit the log is truncated but the rebuilder backend is *not* terminated.
+max_bytes = 10485760 # 10 MiB
+## By default build output is forwarded to stdout/stderr.
+## This can be disabled by settings this to true.
+silent = true
+
 [diffoscope]
 enabled = true
 max_bytes = 10485760 # 10 MiB
