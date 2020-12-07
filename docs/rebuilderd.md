@@ -6,13 +6,16 @@ Results are shown on [our website](https://reproducible.archlinux.org) which is 
 
 ## Configuration
 
-Setting up rebuilderd-workers requires adding the `rebuilderd_worker` role to the playbook and adding `rebuilderd_workers` a list with rebuilderd-worker names for example:
+Setting up rebuilderd-workers requires adding the new machine under `rebuilderd_workers` in hosts
+and adding `rebuilderd_workers` with a list of rebuilderd-worker names for example too it's host_vars:
 
 ```
 rebuilderd_workers:
  - repro11
  - repro12
 ```
+
+Then run the rebuilderd-workers playbook.
 
 ## Monitoring
 

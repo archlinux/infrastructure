@@ -1,7 +1,7 @@
 ---
 
-- name: setup repro1.pkgbuild.com
-  hosts: repro1.pkgbuild.com
+- name: common playbook for rebuilderd_workers
+  hosts: rebuilderd_workers
   remote_user: root
   roles:
     - { role: common }
