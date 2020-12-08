@@ -1,0 +1,30 @@
+---
+- name: install debuginfod
+  pacman: name=debuginfod state=present
+
+- name: create ssl cert
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ debuginfod_domain }}"]
+  when: debuginfod_domain
+
+- name: configure debuginfod systemd service
+  template: src=debuginfod.service.j2 dest=/usr/lib/systemd/system/debuginfod.service owner=root group=root mode=0644
+  vars:
+    debuginfod_package_path: "{{ debuginfod_package_paths | join(' ') }}"
+  notify:
+    - reload debuginfod
+
+- name: make nginx log dir
+  file: path=/var/log/nginx/{{ debuginfod_domain }} state=directory owner=root group=root mode=0755
+
+- name: set up nginx
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/debuginfod.conf owner=root group=root mode=0644
+  notify:
+    - reload nginx
+  when: debuginfod_domain
+  tags: ['nginx']
+
+- name: start and enable debuginfod
+  service: name=debuginfod enabled=yes state=started

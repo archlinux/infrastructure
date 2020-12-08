@@ -1,0 +1,17 @@
+---
+- name: setup debuginfod.archlinux.org
+  hosts: debuginfod.archlinux.org
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: firewalld }
+    - { role: wireguard }
+    - { role: hardening }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: certbot }
+    - { role: nginx }
+    - { role: debuginfod }
+    - { role: syncdebug }
+    - { role: prometheus_exporters }
+    - { role: promtail }

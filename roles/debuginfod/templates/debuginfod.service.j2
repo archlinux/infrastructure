@@ -1,0 +1,22 @@
+[Unit]
+Description=debuginfod server
+After=network.target network-online.target nss-lookup.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/debuginfod -d {{debuginfod_database}} -p {{debuginfod_port}} -F -Z .tar.zst=zstdcat {{debuginfod_package_path}}
+Restart=on-failure
+DynamicUser=yes
+PrivateDevices=true
+PrivateUsers=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+ProtectKernelLogs=true
+ProtectKernelModules=true
+MemoryDenyWriteExecute=true
+RestrictRealtime=true
+ReadOnlyPaths={{debuginfod_package_path}}
+CacheDirectory=debuginfod
+
+[Install]
+WantedBy=multi-user.target

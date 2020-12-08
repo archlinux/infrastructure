@@ -1,0 +1,8 @@
+---
+debuginfod_httpd: false
+debuginfod_domain: debuginfod.archlinux.org
+debuginfod_port: 8002
+debuginfod_database: /var/cache/debuginfod/debuginfod.sqlite
+debuginfod_package_paths:
+  - /srv/ftp/pool/packages-debug
+  - /srv/ftp/pool/community-debug
