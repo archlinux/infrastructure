@@ -18,6 +18,7 @@
       postgres_work_mem: 32MB
       postgres_maintenance_work_mem: 32MB
       postgres_effective_cache_size: 2GB
+      postgres_jit: 'off'
     - role: postfix
       postfix_relayhost: "mail.archlinux.org"
     - { role: matrix }
