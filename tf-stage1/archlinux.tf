@@ -890,6 +890,7 @@ resource "hetznerdns_record" "archlinux_org_rsync_cname" {
 resource "hetznerdns_record" "archlinux_org_security_cname" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "security"
+  ttl     = 600
   value   = "apollo"
   type    = "CNAME"
 }
