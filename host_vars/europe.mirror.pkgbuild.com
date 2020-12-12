@@ -1,4 +1,5 @@
 hostname: "europe.mirror.pkgbuild.com"
+archive_domain: "europe.archive.pkgbuild.com"
 ipv4_address: "89.187.191.12"
 ipv4_netmask: "/26"
 ipv4_gateway: "89.187.191.62"

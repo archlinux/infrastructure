@@ -1,4 +1,5 @@
 hostname: "america.mirror.pkgbuild.com"
+archive_domain: "america.archive.pkgbuild.com"
 ipv4_address: "143.244.34.62"
 ipv4_netmask: "/25"
 ipv4_gateway: "143.244.34.126"
