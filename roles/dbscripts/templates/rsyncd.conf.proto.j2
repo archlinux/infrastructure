@@ -24,7 +24,7 @@ hosts deny = *
 [archive]
 	path = /srv/archive
 	comment = archive
-	hosts allow = {{ groups['archive_mirrors'] | map('extract', hostvars, ['ipv4_address']) | join(' ') }}
+	hosts allow = {{ groups['archive_mirrors'] | map('extract', hostvars, ['ipv4_address']) | join(' ') }} {{ groups['archive_mirrors'] | map('extract', hostvars, ['ipv6_address']) | join(' ') }}
 {% endif %}
 
 # Just the release/stable iso/packages (for most mirrors)
