@@ -74,7 +74,7 @@ max_connections = {{ postgres_max_connections }}			# (change requires restart)
 					# (change requires restart)
 
 # - TCP settings -
-# see "man 7 tcp" for details
+# see "man tcp" for details
 
 #tcp_keepalives_idle = 0		# TCP_KEEPIDLE, in seconds;
 					# 0 selects the system default
@@ -105,7 +105,7 @@ ssl_key_file = '{{ postgres_ssl_key_file }}'
 #ssl_ciphers = 'HIGH:MEDIUM:+3DES:!aNULL' # allowed SSL ciphers
 ssl_prefer_server_ciphers = {{ postgres_ssl_prefer_server_ciphers }}
 #ssl_ecdh_curve = 'prime256v1'
-#ssl_min_protocol_version = 'TLSv1'
+#ssl_min_protocol_version = 'TLSv1.2'
 #ssl_max_protocol_version = ''
 #ssl_dh_params_file = ''
 #ssl_passphrase_command = ''
@@ -128,8 +128,10 @@ shared_buffers = {{ postgres_shared_buffers }}			# min 128kB
 # Caution: it is not advisable to set max_prepared_transactions nonzero unless
 # you actively intend to use prepared transactions.
 work_mem = {{ postgres_work_mem }}				# min 64kB
+#hash_mem_multiplier = 1.0		# 1-1000.0 multiplier on hash table work_mem
 maintenance_work_mem = {{ postgres_maintenance_work_mem }}		# min 1MB
 #autovacuum_work_mem = -1		# min 1MB, or -1 to use maintenance_work_mem
+#logical_decoding_work_mem = 64MB	# min 64kB
 #max_stack_depth = 2MB			# min 100kB
 #shared_memory_type = mmap		# the default is the first option
 					# supported by the operating system:
@@ -148,11 +150,11 @@ maintenance_work_mem = {{ postgres_maintenance_work_mem }}		# min 1MB
 # - Disk -
 
 #temp_file_limit = -1			# limits per-process temp file space
-					# in kB, or -1 for no limit
+					# in kilobytes, or -1 for no limit
 
 # - Kernel Resources -
 
-#max_files_per_process = 1000		# min 25
+#max_files_per_process = 1000		# min 64
 					# (change requires restart)
 
 # - Cost-Based Vacuum Delay -
@@ -173,6 +175,7 @@ maintenance_work_mem = {{ postgres_maintenance_work_mem }}		# min 1MB
 # - Asynchronous Behavior -
 
 #effective_io_concurrency = 1		# 1-1000; 0 disables prefetching
+#maintenance_io_concurrency = 10	# 1-1000; 0 disables prefetching
 #max_worker_processes = 8		# (change requires restart)
 #max_parallel_maintenance_workers = 2	# taken from max_parallel_workers
 #max_parallel_workers_per_gather = 2	# taken from max_parallel_workers
@@ -214,6 +217,7 @@ maintenance_work_mem = {{ postgres_maintenance_work_mem }}		# min 1MB
 					# (change requires restart)
 #wal_writer_delay = 200ms		# 1-10000 milliseconds
 #wal_writer_flush_after = 1MB		# measured in pages, 0 disables
+#wal_skip_threshold = 2MB
 
 #commit_delay = 0			# range 0-100000, in microseconds
 #commit_siblings = 5			# range 1-1000
@@ -285,7 +289,8 @@ maintenance_work_mem = {{ postgres_maintenance_work_mem }}		# min 1MB
 
 #max_wal_senders = 10		# max number of walsender processes
 				# (change requires restart)
-#wal_keep_segments = 0		# in logfile segments; 0 disables
+#wal_keep_size = 0		# in megabytes; 0 disables
+#max_slot_wal_keep_size = -1	# in megabytes; -1 disables
 #wal_sender_timeout = 60s	# in milliseconds; 0 disables
 
 #max_replication_slots = 10	# max number of replication slots
@@ -308,9 +313,7 @@ maintenance_work_mem = {{ postgres_maintenance_work_mem }}		# min 1MB
 # These settings are ignored on a master server.
 
 #primary_conninfo = ''			# connection string to sending server
-					# (change requires restart)
 #primary_slot_name = ''			# replication slot on sending server
-					# (change requires restart)
 #promote_trigger_file = ''		# file name whose presence ends recovery
 #hot_standby = on			# "off" disallows queries during recovery
 					# (change requires restart)
@@ -320,6 +323,8 @@ maintenance_work_mem = {{ postgres_maintenance_work_mem }}		# min 1MB
 #max_standby_streaming_delay = 30s	# max delay before canceling queries
 					# when reading streaming WAL;
 					# -1 allows indefinite delay
+#wal_receiver_create_temp_slot = off	# create temp slot if primary_slot_name
+					# is not set
 #wal_receiver_status_interval = 10s	# send replies at least this often
 					# 0 disables
 #hot_standby_feedback = off		# send info from standby to prevent
@@ -357,6 +362,7 @@ maintenance_work_mem = {{ postgres_maintenance_work_mem }}		# min 1MB
 #enable_parallel_append = on
 #enable_seqscan = on
 #enable_sort = on
+#enable_incremental_sort = on
 #enable_tidscan = on
 #enable_partitionwise_join = off
 #enable_partitionwise_aggregate = off
@@ -493,9 +499,20 @@ syslog_split_messages = off
 					# statements running at least this number
 					# of milliseconds
 
-#log_transaction_sample_rate = 0.0	# Fraction of transactions whose statements
-					# are logged regardless of their duration. 1.0 logs all
-					# statements from all transactions, 0.0 never logs.
+#log_min_duration_sample = -1		# -1 is disabled, 0 logs a sample of statements
+					# and their durations, > 0 logs only a sample of
+					# statements running at least this number
+					# of milliseconds;
+					# sample fraction is determined by log_statement_sample_rate
+
+#log_statement_sample_rate = 1.0	# fraction of logged statements exceeding
+					# log_min_duration_sample to be logged;
+					# 1.0 logs all such statements, 0.0 never logs
+
+
+#log_transaction_sample_rate = 0.0	# fraction of transactions whose statements
+					# are logged regardless of their duration; 1.0 logs all
+					# statements from all transactions, 0.0 never logs
 
 # - What to Log -
 
@@ -515,6 +532,7 @@ log_line_prefix = '%d: '		# special values:
 					#   %d = database name
 					#   %r = remote host and port
 					#   %h = remote host
+					#   %b = backend type
 					#   %p = process ID
 					#   %t = timestamp without milliseconds
 					#   %m = timestamp with milliseconds
@@ -531,6 +549,12 @@ log_line_prefix = '%d: '		# special values:
 					#   %% = '%'
 					# e.g. '<%u%%%d> '
 #log_lock_waits = off			# log lock waits >= deadlock_timeout
+#log_parameter_max_length = -1		# when logging statements, limit logged
+					# bind-parameter values to N bytes;
+					# -1 means print in full, 0 disables
+#log_parameter_max_length_on_error = 0	# when logging an error, limit logged
+					# bind-parameter values to N bytes;
+					# -1 means print in full, 0 disables
 #log_statement = 'none'			# none, ddl, mod, all
 #log_replication_commands = off
 #log_temp_files = -1			# log temporary files equal or larger
@@ -584,9 +608,14 @@ log_timezone = 'UTC'
 #autovacuum_naptime = 1min		# time between autovacuum runs
 #autovacuum_vacuum_threshold = 50	# min number of row updates before
 					# vacuum
+#autovacuum_vacuum_insert_threshold = 1000	# min number of row inserts
+					# before vacuum; -1 disables insert
+					# vacuums
 #autovacuum_analyze_threshold = 50	# min number of row updates before
 					# analyze
 #autovacuum_vacuum_scale_factor = 0.2	# fraction of table size before vacuum
+#autovacuum_vacuum_insert_scale_factor = 0.2	# fraction of inserts over table
+					# size before insert vacuum
 #autovacuum_analyze_scale_factor = 0.1	# fraction of table size before analyze
 #autovacuum_freeze_max_age = 200000000	# maximum XID age before forced vacuum
 					# (change requires restart)
