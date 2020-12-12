@@ -142,6 +142,11 @@ The following steps should be used to update our managed servers:
   * checkservices
   * reboot
 
+ There are a few special cases for upgrading some services/servers:
+
+ * On a major Python upgrade, the AUR role needs to be re-run to install the Python bindings in the correct directory.
+ * On a major PostgreSQL update, the postgres DB has to be dumped and re-importd. A helper script is available on our postgresql servers called `upgrade_pg.sh`.
+
 ## Servers
 
 ### gemini
