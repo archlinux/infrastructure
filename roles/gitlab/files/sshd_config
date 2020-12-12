@@ -1,3 +1,4 @@
+# From upstream https://gitlab.com/gitlab-org/omnibus-gitlab/-/blob/master/docker/assets/sshd_config
 Port 222
 ChallengeResponseAuthentication no
 HostKey /etc/gitlab/ssh_host_rsa_key
