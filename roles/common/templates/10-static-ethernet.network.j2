@@ -9,6 +9,9 @@ Gateway={{ ipv4_gateway }}
 {% if ipv6_gateway is defined %}
 Gateway={{ ipv6_gateway }}
 {% endif %}
+{% if ipv6_ignore_ra|default(false) is true %}
+IPv6AcceptRA=false
+{% endif %}
 Domains=archlinux.org.
 
 [Address]
