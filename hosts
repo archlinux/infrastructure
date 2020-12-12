@@ -24,6 +24,7 @@ america.mirror.pkgbuild.com
 europe.mirror.pkgbuild.com
 
 [borg_clients]
+archlinux.org
 apollo.archlinux.org
 luna.archlinux.org
 state.archlinux.org
@@ -57,12 +58,14 @@ aur.archlinux.org
 aur-dev.archlinux.org
 
 [postgresql_servers]
+archlinux.org
 apollo.archlinux.org
 state.archlinux.org
 quassel.archlinux.org
 accounts.archlinux.org
 
 [nginx]
+archlinux.org
 apollo.archlinux.org
 luna.archlinux.org
 bbs.archlinux.org
@@ -96,6 +99,7 @@ aur-dev.archlinux.org
 monitoring.archlinux.org
 
 [node_exporters]
+archlinux.org
 aur.archlinux.org
 aur-dev.archlinux.org
 monitoring.archlinux.org

@@ -218,6 +218,7 @@ resource "hetznerdns_record" "pkgbuild_com_www_aaaa" {
 resource "hetznerdns_record" "archlinux_org_origin_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "@"
+  ttl     = 600
   value   = "138.201.81.199"
   type    = "A"
 }
@@ -225,6 +226,7 @@ resource "hetznerdns_record" "archlinux_org_origin_a" {
 resource "hetznerdns_record" "archlinux_org_origin_aaaa" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "@"
+  ttl     = 600
   value   = "2a01:4f8:172:1d86::1"
   type    = "AAAA"
 }
@@ -526,6 +528,7 @@ resource "hetznerdns_record" "archlinux_org_mailman3_a" {
 resource "hetznerdns_record" "archlinux_org_master_key_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "master-key"
+  ttl     = 600
   value   = "138.201.81.199"
   type    = "A"
 }
@@ -743,6 +746,7 @@ resource "hetznerdns_record" "archlinux_org_conf_cname" {
 resource "hetznerdns_record" "archlinux_org_dev_cname" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "dev"
+  ttl     = 600
   value   = "apollo"
   type    = "CNAME"
 }
@@ -771,6 +775,7 @@ resource "hetznerdns_record" "archlinux_org_grafana_cname" {
 resource "hetznerdns_record" "archlinux_org_ipxe_cname" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "ipxe"
+  ttl     = 600
   value   = "apollo"
   type    = "CNAME"
 }
@@ -799,6 +804,7 @@ resource "hetznerdns_record" "archlinux_org_mailman_cname" {
 resource "hetznerdns_record" "archlinux_org_packages_cname" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "packages"
+  ttl     = 600
   value   = "apollo"
   type    = "CNAME"
 }
@@ -813,6 +819,7 @@ resource "hetznerdns_record" "archlinux_org_patchwork_cname" {
 resource "hetznerdns_record" "archlinux_org_planet_cname" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "planet"
+  ttl     = 600
   value   = "apollo"
   type    = "CNAME"
 }
@@ -890,6 +897,7 @@ resource "hetznerdns_record" "archlinux_org_wiki_cname" {
 resource "hetznerdns_record" "archlinux_org_www_cname" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "www"
+  ttl     = 600
   value   = "apollo"
   type    = "CNAME"
 }
@@ -1291,6 +1299,27 @@ resource "hcloud_rdns" "openpgpkey_ipv6" {
 
 resource "hcloud_server" "openpgpkey" {
   name        = "openpgpkey.archlinux.org"
+  image       = data.hcloud_image.archlinux.id
+  server_type = "cx11"
+  lifecycle {
+    ignore_changes = [image]
+  }
+}
+
+resource "hcloud_rdns" "archlinux_ipv4" {
+  server_id  = hcloud_server.archlinux.id
+  ip_address = hcloud_server.archlinux.ipv4_address
+  dns_ptr    = "archlinux.org"
+}
+
+resource "hcloud_rdns" "archlinux_ipv6" {
+  server_id  = hcloud_server.archlinux.id
+  ip_address = hcloud_server.archlinux.ipv6_address
+  dns_ptr    = "archlinux.org"
+}
+
+resource "hcloud_server" "archlinux" {
+  name        = "archlinux.org"
   image       = data.hcloud_image.archlinux.id
   server_type = "cx11"
   lifecycle {
