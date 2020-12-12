@@ -17,7 +17,7 @@
       postgres_shared_buffers: 1GB
       postgres_work_mem: 64MB
       postgres_maintenance_work_mem: 256MB
-      postgres_effective_cache_size: 2GB
+      postgres_effective_cache_size: 4GB
       postgres_jit: 'off'
     - role: postfix
       postfix_relayhost: "mail.archlinux.org"
