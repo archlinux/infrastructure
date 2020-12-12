@@ -145,6 +145,20 @@ resource "hetznerdns_record" "pkgbuild_com_america_aaaa" {
   type    = "AAAA"
 }
 
+resource "hetznerdns_record" "pkgbuild_com_america_archive_a" {
+  zone_id = hetznerdns_zone.pkgbuild.id
+  name    = "america.archive"
+  value   = "143.244.34.62"
+  type    = "A"
+}
+
+resource "hetznerdns_record" "pkgbuild_com_america_archive_aaaa" {
+  zone_id = hetznerdns_zone.pkgbuild.id
+  name    = "america.archive"
+  value   = "2a02:6ea0:cc0e::2"
+  type    = "AAAA"
+}
+
 resource "hetznerdns_record" "pkgbuild_com_asia_a" {
   zone_id = hetznerdns_zone.pkgbuild.id
   name    = "asia.mirror"
@@ -159,6 +173,20 @@ resource "hetznerdns_record" "pkgbuild_com_asia_aaaa" {
   type    = "AAAA"
 }
 
+resource "hetznerdns_record" "pkgbuild_com_asia_archive_a" {
+  zone_id = hetznerdns_zone.pkgbuild.id
+  name    = "asia.archive"
+  value   = "84.17.57.98"
+  type    = "A"
+}
+
+resource "hetznerdns_record" "pkgbuild_com_asia_archive_aaaa" {
+  zone_id = hetznerdns_zone.pkgbuild.id
+  name    = "asia.archive"
+  value   = "2a02:6ea0:d605::2"
+  type    = "AAAA"
+}
+
 resource "hetznerdns_record" "pkgbuild_com_europe_a" {
   zone_id = hetznerdns_zone.pkgbuild.id
   name    = "europe.mirror"
@@ -167,6 +195,20 @@ resource "hetznerdns_record" "pkgbuild_com_europe_a" {
 }
 
 resource "hetznerdns_record" "pkgbuild_com_europe_aaaa" {
+  zone_id = hetznerdns_zone.pkgbuild.id
+  name    = "europe.mirror"
+  value   = "2a02:6ea0:c237::2"
+  type    = "AAAA"
+}
+
+resource "hetznerdns_record" "pkgbuild_com_europe_archive_a" {
+  zone_id = hetznerdns_zone.pkgbuild.id
+  name    = "europe.archive"
+  value   = "89.187.191.12"
+  type    = "A"
+}
+
+resource "hetznerdns_record" "pkgbuild_com_europe_archive_aaaa" {
   zone_id = hetznerdns_zone.pkgbuild.id
   name    = "europe.mirror"
   value   = "2a02:6ea0:c237::2"
