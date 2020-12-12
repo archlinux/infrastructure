@@ -6,6 +6,9 @@
 - name: start docker
   service: name=docker enabled=yes state=started
 
+- name: copy sshd_config into place to change the port to 222
+  copy: src=sshd_config dest=/srv/gitlab/sshd_config owner=root group=root mode=640
+
 - name: start docker gitlab image
   docker_container:
     name: gitlab
@@ -13,11 +16,7 @@
     domainname: "{{ gitlab_domain }}"
     hostname: "{{ gitlab_domain }}"
     container_default_behavior: compatibility
-    published_ports:
-      - "80:80"
-      - "443:443"
-      - "222:22"
-      - "5050:5050"
+    network_mode: host
     pull: yes
     restart_policy: always
     env:
@@ -30,6 +29,8 @@
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'https://{{ gitlab_domain }}'
         nginx['client_max_body_size'] = '2g'
+        nginx['listen_addresses'] = ["0.0.0.0", "[::]"]
+        registry_nginx['listen_addresses'] = ['*', '[::]']
         letsencrypt['enable'] = true
         letsencrypt['contact_emails'] = ['webmaster@archlinux.org']
         gitlab_rails['lfs_enabled'] = false
@@ -85,6 +86,7 @@
       - "/srv/gitlab/config:/etc/gitlab"
       - "/srv/gitlab/logs:/var/log/gitlab"
       - "/srv/gitlab/data:/var/opt/gitlab"
+      - "/srv/gitlab/sshd_config:/assets/sshd_config"
 
 - name: open firewall holes
   ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes
