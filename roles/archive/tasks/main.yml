@@ -10,7 +10,6 @@
     owner: archive
     group: archive
     mode: 0755
-  when: not archive_nginx_only
 
 - name: setup archive configuration
   template:
@@ -19,35 +18,12 @@
     owner: root
     group: root
     mode: 0644
-  when: not archive_nginx_only
 
 - name: setup archive timer
   systemd: name=archive.timer enabled=yes state=started
-  when: not archive_nginx_only
 
 - name: setup archive-hardlink timer
   systemd: name=archive-hardlink.timer enabled=yes state=started
-  when: not archive_nginx_only
-
-- name: set up nginx
-  template:
-    src: nginx.d.conf.j2
-    dest: /etc/nginx/nginx.d/archive.conf
-    owner: root
-    group: root
-    mode: 0644
-  notify:
-    - reload nginx
-  tags: ['nginx']
-
-- name: make nginx log dir
-  file:
-    path: /var/log/nginx/{{ archive_domain }}
-    state: directory
-    owner: root
-    group: root
-    mode: 0755
-
 - name: install internet archive packages
   pacman: name=python-internetarchive,python-xtarfile state=present
 
