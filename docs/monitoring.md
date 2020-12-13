@@ -60,3 +60,8 @@ Gitlab runners export a [prometheus endpoint](https://docs.gitlab.com/runner/mon
 ### Network monitoring
 
 For http(s)/icmp monitoring [prometheus-black-exporter](https://github.com/prometheus/blackbox_exporter) is used, which currently has alerts configured for https and SSL certificate expiry monitoring. The web endpoints to monitor are configured in `roles/prometheus/defaults/main.yml`.
+
+
+### Archive monitoring
+
+The [Archive](https://archive.archlinux.org) and its mirrors defined in `archive_mirrors` are monitored using a textcollector which monitors the archive size in bytes.
