@@ -75,6 +75,16 @@
   service: name=systemd-networkd state=started enabled=yes
   when: configure_network
 
+- name: create additional network config directory
+  file: path=/etc/systemd/network/10-dhcp-ethernet.network.d state=directory owner=root group=root mode=0755
+  when: dhcp|default(False) and additional_addresses is defined
+
+- name: configure additional network addresses
+  template: src=additional_addresses.conf.j2 dest=/etc/systemd/network/10-dhcp-ethernet.network.d/additional_addresses.conf owner=root group=root mode=0644
+  notify:
+    - restart networkd
+  when: dhcp|default(False) and additional_addresses is defined
+
 - name: start resolved
   service:
     name: systemd-resolved

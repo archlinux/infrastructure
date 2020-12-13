@@ -26,11 +26,18 @@
       # 2. In order to logout properly we need to configure the "After sign out path" and set it to
       # https://accounts.archlinux.org/auth/realms/archlinux/protocol/openid-connect/logout?redirect_uri=https%3A//gitlab.archlinux.org
       # https://gitlab.com/gitlab-org/gitlab/issues/14414
+      #
+      # In addition, see https://docs.gitlab.com/ee/administration/pages/ for the GitLab Pages trickery done below.
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'https://{{ gitlab_domain }}'
         nginx['client_max_body_size'] = '2g'
-        nginx['listen_addresses'] = ["0.0.0.0", "[::]"]
+        nginx['listen_addresses'] = {{ gitlab_primary_addresses }}
         registry_nginx['listen_addresses'] = ['*', '[::]']
+        gitlab_pages['inplace_chroot'] = true
+        pages_external_url "http://gitlab.archlinux.org"
+        pages_nginx['enable'] = false
+        gitlab_pages['external_http'] = {{ gitlab_pages_http_addresses }}
+        gitlab_pages['external_https'] = {{ gitlab_pages_https_addresses }}
         letsencrypt['enable'] = true
         letsencrypt['contact_emails'] = ['webmaster@archlinux.org']
         gitlab_rails['lfs_enabled'] = true
@@ -82,13 +89,6 @@
             }
           }
         ]
-        # https://docs.gitlab.com/ee/administration/pages/
-        pages_external_url "http://noop.archlinux.org"
-        nginx['listen_addresses'] = ['159.69.41.129', '[2a01:4f8:c2c:5d2d::1]']
-        pages_nginx['enable'] = false
-        # "(Only for custom domains) Have a secondary IP."
-        gitlab_pages['external_http'] = ['1.2.3.4']
-        gitlab_pages['external_https'] = ['1.2.3.4']
     volumes:
       - "/srv/gitlab/config:/etc/gitlab"
       - "/srv/gitlab/logs:/var/log/gitlab"
