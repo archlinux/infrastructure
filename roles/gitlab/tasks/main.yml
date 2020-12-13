@@ -54,8 +54,8 @@
         gitlab_rails['incoming_email_email'] = "gitlab@archlinux.org"
         gitlab_rails['incoming_email_password'] = "{{ vault_gitlab_root_password }}"
         gitlab_rails['incoming_email_host'] = "mail.archlinux.org"
-        gitlab_rails['incoming_email_port'] = 143
-        gitlab_rails['incoming_email_start_tls'] = true
+        gitlab_rails['incoming_email_port'] = 993
+        gitlab_rails['incoming_email_ssl'] = true
         gitlab_rails['omniauth_allow_single_sign_on'] = ['saml']
         gitlab_rails['omniauth_block_auto_created_users'] = false
         gitlab_rails['omniauth_auto_link_saml_user'] = true
