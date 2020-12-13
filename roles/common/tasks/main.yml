@@ -75,6 +75,14 @@
   service: name=systemd-networkd state=started enabled=yes
   when: configure_network
 
+- name: create additional resolved config directory
+  file: path=/etc/systemd/resolved.conf.d
+
+- name: configure additional resolved config for resolving Arch domains
+  copy: src=resolved-arch.conf dest=/etc/systemd/resolved.conf.d/resolved-arch.conf owner=root group=root mode=0644
+  notify:
+    - restart resolved
+
 - name: create additional network config directory
   file: path=/etc/systemd/network/10-dhcp-ethernet.network.d state=directory owner=root group=root mode=0755
   when: dhcp|default(False) and additional_addresses is defined
