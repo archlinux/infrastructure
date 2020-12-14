@@ -1,6 +1,6 @@
 # Using GitLab Pages
 
-In order use GitLab Pages with Arch Linux, you'll have to specifically request a custom subdomain
+In order to use GitLab Pages with Arch Linux, you'll have to specifically request a custom subdomain
 below `pkgbuild.com` or `archlinux.org` to be assigned. We don't allow random projects to use Pages
 because of legal and safety reasons (we don't want people to be able to trick others into thinking
 something hosted below one of our domains is official).
