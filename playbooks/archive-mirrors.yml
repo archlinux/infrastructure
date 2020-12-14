@@ -14,3 +14,4 @@
     - { role: unbound }
     - { role: syncarchive }
     - { role: archive_web }
+    - { role: prometheus_exporters }
