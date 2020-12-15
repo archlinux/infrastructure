@@ -1,7 +1,6 @@
 [uwsgi]
 plugins = python
 chdir = {{ archmanweb_dir }}/repo
-env = DJANGO_SETTINGS_MODULE={{ archmanweb_django_settings_module }}
 module = wsgi:application
 socket = /run/uwsgi/archmanweb.sock
 chmod-socket = 660

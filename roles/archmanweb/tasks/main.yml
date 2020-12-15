@@ -44,7 +44,7 @@
   register: release
 
 - name: configure archmanweb
-  template: src=local_settings.py.j2 dest={{ archmanweb_dir }}/repo/production/local_settings.py owner=archmanweb group=archmanweb mode=0660
+  template: src=local_settings.py.j2 dest={{ archmanweb_dir }}/repo/local_settings.py owner=archmanweb group=archmanweb mode=0660
   register: config
   no_log: true
 
@@ -66,8 +66,6 @@
     - migrate
     - collectstatic
     - man_drop_cache
-  environment:
-    DJANGO_SETTINGS_MODULE: "{{ archmanweb_django_settings_module }}"
   become: true
   become_user: archmanweb
   when: db_created.changed or release.changed or config.changed or archmanweb_forced_deploy
