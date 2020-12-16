@@ -34,7 +34,7 @@
   user: name=security shell=/bin/false home="{{ security_tracker_dir }}" createhome=no
 
 - name: fix home permissions
-  file: state=directory mode=0750 owner=security group=security path="{{ security_tracker_dir }}"
+  file: state=directory mode=0750 owner=security group=http path="{{ security_tracker_dir }}"
 
 - name: copy security-tracker units
   copy: src="{{ item }}" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
