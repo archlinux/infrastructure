@@ -437,6 +437,11 @@ arch_users:
     ssh_key: raster.pub
     groups:
       - tu
+  rgacogne:
+    name: "Remi Rgacogne"
+    ssh_key: rgacogne.pub
+    groups:
+      - tu
   spupykin:
     name: "Sergej Pupykin"
     ssh_key: spupykin.pub
