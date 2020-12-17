@@ -657,6 +657,13 @@ resource "hetznerdns_record" "archlinux_org_dmarc_txt" {
   type    = "TXT"
 }
 
+resource "hetznerdns_record" "archlinux_org_smtp_tlsrpt_txt" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "_smtp._tls"
+  value   = "\"v=TLSRPTv1;rua=mailto:postmaster@archlinux.org\""
+  type    = "TXT"
+}
+
 resource "hetznerdns_record" "archlinux_org_openpgpkey_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "openpgpkey"
