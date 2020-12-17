@@ -46,3 +46,12 @@ as a variable, to make sure the right file is used.
 
 This causes the regular nginx configuration to only be applied when there is no maintenance variable
 on the command line.
+
+# Adding a custom maintenance mode nginx template
+
+The maintenance role can also use a custom nginx template, if the service_nginx_template variable is
+set alongside the other vars when including the maintenance role, it will look up first on the maintenance
+role template directory and then on the calling role template directory for the specified template.
+
+Since this is a completely custom file, it is the job of this file of putting the service into maintenance
+mode. The maintenance role will provide the 503 file and create the directories.
