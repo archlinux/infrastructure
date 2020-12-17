@@ -30,6 +30,13 @@ if [[ -d /var/lib/postgres/data-$FROM_VERSION ]]; then
 	exit 3
 fi
 
+# mask postgresql.service to make sure that other services with
+# Wants=postgresql.service and Restart=on-failure will not start
+# it again during the upgrade
+systemctl mask postgresql.service
+systemctl daemon-reload
+systemctl stop postgresql.service
+
 pacman -S --needed postgresql-old-upgrade
 chown postgres:postgres /var/lib/postgres/
 su - postgres -c "mv /var/lib/postgres/data /var/lib/postgres/data-$FROM_VERSION"
@@ -46,9 +53,11 @@ for f in {fullchain,chain,privkey}.pem; do
 	fi
 done
 
-systemctl stop postgresql.service
 su - postgres -c "pg_upgrade -b /opt/pgsql-$FROM_VERSION/bin/ -B /usr/bin/ \
 	-d /var/lib/postgres/data-$FROM_VERSION -D /var/lib/postgres/data"
+
+# unmask and start postgresql.service
+systemctl unmask postgresql.service
 systemctl daemon-reload
 systemctl start postgresql.service
 
