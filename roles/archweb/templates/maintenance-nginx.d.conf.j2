@@ -157,6 +157,7 @@ server {
         if ($maintenance_remote_machine = true) {
             access_log   /var/log/nginx/{{ archweb_domain }}/access.log main;
             uwsgi_pass archweb;
+            break;
         }
 
         return 503;
