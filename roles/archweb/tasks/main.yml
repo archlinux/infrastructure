@@ -7,7 +7,8 @@
     service_domain: "{{ archweb_domain }}"
     service_alternate_domains: "{{ archweb_alternate_domains }}"
     service_nginx_conf: "{{ archweb_nginx_conf }}"
-  when: maintenance is defined
+    service_nginx_template: "maintenance-nginx.d.conf.j2"
+  when: maintenance is defined and archweb_site
 
 - name: install required packages
   pacman: name=git,python-setuptools,python-psycopg2,llvm-libs,uwsgi-plugin-python state=present
