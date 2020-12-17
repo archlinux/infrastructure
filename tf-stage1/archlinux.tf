@@ -613,6 +613,22 @@ resource "hetznerdns_record" "archlinux_org_mail_aaaa" {
   type    = "AAAA"
 }
 
+resource "hetznerdns_record" "archlinux_org_mtasts_cname" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "mta-sts"
+  value   = "mail"
+  type    = "CNAME"
+}
+
+resource "hetznerdns_record" "archlinux_org__mtasts_txt" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "_mta-sts"
+  ttl     = 600
+  # date +%s
+  value = "\"v=STSv1; id=1608210175\""
+  type  = "TXT"
+}
+
 resource "hetznerdns_record" "archlinux_org_origin_mx" {
   for_each = toset(["@", "aur", "master-key"])
 

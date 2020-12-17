@@ -1,0 +1,38 @@
+server {
+    listen       80;
+    listen       [::]:80;
+    server_name  {{ mta_sts_domain }};
+
+    access_log   /var/log/nginx/{{ mta_sts_domain }}/access.log reduced;
+    error_log    /var/log/nginx/{{ mta_sts_domain }}/error.log;
+
+    include snippets/letsencrypt.conf;
+
+    location / {
+        access_log off;
+        return 301 https://$server_name$request_uri;
+    }
+}
+
+server {
+    listen       443 ssl http2;
+    listen       [::]:443 ssl http2;
+    server_name  {{ mta_sts_domain }};
+
+    access_log   /var/log/nginx/{{ mta_sts_domain }}/access.log reduced;
+    error_log    /var/log/nginx/{{ mta_sts_domain }}/error.log;
+
+    ssl_certificate      /etc/letsencrypt/live/{{ mta_sts_domain }}/fullchain.pem;
+    ssl_certificate_key  /etc/letsencrypt/live/{{ mta_sts_domain }}/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/{{ mta_sts_domain }}/chain.pem;
+
+    location /.well-known/mta-sts.txt {
+        default_type text/plain;
+        return 200 'version: STSv1\nmode: testing\nmax_age: 604800\nmx: mail.archlinux.org\n';
+    }
+
+    location / {
+        access_log off;
+        return 404;
+    }
+}
