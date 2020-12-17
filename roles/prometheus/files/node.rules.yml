@@ -4,7 +4,7 @@ groups:
   rules:
 
   - alert: HostHighCpuLoad
-    expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle",instance!~"dragon.archlinux.org"}[5m])) * 100) > 80
+    expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle",instance!~"dragon.archlinux.org",instance!~"repro1.pkgbuild.com",instance!~"repro2.pkgbuild.com"}[5m])) * 100) > 80
     for: 5m
     labels:
       severity: warning
