@@ -70,6 +70,9 @@
   become_user: security
   command: /usr/bin/make chdir="{{ security_tracker_dir }}" creates=*.db
 
+- name: restrict database permissions
+  file: mode=0640 owner=security group=security path="{{ security_tracker_dir }}/tracker.db"
+
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest="{{ security_tracker_nginx_conf }}" owner=root group=root mode=644
   notify:
