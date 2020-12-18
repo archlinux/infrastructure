@@ -1051,6 +1051,37 @@ resource "hcloud_server" "gitlab" {
   }
 }
 
+resource "hcloud_floating_ip" "gitlab_pages" {
+  type        = "ipv4"
+  description = "GitLab Pages"
+  server_id   = hcloud_server.gitlab.id
+}
+
+variable "gitlab_pages_ipv6" {
+  default = "2a01:4f8:c2c:5d2d::2"
+}
+
+resource "hetznerdns_record" "gitlab_pages_test_a" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "test"
+  value   = hcloud_floating_ip.gitlab_pages.ip_address
+  type    = "A"
+}
+
+resource "hetznerdns_record" "gitlab_pages_test_aaaa" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "test"
+  value   = var.gitlab_pages_ipv6
+  type    = "AAAA"
+}
+
+resource "hetznerdns_record" "gitlab_pages_test_verification" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "_gitlab-pages-verification-code.test"
+  value   = "\"gitlab-pages-verification-code=04ee0a6d7284e43a85bee57bf401bb03\""
+  type    = "TXT"
+}
+
 resource "hcloud_volume" "gitlab" {
   name      = "gitlab"
   size      = 1000
