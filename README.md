@@ -2,6 +2,9 @@
 
 This repository contains the complete collection of ansible playbooks and roles for the Arch Linux infrastructure.
 
+## Table of contents
+[[_TOC_]]
+
 ## Requirements
 
 Install these packages:
