@@ -210,7 +210,7 @@ resource "hetznerdns_record" "pkgbuild_com_europe_archive_a" {
 
 resource "hetznerdns_record" "pkgbuild_com_europe_archive_aaaa" {
   zone_id = hetznerdns_zone.pkgbuild.id
-  name    = "europe.mirror"
+  name    = "europe.archive"
   value   = "2a02:6ea0:c237::2"
   type    = "AAAA"
 }
