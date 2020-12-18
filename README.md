@@ -268,6 +268,16 @@ Hosts our gnupg open web key directory for fetching Arch Linux keyring keys over
 #### Services
   - WKD
 
+
+### Archive Mirrors
+
+The [Arch Linux Archive](https://archive.archlinux.org) is mirrored to three dedicated servers to help aid global availability.
+
+#### Servers
+  - https://america.archive.pkgbuild.com
+  - https://asia.archive.pkgbuild.com
+  - https://europe.archive.pkgbuild.com
+
 ## Ansible repo workflows
 
 ### Replace vault password and change vaulted passwords
