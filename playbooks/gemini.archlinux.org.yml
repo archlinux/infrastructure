@@ -4,7 +4,7 @@
   hosts: gemini.archlinux.org
   remote_user: root
   vars:
-    archweb_db_host: 'apollo.archlinux.org'
+    archweb_db_host: 'archlinux.org'
     dbscripts_commit: '20191022'
   roles:
     - { role: common }

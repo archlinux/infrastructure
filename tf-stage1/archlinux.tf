@@ -261,7 +261,7 @@ resource "hetznerdns_record" "archlinux_org_origin_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "@"
   ttl     = 600
-  value   = "138.201.81.199"
+  value   = "95.217.163.246"
   type    = "A"
 }
 
@@ -269,7 +269,7 @@ resource "hetznerdns_record" "archlinux_org_origin_aaaa" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "@"
   ttl     = 600
-  value   = "2a01:4f8:172:1d86::1"
+  value   = "2a01:4f9:c010:6b1f::1"
   type    = "AAAA"
 }
 
@@ -571,8 +571,16 @@ resource "hetznerdns_record" "archlinux_org_master_key_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "master-key"
   ttl     = 600
-  value   = "138.201.81.199"
+  value   = "95.217.163.246"
   type    = "A"
+}
+
+resource "hetznerdns_record" "archlinux_org_master_key_aaaa" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "master-key"
+  ttl     = 600
+  value   = "2a01:4f9:c010:6b1f::1"
+  type    = "AAAA"
 }
 
 resource "hetznerdns_record" "archlinux_org_master_key_mx" {
@@ -789,7 +797,7 @@ resource "hetznerdns_record" "archlinux_org_dev_cname" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "dev"
   ttl     = 600
-  value   = "apollo"
+  value   = "www"
   type    = "CNAME"
 }
 
@@ -818,7 +826,7 @@ resource "hetznerdns_record" "archlinux_org_ipxe_cname" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "ipxe"
   ttl     = 600
-  value   = "apollo"
+  value   = "www"
   type    = "CNAME"
 }
 
@@ -847,7 +855,7 @@ resource "hetznerdns_record" "archlinux_org_packages_cname" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "packages"
   ttl     = 600
-  value   = "apollo"
+  value   = "www"
   type    = "CNAME"
 }
 
@@ -862,7 +870,7 @@ resource "hetznerdns_record" "archlinux_org_planet_cname" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "planet"
   ttl     = 600
-  value   = "apollo"
+  value   = "www"
   type    = "CNAME"
 }
 
@@ -937,12 +945,20 @@ resource "hetznerdns_record" "archlinux_org_wiki_cname" {
   type    = "CNAME"
 }
 
-resource "hetznerdns_record" "archlinux_org_www_cname" {
+resource "hetznerdns_record" "archlinux_org_www_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "www"
   ttl     = 600
-  value   = "apollo"
-  type    = "CNAME"
+  value   = "95.217.163.246"
+  type    = "A"
+}
+
+resource "hetznerdns_record" "archlinux_org_www_aaaa" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "www"
+  ttl     = 600
+  value   = "2a01:4f9:c010:6b1f::1"
+  type    = "AAAA"
 }
 
 resource "hetznerdns_record" "archlinux_org_matrix_tcp_srv" {
@@ -1049,6 +1065,37 @@ resource "hcloud_server" "gitlab" {
   lifecycle {
     ignore_changes = [image]
   }
+}
+
+resource "hcloud_floating_ip" "gitlab_pages" {
+  type        = "ipv4"
+  description = "GitLab Pages"
+  server_id   = hcloud_server.gitlab.id
+}
+
+variable "gitlab_pages_ipv6" {
+  default = "2a01:4f8:c2c:5d2d::2"
+}
+
+resource "hetznerdns_record" "gitlab_pages_test_a" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "test"
+  value   = hcloud_floating_ip.gitlab_pages.ip_address
+  type    = "A"
+}
+
+resource "hetznerdns_record" "gitlab_pages_test_aaaa" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "test"
+  value   = var.gitlab_pages_ipv6
+  type    = "AAAA"
+}
+
+resource "hetznerdns_record" "gitlab_pages_test_verification" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "_gitlab-pages-verification-code.test"
+  value   = "\"gitlab-pages-verification-code=04ee0a6d7284e43a85bee57bf401bb03\""
+  type    = "TXT"
 }
 
 resource "hcloud_volume" "gitlab" {
@@ -1364,7 +1411,7 @@ resource "hcloud_rdns" "archlinux_ipv6" {
 resource "hcloud_server" "archlinux" {
   name        = "archlinux.org"
   image       = data.hcloud_image.archlinux.id
-  server_type = "cx11"
+  server_type = "cpx11"
   lifecycle {
     ignore_changes = [image]
   }
