@@ -201,6 +201,9 @@ groups:
       summary: "Prometheus TSDB WAL truncations failed (instance {{ $labels.instance }})"
       description: "Prometheus encountered {{ $value }} TSDB WAL truncation failures\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
+- name: pacman
+  interval: 1m
+  rules:
   - alert: pacman_updates_pending
     expr: pacman_updates_pending > 50
     for: 1m
@@ -233,7 +236,6 @@ groups:
 - name: systemd_unit
   interval: 15s
   rules:
-
   - alert: systemd_unit_failed
     expr: |
       node_systemd_unit_state{state="failed"} > 0
