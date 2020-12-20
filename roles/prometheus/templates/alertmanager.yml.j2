@@ -1,8 +1,8 @@
 global:
   resolve_timeout: 5m
-  smtp_smarthost: 'mail.archlinux.org:587'
+  smtp_smarthost: 'mail.archlinux.org:465'
   smtp_from: 'alertmanager@archlinux.org'
-  smtp_require_tls: true
+  smtp_require_tls: false
   smtp_auth_username: alertmanager
   smtp_auth_password: {{ vault_monitoring_alertmanager_smtp_pass }}
 
