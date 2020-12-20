@@ -941,6 +941,7 @@ resource "hetznerdns_record" "archlinux_org_svn_cname" {
 resource "hetznerdns_record" "archlinux_org_wiki_cname" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "wiki"
+  ttl     = 600
   value   = "apollo"
   type    = "CNAME"
 }
@@ -1410,6 +1411,27 @@ resource "hcloud_rdns" "archlinux_ipv6" {
 
 resource "hcloud_server" "archlinux" {
   name        = "archlinux.org"
+  image       = data.hcloud_image.archlinux.id
+  server_type = "cpx11"
+  lifecycle {
+    ignore_changes = [image]
+  }
+}
+
+resource "hcloud_rdns" "archwiki_ipv4" {
+  server_id  = hcloud_server.archwiki.id
+  ip_address = hcloud_server.archwiki.ipv4_address
+  dns_ptr    = "wiki.archlinux.org"
+}
+
+resource "hcloud_rdns" "archwiki_ipv6" {
+  server_id  = hcloud_server.archwiki.id
+  ip_address = hcloud_server.archwiki.ipv6_address
+  dns_ptr    = "wiki.archlinux.org"
+}
+
+resource "hcloud_server" "archwiki" {
+  name        = "wiki.archlinux.org"
   image       = data.hcloud_image.archlinux.id
   server_type = "cpx11"
   lifecycle {
