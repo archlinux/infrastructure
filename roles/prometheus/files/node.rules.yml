@@ -202,16 +202,16 @@ groups:
       description: "Prometheus encountered {{ $value }} TSDB WAL truncation failures\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
 - name: pacman
-  interval: 1m
+  interval: 2m
   rules:
   - alert: pacman_updates_pending
     expr: pacman_updates_pending > 50
-    for: 1m
+    for: 15m
     labels:
       severity: warning
     annotations:
       description: 'host {{ $labels.instance }} has out of date packages'
-      summary: '{{ $labels.instance }} has {{ $value }} out of date packages'
+      summary: '{{ $labels.instance }} has {{ $value }} > 50 out of date packages'
 
 - name: borg
   interval: 60s
