@@ -1418,6 +1418,12 @@ resource "hcloud_server" "archlinux" {
   }
 }
 
+resource "hcloud_volume" "archlinux" {
+  name      = "archlinux.org"
+  size      = 20
+  server_id = hcloud_server.archlinux.id
+}
+
 resource "hcloud_rdns" "archwiki_ipv4" {
   server_id  = hcloud_server.archwiki.id
   ip_address = hcloud_server.archwiki.ipv4_address
