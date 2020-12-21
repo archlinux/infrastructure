@@ -938,12 +938,20 @@ resource "hetznerdns_record" "archlinux_org_svn_cname" {
   type    = "CNAME"
 }
 
-resource "hetznerdns_record" "archlinux_org_wiki_cname" {
+resource "hetznerdns_record" "archlinux_org_wiki_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "wiki"
   ttl     = 600
-  value   = "apollo"
-  type    = "CNAME"
+  value   = "135.181.27.174"
+  type    = "A"
+}
+
+resource "hetznerdns_record" "archlinux_org_wiki_aaaa" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "wiki"
+  ttl     = 600
+  value   = "2a01:4f9:c010:a4eb::1"
+  type    = "AAAA"
 }
 
 resource "hetznerdns_record" "archlinux_org_www_a" {
