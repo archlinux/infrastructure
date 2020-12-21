@@ -1,0 +1,21 @@
+---
+
+- name: setup wiki.archlinux.org
+  hosts: wiki.archlinux.org
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: tools }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: borg_client, tags: ["borg"] }
+    - { role: certbot }
+    - { role: nginx }
+    - { role: postfix, postfix_relayhost: "mail.archlinux.org" }
+    - { role: mariadb, mariadb_query_cache_type: '0', mariadb_innodb_file_per_table: True }
+    - { role: sudo }
+    - { role: php_fpm, php_extensions: ['bcmath', 'curl', 'gd', 'iconv', 'intl', 'mysqli', 'sockets', 'zip'], zend_extensions: ['opcache'] }
+    - { role: memcached }
+    - { role: archwiki }
+    - { role: fail2ban }
+    - { role: prometheus_exporters }
