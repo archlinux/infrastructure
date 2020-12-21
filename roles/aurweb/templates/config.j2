@@ -31,6 +31,9 @@ repo-path = {{ aurweb_git_dir }}
 git-shell-cmd = /usr/bin/sh
 ssh-cmdline = ssh {{ aurweb_user }}@{{ aurweb_domain }}
 
+[update]
+max-blob-size = 500000
+
 [aurblup]
 db-path = {{ aurweb_dir }}/aurblup
 server = https://mirrors.kernel.org/archlinux/%s/os/x86_64
