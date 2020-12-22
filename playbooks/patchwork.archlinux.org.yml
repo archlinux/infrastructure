@@ -1,0 +1,21 @@
+---
+
+- name: setup patchwork.archlinux.org
+  hosts: patchwork.archlinux.org
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: tools }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: borg_client, tags: ["borg"] }
+    - { role: certbot }
+    - { role: nginx }
+    - { role: postfix, postfix_relayhost: "mail.archlinux.org"  }
+    - { role: postgres }
+    - { role: sudo }
+    - { role: uwsgi }
+    - { role: memcached }
+    - { role: patchwork }
+    - { role: fail2ban }
+    - { role: prometheus_exporters }
