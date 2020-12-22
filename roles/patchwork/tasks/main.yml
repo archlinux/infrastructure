@@ -13,7 +13,10 @@
   pacman: name=gcc,git,python,python-psycopg2,sudo,uwsgi-plugin-python,python-pip state=present
 
 - name: make patchwork user
-  user: name=patchwork shell=/bin/false home="{{ patchwork_dir }}" skeleton=/var/empty
+  user: name=patchwork shell=/bin/false home="{{ patchwork_dir }}" createhome=no
+
+- name: fix home permissions
+  file: state=directory owner=patchwork group=patchwork mode=0755 path="{{ patchwork_dir }}"
 
 - name: set patchwork groups
   user: name=patchwork groups=uwsgi
@@ -116,9 +119,7 @@
   template: src=patchwork.ini.j2 dest=/etc/uwsgi/vassals/patchwork.ini owner=patchwork group=http mode=0644
 
 - name: deploy new release
-  become: true
-  become_user: patchwork
-  file: path=/etc/uwsgi/vassals/patchwork.ini state=touch owner=root group=root mode=0644
+  file: path=/etc/uwsgi/vassals/patchwork.ini state=touch owner=patchwork group=http mode=0644
   when: (release.changed or config.changed or virtualenv.changed or patchwork_forced_deploy)
 
 - name: start and enable patchwork memcached service and notification timer
