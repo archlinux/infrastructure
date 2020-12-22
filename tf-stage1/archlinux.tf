@@ -261,7 +261,7 @@ resource "hetznerdns_record" "archlinux_org_origin_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "@"
   ttl     = 600
-  value   = "95.217.163.246"
+  value   = hcloud_server.archlinux.ipv4_address
   type    = "A"
 }
 
@@ -269,7 +269,7 @@ resource "hetznerdns_record" "archlinux_org_origin_aaaa" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "@"
   ttl     = 600
-  value   = "2a01:4f9:c010:6b1f::1"
+  value   = hcloud_server.archlinux.ipv6_address
   type    = "AAAA"
 }
 
@@ -571,7 +571,7 @@ resource "hetznerdns_record" "archlinux_org_master_key_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "master-key"
   ttl     = 600
-  value   = "95.217.163.246"
+  value   = hcloud_server.archlinux.ipv4_address
   type    = "A"
 }
 
@@ -579,7 +579,7 @@ resource "hetznerdns_record" "archlinux_org_master_key_aaaa" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "master-key"
   ttl     = 600
-  value   = "2a01:4f9:c010:6b1f::1"
+  value   = hcloud_server.archlinux.ipv6_address
   type    = "AAAA"
 }
 
@@ -616,7 +616,7 @@ resource "hetznerdns_record" "archlinux_org_mail_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "mail"
   ttl     = 600
-  value   = "95.216.189.61"
+  value   = hcloud_server.mail.ipv4_address
   type    = "A"
 }
 
@@ -624,7 +624,7 @@ resource "hetznerdns_record" "archlinux_org_mail_aaaa" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "mail"
   ttl     = 600
-  value   = "2a01:4f9:c010:3052::1"
+  value   = hcloud_server.mail.ipv6_address
   type    = "AAAA"
 }
 
@@ -943,7 +943,7 @@ resource "hetznerdns_record" "archlinux_org_wiki_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "wiki"
   ttl     = 600
-  value   = "135.181.27.174"
+  value   = hcloud_server.archwiki.ipv4_address
   type    = "A"
 }
 
@@ -951,7 +951,7 @@ resource "hetznerdns_record" "archlinux_org_wiki_aaaa" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "wiki"
   ttl     = 600
-  value   = "2a01:4f9:c010:a4eb::1"
+  value   = hcloud_server.archwiki.ipv6_address
   type    = "AAAA"
 }
 
@@ -959,7 +959,7 @@ resource "hetznerdns_record" "archlinux_org_www_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "www"
   ttl     = 600
-  value   = "95.217.163.246"
+  value   = hcloud_server.archlinux.ipv4_address
   type    = "A"
 }
 
@@ -967,7 +967,7 @@ resource "hetznerdns_record" "archlinux_org_www_aaaa" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "www"
   ttl     = 600
-  value   = "2a01:4f9:c010:6b1f::1"
+  value   = hcloud_server.archlinux.ipv6_address
   type    = "AAAA"
 }
 
