@@ -1447,3 +1447,24 @@ resource "hcloud_server" "patchwork" {
     ignore_changes = [image]
   }
 }
+
+resource "hcloud_rdns" "security_ipv4" {
+  server_id  = hcloud_server.security.id
+  ip_address = hcloud_server.security.ipv4_address
+  dns_ptr    = "security.archlinux.org"
+}
+
+resource "hcloud_rdns" "security_ipv6" {
+  server_id  = hcloud_server.security.id
+  ip_address = hcloud_server.security.ipv6_address
+  dns_ptr    = "security.archlinux.org"
+}
+
+resource "hcloud_server" "security" {
+  name        = "security.archlinux.org"
+  image       = data.hcloud_image.archlinux.id
+  server_type = "cx11"
+  lifecycle {
+    ignore_changes = [image]
+  }
+}
