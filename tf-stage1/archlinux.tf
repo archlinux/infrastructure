@@ -862,6 +862,7 @@ resource "hetznerdns_record" "archlinux_org_packages_cname" {
 resource "hetznerdns_record" "archlinux_org_patchwork_cname" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "patchwork"
+  ttl     = 600
   value   = "apollo"
   type    = "CNAME"
 }
@@ -1442,6 +1443,27 @@ resource "hcloud_server" "archwiki" {
   name        = "wiki.archlinux.org"
   image       = data.hcloud_image.archlinux.id
   server_type = "cpx11"
+  lifecycle {
+    ignore_changes = [image]
+  }
+}
+
+resource "hcloud_rdns" "patchwork_ipv4" {
+  server_id  = hcloud_server.patchwork.id
+  ip_address = hcloud_server.patchwork.ipv4_address
+  dns_ptr    = "patchwork.archlinux.org"
+}
+
+resource "hcloud_rdns" "patchwork_ipv6" {
+  server_id  = hcloud_server.patchwork.id
+  ip_address = hcloud_server.patchwork.ipv6_address
+  dns_ptr    = "patchwork.archlinux.org"
+}
+
+resource "hcloud_server" "patchwork" {
+  name        = "patchwork.archlinux.org"
+  image       = data.hcloud_image.archlinux.id
+  server_type = "cx11"
   lifecycle {
     ignore_changes = [image]
   }
