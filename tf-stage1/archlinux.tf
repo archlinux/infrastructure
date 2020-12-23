@@ -1077,6 +1077,20 @@ resource "hcloud_server" "gitlab" {
   }
 }
 
+resource "hetznerdns_record" "archlinux_org_gitlab_pages_a" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "pages"
+  value   = hcloud_floating_ip.gitlab_pages.ip_address
+  type    = "A"
+}
+
+resource "hetznerdns_record" "archlinux_org_gitlab_pages_aaaa" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "pages"
+  value   = var.gitlab_pages_ipv6
+  type    = "AAAA"
+}
+
 resource "hcloud_floating_ip" "gitlab_pages" {
   type        = "ipv4"
   description = "GitLab Pages"
