@@ -992,6 +992,20 @@ resource "hetznerdns_record" "archlinux_org_github_challenge_archlinux_www" {
   type    = "TXT"
 }
 
+resource "hetznerdns_record" "archlinux_org_whatcanwedofor_cname" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "whatcanwedofor"
+  value   = "pages.archlinux.org."
+  type    = "CNAME"
+}
+
+resource "hetznerdns_record" "gitlab_pages_whatcanwedofor_verification" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "_gitlab-pages-verification-code.whatcanwedofor"
+  value   = "gitlab-pages-verification-code=b5f8011047c1610ace52e754b568c834"
+  type    = "TXT"
+}
+
 resource "hcloud_rdns" "quassel_ipv4" {
   server_id  = hcloud_server.quassel.id
   ip_address = hcloud_server.quassel.ipv4_address

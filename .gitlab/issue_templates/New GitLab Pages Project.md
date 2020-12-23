@@ -27,7 +27,7 @@ something hosted below one of our domains is official).
         resource "hetznerdns_record" "gitlab_pages_your_domain_cname" {
           zone_id = hetznerdns_zone.archlinux.id
           name    = "your-domain"
-          value   = "pages"
+          value   = "pages.archlinux.org."
           type    = "CNAME"
         }
 
