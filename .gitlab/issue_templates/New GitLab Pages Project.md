@@ -24,18 +24,11 @@ something hosted below one of our domains is official).
 1. [ ] At this point, we'll need to add some stuff to `archlinux.tf`. It should look something like this.
        Make sure to substitute the `your_domain` and `your-domain` strings accordingly:
 
-        resource "hetznerdns_record" "gitlab_pages_your_domain_a" {
+        resource "hetznerdns_record" "gitlab_pages_your_domain_cname" {
           zone_id = hetznerdns_zone.archlinux.id
           name    = "your-domain"
-          value   = hcloud_floating_ip.gitlab_pages.ip_address
-          type    = "A"
-        }
-
-        resource "hetznerdns_record" "gitlab_pages_your_domain_aaaa" {
-          zone_id = hetznerdns_zone.archlinux.id
-          name    = "your-domain"
-          value   = var.gitlab_pages_ipv6
-          type    = "AAAA"
+          value   = "pages"
+          type    = "CNAME"
         }
 
         resource "hetznerdns_record" "gitlab_pages_your_domain_verification" {
