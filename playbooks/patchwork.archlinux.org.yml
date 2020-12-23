@@ -12,6 +12,7 @@
     - { role: certbot }
     - { role: nginx }
     - { role: postfix, postfix_relayhost: "mail.archlinux.org"  }
+    - { role: fetchmail }
     - { role: postgres }
     - { role: sudo }
     - { role: uwsgi }
