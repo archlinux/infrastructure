@@ -904,12 +904,20 @@ resource "hetznerdns_record" "archlinux_org_rsync_cname" {
   type    = "CNAME"
 }
 
-resource "hetznerdns_record" "archlinux_org_security_cname" {
+resource "hetznerdns_record" "archlinux_org_security_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "security"
   ttl     = 600
-  value   = "apollo"
-  type    = "CNAME"
+  value   = hcloud_server.security.ipv4_address
+  type    = "A"
+}
+
+resource "hetznerdns_record" "archlinux_org_security_aaaa" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "security"
+  ttl     = 600
+  value   = hcloud_server.security.ipv6_address
+  type    = "AAAA"
 }
 
 resource "hetznerdns_record" "archlinux_org_sources_cname" {
