@@ -1,0 +1,1 @@
+fetchmail ALL=(patchwork) NOPASSWD: /usr/bin/env PW_PYTHON=/srv/http/patchwork/env/bin/python /srv/http/patchwork/patchwork/bin/parsemail.sh
