@@ -100,7 +100,7 @@
     shell: /sbin/nologin
     update_password: always
     home: /home/"{{ inventory_hostname }}" # Set home directory so shadow.service does not fail
-    create_home: yes #
+    create_home: yes
 
 - name: open firewall holes
   ansible.posix.firewalld: service={{ item }} permanent=true state=enabled immediate=yes
