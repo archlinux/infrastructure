@@ -44,6 +44,7 @@ reproducible.archlinux.org
 mail.archlinux.org
 wiki.archlinux.org
 patchwork.archlinux.org
+security.archlinux.org
 
 [borg_hosts]
 prio.ch-s012.rsync.net
@@ -79,6 +80,7 @@ aur.archlinux.org
 aur-dev.archlinux.org
 wiki.archlinux.org
 patchwork.archlinux.org
+security.archlinux.org
 
 [buildservers]
 dragon.archlinux.org
@@ -132,6 +134,7 @@ luna.archlinux.org
 repro1.pkgbuild.com
 wiki.archlinux.org
 patchwork.archlinux.org
+security.archlinux.org
 
 [kape_servers]
 asia.mirror.pkgbuild.com
