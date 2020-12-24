@@ -42,6 +42,7 @@ monitoring.archlinux.org
 reproducible.archlinux.org
 mail.archlinux.org
 wiki.archlinux.org
+patchwork.archlinux.org
 
 [borg_hosts]
 prio.ch-s012.rsync.net
@@ -65,6 +66,7 @@ apollo.archlinux.org
 state.archlinux.org
 quassel.archlinux.org
 accounts.archlinux.org
+patchwork.archlinux.org
 
 [nginx]
 archlinux.org
@@ -75,6 +77,7 @@ bugs.archlinux.org
 aur.archlinux.org
 aur-dev.archlinux.org
 wiki.archlinux.org
+patchwork.archlinux.org
 
 [buildservers]
 dragon.archlinux.org
@@ -98,6 +101,7 @@ repro2.pkgbuild.com
 aur.archlinux.org
 aur-dev.archlinux.org
 wiki.archlinux.org
+patchwork.archlinux.org
 
 [prometheus]
 monitoring.archlinux.org
@@ -126,6 +130,7 @@ gemini.archlinux.org
 luna.archlinux.org
 repro1.pkgbuild.com
 wiki.archlinux.org
+patchwork.archlinux.org
 
 [kape_servers]
 asia.mirror.pkgbuild.com

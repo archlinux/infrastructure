@@ -859,12 +859,20 @@ resource "hetznerdns_record" "archlinux_org_packages_cname" {
   type    = "CNAME"
 }
 
-resource "hetznerdns_record" "archlinux_org_patchwork_cname" {
+resource "hetznerdns_record" "archlinux_org_patchwork_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "patchwork"
   ttl     = 600
-  value   = "apollo"
-  type    = "CNAME"
+  value   = hcloud_server.patchwork.ipv4_address
+  type    = "A"
+}
+
+resource "hetznerdns_record" "archlinux_org_patchwork_aaaa" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "patchwork"
+  ttl     = 600
+  value   = hcloud_server.patchwork.ipv6_address
+  type    = "AAAA"
 }
 
 resource "hetznerdns_record" "archlinux_org_planet_cname" {
