@@ -1,0 +1,22 @@
+---
+
+- name: setup security.archlinux.org
+  hosts: security.archlinux.org
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: tools }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: borg_client, tags: ["borg"] }
+    - { role: certbot }
+    - { role: nginx }
+    - { role: postfix, postfix_relayhost: "mail.archlinux.org" }
+    - { role: sudo }
+    - { role: uwsgi }
+    - role: security_tracker
+      security_tracker_domain: "security.archlinux.org"
+      security_tracker_nginx_conf: '/etc/nginx/nginx.d/security-tracker.conf'
+      security_tracker_dir: "/srv/http/security-tracker"
+    - { role: fail2ban }
+    - { role: prometheus_exporters }
