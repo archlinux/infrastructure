@@ -108,12 +108,6 @@
   tags:
     - firewall
 
-- name: make docker0 interface trusted
-  ansible.posix.firewalld: interface=docker0 zone=trusted permanent=true state=enabled immediate=yes
-  when: configure_firewall
-  tags:
-    - firewall
-
 - name: copy gitlab-cleanup timer and service
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
