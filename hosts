@@ -26,6 +26,7 @@ europe.mirror.pkgbuild.com
 [borg_clients]
 archlinux.org
 apollo.archlinux.org
+aur-dev.archlinux.org
 luna.archlinux.org
 state.archlinux.org
 matrix.archlinux.org
