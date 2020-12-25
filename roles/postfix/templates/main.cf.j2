@@ -139,7 +139,8 @@ smtpd_reject_footer = For assistance contact <postmaster@archlinux.org>. Please 
 {% if postfix_relayhost %}
 # relay all outbound mail via {{postfix_relayhost}}
 # the square brackets prevents postfix from trying to lookup mx records
-relayhost = [{{postfix_relayhost}}]:587
+relayhost = [{{postfix_relayhost}}]:465
+smtp_tls_wrappermode = yes
 smtp_sasl_auth_enable = yes
 smtp_sasl_password_maps = ${indexed}/relay_passwords
 # allow plaintext authentication only over tls secured connections

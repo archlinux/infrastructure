@@ -76,10 +76,10 @@ resource "keycloak_realm" "archlinux" {
   smtp_server {
     host              = "mail.archlinux.org"
     from              = "accounts@archlinux.org"
-    port              = "587"
+    port              = "465"
     from_display_name = "Arch Linux Accounts"
-    ssl               = false
-    starttls          = true
+    ssl               = true
+    starttls          = false
 
     auth {
       username = data.external.vault_keycloak.result.vault_keycloak_smtp_user
