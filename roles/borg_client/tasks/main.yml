@@ -1,10 +1,6 @@
 ---
-
 - name: install borg and tools
-  pacman: name=borg,perl-app-borgrestore state=present
-
-- name: install borg-restore config
-  template: src=borg-restore.cfg.j2 dest=/etc/borg-restore.cfg owner=root group=root mode=0644
+  pacman: name=borg state=present
 
 - name: check if borg repository already exists
   command: borg list {{ item['host'] }}/{{ item['dir'] }}
