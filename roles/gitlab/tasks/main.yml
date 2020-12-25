@@ -32,7 +32,7 @@
       # to be able to have a GitLab Page on purpose (for security and legal safety reasons).
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'https://{{ gitlab_domain }}'
-        nginx['client_max_body_size'] = '2g'
+        nginx['client_max_body_size'] = '10g'
         nginx['listen_addresses'] = {{ gitlab_primary_addresses }}
         registry_nginx['listen_addresses'] = ['*', '[::]']
         gitlab_pages['inplace_chroot'] = true
