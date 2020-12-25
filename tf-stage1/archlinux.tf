@@ -528,6 +528,15 @@ resource "hetznerdns_record" "archlinux_org_lists_mx" {
   type    = "MX"
 }
 
+resource "hetznerdns_record" "archlinux_org_lists_txt" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "lists"
+  ttl     = 600
+  # lists.archlinux.org
+  value = "\"v=spf1 ip4:5.9.250.164 ip6:2a01:4f8:160:3033::2 ~all\""
+  type  = "TXT"
+}
+
 resource "hetznerdns_record" "archlinux_org_luna_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "luna"
@@ -632,8 +641,9 @@ resource "hetznerdns_record" "archlinux_org_origin_txt" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "@"
   ttl     = 600
-  value   = "\"v=spf1 ip4:66.211.214.132/28 ip4:5.9.250.164 ip6:2a01:4f8:160:3033::2 ip4:138.201.81.199/32 ip4:88.198.91.70/32 ip4:95.216.189.61 ip6:2a01:4f9:c010:3052::1 a:aur.archlinux.org a:apollo.archlinux.org ~all\""
-  type    = "TXT"
+  # mail.archlinux.org
+  value = "\"v=spf1 ip4:95.216.189.61 ip6:2a01:4f9:c010:3052::1 ~all\""
+  type  = "TXT"
 }
 
 resource "hetznerdns_record" "archlinux_org_mail_txt" {
