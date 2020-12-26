@@ -678,8 +678,10 @@ resource "hetznerdns_record" "archlinux_org_dmarc_txt" {
 }
 
 resource "hetznerdns_record" "archlinux_org_smtp_tlsrpt_txt" {
+  for_each = toset(["", ".aur", ".master-key", ".lists"])
+
   zone_id = hetznerdns_zone.archlinux.id
-  name    = "_smtp._tls"
+  name    = "_smtp._tls${each.value}"
   value   = "\"v=TLSRPTv1;rua=mailto:postmaster@archlinux.org\""
   type    = "TXT"
 }
