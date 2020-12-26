@@ -553,6 +553,13 @@ resource "hetznerdns_record" "archlinux_org_mailman3_a" {
   type    = "A"
 }
 
+resource "hetznerdns_record" "archlinux_org_mailman3_aaaa" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "mailman3"
+  value   = hcloud_server.mailman3.ipv6_address
+  type    = "AAAA"
+}
+
 resource "hetznerdns_record" "archlinux_org_master_key_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "master-key"
@@ -574,6 +581,13 @@ resource "hetznerdns_record" "archlinux_org_matrix_a" {
   name    = "matrix"
   value   = hcloud_server.matrix.ipv4_address
   type    = "A"
+}
+
+resource "hetznerdns_record" "archlinux_org_matrix_aaaa" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "matrix"
+  value   = hcloud_server.matrix.ipv6_address
+  type    = "AAAA"
 }
 
 resource "hetznerdns_record" "archlinux_org_monitoring_a" {
@@ -700,6 +714,13 @@ resource "hetznerdns_record" "archlinux_org_phrik_a" {
   type    = "A"
 }
 
+resource "hetznerdns_record" "archlinux_org_phrik_aaaa" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "phrik"
+  value   = hcloud_server.phrik.ipv6_address
+  type    = "A"
+}
+
 resource "hetznerdns_record" "archlinux_org_quassel_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "quassel"
@@ -718,6 +739,13 @@ resource "hetznerdns_record" "archlinux_org_reproducible_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "reproducible"
   value   = hcloud_server.reproducible.ipv4_address
+  type    = "A"
+}
+
+resource "hetznerdns_record" "archlinux_org_reproducible_aaaa" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "reproducible"
+  value   = hcloud_server.reproducible.ipv6_address
   type    = "A"
 }
 
