@@ -349,13 +349,6 @@ resource "hetznerdns_record" "archlinux_org_apollo_aaaa" {
   type    = "AAAA"
 }
 
-resource "hetznerdns_record" "archlinux_org_archive_gemini_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "archive.gemini"
-  value   = "49.12.124.107"
-  type    = "A"
-}
-
 resource "hetznerdns_record" "archlinux_org_aur_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "aur"
