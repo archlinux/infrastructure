@@ -718,7 +718,7 @@ resource "hetznerdns_record" "archlinux_org_phrik_aaaa" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "phrik"
   value   = hcloud_server.phrik.ipv6_address
-  type    = "A"
+  type    = "AAAA"
 }
 
 resource "hetznerdns_record" "archlinux_org_quassel_a" {
@@ -746,7 +746,7 @@ resource "hetznerdns_record" "archlinux_org_reproducible_aaaa" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "reproducible"
   value   = hcloud_server.reproducible.ipv6_address
-  type    = "A"
+  type    = "AAAA"
 }
 
 resource "hetznerdns_record" "archlinux_org_runner1_a" {
