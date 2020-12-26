@@ -569,6 +569,14 @@ resource "hetznerdns_record" "archlinux_org_luna2_txt" {
   type    = "TXT"
 }
 
+resource "hetznerdns_record" "archlinux_org_luna3_txt" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "luna"
+  ttl     = 600
+  value   = "\"v=spf1 include:lists.archlinux.org -all\""
+  type    = "TXT"
+}
+
 resource "hetznerdns_record" "archlinux_org_mailman3_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "mailman3"
