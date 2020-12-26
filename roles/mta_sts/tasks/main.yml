@@ -1,9 +1,11 @@
 ---
 - name: create ssl cert
-  command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{ letsencrypt_validation_dir }} -d '{{ mta_sts_domain }}' creates='/etc/letsencrypt/live/{{ mta_sts_domain }}/fullchain.pem'
+  command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{ letsencrypt_validation_dir }} -d mta-sts.{{ item.domains | join(' -d mta-sts.') }} creates='/etc/letsencrypt/live/{{ "mta-sts." + item.domains | first }}/fullchain.pem'
+  loop: "{{ mta_sts }}"
 
 - name: make nginx log dir
-  file: path=/var/log/nginx/{{ mta_sts_domain }} state=directory owner=root group=root mode=0755
+  file: path=/var/log/nginx/{{ "mta-sts." + item.domains | first }} state=directory owner=root group=root mode=0755
+  loop: "{{ mta_sts }}"
 
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest="/etc/nginx/nginx.d/mta-sts.conf" owner=root group=root mode=644

@@ -614,15 +614,19 @@ resource "hetznerdns_record" "archlinux_org_mail_aaaa" {
 }
 
 resource "hetznerdns_record" "archlinux_org_mtasts_cname" {
+  for_each = toset(["", ".aur", ".master-key", ".lists"])
+
   zone_id = hetznerdns_zone.archlinux.id
-  name    = "mta-sts"
+  name    = "mta-sts${each.value}"
   value   = "mail"
   type    = "CNAME"
 }
 
 resource "hetznerdns_record" "archlinux_org__mtasts_txt" {
+  for_each = toset(["", ".aur", ".master-key", ".lists"])
+
   zone_id = hetznerdns_zone.archlinux.id
-  name    = "_mta-sts"
+  name    = "_mta-sts${each.value}"
   ttl     = 600
   # date +%s
   value = "\"v=STSv1; id=1608210175\""
@@ -674,8 +678,10 @@ resource "hetznerdns_record" "archlinux_org_dmarc_txt" {
 }
 
 resource "hetznerdns_record" "archlinux_org_smtp_tlsrpt_txt" {
+  for_each = toset(["", ".aur", ".master-key", ".lists"])
+
   zone_id = hetznerdns_zone.archlinux.id
-  name    = "_smtp._tls"
+  name    = "_smtp._tls${each.value}"
   value   = "\"v=TLSRPTv1;rua=mailto:postmaster@archlinux.org\""
   type    = "TXT"
 }
