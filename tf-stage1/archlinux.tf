@@ -802,8 +802,15 @@ resource "hetznerdns_record" "archlinux_org_archive_cname" {
 resource "hetznerdns_record" "archlinux_org_conf_cname" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "conf"
-  value   = "apollo"
+  value   = "pages.archlinux.org."
   type    = "CNAME"
+}
+
+resource "hetznerdns_record" "gitlab_pages_conf_verification" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "_gitlab-pages-verification-code.conf"
+  value   = "gitlab-pages-verification-code=60a06a1c02e42b36c3b4919f4d6de6bf"
+  type    = "TXT"
 }
 
 resource "hetznerdns_record" "archlinux_org_dev_cname" {
