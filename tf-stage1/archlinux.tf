@@ -27,6 +27,31 @@ provider "hetznerdns" {
   apitoken = data.external.vault_hetzner.result.hetzner_dns_api_key
 }
 
+variable "archlinux_org_cname" {
+  type = map(any)
+  default = {
+    archive                  = { value = "gemini", ttl = null }
+    dev                      = { value = "www", ttl = 600 }
+    g2kjxsblac7x             = { value = "gv-i5y6mnrelvpfiu.dv.googlehosted.com.", ttl = null }
+    git                      = { value = "luna", ttl = null }
+    grafana                  = { value = "apollo", ttl = null }
+    ipxe                     = { value = "www", ttl = 600 }
+    "luna2._domainkey.aur"   = { value = "luna2._domainkey", ttl = null }
+    "luna2._domainkey.lists" = { value = "luna2._domainkey", ttl = null }
+    mailman                  = { value = "apollo", ttl = null }
+    packages                 = { value = "www", ttl = 600 }
+    planet                   = { value = "www", ttl = 600 }
+    projects                 = { value = "luna", ttl = null }
+    repos                    = { value = "gemini", ttl = null }
+    rsync                    = { value = "gemini", ttl = null }
+    sources                  = { value = "gemini", ttl = null }
+    "static.conf"            = { value = "apollo", ttl = null }
+    static                   = { value = "apollo", ttl = null }
+    status                   = { value = "stats.uptimerobot.com.", ttl = null }
+    svn                      = { value = "gemini", ttl = null }
+  }
+}
+
 variable "archlinux_org_gitlab_pages" {
   type = list(object({
     name              = string
@@ -273,6 +298,17 @@ resource "hetznerdns_record" "pkgbuild_com_www_aaaa" {
   value   = "2a01:4f8:c2c:51e2::1"
   type    = "AAAA"
 }
+
+resource "hetznerdns_record" "archlinux_org_cname" {
+  for_each = var.archlinux_org_cname
+
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = each.key
+  ttl     = each.value.ttl
+  value   = each.value.value
+  type    = "CNAME"
+}
+
 
 resource "hetznerdns_record" "archlinux_org_origin_a" {
   zone_id = hetznerdns_zone.archlinux.id
@@ -836,79 +872,6 @@ resource "hetznerdns_record" "archlinux_org_state_aaaa" {
   type    = "AAAA"
 }
 
-resource "hetznerdns_record" "archlinux_org_archive_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "archive"
-  value   = "gemini"
-  type    = "CNAME"
-}
-
-resource "hetznerdns_record" "archlinux_org_dev_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "dev"
-  ttl     = 600
-  value   = "www"
-  type    = "CNAME"
-}
-
-resource "hetznerdns_record" "archlinux_org_g2kjxsblac7x_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "g2kjxsblac7x"
-  value   = "gv-i5y6mnrelvpfiu.dv.googlehosted.com."
-  type    = "CNAME"
-}
-
-resource "hetznerdns_record" "archlinux_org_git_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "git"
-  value   = "luna"
-  type    = "CNAME"
-}
-
-resource "hetznerdns_record" "archlinux_org_grafana_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "grafana"
-  value   = "apollo"
-  type    = "CNAME"
-}
-
-resource "hetznerdns_record" "archlinux_org_ipxe_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "ipxe"
-  ttl     = 600
-  value   = "www"
-  type    = "CNAME"
-}
-
-resource "hetznerdns_record" "archlinux_org_luna2_domainkey_aur_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "luna2._domainkey.aur"
-  value   = "luna2._domainkey"
-  type    = "CNAME"
-}
-
-resource "hetznerdns_record" "archlinux_org_luna2_domainkey_lists_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "luna2._domainkey.lists"
-  value   = "luna2._domainkey"
-  type    = "CNAME"
-}
-
-resource "hetznerdns_record" "archlinux_org_mailman_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "mailman"
-  value   = "apollo"
-  type    = "CNAME"
-}
-
-resource "hetznerdns_record" "archlinux_org_packages_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "packages"
-  ttl     = 600
-  value   = "www"
-  type    = "CNAME"
-}
-
 resource "hetznerdns_record" "archlinux_org_patchwork_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "patchwork"
@@ -925,35 +888,6 @@ resource "hetznerdns_record" "archlinux_org_patchwork_aaaa" {
   type    = "AAAA"
 }
 
-resource "hetznerdns_record" "archlinux_org_planet_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "planet"
-  ttl     = 600
-  value   = "www"
-  type    = "CNAME"
-}
-
-resource "hetznerdns_record" "archlinux_org_projects_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "projects"
-  value   = "luna"
-  type    = "CNAME"
-}
-
-resource "hetznerdns_record" "archlinux_org_repos_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "repos"
-  value   = "gemini"
-  type    = "CNAME"
-}
-
-resource "hetznerdns_record" "archlinux_org_rsync_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "rsync"
-  value   = "gemini"
-  type    = "CNAME"
-}
-
 resource "hetznerdns_record" "archlinux_org_security_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "security"
@@ -968,41 +902,6 @@ resource "hetznerdns_record" "archlinux_org_security_aaaa" {
   ttl     = 600
   value   = hcloud_server.security.ipv6_address
   type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_sources_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "sources"
-  value   = "gemini"
-  type    = "CNAME"
-}
-
-resource "hetznerdns_record" "archlinux_org_static_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "static"
-  value   = "apollo"
-  type    = "CNAME"
-}
-
-resource "hetznerdns_record" "archlinux_org_static_conf_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "static.conf"
-  value   = "apollo"
-  type    = "CNAME"
-}
-
-resource "hetznerdns_record" "archlinux_org_status_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "status"
-  value   = "stats.uptimerobot.com."
-  type    = "CNAME"
-}
-
-resource "hetznerdns_record" "archlinux_org_svn_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "svn"
-  value   = "gemini"
-  type    = "CNAME"
 }
 
 resource "hetznerdns_record" "archlinux_org_wiki_a" {
