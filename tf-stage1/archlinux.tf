@@ -280,14 +280,6 @@ resource "hetznerdns_record" "archlinux_org_origin_caa" {
   type    = "CAA"
 }
 
-resource "hetznerdns_record" "archlinux_org_origin_mx" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "@"
-  ttl     = 600
-  value   = "10 mail"
-  type    = "MX"
-}
-
 resource "hetznerdns_record" "archlinux_org_origin_ns3" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "@"
@@ -376,22 +368,6 @@ resource "hetznerdns_record" "archlinux_org_aur_aaaa" {
   name    = "aur"
   value   = hcloud_server.aur.ipv6_address
   type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_aur_mx" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "aur"
-  ttl     = 600
-  value   = "10 mail"
-  type    = "MX"
-}
-
-resource "hetznerdns_record" "archlinux_org_aur_txt" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "aur"
-  ttl     = 600
-  value   = "\"v=spf1 a ?all\""
-  type    = "TXT"
 }
 
 resource "hetznerdns_record" "archlinux_org_aur_dev_a" {
@@ -528,6 +504,15 @@ resource "hetznerdns_record" "archlinux_org_lists_mx" {
   type    = "MX"
 }
 
+resource "hetznerdns_record" "archlinux_org_lists_txt" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "lists"
+  ttl     = 600
+  # lists.archlinux.org
+  value = "\"v=spf1 ip4:5.9.250.164 ip6:2a01:4f8:160:3033::2 ~all\""
+  type  = "TXT"
+}
+
 resource "hetznerdns_record" "archlinux_org_luna_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "luna"
@@ -560,6 +545,14 @@ resource "hetznerdns_record" "archlinux_org_luna2_txt" {
   type    = "TXT"
 }
 
+resource "hetznerdns_record" "archlinux_org_luna3_txt" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "luna"
+  ttl     = 600
+  value   = "\"v=spf1 include:lists.archlinux.org -all\""
+  type    = "TXT"
+}
+
 resource "hetznerdns_record" "archlinux_org_mailman3_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "mailman3"
@@ -581,14 +574,6 @@ resource "hetznerdns_record" "archlinux_org_master_key_aaaa" {
   ttl     = 600
   value   = hcloud_server.archlinux.ipv6_address
   type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_master_key_mx" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "master-key"
-  ttl     = 600
-  value   = "10 mail"
-  type    = "MX"
 }
 
 resource "hetznerdns_record" "archlinux_org_matrix_a" {
@@ -628,20 +613,25 @@ resource "hetznerdns_record" "archlinux_org_mail_aaaa" {
   type    = "AAAA"
 }
 
-resource "hetznerdns_record" "archlinux_org_origin_txt" {
+resource "hetznerdns_record" "archlinux_org_origin_mx" {
+  for_each = toset(["@", "aur", "master-key"])
+
   zone_id = hetznerdns_zone.archlinux.id
-  name    = "@"
+  name    = each.value
   ttl     = 600
-  value   = "\"v=spf1 ip4:66.211.214.132/28 ip4:5.9.250.164 ip6:2a01:4f8:160:3033::2 ip4:138.201.81.199/32 ip4:88.198.91.70/32 ip4:95.216.189.61 ip6:2a01:4f9:c010:3052::1 a:aur.archlinux.org a:apollo.archlinux.org ~all\""
-  type    = "TXT"
+  value   = "10 mail"
+  type    = "MX"
 }
 
-resource "hetznerdns_record" "archlinux_org_mail_txt" {
+resource "hetznerdns_record" "archlinux_org_origin_txt" {
+  for_each = toset(["@", "aur", "mail", "master-key"])
+
   zone_id = hetznerdns_zone.archlinux.id
-  name    = "mail"
+  name    = each.value
   ttl     = 600
-  value   = "\"v=spf1 include:archlinux.org -all\""
-  type    = "TXT"
+  # mail.archlinux.org
+  value = "\"v=spf1 ip4:95.216.189.61 ip6:2a01:4f9:c010:3052::1 ~all\""
+  type  = "TXT"
 }
 
 resource "hetznerdns_record" "archlinux_org_domainkey_dkim-ed25519_txt" {
