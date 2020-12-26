@@ -1,0 +1,5 @@
+redirects:
+  - static.conf:
+    domain: static.conf.archlinux.org
+    to: https://gitlab.archlinux.org/archlinux/conf-files/-/raw/master$request_uri
+    type: 302

@@ -788,6 +788,20 @@ resource "hetznerdns_record" "archlinux_org_quassel_aaaa" {
   type    = "AAAA"
 }
 
+resource "hetznerdns_record" "archlinux_org_redirect_a" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "redirect"
+  value   = hcloud_server.redirect.ipv4_address
+  type    = "A"
+}
+
+resource "hetznerdns_record" "archlinux_org_redirect_aaaa" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "redirect"
+  value   = hcloud_server.redirect.ipv6_address
+  type    = "AAAA"
+}
+
 resource "hetznerdns_record" "archlinux_org_reproducible_a" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "reproducible"
@@ -1249,6 +1263,27 @@ resource "hcloud_rdns" "aur-dev_ipv6" {
 
 resource "hcloud_server" "aur-dev" {
   name        = "aur-dev.archlinux.org"
+  image       = data.hcloud_image.archlinux.id
+  server_type = "cx11"
+  lifecycle {
+    ignore_changes = [image]
+  }
+}
+
+resource "hcloud_rdns" "redirect_ipv4" {
+  server_id  = hcloud_server.redirect.id
+  ip_address = hcloud_server.redirect.ipv4_address
+  dns_ptr    = "redirect.archlinux.org"
+}
+
+resource "hcloud_rdns" "redirect_ipv6" {
+  server_id  = hcloud_server.redirect.id
+  ip_address = hcloud_server.redirect.ipv6_address
+  dns_ptr    = "redirect.archlinux.org"
+}
+
+resource "hcloud_server" "redirect" {
+  name        = "redirect.archlinux.org"
   image       = data.hcloud_image.archlinux.id
   server_type = "cx11"
   lifecycle {

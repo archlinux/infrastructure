@@ -1,0 +1,15 @@
+- name: setup redirect.archlinux.org
+  hosts: redirect.archlinux.org
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: tools }
+    - { role: firewalld }
+    - { role: unbound }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: certbot }
+    - { role: nginx }
+    - { role: redirects }
+    - { role: prometheus_exporters }
+    - { role: hardening }
