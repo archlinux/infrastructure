@@ -135,6 +135,7 @@ repro1.pkgbuild.com
 wiki.archlinux.org
 patchwork.archlinux.org
 security.archlinux.org
+redirect.archlinux.org
 
 [kape_servers]
 asia.mirror.pkgbuild.com
