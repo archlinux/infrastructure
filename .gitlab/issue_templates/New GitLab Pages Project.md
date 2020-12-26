@@ -21,21 +21,12 @@ something hosted below one of our domains is official).
        information at https://gitlab.archlinux.org/your-namespace/your-project/pages
 1. [ ] At this page, you'll also need to add your custom domain. Add the custom domain you requested earlier.
        GitLab will then show domain verification information which you'll need in the next step.
-1. [ ] At this point, we'll need to add some stuff to `archlinux.tf`. It should look something like this.
-       Make sure to substitute the `your_domain` and `your-domain` strings accordingly:
+1. [ ] At this point, we'll need to add some stuff to the `archlinux_org_gitlab_pages` variable in `archlinux.tf`. It should look something like this.
+       Make sure to substitute the `your-domain` and `your-code-shown-by-gitlab` strings accordingly:
 
-        resource "hetznerdns_record" "gitlab_pages_your_domain_cname" {
-          zone_id = hetznerdns_zone.archlinux.id
-          name    = "your-domain"
-          value   = "pages.archlinux.org."
-          type    = "CNAME"
-        }
-
-        resource "hetznerdns_record" "gitlab_pages_your_domain_verification" {
-          zone_id = hetznerdns_zone.archlinux.id
-          name    = "_gitlab-pages-verification-code.your-domain"
-          value   = "gitlab-pages-verification-code=your-code-shown-by-gitlab"
-          type    = "TXT"
+        {
+          name              = "your-domain"
+          verification_code = "your-code-shown-by-gitlab"
         }
 
 1. [ ] Run `terraform apply` and go back to GitLab. Hit `Verify` and it should pick up the new domain

@@ -27,6 +27,23 @@ provider "hetznerdns" {
   apitoken = data.external.vault_hetzner.result.hetzner_dns_api_key
 }
 
+variable "archlinux_org_gitlab_pages" {
+  type = list(object({
+    name              = string
+    verification_code = string
+  }))
+  default = [
+    {
+      name              = "conf"
+      verification_code = "60a06a1c02e42b36c3b4919f4d6de6bf"
+    },
+    {
+      name              = "whatcanwedofor",
+      verification_code = "b5f8011047c1610ace52e754b568c834"
+    }
+  ]
+}
+
 resource "hetznerdns_zone" "archlinux" {
   name = "archlinux.org"
   ttl  = 86400
@@ -826,20 +843,6 @@ resource "hetznerdns_record" "archlinux_org_archive_cname" {
   type    = "CNAME"
 }
 
-resource "hetznerdns_record" "archlinux_org_conf_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "conf"
-  value   = "pages.archlinux.org."
-  type    = "CNAME"
-}
-
-resource "hetznerdns_record" "gitlab_pages_conf_verification" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "_gitlab-pages-verification-code.conf"
-  value   = "gitlab-pages-verification-code=60a06a1c02e42b36c3b4919f4d6de6bf"
-  type    = "TXT"
-}
-
 resource "hetznerdns_record" "archlinux_org_dev_cname" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "dev"
@@ -1055,20 +1058,6 @@ resource "hetznerdns_record" "archlinux_org_github_challenge_archlinux_www" {
   type    = "TXT"
 }
 
-resource "hetznerdns_record" "archlinux_org_whatcanwedofor_cname" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "whatcanwedofor"
-  value   = "pages.archlinux.org."
-  type    = "CNAME"
-}
-
-resource "hetznerdns_record" "gitlab_pages_whatcanwedofor_verification" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "_gitlab-pages-verification-code.whatcanwedofor"
-  value   = "gitlab-pages-verification-code=b5f8011047c1610ace52e754b568c834"
-  type    = "TXT"
-}
-
 resource "hcloud_rdns" "quassel_ipv4" {
   server_id  = hcloud_server.quassel.id
   ip_address = hcloud_server.quassel.ipv4_address
@@ -1176,6 +1165,24 @@ resource "hcloud_floating_ip" "gitlab_pages" {
 
 variable "gitlab_pages_ipv6" {
   default = "2a01:4f8:c2c:5d2d::2"
+}
+
+resource "hetznerdns_record" "archlinux_org_gitlab_pages_cname" {
+  for_each = { for p in var.archlinux_org_gitlab_pages : p.name => p }
+
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = each.value.name
+  value   = "pages.archlinux.org."
+  type    = "CNAME"
+}
+
+resource "hetznerdns_record" "archlinux_org_gitlab_pages_verification_code_txt" {
+  for_each = { for p in var.archlinux_org_gitlab_pages : p.name => p }
+
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "_gitlab-pages-verification-code.${each.value.name}"
+  value   = "gitlab-pages-verification-code=${each.value.verification_code}"
+  type    = "TXT"
 }
 
 resource "hcloud_volume" "gitlab" {
