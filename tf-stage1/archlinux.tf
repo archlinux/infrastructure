@@ -220,7 +220,7 @@ variable "archlinux_org_cname" {
     repos                    = { value = "gemini", ttl = null }
     rsync                    = { value = "gemini", ttl = null }
     sources                  = { value = "gemini", ttl = null }
-    "static.conf"            = { value = "apollo", ttl = null }
+    "static.conf"            = { value = "redirect", ttl = null }
     static                   = { value = "apollo", ttl = null }
     status                   = { value = "stats.uptimerobot.com.", ttl = null }
     svn                      = { value = "gemini", ttl = null }
