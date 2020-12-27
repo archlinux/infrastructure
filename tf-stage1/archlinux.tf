@@ -27,6 +27,181 @@ provider "hetznerdns" {
   apitoken = data.external.vault_hetzner.result.hetzner_dns_api_key
 }
 
+locals {
+  archlinux_org_a_aaaa = {
+    "@" = {
+      ipv4_address = hcloud_server.archlinux.ipv4_address
+      ipv6_address = hcloud_server.archlinux.ipv6_address
+      ttl          = 600
+    }
+    accounts = {
+      ipv4_address = hcloud_server.accounts.ipv4_address
+      ipv6_address = hcloud_server.accounts.ipv6_address
+      ttl          = null
+    }
+    apollo = {
+      ipv4_address = "138.201.81.199"
+      ipv6_address = "2a01:4f8:172:1d86::1"
+      ttl          = 600
+    }
+    aur = {
+      ipv4_address = hcloud_server.aur.ipv4_address
+      ipv6_address = hcloud_server.aur.ipv6_address
+      ttl          = null
+    }
+    aur4 = {
+      ipv4_address = "5.9.250.164"
+      ipv6_address = "2a01:4f8:160:3033::2"
+      ttl          = null
+    }
+    aur-dev = {
+      ipv4_address = hcloud_server.aur-dev.ipv4_address
+      ipv6_address = hcloud_server.aur-dev.ipv6_address
+      ttl          = null
+    }
+    bbs = {
+      ipv4_address = hcloud_server.bbs.ipv4_address
+      ipv6_address = hcloud_server.bbs.ipv6_address
+      ttl          = null
+    }
+    bugs = {
+      ipv4_address = hcloud_server.bugs.ipv4_address
+      ipv6_address = hcloud_server.bugs.ipv6_address
+      ttl          = null
+    }
+    dragon = {
+      ipv4_address = "195.201.167.210"
+      ipv6_address = "2a01:4f8:13a:102a::2"
+      ttl          = null
+    }
+    gemini = {
+      ipv4_address = "49.12.124.107"
+      ipv6_address = "2a01:4f8:242:5614::2"
+      ttl          = null
+    }
+    "gitlab.pages" = {
+      ipv4_address = hcloud_floating_ip.gitlab_pages.ip_address
+      ipv6_address = var.gitlab_pages_ipv6
+      ttl          = null
+    }
+    gitlab = {
+      ipv4_address = hcloud_server.gitlab.ipv4_address
+      ipv6_address = hcloud_server.gitlab.ipv6_address
+      ttl          = null
+    }
+    homedir = {
+      ipv4_address = hcloud_server.homedir.ipv4_address
+      ipv6_address = hcloud_server.homedir.ipv6_address
+      ttl          = null
+    }
+    lists = {
+      ipv4_address = "5.9.250.164"
+      ipv6_address = "2a01:4f8:160:3033::2"
+      ttl          = null
+    }
+    luna = {
+      ipv4_address = "5.9.250.164"
+      ipv6_address = "2a01:4f8:160:3033::2"
+      ttl          = 600
+    }
+    mailman3 = {
+      ipv4_address = hcloud_server.mailman3.ipv4_address
+      ipv6_address = hcloud_server.mailman3.ipv4_address
+      ttl          = null
+    }
+    mail = {
+      ipv4_address = hcloud_server.mail.ipv4_address
+      ipv6_address = hcloud_server.mail.ipv6_address
+      ttl          = 600
+    }
+    master-key = {
+      ipv4_address = hcloud_server.archlinux.ipv4_address
+      ipv6_address = hcloud_server.archlinux.ipv6_address
+      ttl          = 600
+    }
+    matrix = {
+      ipv4_address = hcloud_server.matrix.ipv4_address
+      ipv6_address = hcloud_server.matrix.ipv6_address
+      ttl          = null
+    }
+    monitoring = {
+      ipv4_address = hcloud_server.monitoring.ipv4_address
+      ipv6_address = hcloud_server.monitoring.ipv6_address
+      ttl          = null
+    }
+    openpgpkey = {
+      ipv4_address = hcloud_server.openpgpkey.ipv4_address
+      ipv6_address = hcloud_server.openpgpkey.ipv6_address
+      ttl          = null
+    }
+    patchwork = {
+      ipv4_address = hcloud_server.patchwork.ipv4_address
+      ipv6_address = hcloud_server.patchwork.ipv6_address
+      ttl          = 600
+    }
+    phrik = {
+      ipv4_address = hcloud_server.phrik.ipv4_address
+      ipv6_address = hcloud_server.phrik.ipv6_address
+      ttl          = null
+    }
+    quassel = {
+      ipv4_address = hcloud_server.quassel.ipv4_address
+      ipv6_address = hcloud_server.quassel.ipv6_address
+      ttl          = null
+    }
+    redirect = {
+      ipv4_address = hcloud_server.redirect.ipv4_address
+      ipv6_address = hcloud_server.redirect.ipv6_address
+      ttl          = null
+    }
+    reproducible = {
+      ipv4_address = hcloud_server.reproducible.ipv4_address
+      ipv6_address = hcloud_server.reproducible.ipv6_address
+      ttl          = null
+    }
+    runner1 = {
+      ipv4_address = "84.17.49.250"
+      ipv6_address = "2a02:6ea0:c719::2"
+      ttl          = null
+    }
+    runner2 = {
+      ipv4_address = "147.75.80.217"
+      ipv6_address = "2604:1380:2001:4500::3"
+      ttl          = null
+    }
+    secure-runner1 = {
+      ipv4_address = "116.202.134.150"
+      ipv6_address = "2a01:4f8:231:4e1e::2"
+      ttl          = null
+    }
+    security = {
+      ipv4_address = hcloud_server.security.ipv4_address
+      ipv6_address = hcloud_server.security.ipv6_address
+      ttl          = 600
+    }
+    state = {
+      ipv4_address = "116.203.16.252"
+      ipv6_address = "2a01:4f8:c2c:474::1"
+      ttl          = null
+    }
+    svn2gittest = {
+      ipv4_address = hcloud_server.svn2gittest.ipv4_address
+      ipv6_address = hcloud_server.svn2gittest.ipv6_address
+      ttl          = null
+    }
+    wiki = {
+      ipv4_address = hcloud_server.archwiki.ipv4_address
+      ipv6_address = hcloud_server.archwiki.ipv6_address
+      ttl          = 600
+    }
+    www = {
+      ipv4_address = hcloud_server.archlinux.ipv4_address
+      ipv6_address = hcloud_server.archlinux.ipv6_address
+      ttl          = 600
+    }
+  }
+}
+
 variable "archlinux_org_cname" {
   type = map(any)
   default = {
@@ -299,6 +474,26 @@ resource "hetznerdns_record" "pkgbuild_com_www_aaaa" {
   type    = "AAAA"
 }
 
+resource "hetznerdns_record" "archlinux_org_a" {
+  for_each = local.archlinux_org_a_aaaa
+
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = each.key
+  ttl     = each.value.ttl
+  value   = each.value.ipv4_address
+  type    = "A"
+}
+
+resource "hetznerdns_record" "archlinux_org_aaaa" {
+  for_each = local.archlinux_org_a_aaaa
+
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = each.key
+  ttl     = each.value.ttl
+  value   = each.value.ipv6_address
+  type    = "AAAA"
+}
+
 resource "hetznerdns_record" "archlinux_org_cname" {
   for_each = var.archlinux_org_cname
 
@@ -309,22 +504,6 @@ resource "hetznerdns_record" "archlinux_org_cname" {
   type    = "CNAME"
 }
 
-
-resource "hetznerdns_record" "archlinux_org_origin_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "@"
-  ttl     = 600
-  value   = hcloud_server.archlinux.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_origin_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "@"
-  ttl     = 600
-  value   = hcloud_server.archlinux.ipv6_address
-  type    = "AAAA"
-}
 
 resource "hetznerdns_record" "archlinux_org_origin_caa" {
   zone_id = hetznerdns_zone.archlinux.id
@@ -372,176 +551,6 @@ resource "hetznerdns_record" "archlinux_org_origin_apollo_domainkey_txt" {
   type    = "TXT"
 }
 
-resource "hetznerdns_record" "archlinux_org_accounts_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "accounts"
-  value   = hcloud_server.accounts.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_accounts_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "accounts"
-  value   = hcloud_server.accounts.ipv6_address
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_apollo_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "apollo"
-  ttl     = 600
-  value   = "138.201.81.199"
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_apollo_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "apollo"
-  ttl     = 600
-  value   = "2a01:4f8:172:1d86::1"
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_aur_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "aur"
-  value   = hcloud_server.aur.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_aur_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "aur"
-  value   = hcloud_server.aur.ipv6_address
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_aur_dev_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "aur-dev"
-  value   = hcloud_server.aur-dev.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_aur_dev_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "aur-dev"
-  value   = hcloud_server.aur-dev.ipv6_address
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_aur4_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "aur4"
-  value   = "5.9.250.164"
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_aur4_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "aur4"
-  value   = "2a01:4f8:160:3033::2"
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_bbs_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "bbs"
-  value   = hcloud_server.bbs.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_bbs_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "bbs"
-  value   = hcloud_server.bbs.ipv6_address
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_bugs_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "bugs"
-  value   = hcloud_server.bugs.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_bugs_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "bugs"
-  value   = hcloud_server.bugs.ipv6_address
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_dragon_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "dragon"
-  value   = "195.201.167.210"
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_dragon_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "dragon"
-  value   = "2a01:4f8:13a:102a::2"
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_gemini_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "gemini"
-  value   = "49.12.124.107"
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_gemini_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "gemini"
-  value   = "2a01:4f8:242:5614::2"
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_gitlab_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "gitlab"
-  value   = hcloud_server.gitlab.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_gitlab_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "gitlab"
-  value   = hcloud_server.gitlab.ipv6_address
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_homedir_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "homedir"
-  value   = hcloud_server.homedir.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_homedir_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "homedir"
-  value   = hcloud_server.homedir.ipv6_address
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_lists_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "lists"
-  value   = "5.9.250.164"
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_lists_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "lists"
-  value   = "2a01:4f8:160:3033::2"
-  type    = "AAAA"
-}
-
 resource "hetznerdns_record" "archlinux_org_lists_mx" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "lists"
@@ -557,22 +566,6 @@ resource "hetznerdns_record" "archlinux_org_lists_txt" {
   # lists.archlinux.org
   value = "\"v=spf1 ip4:5.9.250.164 ip6:2a01:4f8:160:3033::2 ~all\""
   type  = "TXT"
-}
-
-resource "hetznerdns_record" "archlinux_org_luna_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "luna"
-  ttl     = 600
-  value   = "5.9.250.164"
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_luna_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "luna"
-  ttl     = 600
-  value   = "2a01:4f8:160:3033::2"
-  type    = "AAAA"
 }
 
 resource "hetznerdns_record" "archlinux_org_luna_txt" {
@@ -597,80 +590,6 @@ resource "hetznerdns_record" "archlinux_org_luna3_txt" {
   ttl     = 600
   value   = "\"v=spf1 include:lists.archlinux.org -all\""
   type    = "TXT"
-}
-
-resource "hetznerdns_record" "archlinux_org_mailman3_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "mailman3"
-  value   = hcloud_server.mailman3.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_mailman3_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "mailman3"
-  value   = hcloud_server.mailman3.ipv6_address
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_master_key_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "master-key"
-  ttl     = 600
-  value   = hcloud_server.archlinux.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_master_key_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "master-key"
-  ttl     = 600
-  value   = hcloud_server.archlinux.ipv6_address
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_matrix_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "matrix"
-  value   = hcloud_server.matrix.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_matrix_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "matrix"
-  value   = hcloud_server.matrix.ipv6_address
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_monitoring_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "monitoring"
-  value   = hcloud_server.monitoring.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_monitoring_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "monitoring"
-  value   = hcloud_server.monitoring.ipv6_address
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_mail_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "mail"
-  ttl     = 600
-  value   = hcloud_server.mail.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_mail_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "mail"
-  ttl     = 600
-  value   = hcloud_server.mail.ipv6_address
-  type    = "AAAA"
 }
 
 resource "hetznerdns_record" "archlinux_org_mtasts_cname" {
@@ -744,210 +663,6 @@ resource "hetznerdns_record" "archlinux_org_smtp_tlsrpt_txt" {
   name    = "_smtp._tls${each.value}"
   value   = "\"v=TLSRPTv1;rua=mailto:postmaster@archlinux.org\""
   type    = "TXT"
-}
-
-resource "hetznerdns_record" "archlinux_org_openpgpkey_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "openpgpkey"
-  value   = hcloud_server.openpgpkey.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_openpgpkey_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "openpgpkey"
-  value   = hcloud_server.openpgpkey.ipv6_address
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_phrik_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "phrik"
-  value   = hcloud_server.phrik.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_phrik_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "phrik"
-  value   = hcloud_server.phrik.ipv6_address
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_quassel_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "quassel"
-  value   = hcloud_server.quassel.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_quassel_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "quassel"
-  value   = hcloud_server.quassel.ipv6_address
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_redirect_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "redirect"
-  value   = hcloud_server.redirect.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_redirect_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "redirect"
-  value   = hcloud_server.redirect.ipv6_address
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_reproducible_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "reproducible"
-  value   = hcloud_server.reproducible.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_reproducible_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "reproducible"
-  value   = hcloud_server.reproducible.ipv6_address
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_runner1_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "runner1"
-  value   = "84.17.49.250"
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_runner1_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "runner1"
-  value   = "2a02:6ea0:c719::2"
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_runner2_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "runner2"
-  value   = "147.75.80.217"
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_runner2_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "runner2"
-  value   = "2604:1380:2001:4500::3"
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_secure_runner1_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "secure-runner1"
-  value   = "116.202.134.150"
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_secure_runner1_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "secure-runner1"
-  value   = "2a01:4f8:231:4e1e::2"
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_svn2gittest_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "svn2gittest"
-  value   = hcloud_server.svn2gittest.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_svn2gittest_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "svn2gittest"
-  value   = hcloud_server.svn2gittest.ipv6_address
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_state_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "state"
-  value   = "116.203.16.252"
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_state_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "state"
-  value   = "2a01:4f8:c2c:474::1"
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_patchwork_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "patchwork"
-  ttl     = 600
-  value   = hcloud_server.patchwork.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_patchwork_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "patchwork"
-  ttl     = 600
-  value   = hcloud_server.patchwork.ipv6_address
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_security_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "security"
-  ttl     = 600
-  value   = hcloud_server.security.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_security_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "security"
-  ttl     = 600
-  value   = hcloud_server.security.ipv6_address
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_wiki_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "wiki"
-  ttl     = 600
-  value   = hcloud_server.archwiki.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_wiki_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "wiki"
-  ttl     = 600
-  value   = hcloud_server.archwiki.ipv6_address
-  type    = "AAAA"
-}
-
-resource "hetznerdns_record" "archlinux_org_www_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "www"
-  ttl     = 600
-  value   = hcloud_server.archlinux.ipv4_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_www_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "www"
-  ttl     = 600
-  value   = hcloud_server.archlinux.ipv6_address
-  type    = "AAAA"
 }
 
 resource "hetznerdns_record" "archlinux_org_matrix_tcp_srv" {
@@ -1054,20 +769,6 @@ resource "hcloud_server" "gitlab" {
   lifecycle {
     ignore_changes = [image]
   }
-}
-
-resource "hetznerdns_record" "archlinux_org_gitlab_pages_a" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "pages"
-  value   = hcloud_floating_ip.gitlab_pages.ip_address
-  type    = "A"
-}
-
-resource "hetznerdns_record" "archlinux_org_gitlab_pages_aaaa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "pages"
-  value   = var.gitlab_pages_ipv6
-  type    = "AAAA"
 }
 
 resource "hcloud_floating_ip" "gitlab_pages" {
