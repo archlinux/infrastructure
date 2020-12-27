@@ -59,11 +59,11 @@ resource "hetznerdns_record" "archlinux_org_aaaa" {
 }
 
 resource "hetznerdns_record" "archlinux_org_cname" {
-  for_each = var.archlinux_org_cname
+  for_each = local.archlinux_org_cname
 
   zone_id = hetznerdns_zone.archlinux.id
   name    = each.key
-  ttl     = lookup(var.archlinux_org_cname[each.key], "ttl", null)
+  ttl     = lookup(local.archlinux_org_cname[each.key], "ttl", null)
   value   = each.value.value
   type    = "CNAME"
 }
