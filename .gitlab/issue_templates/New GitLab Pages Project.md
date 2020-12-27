@@ -24,10 +24,7 @@ something hosted below one of our domains is official).
 1. [ ] At this point, we'll need to add some stuff to the `archlinux_org_gitlab_pages` variable in `archlinux.tf`. It should look something like this.
        Make sure to substitute the `your-domain` and `your-code-shown-by-gitlab` strings accordingly:
 
-        {
-          name              = "your-domain"
-          verification_code = "your-code-shown-by-gitlab"
-        }
+        "your-domain" = "your-code-shown-by-gitlab"
 
 1. [ ] Run `terraform apply` and go back to GitLab. Hit `Verify` and it should pick up the new domain
        verification code. It should then also automatically begin fetching a certificate via Let's
