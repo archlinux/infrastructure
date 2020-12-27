@@ -48,6 +48,54 @@ resource "hetznerdns_record" "archlinux_org_txt" {
   type    = "TXT"
 }
 
+resource "hetznerdns_record" "archlinux_org_mtasts_cname" {
+  for_each = local.archlinux_org_mail
+
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "_mta-sts${each.key == "@" ? "" : ".${each.key}"}"
+  value   = "mail"
+  type    = "CNAME"
+}
+
+resource "hetznerdns_record" "archlinux_org__mtasts_txt" {
+  for_each = local.archlinux_org_mail
+
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "_mta-sts${each.key == "@" ? "" : ".${each.key}"}"
+  ttl     = 600
+  value   = "\"v=STSv1; id=${local.archlinux_org_mtssts_policy_id}\""
+  type    = "TXT"
+}
+
+resource "hetznerdns_record" "archlinux_org_smtp_tlsrpt_txt" {
+  for_each = local.archlinux_org_mail
+
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "_smtp._tls${each.key == "@" ? "" : ".${each.key}"}"
+  value   = "\"v=TLSRPTv1;rua=mailto:postmaster@archlinux.org\""
+  type    = "TXT"
+}
+
+resource "hetznerdns_record" "archlinux_org_mx" {
+  for_each = local.archlinux_org_mail
+
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = each.key
+  ttl     = 600
+  value   = "10 ${each.value.mx}"
+  type    = "MX"
+}
+
+resource "hetznerdns_record" "archlinux_org_mail_txt" {
+  for_each = local.archlinux_org_mail
+
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = each.key
+  ttl     = 600
+  value   = local.archlinux_org_txt[each.value.mx].value
+  type    = "TXT"
+}
+
 resource "hetznerdns_record" "archlinux_org_a" {
   for_each = local.archlinux_org_a_aaaa
 

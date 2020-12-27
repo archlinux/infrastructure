@@ -156,15 +156,29 @@ locals {
   # Example:
   # "_github-challenge-archlinux" = { value = "824af4446e" }
   archlinux_org_txt = {
-    lists                             = { value = "v=spf1 ip4:5.9.250.164 ip6:2a01:4f8:160:3033::2 ~all" }
+    luna                              = { value = "v=spf1 ip4:5.9.250.164 ip6:2a01:4f8:160:3033::2 ~all" }
     "luna._domainkey.lists"           = { ttl = 600, value = "v=DKIM1; k=rsa; s=email; \" \"p=MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvXrAPvtdX8Jrk4zmyk8w9T2zdAJGe7z0+4XHWWiuzH8Zse6S7oXiS9CVaPOsu0TZqHqhuclASU7qh0NXFwWyi2xRPyJOqH2Clu7vHS3j5F4TjURFOp4/EbA0iQu4rbItl4AU11z2pGSEj5SykUsrH+jjdqzNqAG9d4lNvkTs6RRzPF3KhhY+XljaeysEyDSS4ap4E0DYcduSIX\" \"oD1exFv4SEbXThD9PC1u81w4xusnmwmfHtR7aazeqPDP+S+FqDRy2woCaQb/VMbqMYVuWTVKJ2RxFyTKredOOV2c5kzih7GViwoetll/rTqO4aVbeir9K4f6YZg85dSQtVwEat7LV+zBnQwp3ivWkrIk8VEdSsCSaJlgattBiPHsfFFv1xw4qi3h+UvfCGgz35dtlnzd/noGhNARg0Z+kaMSTjy75V1mKx5sCH0o8nAX2XU8akJfLz58Vg\" \"kTx/sfealtwNA0gTy1t1jV8q0OF5RA0IeMRgCzeH2USOZI98W+EAUsGG5653Vzmp3FJRWp1tWJwRJ0M/aZ3ka/G1iTx3rNNcadVk+4q3gz3KnlAlun+m58y8pNWKjYuxmu9xkDRwM/33rv98j0R8HZO7HFL+1vjKkxSEuzmnTQ2O9F76/OsQoDPZ1Z6nJRvK8ts8PQr4ASKohby62+1F1M8U2Xn7u84dYLUCAwEAAQ==" }
     "luna2._domainkey"                = { ttl = 600, value = "v=DKIM1; k=rsa; s=email; \" \"p=MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvXrAPvtdX8Jrk4zmyk8w9T2zdAJGe7z0+4XHWWiuzH8Zse6S7oXiS9CVaPOsu0TZqHqhuclASU7qh0NXFwWyi2xRPyJOqH2Clu7vHS3j5F4TjURFOp4/EbA0iQu4rbItl4AU11z2pGSEj5SykUsrH+jjdqzNqAG9d4lNvkTs6RRzPF3KhhY+XljaeysEyDSS4ap4E0DYcduSIX\" \"oD1exFv4SEbXThD9PC1u81w4xusnmwmfHtR7aazeqPDP+S+FqDRy2woCaQb/VMbqMYVuWTVKJ2RxFyTKredOOV2c5kzih7GViwoetll/rTqO4aVbeir9K4f6YZg85dSQtVwEat7LV+zBnQwp3ivWkrIk8VEdSsCSaJlgattBiPHsfFFv1xw4qi3h+UvfCGgz35dtlnzd/noGhNARg0Z+kaMSTjy75V1mKx5sCH0o8nAX2XU8akJfLz58Vg\" \"kTx/sfealtwNA0gTy1t1jV8q0OF5RA0IeMRgCzeH2USOZI98W+EAUsGG5653Vzmp3FJRWp1tWJwRJ0M/aZ3ka/G1iTx3rNNcadVk+4q3gz3KnlAlun+m58y8pNWKjYuxmu9xkDRwM/33rv98j0R8HZO7HFL+1vjKkxSEuzmnTQ2O9F76/OsQoDPZ1Z6nJRvK8ts8PQr4ASKohby62+1F1M8U2Xn7u84dYLUCAwEAAQ==" }
-    luna                              = { value = "v=spf1 include:lists.archlinux.org -all" }
+    mail                              = { value = "v=spf1 ip4:95.216.189.61 ip6:2a01:4f9:c010:3052::1 ~all", ttl = 600 }
     "dkim-ed25519._domainkey"         = { ttl = 600, value = "v=DKIM1; k=ed25519; \" \"p=XOHB7b7V1puX+FryNIhsjXHYIFqk+q6JRu4XQ7Jc8MQ=" }
     "dkim-rsa._domainkey"             = { ttl = 600, value = "v=DKIM1; k=rsa; \" \"p=MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA1GjGrEczq7iHZbvT7wa4ltJz2jwSndUGdRHgfEPnGBeevOXEAlEFr4zsdkfZEaNaQLIhZNpvKAt/A+kkyalkj4u9AnxqeNsNmZflFl6TKgvh0tWNEP3+XNxfdQ7zfml4WggL/YdAjXngg42oZEUsnS/6iozOFn7bNvzqBx5PFJ21pgyuR8DWyLaeOt+p55dVed7DCKnKi11Xjiu7k\" \"H68W8rose7g8Fv9fecBatEE4jwloOXsjh+tH0iab1NSSSpIq6EdgcPrpmrllN3/n2J/kCGK6ztISB6vR7xWgvgHSMjmEL0GPWzohGPrw2UQhZhrNV8dJpiLRYmfK+rXaKF0Kqag/F0e4C4jCKFX7NYFcYXYRlN5QlDFjZvUmOILlgnZ8w/SdZUKzpLObGuwnANLG+WSOjw42p9mXVGN6AfOQPu8OjRjS1MyhcdDIbUvZiQjbmiVJ5frpYZ39BTg\" \"CIzYLJJ5932+3gnwROu1OeljWkpBkfHZXPzADus80l3Vxsk91XZVB36rN8tyuMownR/M4HNC7ZE/EBwOnn1mGH7bLd6pva8u5Qy8Y6LrDdYea5Kk7aZ2WJSSRTV+nkPvOEIx+DfsIWNfmkVWzmuVky96fRvwOCuh38w8zpmlqzhDuGSQrBaLFXwAC7LYQ6kPDHzrjQhs99ScR0ix6YclrmpimMcCAwEAAQ==" }
     "_dmarc"                          = { value = "v=DMARC1; p=none; rua=mailto:dmarc-reports@archlinux.org; ruf=mailto:dmarc-reports@archlinux.org;" }
     "_github-challenge-archlinux"     = { value = "824af4446e" }
     "_github-challenge-archlinux.www" = { value = "b53f311f86" }
+  }
+
+  # MTA-STS policy id (generated with: date +%s)
+  archlinux_org_mtssts_policy_id = "1608210175"
+
+  # This setup MTA-STS, TLS-RPT, MX and SPF for archlinux.org
+  # Valid parameters are:
+  #   - mx (mandatory)
+  #
+  archlinux_org_mail = {
+    "@"          = { mx = "mail" }
+    "aur"        = { mx = "mail" }
+    "master-key" = { mx = "mail" }
+    "lists"      = { mx = "luna" }
   }
 
   # This creates archlinux.org A/AAAA DNS entries in addition to those already specified by the VPSes.
@@ -417,64 +431,6 @@ resource "hetznerdns_record" "archlinux_org_origin_ns1" {
 #   value = "ns1.first-ns.de. ibiru.archlinux.org. 2020072502 7200 900 1209600 86400"
 #   type = "SOA"
 # }
-
-resource "hetznerdns_record" "archlinux_org_lists_mx" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "lists"
-  ttl     = 600
-  value   = "10 luna"
-  type    = "MX"
-}
-
-resource "hetznerdns_record" "archlinux_org_mtasts_cname" {
-  for_each = toset(["", ".aur", ".master-key", ".lists"])
-
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "mta-sts${each.value}"
-  value   = "mail"
-  type    = "CNAME"
-}
-
-resource "hetznerdns_record" "archlinux_org__mtasts_txt" {
-  for_each = toset(["", ".aur", ".master-key", ".lists"])
-
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "_mta-sts${each.value}"
-  ttl     = 600
-  # date +%s
-  value = "\"v=STSv1; id=1608210175\""
-  type  = "TXT"
-}
-
-resource "hetznerdns_record" "archlinux_org_origin_mx" {
-  for_each = toset(["@", "aur", "master-key"])
-
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = each.value
-  ttl     = 600
-  value   = "10 mail"
-  type    = "MX"
-}
-
-resource "hetznerdns_record" "archlinux_org_origin_txt" {
-  for_each = toset(["@", "aur", "mail", "master-key"])
-
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = each.value
-  ttl     = 600
-  # mail.archlinux.org
-  value = "\"v=spf1 ip4:95.216.189.61 ip6:2a01:4f9:c010:3052::1 ~all\""
-  type  = "TXT"
-}
-
-resource "hetznerdns_record" "archlinux_org_smtp_tlsrpt_txt" {
-  for_each = toset(["", ".aur", ".master-key", ".lists"])
-
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "_smtp._tls${each.value}"
-  value   = "\"v=TLSRPTv1;rua=mailto:postmaster@archlinux.org\""
-  type    = "TXT"
-}
 
 resource "hetznerdns_record" "archlinux_org_matrix_tcp_srv" {
   zone_id = hetznerdns_zone.archlinux.id
