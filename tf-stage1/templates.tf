@@ -1,7 +1,7 @@
 # This files contains template handling for the main archlinux.tf file
 
 resource "hetznerdns_record" "archlinux_org_gitlab_pages_cname" {
-  for_each = { for p in var.archlinux_org_gitlab_pages : p.name => p }
+  for_each = { for p in local.archlinux_org_gitlab_pages : p.name => p }
 
   zone_id = hetznerdns_zone.archlinux.id
   name    = each.value.name
@@ -10,7 +10,7 @@ resource "hetznerdns_record" "archlinux_org_gitlab_pages_cname" {
 }
 
 resource "hetznerdns_record" "archlinux_org_gitlab_pages_verification_code_txt" {
-  for_each = { for p in var.archlinux_org_gitlab_pages : p.name => p }
+  for_each = { for p in local.archlinux_org_gitlab_pages : p.name => p }
 
   zone_id = hetznerdns_zone.archlinux.id
   name    = "_gitlab-pages-verification-code.${each.value.name}"
