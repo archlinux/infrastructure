@@ -44,11 +44,11 @@ locals {
     "archlinux.org" = {
       server_type = "cpx11"
       domain      = "@"
+      ttl         = 600
     }
     "accounts.archlinux.org" = {
       server_type = "cx11"
       domain      = "accounts"
-      ttl         = 600
     }
     "aur-dev.archlinux.org" = {
       server_type = "cx11"
@@ -82,7 +82,6 @@ locals {
     "mailman3.archlinux.org" = {
       server_type = "cx11"
       domain      = "mailman3"
-      ttl         = 600
     }
     "matrix.archlinux.org" = {
       server_type = "cpx31"
@@ -99,6 +98,7 @@ locals {
     "patchwork.archlinux.org" = {
       server_type = "cx11"
       domain      = "patchwork"
+      ttl         = 600
     }
     "phrik.archlinux.org" = {
       server_type = "cx11"
@@ -119,14 +119,16 @@ locals {
     "security.archlinux.org" = {
       server_type = "cx11"
       domain      = "security"
+      ttl         = 600
     }
     "svn2gittest.archlinux.org" = {
       server_type = "cx11"
       domain      = "svn2gittest"
     }
     "wiki.archlinux.org" = {
-      server_type = "cx11"
+      server_type = "cpx11"
       domain      = "wiki"
+      ttl         = 600
     }
     "mirror.pkgbuild.com" = {
       server_type = "cx11"
@@ -236,7 +238,7 @@ locals {
     repos                    = { value = "gemini" }
     rsync                    = { value = "gemini" }
     sources                  = { value = "gemini" }
-    "static.conf"            = { value = "apollo" }
+    "static.conf"            = { value = "redirect" }
     static                   = { value = "apollo" }
     status                   = { value = "stats.uptimerobot.com." }
     svn                      = { value = "gemini" }

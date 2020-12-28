@@ -13,7 +13,7 @@ resource "hetznerdns_record" "archlinux_org_gitlab_pages_verification_code_txt" 
   for_each = local.archlinux_org_gitlab_pages
 
   zone_id = hetznerdns_zone.archlinux.id
-  name    = "_gitlab-pages-verification-code.${each.value}"
+  name    = "_gitlab-pages-verification-code.${each.key}"
   value   = "gitlab-pages-verification-code=${each.value}"
   type    = "TXT"
 }
@@ -87,7 +87,7 @@ resource "hcloud_rdns" "rdns_ipv6" {
 resource "hcloud_server" "machine" {
   for_each = local.machines
 
-  name        = each.value.domain
+  name        = each.key
   image       = data.hcloud_image.archlinux.id
   server_type = each.value.server_type
   lifecycle {
