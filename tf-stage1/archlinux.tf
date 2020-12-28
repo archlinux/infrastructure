@@ -40,11 +40,16 @@ locals {
   #   = ttl (optional, applies to the dns entries)
   #   - zone (optionel, required for pkgbuild.com machines)
   #
+  # Example:
+  # "archlinux.org" = {
+  #   server_type = "cpx11"
+  #   domain      = "@"
+  #   ttl         = 600
+  # }
   machines = {
     "archlinux.org" = {
       server_type = "cpx11"
       domain      = "@"
-      ttl         = 600
     }
     "accounts.archlinux.org" = {
       server_type = "cx11"
@@ -77,7 +82,6 @@ locals {
     "mail.archlinux.org" = {
       server_type = "cx11"
       domain      = "mail"
-      ttl         = 600
     }
     "mailman3.archlinux.org" = {
       server_type = "cx11"
@@ -98,7 +102,6 @@ locals {
     "patchwork.archlinux.org" = {
       server_type = "cx11"
       domain      = "patchwork"
-      ttl         = 600
     }
     "phrik.archlinux.org" = {
       server_type = "cx11"
@@ -119,7 +122,6 @@ locals {
     "security.archlinux.org" = {
       server_type = "cx11"
       domain      = "security"
-      ttl         = 600
     }
     "svn2gittest.archlinux.org" = {
       server_type = "cx11"
@@ -128,7 +130,6 @@ locals {
     "wiki.archlinux.org" = {
       server_type = "cpx21"
       domain      = "wiki"
-      ttl         = 600
     }
     "mirror.pkgbuild.com" = {
       server_type = "cx11"
@@ -158,11 +159,16 @@ locals {
   #   - ipv6_address (mandatory)
   #   = ttl (optional)
   #
+  # Example:
+  # apollo = {
+  #   ipv4_address = "138.201.81.199"
+  #   ipv6_address = "2a01:4f8:172:1d86::1"
+  #   ttl          = 600
+  # }
   archlinux_org_a_aaaa = {
     apollo = {
       ipv4_address = "138.201.81.199"
       ipv6_address = "2a01:4f8:172:1d86::1"
-      ttl          = 600
     }
     aur4 = {
       ipv4_address = "5.9.250.164"
@@ -183,12 +189,10 @@ locals {
     luna = {
       ipv4_address = "5.9.250.164"
       ipv6_address = "2a01:4f8:160:3033::2"
-      ttl          = 600
     }
     master-key = {
       ipv4_address = hcloud_server.machine["archlinux.org"].ipv4_address
       ipv6_address = hcloud_server.machine["archlinux.org"].ipv6_address
-      ttl          = 600
     }
     pages = {
       ipv4_address = hcloud_floating_ip.gitlab_pages.ip_address
@@ -213,7 +217,6 @@ locals {
     www = {
       ipv4_address = hcloud_server.machine["archlinux.org"].ipv4_address
       ipv6_address = hcloud_server.machine["archlinux.org"].ipv6_address
-      ttl          = 600
     }
   }
 
@@ -222,18 +225,20 @@ locals {
   #   - value (mandatory, the target for the CNAME "redirect")
   #   = ttl (optional)
   #
+  # Example:
+  # dev                      = { value = "www", ttl = 600 }
   archlinux_org_cname = {
     archive                  = { value = "gemini" }
-    dev                      = { value = "www", ttl = 600 }
+    dev                      = { value = "www" }
     g2kjxsblac7x             = { value = "gv-i5y6mnrelvpfiu.dv.googlehosted.com." }
     git                      = { value = "luna" }
     grafana                  = { value = "apollo" }
-    ipxe                     = { value = "www", ttl = 600 }
+    ipxe                     = { value = "www" }
     "luna2._domainkey.aur"   = { value = "luna2._domainkey" }
     "luna2._domainkey.lists" = { value = "luna2._domainkey" }
     mailman                  = { value = "apollo" }
-    packages                 = { value = "www", ttl = 600 }
-    planet                   = { value = "www", ttl = 600 }
+    packages                 = { value = "www" }
+    planet                   = { value = "www" }
     projects                 = { value = "luna" }
     repos                    = { value = "gemini" }
     rsync                    = { value = "gemini" }
