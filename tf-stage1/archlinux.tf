@@ -210,6 +210,10 @@ locals {
       ipv4_address = "116.203.16.252"
       ipv6_address = "2a01:4f8:c2c:474::1"
     }
+    www = {
+      ipv4_address = hcloud_server.machine["archlinux.org"].ipv4_address
+      ipv6_address = hcloud_server.machine["archlinux.org"].ipv6_address
+    }
   }
 
   # This creates archlinux.org CNAME DNS entries.
@@ -221,17 +225,17 @@ locals {
   # dev                      = { value = "www", ttl = 600 }
   archlinux_org_cname = {
     archive                  = { value = "gemini" }
-    dev                      = { value = "@" }
+    dev                      = { value = "www" }
     g2kjxsblac7x             = { value = "gv-i5y6mnrelvpfiu.dv.googlehosted.com." }
     git                      = { value = "luna" }
     grafana                  = { value = "apollo" }
-    ipxe                     = { value = "@" }
+    ipxe                     = { value = "www" }
     "luna2._domainkey.aur"   = { value = "luna2._domainkey" }
     "luna2._domainkey.lists" = { value = "luna2._domainkey" }
     mailman                  = { value = "apollo" }
-    master-key               = { value = "@" }
-    packages                 = { value = "@" }
-    planet                   = { value = "@" }
+    master-key               = { value = "www" }
+    packages                 = { value = "www" }
+    planet                   = { value = "www" }
     projects                 = { value = "luna" }
     repos                    = { value = "gemini" }
     rsync                    = { value = "gemini" }
@@ -240,7 +244,6 @@ locals {
     static                   = { value = "apollo" }
     status                   = { value = "stats.uptimerobot.com." }
     svn                      = { value = "gemini" }
-    www                      = { value = "@" }
   }
 
   # This creates pkgbuild.comA/AAAA DNS entries in addition to those already specified by the VPSes.
