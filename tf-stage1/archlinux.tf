@@ -190,6 +190,10 @@ locals {
       ipv4_address = "5.9.250.164"
       ipv6_address = "2a01:4f8:160:3033::2"
     }
+    master-key = {
+      ipv4_address = hcloud_server.machine["archlinux.org"].ipv4_address
+      ipv6_address = hcloud_server.machine["archlinux.org"].ipv6_address
+    }
     pages = {
       ipv4_address = hcloud_floating_ip.gitlab_pages.ip_address
       ipv6_address = var.gitlab_pages_ipv6
@@ -233,7 +237,6 @@ locals {
     "luna2._domainkey.aur"   = { value = "luna2._domainkey" }
     "luna2._domainkey.lists" = { value = "luna2._domainkey" }
     mailman                  = { value = "apollo" }
-    master-key               = { value = "www" }
     packages                 = { value = "www" }
     planet                   = { value = "www" }
     projects                 = { value = "luna" }
