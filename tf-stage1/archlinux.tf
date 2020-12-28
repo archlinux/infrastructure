@@ -310,8 +310,8 @@ locals {
   #
   pkgbuild_com_a_aaaa = {
     "@" = {
-      ipv4_address = "78.46.178.133"
-      ipv6_address = "2a01:4f8:c2c:51e2::1"
+      ipv4_address = hcloud_server.machine["homedir.archlinux.org"].ipv4_address
+      ipv6_address = hcloud_server.machine["homedir.archlinux.org"].ipv6_address
     }
     "america.mirror" = {
       ipv4_address = "143.244.34.62"
@@ -346,8 +346,8 @@ locals {
       ipv6_address = "2a02:6ea0:c238::2"
     }
     www = {
-      ipv4_address = "78.46.178.133"
-      ipv6_address = "2a01:4f8:c2c:51e2::1"
+      ipv4_address = hcloud_server.machine["homedir.archlinux.org"].ipv4_address
+      ipv6_address = hcloud_server.machine["homedir.archlinux.org"].ipv6_address
     }
   }
 }
