@@ -361,7 +361,7 @@
 256 MD5:2b:7f:a8:75:ef:38:e3:c3:f7:2e:ea:9e:73:fd:3e:d5 root@archlinux-packer (ED25519)
 2048 MD5:f8:a9:75:e2:99:4f:ae:2b:70:72:a2:ae:9e:fb:f1:a2 root@archlinux-packer (RSA)
 
-# svn2gittest
+# svn2gittest.archlinux.org
 1024 SHA256:R5uXRsoC0CXMxAE+dV6Ola8K1amyK84VFknjM9QgonI root@archlinux-packer (DSA)
 256 SHA256:CVc0FXXE1DY1wmwoHCseGg5TnzYOgbf6adTbgstVWx0 root@archlinux-packer (ECDSA)
 256 SHA256:kcuaxYVB/oCraE0q+ZsnUeozpVJYYDZ24tW5MEObj1E root@archlinux-packer (ED25519)
