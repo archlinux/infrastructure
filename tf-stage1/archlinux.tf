@@ -126,7 +126,7 @@ locals {
       domain      = "svn2gittest"
     }
     "wiki.archlinux.org" = {
-      server_type = "cpx11"
+      server_type = "cpx21"
       domain      = "wiki"
       ttl         = 600
     }
