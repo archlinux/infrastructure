@@ -37,7 +37,7 @@ locals {
   # Valid parameters are:
   #   - server_type (mandatory)
   #   - domain (mandatory)
-  #   = ttl (optional, applies to the dns entries)
+  #   - ttl (optional, applies to the dns entries)
   #   - zone (optionel, required for pkgbuild.com machines)
   #
   # Example:
@@ -157,7 +157,7 @@ locals {
   # Valid parameters are:
   #   - ipv4_address (mandatory)
   #   - ipv6_address (mandatory)
-  #   = ttl (optional)
+  #   - ttl (optional)
   #
   # Example:
   # apollo = {
@@ -223,7 +223,7 @@ locals {
   # This creates archlinux.org CNAME DNS entries.
   # Valid parameters are:
   #   - value (mandatory, the target for the CNAME "redirect")
-  #   = ttl (optional)
+  #   - ttl (optional)
   #
   # Example:
   # dev                      = { value = "www", ttl = 600 }
@@ -258,7 +258,7 @@ locals {
   # Valid parameters are:
   #   - ipv4_address (mandatory)
   #   - ipv6_address (mandatory)
-  #   = ttl (optional)
+  #   - ttl (optional)
   #
   pkgbuild_com_a_aaaa = {
     "*" = {
