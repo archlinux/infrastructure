@@ -261,10 +261,6 @@ locals {
   #   - ttl (optional)
   #
   pkgbuild_com_a_aaaa = {
-    "*" = {
-      ipv4_address = "78.46.178.133"
-      ipv6_address = "2a01:4f8:c2c:51e2::1"
-    }
     "@" = {
       ipv4_address = "78.46.178.133"
       ipv6_address = "2a01:4f8:c2c:51e2::1"
