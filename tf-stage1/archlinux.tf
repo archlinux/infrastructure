@@ -236,7 +236,7 @@ locals {
     ipxe                     = { value = "www" }
     "luna2._domainkey.aur"   = { value = "luna2._domainkey" }
     "luna2._domainkey.lists" = { value = "luna2._domainkey" }
-    mailman                  = { value = "apollo" }
+    mailman                  = { value = "redirect" }
     packages                 = { value = "www" }
     planet                   = { value = "www" }
     projects                 = { value = "luna" }
