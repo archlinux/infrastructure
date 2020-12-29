@@ -4,6 +4,10 @@
 #   - type: HTTP status code to use (302 = temporary redirect, 301 = permanent redirect
 #)
 redirects:
+  - mailman:
+    domain: mailman.archlinux.org
+    to: https://lists.archlinux.org$request_uri
+    type: 301
   - static.conf:
     domain: static.conf.archlinux.org
     to: https://gitlab.archlinux.org/archlinux/conf-files/-/raw/master$request_uri
