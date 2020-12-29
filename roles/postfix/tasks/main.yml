@@ -108,21 +108,8 @@
     - smtp
     - smtp-submission
     - smtps
-  when: postfix_smtpd_public and configure_firewall and inventory_hostname != "apollo.archlinux.org"
+  when: postfix_smtpd_public and configure_firewall
   tags:
     - firewall
 
 
-- name: open ipv4 firewall holes on apollo
-  ansible.posix.firewalld: permanent=true state=enabled immediate=yes
-    rich_rule="rule family=ipv4 source address={{ hostvars['mail.archlinux.org']['ipv4_address'] }} port protocol=tcp port=25 accept"
-  when: postfix_smtpd_public and configure_firewall and inventory_hostname == "apollo.archlinux.org"
-  tags:
-    - firewall
-
-- name: open ipv6 firewall holes on apollo
-  ansible.posix.firewalld: permanent=true state=enabled immediate=yes
-    rich_rule="rule family=ipv6 source address={{ hostvars['mail.archlinux.org']['ipv6_address'] }} port protocol=tcp port=25 accept"
-  when: postfix_smtpd_public and configure_firewall and inventory_hostname == "apollo.archlinux.org"
-  tags:
-    - firewall

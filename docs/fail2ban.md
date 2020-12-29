@@ -24,7 +24,7 @@ The sshd jail should be enabled for every host we have, to block brute force ssh
 
 ### postfix
 
-The postfix jail is enabled for Apollo and Orion, to block failed SMTP requests. Adding it to a host:
+The postfix jail not enabled on any server. Adding it to a host:
 
 Add `fail2ban_jails` dict with `postfix: true` to the host's `host_vars`.
 

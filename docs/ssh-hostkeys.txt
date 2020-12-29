@@ -20,17 +20,6 @@
 256 MD5:4b:0b:1c:81:27:81:7a:22:b4:48:88:75:69:a5:b4:4e root@america.mirror.pkgbuild.com (ED25519)
 3072 MD5:a2:41:dc:97:5a:ae:89:7a:4f:69:f7:ec:a0:d4:67:b6 root@america.mirror.pkgbuild.com (RSA)
 
-# apollo.archlinux.org
-1024 SHA256:WArxFzvhf5HknYxil2EQSHHRirM2cyjqbtLvhbQAYC8 root@apollo (DSA)
-256 SHA256:sYJfY17PE0kJ4K8fbkPK/XqRQjY1+g6hmIF7dvTbZoo root@apollo (ECDSA)
-256 SHA256:owwpolkJxPyUmmfJMfFeYIdDXiruwzaEw3bS+q6k97Q root@apollo (ED25519)
-2048 SHA256:JW9dUO95gxGJRTkV/V/1HtmLfLq8uztbWc5KAOg8Blc root@apollo (RSA)
-
-1024 MD5:90:46:7f:8e:1e:79:17:10:1e:32:79:a7:69:c6:4b:a4 root@apollo (DSA)
-256 MD5:4b:52:61:77:f7:f8:4e:75:ca:83:e6:ae:fc:6e:77:67 root@apollo (ECDSA)
-256 MD5:a7:84:8b:95:4f:53:ac:b6:9d:24:79:79:fc:c7:bf:1f root@apollo (ED25519)
-2048 MD5:77:b0:17:18:57:74:38:91:47:31:43:04:47:e9:9e:30 root@apollo (RSA)
-
 # archlinux.org
 1024 SHA256:7jLDIo/l9ngy+KcC2Yh2yCE+gSVix4VmZVaVTMLOiEg root@archlinux-packer (DSA)
 256 SHA256:9nc3jaxyh21w+HVT1Xo0/ujMx7/qWKguqcSiDX7jrA0 root@archlinux-packer (ECDSA)
