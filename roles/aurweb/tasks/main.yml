@@ -102,11 +102,18 @@
   become_user: "{{ aurweb_user }}"
   when: release.changed or db_created.changed
 
+- name: Check python module availability
+  command: "python3 -c 'import aurweb'"
+  ignore_errors: yes
+  register: aurweb_installed
+  tags:
+    - skip_ansible_lint
+
 - name: Install python module
   command: "python3 setup.py install --install-scripts=/usr/local/bin"
   args:
     chdir: "{{ aurweb_dir }}"
-    creates: /usr/local/bin/aurweb-*
+  when: release.changed or aurweb_installed.rc != 0
 
 - name: Generate HTML documentation
   make:
