@@ -17,12 +17,10 @@
   - mailman
   - projects (projects.archlinux.org)
 
-## apollo
+## archlinux.org
 
 ### Services
-  - wiki (wiki.archlinux.org)
-  - archweb
-  - patchwork
+  - archweb (Arch's site)
 
 ## aur.archlinux.org
 
@@ -110,6 +108,12 @@ Medium-fast-ish packet.net Arch Linux box.
 ### Services
   - GitLab runner
 
+## mail.archlinux.org
+
+### Services
+  - postfix (mail server)
+  - rspamd
+  - dovecot (imap)
 
 ## monitoring.archlinux.org
 
@@ -126,6 +130,26 @@ Hosts our gnupg open web key directory for fetching Arch Linux keyring keys over
 
 ### Services
   - WKD
+
+## patchwork.archlinux.org
+
+### Services
+  - patchwork
+
+## redirect.archlinux.org
+
+### Services
+  - Redirects (nginx redirects)
+
+## security.archlinux.org
+
+### Services
+  - security tracker
+
+## wiki.archlinux.org
+
+### Services
+  - archwiki
 
 
 ## Archive Mirrors
