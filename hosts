@@ -1,5 +1,4 @@
 [hetzner]
-apollo.archlinux.org
 luna.archlinux.org
 dragon.archlinux.org
 secure-runner1.archlinux.org
@@ -25,7 +24,6 @@ europe.mirror.pkgbuild.com
 
 [borg_clients]
 archlinux.org
-apollo.archlinux.org
 aur-dev.archlinux.org
 luna.archlinux.org
 state.archlinux.org
@@ -54,7 +52,6 @@ u236610.your-storagebox.de
 homedir.archlinux.org
 
 [mysql_servers]
-apollo.archlinux.org
 luna.archlinux.org
 bbs.archlinux.org
 bugs.archlinux.org
@@ -64,7 +61,6 @@ wiki.archlinux.org
 
 [postgresql_servers]
 archlinux.org
-apollo.archlinux.org
 state.archlinux.org
 quassel.archlinux.org
 accounts.archlinux.org
@@ -72,7 +68,6 @@ patchwork.archlinux.org
 
 [nginx]
 archlinux.org
-apollo.archlinux.org
 luna.archlinux.org
 bbs.archlinux.org
 bugs.archlinux.org
