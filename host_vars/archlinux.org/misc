@@ -1,5 +1,7 @@
 ---
 filesystem: btrfs
+fetchmail_user: "donate@archlinux.org"
+fetchmail_delivery_cmd: "/usr/local/bin/donor_import_wrapper.sh"
 
 ipv4_address: "95.217.163.246"
 ipv6_address: "2a01:4f9:c010:6b1f::1"

@@ -204,37 +204,6 @@
     - daemon reload
   when: archweb_site|bool
 
-- name: install donor_import service and timer
-  template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
-  with_items:
-    - archweb-donor_import.service
-    - archweb-donor_import.timer
-  notify:
-    - daemon reload
-  when: archweb_donor_import|bool
-
-- name: create maildir dump dir
-  file: path={{ archweb_donor_maildir }}/{{ item }} recurse=yes state=directory owner=archweb group=users mode=0755
-  with_items:
-    - cur
-    - new
-  when: archweb_donor_import|bool
-
-- name: install dump donor mail service and timer
-  template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
-  with_items:
-    - archweb-dump_donor_mail.service
-    - archweb-dump_donor_mail.timer
-  notify:
-    - daemon reload
-  when: archweb_donor_import|bool
-
-- name: install archweb donor mail dump script
-  template: src="dump-mails.sh.j2" dest="/usr/local/bin/dump-mails.sh" owner=root group=root mode=0755
-  notify:
-    - daemon reload
-  when: archweb_donor_import|bool
-
 - name: deploy archweb
   template: src=archweb.ini.j2 dest=/etc/uwsgi/vassals/archweb.ini owner=archweb group=http mode=0640
   when: archweb_site|bool
@@ -283,16 +252,11 @@
   service: name="archweb-rebuilderd.timer" enabled=yes state=started
   when: archweb_site
 
-- name: start and enable archweb donor_import and archweb-dump_donor_mail timer
-  systemd:
-    name: "{{ item }}"
-    enabled: yes
-    state: started
-    daemon_reload: yes
-  with_items:
-    - archweb-donor_import.timer
-    - archweb-dump_donor_mail.timer
-  when: archweb_donor_import|bool
+- name: install donation import wrapper script
+  template: src=donor_import_wrapper.sh.j2 dest=/usr/local/bin/donor_import_wrapper.sh owner=root group=root mode=0755
+
+- name: install sudoer rights for fetchmail to call archweb django scripts
+  template: src=sudoers-fetchmail-archweb.j2 dest=/etc/sudoers.d/fetchmail-archweb owner=root group=root mode=0440
 
 - name: create retro dir
   file: state=directory owner=archweb group=archweb mode=0755 path="{{ archweb_retro_dir }}"
