@@ -160,16 +160,12 @@ locals {
   #   - ttl (optional)
   #
   # Example:
-  # apollo = {
-  #   ipv4_address = "138.201.81.199"
-  #   ipv6_address = "2a01:4f8:172:1d86::1"
+  # gemini = {
+  #   ipv4_address = "49.12.124.107"
+  #   ipv6_address = "2a01:4f8:242:5614::2"
   #   ttl          = 600
   # }
   archlinux_org_a_aaaa = {
-    apollo = {
-      ipv4_address = "138.201.81.199"
-      ipv6_address = "2a01:4f8:172:1d86::1"
-    }
     aur4 = {
       ipv4_address = "5.9.250.164"
       ipv6_address = "2a01:4f8:160:3033::2"
@@ -232,7 +228,6 @@ locals {
     dev                      = { value = "www" }
     g2kjxsblac7x             = { value = "gv-i5y6mnrelvpfiu.dv.googlehosted.com." }
     git                      = { value = "luna" }
-    grafana                  = { value = "apollo" }
     ipxe                     = { value = "www" }
     "luna2._domainkey.aur"   = { value = "luna2._domainkey" }
     "luna2._domainkey.lists" = { value = "luna2._domainkey" }
@@ -244,7 +239,6 @@ locals {
     rsync                    = { value = "gemini" }
     sources                  = { value = "gemini" }
     "static.conf"            = { value = "redirect" }
-    static                   = { value = "apollo" }
     status                   = { value = "stats.uptimerobot.com." }
     svn                      = { value = "gemini" }
   }
@@ -404,14 +398,6 @@ resource "hetznerdns_record" "archlinux_org_origin_ns1" {
 #   value = "ns1.first-ns.de. ibiru.archlinux.org. 2020072502 7200 900 1209600 86400"
 #   type = "SOA"
 # }
-
-resource "hetznerdns_record" "archlinux_org_origin_apollo_domainkey_txt" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "apollo._domainkey"
-  ttl     = 600
-  value   = "\"v=DKIM1; k=rsa; s=email; \" \"p=MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvZIf8SbjC53RDCbMjTEpo0FCuMSShlKWdwWjY1J+RpT3CL/21z4nXqVBYF1orkUScH8Nlabocraqk8lmpNBlKCUV77lk9mRsLkWhg+XjhvQXL1xfH8zAg1CntEZuaIMLUQ+5Gkw6BlO1qDRkmXS9UtV8Jt1rhjRtSrgN5lhztOCbQLRAtzKty/nMeClqsfT3nL2hbDeh+b/rYc\" \"l2veZAqiGcR2/0bnKlt+Nb5lOBY3oZiYLmZ5g+l9UXVjGUq9jGAooIWpQvuRPmin3RX31kXfr1A+mDBEexiOL1dDST2Zx7i9puXbqYH0u0IxBpweHCO5UqWx52mdXBuhs+DCo/JoZAHU/6eRzK+Sps50LgLFSzJJNfGXk5PUKdww2GHbkK3mCYfoFCpB0SADzl42+1w6YZk1yXoPdOHtChfQpCgjtddf1W8Q09pYO1/bn4l0erdFQsWb1K\" \"4wEVOCn+hHWbV42V+J3TyGxQ4AM8KQ1OPvUEabyTyqcO4evBaH7/S2wA91Z9QDjTbKmlNovs5zoxuOM/mPGPUuQMvhjoAP+rg4AwJ3Xwd3GgUcqQflcokayUYdp7F3aKp1NWAR9ibseU/XBYsSF8Ucjqzf4DJFUfrgjHUr97st7g4HUCyXrQO4tyE0ytiX8OFjjIszWLmF+B7Vup9O7k+dNz2Vj2Vyzkq1UCAwEAAQ==\" "
-  type    = "TXT"
-}
 
 resource "hetznerdns_record" "archlinux_org_lists_mx" {
   zone_id = hetznerdns_zone.archlinux.id
