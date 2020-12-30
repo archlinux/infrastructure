@@ -170,13 +170,13 @@ locals {
     "_smtp._tls.master-key" = { value = "v=TLSRPTv1;rua=mailto:postmaster@archlinux.org" }
     "_smtp._tls.lists"      = { value = "v=TLSRPTv1;rua=mailto:postmaster@archlinux.org" }
     # Generated with: date +%s
-    "_mta-sts" = { value = "v=STSv1; id=1608210175" }
-    "@"        = { value = "v=spf1 ip4:95.216.189.61 ip6:2a01:4f9:c010:3052::1 ~all", ttl = 600 }
-    mail       = { value = "v=spf1 ip4:95.216.189.61 ip6:2a01:4f9:c010:3052::1 ~all", ttl = 600 }
-    aur        = { value = "v=spf1 ip4:95.216.189.61 ip6:2a01:4f9:c010:3052::1 ~all", ttl = 600 }
-    master-key = { value = "v=spf1 ip4:95.216.189.61 ip6:2a01:4f9:c010:3052::1 ~all", ttl = 600 }
-    lists      = { value = "v=spf1 ip4:5.9.250.164 ip6:2a01:4f8:160:3033::2 ~all" }
-    luna       = { value = "v=spf1 ip4:5.9.250.164 ip6:2a01:4f8:160:3033::2 ~all" }
+    "_mta-sts"   = { value = "v=STSv1; id=1608210175" }
+    "@"          = { value = "v=spf1 ip4:${hcloud_server.machine["mail.archlinux.org"].ipv4_address} ip6:${hcloud_server.machine["mail.archlinux.org"].ipv6_address} ~all", ttl = 600 }
+    "mail"       = { value = "v=spf1 ip4:${hcloud_server.machine["mail.archlinux.org"].ipv4_address} ip6:${hcloud_server.machine["mail.archlinux.org"].ipv6_address} ~all", ttl = 600 }
+    "aur"        = { value = "v=spf1 ip4:${hcloud_server.machine["mail.archlinux.org"].ipv4_address} ip6:${hcloud_server.machine["mail.archlinux.org"].ipv6_address} ~all", ttl = 600 }
+    "master-key" = { value = "v=spf1 ip4:${hcloud_server.machine["mail.archlinux.org"].ipv4_address} ip6:${hcloud_server.machine["mail.archlinux.org"].ipv6_address} ~all", ttl = 600 }
+    lists        = { value = "v=spf1 ip4:5.9.250.164 ip6:2a01:4f8:160:3033::2 ~all" }
+    luna         = { value = "v=spf1 ip4:5.9.250.164 ip6:2a01:4f8:160:3033::2 ~all" }
   }
 
   # This creates archlinux.org MX DNS entries
