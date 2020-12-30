@@ -101,7 +101,7 @@
   template: src="patchwork-parsemail-wrapper.sh.j2" dest="/usr/local/bin/patchwork-parsemail-wrapper.sh" owner=root group=root mode=0755
 
 - name: install sudoer rights for fetchmail to call patchwork
-  copy: src=fetchmail-patchwork dest=/etc/sudoers.d/fetchmail-patchwork owner=root group=root mode=0440
+  template: src=sudoers-fetchmail-patchwork.j2 dest=/etc/sudoers.d/fetchmail-patchwork owner=root group=root mode=0440
 
 - name: install patchwork memcached service
   template: src="patchwork-memcached.service.j2" dest="/etc/systemd/system/patchwork-memcached.service" owner=root group=root mode=0644

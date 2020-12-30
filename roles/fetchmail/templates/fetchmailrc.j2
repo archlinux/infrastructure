@@ -8,6 +8,6 @@ poll mail.archlinux.org
 bad-header accept
 proto imap
 user {{ fetchmail_user }}
-password {{ postfix_relay_password }}
+password {{ fetchmail_password }}
 options idle sslcertck ssl sslproto "TLS1.2+" limitflush limit 25000000 fetchall
 mda "{{ fetchmail_delivery_cmd }}"
