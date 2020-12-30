@@ -4,7 +4,7 @@ groups:
   rules:
 
   - alert: HostHighCpuLoad
-    expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle",instance!~"dragon.archlinux.org"}[5m])) * 100) > 80
+    expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle",instance!~"dragon.archlinux.org",instance!~"repro1.pkgbuild.com",instance!~"repro2.pkgbuild.com"}[5m])) * 100) > 80
     for: 5m
     labels:
       severity: warning
@@ -200,18 +200,6 @@ groups:
     annotations:
       summary: "Prometheus TSDB WAL truncations failed (instance {{ $labels.instance }})"
       description: "Prometheus encountered {{ $value }} TSDB WAL truncation failures\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
-
-- name: arch
-  interval: 60s
-  rules:
-  - alert: pacman_security_updates_pending
-    expr: pacman_security_updates_pending > 0
-    for: 1m
-    labels:
-      severity: warning
-    annotations:
-      description: 'host {{ $labels.instance }} has a vulernable but update-able package'
-      summary: '{{ $labels.instance }} has {{ $value }} vulnerable packages'
 
   - alert: pacman_updates_pending
     expr: pacman_updates_pending > 50

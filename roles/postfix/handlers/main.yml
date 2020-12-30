@@ -18,7 +18,6 @@
     - access_recipient
     - transport
     - relocated
-    - relay_transport_map
     - domains
     - mailman_compat
     - msa_header_checks

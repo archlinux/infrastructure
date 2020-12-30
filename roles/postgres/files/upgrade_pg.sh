@@ -5,7 +5,7 @@ set -e
 TO_VERSION=$(pacman -Q postgresql | grep -Po '(?<=postgresql )[0-9]+\.[0-9]')
 
 to_major=${TO_VERSION%%.*}
-if (( $to_major != 12 )); then
+if (( $to_major != 13 )); then
 	# NOTE: When this happens you should check the changelog and add any
 	# necessary changes here. Then bump the version check.
 	echo "ERROR: major upgrade detected, aborting..."
@@ -30,6 +30,13 @@ if [[ -d /var/lib/postgres/data-$FROM_VERSION ]]; then
 	exit 3
 fi
 
+# mask postgresql.service to make sure that other services with
+# Wants=postgresql.service and Restart=on-failure will not start
+# it again during the upgrade
+systemctl mask postgresql.service
+systemctl daemon-reload
+systemctl stop postgresql.service
+
 pacman -S --needed postgresql-old-upgrade
 chown postgres:postgres /var/lib/postgres/
 su - postgres -c "mv /var/lib/postgres/data /var/lib/postgres/data-$FROM_VERSION"
@@ -38,14 +45,19 @@ su - postgres -c 'chattr -f +C /var/lib/postgres/data' || :
 su - postgres -c 'initdb --locale en_US.UTF-8 -E UTF8 -D /var/lib/postgres/data'
 vimdiff /var/lib/postgres/{data,data-$FROM_VERSION}/pg_hba.conf
 vimdiff /var/lib/postgres/{data,data-$FROM_VERSION}/postgresql.conf
+
+# copy existing SSL certs from data-$FROM_VERSION to data
 for f in {fullchain,chain,privkey}.pem; do
-	[[ -e $f ]] || continue
-	cp -avx /var/lib/postgres/data-$FROM_VERSION/$f /var/lib/postgres/data/$f
+	if [[ -e /var/lib/postgres/data-$FROM_VERSION/$f ]]; then
+		cp -avx /var/lib/postgres/{data-$FROM_VERSION,data}/$f
+	fi
 done
 
-systemctl stop postgresql.service
 su - postgres -c "pg_upgrade -b /opt/pgsql-$FROM_VERSION/bin/ -B /usr/bin/ \
 	-d /var/lib/postgres/data-$FROM_VERSION -D /var/lib/postgres/data"
+
+# unmask and start postgresql.service
+systemctl unmask postgresql.service
 systemctl daemon-reload
 systemctl start postgresql.service
 

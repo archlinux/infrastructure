@@ -76,10 +76,10 @@ resource "keycloak_realm" "archlinux" {
   smtp_server {
     host              = "mail.archlinux.org"
     from              = "accounts@archlinux.org"
-    port              = "587"
+    port              = "465"
     from_display_name = "Arch Linux Accounts"
-    ssl               = false
-    starttls          = true
+    ssl               = true
+    starttls          = false
 
     auth {
       username = data.external.vault_keycloak.result.vault_keycloak_smtp_user
@@ -415,7 +415,8 @@ resource "keycloak_group_roles" "staff" {
   realm_id = "archlinux"
   group_id = keycloak_group.staff.id
   role_ids = [
-    keycloak_role.staff.id
+    keycloak_role.staff.id,
+    keycloak_role.grafana_archlinux_staff.id
   ]
 }
 
@@ -760,4 +761,27 @@ resource "keycloak_openid_user_realm_role_protocol_mapper" "user_realm_role_mapp
   multivalued         = true
   add_to_id_token     = false
   add_to_access_token = false
+}
+
+// All of the below is to restrict access to Grafana to members in the Arch Linux Staff group.
+resource "keycloak_role" "grafana_archlinux_staff" {
+  realm_id    = "archlinux"
+  client_id   = keycloak_openid_client.grafana_openid_client.id
+  name        = "Staff"
+  description = "Arch Linux Staff Grafana"
+}
+
+resource "keycloak_generic_client_role_mapper" "grafana_archlinux_staff_to_email" {
+  realm_id        = "archlinux"
+  role_id         = keycloak_role.grafana_archlinux_staff.id
+  client_scope_id = keycloak_openid_client_scope.email.id
+}
+
+// This needs to be imported from the default client scopes created by Keycloak.
+resource "keycloak_openid_client_scope" "email" {
+  realm_id               = "archlinux"
+  name                   = "email"
+  description            = "OpenID Connect built-in scope: email"
+  include_in_token_scope = true
+  consent_screen_text    = "$${emailScopeConsentText}"
 }

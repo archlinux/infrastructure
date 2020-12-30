@@ -9,6 +9,9 @@ Gateway={{ ipv4_gateway }}
 {% if ipv6_gateway is defined %}
 Gateway={{ ipv6_gateway }}
 {% endif %}
+{% if ipv6_ignore_ra|default(false) is true %}
+IPv6AcceptRA=false
+{% endif %}
 Domains=archlinux.org.
 
 [Address]
@@ -20,4 +23,9 @@ Peer={{ ipv4_gateway }}{{ ipv4_netmask}}
 {% if ipv6_address is defined %}
 [Address]
 Address={{ ipv6_address }}{{ ipv6_netmask }}
+{% endif %}
+
+{% if not ipv6_gateway.startswith("fe80") %}
+[Route]
+Destination={{ ipv6_gateway }}
 {% endif %}

@@ -83,5 +83,3 @@ if is_btrfs "$src"; then
     done
     rmdir "$backup_mountdir"
 fi
-
-/usr/bin/vendor_perl/borg-restore.pl --update-cache

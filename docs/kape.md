@@ -18,4 +18,4 @@ A runner is setup on a 2xE5-2620v4 -  64GB - 2x 1TB SSD as runner1.archlinux.org
 
 ### Rebuilderd worker
 
-A rebuilderd worker is setup on a EPYC - 256GB - 2x 500GB SSD as repro1.pkgbuild.com
+A rebuilderd worker is setup on a EPYC - 256GB - 2x 500GB SSD as repro2.pkgbuild.com

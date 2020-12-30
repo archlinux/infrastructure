@@ -14,6 +14,7 @@
     state: present
     name:
       - git
+      - make
       - python
       - python-sqlalchemy
       - python-sqlalchemy-continuum
@@ -34,7 +35,7 @@
   user: name=security shell=/bin/false home="{{ security_tracker_dir }}" createhome=no
 
 - name: fix home permissions
-  file: state=directory mode=0750 owner=security group=security path="{{ security_tracker_dir }}"
+  file: state=directory mode=0750 owner=security group=http path="{{ security_tracker_dir }}"
 
 - name: copy security-tracker units
   copy: src="{{ item }}" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
@@ -69,6 +70,9 @@
   become: true
   become_user: security
   command: /usr/bin/make chdir="{{ security_tracker_dir }}" creates=*.db
+
+- name: restrict database permissions
+  file: mode=0640 owner=security group=security path="{{ security_tracker_dir }}/tracker.db"
 
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest="{{ security_tracker_nginx_conf }}" owner=root group=root mode=644

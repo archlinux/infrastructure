@@ -1,0 +1,176 @@
+upstream archweb {
+    server unix:///run/uwsgi/archweb.sock;
+}
+
+{% if service_alternate_domains %}
+{% for domain in service_alternate_domains %}
+
+server {
+    listen       80;
+    listen       [::]:80;
+    server_name  {{ domain }};
+
+    access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log reduced;
+    error_log    {{ maintenance_logs_dir }}/{{ service_domain }}-error.log;
+
+    include snippets/letsencrypt.conf;
+
+{% if domain == archweb_network_check_domain %}
+    location /check_network_status.txt {
+        access_log off;
+        add_header Cache-Control "max-age=0, must-revalidate";
+        return 200 'NetworkManager is online';
+    }
+{% endif %}
+    location / {
+        access_log off;
+        return 301 https://$server_name$request_uri;
+    }
+}
+
+server {
+    listen       443 ssl http2;
+    listen       [::]:443 ssl http2;
+    server_name  {{ domain }};
+
+    access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log reduced;
+    error_log    {{ maintenance_logs_dir }}/{{ service_domain }}-error.log;
+
+    ssl_certificate      /etc/letsencrypt/live/{{ service_domain }}/fullchain.pem;
+    ssl_certificate_key  /etc/letsencrypt/live/{{ service_domain }}/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/{{ service_domain }}/chain.pem;
+
+    location / {
+        access_log off;
+        return 301 https://{{ service_domain }};
+    }
+}
+{% endfor %}
+
+server {
+{% else %}
+
+server {
+{% endif %}
+    listen       80;
+    listen       [::]:80;
+    server_name  {{ service_domain }};
+
+    access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log reduced;
+    error_log    {{ maintenance_logs_dir }}/{{ service_domain }}-error.log;
+
+    include snippets/letsencrypt.conf;
+
+    location /check_network_status.txt {
+        access_log off;
+        add_header Cache-Control "max-age=0, must-revalidate";
+        return 200 'NetworkManager is online';
+    }
+
+    location / {
+        access_log off;
+        return 301 https://$server_name$request_uri;
+    }
+}
+
+server {
+    listen       443 ssl http2;
+    listen       [::]:443 ssl http2;
+    server_name  {{ service_domain }};
+
+    access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log reduced;
+    error_log    {{ maintenance_logs_dir }}/{{ service_domain }}-error.log;
+
+    ssl_certificate      /etc/letsencrypt/live/{{ service_domain }}/fullchain.pem;
+    ssl_certificate_key  /etc/letsencrypt/live/{{ service_domain }}/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/{{ service_domain }}/chain.pem;
+
+    error_page 503 /503.html;
+
+    location /.well-known/matrix/server {
+        add_header Content-Type application/json;
+        return 200 '{"m.server": "{{ matrix_domain }}:443"}';
+    }
+
+    location /.well-known/matrix/client {
+        add_header Content-Type application/json;
+        add_header Access-Control-Allow-Origin *;
+        return 200 '{"m.homeserver": {"base_url": "https://{{ matrix_domain }}"}, "m.identity_server": {"base_url": "https://matrix.org"} }';
+    }
+
+    location /robots.txt {
+        alias {{ archweb_dir }}/archlinux.org/robots.txt;
+    }
+
+    location /humans.txt {
+        alias {{ archweb_dir }}/archlinux.org/humans.txt;
+    }
+
+    location /google7827eadf026b4a87.html {
+        alias {{ archweb_dir }}/archlinux.org/google7827eadf026b4a87.html;
+    }
+
+    location /BingSiteAuth.xml {
+        alias {{ archweb_dir }}/archlinux.org/BingSiteAuth.xml;
+    }
+
+    location /favicon.ico {
+        alias {{ archweb_dir }}/collected_static/favicon.ico;
+    }
+
+    location /pacman {
+        alias {{ archweb_dir }}/archlinux.org/pacman/;
+    }
+
+    location /netcfg {
+        alias {{ archweb_dir }}/archlinux.org/netcfg/;
+    }
+
+    location /logos {
+        alias {{ archweb_dir }}/archlinux.org/logos/;
+    }
+
+    location ~ ^/iso/(.*\.(iso|img|tar\.gz|sfs)$) {
+        deny all;
+    }
+
+    location /iso {
+        alias {{ archweb_rsync_iso_dir }};
+    }
+
+    # Cache django's css, js and png files.
+    location /static {
+        expires 30d;
+        add_header Pragma public;
+        add_header Cache-Control "public";
+        alias {{ archweb_dir }}/collected_static;
+    }
+
+    location /img {
+        alias {{ archweb_dir }}/media/img;
+    }
+
+    location /retro {
+        alias {{ archweb_retro_dir }};
+    }
+
+    if ($remote_addr = {{ maintenance_remote_machine }}) {
+        set $maintenance_remote_machine true;
+    }
+
+    location / {
+        include uwsgi_params;
+
+        if ($maintenance_remote_machine = true) {
+            access_log   /var/log/nginx/{{ archweb_domain }}/access.log main;
+            uwsgi_pass archweb;
+            break;
+        }
+
+        return 503;
+    }
+
+    location = /503.html {
+        root {{ maintenance_http_dir }}/{{ service_domain }};
+    }
+}

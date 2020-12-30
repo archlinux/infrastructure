@@ -3,8 +3,12 @@ hostname: "runner1.archlinux.org"
 ipv4_address: "84.17.49.250"
 ipv4_netmask: "/24"
 ipv4_gateway: "84.17.49.254"
+ipv6_address: "2a02:6ea0:c719::2"
+ipv6_netmask: "/64"
+ipv6_gateway: "2a02:6ea0:c719::1337"
+ipv6_ignore_ra: true
 filesystem: "btrfs"
-network_interface: "en*"
+network_interface: "ens1f1"
 system_disks:
   - /dev/sda
   - /dev/sdb

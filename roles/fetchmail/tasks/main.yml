@@ -1,0 +1,12 @@
+---
+
+- name: install fetchmail
+  pacman: name=fetchmail state=present
+
+- name: template fetchmail config
+  template: src=fetchmailrc.j2 dest=/etc/fetchmailrc owner=fetchmail group=nobody mode=600
+  notify:
+    - restart fetchmail
+
+- name: start and enable fetchmail
+  service: name=fetchmail enabled=yes state=started

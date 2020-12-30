@@ -8,6 +8,8 @@
     - { role: root_ssh }
     - { role: borg_client, tags: ['borg'] }
     - { role: certbot }
+    - { role: nginx }
+    - { role: mta_sts }
     - { role: postfix, postfix_server: true, postfix_smtpd_public: true, tags: ['mail'] }
     - { role: dovecot }
     - { role: rspamd, tags: ["mail"] }

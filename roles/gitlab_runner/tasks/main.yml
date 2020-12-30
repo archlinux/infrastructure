@@ -7,12 +7,6 @@
 - name: start docker
   systemd: name=docker enabled=yes state=started daemon_reload=yes
 
-- name: make docker0 interface trusted
-  ansible.posix.firewalld: interface=docker0 zone=trusted permanent=true state=enabled immediate=yes
-  when: configure_firewall
-  tags:
-    - firewall
-
 - name: configure Docker daemon for IPv6
   copy: src=daemon.json dest=/etc/docker/daemon.json owner=root group=root mode=0644
   notify: restart docker

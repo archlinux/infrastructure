@@ -24,7 +24,7 @@ hosts deny = *
 [archive]
 	path = /srv/archive
 	comment = archive
-	hosts allow = {{ groups['archive_mirrors'] | map('extract', hostvars, ['ipv4_address']) | join(' ') }}
+	hosts allow = {{ groups['archive_mirrors'] | map('extract', hostvars, ['ipv4_address']) | join(' ') }} {{ groups['archive_mirrors'] | map('extract', hostvars, ['ipv6_address']) | join(' ') }}
 {% endif %}
 
 # Just the release/stable iso/packages (for most mirrors)
@@ -75,7 +75,7 @@ hosts deny = *
 [kitchensink]
 	path = /srv/ftp
 	comment = ftp area (everything, including very old versions)
-	hosts allow = {{ hostvars['apollo.archlinux.org']['ipv4_address'] }} {{ hostvars['apollo.archlinux.org']['ipv6_address'] }}
+	hosts allow = {{ hostvars['archlinux.org']['ipv4_address'] }} {{ hostvars['archlinux.org']['ipv6_address'] }}
 
 [kitchensink_tier1]
 	path = /srv/ftp

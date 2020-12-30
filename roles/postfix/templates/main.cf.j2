@@ -35,7 +35,11 @@ smtpd_tls_mandatory_ciphers=high
 tls_high_cipherlist=EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHAA
 
 smtp_tls_loglevel = 1
+{% if postfix_relayhost %}
+smtp_tls_security_level = encrypt
+{% else %}
 smtp_tls_security_level = may
+{% endif %}
 
 smtpd_tls_session_cache_database = btree:/var/lib/postfix/smtpd_scache
 smtp_tls_session_cache_database = btree:/var/lib/postfix/smtp_scache
@@ -139,7 +143,8 @@ smtpd_reject_footer = For assistance contact <postmaster@archlinux.org>. Please 
 {% if postfix_relayhost %}
 # relay all outbound mail via {{postfix_relayhost}}
 # the square brackets prevents postfix from trying to lookup mx records
-relayhost = [{{postfix_relayhost}}]:587
+relayhost = [{{postfix_relayhost}}]:465
+smtp_tls_wrappermode = yes
 smtp_sasl_auth_enable = yes
 smtp_sasl_password_maps = ${indexed}/relay_passwords
 # allow plaintext authentication only over tls secured connections
@@ -200,7 +205,6 @@ local_recipient_maps =
   ${indexed}/users
   $alias_maps
   ${indexed}/mailman_compat
-  ${indexed}/relay_transport_map
   pcre:${config_directory}/transport.pcre
 relocated_maps = ${indexed}/relocated
 {% endif %}
@@ -212,7 +216,6 @@ relay_domains =
 
 transport_maps =
   ${indexed}/transport
-  ${indexed}/relay_transport_map
   pcre:${config_directory}/transport.pcre
   #${indexed}/temporary_mailman_maps
 

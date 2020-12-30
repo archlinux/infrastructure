@@ -38,7 +38,7 @@
 - name: start and enable btrfs scrub timer
   service: name=btrfs-scrub@{{ '-' if (item.mount | length == 1) else (item.mount.split("/", 1)[1] | replace("/", "-")) }}.timer enabled=yes state=started
   loop: "{{ ansible_mounts }}"
-  when: item.fstype == "btrfs" and item.mount != "/var/lib/docker/btrfs"
+  when: "item.fstype == 'btrfs' and item.mount != '/var/lib/docker/btrfs' and 'backup' not in item.mount"
 
 - name: install mlocate
   pacman: name=mlocate state=present

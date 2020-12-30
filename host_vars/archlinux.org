@@ -1,0 +1,10 @@
+---
+filesystem: btrfs
+
+ipv4_address: "95.217.163.246"
+ipv6_address: "2a01:4f9:c010:6b1f::1"
+
+fail2ban_jails:
+  sshd: true
+  postfix: false
+  dovecot: false

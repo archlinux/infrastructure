@@ -437,6 +437,11 @@ arch_users:
     ssh_key: raster.pub
     groups:
       - tu
+  rgacogne:
+    name: "Remi Rgacogne"
+    ssh_key: rgacogne.pub
+    groups:
+      - tu
   spupykin:
     name: "Sergej Pupykin"
     ssh_key: spupykin.pub
@@ -475,10 +480,5 @@ arch_users:
   yan12125:
     name: "Chih-Hsuan Yen"
     ssh_key: yan12125.pub
-    groups:
-      - tu
-  zorun:
-    name: "Baptiste Jonglez"
-    ssh_key: zorun.pub
     groups:
       - tu

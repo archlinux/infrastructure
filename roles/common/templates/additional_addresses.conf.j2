@@ -1,0 +1,7 @@
+# Additional addresses to add to the default interface
+
+{% for address in additional_addresses %}
+[Address]
+Address={{ address }}
+
+{% endfor %}
