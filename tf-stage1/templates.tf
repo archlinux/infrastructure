@@ -44,7 +44,7 @@ resource "hetznerdns_record" "archlinux_org_txt" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = each.key
   ttl     = lookup(local.archlinux_org_txt[each.key], "ttl", null)
-  value   = "\"${each.value.value}\""
+  value   = "\"${each.value.value}\" "
   type    = "TXT"
 }
 

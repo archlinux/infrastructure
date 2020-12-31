@@ -170,13 +170,13 @@ locals {
     "_smtp._tls.master-key" = { value = "v=TLSRPTv1;rua=mailto:postmaster@archlinux.org" }
     "_smtp._tls.lists"      = { value = "v=TLSRPTv1;rua=mailto:postmaster@archlinux.org" }
     # Generated with: date +%s
-    "_mta-sts"   = { value = "v=STSv1; id=1608210175" }
+    "_mta-sts"   = { ttl = 600, value = "v=STSv1; id=1608210175" }
     "@"          = { value = "v=spf1 ip4:${hcloud_server.machine["mail.archlinux.org"].ipv4_address} ip6:${hcloud_server.machine["mail.archlinux.org"].ipv6_address} ~all", ttl = 600 }
     "mail"       = { value = "v=spf1 ip4:${hcloud_server.machine["mail.archlinux.org"].ipv4_address} ip6:${hcloud_server.machine["mail.archlinux.org"].ipv6_address} ~all", ttl = 600 }
     "aur"        = { value = "v=spf1 ip4:${hcloud_server.machine["mail.archlinux.org"].ipv4_address} ip6:${hcloud_server.machine["mail.archlinux.org"].ipv6_address} ~all", ttl = 600 }
     "master-key" = { value = "v=spf1 ip4:${hcloud_server.machine["mail.archlinux.org"].ipv4_address} ip6:${hcloud_server.machine["mail.archlinux.org"].ipv6_address} ~all", ttl = 600 }
-    lists        = { value = "v=spf1 ip4:5.9.250.164 ip6:2a01:4f8:160:3033::2 ~all" }
-    luna         = { value = "v=spf1 ip4:5.9.250.164 ip6:2a01:4f8:160:3033::2 ~all" }
+    lists        = { ttl = 600, value = "v=spf1 ip4:5.9.250.164 ip6:2a01:4f8:160:3033::2 ~all" }
+    luna         = { ttl = 600, value = "v=spf1 ip4:5.9.250.164 ip6:2a01:4f8:160:3033::2 ~all" }
   }
 
   # This creates archlinux.org MX DNS entries
@@ -290,11 +290,11 @@ locals {
     # MTA-STS
     mta-sts               = { value = "mail" }
     "mta-sts.aur"         = { value = "mail" }
-    "_mta-sts.aur"        = { value = "_mta-sts" }
+    "_mta-sts.aur"        = { value = "_mta-sts", ttl = 600 }
     "mta-sts.master-key"  = { value = "mail" }
-    "_mta-sts.master-key" = { value = "_mta-sts" }
+    "_mta-sts.master-key" = { value = "_mta-sts", ttl = 600 }
     "mta-sts.lists"       = { value = "mail" }
-    "_mta-sts.lists"      = { value = "_mta-sts" }
+    "_mta-sts.lists"      = { value = "_mta-sts", ttl = 600 }
   }
 
   # This creates pkgbuild.comA/AAAA DNS entries in addition to those already specified by the VPSes.
