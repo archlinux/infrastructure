@@ -38,6 +38,26 @@ resource "hetznerdns_record" "pkgbuild_org_aaaa" {
   type    = "AAAA"
 }
 
+resource "hetznerdns_record" "archlinux_org_txt" {
+  for_each = local.archlinux_org_txt
+
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = each.key
+  ttl     = lookup(local.archlinux_org_txt[each.key], "ttl", null)
+  value   = "\"${each.value.value}\""
+  type    = "TXT"
+}
+
+resource "hetznerdns_record" "archlinux_org_mx" {
+  for_each = local.archlinux_org_mx
+
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = each.key
+  ttl     = lookup(local.archlinux_org_mx[each.key], "ttl", null)
+  value   = "10 ${each.value.mx}"
+  type    = "MX"
+}
+
 resource "hetznerdns_record" "archlinux_org_a" {
   for_each = local.archlinux_org_a_aaaa
 
