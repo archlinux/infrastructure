@@ -2,14 +2,47 @@ monitoring_domain: monitoring.archlinux.org
 gitlab_runner_exporter_port: '9252'
 prometheus_mysqld_exporter_port: '9104'
 
+# for d in $(curl -sf "https://crt.sh/?q=archlinux.org&output=json" "https://crt.sh/?q=pkgbuild.com&output=json" | jq -r ".[].name_value" | sort -u); do if curl -o /dev/null -sS "https://$d"; then echo $d; fi; done | grep -v "\@" | sort | sed "s/^/  - https:\/\//"
 blackbox_targets:
+  - https://accounts.archlinux.org
+  - https://america.archive.pkgbuild.com
+  - https://archive.archlinux.org
   - https://archlinux.org
-  - https://wiki.archlinux.org
-  - https://gitlab.archlinux.org
+  - https://asia.archive.pkgbuild.com
+  - https://aur.archlinux.org
+  - https://aur-dev.archlinux.org
   - https://bbs.archlinux.org
   - https://bugs.archlinux.org
-  - https://aur.archlinux.org
-  - https://archive.archlinux.org
-  - https://mirror.pkgbuild.com
-  - https://pkgbuild.com
+  - https://conf.archlinux.org
+  - https://dev.archlinux.org
+  - https://europe.archive.pkgbuild.com
+  - https://git.archlinux.org
+  - https://gitlab.archlinux.org
+  - https://ipxe.archlinux.org
   - https://lists.archlinux.org
+  - https://mailman3.archlinux.org
+  - https://mailman.archlinux.org
+  - https://master-key.archlinux.org
+  - https://matrix.archlinux.org
+  - https://mirror.pkgbuild.com
+  - https://monitoring.archlinux.org
+  - https://mta-sts.archlinux.org
+  - https://mta-sts.aur.archlinux.org
+  - https://mta-sts.lists.archlinux.org
+  - https://mta-sts.master-key.archlinux.org
+  - https://openpgpkey.archlinux.org
+  - https://packages.archlinux.org
+  - https://patchwork.archlinux.org
+  - https://pkgbuild.com
+  - https://planet.archlinux.org
+  - https://projects.archlinux.org
+  - https://repos.archlinux.org
+  - https://reproducible.archlinux.org
+  - https://security.archlinux.org
+  - https://sources.archlinux.org
+  - https://static.conf.archlinux.org
+  - https://status.archlinux.org
+  - https://whatcanwedofor.archlinux.org
+  - https://wiki.archlinux.org
+  - https://www.archlinux.org
+  - https://www.pkgbuild.com
