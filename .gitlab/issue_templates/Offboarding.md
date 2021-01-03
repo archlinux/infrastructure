@@ -8,6 +8,8 @@ This template should be used for offboarding Arch Linux team members.
 
 - **Team member username**:
 - **Currently held roles**: <!-- Add known roles here like TU, DevOps, etc -->
+- **Removal request**: <!-- Add link to relevant mailing list mail -->
+  - **Voting result**: <!-- Add link to relevant mailing list mail -->
 
 ## All roles checklist
 

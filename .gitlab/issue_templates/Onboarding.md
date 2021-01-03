@@ -8,6 +8,8 @@ It can also be used as a reference for adding new roles to an existing team memb
 ## Details
 
 - **Team member username**:
+- **Application**: <!-- Add link to relevant mailing list mail -->
+  - **Voting result**: <!-- Add link to relevant mailing list mail -->
 
 ## All roles checklist
 
