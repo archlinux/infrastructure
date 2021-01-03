@@ -131,6 +131,11 @@ wiki.archlinux.org
 patchwork.archlinux.org
 security.archlinux.org
 redirect.archlinux.org
+asia.mirror.pkgbuild.com
+america.mirror.pkgbuild.com
+europe.mirror.pkgbuild.com
+repro2.pkgbuild.com
+runner1.archlinux.org
 
 [kape_servers]
 asia.mirror.pkgbuild.com
