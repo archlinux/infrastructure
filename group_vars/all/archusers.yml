@@ -362,6 +362,11 @@ arch_users:
     ssh_key: nicohood.pub
     groups:
       - tu
+  orhun:
+    name: "Orhun Parmaksiz"
+    ssh_key: orhun.pub
+    groups:
+      - tu
   pierre:
     name: "Pierre Schmitz"
     ssh_key: pierre.pub
