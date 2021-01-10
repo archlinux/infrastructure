@@ -7,6 +7,9 @@
 - name: set hostname
   hostname: name="{{ inventory_hostname }}"
 
+- name: install pacman config
+  template: src=pacman.conf.j2 dest=/etc/pacman.conf mode=0644 owner=root group=root
+
 - name: configure pacman mirror
   template: src=mirrorlist.j2 dest=/etc/pacman.d/mirrorlist owner=root group=root mode=0644
 
@@ -165,12 +168,6 @@
 
 - name: remove old checkservices copied script (from submodule; archlinux-contrib provides /usr/bin/checkservices)
   file: path=/usr/local/bin/checkservices state=absent
-
-- name: install pacman config
-  template: src=pacman.conf.j2 dest=/etc/pacman.conf mode=0644 owner=root group=root
-
-- name: update package cache
-  pacman: update_cache=yes
 
 - name: install custom paccache.service
   copy: src=paccache.service dest=/etc/systemd/system/paccache.service owner=root group=root mode=0644
