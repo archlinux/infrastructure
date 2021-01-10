@@ -1,6 +1,0 @@
----
-
-wkd_user: wkd
-wkd_dir: /srv/http/wkd
-wkd_home: /home/wkd
-wkd_domain: openpgpkey.archlinux.org

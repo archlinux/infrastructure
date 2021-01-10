@@ -95,10 +95,6 @@ locals {
       server_type = "cx11"
       domain      = "monitoring"
     }
-    "openpgpkey.archlinux.org" = {
-      server_type = "cx11"
-      domain      = "openpgpkey"
-    }
     "patchwork.archlinux.org" = {
       server_type = "cx11"
       domain      = "patchwork"
@@ -146,6 +142,7 @@ locals {
   archlinux_org_gitlab_pages = {
     "conf"           = "60a06a1c02e42b36c3b4919f4d6de6bf"
     "whatcanwedofor" = "b5f8011047c1610ace52e754b568c834"
+    "openpgpkey"     = "7533dfbf3947a5730d9cbcc1e5e63102"
   }
 
   # This creates archlinux.org TXT DNS entries
