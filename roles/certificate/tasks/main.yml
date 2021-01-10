@@ -1,6 +1,8 @@
 - name: create ssl cert
   shell: |
     set -o pipefail
+    # We can't start nginx without the certificate and we can't issue a certificate without nginx running.
+    # So use Python built-in http.server for the initial certificate issuance
     python -m http.server --directory {{ letsencrypt_validation_dir }} 80 &
     trap "jobs -p | xargs --no-run-if-empty kill" EXIT
     certbot certonly --email {{ certificate_contact_email }} --agree-tos --rsa-key-size {{ certificate_rsa_key_size }} --renew-by-default --webroot -w {{ letsencrypt_validation_dir }} -d {{ domains | join(' -d ') }}
