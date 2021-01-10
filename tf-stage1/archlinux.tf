@@ -98,6 +98,7 @@ locals {
     "openpgpkey.archlinux.org" = {
       server_type = "cx11"
       domain      = "openpgpkey"
+      ttl         = 600
     }
     "patchwork.archlinux.org" = {
       server_type = "cx11"
