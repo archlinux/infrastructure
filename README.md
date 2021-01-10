@@ -40,16 +40,6 @@ all servers directly from hcloud. You don't really have to do anything to make
 this work but you should keep in mind to NOT add hcloud servers to `hosts`!
 They'll be available automatically.
 
-#### Note about first time certificates
-
-The first time a certificate is issued, you'll have to do this manually by yourself. First, configure the DNS to
-point to the new server and then run a playbook onto the server which includes the nginx role. Then on the server,
-it is necessary to run the following once:
-
-    certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w /var/lib/letsencrypt/ -d <domain-name>
-
-Note that some roles already run this automatically.
-
 #### Note about packer
 
 We use packer to build snapshots on hcloud to use as server base images.
