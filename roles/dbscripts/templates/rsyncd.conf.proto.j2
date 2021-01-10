@@ -91,16 +91,6 @@ hosts deny = *
 	secrets file = /etc/rsyncd.secrets
 	max connections = 0
 
-# Special module for ftp.archlinux.org only, allows it to always get through
-[ftp-archlinux]
-	hosts allow = 209.85.41.143 209.85.41.144 209.85.41.145
-	max connections = 4
-	lock file = /var/run/rsyncd/archftp.lock
-	path = /srv/ftp
-	list = false
-	comment = ftp (priority) for ftp.archlinux.org
-	exclude = /archive/
-
 # Individual repositories
 [core]
 	path = /srv/ftp/core
