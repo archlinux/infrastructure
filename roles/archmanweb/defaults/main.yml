@@ -5,7 +5,6 @@ archmanweb_domain: 'man.archlinux.org'
 archmanweb_allowed_hosts: ["{{ archmanweb_domain }}"]
 archmanweb_nginx_conf: '/etc/nginx/nginx.d/archmanweb.conf'
 archmanweb_repository: 'https://gitlab.archlinux.org/archlinux/archmanweb.git'
-archmanweb_version: deployment
 #archmanweb_pgp_key: ['932BA3FA0C86812A32D1F54DAB5964AEB9FEDDDC']   # Jakub Klinkovský (lahwaacz)
 archmanweb_forced_deploy: false
 
