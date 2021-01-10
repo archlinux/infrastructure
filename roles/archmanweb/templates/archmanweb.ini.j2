@@ -1,0 +1,14 @@
+[uwsgi]
+plugins = python
+chdir = {{ archmanweb_dir }}/repo
+module = wsgi:application
+socket = /run/uwsgi/archmanweb.sock
+chmod-socket = 660
+processes = 4
+threads = 1
+master = true
+uid = archmanweb
+gid = http
+thunder-lock = true
+daemonize = /var/log/uwsgi/archmanweb.log
+stats = /run/uwsgi/archmanweb-stats.sock

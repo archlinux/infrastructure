@@ -1,0 +1,22 @@
+[Unit]
+Description=Update archmanweb database
+
+[Service]
+Type=oneshot
+User=archmanweb
+WorkingDirectory={{ archmanweb_dir }}/repo/
+ExecStart=/usr/bin/python3 manage.py man_update --cache-dir {{ archmanweb_cache_dir }}
+
+ProtectSystem=full
+PrivateTmp=true
+PrivateDevices=true
+
+ProtectHostname=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+
+NoNewPrivileges=true
+RestrictRealtime=true
+MemoryDenyWriteExecute=true

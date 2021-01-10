@@ -1,0 +1,29 @@
+# Import the common settings, which may be overridden in this file.
+from settings import *
+
+DEBUG = False
+
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = '{{ vault_archmanweb_secret_key }}'
+
+# Hostnames we allow this site to be served under
+ALLOWED_HOSTS = [{% for host in archmanweb_allowed_hosts %}'{{ host }}', {% endfor -%}]
+
+DATABASES = {
+    'default': {
+        'ENGINE'  : 'django.db.backends.postgresql_psycopg2',
+        'PORT'    : 5432,
+{% if archmanweb_db_host != 'localhost' %}
+        'HOST'    : '{{ archmanweb_db_host }}',
+{% endif %}
+        'NAME'    : '{{ archmanweb_db }}',
+        'USER'    : '{{ archmanweb_db_user }}',
+        'PASSWORD': '{{ vault_archmanweb_db_password }}',
+        'OPTIONS' : {
+            'application_name': 'archmanweb',
+{% if archmanweb_db_host != 'localhost' %}
+            'sslmode': 'require',
+{% endif %}
+        }
+    },
+}
