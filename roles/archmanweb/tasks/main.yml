@@ -1,4 +1,10 @@
 ---
+- name: create ssl cert
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ archmanweb_domain }}"]
+  when: 'archmanweb_domain is defined'
 
 - name: install required packages
   pacman:

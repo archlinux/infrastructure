@@ -87,6 +87,10 @@ locals {
       server_type = "cx11"
       domain      = "mailman3"
     }
+    "man.archlinux.org" = {
+      server_type = "cx11"
+      domain      = "man"
+    }
     "matrix.archlinux.org" = {
       server_type = "cpx31"
       domain      = "matrix"

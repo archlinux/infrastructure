@@ -65,6 +65,7 @@ state.archlinux.org
 quassel.archlinux.org
 accounts.archlinux.org
 patchwork.archlinux.org
+man.archlinux.org
 
 [nginx]
 archlinux.org
@@ -76,6 +77,7 @@ aur-dev.archlinux.org
 wiki.archlinux.org
 patchwork.archlinux.org
 security.archlinux.org
+man.archlinux.org
 
 [buildservers]
 dragon.archlinux.org
