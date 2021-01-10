@@ -1,0 +1,2 @@
+- name: create ssl cert
+  command: certbot certonly --email {{ certificate_contact_email }} --agree-tos --rsa-key-size {{ certificate_rsa_key_size }} --renew-by-default --webroot -w {{ letsencrypt_validation_dir }} -d {{ domains | join(' -d ') }} creates='/etc/letsencrypt/live/{{ domains | first }}/fullchain.pem'

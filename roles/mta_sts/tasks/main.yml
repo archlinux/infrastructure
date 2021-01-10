@@ -1,6 +1,9 @@
 ---
 - name: create ssl cert
-  command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{ letsencrypt_validation_dir }} -d mta-sts.{{ item.domains | join(' -d mta-sts.') }} creates='/etc/letsencrypt/live/{{ "mta-sts." + item.domains | first }}/fullchain.pem'
+  include_role:
+    name: certificate
+  vars:
+    domains: "{{ ['mta-sts.'] | product(item.domains) | map('join') }}"
   loop: "{{ mta_sts }}"
 
 - name: make nginx log dir

@@ -22,7 +22,10 @@
   copy: src=sudoers.d dest=/etc/sudoers.d/dbscripts owner=root group=root mode=0600
 
 - name: create ssl cert
-  command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{ letsencrypt_validation_dir }} -d '{{ repos_domain }}' creates='/etc/letsencrypt/live/{{ repos_domain }}/fullchain.pem'
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ repos_domain }}"]
 
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ repos_domain }} state=directory owner=root group=root mode=0755

@@ -1,7 +1,10 @@
 ---
 
 - name: create ssl cert
-  command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{ letsencrypt_validation_dir }} -d '{{ public_domain }}' -d 'www.{{ public_domain }}' creates='/etc/letsencrypt/live/{{ public_domain }}/fullchain.pem'
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ public_domain }}", "www.{{ public_domain }}"]
 
 - name: copy webroot files
   copy: src=public_html dest=/srv owner=root group=root mode=0644 directory_mode=0755

@@ -19,7 +19,10 @@
   template: src=update-wkd-pacman-hook.j2 dest=/etc/pacman.d/hooks/update-wkd.hook owner=root group=root mode=0644
 
 - name: create ssl cert
-  command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{ letsencrypt_validation_dir }} -d '{{ wkd_domain }}' creates='/etc/letsencrypt/live/{{ wkd_domain }}/fullchain.pem'
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ wkd_domain }}"]
 
 - name: create wkd_dir
   file: state=directory owner={{ wkd_user }} group={{ wkd_user }} path="{{ wkd_dir }}" mode=0755

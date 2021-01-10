@@ -10,7 +10,10 @@
   when: maintenance is defined
 
 - name: create ssl cert
-  command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{ letsencrypt_validation_dir }} -d '{{ archwiki_domain }}' creates='/etc/letsencrypt/live/{{ archwiki_domain }}/fullchain.pem'
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ archwiki_domain }}"]
   when: 'archwiki_domain is defined'
 
 - name: install packages
