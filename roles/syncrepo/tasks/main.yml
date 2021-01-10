@@ -1,7 +1,10 @@
 ---
 
 - name: create ssl cert
-  command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{ letsencrypt_validation_dir }} -d '{{ mirror_domain }}' creates='/etc/letsencrypt/live/{{ mirror_domain }}/fullchain.pem'
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ mirror_domain }}"]
   when: 'mirror_domain is defined'
 
 - name: install rsync

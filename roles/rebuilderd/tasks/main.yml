@@ -2,7 +2,10 @@
   pacman: name=rebuilderd,rebuilderd-website state=present
 
 - name: create ssl cert
-  command: certbot certonly --email webmaster@archlinux.org --agree-tos --rsa-key-size 4096 --renew-by-default --webroot -w {{ letsencrypt_validation_dir }} -d '{{ rebuilderd_domain }}' creates='/etc/letsencrypt/live/{{ rebuilderd_domain }}/fullchain.pem'
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ rebuilderd_domain }}"]
   when: 'rebuilderd_domain is defined'
 
 - name: configure rebuilderd.conf
