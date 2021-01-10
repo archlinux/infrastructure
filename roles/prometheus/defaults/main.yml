@@ -25,7 +25,6 @@ blackbox_targets:
   - https://matrix.archlinux.org
   - https://mirror.pkgbuild.com
   - https://monitoring.archlinux.org
-  - https://openpgpkey.archlinux.org
   - https://packages.archlinux.org
   - https://patchwork.archlinux.org
   - https://pkgbuild.com
