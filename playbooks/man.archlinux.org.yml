@@ -1,0 +1,19 @@
+---
+
+- name: setup man.archlinux.org
+  hosts: man.archlinux.org
+  remote_user: root
+  roles:
+    - { role: firewalld }
+    - { role: common }
+    - { role: tools }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: hardening }
+    - { role: certbot }
+    - { role: nginx }
+    - { role: fail2ban }
+    - { role: prometheus_exporters }
+    - { role: postgres }
+    - { role: uwsgi }
+    - { role: archmanweb, archmanweb_version: 'v1.0' }
