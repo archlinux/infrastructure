@@ -39,6 +39,13 @@
   notify:
     - reload postfix
 
+- name: create ssl cert
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ mail_domain }}"]
+  when: postfix_smtpd_public
+
 - name: install postfix cert renewal hook
   template: src=letsencrypt.hook.d.j2 dest=/etc/letsencrypt/hook.d/postfix owner=root group=root mode=0755
   when: postfix_smtpd_public

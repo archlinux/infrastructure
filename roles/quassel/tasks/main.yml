@@ -33,6 +33,12 @@
       Database: ''
     creates: /var/lib/quassel/quasselcore.conf
 
+- name: create ssl cert
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ quassel_domain }}"]
+
 - name: install quassel cert renewal hook
   template: src=letsencrypt.hook.d.j2 dest=/etc/letsencrypt/hook.d/quassel owner=root group=root mode=0755
 
