@@ -4,8 +4,6 @@ import sys
 import shutil
 import tempfile
 
-from collections import defaultdict
-
 import requests
 
 # The rebuilderd instance
@@ -22,28 +20,13 @@ def format_metric(suite, status, total):
 
 
 def get_rebuilderd_data():
-    req = requests.get(f'{API_URL}/api/v0/pkgs/list')
+    req = requests.get(f'{API_URL}/api/v0/dashboard')
     if req.status_code != 200:
         print(f'Failed to obtain rebuilderd data, http status code: {req.status_code}', file=sys.stderr)
         sys.exit(1)
 
     data = req.json()
-    dataset = defaultdict(dict)
-
-    for entry in data:
-        suite = entry['suite']
-        status = entry['status']
-
-        if suite in dataset:
-            if status in dataset[suite]:
-                dataset[suite][status] += 1
-            else:
-                dataset[suite][status] = 1
-        else:
-            dataset[suite] = defaultdict(dict)
-            dataset[suite][status] = 1
-
-    return dataset
+    return data['suites']
 
 
 def main(directory):
