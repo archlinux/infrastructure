@@ -79,6 +79,10 @@ locals {
       server_type = "cx11"
       domain      = "homedir"
     }
+    "lists.archlinux.org" = {
+      server_type = "cx11"
+      domain      = "lists"
+    }
     "mail.archlinux.org" = {
       server_type = "cx11"
       domain      = "mail"
@@ -226,6 +230,7 @@ locals {
     lists = {
       ipv4_address = "5.9.250.164"
       ipv6_address = "2a01:4f8:160:3033::2"
+      ttl          = 600
     }
     luna = {
       ipv4_address = "5.9.250.164"
