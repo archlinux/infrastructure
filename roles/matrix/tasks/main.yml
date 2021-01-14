@@ -141,7 +141,7 @@
 
 - name: install signing key
   copy:
-    content: '{{ vault_matrix_secrets[matrix_server_name].signing_key }}'
+    content: '{{ vault_matrix_secrets.signing_key }}'
     dest: /etc/synapse/{{ matrix_server_name }}.signing.key
     owner: root
     group: synapse
@@ -149,7 +149,7 @@
 
 - name: install ircpass key
   copy:
-    content: '{{ vault_matrix_secrets[matrix_server_name].ircpass_key }}'
+    content: '{{ vault_matrix_secrets.ircpass_key }}'
     dest: /etc/synapse/{{ matrix_server_name }}.ircpass.key
     owner: root
     group: synapse

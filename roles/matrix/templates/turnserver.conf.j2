@@ -6,7 +6,7 @@ max-port=33999
 use-auth-secret
 
 # 'Static' authentication secret value (a string) for TURN REST API only.
-static-auth-secret="{{ vault_matrix_secrets[matrix_server_name].turn_shared_secret }}"
+static-auth-secret="{{ vault_matrix_secrets.turn_shared_secret }}"
 
 # The default realm to be used for the users when no explicit
 # origin/realm relationship is found in the database, or if the TURN

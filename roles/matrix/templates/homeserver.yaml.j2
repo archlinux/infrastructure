@@ -1096,7 +1096,7 @@ turn_uris:
 
 # The shared secret used to compute passwords for the TURN server
 #
-turn_shared_secret: "{{ vault_matrix_secrets[matrix_server_name].turn_shared_secret }}"
+turn_shared_secret: "{{ vault_matrix_secrets.turn_shared_secret }}"
 
 # The Username and password if the TURN server needs them and
 # does not use a token
@@ -1229,7 +1229,7 @@ account_validity:
 # If set, allows registration of standard or admin accounts by anyone who
 # has the shared secret, even if registration is otherwise disabled.
 #
-registration_shared_secret: "{{ vault_matrix_secrets[matrix_server_name].registration_shared_secret }}"
+registration_shared_secret: "{{ vault_matrix_secrets.registration_shared_secret }}"
 
 # Set the number of bcrypt rounds used to generate password hash.
 # Larger numbers increase the work factor needed to generate the hash.
@@ -1444,13 +1444,13 @@ app_service_config_files:
 # the registration_shared_secret is used, if one is given; otherwise,
 # a secret key is derived from the signing key.
 #
-macaroon_secret_key: "{{ vault_matrix_secrets[matrix_server_name].macaroon_secret_key }}"
+macaroon_secret_key: "{{ vault_matrix_secrets.macaroon_secret_key }}"
 
 # a secret which is used to calculate HMACs for form values, to stop
 # falsification of values. Must be specified for the User Consent
 # forms to work.
 #
-form_secret: "{{ vault_matrix_secrets[matrix_server_name].form_secret }}"
+form_secret: "{{ vault_matrix_secrets.form_secret }}"
 
 ## Signing Keys ##
 
@@ -2037,7 +2037,7 @@ password_config:
    # Uncomment and change to a secret random string for extra security.
    # DO NOT CHANGE THIS AFTER INITIAL SETUP!
    #
-   pepper: "{{ vault_matrix_secrets[matrix_server_name].pepper }}"
+   pepper: "{{ vault_matrix_secrets.pepper }}"
 
    # Define and enforce a password policy. Each parameter is optional.
    # This is an implementation of MSC2000.

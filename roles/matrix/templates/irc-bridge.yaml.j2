@@ -43,7 +43,7 @@ homeserver:
 # Configuration specific to the IRC service
 ircService:
   servers:
-{% for address, settings in vault_matrix_secrets[matrix_server_name].irc_networks.items() %}
+{% for address, settings in vault_matrix_secrets.irc_networks.items() %}
     # The address of the server to connect to.
     "{{ address }}":
       # A human-readable short name. This is used to label IRC status rooms
