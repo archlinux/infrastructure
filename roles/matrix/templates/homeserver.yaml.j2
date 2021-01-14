@@ -2646,7 +2646,7 @@ federation_sender_instances:
 #
 # By default this is unused and traffic is not authenticated.
 #
-#worker_replication_secret: ""
+worker_replication_secret: "{{ vault_matrix_secrets.worker_replication_secret }}"
 
 
 # Configuration for Redis when using workers. This *must* be enabled when
