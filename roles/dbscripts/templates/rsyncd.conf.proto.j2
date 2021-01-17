@@ -91,6 +91,15 @@ hosts deny = *
 	secrets file = /etc/rsyncd.secrets
 	max connections = 0
 
+# Debug repositories
+[debug_packages]
+	path = /srv/ftp
+	comment =  debug packages
+	exclude = *
+	include = /pool /pool/*-debug/***
+	hosts allow = {{ hostvars['debuginfod.archlinux.org']['ipv4_address'] }} {{ hostvars['debuginfod.archlinux.org']['ipv6_address'] }}
+	max connections = 0
+
 # Individual repositories
 [core]
 	path = /srv/ftp/core

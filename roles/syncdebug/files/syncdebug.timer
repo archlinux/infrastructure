@@ -1,0 +1,10 @@
+[Unit]
+Description=Sync debug packages every 4 hours
+
+[Timer]
+OnCalendar=00/4:00
+AccuracySec=1m
+Persistent=true
+
+[Install]
+WantedBy=timers.target
