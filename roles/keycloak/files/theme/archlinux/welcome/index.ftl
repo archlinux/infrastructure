@@ -125,7 +125,7 @@
           </div>
         </#if>
         </div>
-      </divR
+      </div>
       <div class='footer'>
         <#if properties.displayFooter = "true">
         <a href="http://www.jboss.org"><img src="welcome-content/jboss_community.png" alt="JBoss and JBoss Community"></a>
