@@ -12,11 +12,6 @@ arch_users:
   alertmanager:
     name: ""
     groups: []
-  aaron:
-    name: "Aaron Griffin"
-    ssh_key: aaron.pub
-    groups:
-      - dev
   accounts:
     name: ""
     groups: []
