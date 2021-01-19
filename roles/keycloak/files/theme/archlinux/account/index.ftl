@@ -45,7 +45,8 @@
                 isLinkedAccountsEnabled : ${realm.identityFederationEnabled?c},
                 isEventsEnabled : ${isEventsEnabled?c},
                 isMyResourcesEnabled : ${(realm.userManagedAccessAllowed && isAuthorizationEnabled)?c},
-                isTotpConfigured : ${isTotpConfigured?c}
+                isTotpConfigured : ${isTotpConfigured?c},
+                deleteAccountAllowed : ${deleteAccountAllowed?c}
             }
 
             var availableLocales = [];
@@ -109,20 +110,20 @@
             </#list>
         </#if>
 
-        <link rel="stylesheet" type="text/css" href="${resourceUrl}/public/base.css"/>
-        <link rel="stylesheet" type="text/css" href="${resourceUrl}/public/app.css"/>
+        <link rel="stylesheet" type="text/css" href="${resourceCommonUrl}/web_modules/@patternfly/react-core/dist/styles/base.css"/>
+        <link rel="stylesheet" type="text/css" href="${resourceCommonUrl}/web_modules/@patternfly/react-core/dist/styles/app.css"/>
         <link href="${resourceUrl}/public/layout.css" rel="stylesheet"/>
     </head>
 
     <body>
 
         <script>
-            var keycloak = Keycloak({
+            const keycloak = Keycloak({
                 authServerUrl: authUrl,
                 realm: realm,
                 clientId: 'account-console'
             });
-            keycloak.init({onLoad: 'check-sso', pkceMethod: 'S256'}).success(function(authenticated) {
+            keycloak.init({onLoad: 'check-sso', pkceMethod: 'S256', promiseType: 'native'}).then((authenticated) => {
                 isReactLoading = true;
                 toggleReact();
                 if (!keycloak.authenticated) {
@@ -135,8 +136,7 @@
                 }
 
                 loadjs("/Main.js");
-
-            }).error(function() {
+            }).catch(() => {
                 alert('failed to initialize keycloak');
             });
         </script>
