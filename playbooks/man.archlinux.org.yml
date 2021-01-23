@@ -16,4 +16,4 @@
     - { role: prometheus_exporters }
     - { role: postgres }
     - { role: uwsgi }
-    - { role: archmanweb, archmanweb_version: 'v1.0' }
+    - { role: archmanweb, archmanweb_version: 'v1.1' }
