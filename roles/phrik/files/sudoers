@@ -1,1 +1,2 @@
+# Allow everyone in the phrik group to run any command as phrik
 %phrik ALL = (phrik) NOPASSWD: ALL
