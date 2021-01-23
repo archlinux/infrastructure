@@ -34,7 +34,7 @@
         external_url 'https://{{ gitlab_domain }}'
         nginx['client_max_body_size'] = '10g'
         nginx['listen_addresses'] = {{ gitlab_primary_addresses }}
-        registry_nginx['listen_addresses'] = ['*', '[::]']
+        registry_nginx['listen_addresses'] = {{ gitlab_primary_addresses }}
         gitlab_pages['inplace_chroot'] = true
         pages_external_url "http://{{ gitlab_domain }}"
         pages_nginx['enable'] = false
