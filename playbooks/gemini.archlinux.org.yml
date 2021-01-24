@@ -24,5 +24,4 @@
     - { role: archive_web }
     - { role: postfix, postfix_relayhost: "mail.archlinux.org" }
     - { role: fail2ban }
-    - sogrep
     - { role: prometheus_exporters }
