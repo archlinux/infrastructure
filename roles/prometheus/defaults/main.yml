@@ -21,6 +21,7 @@ blackbox_targets:
   - https://ipxe.archlinux.org
   - https://lists.archlinux.org
   - https://mailman.archlinux.org
+  - https://man.archlinux.org
   - https://master-key.archlinux.org
   - https://matrix.archlinux.org
   - https://mirror.pkgbuild.com
