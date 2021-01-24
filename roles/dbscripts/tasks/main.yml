@@ -6,6 +6,9 @@
 - name: install sourceballs requirements (makepkg download dependencies)
   pacman: name=git,subversion,mercurial,breezy state=present
 
+- name: install binutils for createlinks script
+  pacman: name=binutils state=present
+
 - name: create dbscripts users
   user: name="{{ item }}" shell=/bin/bash
   with_items:
@@ -294,6 +297,9 @@
     - lsrepo
     - checklib32
 
+- name: install createlinks script
+  copy: src=createlinks dest=/usr/local/bin/createlinks owner=root group=root mode=0755
+
 - name: start and enable rsync
   service: name=rsyncd.socket enabled=yes state=started
 
@@ -328,6 +334,8 @@
     - gen_rsyncd.service
     - arch-svntogit.timer
     - arch-svntogit.service
+    - createlinks.timer
+    - createlinks.service
   notify:
     - daemon reload
 
@@ -339,3 +347,4 @@
     - lastsync.timer
     - gen_rsyncd.timer
     - arch-svntogit.timer
+    - createlinks.timer

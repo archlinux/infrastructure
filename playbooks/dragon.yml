@@ -12,7 +12,6 @@
     - { role: archusers }
     - { role: sudo, tags: ['archusers'] }
     - { role: syncrepo }
-    - { role: sogrep }
     - { role: archbuild }
     - { role: fail2ban }
     - { role: prometheus_exporters }

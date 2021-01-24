@@ -48,7 +48,6 @@
 
 ### Services
   - build server
-  - sogrep
 
 ## state.archlinux.org
 
