@@ -116,7 +116,9 @@ resource "hcloud_server" "machine" {
 }
 
 resource "hetznerdns_record" "machine_a" {
-  for_each = local.machines
+  for_each = {
+    for name, machine in local.machines : name => machine if can(machine.domain)
+  }
 
   zone_id = lookup(local.machines[each.key], "zone", hetznerdns_zone.archlinux.id)
   name    = each.value.domain
@@ -126,7 +128,9 @@ resource "hetznerdns_record" "machine_a" {
 }
 
 resource "hetznerdns_record" "machine_aaaa" {
-  for_each = local.machines
+  for_each = {
+    for name, machine in local.machines : name => machine if can(machine.domain)
+  }
 
   zone_id = lookup(local.machines[each.key], "zone", hetznerdns_zone.archlinux.id)
   name    = each.value.domain
