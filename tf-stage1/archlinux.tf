@@ -36,7 +36,7 @@ locals {
   #
   # Valid parameters are:
   #   - server_type (mandatory)
-  #   - domain (mandatory)
+  #   - domain (optional, creates dns entry <domain>.archlinux.org pointing to the machine)
   #   - ttl (optional, applies to the dns entries)
   #   - zone (optionel, required for pkgbuild.com machines)
   #
@@ -81,7 +81,6 @@ locals {
     }
     "lists.archlinux.org" = {
       server_type = "cx11"
-      domain      = "lists"
     }
     "mail.archlinux.org" = {
       server_type = "cx11"
