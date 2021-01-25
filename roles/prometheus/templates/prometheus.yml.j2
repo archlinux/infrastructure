@@ -75,14 +75,15 @@ scrape_configs:
 
     {% endfor %}
 
-  - job_name: 'blackbox'
+{% for module in blackbox_targets.keys() %}
+  - job_name: 'blackbox_{{ module }}'
     metrics_path: /probe
     scrape_interval: 15s
     params:
-      module: [http_prometheus]
+      module: [{{ module }}]
     static_configs:
     - targets:
-    {% for target in blackbox_targets %}
+    {% for target in blackbox_targets[module] %}
       - {{ target }}
     {% endfor %}
 
@@ -93,3 +94,4 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: 127.0.0.1:9115
+{% endfor %}
