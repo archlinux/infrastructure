@@ -1,0 +1,2 @@
+Cmnd_Alias EXPORTER = /usr/bin/btrfs --format json device stats /, /usr/bin/btrfs --format json device stats /[a-zA-Z]*, /usr/bin/btrfs filesystem show
+node_exporter ALL=(ALL) NOPASSWD: EXPORTER

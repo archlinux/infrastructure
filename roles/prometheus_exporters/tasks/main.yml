@@ -1,7 +1,7 @@
 ---
 
 - name: install prometheus-node-exporter
-  pacman: name=prometheus-node-exporter,arch-audit,pacman-contrib state=present
+  pacman: name=prometheus-node-exporter,arch-audit,pacman-contrib,jq state=present
 
 - name: install prometheus-blackbox-exporter
   pacman: name=prometheus-blackbox-exporter state=present
@@ -10,10 +10,6 @@
 - name: install prometheus-memcached-exporter
   pacman: name=prometheus-memcached-exporter state=present
   when: "'memcached' in group_names"
-
-- name: install jq for rebuilderd-textcollector
-  pacman: name=jq state=present
-  when: "'rebuilderd' in group_names"
 
 - name: add node_exporter to rebuilderd group
   user: name=node_exporter groups=rebuilderd append=yes
@@ -59,6 +55,7 @@
     - rebuilderd-textcollector.sh
     - rebuilderd-status-textcollector.py
     - archive-textcollector.sh
+    - btrfs-textcollector.sh
 
 - name: install arch textcollector service
   template: src=prometheus-arch-textcollector.service.j2 dest=/etc/systemd/system/prometheus-arch-textcollector.service owner=root group=root mode=644
@@ -108,6 +105,22 @@
 - name: enable and start prometheus archive textcollector timer
   systemd: name=prometheus-archive-textcollector.timer enabled=yes daemon_reload=yes state=started
   when: "'archive_mirrors' in group_names or inventory_hostname == 'gemini.archlinux.org'"
+
+- name: install sudoers for btrfs
+  copy: src=sudoers dest=/etc/sudoers.d/node_exporter owner=root group=root mode=0440
+  when: filesystem == "btrfs"
+
+- name: install btrfs textcollector service
+  template: src=prometheus-btrfs-textcollector.service.j2 dest=/etc/systemd/system/prometheus-btrfs-textcollector.service owner=root group=root mode=644
+  when: filesystem == "btrfs"
+
+- name: install btrfs textcollector timer
+  template: src=prometheus-btrfs-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-btrfs-textcollector.timer owner=root group=root mode=644
+  when: filesystem == "btrfs"
+
+- name: enable and start prometheus btrfs textcollector timer
+  systemd: name=prometheus-btrfs-textcollector.timer enabled=yes daemon_reload=yes state=started
+  when: filesystem == "btrfs"
 
 - name: enable prometheus-node-exporter service
   systemd: name=prometheus-node-exporter enabled=yes daemon_reload=yes state=started

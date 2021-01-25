@@ -213,6 +213,50 @@ groups:
       description: 'host {{ $labels.instance }} has out of date packages'
       summary: '{{ $labels.instance }} has {{ $value }} > 50 out of date packages'
 
+- name: btrfs
+  interval: 2m
+  rules:
+  - alert: btrfs_corruption_errs
+    expr: btrfs_corruption_errs > 1
+    for: 15m
+    labels:
+      severity: warning
+    annotations:
+      description: 'host {{ $labels.instance }} btrfs corruption errors'
+      summary: '{{ $labels.instance }} has {{ $value }} btrfs_corruption_errs'
+  - alert: btrfs_write_io_errs
+    expr: btrfs_write_io_errs > 1
+    for: 15m
+    labels:
+      severity: warning
+    annotations:
+      description: 'host {{ $labels.instance }} btrfs write_io errors'
+      summary: '{{ $labels.instance }} has {{ $value }} btrfs_write_io_errs'
+  - alert: btrfs_read_io_errs
+    expr: btrfs_read_io_errs > 1
+    for: 15m
+    labels:
+      severity: warning
+    annotations:
+      description: 'host {{ $labels.instance }} btrfs read_io errors'
+      summary: '{{ $labels.instance }} has {{ $value }} btrfs_read_io_errs'
+  - alert: btrfs_flush_io_errs
+    expr: btrfs_flush_io_errs > 1
+    for: 15m
+    labels:
+      severity: warning
+    annotations:
+      description: 'host {{ $labels.instance }} btrfs flush_io errors'
+      summary: '{{ $labels.instance }} has {{ $value }} btrfs_flush_io_errs'
+  - alert: btrfs_corruption_errs
+    expr: btrfs_corruption_errs > 1
+    for: 15m
+    labels:
+      severity: warning
+    annotations:
+      description: 'host {{ $labels.instance }} btrfs corruption errors'
+      summary: '{{ $labels.instance }} has {{ $value }} btrfs_corruption_errs'
+
 - name: borg
   interval: 60s
   rules:
