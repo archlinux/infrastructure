@@ -1,0 +1,10 @@
+[Unit]
+Description=Borg backup
+Wants=borg-backup-offsite.service
+Before=borg-backup-offsite.service
+
+[Service]
+Type=oneshot
+Restart=on-failure
+RestartSec=5m
+ExecStart=/usr/local/bin/borg-backup.sh
