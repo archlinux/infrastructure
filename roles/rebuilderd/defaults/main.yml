@@ -7,3 +7,4 @@ suites:
   - extra
   - testing
   - community
+  - community-testing
