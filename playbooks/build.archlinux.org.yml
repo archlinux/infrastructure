@@ -1,0 +1,16 @@
+---
+
+- name: setup build.archlinux.org
+  hosts: build.archlinux.org
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: tools }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: archusers }
+    - { role: sudo, tags: ['archusers'] }
+    - { role: syncrepo }
+    - { role: archbuild }
+    - { role: fail2ban }
+    - { role: prometheus_exporters }

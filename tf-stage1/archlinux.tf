@@ -222,6 +222,10 @@ locals {
       ipv4_address = "195.201.167.210"
       ipv6_address = "2a01:4f8:13a:102a::2"
     }
+    build = {
+      ipv4_address = "135.181.138.48"
+      ipv6_address = "2a01:4f9:3a:120f::2"
+    }
     gemini = {
       ipv4_address = "49.12.124.107"
       ipv6_address = "2a01:4f8:242:5614::2"

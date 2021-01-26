@@ -84,6 +84,7 @@ man.archlinux.org
 
 [buildservers]
 dragon.archlinux.org
+build.archlinux.org
 
 [gitlab_runners]
 runner1.archlinux.org
@@ -127,6 +128,7 @@ mail.archlinux.org
 matrix.archlinux.org
 bbs.archlinux.org
 dragon.archlinux.org
+build.archlinux.org
 bugs.archlinux.org
 gemini.archlinux.org
 luna.archlinux.org

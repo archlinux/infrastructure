@@ -1,0 +1,14 @@
+---
+hostname: "build.archlinux.org"
+network_interface: "enp195s0"
+ipv4_address: "135.181.138.48"
+ipv4_netmask: "/26"
+ipv6_address: "2a01:4f9:3a:120f::2"
+ipv6_netmask: "/128"
+ipv4_gateway: "135.181.138.1"
+ipv6_gateway: "fe80::1"
+filesystem: btrfs
+system_disks:
+  - /dev/nvme0n1
+
+archbuild_fs: 'btrfs'

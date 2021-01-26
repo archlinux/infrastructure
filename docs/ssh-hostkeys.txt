@@ -86,6 +86,17 @@
 256 MD5:d6:d3:a9:2e:c1:7d:69:c1:9a:21:c9:6f:30:53:e6:74 root@archlinux-packer (ED25519)
 3072 MD5:06:6d:1f:87:6b:fb:60:b3:a8:c7:64:37:15:b5:b5:6c root@archlinux-packer (RSA)
 
+# build.archlinux.org
+1024 SHA256:yJv47oZbEr7trxi3Md2RskrKDq3YSz66q5Z6eg5b6v0 root@build.archlinux.org (DSA)
+256 SHA256:h/9vac9LT+cI3VvXbO+BeN4s75GkEeqLDw1ucK61VpQ root@build.archlinux.org (ECDSA)
+256 SHA256:OyJ47eAF9V3nQU70BFpCkrSjSXNApNdTdy5DrEbly2I root@build.archlinux.org (ED25519)
+3072 SHA256:tKHdMeKtQuX42AoRhfvkECjaVhcVYKlL1Rvdo+upd4E root@build.archlinux.org (RSA)
+
+1024 MD5:75:d3:44:04:85:14:17:19:99:a9:fe:09:b1:fd:2b:d7 root@build.archlinux.org (DSA)
+256 MD5:a4:b9:26:2d:49:de:a1:d5:47:83:47:5a:a8:10:f9:62 root@build.archlinux.org (ECDSA)
+256 MD5:7b:38:67:01:59:c8:a7:b3:66:ec:78:df:ec:dd:30:72 root@build.archlinux.org (ED25519)
+3072 MD5:f2:6a:ba:b0:53:9b:d4:73:83:21:d6:76:0f:70:71:72 root@build.archlinux.org (RSA)
+
 # dragon.archlinux.org
 1024 SHA256:B6Toehif0eXoxWA9Z67Vd0KdK1fjdouISxKLqneSCRs root@dragon (DSA)
 256 SHA256:fkrWuKgabvnJhqnFFzHeHffh2FbQVq69a0jlbE/93H8 root@dragon (ECDSA)
@@ -140,6 +151,17 @@
 256 MD5:f9:bc:d6:b3:77:07:d0:80:d6:47:0f:b4:94:fe:35:e4 root@archlinux-packer (ECDSA)
 256 MD5:e2:34:b1:dc:24:00:45:08:4a:62:48:17:b2:69:23:2d root@archlinux-packer (ED25519)
 3072 MD5:50:c8:93:43:05:d5:73:a4:84:b1:07:66:a7:20:a5:79 root@archlinux-packer (RSA)
+
+# lists.archlinux.org
+1024 SHA256:az7ZHreYtkvFBgA1goSjry0/e62JKhk4NRXXgT/+VFg root@archlinux-packer (DSA)
+256 SHA256:vt22ZCpoWg0/L5uFfNsbrZ5EkdBnOh5G3jENuBpQeGo root@archlinux-packer (ECDSA)
+256 SHA256:E0ivN9XqSi7U9GIPQ3JUvw6CP6uiS68M5No0DA/BFfI root@archlinux-packer (ED25519)
+3072 SHA256:5YZCzd1C0bVsaye5l/lNiqsn1/IdOGjTmHqwyjV8lc0 root@archlinux-packer (RSA)
+
+1024 MD5:74:6b:bd:62:a9:52:52:e9:f7:78:fe:44:8a:fa:4f:d2 root@archlinux-packer (DSA)
+256 MD5:ed:60:7c:e3:d6:4d:5a:f5:b9:cd:9e:30:4a:6a:64:c0 root@archlinux-packer (ECDSA)
+256 MD5:a7:2e:f4:3a:3e:34:84:ca:6f:73:05:0e:2e:da:60:d0 root@archlinux-packer (ED25519)
+3072 MD5:ae:ad:58:b8:0a:12:a7:d1:86:f0:c6:ba:fa:9e:ea:9f root@archlinux-packer (RSA)
 
 # luna.archlinux.org
 1024 SHA256:9Nqu9y1LhT3L3Kd6J9CSyuOc1AdGWo0eLsPxoc5bpaw root@alderaan (DSA)

@@ -3,6 +3,7 @@
 - name: install archbuild
   pacman:
     name:
+      - base-devel
       - devtools
       - zsh
       - git
