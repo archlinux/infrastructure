@@ -7,3 +7,30 @@ After=mysqld.service
 Type=oneshot
 User={{ aurweb_user }}
 ExecStart=/usr/local/bin/aurweb-mkpkglists
+
+NoNewPrivileges=true
+LockPersonality=true
+CapabilityBoundingSet=
+ReadWritePaths={{ aurweb_dir }}
+
+PrivateDevices=true
+PrivateTmp=true
+ProtectSystem=strict
+
+MemoryDenyWriteExecute=true
+RemoveIPC=true
+RestrictRealtime=true
+RestrictNamespaces=true
+RestrictSUIDSGID=true
+
+RestrictAddressFamilies=AF_UNIX
+
+ProtectHostname=true
+ProtectControlGroups=true
+ProtectKernelLogs=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectClock=true
+ProtectProc=noaccess
+
+SystemCallArchitectures=native
