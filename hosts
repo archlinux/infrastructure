@@ -16,6 +16,9 @@ repro1.pkgbuild.com
 
 [mirrors]
 mirror.pkgbuild.com
+asia.mirror.pkgbuild.com
+america.mirror.pkgbuild.com
+europe.mirror.pkgbuild.com
 
 [archive_mirrors]
 asia.mirror.pkgbuild.com
