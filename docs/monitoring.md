@@ -11,7 +11,7 @@ To access our monitoring system, go to https://monitoring.archlinux and log in v
 
 ### System
 
-For general system performance monitoring [prometheus-node-exporter](https://github.com/prometheus/node_exporter) is used in combination with the textfile collector for Arch Linux specific metrics. A systemd service/timer 'prometheus-arch-textcollector' writes the amount of out of date packages and security updates. When running the prometheus_exporters role the node-exporter and arch textcollector is automatically added.
+For general system performance monitoring [prometheus-node-exporter](https://github.com/prometheus/node_exporter) is used in combination with a textfile collector for Arch Linux specific and btrfs metrics. A systemd service/timer 'prometheus-arch-textcollector' writes the amount of out of date packages and security updates. For btrfs monitoring, `btrfs device stats` is executed on all btrfs devices on the system and all errors stats are record. When running the prometheus_exporters role the node-exporter, arch textcollector and btrfs textcollector is automatically added.
 
 ### memcached
 

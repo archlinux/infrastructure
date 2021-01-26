@@ -1,0 +1,10 @@
+[Unit]
+Description=Prometheus Btrfs Exporter TextCollector Timer
+
+[Timer]
+OnUnitActiveSec=1d
+OnBootSec=15min
+RandomizedDelaySec=1min
+
+[Install]
+WantedBy=timers.target

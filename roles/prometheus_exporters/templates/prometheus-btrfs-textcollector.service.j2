@@ -1,0 +1,10 @@
+[Unit]
+Description=Prometheus btrfs Exporter
+
+[Service]
+Type=oneshot
+User=node_exporter
+ExecStart=/usr/local/bin/btrfs-textcollector.sh {{ prometheus_textfile_dir }}
+
+ReadWritePaths={{ prometheus_textfile_dir }}
+PrivateNetwork=true
