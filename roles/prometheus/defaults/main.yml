@@ -7,9 +7,11 @@ blackbox_targets:
   http_prometheus:
     - https://accounts.archlinux.org
     - https://america.archive.pkgbuild.com
+    - https://america.mirror.pkgbuild.com
     - https://archive.archlinux.org
     - https://archlinux.org
     - https://asia.archive.pkgbuild.com
+    - https://asia.mirror.pkgbuild.com
     - https://aur.archlinux.org
     - https://aur-dev.archlinux.org
     - https://bbs.archlinux.org
@@ -17,6 +19,7 @@ blackbox_targets:
     - https://conf.archlinux.org
     - https://dev.archlinux.org
     - https://europe.archive.pkgbuild.com
+    - https://europe.mirror.pkgbuild.com
     - https://git.archlinux.org
     - https://gitlab.archlinux.org
     - https://ipxe.archlinux.org

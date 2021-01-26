@@ -1,5 +1,6 @@
 hostname: "asia.mirror.pkgbuild.com"
 archive_domain: "asia.archive.pkgbuild.com"
+mirror_domain: "asia.mirror.pkgbuild.com"
 ipv4_address: "84.17.57.98"
 ipv4_netmask: "/24"
 ipv4_gateway: "84.17.57.110"

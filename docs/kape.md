@@ -4,7 +4,7 @@ All donated servers are with EFI except runner1.archlinux.org.
 
 ### Archive mirrors
 
-Three servers have set up as archive mirrors:
+Three servers have set up as archive and regular mirrors:
 
 * america.mirror.pkgbuild.com
 * asia.mirror.pkgbuild.com
