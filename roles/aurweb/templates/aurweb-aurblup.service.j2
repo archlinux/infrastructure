@@ -7,3 +7,28 @@ After=mysqld.service
 Type=oneshot
 User={{ aurweb_user }}
 ExecStart=/usr/local/bin/aurweb-aurblup
+
+ReadWritePaths={{ aurweb_dir }}
+NoNewPrivileges=true
+LockPersonality=true
+CapabilityBoundingSet=
+
+PrivateDevices=true
+PrivateTmp=true
+ProtectSystem=strict
+
+MemoryDenyWriteExecute=true
+RemoveIPC=true
+RestrictRealtime=true
+RestrictNamespaces=true
+RestrictSUIDSGID=true
+
+ProtectHostname=true
+ProtectControlGroups=true
+ProtectKernelLogs=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectClock=true
+ProtectProc=noaccess
+
+SystemCallArchitectures=native
