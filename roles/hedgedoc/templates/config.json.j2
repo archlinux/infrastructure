@@ -1,0 +1,37 @@
+{
+    "production": {
+        "sessionSecret": "{{ vault_hedgedoc_session_secret }}",
+        "email": false,
+        "domain": "{{ hedgedoc_domain }}",
+        "loglevel": "info",
+        "protocolUseSSL": true,
+        "allowAnonymous": false,
+	"allowAnonymousEdits": true,
+	"defaultPermission": "limited",
+        "hsts": {
+            "enable": true,
+            "maxAgeSeconds": 31536000,
+            "includeSubdomains": true,
+            "preload": true
+        },
+        "csp": {
+            "enable": true,
+            "directives": {},
+            "upgradeInsecureRequests": "true",
+            "addDefaults": true,
+            "addDisqus": false,
+            "addGoogleAnalytics": false
+        },
+        "cookiePolicy": "lax",
+        "db": {
+            "dialect": "postgres",
+            "username": "hedgedoc",
+            "password": "{{ vault_postgres_users.hedgedoc }}",
+            "database": "hedgedoc",
+            "host": "localhost",
+            "port": "5432",
+            "dialect": "postgres"
+        },
+        "linkifyHeaderStyle": "gfm"
+    }
+}

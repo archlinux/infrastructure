@@ -1,0 +1,22 @@
+---
+
+- name: setup hedgedoc server
+  hosts: md.archlinux.org
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: tools }
+    - { role: firewalld }
+    - { role: sshd }
+    - { role: unbound }
+    - { role: root_ssh }
+    - { role: borg_client, tags: ["borg"] }
+    - { role: nginx }
+    - { role: certbot }
+    - role: postgres
+      postgres_max_connections: 100
+      postgres_ssl: 'off'
+      postgres_shared_buffers: 512MB
+      postgres_effective_cache_size: 1GB
+    - { role: hedgedoc, hedgedoc_domain: "md.archlinux.org" }
+    - { role: prometheus_exporters }

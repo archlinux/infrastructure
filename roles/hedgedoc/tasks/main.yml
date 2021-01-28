@@ -1,0 +1,39 @@
+---
+
+- name: install hedgedoc
+  pacman: name=hedgedoc state=present
+
+- name: add hedgedoc postgres db
+  postgresql_db: db=hedgedoc
+  become: yes
+  become_user: postgres
+  become_method: su
+
+- name: add hedgedoc postgres user
+  postgresql_user: db=hedgedoc name=hedgedoc password={{ vault_postgres_users.hedgedoc }} encrypted=true
+  become: yes
+  become_user: postgres
+  become_method: su
+
+- name: make nginx log dir
+  file: path=/var/log/nginx/{{ hedgedoc_domain }} state=directory owner=root group=root mode=0755
+
+- name: set up nginx
+  template: src=nginx.d.conf.j2 dest={{ hedgedoc_nginx_conf }} owner=root group=root mode=644
+  notify: reload nginx
+  tags: ['nginx']
+
+- name: add hedgedoc.service.d dir
+  file: state=directory path=/etc/systemd/system/hedgedoc.service.d owner=root group=root mode=0755
+
+- name: install hedgedoc.service snippet for configuration
+  template: src=hedgedoc.service.d.j2 dest=/etc/systemd/system/hedgedoc.service.d/local.conf owner=root group=root mode=0644
+
+- name: install hedgedoc config file
+  template: src=config.json.j2 dest=/etc/webapps/hedgedoc/config.json owner=root group=root mode=0644
+
+- name: install hedgedoc sequelizerc file
+  template: src=sequelizerc.j2 dest=/etc/webapps/hedgedoc/sequelizerc owner=root group=root mode=0644
+
+- name: start and enable hedgedoc
+  service: name=hedgedoc.service enabled=yes state=started

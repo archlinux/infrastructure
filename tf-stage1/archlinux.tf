@@ -139,6 +139,10 @@ locals {
       domain      = "mirror"
       zone        = hetznerdns_zone.pkgbuild.id
     }
+    "md.archlinux.org" = {
+      server_type = "cx11"
+      domain      = "md"
+    }
   }
 
   # This creates gitlab pages varification entries.
@@ -489,4 +493,3 @@ resource "hcloud_volume" "homedir" {
   size      = 100
   server_id = hcloud_server.machine["homedir.archlinux.org"].id
 }
-
