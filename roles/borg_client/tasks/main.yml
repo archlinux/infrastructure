@@ -58,10 +58,11 @@
   when: inventory_hostname == "gitlab.archlinux.org"
 
 - name: install systemd timer and service for backup
-  template: src={{ item }}.j2 dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
     - borg-backup.timer
     - borg-backup.service
+    - borg-backup-offsite.service
 
 - name: activate systemd timers for backup
   systemd: name=borg-backup.timer enabled=yes state=started daemon-reload=yes

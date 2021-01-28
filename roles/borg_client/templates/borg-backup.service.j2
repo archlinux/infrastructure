@@ -1,8 +1,0 @@
-[Unit]
-Description=Borg backup
-
-[Service]
-Type=oneshot
-{% for backup in backup_hosts %}
-ExecStart=/usr/local/bin/borg-backup{{ backup['suffix'] }}.sh
-{% endfor %}
