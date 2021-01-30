@@ -97,17 +97,6 @@
 256 MD5:7b:38:67:01:59:c8:a7:b3:66:ec:78:df:ec:dd:30:72 root@build.archlinux.org (ED25519)
 3072 MD5:f2:6a:ba:b0:53:9b:d4:73:83:21:d6:76:0f:70:71:72 root@build.archlinux.org (RSA)
 
-# dragon.archlinux.org
-1024 SHA256:B6Toehif0eXoxWA9Z67Vd0KdK1fjdouISxKLqneSCRs root@dragon (DSA)
-256 SHA256:fkrWuKgabvnJhqnFFzHeHffh2FbQVq69a0jlbE/93H8 root@dragon (ECDSA)
-256 SHA256:ueI8ETlculq7g5IdCxbAcY0NiwfL3/NEgPACCD0BDFY root@dragon (ED25519)
-2048 SHA256:KBk/rZEwB5nRtHzwgPyJJjUj8/kttrWAzftqWxhJfT0 root@dragon (RSA)
-
-1024 MD5:6d:99:86:ae:f0:78:de:1b:3e:e3:d4:0b:e4:a6:4d:3e root@dragon (DSA)
-256 MD5:af:94:59:fb:c5:19:90:34:70:e7:6d:62:dd:e2:f5:44 root@dragon (ECDSA)
-256 MD5:54:23:82:0d:e6:da:6c:d7:09:f1:f0:0f:49:5a:64:04 root@dragon (ED25519)
-2048 MD5:e1:e6:4f:72:31:a3:9a:2c:af:e0:0f:53:43:27:6b:df root@dragon (RSA)
-
 # europe.mirror.pkgbuild.com
 1024 SHA256:Oq3eikchfo8Wt6AUzWAiU1mDR24rXudJR/zqKBFnrMo root@europe.mirror.pkgbuild.com (DSA)
 256 SHA256:3S0HuO72jHUUrPM8BjfcjsB0FNXkubxovc7Sm5jZBjc root@europe.mirror.pkgbuild.com (ECDSA)

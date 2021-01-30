@@ -215,7 +215,6 @@ arch_users:
       - name: foutrelis_buildhost.pub
         hosts:
           - build.archlinux.org
-          - dragon.archlinux.org
     groups:
       - dev
       - tu
