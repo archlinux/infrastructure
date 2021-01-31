@@ -263,6 +263,8 @@
       - aurweb-popupdate.timer
       - aurweb-tuvotereminder.service
       - aurweb-tuvotereminder.timer
+      - aurweb-usermaint.service
+      - aurweb-usermaint.timer
 
 - name: start and enable AUR systemd services and timers
   service: name={{ item }} enabled=yes state=started
@@ -274,6 +276,7 @@
        - aurweb-pkgmaint.timer
        - aurweb-popupdate.timer
        - aurweb-tuvotereminder.timer
+       - aurweb-usermaint.timer
 
 - name: configure sshd
   template: src=aurweb_config.j2 dest={{ sshd_includes_dir }}/aurweb_config owner=root group=root mode=0600 validate='/usr/sbin/sshd -t -f %s'
