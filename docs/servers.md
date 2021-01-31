@@ -44,11 +44,6 @@
      the hosts vars and re-used the archusers role. Users
      in the phrik group are allowed to restar the irc bot.
 
-## dragon
-
-### Services
-  - build server
-
 ## state.archlinux.org
 
 ### Services

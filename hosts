@@ -1,6 +1,5 @@
 [hetzner]
 luna.archlinux.org
-dragon.archlinux.org
 secure-runner1.archlinux.org
 gemini.archlinux.org
 
@@ -83,7 +82,6 @@ security.archlinux.org
 man.archlinux.org
 
 [buildservers]
-dragon.archlinux.org
 build.archlinux.org
 
 [gitlab_runners]
@@ -127,7 +125,6 @@ homedir.archlinux.org
 mail.archlinux.org
 matrix.archlinux.org
 bbs.archlinux.org
-dragon.archlinux.org
 build.archlinux.org
 bugs.archlinux.org
 gemini.archlinux.org
