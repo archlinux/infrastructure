@@ -1,1 +1,2 @@
+enable_zram_swap: true
 gitlab_runner_exporter_port: 9252
