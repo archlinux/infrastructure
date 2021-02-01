@@ -6,7 +6,7 @@ After=network.target
 Type=oneshot
 User=archweb
 WorkingDirectory={{ archweb_dir }}
-ExecStart={{ archweb_dir }}/env/bin/python manage.py read_reproducible_status -v3
+ExecStart={{ archweb_dir }}/env/bin/python manage.py read_rebuilderd_status -v3
 
 ProtectSystem=full
 PrivateTmp=true
