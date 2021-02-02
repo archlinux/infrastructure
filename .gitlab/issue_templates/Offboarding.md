@@ -25,6 +25,7 @@ This template should be used for offboarding Arch Linux team members.
 - [ ] Moderate email address on [arch-dev-public](https://lists.archlinux.org/admin/arch-dev-public/members) (find member and moderate)
 - [ ] Remove member from [arch-tu mailing lists](https://lists.archlinux.org/admin/arch-tu/members)
 - [ ] Remove member from [staff mailing lists](https://lists.archlinux.org/admin/staff/members)
+- [ ] Create keyring revocation ticket
 
 ## DevOps offboarding checklist
 
