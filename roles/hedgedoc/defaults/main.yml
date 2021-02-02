@@ -1,0 +1,2 @@
+hedgedoc_nginx_conf: /etc/nginx/nginx.d/hedgedoc.conf
+hedgedoc_domain: md.archlinux.org

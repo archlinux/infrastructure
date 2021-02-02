@@ -33,6 +33,12 @@ data "external" "vault_monitoring" {
   "--format", "json"]
 }
 
+data "external" "vault_hedgedoc" {
+  program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_hedgedoc.yml",
+    "vault_hedgedoc_client_secret",
+  "--format", "json"]
+}
+
 provider "keycloak" {
   client_id = "admin-cli"
   username  = data.external.vault_keycloak.result.vault_keycloak_admin_user
@@ -784,4 +790,30 @@ resource "keycloak_openid_client_scope" "email" {
   description            = "OpenID Connect built-in scope: email"
   include_in_token_scope = true
   consent_screen_text    = "$${emailScopeConsentText}"
+}
+
+resource "keycloak_openid_client" "hedgedoc_openid_client" {
+  realm_id      = "archlinux"
+  client_id     = "openid_hedgedoc"
+  client_secret = data.external.vault_hedgedoc.result.vault_hedgedoc_client_secret
+
+  name    = "Hedgedoc"
+  enabled = true
+
+  access_type           = "CONFIDENTIAL"
+  standard_flow_enabled = true
+  valid_redirect_uris = [
+    "https://md.archlinux.org/*",
+  ]
+}
+
+resource "keycloak_openid_user_realm_role_protocol_mapper" "hedgedoc_user_realm_role_mapper" {
+  realm_id  = "archlinux"
+  client_id = keycloak_openid_client.hedgedoc_openid_client.id
+  name      = "user realms"
+
+  claim_name          = "roles"
+  multivalued         = true
+  add_to_id_token     = false
+  add_to_access_token = false
 }

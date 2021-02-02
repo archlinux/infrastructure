@@ -1,0 +1,16 @@
+[Service]
+Environment=CMD_OAUTH2_USER_PROFILE_URL=https://accounts.archlinux.org/auth/realms/archlinux/protocol/openid-connect/userinfo
+Environment=CMD_OAUTH2_USER_PROFILE_USERNAME_ATTR=preferred_username
+Environment=CMD_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR=name
+Environment=CMD_OAUTH2_USER_PROFILE_EMAIL_ATTR=email
+Environment=CMD_OAUTH2_TOKEN_URL=https://accounts.archlinux.org/auth/realms/archlinux/protocol/openid-connect/token
+Environment=CMD_OAUTH2_AUTHORIZATION_URL=https://accounts.archlinux.org/auth/realms/archlinux/protocol/openid-connect/auth
+Environment=CMD_OAUTH2_CLIENT_ID=openid_hedgedoc
+Environment=CMD_OAUTH2_CLIENT_SECRET={{ vault_hedgedoc_client_secret }}
+Environment=CMD_OAUTH2_SCOPE="openid email profile roles"
+Environment=CMD_OAUTH2_ROLES_CLAIM=roles
+Environment=CMD_OAUTH2_ACCESS_ROLE=Staff
+Environment=CMD_OAUTH2_PROVIDERNAME=Keycloak
+Environment=CMD_DOMAIN=md.archlinux.org
+Environment=CMD_PROTOCOL_USESSL=true
+Environment=CMD_URL_ADDPORT=false
