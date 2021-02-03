@@ -6,7 +6,7 @@ After=network.target synapse.service
 [Service]
 User=synapse
 WorkingDirectory=~
-ExecStart=/var/lib/synapse/venv/bin/pantalaimon \
+ExecStart=/var/lib/synapse/venv-pantalaimon/bin/pantalaimon \
   -c /etc/synapse/pantalaimon.conf \
   --data-path /var/lib/synapse/pantalaimon-data
 

@@ -49,6 +49,58 @@
     - /var/lib/synapse/mjolnir-data
     - /var/lib/synapse/pantalaimon-data
 
+- name: make virtualenvs
+  command: 'python -m venv {{ item }}'
+  args:
+    creates: '{{ item }}/bin/python'
+  become: true
+  become_user: synapse
+  become_method: sudo
+  with_items:
+    - /var/lib/synapse/venv
+    - /var/lib/synapse/venv-pantalaimon
+
+- name: update virtualenvs
+  pip:
+    name:
+      - pip
+      - wheel
+    state: latest
+    extra_args: '--upgrade-strategy=eager'
+    virtualenv: '{{ item }}'
+  become: yes
+  become_user: synapse
+  become_method: sudo
+  with_items:
+    - /var/lib/synapse/venv
+    - /var/lib/synapse/venv-pantalaimon
+
+- name: install synapse
+  pip:
+    name:
+      - 'matrix-synapse[postgres,systemd,url_preview,redis]==1.26.0'
+    state: latest
+    extra_args: '--upgrade-strategy=eager'
+    virtualenv: /var/lib/synapse/venv
+  become: yes
+  become_user: synapse
+  become_method: sudo
+  notify:
+    - restart synapse
+
+- name: install pantalaimon
+  pip:
+    name:
+      - 'pantalaimon==0.9.1'
+    state: latest
+    extra_args: '--upgrade-strategy=eager'
+    virtualenv: /var/lib/synapse/venv-pantalaimon
+  become: yes
+  become_user: synapse
+  become_method: sudo
+  notify:
+    - restart pantalaimon
+
 - name: download mjolnir
   git:
     repo: https://github.com/matrix-org/mjolnir
@@ -57,6 +109,7 @@
   become: yes
   become_user: synapse
   become_method: sudo
+  register: mjolnir_git
   notify:
     - restart mjolnir
 
@@ -66,6 +119,7 @@
   become: yes
   become_user: synapse
   become_method: sudo
+  when: mjolnir_git.changed
 
 - name: build mjolnir
   command: yarn build
@@ -74,31 +128,20 @@
   become: true
   become_user: synapse
   become_method: sudo
+  when: mjolnir_git.changed
 
-- name: make virtualenv
-  command: python -m venv /var/lib/synapse/venv
-  args:
-    creates: /var/lib/synapse/venv/bin/python
-  become: true
-  become_user: synapse
-  become_method: sudo
-
-- name: install python packages
+- name: install mjolnir antispam module
   pip:
     name:
-      - 'matrix-synapse[postgres,systemd,url_preview,redis]==1.26.0'
-      - 'pantalaimon==0.9.1'
       - /var/lib/synapse/mjolnir/synapse_antispam
-      - pip
     state: latest
-    extra_args: '-U --upgrade-strategy=eager'
     virtualenv: /var/lib/synapse/venv
   become: yes
   become_user: synapse
   become_method: sudo
+  when: mjolnir_git.changed
   notify:
     - restart synapse
-    - restart pantalaimon
 
 - name: download matrix-appservice-irc
   git:
@@ -108,6 +151,7 @@
   become: yes
   become_user: synapse
   become_method: sudo
+  register: irc_git
   notify:
     - restart matrix-appservice-irc
 
@@ -117,6 +161,7 @@
   become: yes
   become_user: synapse
   become_method: sudo
+  when: irc_git.changed
 
 - name: install pg_hba.conf
   copy: src=pg_hba.conf dest=/var/lib/postgres/data/pg_hba.conf owner=postgres group=postgres mode=0600
