@@ -1,0 +1,14 @@
+[Unit]
+Description=Mjolnir Matrix moderation tool
+Wants=synapse.service pantalaimon.service
+After=network.target synapse.service pantalaimon.service
+
+[Service]
+User=synapse
+WorkingDirectory=/var/lib/synapse/mjolnir
+Environment=NODE_ENV=production
+Environment=NODE_CONFIG_DIR=/etc/synapse/mjolnir
+ExecStart=/usr/bin/node lib/index.js
+
+[Install]
+WantedBy=multi-user.target

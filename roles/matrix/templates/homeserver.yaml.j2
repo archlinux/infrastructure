@@ -829,9 +829,9 @@ worker_log_config: "/etc/synapse/log_config.yaml"
 #
 # The defaults are as shown below.
 #
-#rc_message:
-#  per_second: 0.2
-#  burst_count: 10
+rc_message:
+  per_second: 0.5
+  burst_count: 20
 #
 #rc_registration:
 #  per_second: 0.17
@@ -1374,7 +1374,7 @@ autocreate_auto_join_rooms: false
 # Note that, if the room already exists, this user must be joined and
 # have the appropriate permissions to invite new members.
 #
-auto_join_mxid_localpart: heftig
+auto_join_mxid_localpart: mjolnir
 
 # When auto_join_rooms is specified, setting this flag to false prevents
 # guest accounts from being automatically joined to the rooms.
@@ -2734,3 +2734,24 @@ redis:
   # Optional password if configured on the Redis instance
   #
   #password: <secret_password>
+
+spam_checker:
+  module: mjolnir.AntiSpam
+  config:
+    # Prevent servers/users in the ban lists from inviting users on this
+    # server to rooms. Default true.
+    block_invites: true
+    # Flag messages sent by servers/users in the ban lists as spam. Currently
+    # this means that spammy messages will appear as empty to users. Default
+    # false.
+    block_messages: false
+    # Remove users from the user directory search by filtering matrix IDs and
+    # display names by the entries in the user ban list. Default false.
+    block_usernames: false
+    # The room IDs of the ban lists to honour. Unlike other parts of Mjolnir,
+    # this list cannot be room aliases or permalinks. This server is expected
+    # to already be joined to the room - Mjolnir will not automatically join
+    # these rooms.
+    ban_lists:
+      - "!WuBtumawCeOGEieRrp:matrix.org"  # #matrix-org-coc-bl:matrix.org
+      - "!tUPwPPmVTaiKXMiijj:matrix.org"  # #matrix-org-hs-tos-bl:matrix.org

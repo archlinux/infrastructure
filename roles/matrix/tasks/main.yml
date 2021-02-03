@@ -17,6 +17,7 @@
       - jemalloc
       - libffi
       - libjpeg-turbo
+      - libolm
       - libtiff
       - libwebp
       - libxslt
@@ -31,6 +32,7 @@
       - redis
       - tcl
       - tk
+      - yarn
       - zlib
 
 - name: add synapse group
@@ -44,6 +46,34 @@
   with_items:
     - /var/lib/synapse
     - /var/lib/synapse/media_store
+    - /var/lib/synapse/mjolnir-data
+    - /var/lib/synapse/pantalaimon-data
+
+- name: download mjolnir
+  git:
+    repo: https://github.com/matrix-org/mjolnir
+    dest: /var/lib/synapse/mjolnir
+    version: v0.1.16
+  become: yes
+  become_user: synapse
+  become_method: sudo
+  notify:
+    - restart mjolnir
+
+- name: install mjolnir
+  community.general.yarn:
+    path: /var/lib/synapse/mjolnir
+  become: yes
+  become_user: synapse
+  become_method: sudo
+
+- name: build mjolnir
+  command: yarn build
+  args:
+    chdir: /var/lib/synapse/mjolnir
+  become: true
+  become_user: synapse
+  become_method: sudo
 
 - name: make virtualenv
   command: python -m venv /var/lib/synapse/venv
@@ -53,10 +83,12 @@
   become_user: synapse
   become_method: sudo
 
-- name: install synapse
+- name: install python packages
   pip:
     name:
-      - 'matrix-synapse[postgres,systemd,url_preview,redis]'
+      - 'matrix-synapse[postgres,systemd,url_preview,redis]==1.26.0'
+      - 'pantalaimon==0.9.1'
+      - /var/lib/synapse/mjolnir/synapse_antispam
       - pip
     state: latest
     extra_args: '-U --upgrade-strategy=eager'
@@ -66,12 +98,13 @@
   become_method: sudo
   notify:
     - restart synapse
+    - restart pantalaimon
 
 - name: download matrix-appservice-irc
   git:
     repo: https://github.com/matrix-org/matrix-appservice-irc
     dest: /var/lib/synapse/matrix-appservice-irc
-    version: master
+    version: 0.23.0
   become: yes
   become_user: synapse
   become_method: sudo
@@ -84,8 +117,6 @@
   become: yes
   become_user: synapse
   become_method: sudo
-  notify:
-    - restart matrix-appservice-irc
 
 - name: install pg_hba.conf
   copy: src=pg_hba.conf dest=/var/lib/postgres/data/pg_hba.conf owner=postgres group=postgres mode=0600
@@ -111,7 +142,10 @@
   become_method: su
 
 - name: create synapse config dir
-  file: state=directory path=/etc/synapse owner=root group=synapse mode=0750
+  file: path={{ item }} state=directory owner=root group=synapse mode=0750
+  with_items:
+    - /etc/synapse
+    - /etc/synapse/mjolnir
 
 - name: install homeserver config
   template: src=homeserver.yaml.j2 dest=/etc/synapse/homeserver.yaml owner=root group=synapse mode=0640
@@ -128,6 +162,16 @@
     - worker-media_repository.yaml
   notify:
     - restart synapse
+
+- name: install pantalaimon config
+  template: src=pantalaimon.conf.j2 dest=/etc/synapse/pantalaimon.conf owner=root group=synapse mode=0644
+  notify:
+    - restart pantalaimon
+
+- name: install mjolnir config
+  template: src=mjolnir.yaml.j2 dest=/etc/synapse/mjolnir/production.yaml owner=root group=synapse mode=0640
+  notify:
+    - restart mjolnir
 
 - name: install irc-bridge config
   template: src=irc-bridge.yaml.j2 dest=/etc/synapse/irc-bridge.yaml owner=root group=synapse mode=0640
@@ -181,6 +225,20 @@
   notify:
     - restart synapse
 
+- name: install pantalaimon units
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - pantalaimon.service
+  notify:
+    - restart pantalaimon
+
+- name: install mjolnir units
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - mjolnir.service
+  notify:
+    - restart mjolnir
+
 - name: install matrix-appservice-irc units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
@@ -206,19 +264,25 @@
   notify:
     - restart synapse
 
+- name: enable pantalaimon units
+  service: name={{ item }} enabled=yes
+  with_items:
+    - pantalaimon.service
+
+- name: enable mjolnir units
+  service: name={{ item }} enabled=yes
+  with_items:
+    - mjolnir.service
+
 - name: enable matrix-appservice-irc units
   service: name={{ item }} enabled=yes
   with_items:
     - matrix-appservice-irc.service
-  notify:
-    - restart matrix-appservice-irc
 
 - name: enable turnserver units
   service: name={{ item }} enabled=yes
   with_items:
     - turnserver.service
-  notify:
-    - restart turnserver
 
 - name: open firewall holes
   ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes

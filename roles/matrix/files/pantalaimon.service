@@ -1,0 +1,14 @@
+[Unit]
+Description=Pantalaimon E2E Matrix reverse proxy
+Wants=synapse.service
+After=network.target synapse.service
+
+[Service]
+User=synapse
+WorkingDirectory=~
+ExecStart=/var/lib/synapse/venv/bin/pantalaimon \
+  -c /etc/synapse/pantalaimon.conf \
+  --data-path /var/lib/synapse/pantalaimon-data
+
+[Install]
+WantedBy=default.target

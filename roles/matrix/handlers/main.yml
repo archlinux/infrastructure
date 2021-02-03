@@ -1,12 +1,5 @@
 ---
 
-- name: restart turnserver
-  systemd:
-    name: turnserver
-    state: restarted
-    enabled: yes
-    daemon_reload: yes
-
 - name: restart synapse
   systemd:
     name: synapse
@@ -14,9 +7,30 @@
     enabled: yes
     daemon_reload: yes
 
+- name: restart pantalaimon
+  systemd:
+    name: pantalaimon
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
+
+- name: restart mjolnir
+  systemd:
+    name: mjolnir
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
+
 - name: restart matrix-appservice-irc
   systemd:
     name: matrix-appservice-irc
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
+
+- name: restart turnserver
+  systemd:
+    name: turnserver
     state: restarted
     enabled: yes
     daemon_reload: yes
