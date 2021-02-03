@@ -1,0 +1,6 @@
+[Unit]
+Description=Sync arch-boxes releases
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/arch-boxes-sync

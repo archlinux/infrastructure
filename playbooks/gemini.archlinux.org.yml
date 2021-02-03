@@ -18,6 +18,7 @@
     - { role: nginx }
     - { role: archusers }
     - { role: dbscripts, repos_domain: "repos.archlinux.org", repos_rsync_domain: "rsync.archlinux.org", svntogit_repos: "/srv/svntogit/repos", postgres_ssl: 'on', tags: ['archusers'] }
+    - { role: arch_boxes_sync }
     - { role: archweb, archweb_site: false, archweb_services: true, archweb_mirrorcheck_locations: [5, 6] }
     - { role: sources, sources_domain: "sources.archlinux.org", sources_dir: "/srv/sources" }
     - { role: archive }
