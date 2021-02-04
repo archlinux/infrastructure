@@ -47,6 +47,5 @@ blackbox_targets:
     - mail.archlinux.org:993
     - mail.archlinux.org:995
   smtp_starttls:
-    - luna.archlinux.org:25
     - mail.archlinux.org:25
     - mail.archlinux.org:587
