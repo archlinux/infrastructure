@@ -116,13 +116,6 @@ arch_users:
       - dev
       - tu
       - multilib
-  bpiotrowski:
-    name: "Bartłomiej Piotrowski"
-    ssh_key: bpiotrowski.pub
-    groups:
-      - dev
-      - tu
-      - multilib
   cbehan:
     name: "Connor Behan"
     ssh_key: cbehan.pub
