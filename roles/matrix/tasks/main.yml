@@ -85,6 +85,7 @@
   become: yes
   become_user: synapse
   become_method: sudo
+  register: synapse_pip
   notify:
     - restart synapse
 
@@ -139,7 +140,7 @@
   become: yes
   become_user: synapse
   become_method: sudo
-  when: mjolnir_git.changed
+  when: synapse_pip.changed or mjolnir_git.changed
   notify:
     - restart synapse
 
