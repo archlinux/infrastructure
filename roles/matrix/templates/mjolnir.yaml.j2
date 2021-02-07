@@ -106,6 +106,10 @@ commands:
   # as display names or prefixed with exclamation points.
   additionalPrefixes: []
 
+  # If true, ban commands that use wildcard characters require confirmation with
+  # an extra `--force` argument
+  confirmWildcardBan: true
+
 # Configuration specific to certain toggleable protections
 protections:
   # Configuration for the wordlist plugin, which can ban users based if they say certain
@@ -152,3 +156,5 @@ health:
     # The HTTP status code which reports that the bot is not healthy/ready.
     # Defaults to 418.
     unhealthyStatus: 418
+
+# vim:set ft=yaml:
