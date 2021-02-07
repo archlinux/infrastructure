@@ -72,6 +72,23 @@ or just a sub-directory:
 
     misc/borg.sh extract <backup_address>::<archive_name> backup/srv/gitlab
 
+## Special backups
+
+### Mariadb
+
+For Mariadb backups are made using mariabackup to `mysql_backup_dir`.Backups can are made and
+restored using the `mariabackup` tool. See also [official MariaDB docs](https://mariadb.com/kb/en/full-backup-and-restore-with-mariabackup/).
+
+### PostgreSQL
+
+For PostgreSQL backups are made using pg_dump to `postgres_backup_dir`.
+
+Restoring backups can be done with `pg_restore`. See also [official PostgreSQL docs](https://www.postgresql.org/docs/current/app-pgrestore.html).
+
+### Gitlab
+
+GitLab is backupped up using the `gitlab_backup` tool to `gitlab_backupdir`. See also [official GitLab docs](https://docs.gitlab.com/ee/raketasks/backup_restore.html).
+
 ## Adding a new server
 
 Adding a new server to be backed up goes as follows:
