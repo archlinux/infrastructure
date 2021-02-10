@@ -26,6 +26,9 @@
       - python-requests
       - python-flask-migrate
       - python-scrypt
+      - python-feedgen
+      - python-pytz
+      - python-email-validator
       - pyalpm
       - sqlite
       - expac
