@@ -6,11 +6,3 @@ Type=oneshot
 User=sourceballs
 ExecStart=/srv/repos/svn-community/dbscripts/cron-jobs/sourceballs
 ExecStart=/srv/repos/svn-packages/dbscripts/cron-jobs/sourceballs
-
-PrivateDevices=true
-NoNewPrivileges=true
-LockPersonality=true
-MemoryDenyWriteExecute=true
-
-ProtectKernelTunables=true
-ProtectControlGroups=true
