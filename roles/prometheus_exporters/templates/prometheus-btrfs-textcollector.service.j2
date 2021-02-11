@@ -1,5 +1,7 @@
 [Unit]
 Description=Prometheus btrfs Exporter
+Wants=network-online.target
+After=network-online.target
 
 [Service]
 Type=oneshot
