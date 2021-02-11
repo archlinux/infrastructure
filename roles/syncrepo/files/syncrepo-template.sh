@@ -94,7 +94,6 @@ rsync_cmd \
 	--exclude='*.links.tar.gz*' \
 	--exclude='/other' \
 	--exclude='/sources' \
-	--exclude='/iso' \
 	"${source_url}" \
 	"${target}"
 
