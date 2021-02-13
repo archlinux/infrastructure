@@ -62,10 +62,10 @@
 
 - name: configure php-fpm
   template:
-    src=php-fpm.conf.j2 dest="/etc/php/php-fpm.d/{{ flyspray_user }}.conf"
+    src=php-fpm.conf.j2 dest="/etc/php7/php-fpm.d/{{ flyspray_user }}.conf"
     owner=root group=root mode=0644
   notify:
-    - restart php-fpm@flyspray
+    - restart php-fpm7@flyspray
 
 - name: install fail2ban register ban filter
   template: src=fail2ban.filter.j2 dest=/etc/fail2ban/filter.d/nginx-flyspray-register.local owner=root group=root mode=0644
@@ -82,4 +82,4 @@
     - fail2ban
 
 - name: start and enable systemd socket
-  service: name=php-fpm@flyspray.socket state=started enabled=true
+  service: name=php-fpm7@flyspray.socket state=started enabled=true

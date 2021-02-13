@@ -1,0 +1,7 @@
+---
+php_extensions:
+  - curl
+  - zip
+
+zend_extensions:
+  - opcache

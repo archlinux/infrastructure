@@ -1,0 +1,45 @@
+[Unit]
+Description=PHP-FPM service for %i
+After=syslog.target network.target
+After=mysqld.service postfix.service
+Requires=php-fpm7@.socket
+
+[Service]
+Type=notify
+
+PrivateTmp=true
+NoNewPrivileges=true
+;PrivateNetwork=true
+PrivateDevices=true
+
+# AURweb's rendercomment script git bindings requires access to /home:
+# failed to stat '/home/aur/.gitconfig
+ProtectHome=tmpfs
+ProtectSystem=full
+InaccessiblePaths=-/var/lib/mysql
+
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+ProtectKernelLogs=true
+ProtectClock=true
+
+RestrictRealtime=true
+RestrictNamespaces=true
+
+# Restricts the set of socket address families accessible to the processes of this unit.
+# Protects against vulnerabilities such as CVE-2016-8655
+RestrictAddressFamilies=AF_INET AF_INET6 AF_NETLINK AF_UNIX
+
+MemoryAccounting=yes
+CPUAccounting=yes
+IOAccounting=yes
+
+User=%i
+Group=%i
+Environment="FPM_SOCKETS=/run/php-fpm7/%i.socket=3"
+ExecStart=/usr/bin/php-fpm7 --nodaemonize --fpm-config /etc/php7/php-fpm.d/%i.conf
+ExecReload=/bin/kill -USR2 $MAINPID
+
+[Install]
+WantedBy=multi-user.target

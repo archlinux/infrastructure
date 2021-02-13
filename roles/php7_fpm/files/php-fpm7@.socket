@@ -1,0 +1,11 @@
+[Unit]
+Description=PHP-FPM socket for %i
+
+[Socket]
+ListenStream=/run/php-fpm7/%i.socket
+SocketMode=0660
+SocketUser=%i
+SocketGroup=http
+
+[Install]
+WantedBy=sockets.target

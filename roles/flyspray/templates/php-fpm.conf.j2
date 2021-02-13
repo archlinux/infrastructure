@@ -3,7 +3,7 @@ error_log = syslog
 daemonize = no
 
 [{{ flyspray_user }}]
-listen = /run/php-fpm/flyspray.socket
+listen = /run/php-fpm7/flyspray.socket
 listen.owner = {{ flyspray_user }}
 listen.group = http
 listen.mode = 0660
