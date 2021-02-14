@@ -59,11 +59,11 @@ lastupdate_url=''
 [ ! -d "${target}" ] && mkdir -p "${target}"
 [ ! -d "${tmp}" ] && mkdir -p "${tmp}"
 
-# Cleanup any temporary files from old run that might remain.
-find "${target}" -name '.~tmp~' -exec rm -r {} +
-
 exec 9>"${lock}"
 flock -n 9 || exit
+
+# Cleanup any temporary files from old run that might remain.
+find "${target}" -name '.~tmp~' -exec rm -r {} +
 
 rsync_cmd() {
 	local -a cmd=(rsync -rtlH --safe-links --delete-after ${VERBOSE} "--timeout=600" "--contimeout=60" -p \
