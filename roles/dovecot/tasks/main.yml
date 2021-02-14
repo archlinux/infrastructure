@@ -5,7 +5,7 @@
 
 # FIXME: check directory permissions
 - name: create dovecot configuration directory
-  file:  path=/etc/dovecot state=directory owner=root group=root mode=0755
+  file: path=/etc/dovecot state=directory owner=root group=root mode=0755
 
 - name: create dhparam
   command: openssl dhparam -out /etc/dovecot/dh.pem 4096 creates=/etc/dovecot/dh.pem
@@ -52,7 +52,7 @@
   systemd:
     name: "{{ item }}"
     state: started
-    enabled: yes
-    daemon_reload: yes
+    enabled: true
+    daemon_reload: true
   with_items:
     - dovecot-cleanup.timer

@@ -17,7 +17,7 @@
     hostname: "{{ gitlab_domain }}"
     container_default_behavior: compatibility
     network_mode: host
-    pull: yes
+    pull: true
     restart_policy: always
     env:
       # See https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/files/gitlab-config-template/gitlab.rb.template

@@ -105,9 +105,9 @@
 - name: start and enable archwiki timers and services
   systemd:
     name: "{{ item }}"
-    enabled: yes
+    enabled: true
     state: started
-    daemon_reload: yes
+    daemon_reload: true
   with_items:
     - archwiki-runjobs.timer
     - archwiki-prune-cache.timer
@@ -118,7 +118,7 @@
   systemd:
     name: archwiki-question-updater.service
     state: started
-    daemon_reload: yes
+    daemon_reload: true
 
 - name: ensure question answer file exists and set permissions
   file: state=file path="{{ archwiki_question_answer_file }}" owner=root group=root mode=0644

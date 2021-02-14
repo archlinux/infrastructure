@@ -2,7 +2,7 @@
 
 - name: daemon reload
   systemd:
-    daemon-reload: yes
+    daemon-reload: true
 
 - name: restart archweb memcached
   service: name=archweb-memcached state=restarted

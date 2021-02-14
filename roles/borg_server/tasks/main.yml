@@ -36,6 +36,6 @@
   authorized_key:
     user: borg
     key: "{{ item.stdout }}"
-    manage_dir: yes
+    manage_dir: true
     key_options: "command=\"/usr/bin/borg serve --restrict-to-path {{ backup_dir }}/{{ item['item'] }}\",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc"
   with_items: "{{ ssh_keys.results }}"

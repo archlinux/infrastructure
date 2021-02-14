@@ -11,7 +11,8 @@ ansible-lint:
     # Fix syntax-check rule (https://github.com/ansible-community/ansible-lint/issues/1350#issuecomment-778764110)
     - sed "s/,hcloud_inventory.py//" -i ansible.cfg
     - sed "/^vault_password_file/d" -i ansible.cfg
-    - ansible-lint
+    # Fix load-failure: Failed to load or parse file
+    - ansible-lint $(printf -- "--exclude %s " */*/vault_*)
 
 terraform-validate:
   script:

@@ -1,8 +1,12 @@
 exclude_paths:
   - misc
+  # FIXME: parser-error: couldn't resolve module/action 'hosts'. This often indicates a misspelling, missing collection, or incorrect module path.
+  - playbooks/tasks
 skip_list:
   # line too long (x > 80 characters) (line-length)
   - 'line-length'
+  # yaml: too many spaces inside braces (braces)
+  - 'braces'
   # Do not recommend running tasks as handlers
   - 'no-handler'
   # Do not force galaxy info in meta/main.yml

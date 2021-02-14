@@ -30,4 +30,3 @@
       - name: upload website
         unarchive: src={{ tempdir.path }}/pacman/pacman-{{ pacman_version }}/doc/website.tar.gz dest={{ archweb_dir }}/archlinux.org/pacman mode=0644
         delegate_to: archlinux.org
-

@@ -216,9 +216,9 @@
 - name: start and enable archweb memcached service and archweb-rsync_iso timer
   systemd:
     name: "{{ item }}"
-    enabled: yes
+    enabled: true
     state: started
-    daemon_reload: yes
+    daemon_reload: true
   with_items:
     - archweb-memcached.service
     - archweb-rsync_iso.timer

@@ -1,8 +1,7 @@
 # Every entry creates a redirect listening on port 80 and 443 with the following parameters:
 #   - domain: the domain to listen on
 #   - to: the redirect target as defined by the nginx return statement
-#   - type: HTTP status code to use (302 = temporary redirect, 301 = permanent redirect
-#)
+#   - type: HTTP status code to use (302 = temporary redirect, 301 = permanent redirect)
 redirects:
   - mailman:
     domain: mailman.archlinux.org

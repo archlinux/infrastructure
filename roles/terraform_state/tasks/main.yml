@@ -2,7 +2,7 @@
 
 - name: create terraform state db
   postgresql_db: db="{{ terraform_db }}"
-  become: yes
+  become: true
   become_user: postgres
   become_method: su
 
@@ -13,6 +13,6 @@
     password: "{{ vault_terraform_db_password }}"
     encrypted: true
     priv: "ALL"
-  become: yes
+  become: true
   become_user: postgres
   become_method: su

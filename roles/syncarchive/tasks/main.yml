@@ -14,8 +14,8 @@
 - name: start and enable syncarchive units
   systemd:
     name: "{{ item }}"
-    enabled: yes
+    enabled: true
     state: started
-    daemon_reload: yes
+    daemon_reload: true
   with_items:
     - syncarchive.timer

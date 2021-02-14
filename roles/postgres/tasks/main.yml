@@ -20,7 +20,7 @@
   when: filesystem == "btrfs"
 
 - name: initialize postgres
-  become: yes
+  become: true
   become_user: postgres
   become_method: su
   command: initdb --locale en_US.UTF-8 -E UTF8 -D '/var/lib/postgres/data'
@@ -58,7 +58,7 @@
 
 - name: set postgres user password
   postgresql_user: name=postgres password={{ vault_postgres_users.postgres }} encrypted=yes
-  become: yes
+  become: true
   become_user: postgres
   become_method: su
 

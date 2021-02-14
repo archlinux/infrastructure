@@ -12,7 +12,7 @@
 
 - name: fix home permissions
   file: state=directory owner=fluxbb group=fluxbb mode=0750 recurse=yes path="{{ fluxbb_dir }}"
-  changed_when: False
+  changed_when: false
 
 - name: create uploads directory
   file: state=directory owner=fluxbb group=fluxbb mode=0755 path="{{ fluxbb_dir }}/uploads"

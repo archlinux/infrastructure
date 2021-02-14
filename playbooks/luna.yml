@@ -27,7 +27,7 @@
   roles:
     - nginx
     - rspamd
-    - { role: mariadb, mariadb_query_cache_type: '0', mariadb_innodb_file_per_table: True }
+    - { role: mariadb, mariadb_query_cache_type: '0', mariadb_innodb_file_per_table: true }
     - { role: prometheus_exporters }
 # luna is hosting mailman lists; this postfix role does not cater to this yet
 # TODO: make postfix role handle mailman config?

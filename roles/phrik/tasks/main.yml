@@ -33,9 +33,9 @@
 - name: start and enable pkgfile and phrikservice
   systemd:
     name: "{{ item }}"
-    enabled: yes
+    enabled: true
     state: started
-    daemon_reload: yes
+    daemon_reload: true
   with_items:
     - pkgfile-update.timer
     - phrik.service

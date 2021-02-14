@@ -99,8 +99,8 @@
     password: "{{ postfix_relay_password | password_hash('sha512') }}"
     shell: /sbin/nologin
     update_password: always
-    home: /home/"{{ inventory_hostname }}" # Set home directory so shadow.service does not fail
-    create_home: yes
+    home: /home/"{{ inventory_hostname }}"  # Set home directory so shadow.service does not fail
+    create_home: true
 
 - name: open firewall holes
   ansible.posix.firewalld: service={{ item }} permanent=true state=enabled immediate=yes
@@ -111,5 +111,3 @@
   when: postfix_smtpd_public and configure_firewall
   tags:
     - firewall
-
-
