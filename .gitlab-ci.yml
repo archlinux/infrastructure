@@ -8,6 +8,9 @@ ansible-lint:
     # Fix weird ansible bug: https://github.com/trailofbits/algo/issues/1637
     # This probably happens due to gitlab-runner mounting the git repo into the container
     - chmod o-w .
+    # Fix syntax-check rule (https://github.com/ansible-community/ansible-lint/issues/1350#issuecomment-778764110)
+    - sed "s/,hcloud_inventory.py//" -i ansible.cfg
+    - sed "/^vault_password_file/d" -i ansible.cfg
     - ansible-lint
 
 terraform-validate:
