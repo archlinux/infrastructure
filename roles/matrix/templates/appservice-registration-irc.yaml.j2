@@ -4,20 +4,20 @@ as_token: {{ vault_matrix_secrets.irc_as_token }}
 namespaces:
 
   users:
-{% for network in vault_matrix_secrets.irc_networks.values() %}
+{% for network in vault_matrix_secrets.irc_networks %}
     - exclusive: true
       regex: '@{{ network.name | regex_escape() }}_.*:{{ matrix_server_name | regex_escape() }}'
       group_id: '+{{ network.name }}:{{ matrix_server_name }}'
 {% endfor %}
 
   aliases:
-{% for network in vault_matrix_secrets.irc_networks.values() %}
+{% for network in vault_matrix_secrets.irc_networks %}
     - exclusive: true
       regex: '#{{ network.name | regex_escape() }}_.*:{{ matrix_server_name | regex_escape() }}'
 {% endfor %}
 
   rooms:
-{% for room in vault_matrix_secrets | json_query("irc_networks.*[].mappings.*[].room") %}
+{% for room in vault_matrix_secrets | json_query("irc_networks[].mappings[].room") %}
     - exclusive: false
       regex: '{{ room | regex_escape() }}'
 {% endfor %}

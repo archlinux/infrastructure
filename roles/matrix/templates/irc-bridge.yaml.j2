@@ -43,9 +43,9 @@ homeserver:
 # Configuration specific to the IRC service
 ircService:
   servers:
-{% for address, network in vault_matrix_secrets.irc_networks.items() %}
+{% for network in vault_matrix_secrets.irc_networks %}
     # The address of the server to connect to.
-    "{{ address }}":
+    "{{ network.address }}":
       # A human-readable short name. This is used to label IRC status rooms
       # where matrix users control their connections.
       # E.g. 'ExampleNet IRC Bridge status'.
@@ -270,8 +270,8 @@ ircService:
         # 1:many mappings from IRC channels to room IDs on this IRC server.
         # The matrix room must already exist. Your matrix client should expose
         # the room ID in a "settings" page for the room.
-{% for channel, mapping in network.mappings.items() %}
-        "{{ channel }}":
+{% for mapping in network.mappings %}
+        "{{ mapping.channel }}":
           roomIds: ["{{ mapping.room }}"]
           key: "{{ mapping.key }}"
 {% endfor %}
