@@ -32,7 +32,7 @@ homeserver:
   # Default: true
   enablePresence: true
 
-  # Which port should the appservice bind to. Takes priority over the one provided in the
+  # Which port should the appservice bind to. Can be overriden by the one provided in the
   # command line! Optional.
   bindPort: 8499
 
@@ -364,6 +364,15 @@ ircService:
         # through the bridge e.g. caller ID as there is no way to /ACCEPT.
         # Default: "" (no user modes)
         userModes: "{{ network.user_modes }}"
+        # The format of the realname defined for users, either mxid or reverse-mxid
+        realnameFormat: "mxid"
+        # The minimum time to wait between connection attempts if we were disconnected
+        # due to throttling.
+        # pingTimeoutMs: 600000
+        # The rate at which to send pings to the IRCd if the client is being quiet for a while.
+        # Whilst the IRCd *should* be sending pings to us to keep the connection alive, it appears
+        # that sometimes they don't get around to it and end up ping timing us out.
+        # pingRateMs: 60000
 
 {% endfor %}
   # Set information about the bridged channel in the room state, so that client's may
@@ -494,6 +503,18 @@ ircService:
     # When handling lots of mode changes, wait this long before setting a power level
     # event in order to batch together changes
     # powerLevelGracePeriod: 1000
+
+  # Map of permissions from user/domain/wildcard to permission level.
+  # This is currently used to allow/disallow use of admin commands
+  # from the admin room but may be expanded in the future to contain more
+  # options. Currently, you may either set the value to be 'admin', or leave the key
+  # out to imply that the user does not have special permissions.
+  # UserID takes precedence over domain, which takes precedence over wildcard.
+  permissions:
+  # '*': admin
+  # 'matrix.org': admin
+  # '@fibble:matrix.org': admin
+    '@heftig:{{ matrix_server_name }}': admin
 
 # Options here are generally only applicable to large-scale bridges and may have
 # consequences greater than other options in this configuration file.
