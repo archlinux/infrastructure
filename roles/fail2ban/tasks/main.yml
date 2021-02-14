@@ -80,6 +80,6 @@
 - name: start and enable service
   systemd:
     name: "fail2ban.service"
-    enabled: yes
+    enabled: true
     state: started
-    daemon-reload: yes
+    daemon-reload: true

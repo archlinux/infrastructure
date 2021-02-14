@@ -9,7 +9,7 @@
     - { role: firewalld }
     - { role: unbound }
     # reconfiguring sshd may break the AUR on luna (unchecked)
-    #- { role: sshd, tags: ['sshd'] }
+    # - { role: sshd, tags: ['sshd'] }
     - { role: root_ssh }
     - { role: borg_client, tags: ["borg"], when: "'borg_clients' in group_names" }
     - { role: hardening }

@@ -18,9 +18,9 @@
 - name: activate letsencrypt renewal service
   systemd:
     name: certbot-renewal.timer
-    enabled: yes
+    enabled: true
     state: started
-    daemon_reload: yes
+    daemon_reload: true
 
 - name: open firewall holes for certbot standalone authenticator
   ansible.posix.firewalld: service={{ item }} permanent=true state=enabled immediate=yes

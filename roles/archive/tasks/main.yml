@@ -32,12 +32,12 @@
 
 - name: configure archive.org client
   command: ia configure --username={{ vault_archive_username }} --password={{ vault_archive_password }} creates={{ archive_user_home }}/.config/ia.ini
-  become: yes
+  become: true
   become_user: "{{ archive_user_name }}"
 
 - name: clone archive uploader code
   git: repo=https://github.com/archlinux/arch-historical-archive.git dest="{{ archive_repo }}" version="{{ archive_uploader_version }}"
-  become: yes
+  become: true
   become_user: "{{ archive_user_name }}"
 
 - name: install system service
@@ -49,6 +49,6 @@
 - name: start uploader timer
   systemd:
     name: archive-uploader.timer
-    enabled: yes
+    enabled: true
     state: started
-    daemon_reload: yes
+    daemon_reload: true

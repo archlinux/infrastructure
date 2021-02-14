@@ -28,7 +28,7 @@
       password: "{{ vault_keycloak_admin_password }}"
       grant_type: password
       client_id: admin-cli
-  ignore_errors: True
+  ignore_errors: true
   register: token
 
 - name: create an admin user
@@ -49,14 +49,14 @@
 
 - name: create postgres keycloak user
   postgresql_user: name="{{ keycloak_db_user }}" password="{{ keycloak_db_password }}"
-  become: yes
+  become: true
   become_user: postgres
   become_method: su
-  no_log: True
+  no_log: true
 
 - name: create keycloak db
   postgresql_db: name=keycloak owner="{{ keycloak_db_user }}"
-  become: yes
+  become: true
   become_user: postgres
   become_method: su
 

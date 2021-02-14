@@ -11,7 +11,7 @@
     - { role: prometheus_exporters }
     - { role: certbot }
     - { role: nginx }
-    - { role: mariadb, mariadb_query_cache_type: '0', mariadb_innodb_file_per_table: True, mariadb_innodb_buffer_pool_size: '1G' }
+    - { role: mariadb, mariadb_query_cache_type: '0', mariadb_innodb_file_per_table: true, mariadb_innodb_buffer_pool_size: '1G' }
     - { role: sudo }
     - { role: php_fpm, php_extensions: ['iconv', 'memcached', 'mysqli', 'pdo_mysql'], zend_extensions: ['opcache'] }
     - { role: memcached }

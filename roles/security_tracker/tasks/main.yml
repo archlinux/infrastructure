@@ -102,7 +102,7 @@
 - name: start and enable security-tracker timer
   systemd:
     name: security-tracker-update.timer
-    enabled: yes
+    enabled: true
     state: started
-    daemon_reload: yes
+    daemon_reload: true
   when: maintenance is not defined

@@ -222,7 +222,7 @@ arch_users:
     ssh_key: foxxx0.pub
     shell: /bin/zsh
     groups:
-       - tu
+      - tu
   fukawi2:
     name: "Phillip Smith"
     ssh_key: fukawi2.pub

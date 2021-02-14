@@ -20,7 +20,7 @@
     zone: public
     permanent: true
     state: enabled
-    immediate: yes
+    immediate: true
     rich_rule: rule family="ipv6" destination not address="fd00::1/80" source address="fd00::/80" masquerade
   when: configure_firewall
   tags:

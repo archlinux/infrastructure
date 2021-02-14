@@ -5,13 +5,13 @@
 
 - name: add hedgedoc postgres db
   postgresql_db: db=hedgedoc
-  become: yes
+  become: true
   become_user: postgres
   become_method: su
 
 - name: add hedgedoc postgres user
   postgresql_user: db=hedgedoc name=hedgedoc password={{ vault_postgres_users.hedgedoc }} encrypted=true
-  become: yes
+  become: true
   become_user: postgres
   become_method: su
 

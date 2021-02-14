@@ -1,5 +1,5 @@
-mariadb_skip_name_resolve: False
-mariadb_skip_networking: False
+mariadb_skip_name_resolve: false
+mariadb_skip_networking: false
 
 mariadb_key_buffer_size: '16M'
 mariadb_max_allowed_packet: '16M'
@@ -22,7 +22,7 @@ mariadb_innodb_log_buffer_size: '16M'
 mariadb_innodb_flush_log_at_trx_commit: '1'
 mariadb_innodb_stats_sample_pages: '32'
 mariadb_innodb_thread_concurrency: '8'
-mariadb_innodb_file_per_table: False
+mariadb_innodb_file_per_table: false
 
 mysql_backup_dir: '/root/backup-mysql'
 mysql_backup_defaults: '/root/.backup-my.cnf'

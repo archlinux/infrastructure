@@ -5,18 +5,18 @@
 
 - name: add quassel postgres db
   postgresql_db: db=quassel
-  become: yes
+  become: true
   become_user: postgres
   become_method: su
 
 - name: add quassel postgres user
   postgresql_user: db=quassel name=quassel password={{ vault_postgres_users.quassel }} encrypted=true
-  become: yes
+  become: true
   become_user: postgres
   become_method: su
 
 - name: initialize quassel
-  become: yes
+  become: true
   become_user: quassel
   become_method: sudo
   expect:

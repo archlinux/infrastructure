@@ -4,17 +4,17 @@
   systemd:
     name: systemd-networkd
     state: restarted
-    daemon_reload: yes
+    daemon_reload: true
 
 - name: restart journald
   systemd:
     name: systemd-journald
     state: restarted
-    daemon_reload: yes
+    daemon_reload: true
 
 - name: systemd daemon-reload
   systemd:
-    daemon_reload: yes
+    daemon_reload: true
 
 - name: restart syslog-ng
   service: name=syslog-ng@default state=restarted

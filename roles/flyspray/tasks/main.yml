@@ -31,7 +31,7 @@
 
 - name: create setup dir with write permissions
   file: state=directory owner="{{ flyspray_user }}" group="{{ flyspray_user }}" path="{{ flyspray_dir }}/setup" mode=755
-  when: not user_created.changed
+  when: falset user_created.changed
 
 - name: clone flyspray repo
   git:

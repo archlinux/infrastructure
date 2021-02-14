@@ -68,7 +68,7 @@
     state: latest
     extra_args: '--upgrade-strategy=eager'
     virtualenv: '{{ item }}'
-  become: yes
+  become: true
   become_user: synapse
   become_method: sudo
   with_items:
@@ -82,7 +82,7 @@
     state: latest
     extra_args: '--upgrade-strategy=eager'
     virtualenv: /var/lib/synapse/venv
-  become: yes
+  become: true
   become_user: synapse
   become_method: sudo
   register: synapse_pip
@@ -96,7 +96,7 @@
     state: latest
     extra_args: '--upgrade-strategy=eager'
     virtualenv: /var/lib/synapse/venv-pantalaimon
-  become: yes
+  become: true
   become_user: synapse
   become_method: sudo
   notify:
@@ -107,7 +107,7 @@
     repo: https://github.com/matrix-org/mjolnir
     dest: /var/lib/synapse/mjolnir
     version: v0.1.17
-  become: yes
+  become: true
   become_user: synapse
   become_method: sudo
   register: mjolnir_git
@@ -117,7 +117,7 @@
 - name: install mjolnir
   community.general.yarn:
     path: /var/lib/synapse/mjolnir
-  become: yes
+  become: true
   become_user: synapse
   become_method: sudo
   when: mjolnir_git.changed
@@ -137,7 +137,7 @@
       - /var/lib/synapse/mjolnir/synapse_antispam
     state: latest
     virtualenv: /var/lib/synapse/venv
-  become: yes
+  become: true
   become_user: synapse
   become_method: sudo
   when: synapse_pip.changed or mjolnir_git.changed
@@ -149,7 +149,7 @@
     repo: https://github.com/matrix-org/matrix-appservice-irc
     dest: /var/lib/synapse/matrix-appservice-irc
     version: 0.23.0
-  become: yes
+  become: true
   become_user: synapse
   become_method: sudo
   register: irc_git
@@ -159,7 +159,7 @@
 - name: install matrix-appservice-irc
   npm:
     path: /var/lib/synapse/matrix-appservice-irc
-  become: yes
+  become: true
   become_user: synapse
   become_method: sudo
   when: irc_git.changed
@@ -171,19 +171,19 @@
 
 - name: add synapse postgres db
   postgresql_db: db=synapse
-  become: yes
+  become: true
   become_user: postgres
   become_method: su
 
 - name: add synapse postgres user
   postgresql_user: db=synapse user=synapse password={{ vault_postgres_users.synapse }}
-  become: yes
+  become: true
   become_user: postgres
   become_method: su
 
 - name: add irc postgres db
   postgresql_db: db=irc
-  become: yes
+  become: true
   become_user: postgres
   become_method: su
 

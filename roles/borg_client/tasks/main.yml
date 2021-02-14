@@ -7,7 +7,7 @@
   environment:
     BORG_RELOCATED_REPO_ACCESS_IS_OK: "yes"
   register: borg_list
-  ignore_errors: True
+  ignore_errors: true
   loop: "{{ backup_hosts }}"
   changed_when: borg_list.stdout | length > 0
 
@@ -16,7 +16,7 @@
   when: borg_list is failed
   environment:
     BORG_PASSPHRASE: ""
-  ignore_errors: True # This can sometimes fail if a backup is in progress :/
+  ignore_errors: true  # This can sometimes fail if a backup is in progress :/
   loop: "{{ backup_hosts }}"
 
 - name: install convenience scripts
@@ -34,7 +34,7 @@
 - name: check whether postgres user exists
   command: getent passwd postgres
   register: check_postgres_user
-  ignore_errors: True
+  ignore_errors: true
   changed_when: check_postgres_user.stdout | length > 0
 
 - name: make postgres backup directory

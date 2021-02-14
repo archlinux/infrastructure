@@ -20,5 +20,5 @@
   ansible.posix.firewalld:
     service: dhcpv6-client
     state: disabled
-    immediate: yes
+    immediate: true
   when: configure_firewall

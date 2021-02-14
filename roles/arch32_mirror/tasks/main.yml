@@ -22,9 +22,9 @@
 - name: start and enable syncrepo unit
   systemd:
     name: syncrepo_arch32.timer
-    enabled: yes
+    enabled: true
     state: started
-    daemon_reload: yes
+    daemon_reload: true
 
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ arch32_mirror_domain }} state=directory owner=root group=root mode=0755

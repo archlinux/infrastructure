@@ -91,7 +91,7 @@
   sysctl:
     name: net.ipv4.tcp_rmem
     value: "{{ tcp_rmem }}"
-    sysctl_set: yes
+    sysctl_set: true
     sysctl_file: /etc/sysctl.d/net.conf
   when: tcp_rmem is defined
 
@@ -99,7 +99,7 @@
   sysctl:
     name: net.ipv4.tcp_wmem
     value: "{{ tcp_wmem }}"
-    sysctl_set: yes
+    sysctl_set: true
     sysctl_file: /etc/sysctl.d/net.conf
   when: tcp_wmem is defined
 
