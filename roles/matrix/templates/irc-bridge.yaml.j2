@@ -43,7 +43,7 @@ homeserver:
 # Configuration specific to the IRC service
 ircService:
   servers:
-{% for address, settings in vault_matrix_secrets.irc_networks.items() %}
+{% for address, network in vault_matrix_secrets.irc_networks.items() %}
     # The address of the server to connect to.
     "{{ address }}":
       # A human-readable short name. This is used to label IRC status rooms
@@ -51,7 +51,7 @@ ircService:
       # E.g. 'ExampleNet IRC Bridge status'.
       # It is also used in the Third Party Lookup API as the instance `desc`
       # property, where each server is an instance.
-      name: "{{ matrix_server_name }}—{{ settings.name }}"
+      name: "{{ matrix_server_name }}—{{ network.name }}"
 
       additionalAddresses: []
       #
@@ -67,7 +67,7 @@ ircService:
       # icon: https://example.com/images/hash.png
 
       # The port to connect to. Optional.
-      port: {{ settings.port }}
+      port: {{ network.port }}
       # Whether to use SSL or not. Default: false.
       ssl: true
       # Whether or not IRC server is using a self-signed cert or not providing CA Chain
@@ -139,11 +139,11 @@ ircService:
         #      See https://github.com/matrix-org/matrix-appservice-irc/issues/55
         enabled: true
         # The nickname to give the AS bot.
-        nick: "{{ settings.nick }}"
+        nick: "{{ network.nick }}"
         # The username to give to the AS bot. Defaults to "matrixbot"
-        username: "{{ settings.username }}"
+        username: "{{ network.username }}"
         # The password to give to NickServ or IRC Server for this nick. Optional.
-        password: "{{ settings.password }}"
+        password: "{{ network.password }}"
         #
         # Join channels even if there are no Matrix users on the other side of
         # the bridge. Set to false to prevent the bot from joining channels which have no
@@ -189,7 +189,7 @@ ircService:
         # This should be set to the same thing as namespaces.users.group_id in irc_registration.
         # This does not alter existing rooms.
         # Leaving this option empty will not set the event.
-        groupId: "+{{ settings.name }}:{{ matrix_server_name }}"
+        groupId: "+{{ network.name }}:{{ matrix_server_name }}"
         # Should created Matrix rooms be federated? If false, only users on the
         # HS attached to this AS will be able to interact with this room.
         # Default: true.
@@ -203,7 +203,7 @@ ircService:
         # $CHANNEL => The IRC channel (e.g. "#python")
         # This MUST have $CHANNEL somewhere in it.
         # Default: '#irc_$SERVER_$CHANNEL'
-        aliasTemplate: "#{{ settings.name }}_$CHANNEL"
+        aliasTemplate: "#{{ network.name }}_$CHANNEL"
         # A list of user IDs which the AS bot will send invites to in response
         # to a !join. Only applies if joinRule is 'invite'. Default: []
         # whitelist:
@@ -270,10 +270,10 @@ ircService:
         # 1:many mappings from IRC channels to room IDs on this IRC server.
         # The matrix room must already exist. Your matrix client should expose
         # the room ID in a "settings" page for the room.
-{% for channel, config in settings.mappings.items() %}
+{% for channel, mapping in network.mappings.items() %}
         "{{ channel }}":
-          roomIds: ["{{ config.room }}"]
-          key: "{{ config.key }}"
+          roomIds: ["{{ mapping.room }}"]
+          key: "{{ mapping.key }}"
 {% endfor %}
 
       # Configuration for virtual matrix users. The following variables are
@@ -285,7 +285,7 @@ ircService:
         # MUST have $NICK somewhere in it.
         # Optional. Default: "@$SERVER_$NICK".
         # Example: "@irc.example.com_Alice:example.com"
-        userTemplate: "@{{ settings.name }}_$NICK"
+        userTemplate: "@{{ network.name }}_$NICK"
         # The display name to use for created matrix clients. This should have
         # $NICK somewhere in it if it is specified. Can also use $SERVER to
         # insert the IRC domain.
@@ -363,7 +363,7 @@ ircService:
         # so check before setting this value. Some modes may not work as intended
         # through the bridge e.g. caller ID as there is no way to /ACCEPT.
         # Default: "" (no user modes)
-        userModes: "{{ settings.user_modes }}"
+        userModes: "{{ network.user_modes }}"
 
 {% endfor %}
   # Set information about the bridged channel in the room state, so that client's may
