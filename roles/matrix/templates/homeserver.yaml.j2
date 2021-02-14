@@ -1314,7 +1314,7 @@ account_threepid_delegates:
 # homeserver. This behaviour can be customised with the settings below.
 #
 auto_join_rooms:
-  - "#archlinux:archlinux.org"
+  - "#archlinux:{{ matrix_server_name }}"
 
 # Where auto_join_rooms are specified, setting this flag ensures that the
 # the rooms exist by creating them when the first user on the
@@ -2192,7 +2192,7 @@ email:
   # Note that the placeholder must be written '%(app)s', including the
   # trailing 's'.
   #
-  notif_from: "Arch Linux %(app)s server <noreply@archlinux.org>"
+  notif_from: "Arch Linux %(app)s server <noreply@{{ matrix_server_name }}>"
 
   # app_name defines the default value for '%(app)s' in notif_from and email
   # subjects. It defaults to 'Matrix'.

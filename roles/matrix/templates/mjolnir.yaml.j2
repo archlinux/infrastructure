@@ -27,7 +27,7 @@ autojoinOnlyIfManager: true
 
 # If `autojoinOnlyIfManager` is false, only the members in this group can invite
 # the bot to new rooms.
-acceptInvitesFromGroup: "+archlinux:archlinux.org"
+acceptInvitesFromGroup: "+archlinux:{{ matrix_server_name }}"
 
 # If the bot is invited to a room and it won't accept the invite (due to the
 # conditions above), report it to the management room. Defaults to disabled (no
@@ -38,7 +38,7 @@ recordIgnoredInvites: true
 # anyone in this room can use the bot - secure your room!
 # This should be a room alias or room ID - not a matrix.to URL.
 # Note: Mjolnir is fairly verbose - expect a lot of messages from it.
-managementRoom: "#mjolnir:archlinux.org"
+managementRoom: "#mjolnir:{{ matrix_server_name }}"
 
 # Set to false to make the management room a bit quieter.
 verboseLogging: false
@@ -77,7 +77,7 @@ automaticallyRedactForReasons:
 
 # A list of rooms to protect (matrix.to URLs)
 protectedRooms:
-  - "https://matrix.to/#/#archlinux:archlinux.org"
+  - "https://matrix.to/#/#archlinux:{{ matrix_server_name }}"
 
 # Set this option to true to protect every room the bot is joined to. Note that
 # this effectively makes the protectedRooms and associated commands useless because
