@@ -1,8 +1,8 @@
 exclude_paths:
   - misc
 skip_list:
-  # Ignore lines longer than 160 chars
-  - '204'
+  # line too long (x > 80 characters) (line-length)
+  - 'line-length'
   # Do not recommend running tasks as handlers
   - '503'
   # Do not force galaxy info in meta/main.yml

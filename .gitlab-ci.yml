@@ -1,7 +1,7 @@
 image: "archlinux:latest"
 
 before_script:
-  - pacman -Syu --needed --noconfirm ansible-lint terraform
+  - pacman -Syu --needed --noconfirm ansible-lint yamllint terraform
 
 ansible-lint:
   script:
