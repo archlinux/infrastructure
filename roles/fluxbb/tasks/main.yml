@@ -6,12 +6,12 @@
 
 - name: clone fluxbb
   git:
-    repo: https://git.archlinux.org/vhosts/bbs.archlinux.org.git/
+    repo: https://gitlab.archlinux.org/archlinux/archbbs.git
     dest: "{{ fluxbb_dir }}"
     version: "{{ fluxbb_version }}"
 
 - name: fix home permissions
-  file: state=directory owner=fluxbb group=fluxbb mode=0750 recurse=yes path="{{ fluxbb_dir }}"
+  file: state=directory owner=fluxbb group=fluxbb mode=0755  path="{{ fluxbb_dir }}"
   changed_when: false
 
 - name: create uploads directory

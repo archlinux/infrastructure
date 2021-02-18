@@ -17,6 +17,7 @@ server {
 # limit to 1 requests per minute, with a burst defined when we use this
 # limiter in the location directive below
 limit_req_zone $binary_remote_addr zone=rsslimit:8m rate=1r/m;
+limit_req_zone $binary_remote_addr zone=searchlimit:10m rate=1r/s;
 limit_req_status 429;
 
 server {
@@ -35,6 +36,15 @@ server {
 
     location /.git {
         deny all;
+    }
+
+    location = /search.php {
+	limit_req zone=searchlimit burst=10;
+        fastcgi_pass   unix:/run/php-fpm/fluxbb.socket;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        fastcgi_param  HTTPS            on;
+        include        fastcgi_params;
     }
 
     location ~ /extern\.php {

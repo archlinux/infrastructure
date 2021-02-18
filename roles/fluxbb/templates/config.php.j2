@@ -1,6 +1,6 @@
 <?php
 
-$db_type = 'mysqli';
+$db_type = 'mysqli_innodb';
 $db_host = 'localhost';
 $db_name = 'fluxbb';
 $db_username = 'fluxbb';
@@ -14,15 +14,15 @@ $cookie_path = '/';
 $cookie_secure = 0;
 $cookie_seed = '{{ fluxbb_cookie_seed }}';
 
-$arch_home ='http://www.archlinux.org/';
-$arch_navbar = array('Home' => 'http://www.archlinux.org/',
-                      'Packages' => 'http://www.archlinux.org/packages/',
+$arch_home ='http://archlinux.org/';
+$arch_navbar = array('Home' => 'http://archlinux.org/',
+                      'Packages' => 'http://archlinux.org/packages/',
                       'Forums' => 'https://bbs.archlinux.org/',
                       'Wiki' => 'https://wiki.archlinux.org/',
                       'Bugs' => 'https://bugs.archlinux.org/',
 		      'Security' => 'https://security.archlinux.org/',
                       'AUR' => 'https://aur.archlinux.org/',
-                      'Download' => 'http://www.archlinux.org/download/');
+                      'Download' => 'http://archlinux.org/download/');
 $arch_navbar_selected = 'Forums';
 
 $funnyquestion_hash = '{{ fluxbb_funnyquestion_hash }}';
