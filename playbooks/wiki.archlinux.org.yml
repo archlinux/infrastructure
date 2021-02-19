@@ -14,7 +14,7 @@
     - { role: postfix, postfix_relayhost: "mail.archlinux.org" }
     - { role: mariadb, mariadb_query_cache_type: '0', mariadb_innodb_file_per_table: true }
     - { role: sudo }
-    - { role: php_fpm, php_extensions: ['bcmath', 'curl', 'gd', 'iconv', 'intl', 'mysqli', 'sockets', 'zip'], zend_extensions: ['opcache'] }
+    - { role: php7_fpm, php_extensions: ['bcmath', 'curl', 'gd', 'iconv', 'intl', 'mysqli', 'sockets', 'zip'], zend_extensions: ['opcache'] }
     - { role: memcached }
     - { role: archwiki }
     - { role: fail2ban }

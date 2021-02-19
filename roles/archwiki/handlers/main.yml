@@ -1,7 +1,7 @@
 ---
 
-- name: restart php-fpm@archwiki
-  service: name=php-fpm@{{ archwiki_user }} state=restarted
+- name: restart php-fpm7@archwiki
+  service: name=php-fpm7@{{ archwiki_user }} state=restarted
 
 - name: run wiki updatescript
   command: php {{ archwiki_dir }}/public/maintenance/update.php --quick
