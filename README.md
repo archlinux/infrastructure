@@ -91,12 +91,6 @@ set up.
 
 All hosts should be relaying email through our primary mx host (currently 'mail.archlinux.org'). See [docs/email.md](./docs/email.md) for full details.
 
-#### Note about opendkim
-
-The opendkim DNS data has to be added to DNS manually. The roles verifies that the DNS is correct before starting opendkim.
-
-The file that has to be added to the zone is `/etc/opendkim/private/$selector.txt`.
-
 ### Putting a service in maintenance mode
 
 Most web services with a nginx configuration, can be put into a maintenance mode, by running the playbook with a maintenance variable:
