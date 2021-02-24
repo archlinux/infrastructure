@@ -28,6 +28,11 @@ server {
 
     root {{ keycloak_domain }};
 
+    # https://w3c.github.io/webappsec-change-password-url/
+    location /.well-known/change-password {
+        return 302 https://$server_name/auth/realms/archlinux/account/#/security/signingin;
+    }
+
     location ~ /auth/realms/[a-z]+/metrics  {
         auth_basic "Prometheus exporter";
         auth_basic_user_file {{ keycloak_nginx_htpasswd }};
