@@ -13,3 +13,4 @@
     - { role: redirects }
     - { role: prometheus_exporters }
     - { role: hardening }
+    - { role: ping }

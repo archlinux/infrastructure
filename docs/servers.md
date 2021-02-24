@@ -127,6 +127,7 @@ Medium-fast-ish packet.net Arch Linux box.
 
 ### Services
   - Redirects (nginx redirects)
+  - ping
 
 ## security.archlinux.org
 

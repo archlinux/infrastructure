@@ -284,6 +284,7 @@ locals {
     ipxe          = { value = "www" }
     mailman       = { value = "redirect" }
     packages      = { value = "www" }
+    ping          = { value = "redirect" }
     planet        = { value = "www" }
     projects      = { value = "luna" }
     repos         = { value = "gemini" }
