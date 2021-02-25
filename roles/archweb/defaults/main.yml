@@ -10,7 +10,6 @@ archweb_domains_redirects:
         'planet.archlinux.org': '/planet$request_uri'
 archweb_domains_templates:
         'ipxe.archlinux.org': 'ipxe.archlinux.org.j2'
-archweb_network_check_domain: 'www.archlinux.org'
 archweb_allowed_hosts: ["{{ archweb_domain }}", 'ipxe.archlinux.org']
 archweb_nginx_conf: '/etc/nginx/nginx.d/archweb.conf'
 archweb_repository: 'https://github.com/archlinux/archweb.git'
