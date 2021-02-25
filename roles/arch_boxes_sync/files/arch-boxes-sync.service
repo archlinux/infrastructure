@@ -4,3 +4,6 @@ Description=Sync arch-boxes releases
 [Service]
 Type=oneshot
 ExecStart=/usr/local/bin/arch-boxes-sync
+ProtectSystem=strict
+PrivateTmp=true
+ReadWritePaths=/srv/ftp/images
