@@ -1,0 +1,17 @@
+---
+- name: install arch-boxes-sync.sh script dependencies
+  pacman: name=curl,jq,unzip state=present
+
+- name: install arch-boxes-sync.sh script
+  copy: src=arch-boxes-sync.sh dest=/usr/local/bin/ owner=root group=root mode=0755
+
+- name: install arch-boxes-sync.{service,timer}
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  loop:
+    - arch-boxes-sync.service
+    - arch-boxes-sync.timer
+  notify:
+    - daemon reload
+
+- name: start and enable arch-boxes-sync.timer
+  systemd: name=arch-boxes-sync.timer enabled=yes daemon_reload=yes state=started
