@@ -1,0 +1,11 @@
+[Unit]
+Description=Prometheus Arch Repository Exporter TextCollector Timer
+
+[Timer]
+# 24 hours
+OnUnitActiveSec=1440m
+OnBootSec=15min
+RandomizedDelaySec=1min
+
+[Install]
+WantedBy=timers.target
