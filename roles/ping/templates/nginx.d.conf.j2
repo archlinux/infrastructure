@@ -1,0 +1,35 @@
+server {
+    # We don't redirect to HTTPS because a redirect is considered a captive portal.
+    listen       80;
+    listen       [::]:80;
+    listen       443 ssl http2;
+    listen       [::]:443 ssl http2;
+    server_name  {{ ping_domain }};
+
+    access_log   /var/log/nginx/{{ ping_domain }}/access.log reduced;
+    error_log    /var/log/nginx/{{ ping_domain }}/error.log;
+
+    include snippets/letsencrypt.conf;
+
+    ssl_certificate      /etc/letsencrypt/live/{{ ping_domain }}/fullchain.pem;
+    ssl_certificate_key  /etc/letsencrypt/live/{{ ping_domain }}/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/{{ ping_domain }}/chain.pem;
+
+    default_type text/plain;
+
+    location = / {
+        return 200 'This domain is used for connectivity checking (captive portal detection).\n';
+    }
+
+    # https://man.archlinux.org/man/NetworkManager.conf.5#CONNECTIVITY_SECTION
+    location /nm-check.txt {
+        access_log off;
+        add_header Cache-Control "max-age=0, must-revalidate";
+        return 200 'NetworkManager is online\n';
+    }
+
+    location / {
+        access_log off;
+        return 404;
+    }
+}
