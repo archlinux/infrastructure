@@ -24,13 +24,23 @@ btrfs_errors=(write_io_errs read_io_errs flush_io_errs corruption_errs generatio
 for btrfs_mount in ${list_btrfs_submounts[@]}; do
   for btrfs_error in "${btrfs_errors[@]}"
   do
+    echo "# HELP btrfs_${btrfs_error} error" >> $TMP_FILE
+    echo "# TYPE btrfs_${btrfs_error} gauge" >> $TMP_FILE
+  done
+  # Break, as we can only have one HELP/TYPE line
+  break
+done
+
+for btrfs_mount in ${list_btrfs_submounts[@]}; do
+  for btrfs_error in "${btrfs_errors[@]}"
+    #echo "# HELP btrfs_${btrfs_error} error" >> $TMP_FILE
+    #echo "# TYPE btrfs_${btrfs_error} gauge" >> $TMP_FILE
+  do
     jq_filter=".[\"device-stats\"][].${btrfs_error}"
     errors=$(sudo btrfs --format json device stats $btrfs_mount | jq -r ${jq_filter})
 
     device=$(sudo btrfs --format json device stats $btrfs_mount | jq -r '.["device-stats"][].device')
 
-    echo "# HELP btrfs_${btrfs_error} error" >> $TMP_FILE
-    echo "# TYPE btrfs_${btrfs_error} gauge" >> $TMP_FILE
     echo "btrfs_${btrfs_error}{device=\"${device}\"} ${errors}" >> $TMP_FILE
   done
 done
