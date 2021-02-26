@@ -73,3 +73,7 @@ The Nginx access logs/systemd logs are indexed by loki. For non webserver hosts 
 ### AUR monitoring
 
 Some fun statistics are scraped from aur.archlinux.org using `curl` and `hq` as there is no proper AUR prometheus endpoint as of yet. The statistics are the AUR packages and users and is retrieved every 5 minutes.
+
+### Smart
+
+TODO:

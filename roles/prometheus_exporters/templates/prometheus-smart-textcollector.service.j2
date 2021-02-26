@@ -1,0 +1,30 @@
+[Unit]
+Description=Prometheus Smart Exporter TextCollector
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/smart-textcollector.sh {{ prometheus_textfile_dir }}
+
+NoNewPrivileges=true
+LockPersonality=true
+
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths={{ prometheus_textfile_dir }}
+
+MemoryDenyWriteExecute=true
+RemoveIPC=true
+RestrictRealtime=true
+RestrictNamespaces=true
+RestrictSUIDSGID=true
+
+PrivateNetwork=true
+ProtectHostname=true
+ProtectControlGroups=true
+ProtectKernelLogs=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+#ProtectClock=true
+
+SystemCallArchitectures=native

@@ -1,0 +1,10 @@
+[Unit]
+Description=Prometheus Smart Exporter TextCollector Timer
+
+[Timer]
+OnUnitActiveSec=1h
+OnBootSec=15min
+RandomizedDelaySec=1min
+
+[Install]
+WantedBy=timers.target
