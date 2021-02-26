@@ -11,4 +11,5 @@
     - { role: root_ssh }
     - { role: rebuilderd_worker }
     - { role: prometheus_exporters }
+    - { role: promtail }
     - { role: fail2ban }

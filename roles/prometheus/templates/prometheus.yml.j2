@@ -13,11 +13,27 @@ alerting:
        - localhost:9093
 
 scrape_configs:
+  - job_name: loki
+    static_configs:
+    - targets: ['127.0.0.1:3100']
+      labels:
+        instance: "{{ ansible_fqdn }}"
+
   - job_name: 'node_exporter'
     static_configs:
     {% for host in groups['node_exporters'] %}
 
     - targets: ['{{ host }}:{{ prometheus_exporter_port }}']
+      labels:
+        instance: "{{ host }}"
+
+    {% endfor %}
+
+  - job_name: 'promtail'
+    static_configs:
+    {% for host in groups['node_exporters'] %}
+
+    - targets: ['{{ host }}:9080']
       labels:
         instance: "{{ host }}"
 

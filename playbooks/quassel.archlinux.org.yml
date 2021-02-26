@@ -18,3 +18,4 @@
       postgres_effective_cache_size: 1GB
     - { role: quassel, quassel_domain: "quassel.archlinux.org" }
     - { role: prometheus_exporters }
+    - { role: promtail }

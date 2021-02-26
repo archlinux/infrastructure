@@ -11,5 +11,6 @@
     - { role: nginx }
     - { role: redirects }
     - { role: prometheus_exporters }
+    - { role: promtail }
     - { role: hardening }
     - { role: ping }

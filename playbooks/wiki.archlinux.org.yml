@@ -19,3 +19,4 @@
     - { role: archwiki }
     - { role: fail2ban }
     - { role: prometheus_exporters }
+    - { role: promtail }

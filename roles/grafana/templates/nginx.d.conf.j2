@@ -2,6 +2,11 @@ upstream grafana {
     server localhost:3000;
 }
 
+map $http_upgrade $connection_upgrade {
+        default upgrade;
+        ''      close;
+}
+
 server {
     listen       80;
     listen       [::]:80;
@@ -36,5 +41,7 @@ server {
         access_log   /var/log/nginx/{{ grafana_domain }}/access.log main;
         proxy_pass http://grafana;
 	proxy_set_header X-Forwarded-For      $proxy_add_x_forwarded_for;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
     }
 }

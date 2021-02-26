@@ -18,3 +18,4 @@
     - { role: postfix, postfix_relayhost: "mail.archlinux.org" }
     - { role: fail2ban }
     - { role: prometheus_exporters }
+    - { role: promtail }

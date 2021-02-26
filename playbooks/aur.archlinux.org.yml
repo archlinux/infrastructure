@@ -9,6 +9,7 @@
     - { role: sshd, sshd_enable_includes: true }
     - { role: root_ssh }
     - { role: prometheus_exporters }
+    - { role: promtail }
     - { role: certbot }
     - { role: nginx }
     - { role: mariadb, mariadb_query_cache_type: '0', mariadb_innodb_file_per_table: true, mariadb_innodb_buffer_pool_size: '1G' }

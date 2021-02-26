@@ -12,3 +12,4 @@
     - { role: sshd }
     - { role: root_ssh }
     - { role: prometheus_exporters }
+    - { role: promtail }

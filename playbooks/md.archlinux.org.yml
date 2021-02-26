@@ -19,3 +19,4 @@
       postgres_effective_cache_size: 1GB
     - { role: hedgedoc, hedgedoc_domain: "md.archlinux.org" }
     - { role: prometheus_exporters }
+    - { role: promtail }

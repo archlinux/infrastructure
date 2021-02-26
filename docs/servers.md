@@ -111,7 +111,7 @@ Medium-fast-ish packet.net Arch Linux box.
 
 ## monitoring.archlinux.org
 
-  Prometheus and Grafana server which collects performance/metrics from our services and runs alertmanager.
+  Prometheus, Loki and Grafana server which collects performance/metrics and logs from our services and runs alertmanager.
 
 ### Services
   - Alertmanager

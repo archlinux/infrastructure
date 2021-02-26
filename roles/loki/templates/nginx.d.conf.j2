@@ -1,0 +1,45 @@
+server {
+    listen       80;
+    listen       [::]:80;
+    server_name  {{ logging_domain }};
+
+    access_log   /var/log/nginx/{{ logging_domain }}/access.log main;
+    error_log    /var/log/nginx/{{ logging_domain }}/error.log;
+
+    include snippets/letsencrypt.conf;
+
+    location / {
+        access_log off;
+        return 301 https://$server_name$request_uri;
+    }
+}
+
+server {
+    listen       443 ssl http2;
+    listen       [::]:443 ssl http2;
+    server_name  {{ logging_domain }};
+
+    access_log   /var/log/nginx/{{ logging_domain }}/access.log main;
+    error_log    /var/log/nginx/{{ logging_domain }}/error.log;
+
+    ssl_certificate      /etc/letsencrypt/live/{{ logging_domain }}/fullchain.pem;
+    ssl_certificate_key  /etc/letsencrypt/live/{{ logging_domain }}/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/{{ logging_domain }}/chain.pem;
+
+    location = /loki/api/v1/push {
+        auth_basic "Loki :)";
+        auth_basic_user_file {{ loki_nginx_htpasswd }};
+
+        proxy_pass http://127.0.0.1:3100$request_uri;
+    }
+
+    # We return a 200 so the monitoring is happy!
+    location = / {
+        default_type text/plain;
+        return 200 'Nothing to see here..\n';
+    }
+
+    location / {
+        return 404;
+    }
+}

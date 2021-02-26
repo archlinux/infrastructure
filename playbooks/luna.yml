@@ -29,6 +29,7 @@
     - rspamd
     - { role: mariadb, mariadb_query_cache_type: '0', mariadb_innodb_file_per_table: true }
     - { role: prometheus_exporters }
+    - { role: promtail }
 # luna is hosting mailman lists; this postfix role does not cater to this yet
 # TODO: make postfix role handle mailman config?
 #    - { role: postfix, tags: ["postfix"], postfix_relayhost: "mail.archlinux.org" }

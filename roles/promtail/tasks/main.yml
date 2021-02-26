@@ -1,0 +1,16 @@
+---
+- name: install promtail
+  pacman: name=promtail state=present
+
+- name: install promtail configuration
+  template: src=promtail.yaml.j2 dest=/etc/loki/promtail.yaml owner=root group=promtail mode=0640
+  notify: restart promtail
+
+- name: open promtail ipv4 port for monitoring.archlinux.org
+  ansible.posix.firewalld: state=enabled permanent=true immediate=yes
+    rich_rule="rule family=ipv4 source address={{ hostvars['monitoring.archlinux.org']['ipv4_address'] }} port protocol=tcp port=9080 accept"
+  tags:
+    - firewall
+
+- name: start and enable promtail
+  systemd: name=promtail.service enabled=yes daemon_reload=yes state=started

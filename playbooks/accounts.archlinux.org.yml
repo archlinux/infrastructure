@@ -20,3 +20,4 @@
     - { role: keycloak }
     - { role: borg_client, tags: ["borg"] }
     - { role: fail2ban }
+    - { role: promtail }

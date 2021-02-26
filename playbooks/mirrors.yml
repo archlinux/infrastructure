@@ -13,4 +13,5 @@
     - { role: archweb, archweb_site: false, archweb_services: false, archweb_mirrorcheck: true }
     - { role: arch32_mirror, tags: ['nginx'] }
     - { role: prometheus_exporters }
+    - { role: promtail }
     - { role: fail2ban }
