@@ -261,7 +261,7 @@ groups:
     interval: 60s
     rules:
       - alert: BorgHetznerMissingBackup
-        expr: time() - borg_hetzner_last_archive_timestamp > 86400 * 1.2
+        expr: time() - borg_hetzner_last_archive_timestamp > 86400 * 1.5
         for: 2m
         labels:
           severity: critical
@@ -269,7 +269,7 @@ groups:
           summary: 'Borg Hetzner missing backup (instance {{ $labels.instance }})'
           description: 'Borg has not backuped for more than 24 hours. Last backup made on {{ $value | humanizeTimestamp }}'
       - alert: BorgOffsiteMissingBackup
-        expr: time() - borg_offsite_last_archive_timestamp > 86400 * 1.2
+        expr: time() - borg_offsite_last_archive_timestamp > 86400 * 1.5
         for: 2m
         labels:
           severity: critical
