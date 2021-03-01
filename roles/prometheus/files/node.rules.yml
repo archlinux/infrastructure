@@ -302,7 +302,7 @@ groups:
     interval: 15s
     rules:
       - alert: ServiceDown
-        expr: avg_over_time(up[5m]) * 100 < 50
+        expr: avg_over_time(up[10m]) * 100 < 50
         annotations:
           description: The service {{ $labels.job }} instance {{ $labels.instance }} is
             not responding for more than 50% of the time for 5 minutes.
