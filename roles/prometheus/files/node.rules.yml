@@ -266,7 +266,7 @@ groups:
           severity: critical
         annotations:
           summary: 'Borg Hetzner missing backup (instance {{ $labels.instance }})'
-          description: 'Borg has not backuped for more than 24 hours. Last backup made on {{ $value | humanizeTimestamp }}'
+          description: 'Borg has not backuped for more than 24 hours. Last backup was made {{ $value | humanizeDuration }} ago'
       - alert: BorgOffsiteMissingBackup
         expr: time() - borg_offsite_last_archive_timestamp > 86400 * 1.5
         for: 2m
@@ -274,7 +274,7 @@ groups:
           severity: critical
         annotations:
           summary: 'Borg Offsite missing backup (instance {{ $labels.instance }})'
-          description: 'Borg has not backuped for more than 24 hours. Last backup made on {{ $value | humanizeTimestamp }}'
+          description: 'Borg has not backuped for more than 24 hours. Last backup was made {{ $value | humanizeDuration }} ago'
 
   - name: systemd_unit
     interval: 15s
