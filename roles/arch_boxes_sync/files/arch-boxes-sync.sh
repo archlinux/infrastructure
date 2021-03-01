@@ -27,7 +27,7 @@ rm output/*.box{,.*}
 mv output/* "${LATEST_RELEASE_TAG}"
 
 mv "${LATEST_RELEASE_TAG}" "${ARCH_BOXES_PATH}/"
-ln -sf "${LATEST_RELEASE_TAG}" "${ARCH_BOXES_PATH}/latest"
+ln -nsf "${LATEST_RELEASE_TAG}" "${ARCH_BOXES_PATH}/latest"
 
 echo "Removing old releases"
 cd "${ARCH_BOXES_PATH}"
