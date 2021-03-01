@@ -1,7 +1,7 @@
 ---
 
 - name: install postfix
-  pacman: name=postfix state=present
+  pacman: name=postfix,postfix-pcre state=present
 
 - name: install template configs
   template: src={{ item }}.j2 dest=/etc/postfix/{{ item }} owner=root group=root mode=0644
