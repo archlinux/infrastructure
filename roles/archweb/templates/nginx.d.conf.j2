@@ -1,3 +1,7 @@
+# limit rss requests to 1 r/m
+limit_req_zone $binary_remote_addr zone=rsslimit:8m rate=1r/m;
+limit_req_status 429;
+
 upstream archweb {
     server unix:///run/uwsgi/archweb.sock;
 }
@@ -167,6 +171,14 @@ server {
 
     location /retro {
         alias {{ archweb_retro_dir }};
+    }
+
+    # Rate limit all RSS feeds
+    location ~ (^/feeds/|\.xml$) {
+        include uwsgi_params;
+        uwsgi_pass archweb;
+
+        limit_req zone=rsslimit burst=10 nodelay;
     }
 
     location / {
