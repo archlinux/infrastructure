@@ -2,6 +2,7 @@ exclude_paths:
   - misc
   # FIXME: parser-error: couldn't resolve module/action 'hosts'. This often indicates a misspelling, missing collection, or incorrect module path.
   - playbooks/tasks
+  - roles/prometheus/files/node.rules.yml
 skip_list:
   # line too long (x > 80 characters) (line-length)
   - 'line-length'

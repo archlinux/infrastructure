@@ -55,6 +55,7 @@
     - rebuilderd-textcollector.sh
     - rebuilderd-status-textcollector.py
     - archive-textcollector.sh
+    - repository-textcollector.sh
     - btrfs-textcollector.sh
 
 - name: install arch textcollector service
@@ -98,6 +99,10 @@
   template: src=prometheus-archive-textcollector.service.j2 dest=/etc/systemd/system/prometheus-archive-textcollector.service owner=root group=root mode=644
   when: "'archive_mirrors' in group_names or inventory_hostname == 'gemini.archlinux.org'"
 
+- name: install rebuilderd textcollector service
+  template: src=prometheus-repository-textcollector.service.j2 dest=/etc/systemd/system/prometheus-repository-textcollector.service owner=root group=root mode=644
+  when: "inventory_hostname == 'gemini.archlinux.org'"
+
 - name: install rebuilderd textcollector timer
   template: src=prometheus-archive-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-archive-textcollector.timer owner=root group=root mode=644
   when: "'archive_mirrors' in group_names or inventory_hostname == 'gemini.archlinux.org'"
@@ -105,6 +110,14 @@
 - name: enable and start prometheus archive textcollector timer
   systemd: name=prometheus-archive-textcollector.timer enabled=yes daemon_reload=yes state=started
   when: "'archive_mirrors' in group_names or inventory_hostname == 'gemini.archlinux.org'"
+
+- name: install rebuilderd textcollector timer
+  template: src=prometheus-repository-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-repository-textcollector.timer owner=root group=root mode=644
+  when: "inventory_hostname == 'gemini.archlinux.org'"
+
+- name: enable and start prometheus repository textcollector timer
+  systemd: name=prometheus-repository-textcollector.timer enabled=yes daemon_reload=yes state=started
+  when: "inventory_hostname == 'gemini.archlinux.org'"
 
 - name: install sudoers for btrfs
   copy: src=sudoers dest=/etc/sudoers.d/node_exporter owner=root group=root mode=0440
