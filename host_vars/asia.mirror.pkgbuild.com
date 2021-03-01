@@ -8,7 +8,7 @@ ipv6_address: "2a02:6ea0:d605::2"
 ipv6_netmask: "/128"
 ipv6_gateway: "2a02:6ea0:d605::1337"
 filesystem: "btrfs"
-network_interface: "en*"
+network_interface: "enp1s0f0"
 system_disks:
   - /dev/sda
   - /dev/sdb
