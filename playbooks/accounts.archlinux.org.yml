@@ -9,6 +9,7 @@
     - { role: firewalld }
     - { role: sshd }
     - { role: root_ssh }
+    - { role: prometheus_exporters }
     - { role: certbot }
     - { role: nginx }
     - role: postgres
