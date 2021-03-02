@@ -6,6 +6,8 @@ src="/"
 snapshotdir="backup-snapshot"
 backup_mountdir="/backup"
 
+declare -a list_of_btrfs_submounts
+
 ##
 #  usage : is_btrfs( $path )
 # return : whether $path is on a btrfs
@@ -21,6 +23,21 @@ is_btrfs() {
 delete_snapshot() {
     btrfs subvolume delete --commit-after "$1"
 }
+
+##
+# exit cleanup handler
+##
+cleanup() {
+  if is_btrfs "$src"; then
+      umount -R "$backup_mountdir"
+      for vol in $list_of_btrfs_submounts; do
+          delete_snapshot "$vol/$snapshotdir"
+      done
+      rmdir "$backup_mountdir"
+  fi
+}
+
+trap cleanup EXIT
 
 if is_btrfs "$src"; then
     # List all btrfs submounts we want to backup, e.g. homedir.archlinux.org with "/ /home"
@@ -75,11 +92,3 @@ borg create -v --stats -C zstd \
     -e "$backup_mountdir/var/lib/docker" \
     {{ item['host'] }}/{{ item['dir'] }}::$(date "+%Y%m%d-%H%M%S") "$backup_mountdir"
 borg prune -v {{ item['host'] }}/{{ item['dir'] }} --keep-daily=7 --keep-weekly=4 --keep-monthly=6
-
-if is_btrfs "$src"; then
-    umount -R "$backup_mountdir"
-    for vol in $list_of_btrfs_submounts; do
-        delete_snapshot "$vol/$snapshotdir"
-    done
-    rmdir "$backup_mountdir"
-fi
