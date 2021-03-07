@@ -28,6 +28,7 @@ blackbox_targets:
     - https://man.archlinux.org
     - https://master-key.archlinux.org
     - https://matrix.archlinux.org
+    - https://md.archlinux.org
     - https://mirror.pkgbuild.com
     - https://monitoring.archlinux.org
     - https://mta-sts.archlinux.org/.well-known/mta-sts.txt
@@ -37,6 +38,7 @@ blackbox_targets:
     - https://openpgpkey.archlinux.org/.well-known/openpgpkey/archlinux.org/policy
     - https://packages.archlinux.org
     - https://patchwork.archlinux.org
+    - https://ping.archlinux.org
     - https://pkgbuild.com
     - https://planet.archlinux.org
     - https://projects.archlinux.org
