@@ -8,7 +8,6 @@
     - { role: tools }
     - { role: firewalld }
     - { role: sshd }
-    - { role: unbound }
     - { role: certbot }
     - { role: borg_client, tags: ["borg"] }
     - { role: root_ssh }
