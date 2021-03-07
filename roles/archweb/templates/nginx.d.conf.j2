@@ -1,3 +1,10 @@
+# limit rss requests to 1 r/m
+limit_req_zone $binary_remote_addr zone=rsslimit:8m rate=1r/m;
+limit_req_status 429;
+
+uwsgi_cache_path /var/lib/nginx/cache levels=1:2 keys_zone=archwebcache:10m inactive=60m;
+uwsgi_cache_key "$scheme$host$request_uri";
+
 upstream archweb {
     server unix:///run/uwsgi/archweb.sock;
 }
@@ -169,9 +176,25 @@ server {
         alias {{ archweb_retro_dir }};
     }
 
+    # Rate limit all RSS feeds
+    location ~ (^/feeds/|\.xml$) {
+        include uwsgi_params;
+        uwsgi_pass archweb;
+
+        uwsgi_cache archwebcache;
+        uwsgi_cache_revalidate on;
+        add_header X-Cache-Status $upstream_cache_status;
+
+        limit_req zone=rsslimit burst=10 nodelay;
+    }
+
     location / {
         access_log   /var/log/nginx/{{ archweb_domain }}/access.log main;
         include uwsgi_params;
         uwsgi_pass archweb;
+
+        uwsgi_cache archwebcache;
+        uwsgi_cache_revalidate on;
+        add_header X-Cache-Status $upstream_cache_status;
     }
 }
