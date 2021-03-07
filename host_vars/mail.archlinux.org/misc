@@ -9,3 +9,4 @@ fail2ban_jails:
 
 ipv4_address: "95.216.189.61"
 ipv6_address: "2a01:4f9:c010:3052::1"
+dns_servers: ["127.0.0.1"]
