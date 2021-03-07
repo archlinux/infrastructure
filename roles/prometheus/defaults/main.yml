@@ -30,14 +30,21 @@ blackbox_targets:
     - https://matrix.archlinux.org
     - https://mirror.pkgbuild.com
     - https://monitoring.archlinux.org
+    - https://mta-sts.archlinux.org/.well-known/mta-sts.txt
+    - https://mta-sts.aur.archlinux.org/.well-known/mta-sts.txt
+    - https://mta-sts.lists.archlinux.org/.well-known/mta-sts.txt
+    - https://mta-sts.master-key.archlinux.org/.well-known/mta-sts.txt
+    - https://openpgpkey.archlinux.org/.well-known/openpgpkey/archlinux.org/policy
     - https://packages.archlinux.org
     - https://patchwork.archlinux.org
     - https://pkgbuild.com
     - https://planet.archlinux.org
     - https://projects.archlinux.org
+    - https://repos.archlinux.org/lastupdate
     - https://reproducible.archlinux.org
     - https://security.archlinux.org
     - https://sources.archlinux.org
+    - https://static.conf.archlinux.org/README.md
     - https://whatcanwedofor.archlinux.org
     - https://wiki.archlinux.org
     - https://www.archlinux.org
