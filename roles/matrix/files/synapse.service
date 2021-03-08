@@ -2,7 +2,7 @@
 Description=Synapse Matrix homeserver
 Requires=postgresql.service redis.service
 Wants=turnserver.service
-After=network.target postgresql.service turnserver.service
+After=network.target postgresql.service redis.service turnserver.service
 
 [Service]
 Type=notify
