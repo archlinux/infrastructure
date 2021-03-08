@@ -2,6 +2,7 @@
 Description=Synapse Matrix worker (%i)
 BindsTo=synapse.service
 After=synapse.service
+ReloadPropagatedFrom=synapse.service
 AssertPathExists=/etc/synapse/worker-%i.yaml
 
 [Service]
