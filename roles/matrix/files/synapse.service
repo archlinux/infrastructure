@@ -3,6 +3,7 @@ Description=Synapse Matrix homeserver
 Requires=postgresql.service redis.service
 Wants=turnserver.service
 After=network.target postgresql.service redis.service turnserver.service
+AssertPathExists=/etc/synapse/homeserver.yaml
 
 [Service]
 Type=notify
