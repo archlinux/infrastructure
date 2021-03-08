@@ -12,4 +12,4 @@ ExecStart=/var/lib/synapse/venv-pantalaimon/bin/pantalaimon \
 ExecStartPost=/usr/bin/sleep 3
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target
