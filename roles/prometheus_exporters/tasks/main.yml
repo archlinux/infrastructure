@@ -80,7 +80,7 @@
   when: "'borg_clients' in group_names"
 
 - name: install blackbox exporter configuration
-  copy: src=blackbox.yml dest=/etc/prometheus/blackbox.yml owner=root group=root mode=0755
+  copy: src=blackbox.yml dest=/etc/prometheus/blackbox.yml owner=root group=root mode=0644
   when: "'prometheus' in group_names"
 
 - name: install rebuilderd textcollector service
