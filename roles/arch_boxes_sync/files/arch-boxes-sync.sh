@@ -19,7 +19,13 @@ readonly TMPDIR="$(mktemp --directory --tmpdir="/var/tmp")"
 trap "rm -rf \"${TMPDIR}\"" EXIT
 cd "${TMPDIR}"
 
-curl --silent --show-error --fail --output "output.zip" "https://gitlab.archlinux.org/api/v4/projects/${PROJECT_ID}/jobs/artifacts/${LATEST_RELEASE_TAG}/download?job=${JOB_NAME}"
+readonly HTTP_CODE="$(curl --silent --show-error --fail --output "output.zip" --write-out "%{http_code}" "https://gitlab.archlinux.org/api/v4/projects/${PROJECT_ID}/jobs/artifacts/${LATEST_RELEASE_TAG}/download?job=${JOB_NAME}")"
+# The releases are released/tagged and then built, so the artifacts aren't necessarily ready (yet).
+if (( HTTP_CODE == 404 )); then
+  echo "Skipping release: ${LATEST_RELEASE_TAG}, artifacts not ready (404)"
+  exit
+fi
+
 mkdir "${LATEST_RELEASE_TAG}"
 unzip output.zip
 # People should download the vagrant images from Vagrant Cloud
