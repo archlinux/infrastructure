@@ -20,7 +20,6 @@ smtpd_tls_key_file = /etc/letsencrypt/live/{{inventory_hostname}}/privkey.pem
 {% endif %}
 
 smtpd_tls_dh1024_param_file = /etc/postfix/dh2048.pem
-smtpd_tls_dh512_param_file = /etc/postfix/dh_512.pem
 smtpd_tls_eecdh_grade = ultra
 tls_preempt_cipherlist = yes
 smtpd_tls_loglevel = 1
