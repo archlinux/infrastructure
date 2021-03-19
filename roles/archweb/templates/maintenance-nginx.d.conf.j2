@@ -85,35 +85,35 @@ server {
         return 200 '{"m.homeserver": {"base_url": "https://{{ matrix_domain }}"}, "m.identity_server": {"base_url": "https://matrix.org"} }';
     }
 
-    location /robots.txt {
+    location = /robots.txt {
         alias {{ archweb_dir }}/archlinux.org/robots.txt;
     }
 
-    location /humans.txt {
+    location = /humans.txt {
         alias {{ archweb_dir }}/archlinux.org/humans.txt;
     }
 
-    location /google7827eadf026b4a87.html {
+    location = /google7827eadf026b4a87.html {
         alias {{ archweb_dir }}/archlinux.org/google7827eadf026b4a87.html;
     }
 
-    location /BingSiteAuth.xml {
+    location = /BingSiteAuth.xml {
         alias {{ archweb_dir }}/archlinux.org/BingSiteAuth.xml;
     }
 
-    location /favicon.ico {
+    location = /favicon.ico {
         alias {{ archweb_dir }}/collected_static/favicon.ico;
     }
 
-    location /pacman {
+    location /pacman/ {
         alias {{ archweb_dir }}/archlinux.org/pacman/;
     }
 
-    location /netcfg {
+    location /netcfg/ {
         alias {{ archweb_dir }}/archlinux.org/netcfg/;
     }
 
-    location /logos {
+    location /logos/ {
         alias {{ archweb_dir }}/archlinux.org/logos/;
     }
 
@@ -121,23 +121,23 @@ server {
         deny all;
     }
 
-    location /iso {
+    location /iso/ {
         alias {{ archweb_rsync_iso_dir }};
     }
 
     # Cache django's css, js and png files.
-    location /static {
+    location /static/ {
         expires 30d;
         add_header Pragma public;
         add_header Cache-Control "public";
-        alias {{ archweb_dir }}/collected_static;
+        alias {{ archweb_dir }}/collected_static/;
     }
 
-    location /img {
-        alias {{ archweb_dir }}/media/img;
+    location /img/ {
+        alias {{ archweb_dir }}/media/img/;
     }
 
-    location /retro {
+    location /retro/ {
         alias {{ archweb_retro_dir }};
     }
 
