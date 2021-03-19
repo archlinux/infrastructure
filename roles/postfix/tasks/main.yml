@@ -39,11 +39,6 @@
   notify:
     - reload postfix
 
-- name: create dhparam 512
-  command: openssl dhparam -out /etc/postfix/dh_512.pem 512 creates=/etc/postfix/dh_512.pem
-  notify:
-    - reload postfix
-
 - name: install postfix cert renewal hook
   template: src=letsencrypt.hook.d.j2 dest=/etc/letsencrypt/hook.d/postfix owner=root group=root mode=0755
   when: postfix_smtpd_public
