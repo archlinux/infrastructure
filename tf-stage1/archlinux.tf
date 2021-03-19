@@ -494,3 +494,9 @@ resource "hcloud_volume" "homedir" {
   size      = 100
   server_id = hcloud_server.machine["homedir.archlinux.org"].id
 }
+
+resource "hcloud_volume" "monitoring" {
+  name      = "monitoring"
+  size      = 100
+  server_id = hcloud_server.machine["monitoring.archlinux.org"].id
+}
