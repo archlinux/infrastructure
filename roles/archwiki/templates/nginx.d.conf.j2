@@ -52,6 +52,11 @@ server {
         deny all;
     }
 
+    # Redirect old URLs to the new short-url (/title/<page>)
+    location ~ ^/index.php/(.*)$ {
+        return 307 /title/$1;
+    }
+
     # special case due to our '/index.php/Main_Page' type URLs
     location ~ ^/(?:index|redirect)\.php(?:/.*)$ {
         access_log   /var/log/nginx/{{ archwiki_domain }}/access.log main;
@@ -84,6 +89,11 @@ server {
         fastcgi_cache_valid 200 10m;
 
         add_header X-Cache $upstream_cache_status;
+    }
+
+    # Handling for the article path (pretty URLs)
+    location ^~ /title/ {
+        rewrite ^ /index.php;
     }
 
     # normal PHP FastCGI handler
