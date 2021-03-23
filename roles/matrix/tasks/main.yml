@@ -157,8 +157,9 @@
     - restart matrix-appservice-irc
 
 - name: install matrix-appservice-irc
-  npm:
+  community.general.npm:
     path: /var/lib/synapse/matrix-appservice-irc
+    ci: true
   become: true
   become_user: synapse
   become_method: sudo
