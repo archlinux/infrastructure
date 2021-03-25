@@ -28,7 +28,7 @@
   include_role:
     name: certificate
   vars:
-    domains: ["{{ repos_domain }}"]
+    domains: ["{{ repos_domain }}", "{{ repos_rsync_domain }}"]
 
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ repos_domain }} state=directory owner=root group=root mode=0755

@@ -59,9 +59,9 @@ bwlimit=0
 source_url='rsync://rsync.archlinux.org/ftp_tier1'
 
 # An HTTP(S) URL pointing to the 'lastupdate' file on your chosen mirror.
-# If you are a tier 1 mirror use: http://rsync.archlinux.org/lastupdate
+# If you are a tier 1 mirror use: https://rsync.archlinux.org/lastupdate
 # Otherwise use the HTTP(S) URL from your chosen mirror.
-lastupdate_url='http://rsync.archlinux.org/lastupdate'
+lastupdate_url='https://rsync.archlinux.org/lastupdate'
 
 #### END CONFIG
 
