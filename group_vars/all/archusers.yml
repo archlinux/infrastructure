@@ -239,7 +239,7 @@ arch_users:
       - tu
   hashworks:
     name: "Justin Kromlinger"
-    ssh_key: hashworks_yubikey_5c.pub
+    ssh_key: hashworks.pub
     shell: /bin/zsh
     groups:
       - tu
