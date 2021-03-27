@@ -245,6 +245,8 @@ arch_users:
       - tu
     additional_ssh_keys:
       - name: hashworks_yubikey_5_nfc.pub
+        hosts:
+          - all
   heftig:
     name: "Jan Steffens"
     ssh_key: heftig.pub
