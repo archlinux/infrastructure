@@ -239,9 +239,14 @@ arch_users:
       - tu
   hashworks:
     name: "Justin Kromlinger"
-    ssh_key: hashworks.pub
+    ssh_key: hashworks_yubikey_5c.pub
+    shell: /bin/zsh
     groups:
       - tu
+    additional_ssh_keys:
+      - name: hashworks_yubikey_5_nfc.pub
+        hosts:
+          - all
   heftig:
     name: "Jan Steffens"
     ssh_key: heftig.pub
