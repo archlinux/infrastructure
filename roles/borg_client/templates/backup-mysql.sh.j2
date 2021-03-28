@@ -4,5 +4,5 @@ mysql_opts="--defaults-file={{mysql_backup_defaults}}"
 backupdir="{{mysql_backup_dir}}"
 
 [[ ! -d "$backupdir" ]] && mkdir -p "$backupdir"
-rm -rf "$backupdir"/*
+rm -rf "${backupdir:?}"/*
 mariabackup $mysql_opts --backup --target-dir="$backupdir"
