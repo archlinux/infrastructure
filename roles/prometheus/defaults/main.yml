@@ -31,7 +31,7 @@ blackbox_targets:
     - https://matrix.archlinux.org
     - https://md.archlinux.org
     - https://mirror.pkgbuild.com
-    - https://monitoring.archlinux.org
+    - https://monitoring.archlinux.org/healthz
     - https://mta-sts.archlinux.org/.well-known/mta-sts.txt
     - https://mta-sts.aur.archlinux.org/.well-known/mta-sts.txt
     - https://mta-sts.lists.archlinux.org/.well-known/mta-sts.txt
