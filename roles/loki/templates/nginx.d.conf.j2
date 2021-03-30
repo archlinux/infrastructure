@@ -4,6 +4,7 @@ server {
     server_name  {{ logging_domain }};
 
     access_log   /var/log/nginx/{{ logging_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ logging_domain }}/access.log.json json_main;
     error_log    /var/log/nginx/{{ logging_domain }}/error.log;
 
     include snippets/letsencrypt.conf;
@@ -14,12 +15,20 @@ server {
     }
 }
 
+# We don't want to log (/loki/api/v1/push) request from yourself as it would cause a infinite loop
+map $remote_addr $loggable {
+    {{ ansible_default_ipv4.address }} 0;
+    {{ ansible_default_ipv6.address }} 0;
+    default 1;
+}
+
 server {
     listen       443 ssl http2;
     listen       [::]:443 ssl http2;
     server_name  {{ logging_domain }};
 
     access_log   /var/log/nginx/{{ logging_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ logging_domain }}/access.log.json json_main if=$loggable;
     error_log    /var/log/nginx/{{ logging_domain }}/error.log;
 
     ssl_certificate      /etc/letsencrypt/live/{{ logging_domain }}/fullchain.pem;

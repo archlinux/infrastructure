@@ -7,6 +7,7 @@ server {
     root         /srv/ftp;
 
     access_log   /var/log/nginx/{{ mirror_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ mirror_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ mirror_domain }}/error.log;
 
     include snippets/letsencrypt.conf;

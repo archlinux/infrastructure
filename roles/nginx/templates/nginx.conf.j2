@@ -33,13 +33,19 @@ http {
         '"host":"$host",'
         '"remote_user":"$remote_user",'
         '"time_local":"$time_local",'
-        '"request":"$request",'
+        '"request_method":"$request_method",'
+        '"request_uri":"$request_uri",'
         '"status": "$status",'
         '"body_bytes_sent":"$body_bytes_sent",'
         '"http_referrer":"$http_referer",'
         '"http_user_agent":"$http_user_agent",'
         '"http_x_forwarded_for":"$http_x_forwarded_for",'
-        '"request_time":"$request_time"'
+        '"request_time":"$request_time",'
+        # This was added to keep every log line unique as Loki drops
+        # log line with the same timestamp and log text:
+        # https://grafana.com/docs/loki/latest/overview/#timestamp-ordering
+        '"connection":"$connection",'
+        '"connection_requests":"$connection_requests"'
         '}';
 
     log_format json_reduced escape=json
@@ -48,13 +54,19 @@ http {
         '"host":"$host",'
         '"remote_user":"$remote_user",'
         '"time_local":"$time_local",'
-        '"request":"$request",'
+        '"request_method":"$request_method",'
+        '"request_uri":"$request_uri",'
         '"status": "$status",'
         '"body_bytes_sent":"$body_bytes_sent",'
         '"http_referrer":"$http_referer",'
         '"http_user_agent":"$http_user_agent",'
         '"http_x_forwarded_for":"$http_x_forwarded_for",'
-        '"request_time":"$request_time"'
+        '"request_time":"$request_time",'
+        # This was added to keep every log line unique as Loki drops
+        # log line with the same timestamp and log text:
+        # https://grafana.com/docs/loki/latest/overview/#timestamp-ordering
+        '"connection":"$connection",'
+        '"connection_requests":"$connection_requests"'
         '}';
 
     sendfile on;

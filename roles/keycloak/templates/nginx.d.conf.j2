@@ -4,6 +4,7 @@ server {
     server_name  {{ keycloak_domain }};
 
     access_log   /var/log/nginx/{{ keycloak_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ keycloak_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ keycloak_domain }}/error.log;
 
     include snippets/letsencrypt.conf;
@@ -20,6 +21,7 @@ server {
     server_name  {{ keycloak_domain }};
 
     access_log   /var/log/nginx/{{ keycloak_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ keycloak_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ keycloak_domain }}/error.log;
 
     ssl_certificate      /etc/letsencrypt/live/{{ keycloak_domain }}/fullchain.pem;
@@ -38,6 +40,7 @@ server {
         auth_basic_user_file {{ keycloak_nginx_htpasswd }};
 
         access_log   /var/log/nginx/{{ keycloak_domain }}/access.log main;
+        access_log   /var/log/nginx/{{ keycloak_domain }}/access.log.json json_main;
         proxy_set_header    Host               $host;
         proxy_set_header    X-Real-IP          $remote_addr;
         proxy_set_header    X-Forwarded-For    $proxy_add_x_forwarded_for;
@@ -48,6 +51,7 @@ server {
 
     location / {
         access_log   /var/log/nginx/{{ keycloak_domain }}/access.log main;
+        access_log   /var/log/nginx/{{ keycloak_domain }}/access.log.json json_main;
         proxy_set_header    Host               $host;
         proxy_set_header    X-Real-IP          $remote_addr;
         proxy_set_header    X-Forwarded-For    $proxy_add_x_forwarded_for;

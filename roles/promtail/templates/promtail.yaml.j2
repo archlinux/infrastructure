@@ -26,3 +26,21 @@ scrape_configs:
         target_label: unit
       - source_labels: ["__journal__hostname"]
         target_label: instance
+  - job_name: nginx
+    static_configs:
+      - targets:
+        - localhost
+        labels:
+          job: nginx
+          instance: {{ ansible_fqdn }}
+          __path__: /var/log/nginx/*/*.json
+    pipeline_stages:
+    - match:
+        selector: '{job="nginx"}'
+        stages:
+        - json:
+            expressions:
+              time_local: time_local
+        - timestamp:
+            format: 02/Jan/2006:15:04:05 -0700
+            source: time_local

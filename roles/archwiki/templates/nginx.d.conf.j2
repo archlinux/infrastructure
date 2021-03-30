@@ -11,6 +11,7 @@ server {
     server_name  {{ archwiki_domain }};
 
     access_log   /var/log/nginx/{{ archwiki_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ archwiki_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ archwiki_domain }}/error.log;
 
     include snippets/letsencrypt.conf;
@@ -27,6 +28,7 @@ server {
     server_name  {{ archwiki_domain }};
 
     access_log   /var/log/nginx/{{ archwiki_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ archwiki_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ archwiki_domain }}/error.log;
 
     ssl_certificate      /etc/letsencrypt/live/{{ archwiki_domain }}/fullchain.pem;
@@ -53,6 +55,7 @@ server {
     # special case due to our '/index.php/Main_Page' type URLs
     location ~ ^/(?:index|redirect)\.php(?:/.*)$ {
         access_log   /var/log/nginx/{{ archwiki_domain }}/access.log main;
+        access_log   /var/log/nginx/{{ archwiki_domain }}/access.log.json json_main;
         fastcgi_pass   archwiki;
         fastcgi_index  index.php;
         fastcgi_split_path_info ^(.+\.php)(.*)$;
@@ -65,6 +68,7 @@ server {
     # special case for '/load.php' type URLs to cache css/js in nginx to relieve php-fpm
     location = /load.php {
         access_log   /var/log/nginx/{{ archwiki_domain }}/access.log main;
+        access_log   /var/log/nginx/{{ archwiki_domain }}/access.log.json json_main;
         fastcgi_pass   archwiki;
         fastcgi_index  index.php;
         fastcgi_split_path_info ^(.+\.php)(.*)$;
@@ -82,6 +86,7 @@ server {
     # normal PHP FastCGI handler
     location ~ ^/[^/]+\.php$ {
         access_log   /var/log/nginx/{{ archwiki_domain }}/access.log main;
+        access_log   /var/log/nginx/{{ archwiki_domain }}/access.log.json json_main;
         fastcgi_pass   archwiki;
         fastcgi_index  index.php;
         fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;

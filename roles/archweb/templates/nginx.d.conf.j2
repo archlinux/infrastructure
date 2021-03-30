@@ -24,6 +24,7 @@ server {
     server_name  {{ domain['domain'] }};
 
     access_log   /var/log/nginx/{{ archweb_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ archweb_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ archweb_domain }}/error.log;
 
     include snippets/letsencrypt.conf;
@@ -45,6 +46,7 @@ server {
     server_name  {{ domain['domain'] }};
 
     access_log   /var/log/nginx/{{ archweb_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ archweb_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ archweb_domain }}/error.log;
 
     ssl_certificate      /etc/letsencrypt/live/{{ archweb_domain }}/fullchain.pem;
@@ -73,6 +75,7 @@ server {
     server_name  {{ archweb_domain }};
 
     access_log   /var/log/nginx/{{ archweb_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ archweb_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ archweb_domain }}/error.log;
 
     include snippets/letsencrypt.conf;
@@ -89,6 +92,7 @@ server {
     server_name  {{ archweb_domain }};
 
     access_log   /var/log/nginx/{{ archweb_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ archweb_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ archweb_domain }}/error.log;
 
     ssl_certificate      /etc/letsencrypt/live/{{ archweb_domain }}/fullchain.pem;
@@ -176,6 +180,7 @@ server {
 
     location / {
         access_log   /var/log/nginx/{{ archweb_domain }}/access.log main;
+        access_log   /var/log/nginx/{{ archweb_domain }}/access.log.json json_main;
         include uwsgi_params;
         uwsgi_pass archweb;
 

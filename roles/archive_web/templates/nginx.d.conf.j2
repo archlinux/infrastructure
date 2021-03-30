@@ -4,6 +4,7 @@ server {
     server_name  {{ archive_domain }};
 
     access_log   /var/log/nginx/{{ archive_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ archive_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ archive_domain }}/error.log;
 
     include snippets/letsencrypt.conf;
@@ -20,6 +21,7 @@ server {
     server_name  {{ archive_domain }};
 
     access_log   /var/log/nginx/{{ archive_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ archive_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ archive_domain }}/error.log;
 
     ssl_certificate      /etc/letsencrypt/live/{{ archive_domain }}/fullchain.pem;

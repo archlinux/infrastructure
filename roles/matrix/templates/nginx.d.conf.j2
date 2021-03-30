@@ -10,6 +10,7 @@ server {
     server_name  {{ matrix_domain }};
 
     access_log   /var/log/nginx/{{ matrix_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ matrix_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ matrix_domain }}/error.log;
 
     include snippets/letsencrypt.conf;
@@ -26,6 +27,7 @@ server {
     server_name  {{ matrix_domain }};
 
     access_log   /var/log/nginx/{{ matrix_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ matrix_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ matrix_domain }}/error.log;
 
     ssl_certificate      /etc/letsencrypt/live/{{ matrix_domain }}/fullchain.pem;
@@ -37,6 +39,7 @@ server {
 {% for location in config.locations %}
     location {{ location }} {
         access_log   /var/log/nginx/{{ matrix_domain }}/access.log main;
+        access_log   /var/log/nginx/{{ matrix_domain }}/access.log.json json_main;
         proxy_pass http://matrix_{{ config.name }};
         proxy_set_header X-Forwarded-For $remote_addr;
         proxy_set_header X-Forwarded-Proto $scheme;

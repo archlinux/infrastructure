@@ -16,6 +16,7 @@ server {
     server_name  {{ aurweb_domain }};
 
     access_log   /var/log/nginx/{{ aurweb_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ aurweb_domain }}/access.log.json json_main;
     error_log    /var/log/nginx/{{ aurweb_domain }}/error.log;
 
     include snippets/letsencrypt.conf;
@@ -31,6 +32,7 @@ server {
     server_name  {{ aurweb_domain }};
 
     access_log   /var/log/nginx/{{ aurweb_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ aurweb_domain }}/access.log.json json_main;
     error_log    /var/log/nginx/{{ aurweb_domain }}/error.log;
 
     ssl_certificate      /etc/letsencrypt/live/{{ aurweb_domain }}/fullchain.pem;

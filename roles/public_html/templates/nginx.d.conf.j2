@@ -5,6 +5,7 @@ server {
     root         /srv/public_html;
 
     access_log   /var/log/nginx/{{ public_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ public_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ public_domain }}/error.log;
 
     include snippets/letsencrypt.conf;
@@ -22,6 +23,7 @@ server {
     root         /srv/public_html;
 
     access_log   /var/log/nginx/{{ public_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ public_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ public_domain }}/error.log;
 
     ssl_certificate      /etc/letsencrypt/live/{{ public_domain }}/fullchain.pem;

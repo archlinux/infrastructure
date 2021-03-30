@@ -8,6 +8,7 @@ server {
     server_name  {{ flyspray_domain }};
 
     access_log   /var/log/nginx/{{ flyspray_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ flyspray_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ flyspray_domain }}/error.log;
 
     include snippets/letsencrypt.conf;
@@ -24,6 +25,7 @@ server {
     server_name  {{ flyspray_domain }};
 
     access_log   /var/log/nginx/{{ flyspray_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ flyspray_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ flyspray_domain }}/error.log;
 
     ssl_certificate      /etc/letsencrypt/live/{{ flyspray_domain }}/fullchain.pem;
@@ -125,6 +127,7 @@ server {
 
     location ~ \.php$ {
         access_log   /var/log/nginx/{{ flyspray_domain }}/access.log main;
+        access_log   /var/log/nginx/{{ flyspray_domain }}/access.log.json json_main;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         include fastcgi_params;
         fastcgi_pass flyspray;

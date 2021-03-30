@@ -13,6 +13,7 @@ server {
     server_name  {{ hedgedoc_domain }};
 
     access_log   /var/log/nginx/{{ hedgedoc_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ hedgedoc_domain }}/access.log.json json_main;
     error_log    /var/log/nginx/{{ hedgedoc_domain }}/error.log;
 
     include snippets/letsencrypt.conf;
@@ -28,6 +29,7 @@ server {
     server_name  {{ hedgedoc_domain }};
 
     access_log   /var/log/nginx/{{ hedgedoc_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ hedgedoc_domain }}/access.log.json json_main;
     error_log    /var/log/nginx/{{ hedgedoc_domain }}/error.log;
 
     ssl_certificate      /etc/letsencrypt/live/{{ hedgedoc_domain }}/fullchain.pem;

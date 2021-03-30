@@ -4,6 +4,7 @@ server {
     server_name  mailman.archlinux.org;
 
     access_log   /var/log/nginx/{{ mailman_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ mailman_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ mailman_domain }}/error.log;
 
     include snippets/letsencrypt.conf;
@@ -20,6 +21,7 @@ server {
     server_name  mailman.archlinux.org;
 
     access_log   /var/log/nginx/{{ mailman_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ mailman_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ mailman_domain }}/error.log;
 
     ssl_certificate      /etc/letsencrypt/live/mailman.archlinux.org/fullchain.pem;

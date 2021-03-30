@@ -15,6 +15,7 @@ server {
     satisfy  any;
 
     access_log   /var/log/nginx/{{ repos_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ repos_domain }}/access.log.json json_reduced;
 
     location /lastupdate {
         allow all;

@@ -7,6 +7,7 @@ server {
     server_name  {{ ping_domain }};
 
     access_log   /var/log/nginx/{{ ping_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ ping_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ ping_domain }}/error.log;
 
     include snippets/letsencrypt.conf;

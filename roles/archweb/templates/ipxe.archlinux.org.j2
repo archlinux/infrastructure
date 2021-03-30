@@ -4,6 +4,7 @@ server {
     server_name  {{ domain['domain_name'] }};
 
     access_log   /var/log/nginx/{{ archweb_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ archweb_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ archweb_domain }}/error.log;
 
     include snippets/letsencrypt.conf;
@@ -20,6 +21,7 @@ server {
     server_name  {{ domain['domain_name'] }};
 
     access_log   /var/log/nginx/{{ archweb_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ archweb_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ archweb_domain }}/error.log;
 
     ssl_ciphers AES128-SHA:AES256-SHA:AES128-SHA256:AES256-SHA256;
@@ -30,6 +32,7 @@ server {
 
     location /releng/netboot {
         access_log   /var/log/nginx/{{ archweb_domain }}/access.log main;
+        access_log   /var/log/nginx/{{ archweb_domain }}/access.log.json json_main;
         include uwsgi_params;
         uwsgi_pass archweb;
     }

@@ -11,6 +11,7 @@ server {
     server_name  {{ domain }};
 
     access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log reduced;
+    access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log.json json_reduced;
     error_log    {{ maintenance_logs_dir }}/{{ service_domain }}-error.log;
 
     include snippets/letsencrypt.conf;
@@ -27,6 +28,7 @@ server {
     server_name  {{ domain }};
 
     access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log reduced;
+    access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log.json json_reduced;
     error_log    {{ maintenance_logs_dir }}/{{ service_domain }}-error.log;
 
     ssl_certificate      /etc/letsencrypt/live/{{ service_domain }}/fullchain.pem;
@@ -50,6 +52,7 @@ server {
     server_name  {{ service_domain }};
 
     access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log reduced;
+    access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log.json json_reduced;
     error_log    {{ maintenance_logs_dir }}/{{ service_domain }}-error.log;
 
     include snippets/letsencrypt.conf;
@@ -66,6 +69,7 @@ server {
     server_name  {{ service_domain }};
 
     access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log reduced;
+    access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log.json json_reduced;
     error_log    {{ maintenance_logs_dir }}/{{ service_domain }}-error.log;
 
     ssl_certificate      /etc/letsencrypt/live/{{ service_domain }}/fullchain.pem;
@@ -150,6 +154,7 @@ server {
 
         if ($maintenance_remote_machine = true) {
             access_log   /var/log/nginx/{{ archweb_domain }}/access.log main;
+            access_log   /var/log/nginx/{{ archweb_domain }}/access.log.json json_main;
             uwsgi_pass archweb;
             break;
         }
