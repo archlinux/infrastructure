@@ -17,6 +17,7 @@ It can also be used as a reference for adding new roles to an existing team memb
 - [ ] Create a new user in archweb: https://www.archlinux.org/devel/newuser/
       This is also linked in the django admin backend at the top
 - [ ] Subscribe user to internal [staff mailing list](https://lists.archlinux.org/admin/staff/members/add)
+- [ ] Give the user access to `#archlinux-staff` on Freenode
 
 ## Developer onboarding checklist
 
