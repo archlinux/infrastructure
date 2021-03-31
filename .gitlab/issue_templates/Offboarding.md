@@ -15,6 +15,7 @@ This template should be used for offboarding Arch Linux team members.
 
 - [ ] Remove user email by reverting instructions from `docs/email.md`.
 - [ ] Set user to inactive in archweb: https://www.archlinux.org/admin/auth/user/
+- [ ] Remove member from [staff mailing lists](https://lists.archlinux.org/admin/staff/members)
 
 ## TU/Developer offboarding checklist
 
@@ -24,7 +25,6 @@ This template should be used for offboarding Arch Linux team members.
 - [ ] Remove the user from the `Trusted Users`/`Developers` groups on Keycloak.
 - [ ] Moderate email address on [arch-dev-public](https://lists.archlinux.org/admin/arch-dev-public/members) (find member and moderate)
 - [ ] Remove member from [arch-tu mailing lists](https://lists.archlinux.org/admin/arch-tu/members)
-- [ ] Remove member from [staff mailing lists](https://lists.archlinux.org/admin/staff/members)
 - [ ] Create keyring revocation ticket
 
 ## DevOps offboarding checklist
