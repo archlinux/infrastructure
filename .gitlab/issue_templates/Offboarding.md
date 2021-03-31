@@ -16,6 +16,7 @@ This template should be used for offboarding Arch Linux team members.
 - [ ] Remove user email by reverting instructions from `docs/email.md`.
 - [ ] Set user to inactive in archweb: https://www.archlinux.org/admin/auth/user/
 - [ ] Remove member from [staff mailing lists](https://lists.archlinux.org/admin/staff/members)
+- [ ] Ask the user to leave `#archlinux-staff` on Freenode and forget the password
 
 ## TU/Developer offboarding checklist
 
