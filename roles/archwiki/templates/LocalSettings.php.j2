@@ -69,4 +69,5 @@ $wgEditPageFrameOptions = "DENY";
 ## https://www.mediawiki.org/wiki/Manual:Short_URL
 $wgScriptPath = "";
 $wgArticlePath = "/title/$1";
-$wgUsePathInfo = true;
+# $wgUsePathInfo is not necessary: https://github.com/wikimedia/mediawiki/blob/bb92c4d1acc029eed0f6848360dff5b2436695fc/includes/WebRequest.php#L151-L153
+#$wgUsePathInfo = true;

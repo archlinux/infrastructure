@@ -57,33 +57,13 @@ server {
         return 307 /title/$1;
     }
 
-    # special case due to our '/index.php/Main_Page' type URLs
-    location ~ ^/(?:index|redirect)\.php(?:/.*)$ {
-        access_log   /var/log/nginx/{{ archwiki_domain }}/access.log main;
-        access_log   /var/log/nginx/{{ archwiki_domain }}/access.log.json json_main;
-        fastcgi_pass   archwiki;
-        fastcgi_index  index.php;
-        fastcgi_split_path_info ^(.+\.php)(.*)$;
-        if (!-f $document_root$fastcgi_script_name) {
-            return 404;
-        }
-        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
-        fastcgi_param  PATH_INFO        $fastcgi_path_info;
-        fastcgi_param  HTTPS            on;
-        include        fastcgi_params;
-    }
-
     # special case for '/load.php' type URLs to cache css/js in nginx to relieve php-fpm
     location = /load.php {
         access_log   /var/log/nginx/{{ archwiki_domain }}/access.log main;
         access_log   /var/log/nginx/{{ archwiki_domain }}/access.log.json json_main;
         fastcgi_pass   archwiki;
         fastcgi_index  index.php;
-        fastcgi_split_path_info ^(.+\.php)(.*)$;
-        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
-        fastcgi_param  PATH_INFO        $fastcgi_path_info;
-        fastcgi_param  HTTPS            on;
-        include        fastcgi_params;
+        include        fastcgi.conf;
 
         fastcgi_cache wiki;
         fastcgi_cache_valid 200 10m;
@@ -98,16 +78,12 @@ server {
 
     # normal PHP FastCGI handler
     location ~ ^/[^/]+\.php$ {
+        try_files $uri =404;
         access_log   /var/log/nginx/{{ archwiki_domain }}/access.log main;
         access_log   /var/log/nginx/{{ archwiki_domain }}/access.log.json json_main;
         fastcgi_pass   archwiki;
         fastcgi_index  index.php;
-        if (!-f $document_root$fastcgi_script_name) {
-            return 404;
-        }
-        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
-        fastcgi_param  HTTPS            on;
-        include        fastcgi_params;
+        include        fastcgi.conf;
     }
 
     # whitelist known OK directories
