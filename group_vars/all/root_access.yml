@@ -20,6 +20,10 @@ root_ssh_keys:
   - key: jelle.pub
   - key: svenstaro.pub
   - key: anthraxx.pub
+  - key: klausenbusk.pub
+    hosts:
+      - bugs.archlinux.org
+      - monitoring.archlinux.org
 
 # run playbook 'playbooks/tasks/reencrypt-vault-key.yml' when this changes
 # before running it, make sure to gpg --lsign-key all of the below keys
