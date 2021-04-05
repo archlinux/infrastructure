@@ -154,6 +154,7 @@ locals {
     "conf"           = "60a06a1c02e42b36c3b4919f4d6de6bf"
     "whatcanwedofor" = "b5f8011047c1610ace52e754b568c834"
     "openpgpkey"     = "7533dfbf3947a5730d9cbcc1e5e63102"
+    "bugs-old"       = "1f3308c8d5763eecb4f9013291aeeac4"
   }
 
   # This creates archlinux.org TXT DNS entries
