@@ -3,13 +3,13 @@ groups:
     interval: 60s
     rules:
       - alert: HostHighCpuLoad
-        expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle",instance!~"build.archlinux.org",instance!~"repro1.pkgbuild.com",instance!~"repro2.pkgbuild.com",instance!~"runner2.archlinux.org"}[5m])) * 100) > 80
+        expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle",instance!~"build.archlinux.org",instance!~"repro1.pkgbuild.com",instance!~"repro2.pkgbuild.com",instance!~"runner2.archlinux.org"}[5m])) * 100) > 90
         for: 5m
         labels:
           severity: warning
         annotations:
           summary: "Host high CPU load (instance {{ $labels.instance }})"
-          description: "CPU load is > 80%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+          description: "CPU load is > 90%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
       - alert: HostSwapIsFillingUp
         expr: (1 - (node_memory_SwapFree_bytes / node_memory_SwapTotal_bytes)) * 100 > 80
@@ -65,14 +65,14 @@ groups:
           summary: "Host out of disk space (instance {{ $labels.instance }})"
           description: "Disk is almost full (< 20% left)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
-      - alert: HostDiskWillFillIn4Hours
-        expr: predict_linear(node_filesystem_free_bytes{fstype!~"tmpfs",mountpoint!~"/backup"}[1h], 4 * 3600) < 0
-        for: 5m
+      - alert: HostDiskWillFillIn24Hours
+        expr: (node_filesystem_avail_bytes{mountpoint!~"/backup"} * 100) / node_filesystem_size_bytes < 10 and ON (instance, device, mountpoint) predict_linear(node_filesystem_avail_bytes{fstype!~"tmpfs",mountpoint!~"/backup"}[1h], 24 * 3600) < 0 and ON (instance, device, mountpoint) node_filesystem_readonly == 0
+        for: 2m
         labels:
           severity: warning
         annotations:
-          summary: "Host disk will fill in 4 hours (instance {{ $labels.instance }})"
-          description: "Disk will fill in 4 hours at current write rate\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+          summary: "Host disk will fill in 24 hours (instance {{ $labels.instance }})"
+          description: "Filesystem is predicted to run out of space within the next 24 hours at current write rate\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
       - alert: HostOutOfInodes
         expr: node_filesystem_files_free{mountpoint ="/rootfs"} / node_filesystem_files{mountpoint ="/rootfs"} * 100 < 10
@@ -211,6 +211,14 @@ groups:
         annotations:
           description: 'host {{ $labels.instance }} has out of date packages'
           summary: '{{ $labels.instance }} has {{ $value }} > 50 out of date packages'
+      - alert: pacman_security_updates_pending
+        expr: pacman_security_updates_pending > 0
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          description: 'host {{ $labels.instance }} has vulnerable date packages'
+          summary: '{{ $labels.instance }} has {{ $value }} vulnerable packages'
 
   - name: btrfs
     interval: 2m
