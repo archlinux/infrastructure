@@ -10,6 +10,5 @@
     - { role: bugbot }
     - { role: phrik }
     - { role: sshd }
-    - { role: unbound }
     - { role: root_ssh }
     - { role: prometheus_exporters }

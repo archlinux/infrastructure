@@ -5,7 +5,6 @@
     - { role: common }
     - { role: tools }
     - { role: firewalld }
-    - { role: unbound }
     - { role: sshd }
     - { role: root_ssh }
     - { role: certbot }
