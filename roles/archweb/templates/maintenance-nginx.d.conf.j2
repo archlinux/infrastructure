@@ -15,13 +15,6 @@ server {
 
     include snippets/letsencrypt.conf;
 
-{% if domain == archweb_network_check_domain %}
-    location /check_network_status.txt {
-        access_log off;
-        add_header Cache-Control "max-age=0, must-revalidate";
-        return 200 'NetworkManager is online';
-    }
-{% endif %}
     location / {
         access_log off;
         return 301 https://$server_name$request_uri;
@@ -60,12 +53,6 @@ server {
     error_log    {{ maintenance_logs_dir }}/{{ service_domain }}-error.log;
 
     include snippets/letsencrypt.conf;
-
-    location /check_network_status.txt {
-        access_log off;
-        add_header Cache-Control "max-age=0, must-revalidate";
-        return 200 'NetworkManager is online';
-    }
 
     location / {
         access_log off;
