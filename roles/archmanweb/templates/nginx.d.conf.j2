@@ -30,16 +30,16 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ archmanweb_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ archmanweb_domain }}/chain.pem;
 
-    location /favicon.ico {
+    location = /favicon.ico {
         alias {{ archmanweb_dir }}/repo/collected_static/favicon.ico;
     }
 
     # Client-cache for Django's static assets
-    location /static {
+    location /static/ {
         expires 30d;
         add_header Pragma public;
         add_header Cache-Control "public";
-        alias {{ archmanweb_dir }}/repo/collected_static;
+        alias {{ archmanweb_dir }}/repo/collected_static/;
     }
 
     location / {

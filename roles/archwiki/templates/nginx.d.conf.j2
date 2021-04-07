@@ -41,7 +41,7 @@ server {
         return 403;
     }
 
-    location /robots.txt {
+    location = /robots.txt {
         alias {{ archwiki_dir }}/robots.txt;
     }
 

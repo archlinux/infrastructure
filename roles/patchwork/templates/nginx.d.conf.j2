@@ -30,8 +30,8 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ patchwork_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ patchwork_domain }}/chain.pem;
 
-    location /static {
-        alias {{ patchwork_dir }}/htdocs/static;
+    location /static/ {
+        alias {{ patchwork_dir }}/htdocs/static/;
     }
 
     location / {
