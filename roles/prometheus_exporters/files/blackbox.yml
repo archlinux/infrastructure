@@ -3,6 +3,8 @@ modules:
     prober: http
     timeout: 5s
     http:
+      headers:
+        User-Agent: "blackbox-monitoring"
   tls_connect:
     prober: tcp
     timeout: 5s
