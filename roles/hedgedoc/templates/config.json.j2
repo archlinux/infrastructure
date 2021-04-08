@@ -6,9 +6,9 @@
         "loglevel": "info",
         "protocolUseSSL": true,
         "allowAnonymous": false,
-	"allowAnonymousEdits": true,
-	"defaultPermission": "limited",
-	"uploadsPath": "/var/lib/hedgedoc/uploads",
+        "allowAnonymousEdits": true,
+        "defaultPermission": "limited",
+        "uploadsPath": "/var/lib/hedgedoc/uploads",
         "hsts": {
             "enable": true,
             "maxAgeSeconds": 31536000,
@@ -30,8 +30,7 @@
             "password": "{{ vault_postgres_users.hedgedoc }}",
             "database": "hedgedoc",
             "host": "localhost",
-            "port": "5432",
-            "dialect": "postgres"
+            "port": "5432"
         },
         "linkifyHeaderStyle": "gfm"
     }
