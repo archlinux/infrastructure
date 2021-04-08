@@ -145,6 +145,9 @@
   service: name=systemd-swap state=started enabled=yes
   when: enable_zram_swap
 
+- name: start systemd-oomd
+  service: name=systemd-oomd state=started enabled=yes
+
 - name: install logrotate
   pacman: name=logrotate state=present
 
