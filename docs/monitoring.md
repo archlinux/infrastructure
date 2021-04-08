@@ -65,3 +65,7 @@ For http(s)/icmp monitoring [prometheus-black-exporter](https://github.com/prome
 ### Archive monitoring
 
 The [Archive](https://archive.archlinux.org) and its mirrors defined in `archive_mirrors` are monitored using a textcollector which monitors the archive size in bytes.
+
+### Log monitoring
+
+The Nginx access logs/systemd logs are indexed by loki. For non webserver hosts the `promtail` job, for hosts with nginx an extra access_log line needs to be added to log json output which can be scraped by promtail.
