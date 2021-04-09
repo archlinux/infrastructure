@@ -13,13 +13,17 @@ sudo_users:
 
 # deploy tag 'root_ssh' when this changes
 root_ssh_keys:
-  - foutrelis.pub
-  - freswa.pub
-  - grazzolini.pub
-  - heftig.pub
-  - jelle.pub
-  - svenstaro.pub
-  - anthraxx.pub
+  - key: foutrelis.pub
+  - key: freswa.pub
+  - key: grazzolini.pub
+  - key: heftig.pub
+  - key: jelle.pub
+  - key: svenstaro.pub
+  - key: anthraxx.pub
+  - key: klausenbusk.pub
+    hosts:
+      - bugs.archlinux.org
+      - monitoring.archlinux.org
 
 # run playbook 'playbooks/tasks/reencrypt-vault-key.yml' when this changes
 # before running it, make sure to gpg --lsign-key all of the below keys
