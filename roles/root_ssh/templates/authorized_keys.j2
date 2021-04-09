@@ -1,6 +1,6 @@
 #jinja2: lstrip_blocks: True
 {% for user in root_ssh_keys | sort(attribute="key") -%}
-	{% if not user.hosts or inventory_hostname in user.hosts -%}
+	{% if user.hosts is not defined or inventory_hostname in user.hosts -%}
 		{{ lookup('file', '../pubkeys/' + user.key ) }}
 	{% endif %}
 {% endfor %}
