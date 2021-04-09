@@ -39,6 +39,12 @@ data "external" "vault_hedgedoc" {
   "--format", "json"]
 }
 
+data "external" "vault_matrix" {
+  program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_matrix.yml",
+    "vault_matrix_openid_client_secret",
+  "--format", "json"]
+}
+
 provider "keycloak" {
   client_id = "admin-cli"
   username  = data.external.vault_keycloak.result.vault_keycloak_admin_user
@@ -810,6 +816,32 @@ resource "keycloak_openid_client" "hedgedoc_openid_client" {
 resource "keycloak_openid_user_realm_role_protocol_mapper" "hedgedoc_user_realm_role_mapper" {
   realm_id  = "archlinux"
   client_id = keycloak_openid_client.hedgedoc_openid_client.id
+  name      = "user realms"
+
+  claim_name          = "roles"
+  multivalued         = true
+  add_to_id_token     = false
+  add_to_access_token = false
+}
+
+resource "keycloak_openid_client" "matrix_openid_client" {
+  realm_id      = "archlinux"
+  client_id     = "openid_matrix"
+  client_secret = data.external.vault_matrix.result.vault_matrix_openid_client_secret
+
+  name    = "Matrix"
+  enabled = true
+
+  access_type           = "CONFIDENTIAL"
+  standard_flow_enabled = true
+  valid_redirect_uris = [
+    "https://matrix.archlinux.org/_synapse/client/oidc/callback"
+  ]
+}
+
+resource "keycloak_openid_user_realm_role_protocol_mapper" "matrix_user_realm_role_mapper" {
+  realm_id  = "archlinux"
+  client_id = keycloak_openid_client.matrix_openid_client.id
   name      = "user realms"
 
   claim_name          = "roles"

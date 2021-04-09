@@ -1936,24 +1936,24 @@ oidc_providers:
   #      value: "synapseUsers"
 
   # Arch Linux accounts
-  #
-  #- idp_id: oidc
-  #  idp_name: "Arch Linux"
-  #  idp_icon: "mxc://archlinux.org/iQmyhmksPLmphXWFUxiLEwVw"
-  #  idp_brand: archlinux
-  #  issuer: "https://accounts.archlinux.org/auth/realms/archlinux"
-  #  client_id: "openid_matrix"
-  #  client_secret: "your-client-secret" # TO BE FILLED
-  #  scopes: ["openid", "profile", "email", "roles"]
-  #  allow_existing_users: false
-  #  user_mapping_provider:
-  #    config:
-  #      localpart_template: "{{ '{{ user.preferred_username }}' }}"
-  #      display_name_template: "{{ '{{ user.name | default(user.preferred_username, true) }}' }}"
-  #      email_template: "{{ '{{ user.email }}' }}"
-  #  attribute_requirements:
-  #    - attribute: roles
-  #      value: "Staff"
+
+  - idp_id: oidc
+    idp_name: "Arch Linux"
+    idp_icon: "mxc://archlinux.org/iQmyhmksPLmphXWFUxiLEwVw"
+    idp_brand: archlinux
+    issuer: "https://accounts.archlinux.org/auth/realms/archlinux"
+    client_id: "openid_matrix"
+    client_secret: "{{ vault_matrix_openid_client_secret }}"
+    scopes: ["openid", "profile", "email", "roles"]
+    allow_existing_users: false
+    user_mapping_provider:
+      config:
+        localpart_template: "{{ '{{ user.preferred_username }}' }}"
+        display_name_template: "{{ '{{ user.name | default(user.preferred_username, true) }}' }}"
+        email_template: "{{ '{{ user.email }}' }}"
+    attribute_requirements:
+      - attribute: roles
+        value: "Staff"
 
 
 # Enable Central Authentication Service (CAS) for registration and login.
@@ -2232,7 +2232,7 @@ sso:
 password_config:
    # Uncomment to disable password login
    #
-   #enabled: false
+   enabled: false
 
    # Uncomment to disable authentication against the local password
    # database. This is ignored if `enabled` is false, and is only useful
