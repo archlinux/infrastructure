@@ -29,6 +29,14 @@ server {
 
     include snippets/letsencrypt.conf;
 
+{% if domain['domain'] == archweb_network_check_domain %}
+    location /check_network_status.txt {
+        access_log off;
+        add_header Cache-Control "max-age=0, must-revalidate";
+        return 200 'NetworkManager is online';
+    }
+
+{% endif %}
     location /.well-known {
         add_header Access-Control-Allow-Origin *;
         return 301 https://$server_name$request_uri;
@@ -79,6 +87,12 @@ server {
     error_log    /var/log/nginx/{{ archweb_domain }}/error.log;
 
     include snippets/letsencrypt.conf;
+
+    location /check_network_status.txt {
+        access_log off;
+        add_header Cache-Control "max-age=0, must-revalidate";
+        return 200 'NetworkManager is online';
+    }
 
     location / {
         access_log off;
