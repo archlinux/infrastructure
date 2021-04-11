@@ -6,7 +6,6 @@
     name: certificate
   vars:
     domains: ["{{ rebuilderd_domain }}"]
-  when: 'rebuilderd_domain is defined'
 
 - name: configure rebuilderd.conf
   template: src=rebuilderd.conf.j2 dest=/etc/rebuilderd.conf owner=rebuilderd group=rebuilderd mode=0660
@@ -21,7 +20,6 @@
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/rebuilderd.conf owner=root group=root mode=0644
   notify:
     - reload nginx
-  when: 'rebuilderd_domain is defined'
   tags: ['nginx']
 
 - name: enable and start rebuilderd
