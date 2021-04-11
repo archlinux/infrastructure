@@ -22,7 +22,7 @@ loggers:
         propagate: false
 
 root:
-    level: INFO
+    level: WARNING
     handlers: [buffer]
 
 disable_existing_loggers: false
