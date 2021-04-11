@@ -16,6 +16,11 @@ route:
   - receiver: 'rebuilderd'
     match_re:
       service: rebuilderd
+  - group_wait: 4h
+    group_interval: 2h
+    group_by: ['service']
+    match:
+      service: pacman
 
 receivers:
   - name: 'default-receiver'
