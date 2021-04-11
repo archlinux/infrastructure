@@ -4,6 +4,7 @@ server {
     server_name  {{ fluxbb_domain }};
 
     access_log   /var/log/nginx/{{ fluxbb_domain }}/access.log;
+    access_log   /var/log/nginx/{{ fluxbb_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ fluxbb_domain }}/error.log;
 
     include snippets/letsencrypt.conf;
@@ -28,6 +29,7 @@ server {
     index index.php;
 
     access_log /var/log/nginx/{{ fluxbb_domain }}/access.log;
+    access_log   /var/log/nginx/{{ fluxbb_domain }}/access.log.json json_reduced;
     error_log /var/log/nginx/{{ fluxbb_domain }}/error.log;
 
     ssl_certificate      /etc/letsencrypt/live/{{ fluxbb_domain }}/fullchain.pem;
