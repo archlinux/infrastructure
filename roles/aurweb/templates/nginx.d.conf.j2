@@ -69,6 +69,9 @@ server {
         fastcgi_pass   aurweb;
         fastcgi_index  index.php;
         fastcgi_split_path_info ^(/[^/]+\.php)(/.*)$;
+        if (!-f $document_root$fastcgi_script_name) {
+            return 404;
+        }
         fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
         fastcgi_param  PATH_INFO        $fastcgi_path_info;
         fastcgi_param  HTTPS            on;
