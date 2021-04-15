@@ -846,6 +846,6 @@ resource "keycloak_openid_user_realm_role_protocol_mapper" "matrix_user_realm_ro
 
   claim_name          = "roles"
   multivalued         = true
-  add_to_id_token     = false
+  add_to_id_token     = true
   add_to_access_token = false
 }
