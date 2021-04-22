@@ -48,7 +48,7 @@ blackbox_targets:
     - https://security.archlinux.org
     - https://sources.archlinux.org
     - https://static.conf.archlinux.org/README.md
-    - https://whatcanwedofor.archlinux.org
+    - https://whatcanidofor.archlinux.org
     - https://wiki.archlinux.org
     - https://www.archlinux.org
     - https://www.pkgbuild.com
