@@ -4,6 +4,7 @@ server:
 	username: "unbound"
 	directory: "/etc/unbound"
 	verbosity: 1
+	port: {{ unbound_port }}
 	trust-anchor-file: trusted-key.key
 
 remote-control:
