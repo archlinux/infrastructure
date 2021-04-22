@@ -1125,10 +1125,10 @@ url_preview_accept_language:
 # The public URIs of the TURN server to give to clients
 #
 turn_uris:
-  - "turns:{{ matrix_domain }}?transport=udp"
-  - "turns:{{ matrix_domain }}?transport=tcp"
-  - "turn:{{ matrix_domain }}?transport=udp"
-  - "turn:{{ matrix_domain }}?transport=tcp"
+  - "turns:{{ matrix_domain }}:5349?transport=udp"
+  - "turns:{{ matrix_domain }}:5349?transport=tcp"
+  - "turn:{{ matrix_domain }}:3478?transport=udp"
+  - "turn:{{ matrix_domain }}:3478?transport=tcp"
 
 # The shared secret used to compute passwords for the TURN server
 #
