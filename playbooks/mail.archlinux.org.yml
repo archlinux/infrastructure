@@ -13,7 +13,7 @@
     - { role: postfix, postfix_server: true, postfix_smtpd_public: true, tags: ['mail'] }
     - { role: dovecot }
     - { role: rspamd, tags: ["mail"] }
-    - { role: unbound, tags: ["mail"] }
+    - { role: unbound, unbound_port: 5353, tags: ["mail"] }
     - { role: postfwd, tags: ['mail'] }
     - { role: archusers }
     - { role: fail2ban }
