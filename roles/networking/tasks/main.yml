@@ -1,0 +1,45 @@
+---
+- name: set fact for local dns resolver in use
+  set_fact:
+    host_has_local_dns_resolver: "{{ dns_servers|length == 1 and '127.0.0.1' in dns_servers }}"
+
+- name: configure network (static)
+  template: src=10-static-ethernet.network.j2 dest={{ chroot_path }}/etc/systemd/network/10-static-ethernet.network owner=root group=root mode=0644
+  notify:
+    - restart networkd
+  when: not dhcp|default(false)
+
+- name: configure network (dhcp)
+  template: src=10-dhcp-ethernet.network.j2 dest={{ chroot_path }}/etc/systemd/network/10-dhcp-ethernet.network owner=root group=root mode=0644
+  notify:
+    - restart networkd
+  when: dhcp|default(false)
+
+- name: create symlink to resolv.conf
+  file: src=/run/systemd/resolve/stub-resolv.conf dest={{ chroot_path }}/etc/resolv.conf state=link force=yes owner=root group=root mode=0644
+
+- name: install hcloud-init
+  copy: src=hcloud-init dest={{ chroot_path }}/usr/local/bin/hcloud-init owner=root group=root mode=0755
+  when: "'hcloud' in group_names or inventory_hostname == 'packer-base-image'"
+
+- name: install hcloud-init.service
+  copy: src=hcloud-init.service dest={{ chroot_path }}/etc/systemd/system/hcloud-init.service owner=root group=root mode=0644
+  when: "'hcloud' in group_names or inventory_hostname == 'packer-base-image'"
+
+- name: enable hcloud-init inside chroot
+  command: chroot {{ chroot_path }} systemctl enable hcloud-init
+  register: chroot_systemd_services
+  changed_when: "chroot_systemd_services.rc == 0"
+  when: chroot_path | length != 0 and ("'hcloud' in group_names or inventory_hostname == 'packer-base-image'")
+
+- name: start and enable hcloud-init
+  service: name=hcloud-init daemon_reload=yes state=started enabled=yes
+  when: chroot_path | length == 0
+
+- name: start and enable networkd
+  service: name=systemd-networkd state=started enabled=yes
+  when: chroot_path | length == 0
+
+- name: start and enable resolved
+  service: name=systemd-resolved state=started enabled=yes
+  when: chroot_path | length == 0

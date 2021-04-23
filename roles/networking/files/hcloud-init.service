@@ -10,6 +10,7 @@ Wants=systemd-networkd.service
 [Service]
 ExecStart=/usr/local/bin/hcloud-init
 Type=oneshot
+RemainAfterExit=yes
 StandardOutput=journal
 StandardError=journal
 

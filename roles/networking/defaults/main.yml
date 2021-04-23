@@ -1,3 +1,4 @@
 ---
+chroot_path: ""
 network_interface: "e*"
 dns_servers: []
