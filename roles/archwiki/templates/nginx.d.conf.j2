@@ -62,6 +62,11 @@ server {
         rewrite ^ /index.php;
     }
 
+    # Handling for MediaWiki REST API, see https://www.mediawiki.org/wiki/API:REST_API
+    location ^~ /rest.php/ {
+        rewrite ^ /rest.php;
+    }
+
     # special case for '/load.php' type URLs to cache css/js in nginx to relieve php-fpm
     location = /load.php {
         access_log   /var/log/nginx/{{ archwiki_domain }}/access.log main;
