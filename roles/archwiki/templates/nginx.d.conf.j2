@@ -57,6 +57,11 @@ server {
         return 307 /title/$1;
     }
 
+    # Handling for the article path (pretty URLs)
+    location ^~ /title/ {
+        rewrite ^ /index.php;
+    }
+
     # special case for '/load.php' type URLs to cache css/js in nginx to relieve php-fpm
     location = /load.php {
         access_log   /var/log/nginx/{{ archwiki_domain }}/access.log main;
@@ -69,11 +74,6 @@ server {
         fastcgi_cache_valid 200 10m;
 
         add_header X-Cache $upstream_cache_status;
-    }
-
-    # Handling for the article path (pretty URLs)
-    location ^~ /title/ {
-        rewrite ^ /index.php;
     }
 
     # normal PHP FastCGI handler
