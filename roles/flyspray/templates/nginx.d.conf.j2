@@ -129,6 +129,7 @@ server {
         access_log   /var/log/nginx/{{ flyspray_domain }}/access.log main;
         access_log   /var/log/nginx/{{ flyspray_domain }}/access.log.json json_main;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        try_files    $uri =404;
         include fastcgi_params;
         fastcgi_pass flyspray;
     }
