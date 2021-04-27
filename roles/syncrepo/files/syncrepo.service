@@ -1,6 +1,8 @@
 [Unit]
 Description=Synchronize package repository mirror
 RequiresMountsFor=/srv/ftp
+Wants=network-online.target
+After=network-online.target
 
 [Service]
 Type=oneshot
