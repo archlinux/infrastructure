@@ -1,4 +1,7 @@
 ---
 
+- name: create .ssh directory
+  file: path={{ root_ssh_directory }} state=directory owner=root group=root mode=0700
+
 - name: add authorized keys for root
-  template: src=authorized_keys.j2 dest=/root/.ssh/authorized_keys mode=0600 owner=root group=root
+  template: src=authorized_keys.j2 dest={{ root_ssh_directory }}/authorized_keys mode=0600 owner=root group=root

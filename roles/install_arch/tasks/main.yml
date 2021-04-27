@@ -171,18 +171,11 @@
   register: chroot_systemd_services
   changed_when: "chroot_systemd_services.rc == 0"
 
-- name: assign pubkey list to fact
-  set_fact: pubkey_list="{{ lookup('file', playbook_dir + "/../../pubkeys/" + item) }}"
-  register: pubkeys
-  vars:
-    playbook_dir: "{{ playbook_dir }}"
-  with_items: "{{ root_ssh_keys }}"
-
-- name: assign pubkey string to fact
-  set_fact: pubkey_string={{ pubkeys.results | map(attribute='ansible_facts.pubkey_list') | join('\n') }}
-
 - name: add authorized key for root
-  authorized_key: user=root key="{{ pubkey_string }}" path=/tmp/root.x86_64/mnt/root/.ssh/authorized_keys exclusive=yes
+  include_role:
+    name: root_ssh
+  vars:
+    root_ssh_directory: /tmp/root.x86_64/mnt/root/.ssh
 
 - name: configure sshd
   template: src=sshd_config.j2 dest=/mnt/etc/ssh/sshd_config owner=root group=root mode=0644
