@@ -99,7 +99,7 @@ locals {
       domain      = "matrix"
     }
     "monitoring.archlinux.org" = {
-      server_type = "cx21"
+      server_type = "cx31"
       domain      = "monitoring"
     }
     "patchwork.archlinux.org" = {
