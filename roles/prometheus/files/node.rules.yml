@@ -112,7 +112,7 @@ groups:
           summary: "Prometheus too many restarts (instance {{ $labels.instance }})"
           description: "Prometheus has restarted more than twice in the last 15 minutes. It might be crashlooping.\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
       - alert: PrometheusNotConnectedToAlertmanager
-        expr: prometheus_notifications_alertmanagers_discovered < 1
+        expr: prometheus_notifications_alertmanagers_discovered{instance!~"dashboards.archlinux.org"} < 1
         for: 5m
         labels:
           severity: critical
