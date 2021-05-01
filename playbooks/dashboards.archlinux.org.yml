@@ -14,5 +14,5 @@
     - { role: promtail }
     - { role: certbot }
     - { role: nginx }
-    - { role: grafana, grafana_domain: 'dashboards.archlinux.org' }
+    - { role: grafana, grafana_anonymous_access: true, grafana_domain: 'dashboards.archlinux.org' }
     - { role: fail2ban }

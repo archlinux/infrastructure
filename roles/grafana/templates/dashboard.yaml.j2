@@ -9,6 +9,10 @@ providers:
    allowUiUpdates: false
    type: file
    options:
+{% if grafana_anonymous_access %}
+     path: /var/lib/grafana/public-dashboards
+{% else %}
      path: /var/lib/grafana/dashboards
+{% endif %}
      foldersFromFilesStructure: true
 
