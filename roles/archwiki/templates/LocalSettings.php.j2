@@ -61,3 +61,13 @@ $wgMemCachedServers = [ "unix://{{ archwiki_memcached_socket }}:0" ];
 # security headers
 $wgReferrerPolicy = ["no-referrer-when-downgrade"];
 $wgEditPageFrameOptions = "DENY";
+
+## The URL base path to the directory containing the wiki;
+## defaults for all runtime URL paths are based off of this.
+## For more information on customizing the URLs
+## (like /w/index.php/Page_title to /wiki/Page_title) please see:
+## https://www.mediawiki.org/wiki/Manual:Short_URL
+$wgScriptPath = "";
+$wgArticlePath = "/title/$1";
+# $wgUsePathInfo is not necessary: https://github.com/wikimedia/mediawiki/blob/bb92c4d1acc029eed0f6848360dff5b2436695fc/includes/WebRequest.php#L151-L153
+#$wgUsePathInfo = true;
