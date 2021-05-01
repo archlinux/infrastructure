@@ -2,6 +2,3 @@
 
 - name: reload prometheus
   service: name=prometheus state=reloaded
-
-- name: reload alertmanager
-  service: name=alertmanager state=reloaded

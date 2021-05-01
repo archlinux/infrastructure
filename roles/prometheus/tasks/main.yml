@@ -1,7 +1,7 @@
 ---
 
-- name: install prometheus,alertmanager server
-  pacman: name=prometheus,alertmanager state=present
+- name: install prometheus server
+  pacman: name=prometheus state=present
 
 - name: install prometheus configuration
   template: src=prometheus.yml.j2 dest=/etc/prometheus/prometheus.yml owner=root group=root mode=644
@@ -15,12 +15,5 @@
   copy: src=node.rules.yml dest=/etc/prometheus/node.rules.yml owner=root group=root mode=644
   notify: reload prometheus
 
-- name: install alertmanager configuration
-  template: src=alertmanager.yml.j2 dest=/etc/alertmanager/alertmanager.yml owner=root group=alertmanager mode=640
-  notify: reload alertmanager
-
 - name: enable prometheus server service
   systemd: name=prometheus enabled=yes daemon_reload=yes state=started
-
-- name: enable alertmanager server service
-  systemd: name=alertmanager enabled=yes daemon_reload=yes state=started
