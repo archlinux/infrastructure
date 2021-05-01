@@ -1,0 +1,5 @@
+{% if prometheus_receive_only %}
+PROMETHEUS_ARGS="--storage.tsdb.retention.time=365d --enable-feature=remote-write-receiver --web.config.file=/etc/prometheus/web-config.yml"
+{% else %}
+PROMETHEUS_ARGS="--storage.tsdb.retention.time=365d"
+{% endif %}

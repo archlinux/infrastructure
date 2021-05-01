@@ -3,17 +3,40 @@
 - name: install prometheus server
   pacman: name=prometheus state=present
 
+- name: install cert renewal hook
+  template: src=letsencrypt.hook.d.j2 dest=/etc/letsencrypt/renewal-hooks/deploy/prometheus owner=root group=root mode=0755
+  when: prometheus_receive_only
+
+- name: create ssl cert
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ prometheus_domain }}"]
+  when: prometheus_receive_only
+
 - name: install prometheus configuration
-  template: src=prometheus.yml.j2 dest=/etc/prometheus/prometheus.yml owner=root group=root mode=644
+  template: src=prometheus.yml.j2 dest=/etc/prometheus/prometheus.yml owner=root group=prometheus mode=640
   notify: reload prometheus
 
 - name: install prometheus cli configuration
-  copy: src=prometheus.conf dest=/etc/conf.d/prometheus owner=root group=root mode=600
+  template: src=prometheus.conf.j2 dest=/etc/conf.d/prometheus owner=root group=root mode=600
   notify: reload prometheus
+
+- name: install prometheus web-config configuration
+  template: src=web-config.yml.j2 dest=/etc/prometheus/web-config.yml owner=root group=prometheus mode=640
+  notify: reload prometheus
+  when: prometheus_receive_only
 
 - name: install prometheus alert configuration
   copy: src=node.rules.yml dest=/etc/prometheus/node.rules.yml owner=root group=root mode=644
   notify: reload prometheus
+  when: not prometheus_receive_only
 
 - name: enable prometheus server service
   systemd: name=prometheus enabled=yes daemon_reload=yes state=started
+
+- name: open firewall holes for prometheus
+  ansible.posix.firewalld: service=prometheus permanent=true state=enabled immediate=yes
+  when: configure_firewall and prometheus_receive_only
+  tags:
+    - firewall

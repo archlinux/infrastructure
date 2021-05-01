@@ -1,3 +1,4 @@
+{% if not prometheus_receive_only %}
 global:
   scrape_interval: 60s
 
@@ -11,6 +12,16 @@ alerting:
   - static_configs:
     - targets:
        - localhost:9093
+
+remote_write:
+- url: https://{{ prometheus_domain }}:9090/api/v1/write
+  write_relabel_configs:
+  - source_labels: [__name__]
+    regex: "archive_directory_size_bytes|archive_total_packages|rebuilderd_results|rebuilderd_workers|rebuilderd_queue_length|repository_directory_size_bytes"
+    action: keep
+  basic_auth:
+    username: {{ vault_prometheus_user }}
+    password: {{ vault_prometheus_passwd }}
 
 scrape_configs:
   - job_name: loki
@@ -111,3 +122,4 @@ scrape_configs:
       - target_label: __address__
         replacement: 127.0.0.1:9115
 {% endfor %}
+{% endif %}

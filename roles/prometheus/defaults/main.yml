@@ -1,6 +1,8 @@
 monitoring_domain: monitoring.archlinux.org
 gitlab_runner_exporter_port: '9252'
+prometheus_domain: dashboards.archlinux.org
 prometheus_mysqld_exporter_port: '9104'
+prometheus_receive_only: false
 
 # for d in $(curl -sf "https://crt.sh/?q=archlinux.org&output=json" "https://crt.sh/?q=pkgbuild.com&output=json" | jq -r ".[].name_value" | sort -u); do if curl -o /dev/null -sS "https://$d"; then echo $d; fi; done | grep -v "\@" | sort | sed "s/^/  - https:\/\//"
 blackbox_targets:
@@ -57,6 +59,7 @@ blackbox_targets:
     - mail.archlinux.org:465
     - mail.archlinux.org:993
     - mail.archlinux.org:995
+    - dashboards.archlinux.org:9090
   smtp_starttls:
     - mail.archlinux.org:25
     - mail.archlinux.org:587

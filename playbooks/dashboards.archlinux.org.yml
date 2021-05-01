@@ -9,7 +9,7 @@
     - { role: root_ssh }
     - { role: hardening }
     - { role: borg_client, tags: ["borg"], when: "'borg_clients' in group_names" }
-    - { role: prometheus }
+    - { role: prometheus, prometheus_receive_only: true }
     - { role: prometheus_exporters }
     - { role: promtail }
     - { role: certbot }
