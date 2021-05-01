@@ -130,6 +130,12 @@
     - daemon reload
   when: archweb_services or archweb_reporead
 
+- name: install readlinks service
+  template: src="archweb-readlinks.service.j2" dest="/etc/systemd/system/archweb-readlinks.service" owner=root group=root mode=0644
+  notify:
+    - daemon reload
+  when: archweb_services or archweb_reporead
+
 - name: install mirrorcheck service and timer
   template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
   with_items:
@@ -230,6 +236,14 @@
 
 - name: restart archweb reporead service
   service: name="archweb-reporead.service" state=restarted
+  when: archweb_services or archweb_reporead and (release.changed or config.changed or virtualenv.changed or archweb_forced_deploy)
+
+- name: start and enable archweb readlinks service
+  service: name="archweb-readlinks.service" enabled=yes state=started
+  when: archweb_services or archweb_reporead
+
+- name: restart archweb readlinks service
+  service: name="archweb-readlinks.service" state=restarted
   when: archweb_services or archweb_reporead and (release.changed or config.changed or virtualenv.changed or archweb_forced_deploy)
 
 - name: start and enable archweb mirrorcheck timer

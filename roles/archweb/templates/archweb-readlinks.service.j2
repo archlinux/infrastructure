@@ -1,0 +1,13 @@
+[Unit]
+Description=archweb read links databases (for sonames)
+After=network.target
+
+[Service]
+User=archweb
+WorkingDirectory={{ archweb_dir }}
+ExecStart={{ archweb_dir }}/env/bin/python manage.py readlinks_inotify
+Restart=on-failure
+Nice=5
+
+[Install]
+WantedBy=multi-user.target
