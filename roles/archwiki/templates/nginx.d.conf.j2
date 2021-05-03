@@ -54,7 +54,7 @@ server {
 
     # Redirect old URLs to the new short-url (/title/<page>)
     location ~ ^/index.php/(.*)$ {
-        return 307 /title/$1;
+        return 301 /title/$1;
     }
 
     # Handling for the article path (pretty URLs)
