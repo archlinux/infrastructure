@@ -14,7 +14,7 @@ archweb_network_check_domain: 'www.archlinux.org'
 archweb_allowed_hosts: ["{{ archweb_domain }}", 'ipxe.archlinux.org']
 archweb_nginx_conf: '/etc/nginx/nginx.d/archweb.conf'
 archweb_repository: 'https://github.com/archlinux/archweb.git'
-archweb_version: 'c6d91ecbd49b7e593415f51a751e149e3a79ca7d'
+archweb_version: 'release_2021-05-04'
 archweb_pgp_key: ['E499C79F53C96A54E572FEE1C06086337C50773E']
 archweb_site: true
 archweb_mirrorcheck: false
