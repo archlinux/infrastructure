@@ -49,7 +49,6 @@
       - pv
       - ccze
       - rxvt-unicode-terminfo
-      - termite-terminfo
       - p7zip
       - unzip
       - setconf
