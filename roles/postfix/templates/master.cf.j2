@@ -95,45 +95,6 @@ lmtp      unix  -       -       n       -       -       lmtp
 anvil     unix  -       -       n       -       1       anvil
 scache    unix  -       -       n       -       1       scache
 
-{% if postfix_smtpd_public %}
-# After-filter SMTP server. Receive mail from the content filter
-# on localhost port 10026.
-#
-127.0.0.1:10026 inet n  -       n       -        -      smtpd
-        -o syslog_name=postfix/after-sa-smtp
-        -o smtpd_authorized_xforward_hosts=127.0.0.0/8
-        -o smtpd_client_restrictions=
-        -o smtpd_helo_restrictions=
-        -o smtpd_sender_restrictions=
-        -o smtpd_recipient_restrictions=$post_queue_smtpd_recipient_restrictions
-        -o smtpd_data_restrictions=
-        -o smtpd_end_of_data_restrictions=
-        -o mynetworks=127.0.0.0/8
-        -o receive_override_options=no_unknown_recipient_checks,no_milters
-        -o smtpd_tls_auth_only=no
-        -o smtpd_reject_footer=
-        -o smtpd_tls_security_level=none
-{% endif %}
-
-# a port listening on localhost only to allow local services (eg, webapps etc)
-# to relay mail without waiting for filtering checks etc that are applied to
-# port 25 connections. specifically, flyspray seems to send emails sequentially
-# so any delays in delivery cause noticable delays for users on the web ui.
-127.0.0.1:10027 inet n  -       n       -        -      smtpd
-        -o syslog_name=postfix/dkim-injector
-        -o smtpd_authorized_xforward_hosts=127.0.0.0/8
-        -o smtpd_client_restrictions=
-        -o smtpd_helo_restrictions=
-        -o smtpd_sender_restrictions=
-        -o smtpd_recipient_restrictions=$post_queue_smtpd_recipient_restrictions
-        -o smtpd_data_restrictions=
-        -o smtpd_end_of_data_restrictions=
-        -o mynetworks=127.0.0.0/8
-        -o receive_override_options=no_unknown_recipient_checks
-        -o smtpd_tls_auth_only=no
-        -o smtpd_reject_footer=
-        -o smtpd_tls_security_level=none
-
 {% if postfix_patchwork_enabled %}
 patchwork   unix  -       n       n       -       -       pipe
   flags=DFRX user={{postfix_patchwork_user}} argv={{postfix_patchwork_mail_handler}}

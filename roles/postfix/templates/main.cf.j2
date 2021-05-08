@@ -121,13 +121,6 @@ smtpd_recipient_restrictions =
 # some rate limiting rules only work after data so check it again
 smtpd_end_of_data_restrictions =
   $policy_check
-
-# needed to put our users on HOLD
-# this is used in master.cf as an argument to smtpd_recipient_restrictions
-post_queue_smtpd_recipient_restrictions =
-  check_sender_access ${indexed}/access_sender-post-filter,
-  permit_mynetworks,
-  reject
 {% endif %}
 
 address_verify_map = ${default_database_type}:/var/lib/postfix/verify_cache
