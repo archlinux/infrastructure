@@ -230,6 +230,11 @@ arch_users:
   gitlab:
     name: ""
     groups: []
+  grawlinson:
+    name: "George Rawlinson"
+    ssh_key: grawlinson.pub
+    groups:
+      - tu
   grazzolini:
     name: "Giancarlo Razzolini"
     ssh_key: grazzolini.pub
