@@ -42,8 +42,8 @@ server {
     root    {{ aurweb_dir }}/web/html;
     index   index.php;
 
-    location ~ ^/trusted-user/ {
-        break;
+    location = /trusted-user/TUbylaws.html {
+	    return 301 https://tu-bylaws.aur.archlinux.org;
     }
 
     location ~ "^/([a-z0-9][a-z0-9.+_-]*?)(\.git)?/(git-(receive|upload)-pack|HEAD|info/refs|objects/(info/(http-)?alternates|packs)|[0-9a-f]{2}/[0-9a-f]{38}|pack/pack-[0-9a-f]{40}\.(pack|idx))$" {

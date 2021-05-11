@@ -2,14 +2,12 @@
 
 aurweb_domain: 'aur.archlinux.org'
 aurweb_repository: 'https://gitlab.archlinux.org/archlinux/aurweb.git'
-tubylaws_repository: 'https://gitlab.archlinux.org/archlinux/tu-bylaws.git'
 aurweb_dir: '/srv/http/aurweb'
 aurweb_conf_dir: '/etc/aurweb'
 aurweb_git_dir: "{{ aurweb_dir }}/aur.git"
 aurweb_git_hook: '/usr/local/bin/aurweb-git-update'
 aurweb_nginx_conf: '/etc/nginx/nginx.d/aurweb.conf'
 aurweb_version: 'live'
-tubylaws_version: 'proposal-117'
 
 aurweb_db: 'aur'
 aurweb_db_host: 'localhost'

@@ -46,22 +46,12 @@
   become_user: "{{ aurweb_user }}"
   register: release
 
-- name: clone Trusted User documentation repo
-  git: >
-    repo={{ tubylaws_repository }}
-    dest="{{ aurweb_dir }}/tu-bylaws"
-    version={{ tubylaws_version }}
-  become: true
-  become_user: "{{ aurweb_user }}"
-  register: tubylaws_release
-
 - name: create necessary directories
   file: path={{ aurweb_dir }}/{{ item }} state=directory owner={{ aurweb_user }} group={{ aurweb_user }} mode=0755
   with_items:
     - 'aurblup'
     - 'sessions'
     - 'uploads'
-    - 'web/html/trusted-user'
 
 - name: create aurweb conf dir
   file: path={{ aurweb_conf_dir }} state=directory owner=root group=root mode=0755
@@ -127,21 +117,6 @@
     target: "install"
   become: true
   become_user: "{{ aurweb_user }}"
-
-- name: Generate Trusted User documentation
-  make:
-    chdir: "{{ aurweb_dir }}/tu-bylaws"
-  become: true
-  become_user: "{{ aurweb_user }}"
-  when: tubylaws_release.changed
-
-- name: Install Trusted User documentation
-  copy: src={{ aurweb_dir }}/tu-bylaws/tu-bylaws.html dest={{ aurweb_dir }}/web/html/trusted-user/tu-bylaws.html remote_src=yes owner={{ aurweb_user }} group=http mode=0644
-  when: tubylaws_release.changed
-
-- name: Install Trusted User documentation symlink
-  file: src=tu-bylaws.html dest={{ aurweb_dir }}/web/html/trusted-user/TUbylaws.html state=link owner={{ aurweb_user }} group=http mode=0644
-  when: tubylaws_release.changed
 
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest={{ aurweb_nginx_conf }} owner=root group=root mode=644
