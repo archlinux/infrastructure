@@ -136,8 +136,12 @@
   systemd: name=prometheus-btrfs-textcollector.timer enabled=yes daemon_reload=yes state=started
   when: filesystem == "btrfs"
 
+- name: install aur textcollector service
+  template: src=prometheus-aur-textcollector.service.j2 dest=/etc/systemd/system/prometheus-aur-textcollector.service owner=root group=root mode=644
+  when: "'prometheus' in group_names"
+
 - name: install aur textcollector timer
-  template: src=prometheus-aur-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-btrfs-textcollector.timer owner=root group=root mode=644
+  template: src=prometheus-aur-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-aur-textcollector.timer owner=root group=root mode=644
   when: "'prometheus' in group_names"
 
 - name: enable and start prometheus aur textcollector timer

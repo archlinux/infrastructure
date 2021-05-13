@@ -10,7 +10,7 @@ if (( $# != 1 )); then
 fi
 
 TEXTFILE_COLLECTOR_DIR=${1}
-PROM_FILE=$TEXTFILE_COLLECTOR_DIR/pacman.prom
+PROM_FILE=$TEXTFILE_COLLECTOR_DIR/aur.prom
 
 TMP_FILE=$PROM_FILE.$$
 [ -e $TMP_FILE ] && rm -f $TMP_FILE
