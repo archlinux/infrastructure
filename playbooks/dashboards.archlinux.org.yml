@@ -1,5 +1,5 @@
-- name: setup prometheus server
-  hosts: monitoring.archlinux.org
+- name: setup public dashboards server
+  hosts: dashboards.archlinux.org
   remote_user: root
   roles:
     - { role: firewalld }
@@ -9,12 +9,10 @@
     - { role: root_ssh }
     - { role: hardening }
     - { role: borg_client, tags: ["borg"], when: "'borg_clients' in group_names" }
-    - { role: prometheus }
-    - { role: alertmanager }
+    - { role: prometheus, prometheus_receive_only: true }
     - { role: prometheus_exporters }
-    - { role: loki }
     - { role: promtail }
     - { role: certbot }
     - { role: nginx }
-    - { role: grafana, grafana_domain: 'monitoring.archlinux.org' }
+    - { role: grafana, grafana_anonymous_access: true, grafana_domain: 'dashboards.archlinux.org' }
     - { role: fail2ban }

@@ -102,6 +102,10 @@ locals {
       server_type = "cx31"
       domain      = "monitoring"
     }
+    "dashboards.archlinux.org" = {
+      server_type = "cx11"
+      domain      = "dashboards"
+    }
     "patchwork.archlinux.org" = {
       server_type = "cx11"
       domain      = "patchwork"

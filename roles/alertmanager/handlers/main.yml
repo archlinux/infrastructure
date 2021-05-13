@@ -1,0 +1,4 @@
+---
+
+- name: reload alertmanager
+  service: name=alertmanager state=reloaded

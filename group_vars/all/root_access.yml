@@ -26,6 +26,7 @@ root_ssh_keys:
       - monitoring.archlinux.org
       - runner1.archlinux.org
       - runner2.archlinux.org
+      - dashboards.archlinux.org
 
 # run playbook 'playbooks/tasks/reencrypt-vault-key.yml' when this changes
 # before running it, make sure to gpg --lsign-key all of the below keys

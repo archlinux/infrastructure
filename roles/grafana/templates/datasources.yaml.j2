@@ -1,6 +1,16 @@
 apiVersion: 1
 
 datasources:
+{% if grafana_anonymous_access %}
+- name: Prometheus
+  type: prometheus
+  access: proxy
+  basicAuth: true
+  basicAuthUser: {{ vault_prometheus_user }}
+  secureJsonData:
+    basicAuthPassword: {{ vault_prometheus_passwd }}
+  url: https://{{ prometheus_domain }}:9090
+{% else %}
 - name: Prometheus
   type: prometheus
   access: proxy
@@ -9,4 +19,4 @@ datasources:
   type: loki
   access: proxy
   url: http://localhost:3100
-
+{% endif %}

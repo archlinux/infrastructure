@@ -233,6 +233,11 @@ x_xss_protection = true
 # The interval string is a possibly signed sequence of decimal numbers, followed by a unit suffix (ms, s, m, h, d), e.g. 30s or 1m.
 ;min_refresh_interval =
 
+{% if grafana_anonymous_access %}
+# Path to the default home dashboard. If this value is empty, then Grafana uses StaticRootPath + "dashboards/home.json"
+default_home_dashboard_path = /var/lib/grafana/public-dashboards/home.json
+{% endif %}
+
 #################################### Users ###############################
 [users]
 # disable user signup / registration
@@ -303,13 +308,15 @@ oauth_auto_login = true
 #################################### Anonymous Auth ######################
 [auth.anonymous]
 # enable anonymous access
-;enabled = false
+{% if grafana_anonymous_access %}
+enabled = true
+{% endif %}
 
 # specify organization name that should be used for unauthenticated users
 ;org_name = Main Org.
 
 # specify role for unauthenticated users
-;org_role = Viewer
+org_role = Viewer
 
 #################################### Github Auth ##########################
 [auth.github]
@@ -373,6 +380,7 @@ oauth_auto_login = true
 ;allowed_domains =
 ;allowed_groups =
 
+{% if not grafana_anonymous_access %}
 #################################### Generic OAuth ##########################
 [auth.generic_oauth]
 enabled = true
@@ -394,6 +402,7 @@ role_attribute_path: contains(roles[*], 'DevOps') && 'Admin' || contains(roles[*
 ;tls_client_cert =
 ;tls_client_key =
 ;tls_client_ca =
+{% endif %}
 
 #################################### SAML Auth ###########################
 [auth.saml] # Enterprise only

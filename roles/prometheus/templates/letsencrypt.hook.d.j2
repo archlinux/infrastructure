@@ -1,0 +1,14 @@
+#!/bin/bash
+set -o errexit -o nounset
+
+for domain in ${RENEWED_DOMAINS}; do
+  if [[ "{{ prometheus_domain }}" = "${domain}" ]]; then
+    umask 077
+    cp --dereference "${RENEWED_LINEAGE}/fullchain.pem" /etc/prometheus/server.crt.new
+    cp --dereference "${RENEWED_LINEAGE}/privkey.pem" /etc/prometheus/server.key.new
+    chown root:prometheus /etc/prometheus/server.{crt,key}.new
+    chmod 640 /etc/prometheus/server.{crt,key}.new
+    rename ".new" "" /etc/prometheus/server.{crt,key}.new
+    break
+  fi
+done

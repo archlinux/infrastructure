@@ -36,6 +36,10 @@
 - name: copy grafana dashboards
   copy: src=dashboards dest=/var/lib/grafana/dashboards owner=grafana group=grafana mode=0600
 
+- name: copy (public) grafana dashboards
+  copy: src=public-dashboards dest=/var/lib/grafana/ owner=root group=grafana mode=0640
+  when: grafana_anonymous_access
+
 - name: install grafana config
   template: src=grafana.ini.j2 dest=/etc/grafana.ini owner=grafana group=root mode=0600
   notify: restart grafana
