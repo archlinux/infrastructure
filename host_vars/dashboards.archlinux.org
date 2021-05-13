@@ -1,3 +1,4 @@
 ---
 filesystem: btrfs
 ipv4_address: 157.90.255.107
+prometheus_domain: dashboards.archlinux.org

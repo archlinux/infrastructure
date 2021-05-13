@@ -5,4 +5,4 @@ tls_server_config:
 # Usernames and passwords required to connect to Prometheus.
 # Passwords are hashed with bcrypt: https://github.com/prometheus/exporter-toolkit/blob/46630604b0f1c5d64fbd3eb3010d91af38dc798b/docs/web-configuration.md#about-bcrypt
 basic_auth_users:
-  {{ vault_prometheus_user }}: {{ vault_prometheus_passwd_hashed }}
+  {{ vault_prometheus_user }}: {{ vault_prometheus_passwd | password_hash('bcrypt') }}

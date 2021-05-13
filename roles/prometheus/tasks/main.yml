@@ -1,7 +1,7 @@
 ---
 
 - name: install prometheus server
-  pacman: name=prometheus state=present
+  pacman: name=prometheus,python-passlib,python-bcrypt state=present
 
 - name: install cert renewal hook
   template: src=letsencrypt.hook.d.j2 dest=/etc/letsencrypt/renewal-hooks/deploy/prometheus owner=root group=root mode=0755
