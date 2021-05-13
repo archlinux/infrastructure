@@ -14,6 +14,8 @@
       - python-mysql-connector
       - python-pygit2
       - python-srcinfo
+      - python-fastapi
+      - python-jinja
       - sudo
       - uwsgi-plugin-cgi
 

@@ -13,6 +13,7 @@ enable-maintenance = 0
 localedir = {{ aurweb_dir }}/web/locale/
 cache = {{ aurweb_cache }}
 cache_pkginfo_ttl = {{ aurweb_cache_pkginfo_ttl }}
+aur_location = https://{{ aurweb_domain }}
 git_clone_uri_anon = https://{{ aurweb_domain }}/%s.git
 git_clone_uri_priv = ssh://{{ aurweb_user }}@{{ aurweb_domain }}/%s.git
 memcache_servers = {{ aurweb_memcached_socket }}:0
