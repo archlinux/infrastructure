@@ -15,59 +15,203 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1610815477110,
+  "iteration": 1620944663181,
   "links": [],
   "panels": [
+    {
+      "datasource": "Prometheus",
+      "description": "reproducible percentage for [$suite] repository",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "good"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "bad"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "unknown"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 4,
+        "x": 0,
+        "y": 0
+      },
+      "id": 10,
+      "links": [
+        {
+          "targetBlank": true,
+          "title": "",
+          "url": "https://reproducible.archlinux.org/"
+        }
+      ],
+      "options": {
+        "displayLabels": [
+          "percent"
+        ],
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "values": [
+            "percent"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {}
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum by (status) (rebuilderd_results{suite=~\"^$suite\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{ status }}",
+          "queryType": "randomWalk",
+          "refId": "A"
+        }
+      ],
+      "title": "Percentage ($suite)",
+      "type": "piechart"
+    },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
-      "description": "Overall statistics of all repositories.",
+      "description": "rebuilderd results for [$suite] repository",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
-      "fill": 1,
+      "fill": 3,
       "fillGradient": 0,
       "gridPos": {
         "h": 9,
-        "w": 24,
-        "x": 0,
+        "w": 20,
+        "x": 4,
         "y": 0
       },
       "hiddenSeries": false,
       "id": 8,
       "legend": {
+        "alignAsTable": true,
         "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": true,
         "show": true,
+        "sort": "current",
+        "sortDesc": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
-      "linewidth": 1,
+      "linewidth": 2,
+      "links": [
+        {
+          "targetBlank": true,
+          "title": "",
+          "url": "https://reproducible.archlinux.org/"
+        }
+      ],
       "nullPointMode": "null",
       "options": {
         "alertThreshold": true
       },
-      "percentage": false,
-      "pluginVersion": "7.3.6",
+      "percentage": true,
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
-      "seriesOverrides": [],
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:1291",
+          "alias": "good",
+          "color": "#37872D"
+        },
+        {
+          "$$hashKey": "object:1302",
+          "alias": "bad",
+          "color": "#C4162A"
+        },
+        {
+          "$$hashKey": "object:1310",
+          "alias": "unknown",
+          "color": "#FADE2A"
+        }
+      ],
       "spaceLength": 10,
-      "stack": false,
+      "stack": true,
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (status) (rebuilderd_results)",
+          "exemplar": true,
+          "expr": "sum by (status) (rebuilderd_results{suite=~\"^$suite\"})",
           "interval": "",
           "legendFormat": "{{ suite }}",
           "queryType": "randomWalk",
@@ -78,10 +222,10 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Overall status",
+      "title": "Reproducible status ($suite)",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -94,129 +238,16 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:1161",
           "format": "short",
           "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
+          "max": "100",
+          "min": "0",
           "show": true
         },
         {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {
-        "bad": "red",
-        "good": "green"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "Prometheus",
-      "description": "rebuilderd results for [$suite] repository",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": null
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 10,
-        "w": 24,
-        "x": 0,
-        "y": 9
-      },
-      "hiddenSeries": false,
-      "id": 2,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.3.6",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "rebuilderd_results{suite=\"$suite\"}",
-          "interval": "",
-          "legendFormat": "{{ status }}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "$suite",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
+          "$$hashKey": "object:1162",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -236,40 +267,39 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
+      "decimals": 0,
       "description": "Number of active rebuidlerd-workers",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
-      "fill": 1,
+      "fill": 2,
       "fillGradient": 0,
       "gridPos": {
-        "h": 11,
+        "h": 10,
         "w": 11,
         "x": 0,
-        "y": 19
+        "y": 9
       },
       "hiddenSeries": false,
       "id": 4,
       "legend": {
         "avg": false,
-        "current": false,
+        "current": true,
         "max": false,
         "min": false,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
-      "linewidth": 1,
+      "linewidth": 2,
       "nullPointMode": "null",
       "options": {
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -279,6 +309,7 @@
       "steppedLine": false,
       "targets": [
         {
+          "exemplar": true,
           "expr": "rebuilderd_workers",
           "interval": "",
           "legendFormat": "active workers",
@@ -289,7 +320,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Active rebuilderd workers",
+      "title": "Active workers",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -305,14 +336,17 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:1921",
+          "decimals": 0,
           "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         },
         {
+          "$$hashKey": "object:1922",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -334,38 +368,36 @@
       "datasource": "Prometheus",
       "description": "The rebuilderd queue length of to be rebuild packages",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
-      "fill": 1,
+      "fill": 2,
       "fillGradient": 0,
       "gridPos": {
-        "h": 11,
+        "h": 10,
         "w": 13,
         "x": 11,
-        "y": 19
+        "y": 9
       },
       "hiddenSeries": false,
       "id": 6,
       "legend": {
         "avg": false,
-        "current": false,
+        "current": true,
         "max": false,
         "min": false,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
-      "linewidth": 1,
+      "linewidth": 2,
       "nullPointMode": "null",
       "options": {
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -375,6 +407,7 @@
       "steppedLine": false,
       "targets": [
         {
+          "exemplar": true,
           "expr": "rebuilderd_queue_length",
           "interval": "",
           "legendFormat": "queue length",
@@ -401,6 +434,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:1839",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -409,6 +443,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:1840",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -424,7 +459,7 @@
     }
   ],
   "refresh": false,
-  "schemaVersion": 26,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -433,41 +468,29 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "text": "extra",
-          "value": "extra"
+          "tags": [],
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": "Prometheus",
         "definition": "label_values(rebuilderd_results,suite)",
+        "description": null,
         "error": null,
         "hide": 0,
-        "includeAll": false,
+        "includeAll": true,
         "label": "suite",
-        "multi": false,
+        "multi": true,
         "name": "suite",
-        "options": [
-          {
-            "selected": false,
-            "text": "community",
-            "value": "community"
-          },
-          {
-            "selected": false,
-            "text": "core",
-            "value": "core"
-          },
-          {
-            "selected": true,
-            "text": "extra",
-            "value": "extra"
-          },
-          {
-            "selected": false,
-            "text": "testing",
-            "value": "testing"
-          }
-        ],
-        "query": "label_values(rebuilderd_results,suite)",
-        "refresh": 0,
+        "options": [],
+        "query": {
+          "query": "label_values(rebuilderd_results,suite)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -500,5 +523,5 @@
   "timezone": "",
   "title": "Rebuilderd",
   "uid": "PKkRg-FGz",
-  "version": 2
+  "version": 4
 }
