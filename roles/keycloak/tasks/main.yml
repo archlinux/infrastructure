@@ -69,6 +69,12 @@
     group: http
     mode: 0640
 
+- name: create ssl cert
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ keycloak_domain }}"]
+
 - name: make nginx log dir
   file: path="/var/log/nginx/{{ keycloak_domain }}" state=directory owner=root mode=0755
 

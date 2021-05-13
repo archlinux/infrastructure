@@ -21,6 +21,12 @@
 - name: set patchwork groups
   user: name=patchwork groups=uwsgi
 
+- name: create ssl cert
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ patchwork_domain }}"]
+
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest="{{ patchwork_nginx_conf }}" owner=root group=root mode=644
   notify:

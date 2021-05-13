@@ -26,6 +26,12 @@
   notify:
     - run sievec
 
+- name: create ssl cert
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ mail_domain }}"]
+
 - name: install dovecot cert renewal hook
   template: src=letsencrypt.hook.d.j2 dest=/etc/letsencrypt/hook.d/dovecot owner=root group=root mode=0755
 

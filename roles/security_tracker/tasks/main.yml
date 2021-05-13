@@ -77,6 +77,12 @@
 - name: restrict database permissions
   file: mode=0640 owner=security group=security path="{{ security_tracker_dir }}/tracker.db"
 
+- name: create ssl cert
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ security_tracker_domain }}"]
+
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest="{{ security_tracker_nginx_conf }}" owner=root group=root mode=644
   notify:
