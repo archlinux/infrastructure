@@ -17,7 +17,7 @@ remote_write:
 - url: https://{{ prometheus_domain }}:9090/api/v1/write
   write_relabel_configs:
   - source_labels: [__name__]
-    regex: "archive_directory_size_bytes|archive_total_packages|rebuilderd_results|rebuilderd_workers|rebuilderd_queue_length|repository_directory_size_bytes"
+    regex: "archive_directory_size_bytes|archive_total_packages|rebuilderd_results|rebuilderd_workers|rebuilderd_queue_length|repository_directory_size_bytes|aur_.+"
     action: keep
   basic_auth:
     username: {{ vault_prometheus_user }}
