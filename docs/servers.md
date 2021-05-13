@@ -118,6 +118,14 @@ Medium-fast-ish packet.net Arch Linux box.
   - [Grafana](https://monitoring.archlinux.org) and [docs/grafana.md](./docs/grafana.md)
   - Prometheus
 
+## dashboards.archlinux.org
+
+Prometheus, and Grafana server which receives selected performance/metrics from monitoring.archlinux.org and make them public accessible.
+
+### Services
+  - [Grafana](https://dashboards.archlinux.org) and [docs/grafana.md](./docs/grafana.md)
+  - Prometheus
+
 ## patchwork.archlinux.org
 
 ### Services

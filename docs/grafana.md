@@ -1,8 +1,10 @@
 # Grafana
 
 Our Grafana is hosted on https://monitoring.archlinux.org and is accessible for
-all Arch Linux Staff, editing rights are restricted to users with the Devops
+all DevOps Staff, editing rights are restricted to users with the Devops
 Role.
+
+A public accessible instance is hosted on https://dashboards.archlinux.org with selected metrics.
 
 Dashboards and datasources are automatically provisioned by Grafana with Grafana's built-in [provisioning configuration](https://grafana.com/docs/grafana/latest/administration/provisioning/).
 
