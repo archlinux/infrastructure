@@ -37,6 +37,18 @@ You can then run
 
 to generate a token to log in.
 
+## UptimeRobot
+
+Run
+
+    pass otp insert -i UptimeRobot -a archlinux UptimeRobot/archlinux-master-token -s
+
+When asked for a secret, provide the `2FA token seed` from `misc/additional-credentials.vault`.
+You can then run
+
+    pass otp code UptimeRobot/archlinux-master-token
+
+to generate a token to log in.
 
 ### Adding your own account
 
