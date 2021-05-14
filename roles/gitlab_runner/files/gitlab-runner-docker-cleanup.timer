@@ -1,0 +1,10 @@
+[Unit]
+Description=Run gitlab-runner-docker-cleanup.service daily
+
+[Timer]
+OnCalendar=weekly
+Persistent=true
+RandomizedDelaySec=1d
+
+[Install]
+WantedBy=timers.target
