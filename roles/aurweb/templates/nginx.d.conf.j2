@@ -65,6 +65,12 @@ server {
         uwsgi_pass cgit;
     }
 
+    location ~ \.gz$ {
+        add_header Content-Type text/plain;
+        add_header Content-Encoding gzip;
+        expires 5m;
+    }
+
     location ~ ^/[^/]+\.php($|/) {
         fastcgi_pass   aurweb;
         fastcgi_index  index.php;
