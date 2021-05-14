@@ -152,7 +152,7 @@ groups:
           summary: "Prometheus AlertManager notification failing (instance {{ $labels.instance }})"
           description: "Alertmanager is failing sending notifications\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
       - alert: PrometheusTargetScrapingSlow
-        expr: prometheus_target_interval_length_seconds{quantile="0.9"} > 60
+        expr: prometheus_target_interval_length_seconds{quantile="0.9"} > 90
         for: 5m
         labels:
           severity: warning
