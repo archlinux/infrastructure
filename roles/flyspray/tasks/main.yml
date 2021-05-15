@@ -41,7 +41,7 @@
 
 - name: clone flyspray repo
   git:
-    repo: https://git.archlinux.org/vhosts/bugs.archlinux.org.git
+    repo: https://gitlab.archlinux.org/archlinux/flyspray.git
     version: "{{ flyspray_commit }}"
     dest: "{{ flyspray_dir }}"
   become: true
