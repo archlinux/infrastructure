@@ -37,4 +37,4 @@ ln -nsf "${LATEST_RELEASE_TAG}" "${ARCH_BOXES_PATH}/latest"
 
 echo "Removing old releases"
 cd "${ARCH_BOXES_PATH}"
-comm --output-delimiter="" -3 <({ ls | grep -v latest | sort -r | head -n "${MAX_RELEASES}"; echo latest; } | sort) <(ls | sort) | xargs --no-run-if-empty rm -rvf
+comm --output-delimiter="" -3 <({ ls | grep -v latest | sort -r | head -n "${MAX_RELEASES}"; echo latest; } | sort) <(ls | sort) | tr -d '\0' | xargs --no-run-if-empty rm -rvf
