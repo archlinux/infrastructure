@@ -67,7 +67,7 @@ ircService:
       # networkId: "example"
 
       # MXC URL to an icon used as the network icon whenever this network appear in
-      # a network list. (Like in the riot room directory, for instance.)
+      # a network list. (Like in the Element room directory, for instance.)
       icon: mxc://matrix.org/LpsSLrbANVrEIEOgEaVteItf
 
       # The port to connect to. Optional.
@@ -377,6 +377,17 @@ ircService:
         # Whilst the IRCd *should* be sending pings to us to keep the connection alive, it appears
         # that sometimes they don't get around to it and end up ping timing us out.
         # pingRateMs: 60000
+        # Choose which conditions the IRC bridge should kick Matrix users for. Decisions to this from
+        # defaults should be taken with care as it may dishonestly repesent Matrix users on the IRC
+        # network, and cause your bridge to be banned.
+        kickOn:
+          # Kick a Matrix user from a bridged room if they fail to join the IRC channel.
+          channelJoinFailure: false
+          # Kick a Matrix user from ALL rooms if they are unable to get connected to IRC.
+          ircConnectionFailure: false
+          # Kick a Matrix user from ALL rooms if they choose to QUIT the IRC network.
+          userQuit: true
+
 
 {% endfor %}
   # Set information about the bridged channel in the room state, so that client's may
@@ -526,6 +537,16 @@ ircService:
   # 'matrix.org': admin
   # '@fibble:matrix.org': admin
     '@heftig:{{ matrix_server_name }}': admin
+
+  # Allow room moderators to adjust the configuration of the bridge via room state.
+  # See docs/room_commands.md
+  # Optional: Off by default
+  perRoomConfig:
+    # Should the bridge use per-room configuration state. If false, the state
+    # events will be ignored.
+    enabled: false
+    # The maximum number that can be set for the `lineLimit` configuration option
+    # lineLimitMax: 5
 
 # Options here are generally only applicable to large-scale bridges and may have
 # consequences greater than other options in this configuration file.
