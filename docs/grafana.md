@@ -13,6 +13,7 @@ A new dashboard can be configured in our Grafana instance to try it out and if s
 * Export the dashboard to json (top left, share dashboard => exporter => save to file).
 * Save the json file in `roles/grafana/files/dashboards'
 * Git add the file and run the grafana playbook
+* If it needs to be available in `dashboards.archlinux.org` create a symlink in `roles/grafana/files/public-dashboards` to the dashboard in `roles/grafana/files/dashboards`
 
 ## Adding new metrics to dashboards.archlinux.org
 
