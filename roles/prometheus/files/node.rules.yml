@@ -221,6 +221,24 @@ groups:
         annotations:
           description: 'host {{ $labels.instance }} has vulnerable date packages'
           summary: '{{ $labels.instance }} has {{ $value }} vulnerable packages'
+      - alert: pacman_orphans
+        expr: pacman_orphans > 0
+        for: 15m
+        labels:
+          severity: warning
+          service: pacman
+        annotations:
+          description: 'host {{ $labels.instance }} has orphan packages'
+          summary: '{{ $labels.instance }} has {{ $value }} orphan packages'
+      - alert: pacman_foreigns
+        expr: pacman_foreigns > 0
+        for: 15m
+        labels:
+          severity: warning
+          service: pacman
+        annotations:
+          description: 'host {{ $labels.instance }} has foreigns packages'
+          summary: '{{ $labels.instance }} has {{ $value }} foreigns packages'
 
   - name: btrfs
     interval: 2m
