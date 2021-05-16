@@ -9,6 +9,7 @@
     - { role: firewalld }
     - { role: sshd }
     - { role: root_ssh }
+    - { role: fail2ban }
     - { role: borg_client, tags: ["borg"] }
     - { role: nginx }
     - { role: certbot }
