@@ -77,6 +77,17 @@
   notify:
     - reload fail2ban jails
 
+- name: install nginx-limit-req jail
+  when: fail2ban_jails.nginx_limit_req
+  template:
+    src: "nginx-limit-req.jail.j2"
+    dest: "/etc/fail2ban/jail.d/nginx-limit-req.local"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  notify:
+    - reload fail2ban jails
+
 - name: start and enable service
   systemd:
     name: "fail2ban.service"
