@@ -237,8 +237,8 @@ groups:
           severity: warning
           service: pacman
         annotations:
-          description: 'host {{ $labels.instance }} has foreigns packages'
-          summary: '{{ $labels.instance }} has {{ $value }} foreigns packages'
+          description: 'host {{ $labels.instance }} has foreign packages'
+          summary: '{{ $labels.instance }} has {{ $value }} foreign packages'
 
   - name: btrfs
     interval: 2m
