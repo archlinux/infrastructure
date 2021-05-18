@@ -2,6 +2,9 @@ upstream archmanweb {
     server unix:///run/uwsgi/archmanweb.sock;
 }
 
+limit_req_zone $binary_remote_addr zone=archmanweb_limit:10m rate=2r/s;
+limit_req_status 429;
+
 server {
     listen       80;
     listen       [::]:80;
@@ -31,6 +34,8 @@ server {
     ssl_certificate      /etc/letsencrypt/live/{{ archmanweb_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ archmanweb_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ archmanweb_domain }}/chain.pem;
+
+    limit_req zone=archmanweb_limit burst=10 delay=8;
 
     location = /favicon.ico {
         alias {{ archmanweb_dir }}/repo/collected_static/favicon.ico;
