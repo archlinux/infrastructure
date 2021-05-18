@@ -38,7 +38,7 @@ server {
     limit_req zone=archmanweb_limit burst=10 delay=8;
 
     location = /favicon.ico {
-        alias {{ archmanweb_dir }}/repo/collected_static/favicon.ico;
+        alias {{ archmanweb_dir }}/repo/collected_static/archlinux-common/favicon.ico;
     }
 
     # Client-cache for Django's static assets
