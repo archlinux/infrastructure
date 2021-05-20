@@ -41,3 +41,16 @@ matrix_nginx_config:
     locations:
       - "/_matrix"
       - "/_synapse"
+
+matrix_metrics_htpasswd: /etc/nginx/auth/matrix_metrics
+matrix_metrics_endpoints:
+  - name: synapse.homeserver
+    port: 8019
+  - name: synapse.appservice
+    port: 8020
+  - name: synapse.federation_reader
+    port: 8021
+  - name: synapse.federation_writer
+    port: 8022
+  - name: synapse.media_repository
+    port: 8023

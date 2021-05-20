@@ -312,6 +312,13 @@ listeners:
     #    module: my_module.CustomRequestHandler
     #    config: {}
 
+  # Turn on the twisted ssh manhole service on localhost on the given
+  # port.
+  #
+  #- port: 9000
+  #  bind_addresses: ['::1', '127.0.0.1']
+  #  type: manhole
+
   - port: 9093
     type: http
     bind_addresses: ['::1', '127.0.0.1']
@@ -319,12 +326,9 @@ listeners:
       - names: [replication]
         compress: false
 
-  # Turn on the twisted ssh manhole service on localhost on the given
-  # port.
-  #
-  #- port: 9000
-  #  bind_addresses: ['::1', '127.0.0.1']
-  #  type: manhole
+  - port: 8019
+    type: metrics
+    bind_addresses: ['127.0.0.1']
 
 # Forward extremities can build up in a room due to networking delays between
 # homeservers. Once this happens in a large room, calculation of the state of
@@ -728,8 +732,8 @@ acme:
 #
 # By default, no domains are monitored in this way.
 #
-#federation_metrics_domains:
-#  - matrix.org
+federation_metrics_domains:
+  - matrix.org
 #  - example.com
 
 # Uncomment to disable profile lookup over federation. By default, the
@@ -1482,7 +1486,7 @@ account_validity:
 
 # Enable collection and rendering of performance metrics
 #
-#enable_metrics: false
+enable_metrics: true
 
 # Enable sentry integration
 # NOTE: While attempts are made to ensure that the logs don't contain
@@ -1502,7 +1506,7 @@ metrics_flags:
     # servers this homeserver knows about, including itself. May cause
     # performance problems on large homeservers.
     #
-    #known_servers: true
+    known_servers: true
 
 # Whether or not to report anonymized homeserver usage statistics.
 #

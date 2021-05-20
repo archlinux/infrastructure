@@ -28,7 +28,7 @@
       - pkgconf
       - postgresql-libs
       - python
-      - python2
+      - python-passlib
       - redis
       - tcl
       - tk
@@ -244,6 +244,15 @@
     dest: /etc/synapse/{{ matrix_server_name }}.ircpass.key
     owner: root
     group: synapse
+    mode: 0640
+
+- name: create htpasswd for matrix metrics endpoint
+  htpasswd:
+    path: "{{ matrix_metrics_htpasswd }}"
+    name: "{{ vault_matrix_secrets.metrics_user }}"
+    password: "{{ vault_matrix_secrets.metrics_password }}"
+    owner: root
+    group: http
     mode: 0640
 
 - name: make nginx log dir

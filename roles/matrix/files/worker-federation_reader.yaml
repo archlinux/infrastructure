@@ -8,5 +8,8 @@ worker_listeners:
     resources:
       - names: [federation]
         compress: false
+  - port: 8021
+    type: metrics
+    bind_addresses: ['127.0.0.1']
 
 # vim:ft=yaml sw=2 et:

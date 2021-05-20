@@ -8,5 +8,8 @@ worker_listeners:
     resources:
       - names: [media]
         compress: false
+  - port: 8023
+    type: metrics
+    bind_addresses: ['127.0.0.1']
 
 # vim:ft=yaml sw=2 et:

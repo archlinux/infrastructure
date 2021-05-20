@@ -50,6 +50,22 @@ server {
 {% endfor %}
 
 {% endfor %}
+    location /metrics {
+        auth_basic "Matrix metrics";
+        auth_basic_user_file {{ matrix_metrics_htpasswd }};
+
+{% for ep in matrix_metrics_endpoints %}
+        location = /metrics/{{ ep.name }} {
+            proxy_pass http://127.0.0.1:{{ ep.port }}/{{ ep.path | default('') }};
+        }
+
+{% endfor %}
+        location = /metrics {
+            add_header Content-Type text/plain;
+            return 200 "Available endpoints:\n{% for ep in matrix_metrics_endpoints %}  /metrics/{{ ep.name }}\n{% endfor %}";
+        }
+    }
+
     location = / {
         add_header Content-Type text/plain;
         return 200 "Nothing to see here.";

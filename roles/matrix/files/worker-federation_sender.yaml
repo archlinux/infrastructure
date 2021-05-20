@@ -1,4 +1,8 @@
 worker_name: federation_sender
 worker_app: synapse.app.federation_sender
+worker_listeners:
+  - port: 8022
+    type: metrics
+    bind_addresses: ['127.0.0.1']
 
 # vim:ft=yaml sw=2 et:
