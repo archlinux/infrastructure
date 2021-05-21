@@ -153,6 +153,7 @@ arch_users:
     name: "Jonas Witschel"
     ssh_key: diabonas.pub
     groups:
+      - dev
       - tu
   donate:
     name: ""
