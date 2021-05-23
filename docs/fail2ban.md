@@ -33,3 +33,9 @@ Add `fail2ban_jails` dict with `postfix: true` to the host's `host_vars`.
 The dovecot jail is enabled for our mail server, blocking failed logins. Adding it to a host:
 
 Add `fail2ban_jails` dict with `dovecot: true` to the host's `host_vars`.
+
+### nginx_limit_req
+
+The nginx_limit_req jail is not enabled on any server. This jail bans IPs based repeated errors on nginx error log. Default blocking is 1 hour(s). Adding to a host:
+
+Add `fail2ban_jails` dict with `nginx_limit_req: true` to the host's `host_vars`.

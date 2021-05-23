@@ -1,0 +1,13 @@
+#
+# {{ansible_managed}}
+#
+
+[nginx-limit-req]
+
+enabled = true
+filter = nginx-limit-req
+action = iptables-multiport[name=ReqLimit, port="http,https", protocol=tcp]
+logpath = /var/log/nginx/*/error.log
+findtime = 5min
+bantime = 1hours
+maxretry = 10
