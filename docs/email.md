@@ -58,3 +58,29 @@ The keys generated need to go to the vault:
 roles/rspamd/files/archlinux.org.dkim-rsa.key
 roles/rspamd/files/archlinux.org.dkim-ed25519.key
 ```
+
+# Gitlab servicedesk
+
+Gitlab has a [servicedesk
+feature](https://docs.gitlab.com/ee/user/project/service_desk.html) which
+creates issues for incomding emails and allows multiple people to reply via
+Gitlab on those issues and assign issues. Gitlab generates a default email
+address with the following logic:
+
+```
+gitlab+<group>-<project>-<project-id>-issue-@archlinux.org
+```
+
+As we prefer to use user friendly addresses such as `privacy@archlinux.org` for communication a postfix alias is configured in `/etc/postix/aliases`.
+
+For a new Gitlab service desk project, add a new alias to `/etc/postfix/aliases` as:
+
+```
+foobar: gitlab+<group>-<project>-<project-id>-issue-@archlinux.org
+```
+
+Then run `postalias`:
+
+```
+postalias /etc/postfix/aliases
+```
