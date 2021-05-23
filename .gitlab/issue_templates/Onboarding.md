@@ -12,6 +12,7 @@ It can also be used as a reference for adding new roles to an existing team memb
   - **Voting result**: <!-- Add link to relevant mailing list mail -->
 
 ## All roles checklist
+The mailing list password can be found in misc/additional-credentials.vault.
 
 - [ ] Add new user email as per `docs/email.md`.
 - [ ] Create a new user in archweb: https://www.archlinux.org/devel/newuser/
@@ -25,6 +26,7 @@ It can also be used as a reference for adding new roles to an existing team memb
 - [ ] Add SSH pubkey to `pubkeys/<username>.pub`.
 - [ ] Run `ansible-playbook -t archusers playbooks/*.yml`.
 - [ ] Assign the user to the `Developers` groups on Keycloak.
+- [ ] Assign the user to the `Developers` group on [archlinux.org](https://archlinux.org/admin/auth/user/)
 - [ ] Subscribe user to internal [arch-dev mailing list](https://lists.archlinux.org/admin/arch-dev/members/add)
 - [ ] Whitelist email address on [arch-dev-public](https://lists.archlinux.org/admin/arch-dev-public/members) (find member and unmoderate)
 
@@ -34,6 +36,7 @@ It can also be used as a reference for adding new roles to an existing team memb
 - [ ] Add SSH pubkey to `pubkeys/<username>.pub`.
 - [ ] Run `ansible-playbook -t archusers playbooks/*.yml`.
 - [ ] Assign the user to the `Trusted Users` groups on Keycloak.
+- [ ] Assign the user to the `Trusted Users` group on [archlinux.org](https://archlinux.org/admin/auth/user/)
 - [ ] Whitelist email address on [arch-dev-public](https://lists.archlinux.org/admin/arch-dev-public/members) (find member and unmoderate)
 - [ ] Subscribe user to internal [arch-tu mailing list](https://lists.archlinux.org/admin/arch-tu/members/add)
 
