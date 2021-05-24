@@ -61,13 +61,13 @@ server {
 
 {% endfor %}
         location = /metrics {
-            add_header Content-Type text/plain;
+            default_type text/plain;
             return 200 "Available endpoints:\n{% for ep in matrix_metrics_endpoints %}  /metrics/{{ ep.name }}\n{% endfor %}";
         }
     }
 
     location = / {
-        add_header Content-Type text/plain;
+        default_type text/plain;
         return 200 "Nothing to see here.";
     }
 
