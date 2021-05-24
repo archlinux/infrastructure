@@ -19,6 +19,7 @@ The mailing list password can be found in misc/additional-credentials.vault.
       This is also linked in the django admin backend at the top
 - [ ] Subscribe user to internal [staff mailing list](https://lists.archlinux.org/admin/staff/members/add)
 - [ ] Give the user access to `#archlinux-staff` on Freenode
+- [ ] Give the user a link to our [staff services page](https://wiki.archlinux.org/title/DeveloperWiki:Staff_Services)
 
 ## Developer onboarding checklist
 
