@@ -66,7 +66,7 @@ server {
     }
 
     location ~ \.gz$ {
-        add_header Content-Type text/plain;
+        default_type text/plain;
         add_header Content-Encoding gzip;
         expires 5m;
     }
