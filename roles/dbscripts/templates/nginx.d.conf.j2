@@ -1,3 +1,5 @@
+proxy_cache_path  /var/lib/nginx/cache levels=1:2 keys_zone=auth_cache:5m inactive=60m;
+
 server {
     listen       80;
     listen       [::]:80;
@@ -22,9 +24,29 @@ server {
     }
 
     location / {
-        auth_basic            "Restricted";
-        auth_basic_user_file  auth/dbscripts.htpasswd;
+        auth_request /devel/mirrorauth/;
 
         autoindex  on;
+    }
+
+    location = /devel/mirrorauth/ {
+        internal;
+
+        # Do not pass the request body, only http authorisation header is required
+        proxy_pass_request_body off;
+        proxy_set_header        Content-Length "";
+
+        # Proxy headers
+        proxy_set_header        Host                    "archlinux.org";
+        proxy_set_header        X-Sent-From             "{{ vault_archweb_x_sent_from_secret }}";
+
+        # Cache responses from the auth proxy
+        proxy_cache             auth_cache;
+        proxy_cache_key         "$scheme$proxy_host$request_uri$http_authorization";
+
+        # Authentication to archweb
+        proxy_pass https://archlinux.org;
+	proxy_ssl_verify on;
+	proxy_ssl_trusted_certificate /etc/ssl/certs/ca-certificates.crt;
     }
 }
