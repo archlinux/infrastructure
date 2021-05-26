@@ -18,6 +18,7 @@ smtp      inet  n       -       n       -       -       smtpd
     -o smtpd_proxy_options=speed_adjust
 {% else %}
 localhost:smtp      inet  n       -       n       -       -       smtpd
+    -o smtpd_tls_security_level=none
 {% endif %}
 
 {% if postfix_server %}
