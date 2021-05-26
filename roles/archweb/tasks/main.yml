@@ -27,7 +27,7 @@
   include_role:
     name: certificate
   vars:
-    domains: ["{{ [archweb_domain] + archweb_alternate_domains }}"]
+    domains: "{{ [archweb_domain] + archweb_alternate_domains }}"
 
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest="{{ archweb_nginx_conf }}" owner=root group=root mode=644
