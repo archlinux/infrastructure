@@ -773,7 +773,7 @@ caches:
    #
    # Defaults to 0.5, which will half the size of all caches.
    #
-   #global_factor: 1.0
+   global_factor: 0.7
 
    # A dictionary of cache name to cache factor for that individual
    # cache. Overrides the global cache factor for a given cache.
@@ -840,7 +840,7 @@ database:
     user: synapse
     password: {{ vault_postgres_users.synapse }}
     cp_min: 1
-    cp_max: 5
+    cp_max: 8
 
 
 ## Logging ##

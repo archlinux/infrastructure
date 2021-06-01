@@ -13,7 +13,7 @@
     - { role: certbot }
     - { role: nginx }
     - role: postgres
-      postgres_shared_buffers: 1GB
+      postgres_shared_buffers: 256MB
       postgres_work_mem: 64MB
       postgres_maintenance_work_mem: 256MB
       postgres_effective_cache_size: 4GB
