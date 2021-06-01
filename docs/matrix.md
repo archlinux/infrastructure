@@ -7,17 +7,16 @@ integrations with third-party services.
 
 ## Signing in
 
-For the initial sign-in you need to use a client that supports OpenID Single-Sign-On, such as [Element
-Web](https://app.element.io/). Enter `@username:archlinux.org` as the username and Element should
-offer to sign into our homeserver.
+For the initial sign-in you need to use a client that supports OpenID Single-Sign-On, such as
+[Element Web](https://app.element.io/). Enter `@username:archlinux.org` as the username and Element
+should offer to sign into our homeserver.
 
 You will be automatically invited to several rooms:
   - `#archlinux:archlinux.org`: A public room for Arch Linux users.
-  - `#staff:archlinux.org`: Bridged with the `#archlinux-staff` IRC channel on Freenode.
   - `#internal:archlinux.org`: A staff-only room with end-to-end encryption.
 
-After signing in you can use Element's settings to set a password for the account if you want to use
-a client that does not support SSO.
+Password login is currently disabled, which might exclude some clients. It can be re-enabled should
+demand exist.
 
 If you need to provide your client with a homeserver address, use `https://matrix.archlinux.org`.
 
@@ -25,21 +24,24 @@ If you need to provide your client with a homeserver address, use `https://matri
 
 ### Our bridge
 
-We bridge several of our private IRC channels on Freenode to Matrix, which you need to be invited
+We bridge several of our private IRC channels on Libera Chat to Matrix, which you need to be invited
 into:
   - `#developers:archlinux.org`: Bridged with `#archlinux-dev`.
   - `#trusted-users:archlinux.org`: Bridged with `#archlinux-tu`.
   - `#staff:archlinux.org`: Bridged with `#archlinux-staff`.
 
+Please request an invitation in `#internal:archlinux.org` for the rooms you need to be in.
+
 ### Matrix.org bridge
 
-Channels without keys are available via the "official" Freenode bridge at Matrix.org. For example:
-  - `#freenode_#archlinux-devops:matrix.org`: Bridged with `#archlinux-devops`.
-  - `#freenode_#archlinux-projects:matrix.org`: Bridged with `#archlinux-projects`.
+Channels without keys are available via the official Libera Chat bridge. For example:
+  - `#archlinux-devops:libera.chat`: Bridged with `#archlinux-devops`.
+  - `#archlinux-projects:libera.chat`: Bridged with `#archlinux-projects`.
 
-**Please avoid joining large bridged rooms (such as `#freenode_#archlinux:matrix.org`), as these
-slow down the server immensely.**
+**Please avoid joining large bridged rooms (such as `#archlinux:libera.chat`), as these slow down
+the server immensely.**
 
-Freenode may require you to have a registered nick to join certain channels. Once
-`@appservice-irc:matrix.org` contacts you, tell it to `!storepass <username>:<password>` with the
-username and the password of your Freenode account and it will reconnect you as registered.
+Libera Chat may require you to have a registered nick to join certain channels. Once
+`@appservice:libera.chat` contacts you, tell it `!username <username>`, then `!storepass <password>`
+with the username and the password of your Libera Chat NickServ account. Then `!reconnect` and it
+will reconnect you as registered.
