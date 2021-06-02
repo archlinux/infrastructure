@@ -15,7 +15,7 @@ This template should be used for offboarding Arch Linux team members.
 
 - [ ] Remove user email by reverting instructions from `docs/email.md`.
 - [ ] Set user to inactive in archweb: https://www.archlinux.org/admin/auth/user/
-- [ ] Remove member from [staff mailing lists](https://lists.archlinux.org/admin/staff/members)
+- [ ] Remove member from [staff mailing list](https://lists.archlinux.org/admin/staff/members)
 - [ ] Ask the user to leave `#archlinux-staff` on Freenode and forget the password
 
 ## TU/Developer offboarding checklist
@@ -25,8 +25,8 @@ This template should be used for offboarding Arch Linux team members.
 - [ ] Run `ansible-playbook -t archusers playbooks/*.yml`.
 - [ ] Remove the user from the `Trusted Users`/`Developers` groups on Keycloak.
 - [ ] Moderate email address on [arch-dev-public](https://lists.archlinux.org/admin/arch-dev-public/members) (find member and moderate)
-- [ ] Remove member from [arch-tu mailing lists](https://lists.archlinux.org/admin/arch-tu/members)
-- [ ] Create keyring revocation ticket
+- [ ] Remove member from [arch-tu](https://lists.archlinux.org/admin/arch-tu/members) and/or [arch-dev](https://lists.archlinux.org/admin/arch-dev/members) mailing lists
+- [ ] Create [issue in archlinux-keyring](https://gitlab.archlinux.org/archlinux/archlinux-keyring/-/issues/new) (choose *"Remove Packager Key"* and/or *"Remove Main Key"* template)
 
 ## DevOps offboarding checklist
 
