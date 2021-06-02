@@ -9,7 +9,7 @@ This repository contains the complete collection of ansible playbooks and roles 
 
 Install these packages:
   - terraform
-  - python-typer
+  - python-click
   - python-jmespath
   - moreutils (for playbooks/tasks/reencrypt-vault-key.yml)
 
