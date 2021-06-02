@@ -44,7 +44,7 @@ The mailing list password can be found in misc/additional-credentials.vault.
 ## DevOps onboarding checklist
 
 - [ ] Add entries in `group_vars/all/root_access.yml`.
-- [ ] Run `ansible-playbook -t root_ssh playbooks/*.yml`.
+- [ ] Run `ansible-playbook -t root_ssh playbooks/all-hosts-basic.yml`.
 - [ ] Run `ansible-playbook playbooks/hetzner_storagebox.yml playbooks/rsync.net.yml`.
 - [ ] Assign the user to the `DevOps` group on Keycloak.
 - [ ] Subscribe user to [arch-devops-private mailing lists](https://lists.archlinux.org/admin/arch-devops-private/members/add)

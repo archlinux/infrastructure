@@ -152,7 +152,7 @@ This section has been moved to [docs/servers.md](docs/servers.md).
 ### Fetching the borg keys for local storage
 
   - Make sure you have all the GPG keys **at least** locally signed
-  - Run the playbooks/tasks/fetch-borg-keys.yml playbook
+  - Run the `playbooks/tasks/fetch-borg-keys.yml` playbook
   - Make sure the playbook runs successfully and check the keys under the borg-keys directory
 
 ## Backup documentation
