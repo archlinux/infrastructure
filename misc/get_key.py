@@ -7,10 +7,8 @@ from contextlib import contextmanager
 from enum import Enum
 from pathlib import Path
 from typing import List
-import typer
+import click
 import yaml
-
-app = typer.Typer()
 
 
 @contextmanager
@@ -56,14 +54,11 @@ class OutputFormat(str, Enum):
     def __str__(self):
         return self.value
 
-
-def main(
-    vault: Path = typer.Argument(...),
-    keys: List[str] = typer.Argument(...),
-    format: OutputFormat = typer.Option(
-        OutputFormat.BARE, show_default=True, help="Output format"
-    ),
-):
+@click.command()
+@click.argument('vault', type=click.Path(exists=True))
+@click.argument('keys', nargs=-1)
+@click.option('--format', default=OutputFormat.BARE, type=click.Choice([e.value for e in OutputFormat]), help='Output format')
+def main(vault, keys, format):
     """
     Get a bunch of entries from the vault located at VAULT.
 
@@ -84,4 +79,4 @@ def main(
 
 
 if __name__ == "__main__":
-    typer.run(main)
+    main()
