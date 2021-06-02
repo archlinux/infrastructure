@@ -2,5 +2,10 @@
 {% for user in root_ssh_keys | sort(attribute="key") -%}
 	{% if user.hosts is not defined or inventory_hostname in user.hosts -%}
 		{{ lookup('file', role_path + '/../../pubkeys/' + user.key ) }}
+		{% if user.additional_keys is defined %}
+			{% for key in user.additional_keys | sort -%}
+				{{ lookup('file', role_path + '/../../pubkeys/' + key ) }}
+			{% endfor %}
+		{% endif %}
 	{% endif %}
 {% endfor %}
