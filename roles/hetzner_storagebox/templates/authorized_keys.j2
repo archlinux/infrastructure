@@ -1,7 +1,7 @@
 #jinja2: lstrip_blocks: True
 # Arch DevOps keys
-{% for user in root_ssh_keys | sort -%}
-	{{ lookup('file', '../pubkeys/' + user) }}
+{% for user in root_ssh_keys | sort(attribute='key') -%}
+	{{ lookup('file', '../pubkeys/' + user.key) }}
 {% endfor %}
 
 # Client machines keys
