@@ -21,6 +21,17 @@ The mailing list password can be found in misc/additional-credentials.vault.
 - [ ] Give the user access to `#archlinux-staff` on Freenode
 - [ ] Give the user a link to our [staff services page](https://wiki.archlinux.org/title/DeveloperWiki:Staff_Services)
 
+## Packager onboarding checklist
+
+<!-- The ticket should be created by a sponsor of the new packager -->
+- [ ] Create [issue in archlinux-keyring](https://gitlab.archlinux.org/archlinux/archlinux-keyring/-/issues/new) (choose *"New Packager Key"* template)
+
+## Main key onboarding checklist
+
+- [ ] Add new user email for the `master-key.archlinux.org` subdomain as per `docs/email.md`.
+<!-- The ticket should be created by the developer becoming a new main key holder -->
+- [ ] Create [issue in archlinux-keyring](https://gitlab.archlinux.org/archlinux/archlinux-keyring/-/issues/new) (choose *"New Main Key"* template)
+
 ## Developer onboarding checklist
 
 - [ ] Add entry in `group_vars/all/archusers.yml`.
