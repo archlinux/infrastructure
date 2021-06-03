@@ -2,11 +2,11 @@
 
 We offer a Quassel instance for Arch team members who can not easily run their own bouncer.
 
-## Freenode restrictions
+## Libera Chat restrictions
 
-Freenode restricts or limits multiple connections from the same IP Address. Every quassel user uses
-a separate connection. We current have a limit of 100 connections. If we need more we have to email
-ilines@freenode.net.
+Libera Chat restricts or limits multiple connections from the same IP Address. Every quassel user uses
+a separate connection. We are currently not near the limit. If we need more we have to email
+support@libera.chat.
 
 ## Add a user
 
