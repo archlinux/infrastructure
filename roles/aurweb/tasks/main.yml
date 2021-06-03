@@ -16,6 +16,7 @@
       - python-srcinfo
       - python-fastapi
       - python-jinja
+      - python-email-validator
       - sudo
       - uwsgi-plugin-cgi
 
