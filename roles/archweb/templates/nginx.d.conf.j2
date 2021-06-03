@@ -5,6 +5,11 @@ limit_req_status 429;
 uwsgi_cache_path /var/lib/nginx/cache levels=1:2 keys_zone=archwebcache:10m inactive=60m;
 uwsgi_cache_key "$scheme$host$request_uri";
 
+map $uri $cache_key {
+    default            $scheme$host$request_uri;
+    /devel/mirrorauth/ $scheme$host$request_uri$http_authorization;
+}
+
 upstream archweb {
     server unix:///run/uwsgi/archweb.sock;
 }
@@ -200,6 +205,7 @@ server {
 
         uwsgi_cache archwebcache;
         uwsgi_cache_revalidate on;
+        uwsgi_cache_key $cache_key;
         add_header X-Cache-Status $upstream_cache_status;
     }
 }
