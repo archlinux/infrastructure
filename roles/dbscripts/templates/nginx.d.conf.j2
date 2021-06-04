@@ -42,7 +42,7 @@ server {
 
         # Cache responses from the auth proxy
         proxy_cache             auth_cache;
-        proxy_cache_key         "$scheme$proxy_host$request_uri$http_authorization";
+        proxy_cache_key         $scheme$proxy_host$uri$http_authorization;
 
         # Authentication to archweb
         proxy_pass https://archlinux.org;
