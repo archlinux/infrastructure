@@ -119,6 +119,13 @@ scrape_configs:
 
     {% endfor %}
 
+  - job_name: hedgedoc
+    scheme: https
+    authorization:
+      credentials: {{ vault_hedgedoc_metrics_token }}
+    static_configs:
+    - targets: ['md.archlinux.org:443']
+
 {% for module in blackbox_targets.keys() %}
   - job_name: 'blackbox_{{ module }}'
     metrics_path: /probe
