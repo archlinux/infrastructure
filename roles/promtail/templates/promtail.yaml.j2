@@ -42,3 +42,20 @@ scrape_configs:
         - timestamp:
             format: 02/Jan/2006:15:04:05 -0700
             source: time_local
+  - job_name: pacman
+    static_configs:
+      - targets:
+        - localhost
+        labels:
+          job: pacman
+          instance: {{ ansible_fqdn }}
+          __path__: /var/log/pacman.log
+    pipeline_stages:
+    - match:
+        selector: '{job="pacman"}'
+        stages:
+        - regex:
+            expression: '^\[(?P<timestamp>.*?)\]'
+        - timestamp:
+            format: 2006-01-02T15:04:05Z0700
+            source: timestamp
