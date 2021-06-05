@@ -25,7 +25,7 @@
   file: path=/var/log/nginx/{{ hedgedoc_domain }} state=directory owner=root group=root mode=0755
 
 - name: set up nginx
-  template: src=nginx.d.conf.j2 dest={{ hedgedoc_nginx_conf }} owner=root group=root mode=644
+  template: src=nginx.d.conf.j2 dest={{ hedgedoc_nginx_conf }} owner=root group=http mode=640
   notify: reload nginx
   tags: ['nginx']
 
