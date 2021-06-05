@@ -126,6 +126,13 @@ scrape_configs:
     static_configs:
     - targets: ['md.archlinux.org:443']
 
+  - job_name: grafana
+    scheme: https
+    authorization:
+      credentials: {{ vault_grafana_metrics_token }}
+    static_configs:
+    - targets: ['monitoring.archlinux.org:443', 'dashboards.archlinux.org:443']
+
 {% for module in blackbox_targets.keys() %}
   - job_name: 'blackbox_{{ module }}'
     metrics_path: /probe
