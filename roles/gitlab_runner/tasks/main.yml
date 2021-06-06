@@ -4,6 +4,10 @@
   pacman: name=docker,python-docker,python-gitlab,gitlab-runner state=latest update_cache=yes
   notify: restart gitlab-runner
 
+- name: install docker.slice
+  copy: src=docker.slice dest=/etc/systemd/system/ owner=root group=root mode=0644
+  notify: systemd daemon-reload
+
 - name: start docker
   systemd: name=docker enabled=yes state=started daemon_reload=yes
 
