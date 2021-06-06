@@ -19,5 +19,5 @@
 - name: restart syslog-ng
   service: name=syslog-ng@default state=restarted
 
-- name: restart systemd-swap
-  service: name=systemd-swap state=restarted
+- name: restart swap.target
+  service: name=swap.target state=restarted daemon_reload=yes
