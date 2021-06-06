@@ -442,11 +442,11 @@
         <subsystem xmlns="urn:jboss:domain:datasources:6.0">
             <datasources>
                 <datasource jndi-name="java:jboss/datasources/KeycloakDS" pool-name="KeycloakDS" enabled="true" use-java-context="true" statistics-enabled="${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}">
-                    <connection-url>jdbc:postgresql://localhost:5432/keycloak</connection-url>
+                    <connection-url>jdbc:postgresql://localhost:5432/{{ keycloak_db_name }}</connection-url>
                     <driver>postgresql</driver>
                     <security>
-                        <user-name>keycloak</user-name>
-                        <password>keycloak</password>
+                        <user-name>{{ vault_keycloak_db_user }}</user-name>
+                        <password>{{ vault_keycloak_db_password }}</password>
                     </security>
                 </datasource>
                 <drivers>

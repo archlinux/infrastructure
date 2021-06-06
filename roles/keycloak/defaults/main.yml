@@ -1,6 +1,4 @@
 keycloak_db_name: keycloak
-keycloak_db_user: keycloak
-keycloak_db_password: keycloak
 keycloak_domain: accounts.archlinux.org
 keycloak_home_dir: /opt/keycloak
 keycloak_port: "8443"

@@ -48,14 +48,14 @@
     - firewall
 
 - name: create postgres keycloak user
-  postgresql_user: name="{{ keycloak_db_user }}" password="{{ keycloak_db_password }}"
+  postgresql_user: name="{{ vault_keycloak_db_user }}" password="{{ vault_keycloak_db_password }}"
   become: true
   become_user: postgres
   become_method: su
   no_log: true
 
 - name: create keycloak db
-  postgresql_db: name=keycloak owner="{{ keycloak_db_user }}"
+  postgresql_db: name=keycloak owner="{{ vault_keycloak_db_user }}"
   become: true
   become_user: postgres
   become_method: su
