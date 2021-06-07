@@ -30,38 +30,22 @@
   tags:
     - firewall
 
-- name: register gitlab-runner
-  command: >
-    gitlab-runner register
-    --non-interactive
-    --url=https://gitlab.archlinux.org/
-    --docker-image=alpine:latest
-    --tag-list=docker
-    --registration-token="{{ vault_gitlab_runner_registration_token }}"
-    --executor=docker
-    --description="{{ inventory_hostname }}"
-    --run-untagged=false
-    --docker-tlsverify=true
-    --locked=false
-    --access-level=not_protected
-  args:
-    creates: /etc/gitlab-runner/config.toml
 
-- name: increase concurrency
-  lineinfile:
-    path: /etc/gitlab-runner/config.toml
-    owner: root
-    group: root
-    mode: 0600
-    regexp: '^concurrent = .*'
-    line: concurrent = 100
-  notify: restart gitlab-runner
-
-- name: enable prometheus exporter
-  lineinfile:
-    path: /etc/gitlab-runner/config.toml
-    insertbefore: '^concurrent'
-    line: listen_address = ":{{ gitlab_runner_exporter_port }}"
+# Please register the runner with this command and save the token as a host var:
+# gitlab-runner register \
+#   --non-interactive \
+#   --url=https://gitlab.archlinux.org/ \
+#   --docker-image=archlinux:latest \
+#   --tag-list=docker \ # Use docker,secure for secure runners
+#   --registration-token="{{ vault_gitlab_runner_registration_token }}" \
+#   --executor=docker \
+#   --description="{{ inventory_hostname }}" \
+#   --run-untagged=true \ # Use false for secure runners
+#   --locked=false \ # Use true for secure runners
+#   --access-level=not_protected # Use ref_protected for secure runners
+# Note: Secure runners must be added manually to the relevant projects
+- name: install runner configuration
+  template: src=config.toml.j2 dest=/etc/gitlab-runner/config.toml owner=root group=root mode=0600
   notify: restart gitlab-runner
 
 - name: install gitlab-runner-docker-cleanup.{service,timer}
