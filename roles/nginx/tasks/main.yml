@@ -34,6 +34,9 @@
 - name: create auth directory
   file: state=directory path=/etc/nginx/auth owner=root group=root mode=0755
 
+- name: create maps directory
+  file: state=directory path=/etc/nginx/maps owner=root group=root mode=0755
+
 - name: create default nginx log directory
   file: state=directory path=/var/log/nginx/default owner=root group=root mode=0755
 
