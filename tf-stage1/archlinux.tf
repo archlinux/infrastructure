@@ -130,10 +130,6 @@ locals {
       server_type = "cx11"
       domain      = "security"
     }
-    "svn2gittest.archlinux.org" = {
-      server_type = "cx11"
-      domain      = "svn2gittest"
-    }
     "wiki.archlinux.org" = {
       server_type = "cpx21"
       domain      = "wiki"
