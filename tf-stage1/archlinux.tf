@@ -297,6 +297,7 @@ locals {
     logging       = { value = "monitoring" }
     status        = { value = "stats.uptimerobot.com." }
     svn           = { value = "gemini" }
+    coc           = { value = "redirect" }
 
     # MTA-STS
     mta-sts               = { value = "mail" }

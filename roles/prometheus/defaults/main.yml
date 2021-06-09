@@ -60,6 +60,7 @@ blackbox_targets:
     - mail.archlinux.org:993
     - mail.archlinux.org:995
     - dashboards.archlinux.org:9090
+    - coc.archlinux.org:443
   smtp_starttls:
     - mail.archlinux.org:25
     - mail.archlinux.org:587
