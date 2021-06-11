@@ -6,6 +6,7 @@ fail2ban_jails:
   sshd: true
   postfix: true
   dovecot: true
+  nginx_limit_req: false
 
 ipv4_address: "95.216.189.61"
 ipv6_address: "2a01:4f9:c010:3052::1"
