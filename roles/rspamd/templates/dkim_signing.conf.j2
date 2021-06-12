@@ -1,13 +1,13 @@
 domain {
-  archlinux.org {
+  {{ rspamd_dkim_domain }} {
     selectors [
       {
         selector = "dkim-ed25519";
-        path = "/var/lib/rspamd/dkim/archlinux.org.dkim-ed25519.key";
+        path = "/var/lib/rspamd/dkim/{{ rspamd_dkim_domain }}.dkim-ed25519.key";
       },
       {
         selector = "dkim-rsa";
-        path = "/var/lib/rspamd/dkim/archlinux.org.dkim-rsa.key";
+        path = "/var/lib/rspamd/dkim/{{ rspamd_dkim_domain }}.dkim-rsa.key";
       }
     ]
   }
@@ -20,4 +20,4 @@ allow_hdrfrom_mismatch_sign_networks = true;
 allow_username_mismatch = true;
 use_domain = "header";
 sign_authenticated = true;
-use_esld = true;
+use_esld = {{ 'true' if rspamd_dkim_use_esld else 'false' }};

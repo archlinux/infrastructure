@@ -12,7 +12,7 @@
     - { role: mta_sts }
     - { role: postfix, postfix_server: true, postfix_smtpd_public: true, tags: ['mail'] }
     - { role: dovecot }
-    - { role: rspamd, tags: ["mail"] }
+    - { role: rspamd, rspamd_dkim_domain: archlinux.org, tags: ["mail"] }
     - { role: unbound, unbound_port: 5353, tags: ["mail"] }
     - { role: postfwd, tags: ['mail'] }
     - { role: archusers }
