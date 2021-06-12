@@ -1,0 +1,6 @@
+---
+- name: reload mailman
+  service: name=mailman state=reloaded
+
+- name: reload postfix
+  service: name=postfix state=reloaded

@@ -1,0 +1,53 @@
+server {
+    listen       80;
+    listen       [::]:80;
+    server_name  {{ lists_domain }};
+
+    access_log   /var/log/nginx/{{ lists_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ lists_domain }}/access.log.json json_main;
+    error_log    /var/log/nginx/{{ lists_domain }}/error.log;
+
+    include snippets/letsencrypt.conf;
+
+    location / {
+        access_log off;
+        return 301 https://$server_name$request_uri;
+    }
+}
+
+server {
+    listen       443 ssl http2;
+    listen       [::]:443 ssl http2;
+    server_name  {{ lists_domain }};
+
+    access_log   /var/log/nginx/{{ lists_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ lists_domain }}/access.log.json json_main;
+    error_log    /var/log/nginx/{{ lists_domain }}/error.log;
+
+    ssl_certificate      /etc/letsencrypt/live/{{ lists_domain }}/fullchain.pem;
+    ssl_certificate_key  /etc/letsencrypt/live/{{ lists_domain }}/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/{{ lists_domain }}/chain.pem;
+
+    # redirect old urls
+    location /mailman {
+        rewrite ^/mailman/(.*) /$1 permanent;
+    }
+
+    location /icons {
+        alias /usr/lib/mailman/icons;
+    }
+
+    location /pipermail {
+        alias /var/lib/mailman/archives/public;
+        autoindex on;
+    }
+
+    location / {
+        root            /usr/lib/mailman/cgi-bin/;
+        index           listinfo;
+        include         uwsgi_params;
+        uwsgi_modifier1 9;
+        uwsgi_pass      unix:/run/uwsgi/mailman.sock;
+    }
+
+}

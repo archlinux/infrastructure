@@ -1,0 +1,50 @@
+#
+# {{ansible_managed}}
+#
+
+compatibility_level = 3.6
+
+biff = no
+smtputf8_enable = no
+
+smtpd_tls_cert_file = /etc/letsencrypt/live/{{ lists_domain }}/fullchain.pem
+smtpd_tls_key_file = /etc/letsencrypt/live/{{ lists_domain }}/privkey.pem
+smtpd_tls_loglevel = 1
+smtpd_tls_security_level = may
+
+smtp_tls_loglevel = 1
+smtp_tls_security_level = may
+
+mydomain = {{ lists_domain }}
+myorigin = {{ lists_domain }}
+mydestination = {{ lists_domain }}
+
+# fatal: configuration error: mailbox_size_limit is smaller than message_size_limit
+message_size_limit = 104857600
+mailbox_size_limit = $message_size_limit
+recipient_delimiter = +
+disable_vrfy_command = yes
+strict_rfc821_envelopes = yes
+
+# enable for testing new config
+soft_bounce = no
+debug_peer_list =
+
+smtpd_relay_restrictions =
+    permit_mynetworks
+    permit_sasl_authenticated
+    reject_unauth_destination
+
+smtpd_reject_footer = For assistance contact <postmaster@archlinux.org>. Please provide the following information in your problem report: time ($localtime) and client ($client_address).
+
+# rspamd
+smtpd_milters = inet:localhost:11332
+non_smtpd_milters = $smtpd_milters
+
+alias_maps = hash:/var/lib/mailman/data/aliases
+alias_database = $alias_maps
+virtual_alias_maps = hash:/var/lib/mailman/data/virtual-mailman
+
+milter_header_checks = pcre:/etc/postfix/milter_header_checks
+
+delay_warning_time = 4h

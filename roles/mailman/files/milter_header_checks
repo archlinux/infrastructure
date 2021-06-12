@@ -1,0 +1,2 @@
+# We don't have a Junk folder for mailman so reject mails which are probably spam
+/^X-Spam: Yes$/ REJECT Your message has been rejected by Rspamd
