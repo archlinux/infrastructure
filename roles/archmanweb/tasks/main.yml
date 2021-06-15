@@ -15,6 +15,7 @@
       - pyalpm
       - python-chardet
       - python-django
+      - python-django-csp
       - python-psycopg2
       - python-requests
       - python-xtarfile
