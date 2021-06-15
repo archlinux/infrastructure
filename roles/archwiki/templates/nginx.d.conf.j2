@@ -107,7 +107,7 @@ server {
     }
 
     # whitelist known OK directories
-    location ~ ^/(?:skins|resources|images|extensions/ArchLinux/modules)/ {
+    location ~ ^/(?:skins|resources|images|extensions/ArchLinux/modules|extensions/WikiEditor/modules/images/toolbar|extensions/CodeMirror/resources/mode/mediawiki/img)/ {
         expires 30d;
         add_header Pragma public;
         add_header Cache-Control "public, must-revalidate, proxy-revalidate";
