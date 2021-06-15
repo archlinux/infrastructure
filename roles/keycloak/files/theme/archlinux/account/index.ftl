@@ -57,7 +57,7 @@
             <#if referrer??>
                 var referrer = '${referrer}';
                 var referrerName = '${referrerName}';
-                var referrerUri = '${referrer_uri?no_esc}';
+                var referrerUri = '${referrer_uri}'.replace('&amp;', '&');
             </#if>
 
             <#if msg??>
@@ -146,7 +146,7 @@
 <div id="spinner_screen" style="display:block; height:100%">
     <div style="width: 320px; height: 328px; text-align: center; position: absolute; top:0;	bottom: 0; left: 0;	right: 0; margin: auto;">
                 <#if properties.logo?has_content>
-                <img src="${resourceUrl}${properties.logoDark}" alt="Logo" class="brand">
+                <img src="${resourceUrl}${properties.logo}" alt="Logo" class="brand">
                 <#else>
                 <img src="${resourceUrl}/public/archlinux-logo-dark.svg" alt="Logo" class="brand">
                 </#if>
