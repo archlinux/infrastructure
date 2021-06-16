@@ -11,3 +11,7 @@ redirects:
     domain: static.conf.archlinux.org
     to: https://gitlab.archlinux.org/archlinux/conf-files/-/raw/master$request_uri
     type: 302
+  - coc:
+    domain: coc.archlinux.org
+    to: https://gitlab.archlinux.org/archlinux/service-agreements/-/blob/master/code-of-conduct.md
+    type: 302
