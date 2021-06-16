@@ -19,6 +19,11 @@ server {
     }
 }
 
+map $uri $redirect {
+    default "";
+    include maps/migrated-tasks.map;
+}
+
 server {
     listen       443 ssl http2;
     listen       [::]:443 ssl http2;
@@ -51,6 +56,9 @@ server {
     }
 
     location ~ ^/task/(?<task_id>[0-9]+) {
+        if ($redirect != "") {
+            return 302 $redirect;
+        }
         rewrite ^/task/[0-9]+$ /index.php?do=details&task_id=$task_id last;
         rewrite ^/task/[0-9]+/comment(?<comment_id>[0-9]+)$ /index.php?do=details&task_id=$task_id&comment=$comment_id last;
         rewrite ^/task/[0-9]+/depends$ /index.php?do=depends&task_id=$task_id last;
