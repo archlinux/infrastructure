@@ -5,7 +5,7 @@ shopt -s extglob
 
 OFFSITE_HOST=ch-s012.rsync.net
 
-decrypted_gpg=$(mktemp)
+decrypted_gpg=$(mktemp arch-infrastructure-borg-XXXXXXXXX)
 trap "rm \"${decrypted_gpg}\"" EXIT
 [[ "$*" =~ $OFFSITE_HOST ]] && is_offsite=true || is_offsite=false
 
