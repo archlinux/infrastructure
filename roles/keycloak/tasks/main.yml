@@ -1,7 +1,7 @@
 ---
 
 - name: install keycloak
-  pacman: name=keycloak,keycloak-metrics-spi,python-passlib state=present
+  pacman: name=jre11-openjdk,keycloak,keycloak-metrics-spi,python-passlib state=present
 
 - name: template keycloak config
   template: src=standalone.xml.j2 dest=/etc/keycloak/standalone.xml owner=keycloak group=keycloak mode=600
