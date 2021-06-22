@@ -36,6 +36,8 @@
         nginx['listen_addresses'] = {{ gitlab_primary_addresses }}
         registry_nginx['listen_addresses'] = {{ gitlab_primary_addresses }}
         gitlab_pages['inplace_chroot'] = true
+        # https://gitlab.com/gitlab-org/gitlab/-/issues/331699#note_608473496
+        gitlab_pages['use_legacy_storage'] = true
         pages_external_url "http://{{ gitlab_domain }}"
         pages_nginx['enable'] = false
         gitlab_pages['external_http'] = {{ gitlab_pages_http_addresses }}
