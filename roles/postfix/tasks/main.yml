@@ -29,7 +29,6 @@
     - header_checks
     - relocated
     - domains
-    - mailman_compat
     - msa_header_checks
   notify:
     - postmap additional files
