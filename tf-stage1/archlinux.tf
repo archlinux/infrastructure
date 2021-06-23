@@ -502,6 +502,6 @@ resource "hcloud_volume" "homedir" {
 
 resource "hcloud_volume" "monitoring" {
   name      = "monitoring"
-  size      = 100
+  size      = 150
   server_id = hcloud_server.machine["monitoring.archlinux.org"].id
 }
