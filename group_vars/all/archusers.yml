@@ -323,6 +323,17 @@ arch_users:
     groups:
       - tu
       - multilib
+  klausenbusk:
+    name: "Kristian Klausen"
+    ssh_key: klausenbusk.pub
+    hosts:
+      - mail.archlinux.org
+    groups:
+      - support-staff
+    additional_ssh_keys:
+      - name: klausenbusk_2.pub
+        hosts:
+          - all
   lcarlier:
     name: "Laurent Carlier"
     ssh_key: lcarlier.pub
