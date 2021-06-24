@@ -150,6 +150,13 @@ arch_users:
       - dev
       - tu
       - multilib
+  denisse:
+    name: "Andrea Denisse Gómez-Martínez"
+    ssh_key: denisse.pub
+    hosts:
+      - mail.archlinux.org
+    groups:
+      - support-staff
   diabonas:
     name: "Jonas Witschel"
     ssh_key: diabonas.pub
