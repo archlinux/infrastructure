@@ -12,4 +12,4 @@ echo "emptying backup directory ${backupdir}"
 # Verify that the gitlab_backupdir in ansible was defined, otherwise we will rm /* and remove the previous backup
 rm -r "${backupdir:?backup dir unset}/"*
 
-docker exec gitlab gitlab-backup create STRATEGY=copy SKIP=tar
+docker exec gitlab gitlab-backup create STRATEGY=copy SKIP=tar GZIP_RSYNCABLE=yes
