@@ -28,6 +28,7 @@
     name: certificate
   vars:
     domains: "{{ [archweb_domain] + archweb_alternate_domains }}"
+  when: archweb_site|bool and maintenance is not defined
 
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest="{{ archweb_nginx_conf }}" owner=root group=root mode=644
