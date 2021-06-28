@@ -13,5 +13,5 @@
 
 # Client machines keys
 {% for client_key in client_ssh_keys.results %}
-command="/usr/bin/borg serve --restrict-to-path {{ backup_dir }}/{{ client_key['item'] }}",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc {{ client_key['stdout'] }}
+command="borg serve --restrict-to-path {{ backup_dir }}/{{ client_key['item'] }}",restrict {{ client_key['stdout'] }}
 {% endfor %}
