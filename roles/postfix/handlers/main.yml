@@ -19,7 +19,6 @@
     - transport
     - relocated
     - domains
-    - mailman_compat
     - msa_header_checks
 
 - name: update aliases db

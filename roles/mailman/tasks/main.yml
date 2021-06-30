@@ -1,0 +1,59 @@
+---
+- name: create ssl cert
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ lists_domain }}"]
+
+- name: install mailman, uwsgi-plugin-cgi and postfx
+  pacman: name=mailman,uwsgi-plugin-cgi,postfix,postfix-pcre state=present
+
+- name: install mailman configuration
+  template: src=mm_cfg.py.j2 dest=/etc/mailman/mm_cfg.py follow=yes owner=root group=root mode=0644
+  notify: reload mailman
+
+- name: install postfix configuration
+  template: src=main.cf.j2 dest=/etc/postfix/main.cf owner=root group=root mode=0644
+  notify: reload postfix
+
+- name: install postfix maps
+  copy: src={{ item }} dest=/etc/postfix/ owner=root group=root mode=0644
+  loop:
+    - milter_header_checks
+
+- name: open firewall holes for postfix
+  ansible.posix.firewalld: service=smtp permanent=true state=enabled immediate=yes
+  when: configure_firewall
+  tags:
+    - firewall
+
+- name: create mailman list
+  command: /usr/lib/mailman/bin/newlist -a mailman root@{{ lists_domain }} meG0n5Wq6dEWCA6s
+  args:
+    creates: /var/lib/mailman/lists/mailman
+
+- name: configure mailman uwsgi service
+  copy: src=mailman.ini dest=/etc/uwsgi/vassals/ owner=mailman group=http mode=0644
+
+- name: make nginx log dir
+  file: path=/var/log/nginx/{{ lists_domain }} state=directory owner=root group=root mode=0755
+
+- name: set up nginx
+  template: src=nginx.d.conf.j2 dest="/etc/nginx/nginx.d/mailman.conf" owner=root group=root mode=644
+  notify: reload nginx
+  tags: ['nginx']
+
+- name: start and enable postfix
+  systemd: name=postfix.service enabled=yes daemon_reload=yes state=started
+
+- name: start and enable mailman{.service,-*.timer}
+  systemd: name={{ item }} enabled=yes daemon_reload=yes state=started
+  loop:
+    - mailman.service
+    - mailman-senddigests.timer
+    - mailman-nightlygzip.timer
+    - mailman-mailpasswds.timer
+    - mailman-gatenews.timer
+    - mailman-disabled.timer
+    - mailman-cullbadshunt.timer
+    - mailman-checkdbs.timer

@@ -6,6 +6,6 @@ mta_sts:
       - aur.archlinux.org
       - master-key.archlinux.org
   - mx:
-      - luna.archlinux.org
+      - lists.archlinux.org
     domains:
       - lists.archlinux.org

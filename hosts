@@ -46,6 +46,7 @@ wiki.archlinux.org
 patchwork.archlinux.org
 security.archlinux.org
 md.archlinux.org
+lists.archlinux.org
 
 [borg_hosts]
 prio.ch-s012.rsync.net
@@ -144,6 +145,7 @@ runner1.archlinux.org
 md.archlinux.org
 man.archlinux.org
 dashboards.archlinux.org
+lists.archlinux.org
 
 [kape_servers]
 asia.mirror.pkgbuild.com

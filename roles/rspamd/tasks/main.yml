@@ -7,6 +7,11 @@
   notify:
     - reload rspamd
 
+- name: install dkim_signing.conf
+  template: src=dkim_signing.conf.j2 dest=/etc/rspamd/local.d/dkim_signing.conf owner=root group=root mode=0644
+  notify:
+    - reload rspamd
+
 - name: create rspamd dkim directory
   file: path=/var/lib/rspamd/dkim state=directory owner=rspamd group=rspamd mode=0750
 
@@ -24,8 +29,8 @@
 - name: install DKIM keys
   copy: src={{ item }} dest=/var/lib/rspamd/dkim/ owner=rspamd group=rspamd mode=0600
   loop:
-    - archlinux.org.dkim-ed25519.key
-    - archlinux.org.dkim-rsa.key
+    - "{{ rspamd_dkim_domain }}.dkim-ed25519.key"
+    - "{{ rspamd_dkim_domain }}.dkim-rsa.key"
   notify:
     - reload rspamd
 

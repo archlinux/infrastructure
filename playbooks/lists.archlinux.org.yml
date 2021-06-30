@@ -1,0 +1,20 @@
+- name: setup mailman server
+  hosts: lists.archlinux.org
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: firewalld }
+    - { role: tools }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: hardening }
+    - { role: borg_client, tags: ["borg"], when: "'borg_clients' in group_names" }
+    - { role: prometheus_exporters }
+    - { role: promtail }
+    - { role: certbot }
+    - { role: nginx }
+    - { role: fail2ban }
+    - { role: rspamd, rspamd_dkim_domain: lists.archlinux.org, rspamd_dkim_use_esld: false, tags: ["mail"] }
+    - { role: unbound, unbound_port: 5353, tags: ["mail"] }
+    - { role: uwsgi }
+    - { role: mailman }
