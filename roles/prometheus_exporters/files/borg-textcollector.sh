@@ -34,6 +34,18 @@ if [[ -f /usr/local/bin/borg ]]; then
   echo "# HELP borg_hetzner_repo_size_bytes amount of data stored in the repo in bytes" >> $TMP_FILE
   echo "# TYPE borg_hetzner_repo_size_bytes gauge" >> $TMP_FILE
   echo "borg_hetzner_repo_size_bytes $REPO_SIZE" >> $TMP_FILE
+
+  STORAGE_BOX_DF=$(sftp -P23 u236610.your-storagebox.de <<<df 2>/dev/null | tail -1)
+  STORAGE_BOX_SIZE=$(( 1024 * $(awk '{print $1}' <<<$STORAGE_BOX_DF) )) # KiB -> bytes
+  STORAGE_BOX_USED=$(( 1024 * $(awk '{print $2}' <<<$STORAGE_BOX_DF) )) # KiB -> bytes
+
+  echo "# HELP hetzner_storage_box_size_bytes storage box total size in bytes" >> $TMP_FILE
+  echo "# TYPE hetzner_storage_box_size_bytes gauge" >> $TMP_FILE
+  echo "hetzner_storage_box_size_bytes $STORAGE_BOX_SIZE" >> $TMP_FILE
+
+  echo "# HELP hetzner_storage_box_used_bytes storage box space used in bytes" >> $TMP_FILE
+  echo "# TYPE hetzner_storage_box_used_bytes gauge" >> $TMP_FILE
+  echo "hetzner_storage_box_used_bytes $STORAGE_BOX_USED" >> $TMP_FILE
 fi
 
 # rsync.net borg
