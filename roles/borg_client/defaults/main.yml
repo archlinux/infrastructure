@@ -1,7 +1,7 @@
 ---
 backup_hosts:
-  - host: "ssh://{{ hetzner_storagebox_username }}@u236610.your-storagebox.de:23"
-    dir: "~/backup/{{ inventory_hostname }}"
+  - host: "ssh://u236610.your-storagebox.de:23"
+    dir: "~/repo"
     suffix: ""
   - host: "ssh://{{ rsync_net_username }}@prio.ch-s012.rsync.net:22"
     dir: "~/backup/{{ inventory_hostname }}"

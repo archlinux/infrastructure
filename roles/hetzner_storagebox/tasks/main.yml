@@ -9,8 +9,17 @@
       (?i)password: "{{ hetzner_storagebox_password }}"
   delegate_to: localhost
 
+- name: create a home directory for each sub-account
+  expect:
+    command: bash -c "echo 'mkdir {{ backup_dir }}/{{ item }}' | sftp -P 23 {{ hetzner_storagebox_username }}@{{ inventory_hostname }}"
+    responses:
+      (?i)password: "{{ hetzner_storagebox_password }}"
+  delegate_to: localhost
+  loop: "{{ backup_clients }}"
+
 - name: fetch ssh keys from each borg client machine
   command: cat /root/.ssh/id_rsa.pub
+  check_mode: false
   register: client_ssh_keys
   delegate_to: "{{ item }}"
   with_items: "{{ backup_clients }}"
@@ -19,16 +28,81 @@
 
 - name: create tempfile
   tempfile: state=file
+  check_mode: false
   register: tempfile
   delegate_to: localhost
 
 - name: fill tempfile
   copy: content="{{ lookup('template', 'authorized_keys.j2') }}" dest="{{ tempfile.path }}" mode=preserve
   delegate_to: localhost
+  no_log: true
 
-- name: upload authorized_keys file
+- name: upload authorized_keys for Arch DevOps
   expect:
     command: bash -c "echo -e 'mkdir .ssh \n chmod 700 .ssh \n put {{ tempfile.path }} .ssh/authorized_keys \n chmod 600 .ssh/authorized_keys' | sftp -P 23 {{ hetzner_storagebox_username }}@{{ inventory_hostname }}"
     responses:
       (?i)password: "{{ hetzner_storagebox_password }}"
   delegate_to: localhost
+
+- name: upload authorized_keys for each backup client
+  include_tasks: upload_client_authorized_keys.yml
+  loop: "{{ client_ssh_keys.results }}"
+  loop_control:
+    label: "{{ item.item }}"
+
+- name: retrieve sub-account information
+  uri:
+    url: https://robot-ws.your-server.de/storagebox/{{ hetzner_storagebox_id }}/subaccount
+    user: "{{ hetzner_webservice_username }}"
+    password: "{{ hetzner_webservice_password }}"
+  delegate_to: localhost
+  check_mode: false
+  register: subaccounts_raw
+  no_log: true
+
+- name: get list of sub-accounts
+  set_fact:
+    subaccounts: "{{ subaccounts_raw.json | json_query('[].subaccount') }}"
+
+- name: create missing sub-accounts
+  uri:
+    timeout: 60
+    url: https://robot-ws.your-server.de/storagebox/{{ hetzner_storagebox_id }}/subaccount
+    user: "{{ hetzner_webservice_username }}"
+    password: "{{ hetzner_webservice_password }}"
+    method: POST
+    body_format: form-urlencoded
+    body:
+      homedirectory: "{{ backup_dir }}/{{ item }}"
+      comment: "{{ item }}"
+      ssh: "true"
+  delegate_to: localhost
+  loop: "{{ backup_clients | difference(subaccounts | json_query('[].comment')) }}"
+  register: new_subaccounts_raw
+  no_log: true
+
+- name: update list of sub-accounts
+  set_fact:
+    subaccounts: "{{ subaccounts + [item.json.subaccount | combine({'comment': item.invocation.module_args.body.comment})] }}"
+  loop: "{{ new_subaccounts_raw.results }}"
+  loop_control:
+    label: "{{ item.invocation.module_args.body.comment }}"
+
+- name: match usernames to backup clients
+  set_fact:
+    backup_client_usernames: "{{ backup_client_usernames|default({}) | combine({item.comment: item.username}) }}"
+  loop: "{{ subaccounts }}"
+  loop_control:
+    label: "{{ {item.comment: item.username} }}"
+
+- name: configure ssh on backup clients
+  blockinfile:
+    path: /root/.ssh/config
+    create: true
+    mode: 0600
+    block: |
+      Host {{ inventory_hostname }}
+        User {{ backup_client_usernames[item] }}
+    marker: '# {mark} HETZNER STORAGE BOX BACKUP CLIENT CONFIG'
+  delegate_to: "{{ item }}"
+  loop: "{{ backup_clients }}"
