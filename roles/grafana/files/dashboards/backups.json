@@ -55,7 +55,6 @@
             }
           },
           "mappings": [],
-          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -93,9 +92,9 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "hetzner_storage_box_size_bytes{instance=\"monitoring.archlinux.org\"}",
+          "expr": "10000*2^30",
           "interval": "",
-          "legendFormat": "Size",
+          "legendFormat": "Quota",
           "queryType": "randomWalk",
           "refId": "A"
         },
@@ -104,8 +103,24 @@
           "expr": "hetzner_storage_box_used_bytes{instance=\"monitoring.archlinux.org\"}",
           "hide": false,
           "interval": "",
-          "legendFormat": "Used",
+          "legendFormat": "Backups",
           "refId": "B"
+        },
+        {
+          "exemplar": true,
+          "expr": "10000*2^30 - hetzner_storage_box_size_bytes{instance=\"monitoring.archlinux.org\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Snapshots",
+          "refId": "C"
+        },
+        {
+          "exemplar": true,
+          "expr": "10000*2^30 - hetzner_storage_box_free_bytes{instance=\"monitoring.archlinux.org\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Total Used",
+          "refId": "D"
         }
       ],
       "title": "Disk Usage (Hetzner)",
@@ -119,26 +134,26 @@
             "mode": "thresholds"
           },
           "mappings": [],
-          "max": 1,
+          "max": 10737418240000,
           "min": 0,
           "thresholds": {
             "mode": "percentage",
             "steps": [
               {
-                "color": "green",
+                "color": "red",
                 "value": null
               },
               {
-                "color": "#EAB839",
-                "value": 85
+                "color": "yellow",
+                "value": 5
               },
               {
-                "color": "red",
-                "value": 95
+                "color": "green",
+                "value": 15
               }
             ]
           },
-          "unit": "percentunit"
+          "unit": "bytes"
         },
         "overrides": []
       },
@@ -165,14 +180,14 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "hetzner_storage_box_used_bytes{instance=\"monitoring.archlinux.org\"} / hetzner_storage_box_size_bytes{instance=\"monitoring.archlinux.org\"}",
+          "expr": "hetzner_storage_box_free_bytes{instance=\"monitoring.archlinux.org\"}",
           "interval": "",
           "legendFormat": "",
           "queryType": "randomWalk",
           "refId": "A"
         }
       ],
-      "title": "Used Space (Hetzner)",
+      "title": "Free Space (Hetzner)",
       "type": "gauge"
     },
     {
@@ -363,5 +378,5 @@
   "timezone": "",
   "title": "Borg Backups",
   "uid": "Rnqpymznz",
-  "version": 28
+  "version": 30
 }
