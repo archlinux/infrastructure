@@ -10,12 +10,11 @@
   - sources (sources.archlinux.org)
   - archive (archive.archlinux.org)
 
-## luna
+## lists.archlinux.org
 
 ### Services
 
   - mailman
-  - projects (projects.archlinux.org)
 
 ## archlinux.org
 

@@ -197,7 +197,7 @@ locals {
   #   - ttl (optional)
   #
   # Example:
-  # "lists" = { mx = "luna", ttl = 600 }
+  # "lists" = { mx = "lists", ttl = 600 }
   archlinux_org_mx = {
     "@"        = { mx = "mail", ttl = 600 }
     aur        = { mx = "mail", ttl = 600 }
@@ -234,10 +234,6 @@ locals {
     gemini = {
       ipv4_address = "49.12.124.107"
       ipv6_address = "2a01:4f8:242:5614::2"
-    }
-    luna = {
-      ipv4_address = "5.9.250.164"
-      ipv6_address = "2a01:4f8:160:3033::2"
     }
     master-key = {
       ipv4_address = hcloud_server.machine["archlinux.org"].ipv4_address
@@ -280,13 +276,11 @@ locals {
     archive       = { value = "gemini" }
     dev           = { value = "www" }
     g2kjxsblac7x  = { value = "gv-i5y6mnrelvpfiu.dv.googlehosted.com." }
-    git           = { value = "luna" }
     ipxe          = { value = "www" }
     mailman       = { value = "redirect" }
     packages      = { value = "www" }
     ping          = { value = "redirect" }
     planet        = { value = "www" }
-    projects      = { value = "luna" }
     repos         = { value = "gemini" }
     rsync         = { value = "gemini" }
     sources       = { value = "gemini" }
