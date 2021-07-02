@@ -51,4 +51,10 @@ server {
         uwsgi_pass      unix:/run/uwsgi/mailman.sock;
     }
 
+    location ~ ^/(static|mailman3|archives|user-profile|accounts|admin3)($|/) {
+        proxy_pass http://{{ hostvars['mailman3.archlinux.org']['wireguard_address'] }};
+        proxy_set_header Host {{ lists_domain }};
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
 }

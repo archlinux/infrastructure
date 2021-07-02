@@ -1,0 +1,17 @@
+- name: setup mailman3 server
+  hosts: mailman3.archlinux.org
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: firewalld }
+    - { role: wireguard }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: hardening }
+    - { role: borg_client, tags: ["borg"] }
+    - { role: prometheus_exporters }
+    - { role: promtail }
+    - { role: nginx, nginx_firewall_zone: wireguard }
+    - { role: uwsgi }
+    - { role: postgres }
+    - { role: mailman3 }

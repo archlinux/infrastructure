@@ -1,2 +1,3 @@
 ---
 letsencrypt_validation_dir: "/var/lib/letsencrypt"
+nginx_firewall_zone:

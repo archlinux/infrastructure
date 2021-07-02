@@ -21,10 +21,19 @@
   loop:
     - aliases
     - milter_header_checks
-  notify: reload postfix
+  notify: run postmap
+
+- name: install postfix templated maps
+  template: src={{ item }}.j2 dest=/etc/postfix/{{ item }} owner=root group=root mode=0644
+  loop:
+    - transport
+  notify: run postmap
 
 - name: open firewall holes for postfix
-  ansible.posix.firewalld: service=smtp permanent=true state=enabled immediate=yes
+  ansible.posix.firewalld: service=smtp zone={{ item }} permanent=true state=enabled immediate=yes
+  loop:
+    -
+    - wireguard
   when: configure_firewall
   tags:
     - firewall

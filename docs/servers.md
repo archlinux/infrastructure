@@ -151,6 +151,14 @@ Prometheus, and Grafana server which receives selected performance/metrics from 
 
   Online collborative markdwown editor for Arch Linux Staff.
 
+## mailman3.archlinux.org
+
+This server runs mailman3 as mailman2 and mailman3 can't be installed on the same server. The HTTP and LMTP traffic is routed over WireGuard from lists.archlinux.org.
+
+### Services
+
+  - mailman3
+
 ### Services
   - [hedgedoc](https://hedgedoc.org/)
 

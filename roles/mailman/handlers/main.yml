@@ -7,3 +7,9 @@
 
 - name: reload postfix
   service: name=postfix state=reloaded
+
+- name: run postmap
+  command: postmap /etc/postfix/{{ item }}
+  loop:
+    - aliases
+    - transport

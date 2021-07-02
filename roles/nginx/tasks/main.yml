@@ -27,6 +27,7 @@
 
 - name: install cert renewal hook
   template: src=letsencrypt.hook.d.j2 dest=/etc/letsencrypt/hook.d/nginx owner=root group=root mode=0755
+  when: "'certbot' in ansible_play_role_names"
 
 - name: create nginx.d directory
   file: state=directory path=/etc/nginx/nginx.d owner=root group=root mode=0755
@@ -59,7 +60,7 @@
   service: name=nginx enabled=yes
 
 - name: open firewall holes
-  ansible.posix.firewalld: service={{ item }} permanent=true state=enabled immediate=yes
+  ansible.posix.firewalld: service={{ item }} zone={{ nginx_firewall_zone }} permanent=true state=enabled immediate=yes
   with_items:
     - http
     - https

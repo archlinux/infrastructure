@@ -1,0 +1,56 @@
+# mailman-web config
+
+from mailman_web.settings.base import *
+from mailman_web.settings.mailman import *
+
+
+#: Default list of admins who receive the emails from error logging.
+ADMINS = (
+    ('Mailman Suite Admin', 'root@{{ lists_domain }}'),
+)
+
+# Postgresql datbase setup.
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'mailman-web',
+        'USER': '{{ vault_mailman_web_db_user }}',
+        'PASSWORD': '{{ vault_mailman_web_db_password }}',
+    }
+}
+
+#: See https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
+ALLOWED_HOSTS = [
+    "localhost",  # Archiving API from Mailman, keep it.
+    "{{ lists_domain }}",
+]
+
+#: Current Django Site being served. This is used to customize the web host
+#: being used to serve the current website. For more details about Django
+#: site, see: https://docs.djangoproject.com/en/dev/ref/contrib/sites/
+SITE_ID = 1
+
+SECRET_KEY = '{{ vault_mailman_web_secret_key }}'
+
+MAILMAN_REST_API_USER = '{{ vault_mailman_admin_user }}'
+MAILMAN_REST_API_PASS = '{{ vault_mailman_admin_pass }}'
+MAILMAN_ARCHIVER_KEY = '{{ vault_mailman_archiver_key }}'
+
+#: https://docs.djangoproject.com/en/3.2/topics/email/#smtp-backend
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = '{{ hostvars['lists.archlinux.org']['wireguard_address'] }}'
+EMAIL_PORT = 25
+
+#: Sender in Emails sent out by Postorius.
+DEFAULT_FROM_EMAIL = 'postorius@{{ lists_domain }}'
+SERVER_EMAIL = 'root@{{ lists_domain }}'
+
+POSTORIUS_TEMPLATE_BASE_URL = 'http://localhost'
+HYPERKITTY_ALLOW_WEB_POSTING = False
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': '/var/lib/mailman-web/fulltext_index'
+    }
+}
