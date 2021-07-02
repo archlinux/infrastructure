@@ -142,6 +142,8 @@ man.archlinux.org
 dashboards.archlinux.org
 lists.archlinux.org
 
+[wireguard]
+
 [kape_servers]
 asia.mirror.pkgbuild.com
 america.mirror.pkgbuild.com
