@@ -10,8 +10,3 @@
 		{% endif %}
 	{% endif %}
 {% endfor %}
-
-# Client machines keys
-{% for client_key in client_ssh_keys.results %}
-command="borg serve --restrict-to-path {{ backup_dir }}/{{ client_key['item'] }}",restrict {{ client_key['stdout'] }}
-{% endfor %}
