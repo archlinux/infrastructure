@@ -50,6 +50,19 @@ You can then run
 
 to generate a token to log in.
 
+## Rsync.net
+
+Run
+
+    pass otp insert -i rsync.net -a archlinux Rsync.net/archlinux-master-token -s
+
+When asked for a secret, provide the `2FA token seed` from `group_vars/all/vault_rsync.net.yml`.
+You can then run
+
+    pass otp code Rsync.net/archlinux-master-token
+
+to generate a token to log in.
+
 ### Adding your own account
 
 Hetzner supports multiple 2FA devices at once which allows you to add your own 2FA app of choice
