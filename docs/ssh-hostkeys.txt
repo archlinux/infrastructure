@@ -163,17 +163,6 @@
 256 MD5:3c:91:d8:b0:4b:5c:36:40:79:27:8a:c7:24:d6:26:af root@archlinux-packer (ED25519)
 3072 MD5:88:99:f2:47:b1:e3:3c:99:52:67:d5:d5:55:b0:af:2c root@archlinux-packer (RSA)
 
-# luna.archlinux.org
-1024 SHA256:9Nqu9y1LhT3L3Kd6J9CSyuOc1AdGWo0eLsPxoc5bpaw root@alderaan (DSA)
-256 SHA256:L71Q91yHwmHPYYkJMDgj0xmUuw16qFOhJbBr1mzsiOI root@alderaan (ECDSA)
-256 SHA256:HQ03dn6EasJHNDlt51KpQpFkT3yBX83x7BoIkA1iv2k root@alderaan.archlinux.org (ED25519)
-2048 SHA256:Ju+yWiMb/2O+gKQ9RJCDqvRg7l+Q95KFAeqM5sr6l2s root@alderaan (RSA)
-
-1024 MD5:f2:56:a9:3c:4d:f9:b7:88:7f:e4:a6:7c:eb:55:c0:15 root@alderaan (DSA)
-256 MD5:11:d1:4c:ae:9a:4f:15:06:d7:c8:0a:b4:08:02:aa:95 root@alderaan (ECDSA)
-256 MD5:1d:92:08:da:8e:a1:fb:1c:c5:65:00:c8:15:a4:87:32 root@alderaan.archlinux.org (ED25519)
-2048 MD5:c4:7f:00:d4:5e:c7:23:45:97:bb:40:ec:15:ce:7c:a9 root@alderaan (RSA)
-
 # mail.archlinux.org
 1024 SHA256:/d3MC4NoQbPSNgNebFyzNCze4HVHPhITVWy9vWdZUp4 root@archlinux-packer (DSA)
 256 SHA256:IbQnu28PPf6iZnr6DPwzITD4o2DznYMO6j0mkjZXasE root@archlinux-packer (ECDSA)

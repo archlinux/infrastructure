@@ -23,7 +23,6 @@ blackbox_targets:
     - https://dev.archlinux.org
     - https://europe.archive.pkgbuild.com
     - https://europe.mirror.pkgbuild.com
-    - https://git.archlinux.org
     - https://gitlab.archlinux.org
     - https://ipxe.archlinux.org
     - https://logging.archlinux.org
@@ -45,7 +44,6 @@ blackbox_targets:
     - https://ping.archlinux.org
     - https://pkgbuild.com
     - https://planet.archlinux.org
-    - https://projects.archlinux.org
     - https://repos.archlinux.org/lastupdate
     - https://reproducible.archlinux.org
     - https://security.archlinux.org
