@@ -4,6 +4,11 @@
   group: name="{{ item }}" state=present system=no
   with_items: "{{ arch_groups }}"
 
+- name: filter arch_users for users with non-matching hosts
+  set_fact: arch_users_filtered="{{ (arch_users_filtered | default([])) + [ item ] }}"
+  when: item.value.hosts is not defined or inventory_hostname in item.value.hosts
+  with_dict: "{{ arch_users }}"
+
 - name: create Arch Linux-specific users
   user:
     name: "{{ item.key }}"
@@ -14,21 +19,21 @@
     password: ""
     update_password: on_create
     state: present
-  with_dict: "{{ arch_users }}"
+  loop: "{{ arch_users_filtered }}"
 
 - name: create .ssh directory
   file: path=/home/{{ item.key }}/.ssh state=directory owner={{ item.key }} group=users mode=0700
-  with_dict: "{{ arch_users }}"
+  loop: "{{ arch_users_filtered }}"
 
 - name: configure ssh keys
   template: src=authorized_keys.j2 dest=/home/{{ item.key }}/.ssh/authorized_keys owner={{ item.key }} group=users mode=0600
   when: item.value.ssh_key is defined
-  with_dict: "{{ arch_users }}"
+  loop: "{{ arch_users_filtered }}"
 
 - name: remove ssh keys if undefined
   file: path=/home/{{ item.key }}/.ssh/authorized_keys state=absent
   when: item.value.ssh_key is not defined
-  with_dict: "{{ arch_users }}"
+  loop: "{{ arch_users_filtered }}"
 
 - name: get list of remote users
   find: paths="/home" file_type="directory"
@@ -37,5 +42,5 @@
   # TODO: this removes the keys of svn-packages and svn-community on gemini temporarily. add some form of whitelist for those users?
 - name: disable ssh keys of disabled users
   file: path="/home/{{ item }}/.ssh/authorized_keys" state=absent
-  when: item not in arch_users
+  when: item not in (arch_users_filtered | map(attribute='key'))
   with_items: "{{ all_users.files | map(attribute='path') | map('basename') | list }}"

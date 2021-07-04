@@ -7,6 +7,7 @@ arch_groups:
   - multilib
   - archboxes-sudo
   - docker-image-sudo
+  - support-staff
 
 arch_users:
   alertmanager:
@@ -149,6 +150,13 @@ arch_users:
       - dev
       - tu
       - multilib
+  denisse:
+    name: "Andrea Denisse Gómez-Martínez"
+    ssh_key: denisse.pub
+    hosts:
+      - mail.archlinux.org
+    groups:
+      - support-staff
   diabonas:
     name: "Jonas Witschel"
     ssh_key: diabonas.pub
@@ -322,6 +330,17 @@ arch_users:
     groups:
       - tu
       - multilib
+  klausenbusk:
+    name: "Kristian Klausen"
+    ssh_key: klausenbusk.pub
+    hosts:
+      - mail.archlinux.org
+    groups:
+      - support-staff
+    additional_ssh_keys:
+      - name: klausenbusk_2.pub
+        hosts:
+          - all
   lcarlier:
     name: "Laurent Carlier"
     ssh_key: lcarlier.pub
