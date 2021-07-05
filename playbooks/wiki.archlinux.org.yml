@@ -4,6 +4,7 @@
   hosts: wiki.archlinux.org
   remote_user: root
   roles:
+    - { role: firewalld }
     - { role: common }
     - { role: tools }
     - { role: sshd }
