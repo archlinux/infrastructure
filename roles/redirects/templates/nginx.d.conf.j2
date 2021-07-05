@@ -1,4 +1,11 @@
 {% for redirect in redirects %}
+{% if redirect.map is defined %}
+map $uri ${{ redirect.map | hash('md5') }} {
+    default "";
+    include {{ redirect.map }};
+}
+
+{% endif %}
 server {
     listen       80;
     listen       [::]:80;
@@ -17,7 +24,12 @@ server {
     include snippets/letsencrypt.conf;
 
     location / {
-    	return {{ redirect.type }} {{ redirect.to }};
+        {% if redirect.map is defined %}
+        if (${{ redirect.map | hash('md5') }} != "") {
+             return {{ redirect.type }} ${{ redirect.map | hash('md5') }};
+        }
+        {% endif %}
+        return {{ redirect.type }} {{ redirect.to }};
     }
 }
 {% endfor %}
