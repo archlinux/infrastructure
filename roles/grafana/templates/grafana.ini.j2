@@ -477,8 +477,8 @@ api_url = https://accounts.archlinux.org/auth/realms/archlinux/protocol/openid-c
 ;allowed_domains =
 ;team_ids =
 ;allowed_organizations =
-role_attribute_path: contains(roles[*], 'DevOps') && 'Admin' || contains(roles[*], 'Staff') && 'Viewer'
-;role_attribute_strict = false
+role_attribute_path: contains(roles[*], 'DevOps') && 'Admin'
+role_attribute_strict = true
 ;tls_skip_verify_insecure = false
 ;tls_client_cert =
 ;tls_client_key =
