@@ -9,7 +9,7 @@ datasources:
   basicAuthUser: {{ vault_prometheus_user }}
   secureJsonData:
     basicAuthPassword: {{ vault_prometheus_passwd }}
-  url: https://{{ prometheus_domain }}:9090
+  url: http://{{ prometheus_domain }}:9090
 {% else %}
 - name: Prometheus
   type: prometheus

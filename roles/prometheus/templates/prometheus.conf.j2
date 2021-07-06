@@ -1,5 +1,5 @@
 {% if prometheus_receive_only %}
-PROMETHEUS_ARGS="--storage.tsdb.retention.time=365d --enable-feature=remote-write-receiver --web.config.file=/etc/prometheus/web-config.yml"
+PROMETHEUS_ARGS="--storage.tsdb.retention.time=365d --enable-feature=remote-write-receiver --web.config.file=/etc/prometheus/web-config.yml --web.listen-address={{ wireguard_address }}:9090"
 {% else %}
 PROMETHEUS_ARGS="--storage.tsdb.retention.time=365d"
 {% endif %}

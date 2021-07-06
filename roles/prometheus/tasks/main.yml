@@ -3,17 +3,6 @@
 - name: install prometheus server
   pacman: name=prometheus,python-passlib,python-bcrypt state=present
 
-- name: install cert renewal hook
-  template: src=letsencrypt.hook.d.j2 dest=/etc/letsencrypt/renewal-hooks/deploy/prometheus owner=root group=root mode=0755
-  when: prometheus_receive_only
-
-- name: create ssl cert
-  include_role:
-    name: certificate
-  vars:
-    domains: ["{{ prometheus_domain }}"]
-  when: prometheus_receive_only
-
 - name: install prometheus configuration
   template: src=prometheus.yml.j2 dest=/etc/prometheus/prometheus.yml owner=root group=prometheus mode=640
   notify: reload prometheus
@@ -35,8 +24,9 @@
 - name: enable prometheus server service
   systemd: name=prometheus enabled=yes daemon_reload=yes state=started
 
-- name: open firewall holes for prometheus
-  ansible.posix.firewalld: service=prometheus permanent=true state=enabled immediate=yes
+- name: open prometheus port for monitoring.archlinux.org
+  ansible.posix.firewalld: zone=wireguard state=enabled permanent=true immediate=yes
+    rich_rule="rule family=ipv4 source address={{ hostvars['monitoring.archlinux.org']['wireguard_address'] }} port protocol=tcp port=9090 accept"
   when: configure_firewall and prometheus_receive_only
   tags:
     - firewall
