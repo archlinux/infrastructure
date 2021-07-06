@@ -1,3 +1,0 @@
----
-filesystem: btrfs
-ipv4_address: 95.217.236.249

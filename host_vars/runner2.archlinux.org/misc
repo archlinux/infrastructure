@@ -12,3 +12,5 @@ network_interface: "enp1s0f0np0"
 system_disks:
   - /dev/sda
 configure_network: true
+wireguard_address: 10.0.0.7
+wireguard_public_key: 27QE/u1liW2251mHvnika7cZ1Lv8O4h+0S6D2g1jZTE=

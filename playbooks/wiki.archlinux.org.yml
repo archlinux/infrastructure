@@ -5,6 +5,7 @@
   remote_user: root
   roles:
     - { role: firewalld }
+    - { role: wireguard }
     - { role: common }
     - { role: tools }
     - { role: sshd }
