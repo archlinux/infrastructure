@@ -15,3 +15,5 @@ system_disks:
 raid_level: "raid1"
 
 configure_network: true
+wireguard_address: 10.0.0.30
+wireguard_public_key: VghPKlYaYYcdt4peH2n9X95ebTamz2MeOI8NvMTmomI=

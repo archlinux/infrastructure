@@ -1,7 +1,0 @@
----
-filesystem: btrfs
-fail2ban_jails:
-  sshd: true
-  postfix: false
-  dovecot: false
-  nginx_limit_req: true

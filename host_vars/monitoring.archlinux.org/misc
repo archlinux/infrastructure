@@ -1,3 +1,5 @@
 ---
 filesystem: btrfs
 ipv4_address: 95.217.220.31
+wireguard_address: 10.0.0.4
+wireguard_public_key: LR3lPa9ABwUkvbm3NqdxeAqX+NOG8FpbICG/+1Ra5lg=

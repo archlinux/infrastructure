@@ -1,3 +1,5 @@
 ---
 filesystem: btrfs
 memcached_socket: "/var/run/aurweb.sock"
+wireguard_address: 10.0.0.2
+wireguard_public_key: TPLeGQ7qU6ZNtcgDbEV0SSYScvK+XS5igcPdGSXo6UA=

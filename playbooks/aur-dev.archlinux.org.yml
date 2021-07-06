@@ -21,3 +21,4 @@
     - { role: aurweb, aurweb_domain: 'aur-dev.archlinux.org', aurweb_version: 'pu' }
     - { role: prometheus_exporters }
     - { role: promtail }
+    - { role: wireguard }

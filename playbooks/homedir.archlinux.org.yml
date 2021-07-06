@@ -16,3 +16,4 @@
     - { role: prometheus_exporters }
     - { role: promtail }
     - { role: fail2ban }
+    - { role: wireguard }

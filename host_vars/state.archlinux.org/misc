@@ -1,0 +1,4 @@
+---
+filesystem: btrfs
+wireguard_address: 10.0.0.11
+wireguard_public_key: cRNS30527OCEgijC7FHrtdXxdNnwWsXP8F1QAoKgAFQ=

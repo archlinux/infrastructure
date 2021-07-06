@@ -12,3 +12,5 @@ network_interface: "en*"
 system_disks:
   - /dev/nvme0n1
   - /dev/nvme1n1
+wireguard_address: 10.0.0.8
+wireguard_public_key: 6cb0sL2PgD55IXWr5j/uIn9wCgUL+HT83vWrxWClSBU=

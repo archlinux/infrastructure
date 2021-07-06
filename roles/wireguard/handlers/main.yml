@@ -1,0 +1,11 @@
+---
+# https://github.com/systemd/systemd/issues/9627
+- name: delete wg0
+  command: networkctl delete wg0
+  register: result
+  failed_when: result.rc not in [0, 1]
+  listen: reload wireguard
+
+- name: reload .network and .netdev files
+  command: networkctl reload
+  listen: reload wireguard

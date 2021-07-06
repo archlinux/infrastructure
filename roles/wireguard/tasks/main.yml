@@ -1,0 +1,25 @@
+---
+# Used for debugging
+- name: install wireguard-tools
+  pacman: name=wireguard-tools state=present
+
+- name: install wireguard configuration
+  template: src={{ item.src }} dest=/etc/systemd/network/{{ item.dest }} owner=root group=systemd-network mode=0640
+  loop:
+    - {src: wg0.netdev.j2, dest: wg0.netdev}
+    - {src: wg0.network.j2, dest: wg0.network}
+  notify: reload wireguard
+
+- name: create wireguard zone
+  ansible.posix.firewalld: zone=wireguard permanent=yes state=present
+  register: result
+
+- name: reload firewalld
+  service: name=firewalld state=reloaded
+  when: result.changed
+
+- name: add wg0 to the wireguard zone
+  ansible.posix.firewalld: zone=wireguard interface=wg0 permanent=yes immediate=yes state=enabled
+
+- name: open firewall holes
+  ansible.posix.firewalld: port=51820/udp permanent=yes immediate=yes state=enabled

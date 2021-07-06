@@ -1,0 +1,6 @@
+---
+filesystem: btrfs
+ipv4_address: 157.90.255.107
+prometheus_domain: dashboards.archlinux.org
+wireguard_address: 10.0.0.33
+wireguard_public_key: lLZtvFIrmtUXRXmw+qQC8LZ00NzN1wlvcI4grNWt2lE=
