@@ -381,21 +381,21 @@ resource "hetznerdns_record" "pkgbuild_com_origin_mx" {
 resource "hetznerdns_record" "pkgbuild_com_origin_ns3" {
   zone_id = hetznerdns_zone.pkgbuild.id
   name    = "@"
-  value   = "robotns3.second-ns.com."
+  value   = "helium.ns.hetzner.de."
   type    = "NS"
 }
 
 resource "hetznerdns_record" "pkgbuild_com_origin_ns2" {
   zone_id = hetznerdns_zone.pkgbuild.id
   name    = "@"
-  value   = "robotns2.second-ns.de."
+  value   = "oxygen.ns.hetzner.com."
   type    = "NS"
 }
 
 resource "hetznerdns_record" "pkgbuild_com_origin_ns1" {
   zone_id = hetznerdns_zone.pkgbuild.id
   name    = "@"
-  value   = "ns1.first-ns.de."
+  value   = "hydrogen.ns.hetzner.com."
   type    = "NS"
 }
 
@@ -427,21 +427,21 @@ resource "hetznerdns_record" "archlinux_org_origin_caa" {
 resource "hetznerdns_record" "archlinux_org_origin_ns3" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "@"
-  value   = "robotns3.second-ns.com."
+  value   = "helium.ns.hetzner.de."
   type    = "NS"
 }
 
 resource "hetznerdns_record" "archlinux_org_origin_ns2" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "@"
-  value   = "robotns2.second-ns.de."
+  value   = "oxygen.ns.hetzner.com."
   type    = "NS"
 }
 
 resource "hetznerdns_record" "archlinux_org_origin_ns1" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "@"
-  value   = "ns1.first-ns.de."
+  value   = "hydrogen.ns.hetzner.com."
   type    = "NS"
 }
 
