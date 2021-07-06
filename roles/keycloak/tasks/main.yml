@@ -8,11 +8,6 @@
   notify:
     - restart keycloak
 
-- name: copy profile.properties
-  copy: src=profile.properties dest=/etc/keycloak/profile.properties owner=keycloak group=keycloak mode=600
-  notify:
-    - restart keycloak
-
 - name: copy custom theme
   copy: src=theme/archlinux dest=/opt/keycloak/themes owner=keycloak group=keycloak mode=755
   notify:
