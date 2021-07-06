@@ -1,2 +1,1 @@
-logging_domain: logging.archlinux.org
 loki_nginx_htpasswd: /etc/nginx/auth/loki

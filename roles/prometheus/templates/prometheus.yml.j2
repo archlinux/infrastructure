@@ -61,7 +61,7 @@ scrape_configs:
     static_configs:
     {% for host in groups['node_exporters'] %}
 
-    - targets: ['{{ host }}:9080']
+    - targets: ['{{ hostvars[host]['wireguard_address'] }}:9080']
       labels:
         instance: "{{ host }}"
 

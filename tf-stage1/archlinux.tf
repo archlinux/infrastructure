@@ -285,7 +285,6 @@ locals {
     rsync         = { value = "gemini" }
     sources       = { value = "gemini" }
     "static.conf" = { value = "redirect" }
-    logging       = { value = "monitoring" }
     status        = { value = "stats.uptimerobot.com." }
     svn           = { value = "gemini" }
     coc           = { value = "redirect" }
