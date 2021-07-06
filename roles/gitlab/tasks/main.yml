@@ -94,6 +94,7 @@
             }
           }
         ]
+        prometheus_monitoring['enable'] = false
     volumes:
       - "/srv/gitlab/config:/etc/gitlab"
       - "/srv/gitlab/logs:/var/log/gitlab"
