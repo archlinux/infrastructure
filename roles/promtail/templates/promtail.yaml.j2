@@ -1,5 +1,5 @@
 server:
-  http_listen_address: 0.0.0.0
+  http_listen_address: {{ wireguard_address }}
   http_listen_port: 9080
   grpc_listen_address: 127.0.0.1
   grpc_listen_port: 0 # 0 means random
@@ -8,7 +8,7 @@ positions:
   filename: /var/lib/promtail/positions.yaml
 
 clients:
-  - url: https://{{ logging_domain }}/loki/api/v1/push
+  - url: http://{{ hostvars['monitoring.archlinux.org']['wireguard_address'] }}/loki/api/v1/push
     basic_auth:
       username: '{{ vault_loki_nginx_user }}'
       password: '{{ vault_loki_nginx_passwd }}'

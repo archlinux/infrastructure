@@ -7,6 +7,7 @@ prometheus_receive_only: false
 # for d in $(curl -sf "https://crt.sh/?q=archlinux.org&output=json" "https://crt.sh/?q=pkgbuild.com&output=json" | jq -r ".[].name_value" | sort -u); do if curl -o /dev/null -sS "https://$d"; then echo $d; fi; done | grep -v "\@" | sort | sed "s/^/  - https:\/\//"
 blackbox_targets:
   http_prometheus:
+    - http://{{ hostvars['monitoring.archlinux.org']['wireguard_address'] }}
     - https://accounts.archlinux.org
     - https://america.archive.pkgbuild.com
     - https://america.mirror.pkgbuild.com
@@ -25,7 +26,6 @@ blackbox_targets:
     - https://europe.mirror.pkgbuild.com
     - https://gitlab.archlinux.org
     - https://ipxe.archlinux.org
-    - https://logging.archlinux.org
     - https://lists.archlinux.org
     - https://mailman.archlinux.org
     - https://man.archlinux.org
