@@ -5,4 +5,5 @@ Description=Borg backup (offsite)
 Type=oneshot
 Restart=on-failure
 RestartSec=5m
+{% include 'borg-backup-cpu-quota.j2' %}
 ExecStart=/usr/local/bin/borg-backup-offsite.sh

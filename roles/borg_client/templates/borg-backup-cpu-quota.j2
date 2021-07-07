@@ -1,0 +1,4 @@
+{% if ansible_processor_vcpus == 1 %}
+{# Limit CPU usage to avoid triggering a HostHighCpuLoad alert #}
+CPUQuota=50%
+{% endif %}
