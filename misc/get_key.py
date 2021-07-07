@@ -40,10 +40,9 @@ with chdir(root):
 
 
 def load_vault(path):
-    with chdir(root):
-        return yaml.load(
-            vault_lib.decrypt(Path(path).read_text()), Loader=yaml.SafeLoader
-        )
+    return yaml.load(
+        vault_lib.decrypt(Path(path).read_text()), Loader=yaml.SafeLoader
+    )
 
 
 class OutputFormat(str, Enum):
