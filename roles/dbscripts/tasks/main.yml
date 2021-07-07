@@ -217,7 +217,7 @@
   user: name=svntogit shell=/sbin/nologin home=/srv/svntogit generate_ssh_key=yes ssh_key_bits=4096
 
 - name: configure svntogit git user name
-  command: git config --global user.name = 'svntogit'
+  command: git config --global user.name svntogit
   become: true
   become_user: svntogit
   register: git_config_username
@@ -226,7 +226,7 @@
     - skip_ansible_lint
 
 - name: configure svntogit git user email
-  command: git config --global user.name = 'svntogit@repos.archlinux.org'
+  command: git config --global user.email svntogit@repos.archlinux.org
   become: true
   become_user: svntogit
   register: git_config_email
