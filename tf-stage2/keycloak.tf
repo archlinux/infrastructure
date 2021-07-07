@@ -5,7 +5,7 @@ terraform {
 }
 
 data "external" "vault_keycloak" {
-  program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_keycloak.yml",
+  program = ["${path.module}/../misc/get_key.py", "${path.module}/../group_vars/all/vault_keycloak.yml",
     "vault_keycloak_admin_user",
     "vault_keycloak_admin_password",
     "vault_keycloak_smtp_user",
@@ -14,33 +14,33 @@ data "external" "vault_keycloak" {
 }
 
 data "external" "vault_google" {
-  program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_google.yml",
+  program = ["${path.module}/../misc/get_key.py", "${path.module}/../group_vars/all/vault_google.yml",
     "vault_google_recaptcha_site_key",
     "vault_google_recaptcha_secret_key",
   "--format", "json"]
 }
 
 data "external" "vault_github" {
-  program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_github.yml",
+  program = ["${path.module}/../misc/get_key.py", "${path.module}/../group_vars/all/vault_github.yml",
     "vault_github_oauth_app_client_id",
     "vault_github_oauth_app_client_secret",
   "--format", "json"]
 }
 
 data "external" "vault_monitoring" {
-  program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_monitoring.yml",
+  program = ["${path.module}/../misc/get_key.py", "${path.module}/../group_vars/all/vault_monitoring.yml",
     "vault_monitoring_grafana_client_secret",
   "--format", "json"]
 }
 
 data "external" "vault_hedgedoc" {
-  program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_hedgedoc.yml",
+  program = ["${path.module}/../misc/get_key.py", "${path.module}/../group_vars/all/vault_hedgedoc.yml",
     "vault_hedgedoc_client_secret",
   "--format", "json"]
 }
 
 data "external" "vault_matrix" {
-  program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_matrix.yml",
+  program = ["${path.module}/../misc/get_key.py", "${path.module}/../group_vars/all/vault_matrix.yml",
     "vault_matrix_openid_client_secret",
   "--format", "json"]
 }

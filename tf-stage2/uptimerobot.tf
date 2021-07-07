@@ -3,7 +3,7 @@
 # https://github.com/louy/terraform-provider-uptimerobot/issues/82
 
 data "external" "vault_uptimerobot" {
-  program = ["${path.module}/../misc/get_key.py", "group_vars/all/vault_uptimerobot.yml",
+  program = ["${path.module}/../misc/get_key.py", "${path.module}/../group_vars/all/vault_uptimerobot.yml",
     "vault_uptimerobot_api_key",
     "vault_uptimerobot_alert_contact",
   "--format", "json"]
