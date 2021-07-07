@@ -405,10 +405,9 @@ resource "hetznerdns_record" "pkgbuild_com_origin_ns1" {
 # resource "hetznerdns_record" "pkgbuild_com_origin_soa" {
 #   zone_id = hetznerdns_zone.pkgbuild.id
 #   name = "@"
-#   value = "ns1.first-ns.de. dns.hetzner.com. 2020090604 14400 1800 604800 86400"
+#   value = "hydrogen.ns.hetzner.com. hetzner.archlinux.org. 2021070703 3600 1800 604800 3600"
 #   type = "SOA"
 # }
-
 
 resource "hetznerdns_record" "pkgbuild_com_origin_txt" {
   zone_id = hetznerdns_zone.pkgbuild.id
@@ -451,7 +450,7 @@ resource "hetznerdns_record" "archlinux_org_origin_ns1" {
 #; resource "hetznerdns_record" "archlinux_org_origin_soa" {
 #   zone_id = hetznerdns_zone.archlinux.id
 #   name = "@"
-#   value = "ns1.first-ns.de. ibiru.archlinux.org. 2020072502 7200 900 1209600 86400"
+#   value = "hydrogen.ns.hetzner.com. hetzner.archlinux.org. 2021070703 3600 1800 604800 3600"
 #   type = "SOA"
 # }
 
