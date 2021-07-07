@@ -265,7 +265,9 @@
 
 # The following command also serves as a way to get the data the first time the repo is set up
 - name: configure svntogit pull upstream branch
-  command: git pull public master chdir=/srv/svntogit/repos/{{ item }}
+  command: git pull --set-upstream public master chdir=/srv/svntogit/repos/{{ item }}
+  environment:
+    - SHELL: /bin/bash
   with_items:
     - community
     - packages
