@@ -5,7 +5,7 @@
             {% set keys = lookup('file', '../pubkeys/'+user+'.pub').split("\n") %}
             {% for key in keys | sort %}
                 {% if "command" not in key -%}
-                    command="/usr/bin/svnserve --tunnel-user={{user}} -t",no-port-forwarding,no-agent-forwarding,no-pty {{key}}
+                    command="/usr/bin/svnserve --tunnel-user={{user}} -t",restrict {{key}}
                 {% endif %}
             {% endfor %}
         {% endif %}
