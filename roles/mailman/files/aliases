@@ -1,0 +1,4 @@
+root		root@archlinux.org
+MAILER-DAEMON	postmaster@archlinux.org
+postmaster	postmaster@archlinux.org
+abuse		abuse@archlinux.org

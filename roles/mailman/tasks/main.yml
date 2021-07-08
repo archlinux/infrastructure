@@ -19,7 +19,9 @@
 - name: install postfix maps
   copy: src={{ item }} dest=/etc/postfix/ owner=root group=root mode=0644
   loop:
+    - aliases
     - milter_header_checks
+  notify: reload postfix
 
 - name: open firewall holes for postfix
   ansible.posix.firewalld: service=smtp permanent=true state=enabled immediate=yes
