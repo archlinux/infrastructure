@@ -9,9 +9,7 @@ positions:
 
 clients:
   - url: http://{{ hostvars['monitoring.archlinux.org']['wireguard_address'] }}/loki/api/v1/push
-    basic_auth:
-      username: '{{ vault_loki_nginx_user }}'
-      password: '{{ vault_loki_nginx_passwd }}'
+    bearer_token: '{{ vault_loki_token }}'
 
 scrape_configs:
   - job_name: journal

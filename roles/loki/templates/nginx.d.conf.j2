@@ -12,8 +12,9 @@ server {
     error_log    /var/log/nginx/loki/error.log;
 
     location = /loki/api/v1/push {
-        auth_basic "Loki :)";
-        auth_basic_user_file {{ loki_nginx_htpasswd }};
+        if ($http_authorization != "Bearer {{ vault_loki_token }}") {
+            return 403;
+        }
 
         proxy_pass http://127.0.0.1:3100$request_uri;
     }
