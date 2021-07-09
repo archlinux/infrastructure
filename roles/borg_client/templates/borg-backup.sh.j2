@@ -45,7 +45,8 @@ if systemctl is-active mysqld || systemctl is-active mariadb; then
     /usr/local/bin/backup-mysql.sh || true
 fi
 
-{% if inventory_hostname == "gitlab.archlinux.org" %}
+{# When backing up to offsite, reuse the existing tarballs from the previous backup #}
+{% if inventory_hostname == "gitlab.archlinux.org" and item['suffix'] != '-offsite' %}
 # Create tarball backups of various GitLab directories using the official backup tool
 systemctl is-active docker && /usr/local/bin/backup-gitlab.sh
 {% endif %}
