@@ -41,9 +41,6 @@ When a new host is provisioned:
   happen automatically as the *postfwd* role is a dependency of the *postfix*
   role (using `delegate_to` to run it against 'mail.archlinux.org' regardless of the target
   host that the postfix role is being run on)
-- Any services on the new host that need to relay mail should relay using SMTP
-  to `localhost` on port 10027 which bypasses any filtering/restrictions that
-  are applied by postfix to port 25 traffic.
 
 # Create new DKIM keys
 
