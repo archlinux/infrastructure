@@ -1,0 +1,3 @@
+---
+- name: reload postfix
+  service: name=postfix state=reloaded

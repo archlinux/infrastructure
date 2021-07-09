@@ -12,16 +12,10 @@
 # service type  private unpriv  chroot  wakeup  maxproc command + args
 #               (yes)   (yes)   (no)    (never) (100)
 # ==========================================================================
-{% if postfix_smtpd_public %}
 smtp      inet  n       -       n       -       -       smtpd
     -o smtpd_client_connection_count_limit=20
     -o smtpd_proxy_options=speed_adjust
-{% else %}
-localhost:smtp      inet  n       -       n       -       -       smtpd
-    -o smtpd_tls_security_level=none
-{% endif %}
 
-{% if postfix_server %}
 msa_cleanup unix n      -       n       -       0       cleanup
     -o header_checks=pcre:/etc/postfix/msa_header_checks
 submissions inet n       -       n       -       -       smtpd
@@ -32,7 +26,6 @@ submissions inet n       -       n       -       -       smtpd
     -o smtpd_sasl_auth_enable=yes
     -o smtpd_recipient_restrictions=$submission_recipient_restrictions
     -o smtpd_client_connection_count_limit=10
-{% endif %}
 
 #smtp      inet  n       -       n       -       1       postscreen
 #smtpd     pass  -       -       n       -       -       smtpd
@@ -94,7 +87,5 @@ patchwork   unix  -       n       n       -       -       pipe
   flags=DFRX user={{postfix_patchwork_user}} argv={{postfix_patchwork_mail_handler}}
 {% endif %}
 
-{% if postfix_server %}
 wiki_bouncehandler unix - n       n       -       -       pipe
   flags=DFRX user={{postfix_wiki_bounce_user}} argv=/usr/bin/systemd-cat {{postfix_wiki_bounce_mail_handler}} {{postfix_wiki_bounce_config}}
-{% endif %}

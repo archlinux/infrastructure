@@ -43,26 +43,21 @@
     name: certificate
   vars:
     domains: ["{{ mail_domain }}"]
-  when: postfix_smtpd_public
 
 - name: install postfix cert renewal hook
   template: src=letsencrypt.hook.d.j2 dest=/etc/letsencrypt/hook.d/postfix owner=root group=root mode=0755
-  when: postfix_smtpd_public
 
 - name: install bouncehandler config
   template: src=wiki-bouncehandler.conf.j2 dest={{ postfix_wiki_bounce_config }} owner={{ postfix_wiki_bounce_user }} group=root mode=0600
-  when: postfix_server
 
 - name: install packages for bounce handler
   pacman: name=perl-mediawiki-api,perl-config-simple state=present
-  when: postfix_server
 
 - name: install bouncehandler script
   copy: src=bouncehandler.pl dest={{ postfix_wiki_bounce_mail_handler }} owner=root group=root mode=0755
-  when: postfix_server
 
 - name: make bouncehandler user
-  user: name={{ postfix_wiki_bounce_user }} shell=/bin/false skeleton=/var/empty state={{ "present" if postfix_server else "absent" }}
+  user: name={{ postfix_wiki_bounce_user }} shell=/bin/false skeleton=/var/empty state=present
 
 - name: start and enable postfix
   service: name=postfix enabled=yes state=started
@@ -73,41 +68,11 @@
     - compat_maps
     - compat_maps.db
 
-- name: install extra packages for relaying via smarthost
-  when: postfix_relayhost | length > 0
-  package:
-    name: cyrus-sasl
-    state: present
-
-- name: install relay_passwords file
-  when: postfix_relayhost | length > 0
-  template:
-    src: relay_passwords.j2
-    dest: /etc/postfix/relay_passwords
-    mode: 0640
-    owner: root
-    group: postfix
-  notify:
-    - postmap relay_passwords
-
-- name: create user account on mail to relay with
-  delegate_to: mail.archlinux.org
-  when: postfix_relayhost | length > 0
-  user:
-    name: "{{ inventory_hostname_short }}"
-    comment: "SMTP Relay Account for {{ inventory_hostname }}"
-    group: nobody
-    password: "{{ postfix_relay_password | password_hash('sha512') }}"
-    shell: /sbin/nologin
-    update_password: always
-    home: /home/"{{ inventory_hostname }}"  # Set home directory so shadow.service does not fail
-    create_home: true
-
 - name: open firewall holes
   ansible.posix.firewalld: service={{ item }} permanent=true state=enabled immediate=yes
   with_items:
     - smtp
     - smtps
-  when: postfix_smtpd_public and configure_firewall
+  when: configure_firewall
   tags:
     - firewall

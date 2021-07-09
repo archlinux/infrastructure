@@ -24,7 +24,7 @@
     - { role: sources, sources_domain: "sources.archlinux.org", sources_dir: "/srv/sources" }
     - { role: archive }
     - { role: archive_web }
-    - { role: postfix, postfix_relayhost: "mail.archlinux.org" }
+    - { role: postfix_null }
     - { role: fail2ban }
     - { role: prometheus_exporters }
     - { role: promtail }
