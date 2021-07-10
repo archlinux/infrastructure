@@ -73,6 +73,12 @@
 - name: fix home permissions
   file: state=directory owner=archweb group=archweb mode=0755 path="{{ archweb_dir }}"
 
+- name: make archlinux.org dir
+  file: path="{{ archweb_dir }}/archlinux.org" state=directory owner=archweb group=archweb mode=0755
+
+- name: configure robots.txt
+  copy: src=robots.txt dest="{{ archweb_dir }}/archlinux.org/robots.txt" owner=root group=root mode=0644
+
 - name: configure archweb
   template: src=local_settings.py.j2 dest={{ archweb_dir }}/local_settings.py owner=archweb group=archweb mode=0660
   register: config
