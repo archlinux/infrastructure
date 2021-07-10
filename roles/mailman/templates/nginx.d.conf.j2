@@ -39,6 +39,7 @@ server {
 
     location /pipermail {
         alias /var/lib/mailman/archives/public;
+        add_header Cache-Control "public, no-cache";
         autoindex on;
     }
 
