@@ -1,0 +1,34 @@
+[Unit]
+Description=Prometheus Fail2ban Exporter
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/fail2ban-textcollector.sh {{ prometheus_textfile_dir }}
+
+NoNewPrivileges=true
+LockPersonality=true
+
+PrivateDevices=true
+PrivateTmp=true
+PrivateNetwork=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths={{ prometheus_textfile_dir }}
+
+MemoryDenyWriteExecute=true
+RemoveIPC=true
+RestrictRealtime=true
+RestrictNamespaces=true
+RestrictSUIDSGID=true
+
+RestrictAddressFamilies=~AF_PACKET
+RestrictAddressFamilies=~AF_NETLINK
+
+ProtectHostname=true
+ProtectControlGroups=true
+ProtectKernelLogs=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectClock=true
+
+SystemCallArchitectures=native

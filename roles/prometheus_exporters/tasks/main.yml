@@ -58,6 +58,7 @@
     - repository-textcollector.sh
     - btrfs-textcollector.sh
     - aur-textcollector.sh
+    - fail2ban-textcollector.sh
 
 - name: install arch textcollector service
   template: src=prometheus-arch-textcollector.service.j2 dest=/etc/systemd/system/prometheus-arch-textcollector.service owner=root group=root mode=644
@@ -79,6 +80,15 @@
 - name: enable and start prometheus borg textcollector timer
   systemd: name=prometheus-borg-textcollector.timer enabled=yes daemon_reload=yes state=started
   when: "'borg_clients' in group_names"
+
+- name: install fail2ban textcollector service
+  template: src=prometheus-fail2ban-textcollector.service.j2 dest=/etc/systemd/system/prometheus-fail2ban-textcollector.service owner=root group=root mode=644
+
+- name: install fail2ban textcollector timer
+  template: src=prometheus-fail2ban-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-fail2ban-textcollector.timer owner=root group=root mode=644
+
+- name: enable and start prometheus fail2ban textcollector timer
+  systemd: name=prometheus-fail2ban-textcollector.timer enabled=yes daemon_reload=yes state=started
 
 - name: install blackbox exporter configuration
   copy: src=blackbox.yml dest=/etc/prometheus/blackbox.yml owner=root group=root mode=0644
