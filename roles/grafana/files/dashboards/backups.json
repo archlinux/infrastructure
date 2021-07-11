@@ -15,7 +15,6 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 47,
   "links": [],
   "panels": [
     {
@@ -176,11 +175,12 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.3",
+      "pluginVersion": "8.0.5",
       "targets": [
         {
           "exemplar": true,
           "expr": "hetzner_storage_box_free_bytes{instance=\"monitoring.archlinux.org\"}",
+          "instant": true,
           "interval": "",
           "legendFormat": "",
           "queryType": "randomWalk",
@@ -378,5 +378,5 @@
   "timezone": "",
   "title": "Borg Backups",
   "uid": "Rnqpymznz",
-  "version": 30
+  "version": 33
 }
