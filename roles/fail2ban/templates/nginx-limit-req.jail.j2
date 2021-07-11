@@ -11,3 +11,5 @@ logpath = /var/log/nginx/*/error.log
 findtime = 5min
 bantime = 1hours
 maxretry = 10
+# Do not fail2ban archweb's rss limit.
+ignoreregex = rsslimit

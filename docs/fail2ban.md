@@ -39,3 +39,6 @@ Add `fail2ban_jails` dict with `dovecot: true` to the host's `host_vars`.
 The nginx_limit_req jail is not enabled on any server. This jail bans IPs based repeated errors on nginx error log. Default blocking is 1 hour(s). Adding to a host:
 
 Add `fail2ban_jails` dict with `nginx_limit_req: true` to the host's `host_vars`.
+
+The `rsslimit` zone is whitelisted from being banned with `ignoreregex`, as we
+choose to not ban RSS abusers.

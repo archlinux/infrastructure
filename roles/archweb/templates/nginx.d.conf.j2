@@ -1,5 +1,9 @@
 # limit rss requests to 1 r/m
 limit_req_zone $binary_remote_addr zone=rsslimit:8m rate=1r/m;
+
+# limit general requests to 20 r/s to block DoS attempts.
+limit_req_zone $binary_remote_addr zone=archweblimit:10m rate=20r/s;
+
 limit_req_status 429;
 
 uwsgi_cache_path /var/lib/nginx/cache levels=1:2 keys_zone=archwebcache:10m inactive=60m;
@@ -193,5 +197,7 @@ server {
         uwsgi_cache_revalidate on;
         uwsgi_cache_key $cache_key;
         add_header X-Cache-Status $upstream_cache_status;
+
+        limit_req zone=archweblimit burst=10 nodelay;
     }
 }
