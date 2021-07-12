@@ -3,6 +3,10 @@ fastcgi_cache_key "$scheme$request_method$host$request_uri";
 
 # rate limit API endpoint
 limit_req_zone $binary_remote_addr zone=api_zone:10m rate=5r/s;
+
+# limit general requests to 10 r/s to block DoS attempts with a burst of 10.
+limit_req_zone $binary_remote_addr zone=archwikilimit:10m rate=10r/s;
+
 limit_req_status 429;
 
 upstream archwiki {
@@ -104,6 +108,8 @@ server {
         fastcgi_pass   archwiki;
         fastcgi_index  index.php;
         include        fastcgi.conf;
+
+        limit_req zone=archwikilimit burst=10 nodelay;
     }
 
     # whitelist known OK directories
