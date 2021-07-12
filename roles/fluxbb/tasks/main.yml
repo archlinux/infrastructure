@@ -56,7 +56,7 @@
     owner=fluxbb group=fluxbb mode=400
 
 - name: install php-apcu
-  pacman: name=php-apcu,php-apcu-bc,php-intl
+  pacman: name=php-apcu,php-intl
 
 - name: configure php-fpm
   template: >
