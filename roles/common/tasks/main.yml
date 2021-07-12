@@ -141,8 +141,17 @@
 - name: install zram-generator config for zram
   copy: src=zram-generator.conf dest=/etc/systemd/zram-generator.conf owner=root group=root mode=0644
   notify:
-    - restart swap.target
+    - restart systemd-zram-setup@zram0
   when: enable_zram_swap
+
+- name: disable zswap to prevent conflict with zram
+  copy: content="w- /sys/module/zswap/parameters/enabled - - - - N" dest=/etc/tmpfiles.d/zram.conf
+  register: zramtmpfiles
+  when: enable_zram_swap
+
+- name: use tmpfiles.d/zram.conf
+  command: systemd-tmpfiles --create
+  when: zramtmpfiles.changed
 
 - name: start systemd-oomd
   service: name=systemd-oomd state=started enabled=yes
