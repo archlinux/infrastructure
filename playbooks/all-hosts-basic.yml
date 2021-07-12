@@ -13,3 +13,4 @@
     - { role: root_ssh }
     - { role: borg_client, tags: ["borg"], when: "'borg_clients' in group_names" }
     - { role: hardening }
+    - { role: fail2ban }
