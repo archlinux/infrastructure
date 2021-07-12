@@ -1,0 +1,10 @@
+[Unit]
+Description=Prometheus Fail2ban Exporter TextCollector Timer
+
+[Timer]
+OnUnitActiveSec=10min
+OnBootSec=15min
+RandomizedDelaySec=1min
+
+[Install]
+WantedBy=timers.target
