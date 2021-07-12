@@ -278,18 +278,6 @@
   tags:
     - skip_ansible_lint
 
-- name: configure svntogit push upstream branch
-  command: git push -u public master chdir=/srv/svntogit/repos/{{ item }}
-  with_items:
-    - community
-    - packages
-  become: true
-  become_user: svntogit
-  register: git_push_master
-  changed_when: "git_push_master.rc == 0"
-  tags:
-    - skip_ansible_lint
-
 - name: fix svntogit home permissions
   file: path="/srv/svntogit" state=directory owner=svntogit group=svntogit mode=0775
 
