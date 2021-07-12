@@ -13,6 +13,9 @@ system_disks:
   - /dev/sda
 configure_network: true
 
+# repro1 has a big swap partition; avoid zram and rely on zswap instead
+enable_zram_swap: false
+
 rebuilderd_workers:
  - repro11
  - repro12
