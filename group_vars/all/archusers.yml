@@ -433,7 +433,8 @@ arch_users:
   morganamilo:
     name: "Morgan Adamiec"
     ssh_key: morganamilo.pub
-    groups: []
+    groups:
+      - tu
   freswa:
     name: "Frederik Schwan"
     ssh_key: freswa.pub
