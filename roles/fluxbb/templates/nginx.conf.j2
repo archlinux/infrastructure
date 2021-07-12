@@ -19,6 +19,7 @@ server {
 # limiter in the location directive below
 limit_req_zone $binary_remote_addr zone=rsslimit:8m rate=1r/m;
 limit_req_zone $binary_remote_addr zone=searchlimit:10m rate=1r/s;
+limit_req_zone $binary_remote_addr zone=bbslimit:10m rate=10r/s;
 limit_req_status 429;
 
 server {
@@ -101,5 +102,7 @@ server {
         try_files      $uri =404;
         fastcgi_param  HTTPS            on;
         include        fastcgi_params;
+
+        limit_req zone=bbslimit burst=10 nodelay;
     }
 }
