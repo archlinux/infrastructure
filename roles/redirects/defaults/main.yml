@@ -2,6 +2,7 @@
 #   - domain: the domain to listen on
 #   - to: the redirect target as defined by the nginx return statement
 #   - type: HTTP status code to use (302 = temporary redirect, 301 = permanent redirect)
+#   - map: the mapping file
 redirects:
   - mailman:
     domain: mailman.archlinux.org
@@ -15,3 +16,8 @@ redirects:
     domain: coc.archlinux.org
     to: https://gitlab.archlinux.org/archlinux/service-agreements/-/blob/master/code-of-conduct.md
     type: 302
+  - cgit:
+    domain: git.archlinux.org
+    to: https://gitlab.archlinux.org
+    type: 301
+    map: maps/cgit-migrated-repos.map

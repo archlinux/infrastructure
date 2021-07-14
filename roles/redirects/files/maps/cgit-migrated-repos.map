@@ -1,0 +1,5 @@
+/pacman.git https://gitlab.archlinux.org/pacman/pacman;
+/pacman-contrib.git https://gitlab.archlinux.org/pacman/pacman-contrib;
+
+/netctl.git https://gitlab.archlinux.org/archlinux/netctl;
+/mkinitcpio.git https://github.com/archlinux/mkinitcpio;
