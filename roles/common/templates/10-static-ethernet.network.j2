@@ -25,7 +25,7 @@ Peer={{ ipv4_gateway }}{{ ipv4_netmask}}
 Address={{ ipv6_address }}{{ ipv6_netmask }}
 {% endif %}
 
-{% if not ipv6_gateway.startswith("fe80") %}
+{% if ipv6_gateway is defined and not ipv6_gateway.startswith("fe80") %}
 [Route]
 Destination={{ ipv6_gateway }}
 {% endif %}
