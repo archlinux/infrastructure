@@ -78,10 +78,6 @@ smtpd_recipient_restrictions =
 # policy services
   $policy_check,
 # white-/blacklisting
-  check_recipient_access ${indexed}/access_recipient,
-  check_client_access ${indexed}/access_client,
-  check_helo_access ${indexed}/access_helo,
-  check_sender_access ${indexed}/access_sender,
 # reject unclean mails
   reject_unauth_pipelining,
   reject_non_fqdn_recipient,
@@ -130,7 +126,6 @@ smtpd_sasl_authenticated_header = yes
 
 submission_recipient_restrictions=
 # allow postmaster
-  check_recipient_access ${indexed}/access_recipient,
   permit_sasl_authenticated,
   reject
 
@@ -156,7 +151,6 @@ alias_database = ${indexed}/aliases
 
 virtual_alias_maps =
   ${indexed}/users
-  pcre:${config_directory}/users.pcre
 virtual_alias_domains =  ${indexed}/domains
 
 # reject mails to system users (nobody looks in those mailboxes)
@@ -164,7 +158,6 @@ local_recipient_maps =
   ${indexed}/users
   $alias_maps
   pcre:${config_directory}/transport.pcre
-relocated_maps = ${indexed}/relocated
 
 relay_domains =
 
@@ -175,9 +168,6 @@ transport_maps =
 wiki_bouncehandler_destination_recipient_limit = 1
 
 authorized_mailq_users = root
-
-header_checks = pcre:/etc/postfix/header_checks
-body_checks = pcre:/etc/postfix/body_checks
 
 delay_warning_time = 4h
 

@@ -9,13 +9,7 @@
 - name: Postmap additional files  # noqa no-changed-when
   command: postmap /etc/postfix/{{ item }}
   loop:
-    - access_client
-    - access_sender
-    - access_sender-post-filter
-    - access_helo
-    - access_recipient
     - transport
-    - relocated
     - domains
     - msa_header_checks
 

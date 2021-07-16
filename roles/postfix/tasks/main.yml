@@ -9,7 +9,6 @@
     - transport
     - transport.pcre
     - aliases
-    - users.pcre
   notify:
     - Restart postfix
     - Postmap additional files
@@ -18,14 +17,6 @@
 - name: Install additional files
   copy: src={{ item }} dest=/etc/postfix/{{ item }} owner=root group=root mode=0644
   loop:
-    - access_client
-    - access_sender
-    - access_sender-post-filter
-    - access_helo
-    - access_recipient
-    - body_checks
-    - header_checks
-    - relocated
     - domains
     - msa_header_checks
   notify:
