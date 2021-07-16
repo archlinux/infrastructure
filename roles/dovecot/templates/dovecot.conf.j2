@@ -51,7 +51,7 @@ plugin {
 	zlib_save_level = 6
 	zlib_save = gz
 }
-protocols = imap pop3 sieve lmtp
+protocols = imap sieve lmtp
 service auth {
 	unix_listener auth-client {
 		group = postfix
@@ -69,12 +69,6 @@ service imap-login {
 	process_min_avail = 5
 }
 
-service pop3-login {
-  # don't listen for plain pop3
-  inet_listener pop3 {
-    port = 0
-  }
-}
 service lmtp {
 	unix_listener /var/spool/postfix/private/dovecot-lmtp {
 		group = postfix

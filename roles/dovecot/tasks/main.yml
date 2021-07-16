@@ -47,7 +47,6 @@
 - name: open firewall holes
   ansible.posix.firewalld: service={{ item }} permanent=true state=enabled immediate=yes
   with_items:
-    - pop3s
     - imaps
     - managesieve
   when: configure_firewall
