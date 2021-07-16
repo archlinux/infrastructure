@@ -6,7 +6,6 @@
   loop:
     - main.cf
     - master.cf
-    - transport
     - transport.pcre
     - aliases
   notify:

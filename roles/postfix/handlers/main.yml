@@ -9,7 +9,6 @@
 - name: Postmap additional files  # noqa no-changed-when
   command: postmap /etc/postfix/{{ item }}
   loop:
-    - transport
     - domains
     - msa_header_checks
 
