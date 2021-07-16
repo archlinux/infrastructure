@@ -56,7 +56,6 @@ blackbox_targets:
   tls_connect:
     - mail.archlinux.org:465
     - mail.archlinux.org:993
-    - mail.archlinux.org:995
     - coc.archlinux.org:443
   smtp_starttls:
     - mail.archlinux.org:25
