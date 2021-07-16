@@ -107,7 +107,6 @@
   ansible.posix.firewalld: service={{ item }} permanent=true state=enabled immediate=yes
   with_items:
     - smtp
-    - smtp-submission
     - smtps
   when: postfix_smtpd_public and configure_firewall
   tags:

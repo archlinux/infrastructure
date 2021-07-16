@@ -60,5 +60,4 @@ blackbox_targets:
     - coc.archlinux.org:443
   smtp_starttls:
     - mail.archlinux.org:25
-    - mail.archlinux.org:587
     - lists.archlinux.org:25
