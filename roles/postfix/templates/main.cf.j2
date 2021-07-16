@@ -11,13 +11,8 @@ smtputf8_enable = no
 
 append_dot_mydomain = no
 
-{% if postfix_smtpd_public %}
 smtpd_tls_cert_file = /etc/letsencrypt/live/{{mail_domain}}/fullchain.pem
 smtpd_tls_key_file = /etc/letsencrypt/live/{{mail_domain}}/privkey.pem
-{% else %}
-smtpd_tls_cert_file = /etc/letsencrypt/live/{{inventory_hostname}}/fullchain.pem
-smtpd_tls_key_file = /etc/letsencrypt/live/{{inventory_hostname}}/privkey.pem
-{% endif %}
 
 smtpd_tls_dh1024_param_file = /etc/postfix/dh2048.pem
 smtpd_tls_eecdh_grade = ultra
@@ -34,11 +29,7 @@ smtpd_tls_mandatory_ciphers=high
 tls_high_cipherlist=EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHAA
 
 smtp_tls_loglevel = 1
-{% if postfix_relayhost %}
-smtp_tls_security_level = encrypt
-{% else %}
 smtp_tls_security_level = may
-{% endif %}
 
 smtpd_tls_session_cache_database = btree:/var/lib/postfix/smtpd_scache
 smtp_tls_session_cache_database = btree:/var/lib/postfix/smtp_scache
@@ -51,11 +42,7 @@ daemon_directory = /usr/lib/postfix/bin
 mydomain = {{inventory_hostname}}
 myhostname = {{inventory_hostname}}
 myorigin = archlinux.org
-{% if postfix_server %}
 mydestination = archlinux.org
-{% else %}
-mydestination =
-{% endif %}
 
 default_database_type=btree
 indexed = ${default_database_type}:${config_directory}
@@ -82,7 +69,6 @@ smtp_connection_cache_on_demand = yes
 
 smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
 
-{% if postfix_smtpd_public %}
 # custom restriction classes
 policy_check =
 # postfwd (rate-limiting)
@@ -121,7 +107,6 @@ smtpd_recipient_restrictions =
 # some rate limiting rules only work after data so check it again
 smtpd_end_of_data_restrictions =
   $policy_check
-{% endif %}
 
 address_verify_map = ${default_database_type}:/var/lib/postfix/verify_cache
 
@@ -132,19 +117,6 @@ unknown_address_reject_code = 550
 
 smtpd_reject_footer = For assistance contact <postmaster@archlinux.org>. Please provide the following information in your problem report: time ($localtime), client ($client_address) and server ($server_name).
 
-{% if postfix_relayhost %}
-# relay all outbound mail via {{postfix_relayhost}}
-# the square brackets prevents postfix from trying to lookup mx records
-relayhost = [{{postfix_relayhost}}]:465
-smtp_tls_wrappermode = yes
-smtp_sasl_auth_enable = yes
-smtp_sasl_password_maps = ${indexed}/relay_passwords
-# allow plaintext authentication only over tls secured connections
-smtp_sasl_security_options = noanonymous, noplaintext
-smtp_sasl_tls_security_options = noanonymous
-{% endif %}
-
-{% if postfix_server %}
 smtpd_sasl_auth_enable = yes
 smtpd_tls_auth_only = yes
 
@@ -168,13 +140,10 @@ non_smtpd_milters=inet:localhost:11332
 # Pass internal mails through filters so they get signed by opendkim
 # XXX: Be careful not to have filters that may reject mails!
 internal_mail_filter_classes = bounce
-{% endif %}
 
-{% if postfix_server %}
 smtpd_sender_login_maps =
   ${indexed}/smtp_sender_map,
   ${indexed}/users
-{% endif %}
 smtpd_helo_required = yes
 
 smtpd_client_connection_rate_limit = 400
@@ -185,7 +154,6 @@ alias_maps = ${indexed}/aliases
 alias_database = ${indexed}/aliases
 
 
-{% if postfix_server %}
 virtual_alias_maps =
   ${indexed}/users
   pcre:${config_directory}/users.pcre
@@ -197,7 +165,6 @@ local_recipient_maps =
   $alias_maps
   pcre:${config_directory}/transport.pcre
 relocated_maps = ${indexed}/relocated
-{% endif %}
 
 relay_domains =
 {%if postfix_patchwork_enabled %}
@@ -212,9 +179,7 @@ transport_maps =
 patchwork_destination_recipient_limit = 1
 {% endif %}
 
-{% if postfix_server %}
 wiki_bouncehandler_destination_recipient_limit = 1
-{% endif %}
 
 authorized_mailq_users = root
 

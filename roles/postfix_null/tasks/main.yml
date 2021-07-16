@@ -1,0 +1,26 @@
+---
+- name: install postfix
+  pacman: name=postfix state=present
+
+- name: install template configs
+  template: src={{ item.file }}.j2 dest=/etc/postfix/{{ item.file }} owner=root group={{ item.group }} mode={{ item.mode }}
+  with_items:
+    - {file: main.cf, group: root, mode: 644}
+    - {file: relay_passwords, group: postfix, mode: 640}
+  notify:
+    - reload postfix
+
+- name: create user account on mail to relay with
+  delegate_to: mail.archlinux.org
+  user:
+    name: "{{ inventory_hostname_short }}"
+    comment: "SMTP Relay Account for {{ inventory_hostname }}"
+    group: nobody
+    password: "{{ postfix_relay_password | password_hash('sha512') }}"
+    shell: /sbin/nologin
+    update_password: always
+    home: /home/"{{ inventory_hostname }}"  # Set home directory so shadow.service does not fail
+    create_home: true
+
+- name: start and enable postfix
+  service: name=postfix enabled=yes state=started

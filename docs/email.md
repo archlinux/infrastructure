@@ -31,14 +31,14 @@ to the server. This gives us several benefits:
 
 When a new host is provisioned:
 
-- The *postfix* role has a task delegated to 'mail.archlinux.org' to create a local user
+- The *postfix_null* role has a task delegated to 'mail.archlinux.org' to create a local user
   on 'mail.archlinux.org' that is used for the new server to authenticate against. The user
   name is the shortname of the new servers hostname (ie, "foobar.archlinux.org"
   will authenticate with the username "foobar")
 - You will need to run the *postfwd* role against mail.archlinux.org to update the
   rate-limiting it performs (servers are given higher rate-limits than normal
   users - see `/etc/postfwd/postfwd.cf` for exact limits). This *should*
-  happen automatically as the *postfwd* role is a dependency of the *postfix*
+  happen automatically as the *postfwd* role is a dependency of the *postfix_null*
   role (using `delegate_to` to run it against 'mail.archlinux.org' regardless of the target
   host that the postfix role is being run on)
 

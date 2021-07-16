@@ -1,0 +1,19 @@
+#
+# {{ansible_managed}}
+#
+compatibility_level = 3.6
+
+mydestination =
+inet_interfaces = loopback-only
+# relay all outbound mail via {{ postfix_relayhost }}
+# the square brackets prevents postfix from trying to lookup mx records
+relayhost = [{{ postfix_relayhost }}]:465
+smtp_tls_wrappermode = yes
+smtp_tls_security_level = verify
+smtp_sasl_auth_enable = yes
+smtp_sasl_tls_security_options = noanonymous
+smtp_sasl_password_maps = texthash:/etc/postfix/relay_passwords
+smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+
+alias_maps = inline:{root=root@archlinux.org}
+alias_database = $alias_maps

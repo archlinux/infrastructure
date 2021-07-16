@@ -23,6 +23,3 @@
 
 - name: update aliases db
   command: postalias /etc/postfix/aliases
-
-- name: postmap relay_passwords
-  command: postmap /etc/postfix/relay_passwords

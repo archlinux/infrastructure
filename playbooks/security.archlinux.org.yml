@@ -11,7 +11,7 @@
     - { role: borg_client, tags: ["borg"] }
     - { role: certbot }
     - { role: nginx }
-    - { role: postfix, postfix_relayhost: "mail.archlinux.org" }
+    - { role: postfix_null }
     - { role: sudo }
     - { role: uwsgi }
     - role: security_tracker
