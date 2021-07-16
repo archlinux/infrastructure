@@ -15,7 +15,7 @@
     - { role: rspamd, rspamd_dkim_domain: archlinux.org, tags: ["mail"] }
     - { role: unbound, unbound_port: 5353, tags: ["mail"] }
     - { role: postfwd, tags: ['mail'] }
-    - { role: archusers }
+    - { role: archusers, archusers_ssh_options: 'command="/usr/bin/passwd",restrict,pty' }
     - { role: fail2ban }
     - { role: prometheus_exporters }
     - { role: promtail }

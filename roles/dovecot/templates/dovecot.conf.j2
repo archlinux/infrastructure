@@ -97,6 +97,8 @@ ssl_cipher_list = ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDH
 
 userdb {
 	driver = passwd
+	# https://doc.dovecot.org/configuration_manual/config_file/config_variables/
+	override_fields = uid=vmail gid=vmail home=/home/vmail/%d/%n
 }
 protocol imap {
 	imap_client_workarounds = tb-extra-mailbox-sep

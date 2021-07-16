@@ -1,9 +1,16 @@
 #jinja2: lstrip_blocks: True
-{{ lookup('file', '../pubkeys/' + item.value.ssh_key) }}
+{% set keys = [item.value.ssh_key] %}
 {% if item.value.additional_ssh_keys is defined %}
 	{% for key in item.value.additional_ssh_keys %}
 		{% if inventory_hostname in key.hosts or 'all' in key.hosts %}
-{{ lookup('file', '../pubkeys/' + key.name) }}
+			{{- keys.append(key.name) -}}
 		{% endif %}
 	{% endfor %}
 {% endif %}
+{% for key in keys %}
+	{% if archusers_ssh_options is defined %}
+{{ lookup('file', '../pubkeys/' + key) | regex_replace('(.*\S.*)', archusers_ssh_options + ' \\1') }}
+	{% else %}
+{{ lookup('file', '../pubkeys/' + key) }}
+	{% endif %}
+{% endfor %}
