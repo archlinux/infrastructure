@@ -307,15 +307,15 @@
 3072 MD5:42:0a:57:89:2a:ae:e6:c5:c1:ae:6a:a2:bd:3d:5f:dc root@archlinux-packer (RSA)
 
 # runner1.archlinux.org
-1024 SHA256:TgWGBKCSo3rkdYuP4mJzGtH+Ucub8dmEJXnnzrhUSwM root@84.17.49.250 (DSA)
-256 SHA256:2OEO/Pv1OxCLaVg9r8wHzTR7V3YTWEw//g7LJgIBMGs root@84.17.49.250 (ECDSA)
-256 SHA256:nXpZ/R3IuOEAasoIvCCTkdMlyNjCnWVTvQBh6xvycIg root@84.17.49.250 (ED25519)
-3072 SHA256:Ii5JwUoEKXV37rdjnsts4k3ppbEX+GHYjBC9mygdwY4 root@84.17.49.250 (RSA)
+1024 SHA256:/8lwFrCJznKrOXlMWWzq2SwInUAdEp/2WxpL4VMPnTE root@runner3.archlinux.org (DSA)
+256 SHA256:VIbire3ek5TUMOFgLAO/hQV9FG5/OYWSJif0CziS/CI root@runner3.archlinux.org (ECDSA)
+256 SHA256:gWeV6cBQPoe6hrqtItOVhv9Wr7Awnzgt1YcnzcmArJM root@runner3.archlinux.org (ED25519)
+3072 SHA256:Ke3/DVYRlx8EA/JzmdD4evxbyVwPQ3rQAroGkmScpRs root@runner3.archlinux.org (RSA)
 
-1024 MD5:31:f6:9c:50:d2:80:f1:fa:b5:50:c5:06:3a:9e:80:cc root@84.17.49.250 (DSA)
-256 MD5:ad:cb:d6:53:cb:42:8d:33:26:99:33:fd:c9:19:a0:ea root@84.17.49.250 (ECDSA)
-256 MD5:c1:7f:43:ad:dc:69:17:b4:33:df:bb:94:00:22:33:5a root@84.17.49.250 (ED25519)
-3072 MD5:da:9f:ec:c4:f3:c1:63:6e:ca:f4:9b:ac:32:23:d9:74 root@84.17.49.250 (RSA)
+1024 MD5:68:27:02:26:23:b8:95:cc:d3:82:34:57:54:61:29:41 root@runner3.archlinux.org (DSA)
+256 MD5:54:d3:ac:fa:52:e6:38:be:09:5c:51:c4:5c:3f:0e:d4 root@runner3.archlinux.org (ECDSA)
+256 MD5:fe:fc:6f:0f:0f:5e:76:25:ed:ac:6d:f1:5d:22:94:13 root@runner3.archlinux.org (ED25519)
+3072 MD5:92:43:38:30:47:11:2a:a3:df:2d:df:93:ce:3f:cc:d8 root@runner3.archlinux.org (RSA)
 
 # runner2.archlinux.org
 1024 SHA256:tK3XeUrt/ahlj1fdl5tQgeVXticllUIaewK2y86Jvzc root@runner2.archlinux.org (DSA)
