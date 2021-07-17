@@ -41,6 +41,7 @@ policy_check =
 # postfwd (rate-limiting)
   check_policy_service inet:127.0.0.1:10040
 
+smtpd_sender_restrictions = reject_authenticated_sender_login_mismatch
 smtpd_relay_restrictions =
 smtpd_recipient_restrictions =
 # policy services
@@ -84,9 +85,10 @@ internal_mail_filter_classes = bounce
 
 indexed = ${default_database_type}:${config_directory}
 
-smtpd_sender_login_maps =
+smtpd_sender_login_maps = unionmap:{
+  static:{aur bbs gemini gitlab matrix archlinux wiki security},
   ${indexed}/smtp_sender_map,
-  ${indexed}/users
+  ${indexed}/users}
 smtpd_helo_required = yes
 
 smtpd_client_connection_rate_limit = 400
