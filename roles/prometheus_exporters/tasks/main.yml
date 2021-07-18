@@ -52,6 +52,7 @@
   with_items:
     - arch-textcollector.sh
     - borg-textcollector.sh
+    - borg-offsite-textcollector.sh
     - rebuilderd-textcollector.sh
     - rebuilderd-status-textcollector.py
     - archive-textcollector.sh
@@ -69,16 +70,18 @@
 - name: enable and start prometheus arch textcollector timer
   systemd: name=prometheus-arch-textcollector.timer enabled=yes daemon_reload=yes state=started
 
-- name: install borg textcollector service
-  template: src=prometheus-borg-textcollector.service.j2 dest=/etc/systemd/system/prometheus-borg-textcollector.service owner=root group=root mode=644
+- name: install borg textcollector services
+  template: src=prometheus-borg-textcollector.service.j2 dest=/etc/systemd/system/prometheus-{{ item.name }}-textcollector.service owner=root group=root mode=644
+  loop:
+    - { name: borg, service: borg-backup }
+    - { name: borg-offsite, service: borg-backup-offsite }
   when: "'borg_clients' in group_names"
 
-- name: install borg textcollector timer
-  template: src=prometheus-borg-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-borg-textcollector.timer owner=root group=root mode=644
-  when: "'borg_clients' in group_names"
-
-- name: enable and start prometheus borg textcollector timer
-  systemd: name=prometheus-borg-textcollector.timer enabled=yes daemon_reload=yes state=started
+- name: enable borg textcollector services
+  systemd: name=prometheus-{{ item.name }}-textcollector.service enabled=yes daemon_reload=yes
+  loop:
+    - { name: borg, service: borg-backup }
+    - { name: borg-offsite, service: borg-backup-offsite }
   when: "'borg_clients' in group_names"
 
 - name: install fail2ban textcollector service
