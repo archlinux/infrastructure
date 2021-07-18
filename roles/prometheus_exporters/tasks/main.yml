@@ -53,6 +53,7 @@
     - arch-textcollector.sh
     - borg-textcollector.sh
     - borg-offsite-textcollector.sh
+    - hetzner-textcollector.sh
     - rebuilderd-textcollector.sh
     - rebuilderd-status-textcollector.py
     - archive-textcollector.sh
@@ -83,6 +84,18 @@
     - { name: borg, service: borg-backup }
     - { name: borg-offsite, service: borg-backup-offsite }
   when: "'borg_clients' in group_names"
+
+- name: install hetzner textcollector service
+  template: src=prometheus-hetzner-textcollector.service.j2 dest=/etc/systemd/system/prometheus-hetzner-textcollector.service owner=root group=root mode=644
+  when: "inventory_hostname == 'monitoring.archlinux.org'"
+
+- name: install hetzner textcollector timer
+  template: src=prometheus-hetzner-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-hetzner-textcollector.timer owner=root group=root mode=644
+  when: "inventory_hostname == 'monitoring.archlinux.org'"
+
+- name: enable and start prometheus hetzner textcollector timer
+  systemd: name=prometheus-hetzner-textcollector.timer enabled=yes daemon_reload=yes state=started
+  when: "inventory_hostname == 'monitoring.archlinux.org'"
 
 - name: install fail2ban textcollector service
   template: src=prometheus-fail2ban-textcollector.service.j2 dest=/etc/systemd/system/prometheus-fail2ban-textcollector.service owner=root group=root mode=644
