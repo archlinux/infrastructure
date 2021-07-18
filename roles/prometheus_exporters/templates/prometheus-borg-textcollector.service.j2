@@ -1,13 +1,11 @@
 [Unit]
-Description=Prometheus Borg Exporter TextCollector
+Description=Prometheus {{ item.name|capitalize }} Exporter TextCollector
 After=network.target
-# If the backup snapshot path exists, the backup script runs and a borg
-# lockfile exists and we can't run borg list
-ConditionPathExists=!/backup
+After={{ item.service }}.service
 
 [Service]
 Type=oneshot
-ExecStart=/usr/local/bin/borg-textcollector.sh {{ prometheus_textfile_dir }}
+ExecStart=/usr/local/bin/{{ item.name }}-textcollector.sh {{ prometheus_textfile_dir }}
 
 NoNewPrivileges=true
 LockPersonality=true
@@ -35,3 +33,6 @@ ProtectKernelModules=true
 ProtectClock=true
 
 SystemCallArchitectures=native
+
+[Install]
+WantedBy={{ item.service }}.service
