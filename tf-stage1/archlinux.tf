@@ -244,8 +244,8 @@ locals {
       ipv6_address = var.gitlab_pages_ipv6
     }
     runner1 = {
-      ipv4_address = "84.17.49.250"
-      ipv6_address = "2a02:6ea0:c719::2"
+      ipv4_address = "138.199.19.15"
+      ipv6_address = "2a02:6ea0:c72e::2"
     }
     runner2 = {
       ipv4_address = "147.75.80.217"
