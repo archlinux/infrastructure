@@ -80,7 +80,7 @@ locals {
       domain      = "homedir"
     }
     "lists.archlinux.org" = {
-      server_type = "cx11"
+      server_type = "cpx11"
       domain      = "lists"
     }
     "mail.archlinux.org" = {
