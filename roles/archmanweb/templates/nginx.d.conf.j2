@@ -41,6 +41,10 @@ server {
         alias {{ archmanweb_dir }}/repo/collected_static/archlinux-common/favicon.ico;
     }
 
+    location = /robots.txt {
+        alias {{ archmanweb_dir }}/repo/robots.txt;
+    }
+
     # Client-cache for Django's static assets
     location /static/ {
         expires 30d;
