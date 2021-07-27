@@ -346,6 +346,13 @@ arch_users:
       - name: klausenbusk_2.pub
         hosts:
           - all
+  lahwaacz:
+    name: "Jakub Klinkovský"
+    ssh_key: lahwaacz.pub
+    hosts:
+      - mail.archlinux.org
+    groups:
+      - support-staff
   lcarlier:
     name: "Laurent Carlier"
     ssh_key: lcarlier.pub
