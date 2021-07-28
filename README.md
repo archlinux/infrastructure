@@ -166,7 +166,7 @@ See [docs/backups.md](./docs/backups.md) for detailed backup information.
 
 Our Gitlab installation uses [Omnibus](https://docs.gitlab.com/omnibus/) to run Gitlab on Docker. Updating Gitlab is as simple as running the ansible gitlab playbook:
 
-    ansible-playbook playbooks/gitlab.archlinux.org -t gitlab
+    ansible-playbook playbooks/gitlab.archlinux.org.yml --diff -t gitlab
 
 ## One-shots
 
