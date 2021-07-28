@@ -63,6 +63,8 @@ exec 9>"${lock}"
 flock -n 9 || exit
 
 # Cleanup any temporary files from old run that might remain.
+# Note: You can skip this if you have rsync newer than 3.2.3
+# not affected by https://github.com/WayneD/rsync/issues/192
 find "${target}" -name '.~tmp~' -exec rm -r {} +
 
 rsync_cmd() {
