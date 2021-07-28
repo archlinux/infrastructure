@@ -65,6 +65,9 @@
   register: config
   no_log: true
 
+- name: copy robots.txt
+  copy: src=robots.txt dest="{{ archmanweb_dir }}/repo/robots.txt" owner=root group=root mode=0644
+
 - name: create archmanweb db user
   postgresql_user: name={{ archmanweb_db_user }} password={{ vault_archmanweb_db_password }} login_host="{{ archmanweb_db_host }}" login_password="{{ vault_postgres_users.postgres }}" encrypted=yes
   no_log: true
