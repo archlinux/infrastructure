@@ -50,7 +50,7 @@ bwlimit=0
 source_url=''
 
 # An HTTP(S) URL pointing to the 'lastupdate' file on your chosen mirror.
-# If you are a tier 1 mirror use: http://rsync.archlinux.org/lastupdate
+# If you are a tier 1 mirror use: https://rsync.archlinux.org/lastupdate
 # Otherwise use the HTTP(S) URL from your chosen mirror.
 lastupdate_url=''
 
@@ -66,8 +66,8 @@ flock -n 9 || exit
 find "${target}" -name '.~tmp~' -exec rm -r {} +
 
 rsync_cmd() {
-	local -a cmd=(rsync -rtlH --safe-links --delete-after ${VERBOSE} "--timeout=600" "--contimeout=60" -p \
-		--delay-updates --no-motd "--temp-dir=${tmp}")
+	local -a cmd=(rsync -rlptH --safe-links --delete-delay --delay-updates
+		"--timeout=600" "--contimeout=60" --no-motd "--temp-dir=${tmp}")
 
 	if stty &>/dev/null; then
 		cmd+=(-h -v --progress)
