@@ -113,22 +113,6 @@
   notify:
     - restart journald
 
-- name: install syslog-ng
-  pacman: name=syslog-ng state=present
-
-- name: configure syslog-ng
-  template: src=syslog-ng.conf.j2 dest=/etc/syslog-ng/syslog-ng.conf owner=root group=root mode=0600
-  notify:
-    - restart syslog-ng
-
-- name: configure syslog-ng default config
-  template: src=syslog-ng@default.j2 dest=/etc/default/syslog-ng@default owner=root group=root mode=0644
-  notify:
-    - restart syslog-ng
-
-- name: start syslog-ng
-  service: name=syslog-ng@default state=started enabled=yes
-
 - name: install system.conf
   template: src=system.conf.j2 dest=/etc/systemd/system.conf owner=root group=root mode=0644
   notify:
