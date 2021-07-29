@@ -433,10 +433,6 @@ arch_users:
     groups:
       - tu
       - multilib
-  scimmia:
-    name: "Doug Newgard"
-    ssh_key: scimmia.pub
-    groups: []
   morganamilo:
     name: "Morgan Adamiec"
     ssh_key: morganamilo.pub
