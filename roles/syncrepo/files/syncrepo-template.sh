@@ -29,11 +29,6 @@
 # Directory where the repo is stored locally. Example: /srv/repo
 target=""
 
-# Directory where files are downloaded to before being moved in place.
-# This should be on the same filesystem as $target, but not a subdirectory of $target.
-# Example: /srv/tmp
-tmp=""
-
 # Lockfile path
 lock="/var/lock/syncrepo.lck"
 
@@ -57,7 +52,6 @@ lastupdate_url=''
 #### END CONFIG
 
 [ ! -d "${target}" ] && mkdir -p "${target}"
-[ ! -d "${tmp}" ] && mkdir -p "${tmp}"
 
 exec 9>"${lock}"
 flock -n 9 || exit
@@ -69,7 +63,7 @@ find "${target}" -name '.~tmp~' -exec rm -r {} +
 
 rsync_cmd() {
 	local -a cmd=(rsync -rlptH --safe-links --delete-delay --delay-updates
-		"--timeout=600" "--contimeout=60" --no-motd "--temp-dir=${tmp}")
+		"--timeout=600" "--contimeout=60" --no-motd)
 
 	if stty &>/dev/null; then
 		cmd+=(-h -v --progress)
