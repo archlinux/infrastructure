@@ -38,11 +38,6 @@
 # Directory where the repo is stored locally. Example: /srv/repo
 target="/srv/ftp"
 
-# Directory where files are downloaded to before being moved in place.
-# This should be on the same filesystem as $target, but not a subdirectory of $target.
-# Example: /srv/tmp
-tmp="/srv/syncrepo-tmp"
-
 # Lockfile path
 lock="/var/lock/syncrepo.lck"
 
@@ -66,17 +61,13 @@ lastupdate_url='https://rsync.archlinux.org/lastupdate'
 #### END CONFIG
 
 [ ! -d "${target}" ] && mkdir -p "${target}"
-[ ! -d "${tmp}" ] && mkdir -p "${tmp}"
-
-# Cleanup any temporary files from old run that might remain.
-find "${target}" -name '.~tmp~' -exec rm -r {} +
 
 exec 9>"${lock}"
 flock -n 9 || exit
 
 rsync_cmd() {
-	local -a cmd=(rsync -rtlH --safe-links --delete-after ${VERBOSE} "--timeout=600" "--contimeout=60" -p \
-		--delay-updates --no-motd "--temp-dir=${tmp}")
+	local -a cmd=(rsync -rlptH --safe-links --delete-delay --delay-updates
+		"--timeout=600" "--contimeout=60" --no-motd)
 
 	if stty &>/dev/null; then
 		cmd+=(-h -v --progress)
