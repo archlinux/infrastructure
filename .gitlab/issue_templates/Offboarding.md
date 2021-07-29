@@ -17,6 +17,7 @@ This template should be used for offboarding Arch Linux team members.
 - [ ] Set user to inactive in archweb: https://www.archlinux.org/admin/auth/user/
 - [ ] Remove member from [staff mailing list](https://lists.archlinux.org/admin/staff/members)
 - [ ] Ask the user to leave `#archlinux-staff` on Libera Chat and forget the password
+- [ ] Remove staff cloak on Libera Chat
 
 ## TU/Developer offboarding checklist
 
