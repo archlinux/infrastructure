@@ -153,4 +153,16 @@ scrape_configs:
       - target_label: __address__
         replacement: 127.0.0.1:9115
 {% endfor %}
+{% for endpoint in matrix_metrics_endpoints %}
+
+  - job_name: 'synapse_{{ endpoint }}'
+    scrape_interval: 15s
+    metrics_path: "/metrics/synapse.{{ endpoint }}"
+    scheme: https
+    basic_auth:
+      username: {{ vault_matrix_secrets.metrics_user }}
+      password: {{ vault_matrix_secrets.metrics_password }}
+    static_configs:
+      - targets: ["matrix.archlinux.org:443"]
+{% endfor %}
 {% endif %}
