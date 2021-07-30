@@ -12,7 +12,7 @@
   when: dhcp|default(false)
 
 - name: create symlink to resolv.conf
-  file: src=/run/systemd/resolve/stub-resolv.conf dest={{ chroot_path }}/etc/resolv.conf state=link force=yes owner=root group=root mode=0644
+  file: src=/run/systemd/resolve/stub-resolv.conf dest={{ chroot_path }}/etc/resolv.conf state=link force=yes follow=no owner=root group=root
 
 - name: install hcloud-init
   copy: src=hcloud-init dest={{ chroot_path }}/usr/local/bin/hcloud-init owner=root group=root mode=0755
