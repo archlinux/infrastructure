@@ -42,7 +42,6 @@ matrix_nginx_config:
       - "/_matrix"
       - "/_synapse"
 
-matrix_metrics_htpasswd: /etc/nginx/auth/matrix_metrics
 matrix_metrics_endpoints:
   - name: synapse.homeserver
     port: 8019

@@ -28,7 +28,6 @@
       - pkgconf
       - postgresql-libs
       - python
-      - python-passlib
       - redis
       - tcl
       - tk
@@ -246,20 +245,11 @@
     group: synapse
     mode: 0640
 
-- name: create htpasswd for matrix metrics endpoint
-  htpasswd:
-    path: "{{ matrix_metrics_htpasswd }}"
-    name: "{{ vault_matrix_secrets.metrics_user }}"
-    password: "{{ vault_matrix_secrets.metrics_password }}"
-    owner: root
-    group: http
-    mode: 0640
-
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ matrix_domain }} state=directory owner=root group=root mode=0755
 
 - name: set up nginx
-  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/matrix.conf owner=root group=root mode=0644
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/matrix.conf owner=root group=root mode=0640
   notify:
     - reload nginx
   when: 'matrix_domain is defined'
