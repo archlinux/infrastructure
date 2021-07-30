@@ -1,7 +1,7 @@
 # Configuration for users
 
 SMTP/IMAP server: mail.archlinux.org
-SMTP port: 465 (TLS), [deprecated: 587 STARTTLS]
+SMTP port: 465 (TLS)
 IMAP port: 993 (TLS)
 
 username: the system account name
