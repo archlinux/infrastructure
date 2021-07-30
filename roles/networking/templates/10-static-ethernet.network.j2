@@ -2,9 +2,6 @@
 Name={{ network_interface }}
 
 [Network]
-{% for server in dns_servers %}
-DNS={{server}}
-{% endfor %}
 Gateway={{ ipv4_gateway }}
 {% if ipv6_gateway is defined %}
 Gateway={{ ipv6_gateway }}

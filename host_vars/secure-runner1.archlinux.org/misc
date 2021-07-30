@@ -8,7 +8,6 @@ ipv6_netmask: "/128"
 ipv4_gateway: "116.202.134.129"
 ipv6_gateway: "fe80::1"
 filesystem: "btrfs"
-network_interface: "en*"
 system_disks:
   - /dev/nvme0n1
   - /dev/nvme1n1

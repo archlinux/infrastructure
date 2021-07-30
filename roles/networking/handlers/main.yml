@@ -1,0 +1,8 @@
+---
+
+- name: restart networkd
+  systemd:
+    name: systemd-networkd
+    state: restarted
+    daemon_reload: true
+  when: chroot_path | length == 0
