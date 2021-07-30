@@ -135,9 +135,6 @@
 - name: install pacman-contrib,archlinux-contrib
   pacman: name=pacman-contrib,archlinux-contrib state=installed
 
-- name: remove old checkservices copied script (from submodule; archlinux-contrib provides /usr/bin/checkservices)
-  file: path=/usr/local/bin/checkservices state=absent
-
 - name: install custom paccache.service
   copy: src=paccache.service dest=/etc/systemd/system/paccache.service owner=root group=root mode=0644
 
