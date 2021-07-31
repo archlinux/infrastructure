@@ -9,6 +9,8 @@
       pacman:
         update_cache: yes
         upgrade: yes
+      register: pacman_upgrade
 
     - name: reboot
       reboot:
+      when: pacman_upgrade is changed
