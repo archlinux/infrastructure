@@ -1,0 +1,14 @@
+---
+
+- name: upgrade and reboot all servers
+  hosts: all,!rsync_net,!hetzner_storageboxes
+  gather_facts: false
+
+  tasks:
+    - name: upgrade all packages
+      pacman:
+        update_cache: yes
+        upgrade: yes
+
+    - name: reboot
+      reboot:
