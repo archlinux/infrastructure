@@ -158,6 +158,7 @@ locals {
     "openpgpkey.master-key" = "5c7f9c249885c62287dd75d0c1dd99d8"
     "bugs-old"              = "1f3308c8d5763eecb4f9013291aeeac4"
     "tu-bylaws.aur"         = "bbafd3ed82f336e0c52d3eb9774b2432"
+    "reproducible-notes"    = "8c657f2f2720db1c3db63be89605cf0d"
   }
 
   # This creates archlinux.org TXT DNS entries
