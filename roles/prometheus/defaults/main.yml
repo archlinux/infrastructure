@@ -60,3 +60,9 @@ blackbox_targets:
   smtp_starttls:
     - mail.archlinux.org:25
     - lists.archlinux.org:25
+matrix_metrics_endpoints:
+  - homeserver
+  - appservice
+  - federation_reader
+  - federation_writer
+  - media_repository
