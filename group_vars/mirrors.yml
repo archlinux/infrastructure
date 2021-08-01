@@ -1,5 +1,5 @@
 ---
-archweb_db_host: 'archlinux.org'
+archweb_db_host: "{{ hostvars['archlinux.org']['wireguard_address'] }}"
 
 # raise tcp window limits to 32MiB
 tcp_rmem: "10240 87380 33554432"

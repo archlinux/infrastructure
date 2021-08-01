@@ -96,11 +96,17 @@ host    sameuser        all             ::1/128                 md5
 #host    replication     all             ::1/128                 md5
 
 # IPv4 Remote Clients
+{% for host in postgres_hosts4 %}
+host    all             all             {{ host }}              md5
+{% endfor %}
 {% for host in postgres_ssl_hosts4 %}
 hostssl all             all             {{ host }}              md5
 {% endfor %}
 
 # IPv6 Remote Clients
+{% for host in postgres_hosts6 %}
+host    all             all             {{ host }}              md5
+{% endfor %}
 {% for host in postgres_ssl_hosts6 %}
 hostssl all             all             {{ host }}              md5
 {% endfor %}

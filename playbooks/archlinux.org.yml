@@ -3,17 +3,11 @@
 - name: "prepare postgres ssl hosts list"
   hosts: archlinux.org
   tasks:
-    - name: assign ipv4 addresses to fact postgres_ssl_hosts4
-      set_fact: postgres_ssl_hosts4="{{ [gemini4] + detected_ips }}"
+    - name: assign ipv4 addresses to fact postgres_hosts4
+      set_fact: postgres_hosts4="{{ [gemini4] + detected_ips }}"
       vars:
-        gemini4: "{{ hostvars['gemini.archlinux.org']['ipv4_address'] }}/32"
-        detected_ips: "{{ groups['mirrors'] | map('extract', hostvars, ['ipv4_address']) | select() | map('regex_replace', '^(.+)$', '\\1/32') | list }}"
-      tags: ["postgres", "firewall"]
-    - name: assign ipv6 addresses to fact postgres_ssl_hosts6
-      set_fact: postgres_ssl_hosts6="{{ [gemini6] + detected_ips }}"
-      vars:
-        gemini6: "{{ hostvars['gemini.archlinux.org']['ipv6_address'] }}/128"
-        detected_ips: "{{ groups['mirrors'] | map('extract', hostvars, ['ipv6_address']) | select() | map('regex_replace', '^(.+)$', '\\1/128') | list }}"
+        gemini4: "{{ hostvars['gemini.archlinux.org']['wireguard_address'] }}/32"
+        detected_ips: "{{ groups['mirrors'] | map('extract', hostvars, ['wireguard_address']) | select() | map('regex_replace', '^(.+)$', '\\1/32') | list }}"
       tags: ["postgres", "firewall"]
 
 - name: setup archlinux.org
@@ -29,8 +23,8 @@
     - { role: nginx }
     - { role: postfix_null }
     - role: postgres
-      postgres_listen_addresses: "*"
-      postgres_ssl: 'on'
+      postgres_listen_addresses: "localhost, {{ wireguard_address }}"
+      postgres_firewalld_zone: wireguard
     - { role: sudo }
     - { role: uwsgi }
     - { role: memcached }

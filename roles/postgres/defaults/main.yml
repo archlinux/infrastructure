@@ -1,6 +1,7 @@
 ---
 postgres_listen_addresses: 'localhost'
 postgres_max_connections: '100'
+postgres_firewalld_zone:
 
 postgres_ssl: 'off'
 postgres_ssl_prefer_server_ciphers: 'on'
@@ -14,6 +15,8 @@ postgres_maintenance_work_mem: '64MB'
 postgres_effective_cache_size: '4GB'
 postgres_jit: 'on'
 
+postgres_hosts4: []
+postgres_hosts6: []
 postgres_ssl_hosts4: []
 postgres_ssl_hosts6: []
 

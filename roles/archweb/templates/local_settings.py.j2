@@ -31,9 +31,6 @@ DATABASES = {
         'PASSWORD': '{{ vault_archweb_db_site_password }}',
         'OPTIONS' : {
             'application_name': 'archweb',
-{% if archweb_db_host != 'localhost' %}
-            'sslmode': 'require',
-{% endif %}
         }
     },
 }

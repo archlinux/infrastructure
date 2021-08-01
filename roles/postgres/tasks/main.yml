@@ -67,17 +67,17 @@
   when: postgres_ssl == 'on'
 
 - name: open firewall holes to known postgresql ipv4 clients
-  ansible.posix.firewalld: permanent=true state=enabled immediate=yes
+  ansible.posix.firewalld: zone={{ postgres_firewalld_zone }} permanent=true state=enabled immediate=yes
     rich_rule="rule family=ipv4 source address={{ item }} port protocol=tcp port=5432 accept"
-  with_items: "{{ postgres_ssl_hosts4 }}"
+  with_items: "{{ postgres_hosts4 + postgres_ssl_hosts4 }}"
   when: configure_firewall
   tags:
     - firewall
 
 - name: open firewall holes to known postgresql ipv6 clients
-  ansible.posix.firewalld: permanent=true state=enabled immediate=yes
+  ansible.posix.firewalld: zone={{ postgres_firewalld_zone }} permanent=true state=enabled immediate=yes
     rich_rule="rule family=ipv6 source address={{ item }} port protocol=tcp port=5432 accept"
-  with_items: "{{ postgres_ssl_hosts6 }}"
+  with_items: "{{ postgres_hosts6 + postgres_ssl_hosts6 }}"
   when: configure_firewall
   tags:
     - firewall
