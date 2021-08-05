@@ -9,7 +9,7 @@ WorkingDirectory=~
 ExecStart=/var/lib/synapse/venv-pantalaimon/bin/pantalaimon \
   -c /etc/synapse/pantalaimon.conf \
   --data-path /var/lib/synapse/pantalaimon-data
-ExecStartPost=/usr/bin/sleep 3
+ExecStartPost=/usr/bin/sleep 30
 
 [Install]
 WantedBy=multi-user.target
