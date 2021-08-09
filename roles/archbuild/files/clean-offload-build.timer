@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily offload-build artifacts cleanup
+
+[Timer]
+OnCalendar=daily
+RandomizedDelaySec=1d
+Persistent=true
+
+[Install]
+WantedBy=timers.target
