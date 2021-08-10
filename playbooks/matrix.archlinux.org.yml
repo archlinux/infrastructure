@@ -18,7 +18,6 @@
       postgres_work_mem: 64MB
       postgres_maintenance_work_mem: 256MB
       postgres_effective_cache_size: 4GB
-      postgres_jit: 'off'
     - { role: postfix_null }
     - { role: matrix }
     - { role: fail2ban }
