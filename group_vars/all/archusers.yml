@@ -29,8 +29,10 @@ arch_users:
   alad:
     name: "Alad Wenter"
     ssh_key: alad.pub
+    hosts:
+      - mail.archlinux.org
     groups:
-      - tu
+      - support-staff
   alerque:
     name: "Caleb Maclennan"
     ssh_key: alerque.pub
