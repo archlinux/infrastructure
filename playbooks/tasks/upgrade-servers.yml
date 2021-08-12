@@ -2,6 +2,7 @@
 
 - name: upgrade and reboot all servers
   hosts: all,!rsync_net,!hetzner_storageboxes
+  serial: 20%
   gather_facts: false
 
   tasks:
