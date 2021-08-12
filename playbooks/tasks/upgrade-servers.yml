@@ -5,6 +5,12 @@
   gather_facts: false
 
   tasks:
+    - name: ensure latest keyring
+      pacman:
+        name: archlinux-keyring
+        state: latest
+        update_cache: yes
+
     - name: upgrade all packages
       pacman:
         update_cache: yes
