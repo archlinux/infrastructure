@@ -33,8 +33,7 @@ https://www.gnupg.org/gph/en/manual/x135.html
 The mailing list password can be found in misc/additional-credentials.vault.
 
 - [ ] Add new user email as per `docs/email.md`.
-- [ ] Create a new user in archweb: https://www.archlinux.org/devel/newuser/
-      This is also linked in the django admin backend at the top
+- [ ] Create a new user in [archweb](https://www.archlinux.org/devel/newuser/). Select the appropriate group membership and allowed repos (if applicable).
 - [ ] Subscribe **communication e-mail address** to internal [staff mailing list](https://lists.archlinux.org/admin/staff/members/add).
 - [ ] Give the user access to `#archlinux-staff` on Libera Chat.
 - [ ] Give the user a link to our [staff services page](https://wiki.archlinux.org/title/DeveloperWiki:Staff_Services).
