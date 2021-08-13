@@ -36,6 +36,11 @@ arch_users:
     ssh_key: alerque.pub
     groups:
       - tu
+  alex19ep:
+    name: "Alexander Epaneshnikov"
+    ssh_key: alex19ep.pub
+    groups:
+      - tu
   allan:
     name: "Allan McRae"
     ssh_key: allan.pub
