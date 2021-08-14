@@ -21,6 +21,9 @@ loggers:
         handlers: [journal]
         propagate: false
 
+    synapse.logging.context:
+        level: ERROR
+
 root:
     level: WARNING
     handlers: [buffer]
