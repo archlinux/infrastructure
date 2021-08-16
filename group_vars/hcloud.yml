@@ -1,3 +1,4 @@
 ---
 enable_zram_swap: true
+configure_network: true
 dhcp: true
