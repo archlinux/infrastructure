@@ -124,7 +124,6 @@ Arch-audit can be used to find servers in need of updates for security issues.
 The following steps should be used to update our managed servers:
 
   * pacman -Syu
-  * manually update the kernel, since it is in IgnorePkg by default
   * sync
   * checkservices
   * reboot
