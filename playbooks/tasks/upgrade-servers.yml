@@ -2,6 +2,7 @@
 
 - name: upgrade and reboot all hetzner servers
   hosts: all,!kape_servers,!packet_net,!rsync_net,!hetzner_storageboxes
+  max_fail_percentage: 0
   serial: 20%
   gather_facts: false
 
@@ -11,6 +12,7 @@
 
 - name: upgrade and reboot all kape and packet.net servers
   hosts: kape_servers,packet_net
+  max_fail_percentage: 0
   serial: 1
   gather_facts: false
 
