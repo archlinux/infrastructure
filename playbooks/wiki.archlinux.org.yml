@@ -14,7 +14,7 @@
     - { role: certbot }
     - { role: nginx }
     - { role: postfix_null }
-    - { role: mariadb, mariadb_query_cache_type: '0', mariadb_innodb_file_per_table: true }
+    - { role: mariadb }
     - { role: sudo }
     - { role: php7_fpm, php_extensions: ['bcmath', 'curl', 'gd', 'iconv', 'intl', 'mysqli', 'sockets', 'zip'], zend_extensions: ['opcache'] }
     - { role: memcached }
