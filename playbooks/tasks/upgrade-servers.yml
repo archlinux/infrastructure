@@ -1,23 +1,19 @@
 ---
 
-- name: upgrade and reboot all servers
-  hosts: all,!rsync_net,!hetzner_storageboxes
+- name: upgrade and reboot all hetzner servers
+  hosts: all,!kape_servers,!packet_net,!rsync_net,!hetzner_storageboxes
   serial: 20%
   gather_facts: false
 
   tasks:
-    - name: ensure latest keyring
-      pacman:
-        name: archlinux-keyring
-        state: latest
-        update_cache: yes
+    - name: upgrade each host in this batch
+      include_tasks: include/upgrade-server.yml
 
-    - name: upgrade all packages
-      pacman:
-        update_cache: yes
-        upgrade: yes
-      register: pacman_upgrade
+- name: upgrade and reboot all kape and packet.net servers
+  hosts: kape_servers,packet_net
+  serial: 1
+  gather_facts: false
 
-    - name: reboot
-      reboot:
-      when: pacman_upgrade is changed
+  tasks:
+    - name: upgrade each host in this batch
+      include_tasks: include/upgrade-server.yml
