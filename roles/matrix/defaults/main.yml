@@ -53,3 +53,6 @@ matrix_metrics_endpoints:
     port: 8022
   - name: synapse.media_repository
     port: 8023
+  - name: irc-bridge
+    port: 8499
+    path: metrics
