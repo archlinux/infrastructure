@@ -12,6 +12,12 @@
     upgrade: yes
   register: pacman_upgrade
 
+- name: wait for svntogit to finish
+  wait_for:
+    path: /srv/svntogit/update-repos.sh.lock
+    state: absent
+  when: inventory_hostname == "gemini.archlinux.org"
+
 - name: reboot
   reboot:
   when: pacman_upgrade is changed
