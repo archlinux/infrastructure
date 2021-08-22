@@ -6,9 +6,9 @@
     <div id="kc-terms-text">
         ${kcSanitize(msg("termsText"))?no_esc}
         <ul style="margin-top: 10px;">
-            <li><a target="_blank" rel="noopener noreferrer" href="https://wiki.archlinux.org/index.php/Code_of_conduct">Code of Conduct</a></li>
-            <li><a target="_blank" rel="noopener noreferrer" href="https://gitlab.archlinux.org/archlinux/service-agreements/-/blob/master/terms-of-service.md">Terms of Service</a></li>
-            <li><a target="_blank" rel="noopener noreferrer" href="https://gitlab.archlinux.org/archlinux/service-agreements/-/blob/master/privacy-policy.md">Privacy Policy</a></li>
+            <li><a target="_blank" rel="noopener noreferrer" href="https://terms.archlinux.org/docs/code-of-conduct/">Code of Conduct</a></li>
+            <li><a target="_blank" rel="noopener noreferrer" href="https://terms.archlinux.org/docs/terms-of-service/">Terms of Service</a></li>
+            <li><a target="_blank" rel="noopener noreferrer" href="https://terms.archlinux.org/docs/privacy-policy/">Privacy Policy</a></li>
         </ul>
     </div>
     <form class="form-actions" action="${url.loginAction}" method="POST">
