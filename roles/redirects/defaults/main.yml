@@ -14,7 +14,7 @@ redirects:
     type: 302
   - coc:
     domain: coc.archlinux.org
-    to: https://gitlab.archlinux.org/archlinux/service-agreements/-/blob/master/code-of-conduct.md
+    to: https://terms.archlinux.org/docs/code-of-conduct/
     type: 302
   - cgit:
     domain: git.archlinux.org
