@@ -12,6 +12,18 @@
     upgrade: yes
   register: pacman_upgrade
 
+- name: check for running builds
+  block:
+    - name: list build-related processes
+      command: pgrep -x 'mkarchroot|makechrootpkg|systemd-nspawn'
+      register: pgrep
+      ignore_errors: true
+
+    - name: abort reboot with running builds
+      meta: end_host
+      when: pgrep is succeeded
+  when: "'buildservers' in group_names"
+
 - name: wait for svntogit to finish
   wait_for:
     path: /srv/svntogit/update-repos.sh.lock
