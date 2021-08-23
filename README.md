@@ -128,6 +128,23 @@ The following steps should be used to update our managed servers:
   * checkservices
   * reboot
 
+##### Semi-automated server updates (experimental)
+
+For updating a lot of servers in a more unattended manner, the following
+playbook can be used:
+
+    ansible-playbook playbooks/tasks/upgrade-servers.yml [-l SUBSET]
+
+It runs `pacman -Syu` on the targeted hosts in batches and then reboots them.
+If any server fails to reboot successfully, the rolling update stops and
+further batches are cancelled. To display the packages updated on each host,
+you can pass the `--diff` option to ansible-playbook.
+
+Using this update method, `.pacnew` files are left unmerged which is OK for
+most configuration files that are managed by Ansible. However, care must be
+taken with updates that require manual intervention (e.g. major PostgreSQL
+releases).
+
 ## Servers
 
 This section has been moved to [docs/servers.md](docs/servers.md).

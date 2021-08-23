@@ -1,0 +1,47 @@
+---
+
+- name: ensure latest keyring
+  pacman:
+    name: archlinux-keyring
+    state: latest
+    update_cache: yes
+
+- name: upgrade all packages
+  pacman:
+    update_cache: yes
+    upgrade: yes
+  register: pacman_upgrade
+
+- name: check for running builds
+  block:
+    - name: list build-related processes
+      command: pgrep -x 'mkarchroot|makechrootpkg|systemd-nspawn'
+      register: pgrep
+      ignore_errors: true
+
+    - name: abort reboot with running builds
+      meta: end_host
+      when: pgrep is succeeded
+  when: "'buildservers' in group_names"
+
+- name: gemini pre-reboot checks
+  block:
+    - name: wait for svntogit to finish
+      wait_for:
+        path: /srv/svntogit/update-repos.sh.lock
+        state: absent
+
+    - name: list logged on users
+      command: who
+      register: who
+
+    - name: abort reboot with logged on users
+      meta: end_host
+      when:
+        - who is changed
+        - who.stdout_lines|length > 1
+  when: inventory_hostname == "gemini.archlinux.org"
+
+- name: reboot
+  reboot:
+  when: pacman_upgrade is changed
