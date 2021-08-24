@@ -1,6 +1,6 @@
 ---
 mirror_domain: mirror.pkgbuild.com
-archweb_mirrorcheck_locations: [12, 13]
+archweb_mirrorcheck_locations: [20, 21]
 filesystem: btrfs
 
 ipv4_address: "78.46.209.220"
