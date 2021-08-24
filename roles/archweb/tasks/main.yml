@@ -281,9 +281,11 @@
 
 - name: install donation import wrapper script
   template: src=donor_import_wrapper.sh.j2 dest=/usr/local/bin/donor_import_wrapper.sh owner=root group=root mode=0755
+  when: archweb_site
 
 - name: install sudoer rights for fetchmail to call archweb django scripts
   template: src=sudoers-fetchmail-archweb.j2 dest=/etc/sudoers.d/fetchmail-archweb owner=root group=root mode=0440
+  when: archweb_site
 
 - name: create retro dir
   file: state=directory owner=archweb group=archweb mode=0755 path="{{ archweb_retro_dir }}"
