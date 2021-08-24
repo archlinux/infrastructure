@@ -1,18 +1,15 @@
 [Unit]
 Description=Apply configuration from HCloud metadata
-DefaultDependencies=no
 ConditionVirtualization=kvm
-After=systemd-networkd.service
-Before=network.target multi-user.target shutdown.target
-Conflicts=shutdown.target
-Wants=systemd-networkd.service
+After=systemd-networkd-wait-online.service
+Before=network-online.target
+Wants=network-online.target
+ConditionPathExists=!/etc/systemd/network/10-dhcp-ethernet.network.d/hcloud.conf
 
 [Service]
 ExecStart=/usr/local/bin/hcloud-init
 Type=oneshot
 RemainAfterExit=yes
-StandardOutput=journal
-StandardError=journal
 
 [Install]
 WantedBy=multi-user.target
