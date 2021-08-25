@@ -5,7 +5,6 @@
     - { role: firewalld }
     - { role: wireguard }
     - { role: common }
-    - { role: tools }
     - { role: sshd }
     - { role: root_ssh }
     - { role: hardening }

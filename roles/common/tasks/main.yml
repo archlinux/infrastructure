@@ -1,5 +1,11 @@
 ---
 
+- name: install essential tools
+  pacman: name=vim,nano,tmux,htop,rsync,vnstat state=present
+
+- name: start and enable vnstatd
+  service: name=vnstat enabled=yes state=started
+
 - name: install inetutils for hostname
   pacman: name=inetutils state=present
 

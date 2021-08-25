@@ -5,7 +5,6 @@
   remote_user: root
   roles:
     - { role: common }
-    - { role: tools }
     - { role: firewalld }
     - { role: wireguard }
     # reconfiguring sshd may break the AUR on luna (unchecked)

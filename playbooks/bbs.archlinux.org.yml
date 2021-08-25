@@ -5,7 +5,6 @@
   remote_user: root
   roles:
     - { role: common }
-    - { role: tools }
     - { role: sshd }
     - { role: root_ssh }
     - { role: certbot }
