@@ -26,7 +26,7 @@ matrix_nginx_config:
       - "~ ^/_matrix/federation/v1/user/devices/"
       - "~ ^/_matrix/federation/v1/get_groups_publicised$"
       - "~ ^/_matrix/key/v2/query"
-      - "~ ^/_matrix/federation/v1/send/"  # Don't load balance
+      - "~ ^/_matrix/federation/v1/send/"
   - name: media_repository
     port: 8013
     locations:
@@ -36,6 +36,7 @@ matrix_nginx_config:
       - "~ ^/_synapse/admin/v1/user/.*/media.*$"
       - "~ ^/_synapse/admin/v1/media/.*$"
       - "~ ^/_synapse/admin/v1/quarantine_media/.*$"
+      - "~ ^/_synapse/admin/v1/users/.*/media$"
   - name: homeserver
     port: 8008
     locations:
