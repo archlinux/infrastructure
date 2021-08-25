@@ -5,27 +5,17 @@ formatters:
         format: '%(name)s: [%(request)s] %(message)s'
 
 handlers:
-    buffer:
-        class: logging.handlers.MemoryHandler
-        target: journal
-        capacity: 10
-        flushLevel: 30  # Flush for WARNING logs as well
-
     journal:
         class: systemd.journal.JournalHandler
         formatter: journal_fmt
         SYSLOG_IDENTIFIER: synapse
 
 loggers:
-    twisted:
-        handlers: [journal]
-        propagate: false
-
     synapse.logging.context:
         level: ERROR
 
 root:
     level: WARNING
-    handlers: [buffer]
+    handlers: [journal]
 
 disable_existing_loggers: false
