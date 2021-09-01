@@ -1,3 +1,8 @@
+# limit general requests to 5 r/s to block DoS attempts with a burst of 10.
+limit_req_zone $binary_remote_addr zone=archseclimit:10m rate=5r/s;
+
+limit_req_status 429;
+
 upstream security-tracker {
     server unix:///run/uwsgi/security-tracker.sock;
 }
@@ -46,5 +51,7 @@ server {
         access_log   /var/log/nginx/{{ security_tracker_domain }}/access.log.json json_main;
         include uwsgi_params;
         uwsgi_pass security-tracker;
+
+        limit_req zone=archseclimit burst=10 nodelay;
     }
 }
