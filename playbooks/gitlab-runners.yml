@@ -11,4 +11,5 @@
     - { role: fail2ban }
     - { role: prometheus_exporters }
     - { role: promtail }
+    - { role: libvirt }
     - { role: gitlab_runner }
