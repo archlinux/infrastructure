@@ -121,6 +121,14 @@ resource "keycloak_realm" "archlinux" {
   }
 }
 
+resource "keycloak_required_action" "custom-terms-and-conditions" {
+  realm_id       = "archlinux"
+  alias          = "terms_and_conditions"
+  default_action = true
+  enabled        = true
+  name           = "Terms and Conditions"
+}
+
 resource "keycloak_required_action" "configure_otp" {
   realm_id = "archlinux"
   alias    = "CONFIGURE_TOTP"
