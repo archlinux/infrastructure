@@ -1,0 +1,8 @@
+#cloud-config
+disable_root: false
+users:
+  - name: root
+    ssh_authorized_keys:
+      - PUBLIC_SSH_KEY
+runcmd:
+- [ sudo, touch, /etc/cloud/cloud-init.disabled ]

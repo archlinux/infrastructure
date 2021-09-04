@@ -34,7 +34,7 @@
 #   --non-interactive \
 #   --url=https://gitlab.archlinux.org/ \
 #   --docker-image=archlinux:latest \
-#   --tag-list=docker \ # Use docker,secure for secure runners
+#   --tag-list=docker \ # Use docker,secure for secure runners and docker,secure-vm for secure VM runners
 #   --registration-token="{{ vault_gitlab_runner_registration_token }}" \
 #   --executor=docker \
 #   --description="{{ inventory_hostname }}" \
@@ -59,3 +59,31 @@
 
 - name: enable and start gitlab runner service
   systemd: name=gitlab-runner state=started enabled=yes daemon_reload=yes
+
+- name: setup libvirt-executor
+  block:
+    - name: install libvirt-executor script
+      copy: src=libvirt-executor dest=/usr/local/bin/ owner=root group=root mode=0755
+
+    - name: create libvirt-executor state directory
+      file: path=/usr/local/lib/libvirt-executor state=directory owner=root group=root mode=0700
+
+    - name: create SSH keys for libvirt-executor
+      command: ssh-keygen -N "" -f /usr/local/lib/libvirt-executor/id_rsa
+      args:
+        creates: /usr/local/lib/libvirt-executor/id_rsa
+
+    - name: install user-data for libvirt-executor
+      copy: src=user-data dest=/usr/local/lib/libvirt-executor/ owner=root group=root mode=0755
+
+    - name: install libvirt-executor-vm-template.{service,timer}
+      copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+      loop:
+        - libvirt-executor-vm-template.service
+        - libvirt-executor-vm-template.timer
+      notify:
+        - restart libvirt-executor-vm-template.timer
+
+    - name: enable and start libvirt-executor-vm-template.timer
+      systemd: name=libvirt-executor-vm-template.timer state=started enabled=yes daemon_reload=yes
+  when: "'gitlab_vm_runners' in group_names"

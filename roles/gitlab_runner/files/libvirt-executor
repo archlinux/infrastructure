@@ -1,0 +1,163 @@
+#!/usr/bin/env bash
+set -o nounset -o errexit -o pipefail
+readonly MIRROR="https://mirror.pkgbuild.com"
+readonly LIBVIRT_DEFAULT_POOL_PATH="/var/lib/libvirt/images"
+readonly STATE_DIR="/usr/local/lib/libvirt-executor"
+
+ssh() {
+  command ssh -i "${STATE_DIR}/id_rsa" -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=off "root@${vm_ip}" "${@}"
+}
+
+get_vm_ip() {
+  if [[ -z "${vm_ip-}" ]]; then
+    vm_ip="$(virsh -q domifaddr "${1}" | awk -F'[ /]+' '{print $5}')"
+    [[ -n "${vm_ip}" ]] || return 1
+  fi
+}
+
+get_vm_name() {
+  printf 'libvirt_executor_runner_%s_project-%s_concurrent_%s\n' "${CUSTOM_ENV_CI_RUNNER_SHORT_TOKEN}" "${CUSTOM_ENV_CI_PROJECT_ID}" "${CUSTOM_ENV_CI_CONCURRENT_PROJECT_ID}"
+}
+
+clone_vm() {
+  for _ in {1..10}; do
+    # --reflink sadly doesn't work with non-raw formats:
+    # https://bugzilla.redhat.com/show_bug.cgi?id=1324006
+    if virt-clone -o "${1}" -n "${2}" --auto-clone; then
+      return 0
+    fi
+    sleep 1
+  done
+  return 1
+}
+
+wait_for_ssh() {
+  for _ in {1..90}; do
+    if ! get_vm_ip "${1}"; then
+      echo "Waiting for network"
+      sleep 1
+      continue
+    fi
+    if ! ssh true; then
+      echo "Waiting for SSH to be ready"
+      sleep 1
+      continue
+    fi
+    return 0
+  done
+  echo 'Waited 90 seconds for VM to start, exiting...'
+  exit "${SYSTEM_FAILURE_EXIT_CODE:-1}"
+}
+
+wait_for_vm_shutdown() {
+  for _ in {1..10}; do
+    if LC_ALL=C virsh domstate "${1}" | grep -F "shut off"; then
+      return 0
+    fi
+    sleep 1
+  done
+  return 1
+}
+
+# Create a updated VM image with the required tools
+create_vm_template() {
+  local vm_name
+  printf -v vm_name 'libvirt_executor_vm_template_%(%s)T_tmp'
+
+  local latest_image="$(curl -fs "${MIRROR}/images/latest/" | grep -Eo 'Arch-Linux-x86_64-cloudimg-[0-9]{8}\.[0-9]+\.qcow2'| head -n 1)"
+  if [ -z "${latest_image}" ]; then
+    echo "Error: Couldn't find latest cloud image"
+    exit 1
+  fi
+  local image_path="${LIBVIRT_DEFAULT_POOL_PATH}/${vm_name}.qcow2"
+  trap 'rm -f -- "${image_path}"' EXIT
+  curl -sSf "${MIRROR}/images/latest/${latest_image}" --output "${image_path}"
+  qemu-img resize "${image_path}" 10G
+  local tmp_user_data
+  tmp_user_data="$(mktemp -u)"
+  trap 'rm -f -- "$tmp_user_data"; virsh destroy "${vm_name}"; virsh undefine "${vm_name}" --remove-all-storage; exit 1' EXIT
+  sed "s:PUBLIC_SSH_KEY:$(<"${STATE_DIR}/id_rsa.pub"):" "${STATE_DIR}/user-data" > "${tmp_user_data}"
+  virt-install --name "${vm_name}" \
+               --cloud-init "user-data=${tmp_user_data}" \
+               --disk path="${image_path}",device=disk \
+               --memory 1024 \
+               --vcpus 4 \
+               --os-type Linux \
+               --os-variant archlinux \
+               --network network=default,filterref.filter=clean-traffic \
+               --noautoconsole
+  rm -- "${tmp_user_data}"
+  wait_for_ssh "${vm_name}"
+
+  ssh "cat > /etc/pacman.d/mirrorlist" <<< "Server = ${MIRROR}/\$repo/os/\$arch"
+  ssh "cat > /etc/systemd/network/20-wired.network" <<< $'[Match]\nName=eth0\n[Network]\nDHCP=yes'
+  ssh pacman -Sy --noconfirm --needed archlinux-keyring
+  ssh pacman -Syu --noconfirm git git-lfs gitlab-runner
+  ssh "sed -E 's/^#(IgnorePkg *=)/\1 linux/' -i /etc/pacman.conf"
+
+  # Reboot to be sure the network is working
+  virsh shutdown "${vm_name}"
+  wait_for_vm_shutdown "${vm_name}"
+  virsh start "${vm_name}"
+  vm_ip=""
+  wait_for_ssh "${vm_name}"
+  ssh rm /etc/machine-id /var/lib/dbus/machine-id
+
+  virsh shutdown "${vm_name}"
+  wait_for_vm_shutdown "${vm_name}"
+  virsh domrename "${vm_name}" "${vm_name%%_tmp}"
+  trap - EXIT
+
+  # Keep the 3 most recent VM templates
+  virsh list --state-shutoff --name | grep "^libvirt_executor_vm_template_[0-9]*$" | sort -r | tail -n +4 | xargs -n 1 --no-run-if-empty virsh undefine --remove-all-storage
+}
+
+# https://docs.gitlab.com/runner/executors/custom.html#prepare
+prepare() {
+  vm_template="$(virsh list --state-shutoff --name | grep "^libvirt_executor_vm_template_[0-9]*$" | sort -r | head -n 1)"
+  if [[ -z "${vm_template}" ]]; then
+    echo "Error no VM template found"
+    exit 1
+  fi
+  vm_name="$(get_vm_name)"
+  clone_vm "${vm_template}" "${vm_name}"
+  virsh start "${vm_name}"
+  wait_for_ssh "${vm_name}"
+}
+
+# https://docs.gitlab.com/runner/executors/custom.html#run
+run() {
+  vm_name="$(get_vm_name)"
+  wait_for_ssh "${vm_name}"
+  # Upstream issue: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/28189
+  if [[ "${2}" == *'_artifacts'* ]]; then
+    ssh 'TMPDIR=/var/tmp bash' < "${1}" || exit "${BUILD_FAILURE_EXIT_CODE:-1}"
+  else
+    ssh bash < "${1}" || exit "${BUILD_FAILURE_EXIT_CODE:-1}"
+  fi
+}
+
+# https://docs.gitlab.com/runner/executors/custom.html#cleanup
+cleanup() {
+  vm_name="$(get_vm_name)"
+  virsh destroy "${vm_name}" || true
+  virsh undefine "${vm_name}" --remove-all-storage
+}
+
+case "${1:-}" in
+  create-vm-template)
+    create_vm_template
+    ;;
+  prepare)
+    prepare
+    ;;
+  run)
+    run "${2}" "${3}"
+    ;;
+  cleanup)
+    cleanup
+    ;;
+  *)
+    echo "Error invalid command: ${1:-}"
+    exit 1;
+esac
