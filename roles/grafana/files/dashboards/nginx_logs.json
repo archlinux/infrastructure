@@ -8,6 +8,12 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
@@ -16,8 +22,7 @@
   "editable": true,
   "gnetId": 12559,
   "graphTooltip": 0,
-  "id": 35,
-  "iteration": 1617910462309,
+  "iteration": 1630912444243,
   "links": [],
   "panels": [
     {
@@ -67,7 +72,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.5.3",
+      "pluginVersion": "8.1.2",
       "targets": [
         {
           "expr": "sum by(host) (count_over_time({job=\"nginx\", instance=\"$host\"}[$__interval]))  ",
@@ -127,7 +132,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.3",
+      "pluginVersion": "8.1.2",
       "targets": [
         {
           "expr": "sum by (status) (count_over_time({job=\"nginx\", instance=\"$host\"} | json |  __error__=\"\" [$__interval]))",
@@ -154,6 +159,8 @@
           },
           "decimals": 1,
           "mappings": [],
+          "max": 100,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -197,7 +204,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.5.3",
+      "pluginVersion": "8.1.2",
       "targets": [
         {
           "expr": "sum(count_over_time({job=\"nginx\", instance=\"$host\"} | json | status >= 500 |__error__=\"\"[$__interval])) / (sum(count_over_time({job=\"nginx\", instance=\"$host\"} | json | __error__=\"\"[$__interval]))/ 100)",
@@ -259,7 +266,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.3",
+      "pluginVersion": "8.1.2",
       "targets": [
         {
           "expr": "bytes_over_time({job=\"nginx\", instance=\"$host\"}[$__interval])",
@@ -317,7 +324,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.5.3",
+      "pluginVersion": "8.1.2",
       "targets": [
         {
           "expr": "count(sum by (remote_addr) (count_over_time({job=\"nginx\", instance=\"$host\"} | json |  __error__=\"\" [$__interval])))",
@@ -379,7 +386,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.5.3",
+      "pluginVersion": "8.1.2",
       "targets": [
         {
           "expr": "sum by (host) (sum_over_time({job=\"nginx\", instance=\"$host\"} | json | unwrap body_bytes_sent |  __error__=\"\" [$__interval]))",
@@ -442,7 +449,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.3",
+      "pluginVersion": "8.1.2",
       "targets": [
         {
           "expr": "count_over_time({job=\"nginx\", instance=\"$host\"}[$__interval])",
@@ -468,10 +475,6 @@
       "dashes": false,
       "datasource": "Loki",
       "description": "",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 10,
       "gridPos": {
@@ -500,7 +503,7 @@
         "alertThreshold": false
       },
       "percentage": false,
-      "pluginVersion": "7.5.3",
+      "pluginVersion": "8.1.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -588,10 +591,6 @@
       "dashes": false,
       "datasource": "Loki",
       "description": "",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
       "fill": 8,
       "fillGradient": 10,
       "gridPos": {
@@ -619,7 +618,7 @@
         "alertThreshold": false
       },
       "percentage": false,
-      "pluginVersion": "7.5.3",
+      "pluginVersion": "8.1.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -718,7 +717,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.3",
+      "pluginVersion": "8.1.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -820,7 +819,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.3",
+      "pluginVersion": "8.1.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -907,10 +906,6 @@
       "dashes": false,
       "datasource": "Loki",
       "description": "The total amount of requests per second",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -937,7 +932,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.3",
+      "pluginVersion": "8.1.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -953,7 +948,9 @@
         }
       ],
       "thresholds": [],
+      "timeFrom": null,
       "timeRegions": [],
+      "timeShift": null,
       "title": "Requests per second",
       "tooltip": {
         "shared": true,
@@ -1003,6 +1000,7 @@
           },
           "custom": {
             "align": null,
+            "displayMode": "auto",
             "filterable": false
           },
           "mappings": [],
@@ -1063,7 +1061,7 @@
           }
         ]
       },
-      "pluginVersion": "7.5.3",
+      "pluginVersion": "8.1.2",
       "targets": [
         {
           "expr": "topk(100, sum by (http_user_agent) (count_over_time({job=\"nginx\", instance=\"$host\"} | json |  __error__=\"\" [$__interval])))",
@@ -1106,6 +1104,7 @@
           },
           "custom": {
             "align": null,
+            "displayMode": "auto",
             "filterable": false
           },
           "mappings": [],
@@ -1166,7 +1165,7 @@
           }
         ]
       },
-      "pluginVersion": "7.5.3",
+      "pluginVersion": "8.1.2",
       "targets": [
         {
           "expr": "topk(300, sum by (request_uri) (count_over_time({job=\"nginx\", instance=\"$host\"} !~ `\\.ico|\\.svg|\\.css|\\.png|\\.txt|\\.js|\\.xml` | json | status = 200 and request_uri != \"/\" | __error__=\"\" [$__interval])))",
@@ -1209,6 +1208,7 @@
           },
           "custom": {
             "align": null,
+            "displayMode": "auto",
             "filterable": false
           },
           "mappings": [],
@@ -1269,7 +1269,7 @@
           }
         ]
       },
-      "pluginVersion": "7.5.3",
+      "pluginVersion": "8.1.2",
       "targets": [
         {
           "expr": "topk(100, sum by (remote_addr) (count_over_time({job=\"nginx\", instance=\"$host\"} | json |  __error__=\"\" [$__interval])))",
@@ -1310,7 +1310,7 @@
     }
   ],
   "refresh": false,
-  "schemaVersion": 27,
+  "schemaVersion": 30,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -1323,22 +1323,21 @@
           "value": "archlinux.org"
         },
         "datasource": "Loki",
-        "definition": "label_values({filename=~`.*json_access.log.*`}, instance)",
+        "definition": "label_values({job=\"nginx\"}, instance)",
         "description": null,
         "error": null,
         "hide": 0,
         "includeAll": false,
-        "label": "host",
+        "label": "Host",
         "multi": false,
         "name": "host",
         "options": [],
-        "query": "label_values({filename=~`.*json_access.log.*`}, instance)",
+        "query": "label_values({job=\"nginx\"}, instance)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 1,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -1365,5 +1364,5 @@
   "timezone": "",
   "title": "NGINX Web Analytics",
   "uid": "Nz6kKgtGj",
-  "version": 6
+  "version": 7
 }
