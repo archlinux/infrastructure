@@ -3,30 +3,35 @@
 - name: Update pacman website
   hosts: localhost
   vars:
-      pacman_version: "5.2.2"
-      archweb_dir: '/srv/http/archweb'
+    pacman_version: '6.0.1'
+    pacman_dir: '/srv/http/archweb/archlinux.org/pacman'
   tasks:
-      - name: Create temp dir
-        tempfile: state=directory suffix=pacman
-        register: tempdir
+    - name: Create temp dir
+      tempfile: state=directory suffix=pacman
+      register: tempdir
 
-      - name: fetch pacman tarball
-        get_url: url=https://sources.archlinux.org/other/pacman/pacman-{{ pacman_version }}.tar.gz dest={{ tempdir.path }}/pacman.tar.gz
+    - name: fetch pacman tarball
+      get_url: url=https://sources.archlinux.org/other/pacman/pacman-{{ pacman_version }}.tar.xz dest={{ tempdir.path }}/pacman.tar.xz
 
-      - name: create extraction dir
-        file: path={{ tempdir.path }}/pacman state=directory owner=root group=root mode=0755
+    - name: unpack tarball
+      unarchive: src={{ tempdir.path }}/pacman.tar.xz dest={{ tempdir.path }}
 
-      - name: unpack tarball
-        unarchive: src={{ tempdir.path }}/pacman.tar.gz dest={{ tempdir.path }}/pacman/ owner=root group=root mode=0755
+    - name: build website
+      command: "{{ item }}"
+      args:
+        chdir: "{{ tempdir.path }}/pacman-{{ pacman_version }}"
+      loop:
+        - meson -Ddoc=enabled build
+        - ninja -C build doc/website.tar.gz
 
-      - name: configure
-        command: ./configure chdir={{ tempdir.path }}/pacman/pacman-{{ pacman_version }}
-        register: configure
-        changed_when: "configure.rc == 0"
-
-      - name: make
-        make: chdir={{ tempdir.path }}/pacman/pacman-{{ pacman_version }}/doc target=website
+    - block:
+      - name: create website directory
+        file: state=directory owner=root group=root mode=0755 path={{ pacman_dir }}
 
       - name: upload website
-        unarchive: src={{ tempdir.path }}/pacman/pacman-{{ pacman_version }}/doc/website.tar.gz dest={{ archweb_dir }}/archlinux.org/pacman mode=0644
-        delegate_to: archlinux.org
+        unarchive:
+          src: "{{ tempdir.path }}/pacman-{{ pacman_version }}/build/doc/website.tar.gz"
+          dest: "{{ pacman_dir }}"
+          owner: nobody
+          group: nobody
+      delegate_to: archlinux.org
