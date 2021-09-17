@@ -105,7 +105,7 @@
   git:
     repo: https://github.com/matrix-org/mjolnir
     dest: /var/lib/synapse/mjolnir
-    version: v0.1.19
+    version: v1.1.20
   become: true
   become_user: synapse
   become_method: sudo
