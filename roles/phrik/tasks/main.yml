@@ -1,7 +1,7 @@
 ---
 
 - name: install phrik utilities
-  pacman: name=git,pkgfile state=present
+  pacman: name=git,pkgfile,polkit state=present
 
 - name: add phrik group
   group: name=phrik gid=1100 state=present

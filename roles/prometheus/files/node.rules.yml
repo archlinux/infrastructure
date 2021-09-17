@@ -240,6 +240,18 @@ groups:
           description: 'host {{ $labels.instance }} has foreign packages'
           summary: '{{ $labels.instance }} has {{ $value }} foreign packages'
 
+  - name: smartd
+    interval: 2m
+    rules:
+      - alert: smartmon_health
+        expr: smartmon_device_smart_healthy > 1
+        for: 15m
+        labels:
+          severity: high
+        annotations:
+          description: 'host {{ $labels.instance }} disk unheahtly'
+          summary: '{{ $labels.instance }} has an unhealthy disk {{ $labels.disk }} '
+
   - name: btrfs
     interval: 2m
     rules:
