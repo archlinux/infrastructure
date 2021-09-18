@@ -15,3 +15,12 @@
 # reference: https://stackoverflow.com/a/6896903
 - name: purge nginx cache
   command: find /var/lib/nginx/cache -type f -delete
+
+# The MediaWiki file cache can be invalidated by deleting the files in the
+# cache, by setting $wgCacheEpoch to the current time, or by touching the
+# LocalSettings.php file (thanks to $wgInvalidateCacheOnLocalSettingsChange
+# being set to true). References:
+# - https://www.mediawiki.org/wiki/Manual:File_cache
+# - https://www.mediawiki.org/wiki/Manual:$wgInvalidateCacheOnLocalSettingsChange
+- name: invalidate MediaWiki file cache
+  file: path="{{ archwiki_dir }}/public/LocalSettings.php" state=touch
