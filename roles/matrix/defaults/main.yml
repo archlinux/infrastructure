@@ -26,6 +26,8 @@ matrix_nginx_config:
       - "~ ^/_matrix/federation/v1/user/devices/"
       - "~ ^/_matrix/federation/v1/get_groups_publicised$"
       - "~ ^/_matrix/key/v2/query"
+      - "~ ^/_matrix/federation/unstable/org.matrix.msc2946/spaces/"
+      - "~ ^/_matrix/federation/unstable/org.matrix.msc2946/hierarchy/"
       - "~ ^/_matrix/federation/v1/send/"
   - name: media_repository
     port: 8013
