@@ -17,5 +17,11 @@
 - name: open firewall hole
   ansible.posix.firewalld: service=http zone=wireguard permanent=true state=enabled immediate=yes
 
+- name: create drop-in directory for loki
+  file: path=/etc/systemd/system/loki.service.d state=directory owner=root group=root mode=0755
+
+- name: install drop-in snippet for loki
+  copy: src=loki-override.conf dest=/etc/systemd/system/loki.service.d/override.conf owner=root group=root mode=0644
+
 - name: start and enable loki
   systemd: name=loki.service enabled=yes daemon_reload=yes state=started
