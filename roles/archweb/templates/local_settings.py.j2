@@ -38,7 +38,7 @@ DATABASES = {
 ## Define cache settings
 CACHES = {
     'default': {
-        'BACKEND' : 'django.core.cache.backends.memcached.PyMemcacheCache'
+        'BACKEND' : 'django.core.cache.backends.memcached.PyMemcacheCache',
         'LOCATION': 'unix:/run/memcached/archweb.sock',
     }
 }
