@@ -6,7 +6,8 @@ After=network.target
 User=archweb
 Group=memcached
 # Remove '-l 127.0.0.1' to listen on all addresses
-ExecStart=/usr/bin/memcached -s /run/memcached/archweb.sock -o modern
+# The packages /files sitemap is about ~ 3m so raise the default 1m limit.
+ExecStart=/usr/bin/memcached -s /run/memcached/archweb.sock -o modern -I 10m
 Restart=always
 NoNewPrivileges=yes
 PrivateTmp=yes
