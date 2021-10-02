@@ -48,11 +48,15 @@
   command: chroot {{ chroot_path }} systemctl enable hcloud-init
   register: chroot_systemd_services
   changed_when: "chroot_systemd_services.rc == 0"
-  when: chroot_path | length != 0 and ("'hcloud' in group_names or inventory_hostname == 'packer-base-image'")
+  when:
+    - chroot_path | length != 0
+    - "'hcloud' in group_names or inventory_hostname == 'packer-base-image'"
 
 - name: start and enable hcloud-init
   service: name=hcloud-init daemon_reload=yes state=started enabled=yes
-  when: chroot_path | length == 0
+  when:
+    - chroot_path | length == 0
+    - "'hcloud' in group_names or inventory_hostname == 'packer-base-image'"
 
 - name: start and enable networkd
   service: name=systemd-networkd state=started enabled=yes
