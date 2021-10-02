@@ -4,7 +4,6 @@
   remote_user: root
   roles:
     - { role: common }
-    - { role: tools }
     - { role: firewalld }
     - { role: wireguard }
     - { role: hardening }
