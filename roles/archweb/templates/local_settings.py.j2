@@ -40,6 +40,13 @@ CACHES = {
     'default': {
         'BACKEND' : 'django.core.cache.backends.memcached.PyMemcacheCache',
         'LOCATION': 'unix:/run/memcached/archweb.sock',
+        'OPTIONS': {
+            'no_delay': True,
+            'max_pool_size': 4,
+            'use_pooling': True,
+            'ignore_exc': True,
+        }
+
     }
 }
 
