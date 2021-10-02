@@ -1,5 +1,6 @@
 {
 	"ipv6": true,
 	"fixed-cidr-v6": "fd00::/80",
-	"cgroup-parent": "docker.slice"
+	"cgroup-parent": "docker.slice",
+	"log-driver": "journald"
 }
