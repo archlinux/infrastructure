@@ -93,4 +93,5 @@ If you want to add a new official project, here are some guidelines to follow:
 1. [ ] In the GitHub description of the mirrored project, append " (read-only mirror)" so that people know it's a mirror.
 1. [ ] Disable `Packages` and `Environments` from being shown on the main page.
 1. [ ] In the website field put the full url to the repository on our GitLab.
-½. [ ] Go to https://github.com/archlinux/my-example/settings/access and remove the GitHub account `archlinux-github`
+1. [ ] Go to https://github.com/archlinux/my-example/settings/access and remove the GitHub account `archlinux-github`
+1. [ ] Go to https://github.com/orgs/archlinux/teams/read-only-mirrors/repositories and add the repository with `write` permission
