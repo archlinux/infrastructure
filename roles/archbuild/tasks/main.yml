@@ -27,6 +27,7 @@
     - pkgdiffrepo
     - clean-chroots
     - clean-dests
+    - clean-offload-build
     - gitpkg
 
 - name: install archbuild config files
@@ -41,6 +42,8 @@
     - clean-chroots.service
     - clean-dests.timer
     - clean-dests.service
+    - clean-offload-build.timer
+    - clean-offload-build.service
     - var-lib-archbuilddest.mount
     - strictatime@.service
   notify:
@@ -105,6 +108,7 @@
   with_items:
     - clean-chroots.timer
     - clean-dests.timer
+    - clean-offload-build.timer
 
 - name: install makepkg.conf
   template: src=makepkg.conf.j2 dest=/etc/makepkg.conf owner=root group=root mode=0644

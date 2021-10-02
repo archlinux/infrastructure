@@ -1,0 +1,10 @@
+[Unit]
+Description=Clean up offload-build artifacts
+After=var-lib-archbuild.mount
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/clean-offload-build
+Nice=19
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
