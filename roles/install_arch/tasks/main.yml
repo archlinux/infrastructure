@@ -165,7 +165,7 @@
   template: src=sshd_config.j2 dest=/mnt/etc/ssh/sshd_config owner=root group=root mode=0644
 
 - name: clean pacman cache
-  command: yes | chroot /mnt pacman -Scc
+  shell: yes | chroot /mnt pacman -Scc  # noqa risky-shell-pipe ("Illegal option -o pipefail" in Hetzner's recovery environment (dash?))
   register: chroot_pacman_clean_cache
   changed_when: "chroot_pacman_clean_cache.rc == 0"
 
