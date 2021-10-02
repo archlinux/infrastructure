@@ -132,11 +132,6 @@ arch_users:
     ssh_key: cbehan.pub
     groups:
       - tu
-  cesura:
-    name: "Brad Fanella"
-    ssh_key: cesura.pub
-    groups:
-      - tu
   coderobe:
     name: "Robin Broda"
     ssh_key: coderobe.pub
