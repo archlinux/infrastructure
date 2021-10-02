@@ -1,0 +1,4 @@
+---
+
+- name: restart php-fpm7@flyspray
+  service: name=php-fpm7@flyspray state=restarted
