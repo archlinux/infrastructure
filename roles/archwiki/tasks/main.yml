@@ -42,9 +42,6 @@
   when: maintenance is not defined
   tags: ['nginx']
 
-- name: remove old fastcgi cache directory
-  file: path=/etc/nginx/wikicache state=absent
-
 - name: configure robots.txt
   copy: src=robots.txt dest="{{ archwiki_dir }}/robots.txt" owner=root group=root mode=0644
 
@@ -60,8 +57,10 @@
   become_user: "{{ archwiki_user }}"
   notify:
     - run wiki updatescript
-    # purge the nginx cache to make sure clients get the updated assets
+    # purge the nginx cache and MediaWiki file cache to make sure clients get updated assets
+    # as well as freshly rendered pages using the new assets
     - purge nginx cache
+    - invalidate MediaWiki file cache
 
 - name: configure archwiki
   template: src=LocalSettings.php.j2 dest="{{ archwiki_dir }}/public/LocalSettings.php" owner="{{ archwiki_user }}" group="{{ archwiki_user }}" mode=0640
