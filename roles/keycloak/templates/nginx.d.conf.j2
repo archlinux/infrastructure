@@ -31,7 +31,7 @@ server {
     root {{ keycloak_domain }};
 
     # https://w3c.github.io/webappsec-change-password-url/
-    location /.well-known/change-password {
+    location = /.well-known/change-password {
         return 302 https://$server_name/auth/realms/archlinux/account/#/security/signingin;
     }
 

@@ -43,15 +43,15 @@ server {
         deny all;
     }
 
-    location /setup {
+    location /setup/ {
         deny all;
     }
 
-    location /attachments {
+    location /attachments/ {
         location ~ \.php$ {return 403;}
     }
 
-    location /cache {
+    location /cache/ {
         location ~ \.php$ {return 403;}
     }
 

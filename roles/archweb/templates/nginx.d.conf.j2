@@ -38,7 +38,7 @@ server {
 
     include snippets/letsencrypt.conf;
 
-    location /.well-known {
+    location /.well-known/ {
         add_header Access-Control-Allow-Origin *;
         return 301 https://$server_name$request_uri;
     }
@@ -62,7 +62,7 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ archweb_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ archweb_domain }}/chain.pem;
 
-    location /.well-known {
+    location /.well-known/ {
         add_header Access-Control-Allow-Origin *;
         return 301 https://{{ archweb_domain }}{{ domain['redirect']|default('$request_uri') }};
     }
@@ -108,12 +108,12 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ archweb_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ archweb_domain }}/chain.pem;
 
-    location /.well-known/matrix/server {
+    location = /.well-known/matrix/server {
         default_type application/json;
         return 200 '{"m.server": "{{ matrix_domain }}:443"}';
     }
 
-    location /.well-known/matrix/client {
+    location = /.well-known/matrix/client {
         default_type application/json;
         add_header Access-Control-Allow-Origin *;
         return 200 '{"m.homeserver": {"base_url": "https://{{ matrix_domain }}"}, "m.identity_server": {"base_url": "https://matrix.org"} }';

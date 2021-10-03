@@ -23,7 +23,7 @@ server {
     }
 
     # https://man.archlinux.org/man/NetworkManager.conf.5#CONNECTIVITY_SECTION
-    location /nm-check.txt {
+    location = /nm-check.txt {
         access_log off;
         add_header Cache-Control "max-age=0, must-revalidate";
         return 200 'NetworkManager is online\n';
