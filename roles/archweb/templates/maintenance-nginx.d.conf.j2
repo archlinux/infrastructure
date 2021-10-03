@@ -78,12 +78,12 @@ server {
 
     error_page 503 /503.html;
 
-    location /.well-known/matrix/server {
+    location = /.well-known/matrix/server {
         default_type application/json;
         return 200 '{"m.server": "{{ matrix_domain }}:443"}';
     }
 
-    location /.well-known/matrix/client {
+    location = /.well-known/matrix/client {
         default_type application/json;
         add_header Access-Control-Allow-Origin *;
         return 200 '{"m.homeserver": {"base_url": "https://{{ matrix_domain }}"}, "m.identity_server": {"base_url": "https://matrix.org"} }';

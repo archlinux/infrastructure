@@ -29,16 +29,16 @@ server {
     ssl_trusted_certificate /etc/letsencrypt/live/{{ lists_domain }}/chain.pem;
 
     # redirect old urls
-    location /mailman {
+    location /mailman/ {
         rewrite ^/mailman/(.*) /$1 permanent;
     }
 
-    location /icons {
-        alias /usr/lib/mailman/icons;
+    location /icons/ {
+        alias /usr/lib/mailman/icons/;
     }
 
-    location /pipermail {
-        alias /var/lib/mailman/archives/public;
+    location ~ ^/pipermail(?:/(.*))?$ {
+        alias /var/lib/mailman/archives/public/$1;
         add_header Cache-Control "public, no-cache";
         autoindex on;
     }

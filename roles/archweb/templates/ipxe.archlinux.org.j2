@@ -30,7 +30,7 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ archweb_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ archweb_domain }}/chain.pem;
 
-    location /releng/netboot {
+    location /releng/netboot/ {
         access_log   /var/log/nginx/{{ archweb_domain }}/access.log main;
         access_log   /var/log/nginx/{{ archweb_domain }}/access.log.json json_main;
         include uwsgi_params;
@@ -38,11 +38,11 @@ server {
     }
 
     # Cache django's css, js and png files.
-    location /static {
+    location /static/ {
         expires 30d;
         add_header Pragma public;
         add_header Cache-Control "public";
-        alias /srv/http/archweb/collected_static;
+        alias /srv/http/archweb/collected_static/;
     }
 
     location / {
