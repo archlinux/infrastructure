@@ -27,7 +27,7 @@ autojoinOnlyIfManager: true
 
 # If `autojoinOnlyIfManager` is false, only the members in this group can invite
 # the bot to new rooms.
-acceptInvitesFromGroup: "+archlinux:{{ matrix_server_name }}"
+acceptInvitesFromGroup: '+example:example.org'
 
 # If the bot is invited to a room and it won't accept the invite (due to the
 # conditions above), report it to the management room. Defaults to disabled (no
@@ -77,9 +77,7 @@ automaticallyRedactForReasons:
   - "redact:*"
 
 # A list of rooms to protect (matrix.to URLs)
-protectedRooms:
-  - "https://matrix.to/#/#archlinux:{{ matrix_server_name }}"
-  - "https://matrix.to/#/#offtopic:{{ matrix_server_name }}"
+protectedRooms: []
 
 # Set this option to true to protect every room the bot is joined to. Note that
 # this effectively makes the protectedRooms and associated commands useless because
