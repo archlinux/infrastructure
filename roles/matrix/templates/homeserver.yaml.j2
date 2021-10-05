@@ -1332,8 +1332,9 @@ account_threepid_delegates:
 # room. The join rule of the room must be set to 'public'.
 #
 auto_join_rooms:
-  - "#archlinux:{{ matrix_server_name }}"
-  - "#internal:{{ matrix_server_name }}"
+{% for room in vault_matrix_secrets.auto_join_rooms %}
+  - {{ room | quote }}
+{% endfor %}
 
 # Where auto_join_rooms are specified, setting this flag ensures that the
 # the rooms exist by creating them when the first user on the
