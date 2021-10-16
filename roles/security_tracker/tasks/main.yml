@@ -16,7 +16,7 @@
       - git
       - make
       - python
-      - python-sqlalchemy
+      - python-sqlalchemy1.3
       - python-sqlalchemy-continuum
       - python-flask
       - python-flask-sqlalchemy
