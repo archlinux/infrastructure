@@ -47,7 +47,7 @@ ircService:
   # All server keys can be hot-reloaded, however existing IRC connections
   # will not have changes applied to them.
   servers:
-{% for network in vault_matrix_secrets | json_query("irc_networks[?!disabled]") %}
+{% for network in vault_matrix_secrets.irc_networks %}
     # The address of the server to connect to.
     "{{ network.address }}":
       # A human-readable short name. This is used to label IRC status rooms
