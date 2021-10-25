@@ -17,7 +17,7 @@ namespaces:
 {% endfor %}
 
   rooms:
-{% for room in vault_matrix_secrets | json_query("irc_networks[].mappings[].room") %}
+{% for room in vault_matrix_secrets | json_query("irc_networks[?!disabled].mappings[].room") %}
     - exclusive: false
       regex: '{{ room | regex_escape() }}'
 {% endfor %}
