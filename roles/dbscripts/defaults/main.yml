@@ -1,4 +1,4 @@
 ---
 dbscripts_commit: HEAD
 dbscripts_update: true
-dbscripts_pgp_emails: ['eschwartz@archlinux.org']
+dbscripts_pgp_emails: ['eschwartz@archlinux.org', 'jelle@archlinux.org']

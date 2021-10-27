@@ -5,7 +5,7 @@
   remote_user: root
   vars:
     archweb_db_host: "{{ hostvars['archlinux.org']['wireguard_address'] }}"
-    dbscripts_commit: '20191022'
+    dbscripts_commit: '20211026'
   roles:
     - { role: common }
     - { role: tools }
