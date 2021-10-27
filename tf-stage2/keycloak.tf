@@ -308,6 +308,7 @@ resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_username" {
 // |- Trusted Users
 // |- Wiki
 // |  |- Admins
+// |  |- Maintainers
 // |- Forum
 // |  |- Admins
 // |  |- Mods
@@ -338,7 +339,7 @@ resource "keycloak_group" "staff_groups" {
 }
 
 resource "keycloak_group" "staff_wiki_groups" {
-  for_each = toset(["Admins"])
+  for_each = toset(["Admins", "Maintainers"])
 
   realm_id  = "archlinux"
   parent_id = keycloak_group.staff_groups["Wiki"].id
