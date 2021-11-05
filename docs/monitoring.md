@@ -23,7 +23,7 @@ For general system performance monitoring [prometheus-node-exporter](https://git
 
 ### Borg
 
-For monitoring our borg backups prometheus-node-exporter's textfile collector feature is used, the textfile is written by a systemd service run periodically by a systemd timer called prometheus-borg-textcollector. Borg's last backup time is recorded for our Hetzner and rsync.net backups. Adding monitoring to a system is as simple as:
+For monitoring our borg backups prometheus-node-exporter's textfile collector feature is used, the textfile is written by a systemd service called prometheus-borg-textcollector. Borg's last backup time is recorded for our Hetzner and rsync.net backups. Adding monitoring to a system is as simple as:
 
 * Add the host to the `borg_clients` group
 * Rollout exporter on host: `ansible-playbook playbooks/host.yml -t prometheus_exporters`
