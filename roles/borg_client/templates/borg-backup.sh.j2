@@ -74,7 +74,7 @@ else
     backup_mountdir="$src"
 fi
 
-borg create -v --stats -C zstd \
+{{ item['borg_cmd'] }} create -v --stats -C zstd \
     -e /proc \
     -e /sys \
     -e /dev \
@@ -94,4 +94,4 @@ borg create -v --stats -C zstd \
     -e "$backup_mountdir/var/lib/archbuilddest" \
     -e "$backup_mountdir/var/lib/docker" \
     {{ item['host'] }}/{{ item['dir'] }}::$(date "+%Y%m%d-%H%M%S") "$backup_mountdir"
-borg prune -v {{ item['host'] }}/{{ item['dir'] }} --keep-daily=7 --keep-weekly=4 --keep-monthly=6
+{{ item['borg_cmd'] }} prune -v {{ item['host'] }}/{{ item['dir'] }} --keep-daily=7 --keep-weekly=4 --keep-monthly=6
