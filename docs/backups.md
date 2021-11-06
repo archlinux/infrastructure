@@ -8,21 +8,21 @@ You'll have to get the correct username from the vault.
 We use two different borg backup hosts: A primary one and an offsite one.
 The URL format for the primary one is
 
-    ssh://<hetzner_storagebox_username>@u236610.your-storagebox.de:23/~/backup/<hostname>/repo
+    ssh://u236610@u236610.your-storagebox.de:23/~/backup/<hostname>/repo
 
 while for the offsite one it's
 
-    ssh://<rsync_net_username>@zh1905.rsync.net:22/~/backup/<hostname>
+    ssh://zh1905@zh1905.rsync.net:22/~/backup/<hostname>
 
 In the examples below, we'll just abbreviate the full address as `<backup_address>`.
 If you want to use one of the examples below, you'll have to fill in the
 placeholder with your desired full address to the backup repository. For instance,
 
-    misc/borg.sh list <backup_address>::20191127-084357
+    misc/borg.sh list <backup_address>
 
 becomes
 
-    misc/borg.sh ssh://<hetzner_storagebox_username>@u236610.your-storagebox.de:23/~/backup/homedir.archlinux.org/repo::20191127-084357
+    misc/borg.sh list ssh://u236610@u236610.your-storagebox.de:23/~/backup/homedir.archlinux.org/repo
 
 A convenience wrapper script is available at `misc/borg.sh` which makes sure you
 use the correct keyfile for the given server.
