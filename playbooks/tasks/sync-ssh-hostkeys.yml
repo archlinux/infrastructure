@@ -34,12 +34,12 @@
     - name: manually append rsync.net host keys
       lineinfile:
         path: "{{ playbook_dir }}/../../docs/ssh-known_hosts.txt"
-        line: "{% for host in query('inventory_hostnames', 'rsync_net') | sort %}# {{ host }}\n{{ hostvars[host].known_host }}\n\n{% endfor %}"
+        line: "{% for host in query('inventory_hostnames', 'rsync_net') | sort %}# {{ host }}\n{{ hostvars[host].known_host }}\n{% endfor %}"
       delegate_to: localhost
     - name: manually append Hetzner Storageboxes host keys
       lineinfile:
         path: "{{ playbook_dir }}/../../docs/ssh-known_hosts.txt"
-        line: "{% for host in query('inventory_hostnames', 'hetzner_storageboxes') | sort %}# {{ host }}\n{{ hostvars[host].known_host }}\n\n{% endfor %}"
+        line: "{% for host in query('inventory_hostnames', 'hetzner_storageboxes') | sort %}# {{ host }}\n{{ hostvars[host].known_host }}\n{% endfor %}"
       delegate_to: localhost
 
 - name: upload known_hosts to all nodes

@@ -12,7 +12,7 @@ The URL format for the primary one is
 
 while for the offsite one it's
 
-    ssh://<rsync_net_username>@prio.ch-s012.rsync.net:22/~/backup/<hostname>
+    ssh://<rsync_net_username>@zh1905.rsync.net:22/~/backup/<hostname>
 
 In the examples below, we'll just abbreviate the full address as `<backup_address>`.
 If you want to use one of the examples below, you'll have to fill in the

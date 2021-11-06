@@ -1,0 +1,3 @@
+---
+ansible_ssh_user: "{{ rsync_net_username }}"
+known_host: "zh1905.rsync.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJtclizeBy1Uo3D86HpgD3LONGVH0CJ0NT+YfZlldAJd"

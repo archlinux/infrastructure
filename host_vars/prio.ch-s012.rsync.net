@@ -1,3 +1,0 @@
----
-ansible_ssh_user: "{{ rsync_net_username }}"
-known_host: "prio.ch-s012.rsync.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO5lfML3qjBiDXi4yh3xPoXPHqIOeLNp66P3Unrl+8g3"

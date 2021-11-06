@@ -3,12 +3,18 @@
 set -eu
 shopt -s extglob
 
-OFFSITE_HOST=ch-s012.rsync.net
+OFFSITE_HOST=rsync.net
 ROOT_DIR=$(dirname "${0}")/..
 
 decrypted_gpg=$(mktemp arch-infrastructure-borg-XXXXXXXXX)
 trap "rm -f \"${decrypted_gpg}\"" EXIT
 [[ "$*" =~ $OFFSITE_HOST ]] && is_offsite=true || is_offsite=false
+
+# Use borg1 as the borg executable on offsite
+remote_path=borg
+if $is_offsite; then
+    remote_path=borg1
+fi
 
 # Find matching key
 matching_key=""
@@ -28,6 +34,6 @@ if [[ -z "$matching_key" ]]; then
 fi
 gpg --batch --yes --decrypt -aq --output "$decrypted_gpg" "$ROOT_DIR/borg-keys/$matching_key.gpg"
 
-BORG_KEY_FILE="$decrypted_gpg" borg "$@"
+BORG_KEY_FILE="$decrypted_gpg" borg --remote-path=$remote_path "$@"
 
 rm "$decrypted_gpg"

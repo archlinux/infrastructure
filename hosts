@@ -3,7 +3,7 @@ secure-runner1.archlinux.org
 gemini.archlinux.org
 
 [rsync_net]
-prio.ch-s012.rsync.net
+zh1905.rsync.net
 
 [hetzner_storageboxes]
 u236610.your-storagebox.de
@@ -47,7 +47,7 @@ md.archlinux.org
 lists.archlinux.org
 
 [borg_hosts]
-prio.ch-s012.rsync.net
+zh1905.rsync.net
 u236610.your-storagebox.de
 
 [public_html]
