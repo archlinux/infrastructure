@@ -5,8 +5,7 @@ Description=Borg backup
 # The ordering relation defined below is important for the GitLab backups
 # because the offsite backup reuses the tarballs from this service's run.
 {% endif %}
-# Disabled for rsync.net relocation
-#Wants=borg-backup-offsite.service
+Wants=borg-backup-offsite.service
 Before=borg-backup-offsite.service
 
 [Service]
