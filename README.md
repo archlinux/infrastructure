@@ -184,6 +184,8 @@ Our Gitlab installation uses [Omnibus](https://docs.gitlab.com/omnibus/) to run 
 
     ansible-playbook playbooks/gitlab.archlinux.org.yml --diff -t gitlab
 
+To view the current Gitlab version visit [this url](https://gitlab.archlinux.org/help/)
+
 ## One-shots
 
 A bunch of once-only admin task scripts can be found in `one-shots/`.
