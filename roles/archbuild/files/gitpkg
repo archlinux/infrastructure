@@ -426,7 +426,7 @@ if gitify
     package: case
     when meson
       <<~END
-        DESTDIR="$pkgdir" meson install -C build
+        meson install -C build --destdir "$pkgdir"
       END
     end,
   }.reverse_each do |name, content|
