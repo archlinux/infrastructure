@@ -10,10 +10,14 @@ support@libera.chat.
 
 ## Add a user
 
-1. `sudo -u quassel quasselcore --configdir=/var/lib/quassel --add-user`
+`sudo -u quassel quasselcore --configdir=/var/lib/quassel --add-user`
 
 ## Migration quassel
 
-1. `Stop the quassel service`
-2. `sudo -u postgres pg_dump -F c quassel >quassel.dump`
-3. `sudo -u postgres pg_restore -d quassel --clean --exit-on-error <quassel.dump`
+Stop the quassel service:
+
+`sudo -u postgres pg_dump -F c quassel >quassel.dump`
+
+Restore the data:
+
+`sudo -u postgres pg_restore -d quassel --clean --exit-on-error <quassel.dump`
