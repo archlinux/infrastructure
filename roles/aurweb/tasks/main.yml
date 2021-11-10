@@ -17,6 +17,7 @@
       - python-fastapi
       - python-jinja
       - python-email-validator
+      - python-orjson
       - sudo
       - uwsgi-plugin-cgi
 

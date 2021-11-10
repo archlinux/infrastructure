@@ -6,7 +6,7 @@ After=mysqld.service
 [Service]
 Type=oneshot
 User={{ aurweb_user }}
-ExecStart=/usr/local/bin/aurweb-mkpkglists
+ExecStart=/usr/local/bin/aurweb-mkpkglists --extended
 
 NoNewPrivileges=true
 LockPersonality=true
