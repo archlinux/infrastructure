@@ -56,7 +56,7 @@ log
 the Hardware Security Module (HSM) is able to steal the device with the 
 private key and use it for creating valid signatures.
 * Everyone with access to the gitlab or runner machine can issue a 
-signing request and sign malicious software
+signing request and sign malicious artifacts
 * We have to write our own toolchain for creating and verifying rekor 
 transparency logs.
 * GPG does not enforce a transparency lookup
@@ -82,7 +82,7 @@ Cons:
 * The private key is persistent and can be stolen.
 * There is no way to revoke a private key (as far as I know)
 * Everyone with access to the gitlab or runner machine can issue a 
-signing request and sign malicious software
+signing request and sign malicious artifacts
 
 ## Keyless signatures via cosign and workload identities
 
