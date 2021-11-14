@@ -88,7 +88,7 @@ signing request and sign malicious artifacts
 
 Pros:
 * Better User Experience (single step verify via cosign verify-blob)
-* Private keys are ephemeral, a later stolen private key is useless.
+* Private keys are [ephemeral](https://shibumi.dev/posts/what-are-ephemeral-certificates/), a later stolen private key is useless.
 * The key identity is strictly connected to the pipeline run
 * Creation of rekor transparency logs happens automatically
 * Transparency lookups are enforced by cosign
