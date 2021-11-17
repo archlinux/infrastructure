@@ -31,19 +31,19 @@ hosts deny = *
 [ftp]
 	path = /srv/ftp
 	comment = ftp area (most mirrors should use this)
-	exclude = /archive/ /other/ /sources/
+	exclude = /archive/ /other/ /sources/ /*-debug/ /pool/*-debug/
 
 [ftp_tier1]
 	path = /srv/ftp
 	comment = ftp area (most mirrors should use this)
-	exclude = /archive/ /other/ /sources/
+	exclude = /archive/ /other/ /sources/ /*-debug/ /pool/*-debug/
 	hosts allow = @@ALLOWHOSTS_TIER1@@
 	max connections = 0
 
 [ftp_auth]
 	path = /srv/ftp
 	comment = ftp area, passworded (same as 'ftp')
-	exclude = /archive/ /other/ /sources/
+	exclude = /archive/ /other/ /sources/ /*-debug/ /pool/*-debug/
 	hosts allow = *
 	auth users = *
 	secrets file = /etc/rsyncd.secrets
