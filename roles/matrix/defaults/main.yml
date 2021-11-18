@@ -2,6 +2,12 @@
 
 matrix_max_upload_size: 50M
 matrix_nginx_config:
+  - name: mjolnir
+    port: 8010
+    locations:
+      - path: "~ ^/_matrix/client/r0/rooms/([^/]*)/report/(.*)$"
+        pass: "/api/1/report/$1/$2"
+        add_cors: true
   - name: federation_reader
     port: 8011
     locations:
