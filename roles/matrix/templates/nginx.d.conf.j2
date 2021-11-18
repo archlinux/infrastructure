@@ -30,16 +30,16 @@ server {
     access_log   /var/log/nginx/{{ matrix_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ matrix_domain }}/error.log;
 
-    ssl_certificate      /etc/letsencrypt/live/{{ matrix_domain }}/fullchain.pem;
-    ssl_certificate_key  /etc/letsencrypt/live/{{ matrix_domain }}/privkey.pem;
+    ssl_certificate         /etc/letsencrypt/live/{{ matrix_domain }}/fullchain.pem;
+    ssl_certificate_key     /etc/letsencrypt/live/{{ matrix_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ matrix_domain }}/chain.pem;
 
 {% for config in matrix_nginx_config %}
     # {{ config.name }}
 {% for location in config.locations %}
     location {{ location }} {
-        access_log   /var/log/nginx/{{ matrix_domain }}/access.log main;
-        access_log   /var/log/nginx/{{ matrix_domain }}/access.log.json json_main;
+        access_log /var/log/nginx/{{ matrix_domain }}/access.log main;
+        access_log /var/log/nginx/{{ matrix_domain }}/access.log.json json_main;
         proxy_pass http://matrix_{{ config.name }};
         proxy_set_header X-Forwarded-For $remote_addr;
         proxy_set_header X-Forwarded-Proto $scheme;
