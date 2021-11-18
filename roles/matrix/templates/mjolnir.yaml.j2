@@ -2,6 +2,11 @@
 # pantalaimon if you're using that.
 homeserverUrl: "http://127.0.0.1:8009"
 
+
+# Where the homeserver is located (client-server URL). NOT panalaimon.
+rawHomeserverUrl: "http://127.0.0.1:8008"
+
+
 # The access token for the bot to use. Do not populate if using Pantalaimon.
 accessToken: ""
 
@@ -158,5 +163,32 @@ health:
     # The HTTP status code which reports that the bot is not healthy/ready.
     # Defaults to 418.
     unhealthyStatus: 418
+
+# Options for exposing web APIs.
+web:
+  # Whether to enable web APIs.
+  enabled: false
+
+  # The port to expose the webserver on. Defaults to 8080.
+  port: 8010
+
+  # The address to listen for requests on. Defaults to only the current
+  # computer.
+  address: localhost
+
+  # Alternative setting to open to the entire web. Be careful,
+  # as this will increase your security perimeter:
+  #
+  #  address: "0.0.0.0"
+
+  # A web API designed to intercept Matrix API
+  # POST /_matrix/client/r0/rooms/{roomId}/report/{eventId}
+  # and display readable abuse reports in the moderation room.
+  #
+  # If you wish to take advantage of this feature, you will need
+  # to configure a reverse proxy, see e.g. test/nginx.conf
+  abuseReporting:
+    # Whether to enable this feature.
+    enabled: true
 
 # vim:set ft=yaml:
