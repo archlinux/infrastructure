@@ -110,7 +110,7 @@ resource "hcloud_server" "machine" {
   name        = each.key
   image       = data.hcloud_image.archlinux.id
   server_type = each.value.server_type
-  location    = "nbg1"
+  location    = "fsn1"
   lifecycle {
     ignore_changes = [image, location]
   }
