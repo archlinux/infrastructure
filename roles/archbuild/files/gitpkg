@@ -383,7 +383,7 @@ if gitify
         warn "pkgver() deduction failed: #{e}"
       end
 
-      ver_sed << "s/-/+/g"
+      ver_sed << "s/[^-]*-g/r&/;s/-/+/g"
 
       <<~END
         cd #{localname}
