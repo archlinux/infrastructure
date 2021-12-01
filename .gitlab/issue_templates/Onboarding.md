@@ -41,6 +41,7 @@ The mailing list password can be found in misc/additional-credentials.vault.
 - [ ] Remove personal information (such as **Full Name** and **Personal e-mail
   address**, as well as the clearsigned representation of this data), remove
   the description history and make the issue non-confidential.
+- [ ] Request staff cloak on Libera Chat ([Group contacts](https://wiki.archlinux.org/title/Arch_IRC_channels#Libera_Chat_group_contacts))
 
 ## Packager onboarding checklist
 
