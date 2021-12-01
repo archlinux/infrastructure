@@ -16,6 +16,13 @@ If the user wants to forward email, either enter the destination directly in
 the /etc/postfix/users file or enter a username and then put the destination
 into `~username/.forward` so that they can edit it themselves.
 
+If the user is a new onboarded user the password has to be made empty, so the
+user can login and set a password:
+
+```
+passwd -d $username
+```
+
 # SMTP Architecture
 
 All hosts should be relaying outbound SMTP traffic via our primary MX server
