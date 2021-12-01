@@ -42,6 +42,8 @@ The mailing list password can be found in misc/additional-credentials.vault.
   address**, as well as the clearsigned representation of this data), remove
   the description history and make the issue non-confidential.
 - [ ] Request staff cloak on Libera Chat ([Group contacts](https://wiki.archlinux.org/title/Arch_IRC_channels#Libera_Chat_group_contacts))
+- [ ] Go to [Arch Linux group](https://gitlab.archlinux.org/groups/archlinux/-/group_members) -> Enter Admin mode -> go to members -> add username as "minimal access"
+- [ ] Go to [Arch Staff group](https://gitlab.archlinux.org/groups/archlinux/teams/staff/-/group_members) -> Enter Admin mode -> go to members -> add username as "reporter"
 
 ## Packager onboarding checklist
 
