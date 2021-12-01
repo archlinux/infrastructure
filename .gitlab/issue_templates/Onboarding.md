@@ -58,7 +58,7 @@ The mailing list password can be found in misc/additional-credentials.vault.
 
 - [ ] Add entry in `group_vars/all/archusers.yml`.
 - [ ] Add SSH pubkey to `pubkeys/<username>.pub`.
-- [ ] Run `ansible-playbook -t archusers playbooks/*.yml`.
+- [ ] Run `ansible-playbook -t archusers  $(git grep -l archusers playbooks/ | grep -v phrik)`.
 - [ ] Assign the user to the `Developers` groups on Keycloak.
 - [ ] Assign the user to the `Developers` group on [archlinux.org](https://archlinux.org/admin/auth/user/).
 - [ ] Subscribe **communication e-mail address** to internal [arch-dev](https://lists.archlinux.org/admin/arch-dev/members/add) mailing list.
@@ -68,7 +68,7 @@ The mailing list password can be found in misc/additional-credentials.vault.
 
 - [ ] Add entry in `group_vars/all/archusers.yml`.
 - [ ] Add SSH pubkey to `pubkeys/<username>.pub`.
-- [ ] Run `ansible-playbook -t archusers playbooks/*.yml`.
+- [ ] Run `ansible-playbook -t archusers  $(git grep -l archusers playbooks/ | grep -v phrik)`.
 - [ ] Assign the user to the `Trusted Users` groups on Keycloak.
 - [ ] Assign the user to the `Trusted Users` group on [archlinux.org](https://archlinux.org/admin/auth/user/).
 - [ ] Subscribe **communication e-mail address** to internal [arch-tu](https://lists.archlinux.org/admin/arch-tu/members/add) mailing list.

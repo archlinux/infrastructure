@@ -23,7 +23,7 @@ This template should be used for offboarding Arch Linux team members.
 
 - [ ] Remove entry in `group_vars/all/archusers.yml`.
 - [ ] Remove SSH pubkey from `pubkeys/<username>.pub`.
-- [ ] Run `ansible-playbook -t archusers playbooks/*.yml`.
+- [ ] Run `ansible-playbook -t archusers  $(git grep -l archusers playbooks/ | grep -v phrik)`.
 - [ ] Remove the user from the `Trusted Users`/`Developers` groups on Keycloak.
 - [ ] Moderate email address on [arch-dev-public](https://lists.archlinux.org/admin/arch-dev-public/members) (find member and moderate)
 - [ ] Remove member from [arch-tu](https://lists.archlinux.org/admin/arch-tu/members) and/or [arch-dev](https://lists.archlinux.org/admin/arch-dev/members) mailing lists
