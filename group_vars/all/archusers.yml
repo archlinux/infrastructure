@@ -286,13 +286,6 @@ arch_users:
       - dev
       - tu
       - multilib
-  jgc:
-    name: "Jan de Groot"
-    ssh_key: jgc.pub
-    groups:
-      - dev
-      - multilib
-      - tu
   jleclanche:
     name: "Jerome Leclanche"
     ssh_key: jleclanche.pub
