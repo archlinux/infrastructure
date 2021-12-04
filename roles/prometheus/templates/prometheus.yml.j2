@@ -159,9 +159,8 @@ scrape_configs:
     scrape_interval: 15s
     metrics_path: "/metrics/synapse.{{ endpoint }}"
     scheme: https
-    basic_auth:
-      username: {{ vault_matrix_secrets.metrics_user }}
-      password: {{ vault_matrix_secrets.metrics_password }}
+    authorization:
+      credentials: {{ vault_matrix_secrets.metrics_token }}
     static_configs:
       - targets: ["matrix.archlinux.org:443"]
 {% endfor %}
