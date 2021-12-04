@@ -3,7 +3,7 @@ groups:
     interval: 60s
     rules:
       - alert: HostHighCpuLoad
-        expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle",instance!~"build.archlinux.org",instance!~"repro1.pkgbuild.com",instance!~"repro2.pkgbuild.com",instance!~"runner2.archlinux.org"}[5m])) * 100) > 90
+        expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle",instance!~"build.archlinux.org",instance!~"repro1.pkgbuild.com",instance!~"repro2.pkgbuild.com",instance!~"runner2.archlinux.org",instance!~"runner1.archlinux.org"}[5m])) * 100) > 90
         for: 5m
         labels:
           severity: warning
