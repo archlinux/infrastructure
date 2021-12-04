@@ -6,7 +6,7 @@ After=network.target synapse.service
 [Service]
 User=synapse
 WorkingDirectory=/var/lib/synapse/matrix-appservice-irc
-ExecStart=/usr/bin/node app.js \
+ExecStart=/usr/bin/node --dns-result-order=ipv4first app.js \
   -c /etc/synapse/irc-bridge.yaml \
   -f /etc/synapse/appservice-registration-irc.yaml
 AmbientCapabilities=CAP_NET_BIND_SERVICE
