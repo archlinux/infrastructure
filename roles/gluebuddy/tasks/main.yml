@@ -1,0 +1,7 @@
+---
+
+- name: install systemd service/timer
+  copy: src={{ item }} dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
+  with_items:
+    - gluebuddy.service
+    - gluebuddy.timer
