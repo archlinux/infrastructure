@@ -2,3 +2,19 @@
 dbscripts_commit: HEAD
 dbscripts_update: true
 dbscripts_pgp_emails: ['jelle@archlinux.org']
+
+community_repos:
+  - community-debug
+  - community-testing-debug
+  - community-staging-debug
+  - multilib-debug
+  - multilib-staging-debug
+  - multilib-testing-debug
+
+package_repos:
+  - core-debug
+  - extra-debug
+  - testing-debug
+  - staging-debug
+  - kde-unstable-debug
+  - gnome-unstable-debug
