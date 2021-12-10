@@ -457,13 +457,6 @@ resource "hetznerdns_record" "archlinux_org_origin_ns1" {
 #   type = "SOA"
 # }
 
-resource "hetznerdns_record" "archlinux_org_matrix_tcp_srv" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "_matrix._tcp"
-  value   = "10 0 8448 matrix"
-  type    = "SRV"
-}
-
 resource "hcloud_floating_ip" "gitlab_pages" {
   type        = "ipv4"
   description = "GitLab Pages"
