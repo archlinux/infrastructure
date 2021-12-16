@@ -188,25 +188,25 @@
   file: path=/packages src=/srv/repos/svn-packages/dbscripts state=link owner=root group=root mode=0755
 
 - name: make debug packages-debug pool
-  file: path=/srv/ftp/pool/packages-debug state=directory owner=root group=dev mode=0755
+  file: path=/srv/ftp/pool/packages-debug state=directory owner=root group=dev mode=0775
 
 - name: make debug community-debug pool
-  file: path=/srv/ftp/pool/community-debug state=directory owner=root group=tu mode=0755
+  file: path=/srv/ftp/pool/community-debug state=directory owner=root group=tu mode=2775
 
 - name: make package root debug repos
   file: path=/srv/ftp/{{ item }}/os state=directory owner=root group=root mode=0755
   with_items: '{{ package_repos }}'
 
 - name: make community root debug repos
-  file: path=/srv/ftp/{{ item }}/os state=directory owner=root group=root mode=0755
+  file: path=/srv/ftp/{{ item }}/os state=directory owner=root group=root mode=00755
   with_items: '{{ community_repos }}'
 
 - name: make package debug repos
-  file: path=/srv/ftp/{{ item }}/os/x86_64 state=directory owner=root group=dev mode=0755
+  file: path=/srv/ftp/{{ item }}/os/x86_64 state=directory owner=root group=dev mode=0775
   with_items: '{{ package_repos }}'
 
 - name: make community debug repos
-  file: path=/srv/ftp/{{ item }}/os/x86_64 state=directory owner=root group=tu mode=0755
+  file: path=/srv/ftp/{{ item }}/os/x86_64 state=directory owner=root group=tu mode=0775
   with_items: '{{ community_repos }}'
 
 - name: put rsyncd.conf into tmpfiles
