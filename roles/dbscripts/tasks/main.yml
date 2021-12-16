@@ -165,7 +165,7 @@
 - name: clone dbscripts git repo
   git: >
     dest=/srv/repos/{{ item }}/dbscripts
-    repo=https://github.com/archlinux/dbscripts.git
+    repo=https://gitlab.archlinux.org/archlinux/dbscripts.git
     version={{ dbscripts_commit }} update={{ dbscripts_update }}
     verify_commit=yes
   with_items:
