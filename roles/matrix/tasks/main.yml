@@ -307,21 +307,29 @@
   service: name={{ item }} enabled=yes
   with_items:
     - pantalaimon.service
+  notify:
+    - restart pantalaimon
 
 - name: enable mjolnir units
   service: name={{ item }} enabled=yes
   with_items:
     - mjolnir.service
+  notify:
+    - restart mjolnir
 
 - name: enable matrix-appservice-irc units
   service: name={{ item }} enabled=yes
   with_items:
     - matrix-appservice-irc.service
+  notify:
+    - restart matrix-appservice-irc
 
 - name: enable turnserver units
   service: name={{ item }} enabled=yes
   with_items:
     - turnserver.service
+  notify:
+    - restart turnserver
 
 - name: open firewall holes
   ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes
