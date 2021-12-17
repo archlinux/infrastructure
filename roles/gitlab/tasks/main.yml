@@ -19,7 +19,6 @@
     network_mode: host
     pull: true
     restart_policy: always
-    log_driver: journald
     env:
       # See https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/files/gitlab-config-template/gitlab.rb.template
       # 1. In order to figure out what needs to go into 'idp_cert_fingerprint', run
