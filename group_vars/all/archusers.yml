@@ -473,6 +473,11 @@ arch_users:
     groups:
       - tu
       - multilib
+  segaja:
+    name: "Andreas Schleifer"
+    ssh_key: segaja.pub
+    groups:
+      - tu
   svenstaro:
     name: "Sven-Hendrik Haase"
     ssh_key: svenstaro.pub
