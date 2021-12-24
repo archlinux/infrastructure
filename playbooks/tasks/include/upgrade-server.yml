@@ -24,6 +24,19 @@
       when: pgrep is succeeded
   when: "'buildservers' in group_names"
 
+
+- name: check for active borg backup jobs
+  block:
+    - name: get service facts
+      service_facts:
+
+    - name: abort reboot when borg backup is running
+      meta: end_host
+      when: >
+        ansible_facts.services["borg-backup.service"]["state"] == "running" or
+        ansible_facts.services["borg-backup-offsite.service"]["state"] == "running"
+  when: "'borg_clients' in group_names"
+
 - name: gemini pre-reboot checks
   block:
     - name: wait for svntogit to finish
