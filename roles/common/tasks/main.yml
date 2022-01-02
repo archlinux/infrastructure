@@ -31,6 +31,10 @@
   pacman: name=smartmontools state=present
   when: "'hcloud' not in group_names"
 
+- name: configure smartd to do periodic health checks
+  copy: src=smartd.conf dest=/etc/smartd.conf owner=root group=root mode=0644
+  when: "'hcloud' not in group_names"
+
 - name: start and enable smart
   service: name=smartd enabled=yes state=started
   when: "'hcloud' not in group_names"
