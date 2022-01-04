@@ -284,6 +284,28 @@ groups:
           description: 'host {{ $labels.instance }} btrfs corruption errors'
           summary: '{{ $labels.instance }} has {{ $value }} btrfs_corruption_errs'
 
+  - name: smart
+    interval: 1m
+    rules:
+      - alert: smart_device_smart_healthy
+        expr: smart_device_smart_healthy == 0
+        for: 2m
+        labels:
+          severity: critical
+          service: smart
+        annotations:
+          description: 'host {{ $labels.instance }} has an unhealthy disk {{ $labels.disk }}'
+          summary: '{{ $labels.instance }} has an unhealthy disk {{ $labels.disk }}'
+      - alert: smart_device_self_test
+        expr: smart_device_self_test == 0
+        for: 2m
+        labels:
+          severity: critical
+          service: smart
+        annotations:
+          description: 'host {{ $labels.instance }} has an not passing self test'
+          summary: '{{ $labels.instance }} has an unhealthy disk {{ $labels.disk }}'
+
   - name: borg
     interval: 60s
     rules:
