@@ -10,6 +10,7 @@ data "external" "vault_keycloak" {
     "vault_keycloak_admin_password",
     "vault_keycloak_smtp_user",
     "vault_keycloak_smtp_password",
+    "vault_keycloak_gluebuddy_openid_client_secret",
   "--format", "json"]
 }
 
@@ -834,4 +835,22 @@ resource "keycloak_openid_user_realm_role_protocol_mapper" "matrix_user_realm_ro
   multivalued         = true
   add_to_id_token     = true
   add_to_access_token = false
+}
+
+resource "keycloak_openid_client" "gluebuddy_openid_client" {
+  realm_id      = "archlinux"
+  client_id     = "gluebuddy"
+  client_secret = data.external.vault_keycloak.result.vault_keycloak_gluebuddy_openid_client_secret
+  web_origins   = []
+
+  name    = "Gluebuddy"
+  enabled = true
+
+  service_accounts_enabled = true
+
+  access_type           = "CONFIDENTIAL"
+  standard_flow_enabled = true
+  valid_redirect_uris = [
+    "https://gitlab.archlinux.org/"
+  ]
 }
