@@ -1,0 +1,15 @@
+[Unit]
+Description=aurweb asgi server
+
+[Service]
+User={{ aurweb_user }}
+WorkingDirectory={{ aurweb_dir }}
+ExecStart=/usr/bin/poetry run gunicorn \
+    --log-config {{ aurweb_dir }}/logging.conf \
+    --bind {{ aurweb_asgi_bind }} \
+    --workers {{ aurweb_workers }} \
+    -k uvicorn.workers.UvicornWorker \
+    aurweb.asgi:app
+
+[Install]
+WantedBy=multi-user.target
