@@ -6,7 +6,8 @@ After=mysqld.service
 [Service]
 Type=oneshot
 User={{ aurweb_user }}
-ExecStart=/usr/local/bin/aurweb-aurblup
+WorkingDirectory={{ aurweb_dir }}
+ExecStart=/usr/bin/poetry run aurweb-aurblup
 
 ReadWritePaths={{ aurweb_dir }}
 NoNewPrivileges=true
