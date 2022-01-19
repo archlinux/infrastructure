@@ -45,6 +45,7 @@ patchwork.archlinux.org
 security.archlinux.org
 md.archlinux.org
 lists.archlinux.org
+gluebuddy.archlinux.org
 
 [borg_hosts]
 zh1905.rsync.net
