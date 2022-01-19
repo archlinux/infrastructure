@@ -44,12 +44,23 @@ for ((i=0; i < $devices_total; i++)); do
 		echo "smart_device_smart_healthy{disk=\"${disk}\"} 0" >> $TMP_FILE
 	fi
 
-	status=$(echo $info | jq '.ata_smart_data.self_test.status.passed')
-	if [[ "$status" == "true" ]]; then
-		echo "smart_device_self_test{disk=\"${disk}\"} 1" >> $TMP_FILE
-	else
-		echo "smart_device_self_test{disk=\"${disk}\"} 0" >> $TMP_FILE
-	fi
+        # NVME ssd's don't have an ata_smart_data table
+        if [[ "$info" == *"\"ata_smart_data\":"* ]]; then
+          progress=$(echo $info | jq '.ata_smart_data.self_test.status.string')
+          # When a self test in progress, smartctl omits the status key which is a bug in smartctl but we'll work around it.
+          if [[ "$progress" == *"in progress"* ]]; then
+            echo "smart_device_self_test{disk=\"${disk}\"} 1" >> $TMP_FILE
+          else
+            status=$(echo $info | jq '.ata_smart_data.self_test.status.passed')
+            if [[ "$status" == "true" ]]; then
+                    echo "smart_device_self_test{disk=\"${disk}\"} 1" >> $TMP_FILE
+            else
+                    echo "smart_device_self_test{disk=\"${disk}\"} 0" >> $TMP_FILE
+            fi
+          fi
+        else
+            echo "smart_device_self_test{disk=\"${disk}\"} 1" >> $TMP_FILE
+        fi
 
 	echo "smart_temperature_celsius{disk=\"${disk}\"} $(echo $info | jq '.temperature.current')" >> $TMP_FILE
 
