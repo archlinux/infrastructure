@@ -2,7 +2,7 @@
 Description=gluebuddy timer
 
 [Timer]
-OnUnitActiveSec=10min
+OnUnitActiveSec=30min
 OnBootSec=5min
 RandomizedDelaySec=1min
 
