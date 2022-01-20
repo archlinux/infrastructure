@@ -13,8 +13,7 @@
     - { role: nginx }
     - { role: mariadb, mariadb_innodb_buffer_pool_size: '1G' }
     - { role: sudo }
-    - { role: php_fpm, php_extensions: ['iconv', 'memcached', 'mysqli', 'pdo_mysql'], zend_extensions: ['opcache'] }
-    - { role: memcached }
+    - { role: redis }
     - { role: uwsgi }
     - { role: borg_client, tags: ["borg"] }
     - { role: postfix_null }
