@@ -1,0 +1,10 @@
+[Unit]
+Description=gluebuddy timer
+
+[Timer]
+OnUnitActiveSec=30min
+OnBootSec=5min
+RandomizedDelaySec=1min
+
+[Install]
+WantedBy=timers.target

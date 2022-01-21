@@ -1,0 +1,26 @@
+---
+
+- name: install sequoia
+  pacman: name=sequoia-sq state=present
+
+- name: install systemd service/timer
+  copy: src={{ item }} dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
+  with_items:
+    - gluebuddy.service
+    - gluebuddy.timer
+  notify:
+    - daemon reload
+
+- name: enable timer
+  systemd: name=gluebuddy.timer enabled=yes state=started
+
+- name: install conf file
+  template: src=gluebuddy.conf.j2 dest=/etc/conf.d/gluebuddy owner=root group=root mode=0600
+
+- name: install download script
+  copy: src=gluebuddy_download.sh dest=/usr/local/bin/gluebuddy_download.sh owner=root group=root mode=0755
+
+- name: download latest gluebuddy
+  command: /usr/local/bin/gluebuddy_download.sh
+  tags:
+    - skip_ansible_lint

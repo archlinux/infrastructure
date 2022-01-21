@@ -143,6 +143,10 @@ locals {
     "md.archlinux.org" = {
       server_type = "cx11"
       domain      = "md"
+    },
+    "gluebuddy.archlinux.org" = {
+      server_type = "cx11"
+      domain      = "gluebuddy"
     }
   }
 
