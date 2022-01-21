@@ -107,7 +107,7 @@
   when: enable_zram_swap
 
 - name: disable zswap to prevent conflict with zram
-  copy: content="w- /sys/module/zswap/parameters/enabled - - - - N" dest=/etc/tmpfiles.d/zram.conf
+  copy: content="w- /sys/module/zswap/parameters/enabled - - - - N" dest=/etc/tmpfiles.d/zram.conf owner=root group=root mode=0644
   register: zramtmpfiles
   when: enable_zram_swap
 
