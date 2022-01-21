@@ -18,6 +18,9 @@
     BORG_PASSPHRASE: ""
   ignore_errors: true  # This can sometimes fail if a backup is in progress :/
   loop: "{{ backup_hosts }}"
+  tags:
+    - skip_ansible_lint
+
 
 - name: install convenience scripts
   template: src=borg.j2 dest=/usr/local/bin/borg{{ item['suffix'] }} owner=root group=root mode=0755
