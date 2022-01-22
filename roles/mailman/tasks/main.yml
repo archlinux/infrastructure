@@ -48,6 +48,13 @@
 - name: start and enable postfix
   systemd: name=postfix.service enabled=yes daemon_reload=yes state=started
 
+- name: create drop-in directory for mailman.service
+  file: path=/etc/systemd/system/mailman.service.d state=directory owner=root group=root mode=0755
+
+- name: install drop-in for mailman.service
+  copy: src=override.conf dest=/etc/systemd/system/mailman.service.d/ owner=root group=root mode=0644
+  notify: restart mailman
+
 - name: start and enable mailman{.service,-*.timer}
   systemd: name={{ item }} enabled=yes daemon_reload=yes state=started
   loop:

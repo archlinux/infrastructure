@@ -1,4 +1,7 @@
 ---
+- name: restart mailman
+  service: name=mailman daemon_reload=yes state=restarted
+
 - name: reload mailman
   service: name=mailman state=reloaded
 
