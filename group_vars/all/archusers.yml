@@ -174,6 +174,13 @@ arch_users:
       - mail.archlinux.org
     groups:
       - support-staff
+  det87:
+    name: "Det87"
+    ssh_key: det87.pub
+    hosts:
+      - mail.archlinux.org
+    groups:
+      - support-staff
   diabonas:
     name: "Jonas Witschel"
     ssh_key: diabonas.pub
@@ -221,6 +228,13 @@ arch_users:
     shell: /bin/bash
     groups:
       - tu
+  flyingpig:
+    name: "Sibo Dong"
+    ssh_key: flyingpig.pub
+    hosts:
+      - mail.archlinux.org
+    groups:
+      - support-staff
   foutrelis:
     name: "Evangelos Foutras"
     ssh_key: foutrelis.pub
@@ -326,6 +340,13 @@ arch_users:
       - dev
       - multilib
       - tu
+  kewl:
+    name: "Kewl FFT"
+    ssh_key: kewl.pub
+    hosts:
+      - mail.archlinux.org
+    groups:
+      - support-staff
   kgizdov:
     name: "Konstantin Gizdov"
     ssh_key: kgizdov.pub
@@ -460,6 +481,13 @@ arch_users:
     shell: /bin/zsh
     groups:
       - tu
+  skydiver:
+    name: "Xiao Guo"
+    ssh_key: skydiver.pub
+    hosts:
+      - mail.archlinux.org
+    groups:
+      - support-staff
   kpcyrd:
     name: "Kpcyrd"
     ssh_key: kpcyrd.pub
