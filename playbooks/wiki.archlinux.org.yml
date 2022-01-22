@@ -15,7 +15,7 @@
     - { role: postfix_null }
     - { role: mariadb }
     - { role: sudo }
-    - { role: php7_fpm, php_extensions: ['bcmath', 'curl', 'gd', 'iconv', 'intl', 'mysqli', 'sockets', 'zip'], zend_extensions: ['opcache'] }
+    - { role: php_fpm, php_extensions: ['bcmath', 'curl', 'gd', 'iconv', 'intl', 'mysqli', 'sockets', 'zip'], zend_extensions: ['opcache'] }
     - { role: memcached }
     - { role: archwiki }
     - { role: fail2ban }

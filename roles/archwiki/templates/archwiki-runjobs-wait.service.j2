@@ -5,7 +5,7 @@ After=mysqld.service
 [Service]
 User={{ archwiki_user }}
 WorkingDirectory={{ archwiki_dir }}
-ExecStart=/usr/bin/php7 {{ archwiki_dir }}/public/maintenance/runJobs.php -q --wait
+ExecStart=/usr/bin/php {{ archwiki_dir }}/public/maintenance/runJobs.php -q --wait
 Restart=on-failure
 
 NoNewPrivileges=true

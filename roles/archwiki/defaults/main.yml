@@ -7,7 +7,7 @@ archwiki_repository: 'https://github.com/archlinux/archwiki.git'
 archwiki_version: '1.37.1-4'
 archwiki_question_answer_file: '/srv/http/archwiki/registration-question-answer.txt'
 
-archwiki_socket: '/run/php-fpm7/archwiki.socket'
+archwiki_socket: '/run/php-fpm/archwiki.socket'
 archwiki_memcached_socket: '/run/memcached/archwiki.sock'
 archwiki_memcached_memory: 1024
 
