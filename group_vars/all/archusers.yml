@@ -197,6 +197,13 @@ arch_users:
       - dev
       - multilib
       - tu
+  edh:
+    name: "Gordian Edenhofer"
+    ssh_key: edh.pub
+    hosts:
+      - mail.archlinux.org
+    groups:
+      - support-staff
   escondida:
     name: "Ivy Foster"
     ssh_key: escondida.pub
