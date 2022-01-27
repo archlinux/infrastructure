@@ -28,8 +28,16 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ debuginfod_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ debuginfod_domain }}/chain.pem;
 
+    root  /srv/http/debuginfod;
+    index index.html;
+
     location / {
         proxy_set_header X-Forwarded-For $remote_addr;
         proxy_pass http://127.0.0.1:8002;
+    }
+
+    location /packages {
+        default_type "text/plain";
+        alias /srv/http/debuginfod/;
     }
 }

@@ -1,0 +1,6 @@
+[Unit]
+Description=Synchronize package list
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/bash -c "find /srv/ftp/pool/*-debug/ -type f -not -name *.sig > /srv/http/debuginfod/index.html"

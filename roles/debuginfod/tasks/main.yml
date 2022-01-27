@@ -16,6 +16,18 @@
   notify:
     - reload debuginfod
 
+- name: create http directory for debuginfod website files
+  file: path=/srv/http/debuginfod state=directory owner=root group=root mode=0755
+
+- name: install packagelist units
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  loop:
+    - packagelist.timer
+    - packagelist.service
+
+- name: start and enable packagelist.timer
+  service: name=packagelist.timer enabled=yes state=started
+
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ debuginfod_domain }} state=directory owner=root group=root mode=0755
 
