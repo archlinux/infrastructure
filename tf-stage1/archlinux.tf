@@ -147,6 +147,10 @@ locals {
     "gluebuddy.archlinux.org" = {
       server_type = "cx11"
       domain      = "gluebuddy"
+    },
+    "debuginfod.archlinux.org" = {
+      server_type = "cx11"
+      domain      = "debuginfod"
     }
   }
 
@@ -493,4 +497,10 @@ resource "hcloud_volume" "monitoring" {
   name      = "monitoring"
   size      = 200
   server_id = hcloud_server.machine["monitoring.archlinux.org"].id
+}
+
+resource "hcloud_volume" "debuginfod" {
+  name      = "debuginfod"
+  size      = 100
+  server_id = hcloud_server.machine["debuginfod.archlinux.org"].id
 }

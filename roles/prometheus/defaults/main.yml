@@ -57,6 +57,7 @@ blackbox_targets:
     - mail.archlinux.org:465
     - mail.archlinux.org:993
     - coc.archlinux.org:443
+    - debuginfod.archlinux.org:443
   smtp_starttls:
     - mail.archlinux.org:25
     - lists.archlinux.org:25
