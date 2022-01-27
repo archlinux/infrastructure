@@ -38,5 +38,11 @@
   when: debuginfod_domain
   tags: ['nginx']
 
+- name: open debuginfod ipv4 port for monitoring.archlinux.org
+  ansible.posix.firewalld: zone=wireguard state=enabled permanent=true immediate=yes
+    rich_rule="rule family=ipv4 source address={{ hostvars['monitoring.archlinux.org']['wireguard_address'] }} port protocol=tcp port=8002 accept"
+  tags:
+    - firewall
+
 - name: start and enable debuginfod
   service: name=debuginfod enabled=yes state=started
