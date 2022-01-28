@@ -1,8 +1,8 @@
 [Unit]
-Description=Sync debug packages every 4 hours
+Description=Sync debug packages every minute
 
 [Timer]
-OnCalendar=00/4:00
+OnCalendar=minutely
 AccuracySec=1m
 Persistent=true
 

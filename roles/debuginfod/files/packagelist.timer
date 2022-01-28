@@ -1,8 +1,8 @@
 [Unit]
-Description=Sync package lists every hour
+Description=Sync package lists every minute
 
 [Timer]
-OnCalendar=hourly
+OnCalendar=minutely
 AccuracySec=1m
 Persistent=true
 
