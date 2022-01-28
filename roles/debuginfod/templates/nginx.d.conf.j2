@@ -32,12 +32,15 @@ server {
     index index.html;
 
     location / {
-        proxy_set_header X-Forwarded-For $remote_addr;
-        proxy_pass http://127.0.0.1:8002;
+        try_files $uri $uri/ @debuginfod;
     }
 
-    location /packages {
+    location = /packages {
         default_type "text/plain";
-        alias /srv/http/debuginfod/;
+    }
+
+    location @debuginfod {
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_pass http://127.0.0.1:8002;
     }
 }

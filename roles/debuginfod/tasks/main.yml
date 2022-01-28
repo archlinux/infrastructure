@@ -19,6 +19,12 @@
 - name: create http directory for debuginfod website files
   file: path=/srv/http/debuginfod state=directory owner=root group=root mode=0755
 
+- name: install website files
+  copy: src={{ item }} dest=/srv/http/debuginfod/{{ item }} owner=root group=root mode=0644
+  loop:
+    - archlinux.png
+    - index.html
+
 - name: install packagelist units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   loop:
