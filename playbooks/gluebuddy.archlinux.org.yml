@@ -6,6 +6,7 @@
   roles:
     - { role: common }
     - { role: firewalld }
+    - { role: wireguard }
     - { role: sshd }
     - { role: root_ssh }
     - { role: gluebuddy }
