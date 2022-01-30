@@ -417,6 +417,13 @@ arch_users:
     ssh_key: muflone.pub
     groups:
       - tu
+  neitsab:
+    name: "Bastien Traverse"
+    ssh_key: neitsab.pub
+    hosts:
+      - mail.archlinux.org
+    groups:
+      - support-staff
   nicohood:
     name: "NicoHood"
     ssh_key: nicohood.pub
