@@ -1,5 +1,5 @@
 ---
-dbscripts_commit: 20211216
+dbscripts_commit: 20220131
 dbscripts_update: true
 dbscripts_pgp_emails: ['jelle@archlinux.org']
 
