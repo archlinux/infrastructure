@@ -30,9 +30,9 @@ https://www.gnupg.org/gph/en/manual/x135.html
 -->
 
 ## All roles checklist
-The mailing list password can be found in misc/additional-credentials.vault.
+The mailing list password can be found in [`misc/additional-credentials.vault`](misc/additional-credentials.vault).
 
-- [ ] Add new user email as per `docs/email.md`.
+- [ ] Add new user email as per [`docs/email.md`](docs/email.md).
 - [ ] Create a new user in [archweb](https://www.archlinux.org/devel/newuser/). Select the appropriate group membership and allowed repos (if applicable).
 - [ ] Subscribe **communication e-mail address** to internal [staff mailing list](https://lists.archlinux.org/admin/staff/members/add).
 - [ ] Give the user access to `#archlinux-staff` on Libera Chat.
@@ -48,17 +48,17 @@ The mailing list password can be found in misc/additional-credentials.vault.
 ## Packager onboarding checklist
 
 <!-- The ticket should be created by a sponsor of the new packager -->
-- [ ] Create [issue in archlinux-keyring](https://gitlab.archlinux.org/archlinux/archlinux-keyring/-/issues/new) (choose *"New Packager Key"* template).
+- [ ] Create [issue in archlinux-keyring using the *"New Packager Key"* template](https://gitlab.archlinux.org/archlinux/archlinux-keyring/-/issues/new?issuable_template=New%20Packager%20Key).
 
 ## Main key onboarding checklist
 
-- [ ] Add new user email for the `master-key.archlinux.org` subdomain as per `docs/email.md`.
+- [ ] Add new user email for the `master-key.archlinux.org` subdomain as per [`docs/email.md`](docs/email.md).
 <!-- The ticket should be created by the developer becoming a new main key holder -->
-- [ ] Create [issue in archlinux-keyring](https://gitlab.archlinux.org/archlinux/archlinux-keyring/-/issues/new) (choose *"New Main Key"* template).
+- [ ] Create [issue in archlinux-keyring using the *"New Main Key"* template](https://gitlab.archlinux.org/archlinux/archlinux-keyring/-/issues/new?issuable_template=New%20Main%20Key).
 
 ## Developer onboarding checklist
 
-- [ ] Add entry in `group_vars/all/archusers.yml`.
+- [ ] Add entry in [`group_vars/all/archusers.yml`](group_vars/all/archusers.yml).
 - [ ] Add SSH pubkey to `pubkeys/<username>.pub`.
 - [ ] Run `ansible-playbook -t archusers  $(git grep -l archusers playbooks/ | grep -v phrik)`.
 - [ ] Assign the user to the `Developers` groups on Keycloak.
@@ -68,7 +68,7 @@ The mailing list password can be found in misc/additional-credentials.vault.
 
 ## TU onboarding checklist
 
-- [ ] Add entry in `group_vars/all/archusers.yml`.
+- [ ] Add entry in [`group_vars/all/archusers.yml`](group_vars/all/archusers.yml).
 - [ ] Add SSH pubkey to `pubkeys/<username>.pub`.
 - [ ] Run `ansible-playbook -t archusers  $(git grep -l archusers playbooks/ | grep -v phrik)`.
 - [ ] Assign the user to the `Trusted Users` groups on Keycloak.
@@ -78,7 +78,7 @@ The mailing list password can be found in misc/additional-credentials.vault.
 
 ## DevOps onboarding checklist
 
-- [ ] Add entries in `group_vars/all/root_access.yml`.
+- [ ] Add entries in [`group_vars/all/root_access.yml`](group_vars/all/root_access.yml).
 - [ ] Run `ansible-playbook -t root_ssh playbooks/all-hosts-basic.yml`.
 - [ ] Run `ansible-playbook playbooks/hetzner_storagebox.yml playbooks/rsync.net.yml`.
 - [ ] Assign the user to the `DevOps` group on Keycloak.
