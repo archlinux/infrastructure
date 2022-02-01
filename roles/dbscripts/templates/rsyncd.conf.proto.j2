@@ -96,8 +96,8 @@ hosts deny = *
 	path = /srv/ftp
 	comment =  debug packages
 	exclude = *
-	include = /pool /pool/*-debug/***
-	hosts allow = {{ hostvars['debuginfod.archlinux.org']['ipv4_address'] }} {{ hostvars['debuginfod.archlinux.org']['ipv6_address'] }}
+	include = /*-debug/*** /pool /pool/*-debug/***
+	hosts allow = {{ groups['mirrors'] | map('extract', hostvars, ['ipv4_address']) | join(' ') }} {{ groups['mirrors'] | map('extract', hostvars, ['ipv6_address']) | join(' ') }} {{ hostvars['debuginfod.archlinux.org']['ipv4_address'] }} {{ hostvars['debuginfod.archlinux.org']['ipv6_address'] }}
 	max connections = 0
 
 # Individual repositories

@@ -29,6 +29,9 @@ if ! tty -s && [[ -f "$target/lastupdate" ]] && diff -b <(curl -Ls "$lastupdate_
 fi
 
 rsync_cmd \
-    --exclude=".well-known" \
+	--include="*-debug/***" \
+	--include="pool/" \
+	--include="pool/*-debug/***" \
+	--exclude="*" \
 	"${source_url}" \
 	"${target}"
