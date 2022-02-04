@@ -1,0 +1,54 @@
+---
+- name: install debuginfod
+  pacman: name=debuginfod state=present
+
+- name: create ssl cert
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ debuginfod_domain }}"]
+  when: debuginfod_domain
+
+- name: configure debuginfod systemd service
+  template: src=debuginfod.service.j2 dest=/usr/lib/systemd/system/debuginfod.service owner=root group=root mode=0644
+  vars:
+    debuginfod_package_path: "{{ debuginfod_package_paths | join(' ') }}"
+  notify:
+    - reload debuginfod
+
+- name: create http directory for debuginfod website files
+  file: path=/srv/http/debuginfod state=directory owner=root group=root mode=0755
+
+- name: install website files
+  copy: src={{ item }} dest=/srv/http/debuginfod/{{ item }} owner=root group=root mode=0644
+  loop:
+    - archlinux.png
+    - index.html
+
+- name: install packagelist units
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  loop:
+    - packagelist.timer
+    - packagelist.service
+
+- name: start and enable packagelist.timer
+  service: name=packagelist.timer enabled=yes state=started
+
+- name: make nginx log dir
+  file: path=/var/log/nginx/{{ debuginfod_domain }} state=directory owner=root group=root mode=0755
+
+- name: set up nginx
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/debuginfod.conf owner=root group=root mode=0644
+  notify:
+    - reload nginx
+  when: debuginfod_domain
+  tags: ['nginx']
+
+- name: open debuginfod ipv4 port for monitoring.archlinux.org
+  ansible.posix.firewalld: zone=wireguard state=enabled permanent=true immediate=yes
+    rich_rule="rule family=ipv4 source address={{ hostvars['monitoring.archlinux.org']['wireguard_address'] }} port protocol=tcp port=8002 accept"
+  tags:
+    - firewall
+
+- name: start and enable debuginfod
+  service: name=debuginfod enabled=yes state=started

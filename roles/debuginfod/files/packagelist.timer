@@ -1,0 +1,10 @@
+[Unit]
+Description=Sync package lists every minute
+
+[Timer]
+OnCalendar=minutely
+AccuracySec=1m
+Persistent=true
+
+[Install]
+WantedBy=timers.target

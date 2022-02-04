@@ -141,6 +141,7 @@ man.archlinux.org
 dashboards.archlinux.org
 lists.archlinux.org
 gluebuddy.archlinux.org
+debuginfod.archlinux.org
 
 [wireguard]
 archlinux.org
@@ -178,6 +179,7 @@ man.archlinux.org
 dashboards.archlinux.org
 lists.archlinux.org
 gluebuddy.archlinux.org
+debuginfod.archlinux.org
 
 [kape_servers]
 asia.mirror.pkgbuild.com

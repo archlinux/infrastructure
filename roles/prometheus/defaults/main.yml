@@ -3,6 +3,11 @@ gitlab_runner_exporter_port: '9252'
 prometheus_domain: "{{ hostvars['dashboards.archlinux.org']['wireguard_address'] }}"
 prometheus_mysqld_exporter_port: '9104'
 prometheus_receive_only: false
+prometheus_remote_write_relabel_configs:
+  - label: job
+    regex: debuginfod
+  - label: __name__
+    regex: "archive_directory_size_bytes|archive_total_packages|rebuilderd_results|rebuilderd_workers|rebuilderd_queue_length|repository_directory_size_bytes|aur_.+"
 
 # for d in $(curl -sf "https://crt.sh/?q=archlinux.org&output=json" "https://crt.sh/?q=pkgbuild.com&output=json" | jq -r ".[].name_value" | sort -u); do if curl -o /dev/null -sS "https://$d"; then echo $d; fi; done | grep -v "\@" | sort | sed "s/^/  - https:\/\//"
 blackbox_targets:
@@ -57,6 +62,7 @@ blackbox_targets:
     - mail.archlinux.org:465
     - mail.archlinux.org:993
     - coc.archlinux.org:443
+    - debuginfod.archlinux.org:443
   smtp_starttls:
     - mail.archlinux.org:25
     - lists.archlinux.org:25
