@@ -132,6 +132,13 @@ arch_users:
       - dev
       - tu
       - multilib
+  braindamage:
+    name: "BrainDamage"
+    ssh_key: braindamage.pub
+    hosts:
+      - mail.archlinux.org
+    groups:
+      - support-staff
   cbehan:
     name: "Connor Behan"
     ssh_key: cbehan.pub
