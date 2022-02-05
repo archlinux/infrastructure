@@ -1,10 +1,6 @@
 [Unit]
 Description=Borg backup
 
-{% if inventory_hostname == "gitlab.archlinux.org" %}
-# The ordering relation defined below is important for the GitLab backups
-# because the offsite backup reuses the tarballs from this service's run.
-{% endif %}
 Wants=borg-backup-offsite.service
 Before=borg-backup-offsite.service
 

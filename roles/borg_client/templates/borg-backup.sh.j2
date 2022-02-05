@@ -45,12 +45,6 @@ if systemctl is-active mysqld || systemctl is-active mariadb; then
     /usr/local/bin/backup-mysql.sh || true
 fi
 
-{# When backing up to offsite, reuse the existing tarballs from the previous backup #}
-{% if inventory_hostname == "gitlab.archlinux.org" and item['suffix'] != '-offsite' %}
-# Create tarball backups of various GitLab directories using the official backup tool
-systemctl is-active docker && /usr/local/bin/backup-gitlab.sh
-{% endif %}
-
 if is_btrfs "$src"; then
     # List all btrfs submounts we want to backup, e.g. homedir.archlinux.org with "/ /home"
     list_of_btrfs_submounts=$(findmnt -Rl -o target,fstype,options / | grep btrfs | grep -v docker | grep -v "subvol=\/[[:alnum:]]" | cut -d ' ' -f1)
