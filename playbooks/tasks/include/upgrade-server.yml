@@ -27,14 +27,13 @@
 
 - name: check for active borg backup jobs
   block:
-    - name: get service facts
-      service_facts:
+    - name: check if /backup exists
+      stat: path=/backup
+      register: backup_mountdir
 
     - name: abort reboot when borg backup is running
       meta: end_host
-      when: >
-        ansible_facts.services["borg-backup.service"]["state"] == "running" or
-        ansible_facts.services["borg-backup-offsite.service"]["state"] == "running"
+      when: backup_mountdir.stat.exists
   when: "'borg_clients' in group_names"
 
 - name: gemini pre-reboot checks
