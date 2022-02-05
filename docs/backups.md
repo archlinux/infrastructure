@@ -85,10 +85,6 @@ For PostgreSQL backups are made using pg_dump to `postgres_backup_dir`.
 
 Restoring backups can be done with `pg_restore`. See also [official PostgreSQL docs](https://www.postgresql.org/docs/current/app-pgrestore.html).
 
-### Gitlab
-
-GitLab is backupped up using the `gitlab_backup` tool to `gitlab_backupdir`. See also [official GitLab docs](https://docs.gitlab.com/ee/raketasks/backup_restore.html).
-
 ## Adding a new server
 
 Adding a new server to be backed up goes as follows:
