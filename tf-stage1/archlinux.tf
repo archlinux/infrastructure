@@ -477,7 +477,7 @@ variable "gitlab_pages_ipv6" {
 
 resource "hcloud_volume" "gitlab" {
   name      = "gitlab"
-  size      = 1000
+  size      = 250
   server_id = hcloud_server.machine["gitlab.archlinux.org"].id
 }
 
