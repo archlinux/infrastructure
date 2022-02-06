@@ -72,7 +72,7 @@ locals {
       domain      = "bugs"
     }
     "gitlab.archlinux.org" = {
-      server_type = "cx51"
+      server_type = "cpx41"
       domain      = "gitlab"
     }
     "homedir.archlinux.org" = {
