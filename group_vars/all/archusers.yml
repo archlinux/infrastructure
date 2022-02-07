@@ -443,6 +443,7 @@ arch_users:
     name: "Frederik Schwan"
     ssh_key: freswa.pub
     groups:
+      - dev
       - tu
       - multilib
   seblu:
