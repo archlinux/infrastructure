@@ -4,6 +4,7 @@ user = {{ aurweb_db_user }}
 password = {{ vault_aurweb_db_password }}
 
 [options]
+aurwebdir = {{ aurweb_dir }}
 {% if maintenance is defined and maintenance %}
 enable_maintenance = 1
 maintenance-exceptions = {{ maintenance_remote_machine }}
@@ -16,7 +17,7 @@ cache_pkginfo_ttl = {{ aurweb_cache_pkginfo_ttl }}
 aur_location = https://{{ aurweb_domain }}
 git_clone_uri_anon = https://{{ aurweb_domain }}/%s.git
 git_clone_uri_priv = ssh://{{ aurweb_user }}@{{ aurweb_domain }}/%s.git
-memcache_servers = {{ aurweb_memcached_socket }}:0
+redis_address = redis://localhost
 
 [ratelimit]
 request_limit = {{ aurweb_request_limt }}
@@ -27,9 +28,13 @@ Ed25519 = SHA256:RFzBCUItH9LZS0cKB5UE6ceAYhBD5C8GeOBip8Z11+4
 ECDSA = SHA256:uTa/0PndEgPZTf76e1DFqXKJEXKsn7m9ivhLQtzGOCI
 RSA =  SHA256:5s5cIyReIfNNVGRFdDbe3hdYiI5OelHGpw2rOUud3Q8
 
+[auth]
+git-serve-cmd = /usr/local/bin/aurweb-git-serve.sh
+
 [serve]
 repo-path = {{ aurweb_git_dir }}
 git-shell-cmd = /usr/bin/sh
+git-update-cmd = /usr/local/bin/aurweb-git-update.sh
 ssh-cmdline = ssh {{ aurweb_user }}@{{ aurweb_domain }}
 
 [update]
@@ -45,3 +50,11 @@ packagesmetafile = {{ aurweb_dir }}/web/html/packages-meta-v1.json.gz
 packagesmetaextfile = {{ aurweb_dir }}/web/html/packages-meta-ext-v1.json.gz
 pkgbasefile = {{ aurweb_dir }}/web/html/pkgbase.gz
 userfile = {{ aurweb_dir }}/web/html/users.gz
+
+[notifications]
+notify-cmd = aurweb-notify
+{# An email used for server error notifications. #}
+postmaster = {{ vault_aurweb_postmaster }}
+
+[fastapi]
+session_secret = {{ vault_aurweb_secret }}

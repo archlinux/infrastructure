@@ -1,5 +1,5 @@
 Match User {{ aurweb_user }}
         PasswordAuthentication no
-        AuthorizedKeysCommand /usr/local/bin/aurweb-git-auth "%t" "%k"
+        AuthorizedKeysCommand /usr/local/bin/aurweb-git-auth.sh "%t" "%k"
         AuthorizedKeysCommandUser {{ aurweb_user }}
         AcceptEnv AUR_OVERWRITE

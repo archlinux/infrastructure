@@ -11,8 +11,7 @@
     - { role: nginx }
     - { role: mariadb }
     - { role: sudo }
-    - { role: php_fpm, php_extensions: ['iconv', 'memcached', 'mysqli', 'pdo_mysql'], zend_extensions: ['opcache'] }
-    - { role: memcached }
+    - { role: redis }
     - { role: uwsgi }
     - { role: borg_client, tags: ["borg"] }
     - { role: postfix_null }

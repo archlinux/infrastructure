@@ -6,20 +6,11 @@
       - asciidoc
       - highlight
       - make
-      - php-memcached
-      - pyalpm
-      - python-alembic
-      - python-bleach
-      - python-markdown
-      - python-mysql-connector
-      - python-pygit2
-      - python-srcinfo
-      - python-fastapi
-      - python-jinja
-      - python-email-validator
-      - python-orjson
       - sudo
       - uwsgi-plugin-cgi
+      - python-poetry
+      - gcc
+      - pkg-config
 
 - name: install the cgit package
   pacman:
@@ -41,11 +32,21 @@
 - name: Create directory
   file: path={{ aurweb_dir }} state=directory owner={{ aurweb_user }} group=http mode=0775
 
+- name: receive valid signing keys
+  command: /usr/bin/gpg --keyserver keys.openpgp.org --recv {{ item }}
+  loop: '{{ aurweb_pgp_keys }}'
+  become: true
+  become_user: "{{ aurweb_user }}"
+  register: gpg
+  changed_when: "gpg.rc == 0"
+
 - name: clone aurweb repo
   git: >
     repo={{ aurweb_repository }}
     dest="{{ aurweb_dir }}"
     version={{ aurweb_version }}
+    verify_commit: true
+    gpg_whitelist: '{{ aurweb_pgp_keys }}'
   become: true
   become_user: "{{ aurweb_user }}"
   register: release
@@ -79,7 +80,7 @@
   no_log: true
 
 - name: initialize the database
-  command: python -m aurweb.initdb
+  command: poetry run python -m aurweb.initdb
   args:
     chdir: "{{ aurweb_dir }}"
   become: true
@@ -87,7 +88,7 @@
   when: db_created.changed
 
 - name: run migrations
-  command: alembic upgrade head
+  command: poetry run alembic upgrade head
   args:
     chdir: "{{ aurweb_dir }}"
   environment:
@@ -97,17 +98,42 @@
   when: release.changed or db_created.changed
 
 - name: Check python module availability
-  command: "python3 -c 'import aurweb'"
+  command: poetry run python3 -c 'import aurweb'
+  args:
+    chdir: "{{ aurweb_dir }}"
+  become: true
+  become_user: "{{ aurweb_user }}"
   ignore_errors: true
   register: aurweb_installed
   tags:
     - skip_ansible_lint
 
 - name: Install python module
-  command: "python3 setup.py install --install-scripts=/usr/local/bin"
+  command: poetry install
   args:
     chdir: "{{ aurweb_dir }}"
+  become: true
+  become_user: "{{ aurweb_user }}"
   when: release.changed or aurweb_installed.rc != 0
+
+- name: install custom aurweb-git-auth wrapper script
+  template: src=aurweb-git-auth.sh.j2 dest=/usr/local/bin/aurweb-git-auth.sh owner=root group=root mode=0755
+  when: release.changed
+
+- name: install custom aurweb-git-serve wrapper script
+  template: src=aurweb-git-serve.sh.j2 dest=/usr/local/bin/aurweb-git-serve.sh owner=root group=root mode=0755
+  when: release.changed
+
+- name: install custom aurweb-git-update wrapper script
+  template: src=aurweb-git-update.sh.j2 dest=/usr/local/bin/aurweb-git-update.sh owner=root group=root mode=0755
+  when: release.changed
+
+- name: link custom aurweb-git-update wrapper to hooks/update
+  file:
+    src: /usr/local/bin/aurweb-git-update.sh
+    dest: "{{ aurweb_dir }}/aur.git/hooks/update"
+    state: link
+  when: release.changed
 
 - name: Generate HTML documentation
   make:
@@ -135,16 +161,6 @@
 
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ aurweb_domain }} state=directory owner=root group=root mode=0755
-
-- name: configure php-fpm
-  template:
-    src=php-fpm.conf.j2 dest="/etc/php/php-fpm.d/{{ aurweb_user }}.conf"
-    owner=root group=root mode=0644
-  notify:
-    - restart php-fpm@{{ aurweb_user }}
-
-- name: start and enable systemd socket
-  service: name=php-fpm@{{ aurweb_user }}.socket state=started enabled=true
 
 - name: install cgit configuration
   template: src=cgitrc.j2 dest="{{ aurweb_conf_dir }}/cgitrc" owner=root group=root mode=0644
@@ -223,15 +239,6 @@
   tags:
     - skip_ansible_lint
 
-- name: create symlink for git hook
-  file:
-    src: "{{ aurweb_git_hook }}"
-    dest: "{{ aurweb_git_dir }}/hooks/update"
-    owner: root
-    group: root
-    mode: 0755
-    state: link
-
 - name: install AUR systemd service and timers
   template: src={{ item }}.j2 dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
@@ -239,7 +246,6 @@
     - aurweb-git.timer
     - aurweb-aurblup.service
     - aurweb-aurblup.timer
-    - aurweb-memcached.service
     - aurweb-mkpkglists.service
     - aurweb-mkpkglists.timer
     - aurweb-pkgmaint.service
@@ -250,20 +256,22 @@
     - aurweb-tuvotereminder.timer
     - aurweb-usermaint.service
     - aurweb-usermaint.timer
-
-- name: start and enable AUR systemd services and timers
-  service: name={{ item }} enabled=yes state=started
-  with_items:
-    - aurweb-git.timer
-    - aurweb-aurblup.timer
-    - aurweb-memcached.service
-    - aurweb-mkpkglists.timer
-    - aurweb-pkgmaint.timer
-    - aurweb-popupdate.timer
-    - aurweb-tuvotereminder.timer
-    - aurweb-usermaint.timer
+    - aurweb.service
 
 - name: configure sshd
   template: src=aurweb_config.j2 dest={{ sshd_includes_dir }}/aurweb_config owner=root group=root mode=0600 validate='/usr/sbin/sshd -t -f %s'
   notify:
     - restart sshd
+
+- name: start and enable AUR systemd services and timers
+  service: name={{ item }} enabled=yes state=restarted daemon_reload=yes
+  with_items:
+    - aurweb-git.timer
+    - aurweb-aurblup.timer
+    - aurweb-mkpkglists.timer
+    - aurweb-pkgmaint.timer
+    - aurweb-popupdate.timer
+    - aurweb-tuvotereminder.timer
+    - aurweb-usermaint.timer
+    - aurweb.service
+  when: release.changed

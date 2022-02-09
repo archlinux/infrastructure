@@ -6,7 +6,8 @@ After=mysqld.service
 [Service]
 Type=oneshot
 User={{ aurweb_user }}
-ExecStart=/usr/local/bin/aurweb-popupdate
+WorkingDirectory={{ aurweb_dir }}
+ExecStart=/usr/bin/poetry run aurweb-popupdate
 
 NoNewPrivileges=true
 LockPersonality=true
@@ -15,7 +16,7 @@ CapabilityBoundingSet=
 PrivateDevices=true
 PrivateTmp=true
 ProtectSystem=strict
-ProtectHome=true
+ProtectHome=read-only
 
 MemoryDenyWriteExecute=true
 RemoveIPC=true

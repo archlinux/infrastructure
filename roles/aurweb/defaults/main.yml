@@ -1,4 +1,5 @@
 ---
+aurweb_asgi_bind: '127.0.0.1:8000'
 
 aurweb_domain: 'aur.archlinux.org'
 aurweb_repository: 'https://gitlab.archlinux.org/archlinux/aurweb.git'
@@ -8,6 +9,7 @@ aurweb_git_dir: "{{ aurweb_dir }}/aur.git"
 aurweb_git_hook: '/usr/local/bin/aurweb-git-update'
 aurweb_nginx_conf: '/etc/nginx/nginx.d/aurweb.conf'
 aurweb_version: 'live'
+aurweb_pgp_keys: ['0F985B6F99B6686854C44EC3F7E46DED420788F3']
 
 aurweb_db: 'aur'
 aurweb_db_host: 'localhost'
@@ -18,9 +20,11 @@ aurweb_socket: '/run/php-fpm/{{aurweb_user}}.socket'
 cgit_socket: '/run/uwsgi/cgit.sock'
 smartgit_socket: '/run/uwsgi/smartgit.sock'
 
-aurweb_cache: 'memcache'
+aurweb_cache: 'redis'
 aurweb_cache_pkginfo_ttl: '86400'
 aurweb_request_limt: '4000'
 aurweb_window_length: '86400'
 aurweb_memcached_socket: '/run/memcached/aurweb.sock'
 aurweb_memcached_memory: 2048
+
+aurweb_workers: 4

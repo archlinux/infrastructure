@@ -71,39 +71,12 @@ server {
         expires 5m;
     }
 
-    location ~ ^/[^/]+\.php($|/) {
-        fastcgi_pass   aurweb;
-        fastcgi_index  index.php;
-        fastcgi_split_path_info ^(/[^/]+\.php)(/.*)$;
-        if (!-f $document_root$fastcgi_script_name) {
-            return 404;
-        }
-        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
-        fastcgi_param  PATH_INFO        $fastcgi_path_info;
-        fastcgi_param  HTTPS            on;
-        include        fastcgi_params;
-
-        # Cache PHP Requests
-        #fastcgi_cache aur;
-        #fastcgi_cache_valid 200 5m;
-        #add_header X-Cache $upstream_cache_status;
-
-        # Required for caching to work
-        #fastcgi_ignore_headers "Cache-Control" "Expires" "Set-Cookie";
-
-        # Only apply cache when set
-        #fastcgi_cache_bypass $no_cache;
-        #fastcgi_no_cache $no_cache;
-    }
-
-    # directories for static assets
-    location ~ ^/(?:css|js|images)/ {
-        expires 30d;
-        add_header Pragma public;
-        add_header Cache-Control "public, must-revalidate, proxy-revalidate";
-    }
-
-    location ~ .* {
-        rewrite ^/(.*)$ /index.php/$1 last;
+    location / {
+        # Proxy over to aurweb's ASGI application.
+        proxy_pass http://{{ aurweb_asgi_bind }};
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Ssl on;
     }
 }
