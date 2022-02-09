@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
+import logging
 from argparse import ArgumentParser
-from asyncio import gather, get_event_loop, create_subprocess_exec
+from asyncio import create_subprocess_exec, gather, run
 from asyncio.subprocess import DEVNULL, PIPE
 from pathlib import Path
 from shlex import quote
 from warnings import warn
-import logging
-
 
 log = logging.getLogger(__name__)
 
@@ -17,7 +16,9 @@ class DBParser:
         self._packages = {}
 
     def _assert_state(self, *wanted):
-        assert self._state in wanted, "state is {!r}, not in {!r}".format(self._state, wanted)
+        assert self._state in wanted, "state is {!r}, not in {!r}".format(
+            self._state, wanted
+        )
 
     def _add_package(self):
         name, base, version = self._name, self._base, self._version
@@ -31,8 +32,11 @@ class DBParser:
         pkg = self._packages.setdefault(base, {})
         pkg.setdefault("names", set()).add(name)
         if pkg.setdefault("version", version) != version:
-            warn("Conflicting versions for pkgbase {!r}: {!r} {!r}".format(
-                base, pkg["version"], version))
+            warn(
+                "Conflicting versions for pkgbase {!r}: {!r} {!r}".format(
+                    base, pkg["version"], version
+                )
+            )
 
         self._name = self._base = self._version = None
 
@@ -86,21 +90,18 @@ async def open_db(dbfile):
     args = "/usr/bin/bsdtar", "-xOf", str(dbfile), "*/desc"
     cmdline = " ".join(quote(a) for a in args)
     log.debug("Running %s", cmdline)
-    process = await create_subprocess_exec(
-        *args, stdout=PIPE, stderr=DEVNULL, env={}
-    )
-    process.cmdline = cmdline
+    process = await create_subprocess_exec(*args, stdout=PIPE, stderr=DEVNULL, env={})
+    process.cmdline = cmdline  # type: ignore
     return process
 
 
 async def read_db(dbfile):
-    state = name = base = version = None
     packages = {}
     process = await open_db(dbfile)
 
     with DBParser() as parser:
         while True:
-            line = await process.stdout.readline()
+            line = await process.stdout.readline()  # type: ignore
             if not line:
                 break
             parser.parse_line(line.decode())
@@ -118,11 +119,11 @@ async def read_repo(name, archs):
         path = Path("/srv/ftp") / name / "os" / arch / (name + ".db")
         db = {}
         if path.exists():
-          try:
-              db = await read_db(path)
-              log.debug("Loaded repo name=%r arch=%r pkgs=%d", name, arch, len(db))
-          except Exception as e:
-              log.warning("Failed to read repo name=%r arch=%r: %s", name, arch, e)
+            try:
+                db = await read_db(path)
+                log.debug("Loaded repo name=%r arch=%r pkgs=%d", name, arch, len(db))
+            except Exception as e:
+                log.warning("Failed to read repo name=%r arch=%r: %s", name, arch, e)
         return frozenset([arch]), db
 
     repo = {}
@@ -153,12 +154,30 @@ def packages(repos):
 def parse_args():
     parser = ArgumentParser(description="List packages in FTP repositories")
     mode = parser.add_mutually_exclusive_group()
-    mode.add_argument("-b", "--bases", dest="mode", action="store_const", const="bases",
-            help="Only list pkgbases")
-    mode.add_argument("-n", "--names", dest="mode", action="store_const", const="names",
-            help="Only list pkgnames")
-    parser.add_argument("-a", "--arch", metavar="ARCH", dest="archs", action="append",
-            help="Arch to read")
+    mode.add_argument(
+        "-b",
+        "--bases",
+        dest="mode",
+        action="store_const",
+        const="bases",
+        help="Only list pkgbases",
+    )
+    mode.add_argument(
+        "-n",
+        "--names",
+        dest="mode",
+        action="store_const",
+        const="names",
+        help="Only list pkgnames",
+    )
+    parser.add_argument(
+        "-a",
+        "--arch",
+        metavar="ARCH",
+        dest="archs",
+        action="append",
+        help="Arch to read",
+    )
     parser.add_argument("--debug", action="store_true", help="Enable debug output")
     parser.add_argument("repos", metavar="REPO", nargs="+", help="Repository to read")
     return parser.parse_args()
@@ -171,12 +190,7 @@ if args.debug:
     logging.root.setLevel(logging.DEBUG)
 archs = frozenset(args.archs or ["x86_64"])
 
-loop = get_event_loop()
-try:
-    repos = loop.run_until_complete(read_repos(args.repos, archs))
-finally:
-    loop.close()
-
+repos = run(read_repos(args.repos, archs))
 
 if args.mode == "bases":
     for base in set(bases(repos)):
@@ -185,6 +199,7 @@ elif args.mode == "names":
     for name in {n for p in packages(repos) for n in p["names"]}:
         print(name)
 else:
+    longestbase = longestarch = longestver = 0
     if any(repos.values()):
         longestbase = max(len(b) for b in bases(repos))
         longestarch = len(" ".join(archs))
@@ -203,9 +218,13 @@ else:
                     "  \033[{}m{:^{}s}\033[39m"
                     "  \033[36m{:<{}s}\033[39m"
                     "  {}".format(
-                        base, longestbase,
-                        34 if arch == archs else 31, " ".join(sorted(arch)), longestarch,
-                        pkg["version"], longestver,
-                        " ".join(sorted(pkg["names"]))
+                        base,
+                        longestbase,
+                        34 if arch == archs else 31,
+                        " ".join(sorted(arch)),
+                        longestarch,
+                        pkg["version"],
+                        longestver,
+                        " ".join(sorted(pkg["names"])),
                     )
                 )
