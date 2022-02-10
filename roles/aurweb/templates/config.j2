@@ -53,8 +53,10 @@ userfile = {{ aurweb_dir }}/web/html/users.gz
 
 [notifications]
 notify-cmd = aurweb-notify
-{# An email used for server error notifications. #}
-postmaster = {{ vault_aurweb_postmaster }}
+{# Gitlab project and token used for traceback reports. #}
+gitlab-instance = {{ vault_aurweb_gitlab_instance }}
+error-project = {{ vault_aurweb_error_project }}
+error-token = {{ vault_aurweb_error_token }}
 
 [fastapi]
 session_secret = {{ vault_aurweb_secret }}
