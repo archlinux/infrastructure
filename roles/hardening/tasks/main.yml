@@ -7,6 +7,7 @@
 
 - name: set ptrace scope, restrict ptrace to CAP_SYS_PTRACE
   copy: src=50-ptrace-restrict.conf dest=/etc/sysctl.d/50-ptrace-restrict.conf owner=root group=root mode=0644
+  when: "'buildservers' not in group_names"
   notify:
     - apply sysctl settings
 
