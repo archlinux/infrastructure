@@ -257,6 +257,7 @@ arch_users:
     name: "Morten Linderud"
     ssh_key: foxboron.pub
     groups:
+      - dev
       - tu
   foxxx0:
     name: "Thore Bödecker"
