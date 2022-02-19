@@ -71,6 +71,14 @@ server {
         expires 5m;
     }
 
+    location ~ ^/static/(?:css|js|images)/ {
+        rewrite ^/static(/.*)$ $1 break;
+
+        expires 7d;
+        add_header Pragma public;
+        add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+    }
+
     location / {
         # Proxy over to aurweb's ASGI application.
         proxy_pass http://{{ aurweb_asgi_bind }};
