@@ -4,6 +4,7 @@ aurweb_asgi_bind: '127.0.0.1:8000'
 aurweb_domain: 'aur.archlinux.org'
 aurweb_repository: 'https://gitlab.archlinux.org/archlinux/aurweb.git'
 aurweb_dir: '/srv/http/aurweb'
+aurweb_prom_dir: 'aurweb-prom'
 aurweb_conf_dir: '/etc/aurweb'
 aurweb_git_dir: "{{ aurweb_dir }}/aur.git"
 aurweb_git_hook: '/usr/local/bin/aurweb-git-update'

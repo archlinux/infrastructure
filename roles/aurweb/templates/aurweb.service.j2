@@ -2,6 +2,8 @@
 Description=aurweb asgi server
 
 [Service]
+RuntimeDirectory={{ aurweb_prom_dir }}
+Environment=PROMETHEUS_MULTIPROC_DIR=/run/{{ aurweb_prom_dir }}
 User={{ aurweb_user }}
 WorkingDirectory={{ aurweb_dir }}
 ExecStart=/usr/bin/poetry run gunicorn \
