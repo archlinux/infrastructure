@@ -134,6 +134,11 @@ scrape_configs:
     static_configs:
     - targets: ['md.archlinux.org:443']
 
+  - job_name: aurweb
+    scheme: https
+    static_configs:
+    - targets: ['aur.archlinux.org:443']
+
   - job_name: grafana
     scheme: https
     authorization:
