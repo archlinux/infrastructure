@@ -321,6 +321,7 @@ resource "keycloak_saml_user_property_protocol_mapper" "gitlab_saml_username" {
 // |- Archweb
 // |  |- Mirrorlist Maintainers
 // |- Bug Wranglers
+// |- Project Maintainers
 // External Contributors
 // |- Security Team
 // |  |- Reporters
@@ -332,7 +333,7 @@ resource "keycloak_group" "staff" {
 }
 
 resource "keycloak_group" "staff_groups" {
-  for_each = toset(["DevOps", "Developers", "Trusted Users", "Wiki", "Forum", "Security Team", "IRC", "Archweb", "Bug Wranglers"])
+  for_each = toset(["DevOps", "Developers", "Trusted Users", "Wiki", "Forum", "Security Team", "IRC", "Archweb", "Bug Wranglers", "Project Maintainers"])
 
   realm_id  = "archlinux"
   parent_id = keycloak_group.staff.id
