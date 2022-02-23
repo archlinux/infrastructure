@@ -1,20 +1,22 @@
+{% for domain in mirror_domains %}
 server {
     listen       80;
     listen       [::]:80;
     listen       443 ssl http2;
     listen       [::]:443 ssl http2;
-    server_name  {{ mirror_domain }};
+    server_name  {{ domain }};
     root         /srv/ftp;
 
-    access_log   /var/log/nginx/{{ mirror_domain }}/access.log reduced;
-    access_log   /var/log/nginx/{{ mirror_domain }}/access.log.json json_reduced;
-    error_log    /var/log/nginx/{{ mirror_domain }}/error.log;
+    access_log   /var/log/nginx/{{ domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ domain }}/access.log.json json_reduced;
+    error_log    /var/log/nginx/{{ domain }}/error.log;
 
     include snippets/letsencrypt.conf;
 
-    ssl_certificate      /etc/letsencrypt/live/{{ mirror_domain }}/fullchain.pem;
-    ssl_certificate_key  /etc/letsencrypt/live/{{ mirror_domain }}/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/{{ mirror_domain }}/chain.pem;
+    ssl_certificate      /etc/letsencrypt/live/{{ domain }}/fullchain.pem;
+    ssl_certificate_key  /etc/letsencrypt/live/{{ domain }}/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/{{ domain }}/chain.pem;
 
     autoindex on;
 }
+{% endfor %}

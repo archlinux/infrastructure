@@ -85,6 +85,7 @@ So to set up this server from scratch, run:
 
 ### Services
   - Regular mirror.
+  - Running a authoritative DNS server (PowerDNS) for our GeoIP mirror
 
 ## reproducible.archlinux.org
 

@@ -1,0 +1,26 @@
+#jinja2:lstrip_blocks: True
+---
+domains:
+  - domain: {{ geo_mirror_domain }}
+    ttl: 3600
+    records:
+      {{ geo_mirror_domain }}:
+        - soa: mirror.pkgbuild.com. root.archlinux.org. 2022011501 3600 1800 604800 3600
+        - ns: mirror.pkgbuild.com
+      {% for host in groups['geo_mirrors'] %}
+      {{ host.split(".")[0] }}.{{ geo_mirror_domain }}:
+        - a: {{ hostvars[host]['ipv4_address'] }}
+        - aaaa: {{ hostvars[host]['ipv6_address'] }}
+      {% endfor %}
+    services:
+      {{ geo_mirror_domain }}: '%mp.geo.mirror.pkgbuild.com'
+mapping_lookup_formats: ['%cn']
+custom_mapping:
+  af: europe
+  an: europe
+  as: asia
+  eu: europe
+  na: america
+  oc: asia
+  sa: america
+  unknown: europe

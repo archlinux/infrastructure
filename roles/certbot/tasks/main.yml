@@ -1,7 +1,11 @@
 ---
 
 - name: install certbot
-  pacman: name=certbot state=present
+  pacman: name=certbot{{ ",certbot-dns-rfc2136" if certbot_dns_support }} state=present
+
+- name: install rfc2136.ini
+  template: src=rfc2136.ini.j2 dest=/etc/letsencrypt/rfc2136.ini owner=root group=root mode=0600
+  when: certbot_dns_support
 
 - name: install letsencrypt hook
   copy: src=hook.sh dest=/etc/letsencrypt/hook.sh owner=root group=root mode=0755

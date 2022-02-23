@@ -1,4 +1,4 @@
-- name: create ssl cert
+- name: create ssl cert (HTTP-01)
   shell: |
     set -o pipefail
     # We can't start nginx without the certificate and we can't issue a certificate without nginx running.
@@ -8,3 +8,10 @@
     certbot certonly --email {{ certificate_contact_email }} --agree-tos --rsa-key-size {{ certificate_rsa_key_size }} --renew-by-default --webroot -w {{ letsencrypt_validation_dir }} -d {{ domains | join(' -d ') }}
   args:
     creates: '/etc/letsencrypt/live/{{ domains | first }}/fullchain.pem'
+  when: challenge | default(certificate_challenge) == "HTTP-01"
+
+- name: create ssl cert (DNS-01)
+  command: certbot certonly --email {{ certificate_contact_email }} --agree-tos --rsa-key-size {{ certificate_rsa_key_size }} --renew-by-default --dns-rfc2136 --dns-rfc2136-credentials /etc/letsencrypt/rfc2136.ini -d {{ domains | join(' -d ') }}
+  args:
+    creates: '/etc/letsencrypt/live/{{ domains | first }}/fullchain.pem'
+  when: challenge | default(certificate_challenge) == "DNS-01"
