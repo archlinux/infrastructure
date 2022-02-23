@@ -168,6 +168,7 @@ locals {
     "tu-bylaws.aur"         = "bbafd3ed82f336e0c52d3eb9774b2432"
     "reproducible-notes"    = "8c657f2f2720db1c3db63be89605cf0d"
     "terms"                 = "0b62a71af2aa85fb491295b543b4c3d2"
+    "btw"                   = "20e632fd625241de7b0db4b1df564dd4"
   }
 
   # This creates archlinux.org TXT DNS entries
