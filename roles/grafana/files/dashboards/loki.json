@@ -1748,7 +1748,7 @@
           "refId": "A"
         },
         {
-          "expr": "loki_distributor_ingester_append_failures_total",
+          "expr": "rate(loki_distributor_ingester_append_failures_total[5m])",
           "interval": "",
           "legendFormat": "failed",
           "refId": "B"
@@ -1758,7 +1758,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "batch appends sent to ingesters / sec",
+      "title": "Batch appends sent to ingesters / sec",
       "tooltip": {
         "shared": true,
         "sort": 0,
