@@ -7,6 +7,7 @@
       shell: "for type in sha256 md5; do for file in /etc/ssh/ssh_host_*.pub; do ssh-keygen -l -f $file -E $type; done; echo; done"
       register: ssh_hostkeys
       changed_when: ssh_hostkeys | length > 0
+
     - name: fetch known_hosts
       shell: "set -o pipefail && ssh-keyscan 127.0.0.1 2>/dev/null | sed 's#^127.0.0.1#{{ inventory_hostname }}#' | sort"
       environment:
@@ -24,23 +25,11 @@
         dest: "{{ playbook_dir }}/../../docs/ssh-hostkeys.txt"
         content: "{% for host in query('inventory_hostnames', 'all,!rsync_net,!hetzner_storageboxes,!localhost') | sort %}# {{ host }}\n{{ hostvars[host].ssh_hostkeys.stdout }}\n\n{% endfor %}"
         mode: preserve
-      delegate_to: localhost
+
     - name: store known_hosts
-      copy:
-        dest: "{{ playbook_dir }}/../../docs/ssh-known_hosts.txt"
-        content: "{% for host in query('inventory_hostnames', 'all,!rsync_net,!hetzner_storageboxes,!localhost') | sort %}# {{ host }}\n{{ hostvars[host].known_hosts.stdout }}\n\n{% endfor %}"
-        mode: preserve
-      delegate_to: localhost
-    - name: manually append rsync.net host keys
-      lineinfile:
+      blockinfile:
         path: "{{ playbook_dir }}/../../docs/ssh-known_hosts.txt"
-        line: "{% for host in query('inventory_hostnames', 'rsync_net') | sort %}# {{ host }}\n{{ hostvars[host].known_host }}\n{% endfor %}"
-      delegate_to: localhost
-    - name: manually append Hetzner Storageboxes host keys
-      lineinfile:
-        path: "{{ playbook_dir }}/../../docs/ssh-known_hosts.txt"
-        line: "{% for host in query('inventory_hostnames', 'hetzner_storageboxes') | sort %}# {{ host }}\n{{ hostvars[host].known_host }}\n{% endfor %}"
-      delegate_to: localhost
+        block: "\n{% for host in query('inventory_hostnames', 'all,!rsync_net,!hetzner_storageboxes,!localhost') | sort %}# {{ host }}\n{{ hostvars[host].known_hosts.stdout }}\n\n{% endfor %}"
 
 - name: upload known_hosts to all nodes
   hosts: all,!rsync_net,!hetzner_storageboxes
