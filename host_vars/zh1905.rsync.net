@@ -1,2 +1,0 @@
----
-ansible_ssh_user: "{{ rsync_net_username }}"

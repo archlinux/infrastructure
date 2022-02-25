@@ -1,31 +1,35 @@
 ---
 
-# We have to set up the rsync.net account in a weird fashion because
-# they don't support ansible directly (no Python and such).
+# This role runs on localhost; use commands like sftp to upload configuration
+
 - name: create the root backup directory at {{ backup_dir }}
-  raw: mkdir -p {{ backup_dir }}
-  tags:
-    - skip_ansible_lint
+  expect:
+    command: bash -c "echo 'mkdir {{ backup_dir }}' | sftp {{ rsync_net_username }}@{{ rsync_net_username }}.rsync.net"
+    responses:
+      (?i)password: "{{ rsync_net_password }}"
 
 - name: fetch ssh keys from each borg client machine
   command: cat /root/.ssh/id_rsa.pub
   register: client_ssh_keys
   delegate_to: "{{ item }}"
   with_items: "{{ backup_clients }}"
-  remote_user: root
   changed_when: client_ssh_keys.changed
 
 - name: create tempfile
   tempfile: state=file
   register: tempfile
-  delegate_to: localhost
 
 - name: fill tempfile
   copy: content="{{ lookup('template', 'authorized_keys.j2') }}" dest="{{ tempfile.path }}" mode=0644  # noqa 208
-  delegate_to: localhost
 
 - name: upload authorized_keys file
-  command: scp "{{ tempfile.path }}" "{{ rsync_net_username }}@{{ inventory_hostname }}":.ssh/authorized_keys
-  delegate_to: localhost
-  register: scp
-  changed_when: "scp.rc == 0"
+  expect:
+    command: |
+      bash -c 'sftp {{ rsync_net_username }}@{{ rsync_net_username }}.rsync.net <<EOF
+        mkdir .ssh
+        chmod 700 .ssh
+        put {{ tempfile.path }} .ssh/authorized_keys
+        chmod 600 .ssh/authorized_keys
+      EOF'
+    responses:
+      (?i)password: "{{ rsync_net_password }}"
