@@ -2,12 +2,6 @@
 secure-runner1.archlinux.org
 gemini.archlinux.org
 
-[rsync_net]
-zh1905.rsync.net
-
-[hetzner_storageboxes]
-u236610.your-storagebox.de
-
 [packet_net]
 runner2.archlinux.org
 repro1.pkgbuild.com
@@ -46,10 +40,6 @@ security.archlinux.org
 md.archlinux.org
 lists.archlinux.org
 gluebuddy.archlinux.org
-
-[borg_hosts]
-zh1905.rsync.net
-u236610.your-storagebox.de
 
 [public_html]
 homedir.archlinux.org
