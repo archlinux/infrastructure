@@ -1,2 +1,0 @@
----
-ansible_ssh_user: "{{ hetzner_storagebox_username }}"
