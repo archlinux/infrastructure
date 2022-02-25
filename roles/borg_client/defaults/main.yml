@@ -4,7 +4,7 @@ backup_hosts:
     dir: "~/repo"
     suffix: ""
     borg_cmd: "borg"
-  - host: "ssh://{{ rsync_net_username }}@zh1905.rsync.net:22"
+  - host: "ssh://zh1905@zh1905.rsync.net:22"
     dir: "~/backup/{{ inventory_hostname }}"
     suffix: "-offsite"
     borg_cmd: "borg --remote-path=borg1"

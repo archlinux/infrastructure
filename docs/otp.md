@@ -56,7 +56,7 @@ Run
 
     pass otp insert -i rsync.net -a archlinux Rsync.net/archlinux-master-token -s
 
-When asked for a secret, provide the `2FA token seed` from `group_vars/all/vault_rsync.net.yml`.
+When asked for a secret, provide the `2FA token seed` from `host_vars/localhost/vault_rsync.net.yml`.
 You can then run
 
     pass otp code Rsync.net/archlinux-master-token
