@@ -1,21 +1,23 @@
 ---
 
-# We have to set up the Hetzner Storagebox account in a weird fashion because
-# they don't even allow direct SSH.
+# This role runs on localhost; use commands like sftp to upload configuration
+
 - name: create the root backup directory at {{ backup_dir }}
   expect:
-    command: bash -c "echo 'mkdir {{ backup_dir }}' | sftp -P 23 {{ hetzner_storagebox_username }}@{{ inventory_hostname }}"
+    command: bash -c "echo 'mkdir {{ backup_dir }}' | sftp -P 23 {{ storagebox_username }}@{{ storagebox_hostname }}"
     responses:
-      (?i)password: "{{ hetzner_storagebox_password }}"
-  delegate_to: localhost
+      (?i)password: "{{ storagebox_password }}"
 
 - name: create a home directory for each sub-account
   expect:
-    command: bash -c "echo 'mkdir {{ backup_dir }}/{{ item }}' | sftp -P 23 {{ hetzner_storagebox_username }}@{{ inventory_hostname }}"
+    command: |
+      bash -c 'sftp -P 23 {{ storagebox_username }}@{{ storagebox_hostname }} <<EOF
+        {% for client in backup_clients %}
+          mkdir {{ backup_dir }}/{{ client }}
+        {% endfor %}
+      EOF'
     responses:
-      (?i)password: "{{ hetzner_storagebox_password }}"
-  delegate_to: localhost
-  loop: "{{ backup_clients }}"
+      (?i)password: "{{ storagebox_password }}"
 
 - name: fetch ssh keys from each borg client machine
   command: cat /root/.ssh/id_rsa.pub
@@ -23,26 +25,28 @@
   register: client_ssh_keys
   delegate_to: "{{ item }}"
   with_items: "{{ backup_clients }}"
-  remote_user: root
   changed_when: client_ssh_keys.changed
 
 - name: create tempfile
   tempfile: state=file
   check_mode: false
   register: tempfile
-  delegate_to: localhost
 
 - name: fill tempfile
   copy: content="{{ lookup('template', 'authorized_keys.j2') }}" dest="{{ tempfile.path }}" mode=preserve
-  delegate_to: localhost
   no_log: true
 
 - name: upload authorized_keys for Arch DevOps
   expect:
-    command: bash -c "echo -e 'mkdir .ssh \n chmod 700 .ssh \n put {{ tempfile.path }} .ssh/authorized_keys \n chmod 600 .ssh/authorized_keys' | sftp -P 23 {{ hetzner_storagebox_username }}@{{ inventory_hostname }}"
+    command: |
+      bash -c 'sftp -P 23 {{ storagebox_username }}@{{ storagebox_hostname }} <<EOF
+        mkdir .ssh
+        chmod 700 .ssh
+        put {{ tempfile.path }} .ssh/authorized_keys
+        chmod 600 .ssh/authorized_keys
+      EOF'
     responses:
-      (?i)password: "{{ hetzner_storagebox_password }}"
-  delegate_to: localhost
+      (?i)password: "{{ storagebox_password }}"
 
 - name: upload authorized_keys for each backup client
   include_tasks: upload_client_authorized_keys.yml
@@ -52,10 +56,9 @@
 
 - name: retrieve sub-account information
   uri:
-    url: https://robot-ws.your-server.de/storagebox/{{ hetzner_storagebox_id }}/subaccount
+    url: https://robot-ws.your-server.de/storagebox/{{ storagebox_id }}/subaccount
     user: "{{ hetzner_webservice_username }}"
     password: "{{ hetzner_webservice_password }}"
-  delegate_to: localhost
   check_mode: false
   register: subaccounts_raw
   no_log: true
@@ -67,7 +70,7 @@
 - name: create missing sub-accounts
   uri:
     timeout: 60
-    url: https://robot-ws.your-server.de/storagebox/{{ hetzner_storagebox_id }}/subaccount
+    url: https://robot-ws.your-server.de/storagebox/{{ storagebox_id }}/subaccount
     user: "{{ hetzner_webservice_username }}"
     password: "{{ hetzner_webservice_password }}"
     method: POST
@@ -76,7 +79,6 @@
       homedirectory: "{{ backup_dir }}/{{ item }}"
       comment: "{{ item }}"
       ssh: "true"
-  delegate_to: localhost
   loop: "{{ backup_clients | difference(subaccounts | json_query('[].comment')) }}"
   register: new_subaccounts_raw
   no_log: true
@@ -101,7 +103,7 @@
     create: true
     mode: 0600
     block: |
-      Host {{ inventory_hostname }}
+      Host {{ storagebox_hostname }}
         User {{ backup_client_usernames[item] }}
     marker: '# {mark} HETZNER STORAGE BOX BACKUP CLIENT CONFIG'
   delegate_to: "{{ item }}"

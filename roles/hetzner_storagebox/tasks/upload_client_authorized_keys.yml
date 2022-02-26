@@ -2,12 +2,16 @@
 
 - name: fill tempfile
   copy: content="{{ lookup('template', 'authorized_keys_client.j2') }}" dest="{{ tempfile.path }}" mode=preserve
-  delegate_to: localhost
   no_log: true
 
 - name: upload authorized_keys file to {{ backup_dir }}/{{ item.item }}
   expect:
-    command: bash -c "echo -e 'mkdir {{ backup_dir }}/{{ item.item }}/.ssh \n chmod 700 {{ backup_dir }}/{{ item.item }}/.ssh \n put {{ tempfile.path }} {{ backup_dir }}/{{ item.item }}/.ssh/authorized_keys \n chmod 600 {{ backup_dir }}/{{ item.item }}/.ssh/authorized_keys' | sftp -P 23 {{ hetzner_storagebox_username }}@{{ inventory_hostname }}"
+    command: |
+      bash -c 'sftp {{ storagebox_username }}@{{ storagebox_hostname }} <<EOF
+        mkdir {{ backup_dir }}/{{ item.item }}/.ssh
+        chmod 700 {{ backup_dir }}/{{ item.item }}/.ssh
+        put {{ tempfile.path }} {{ backup_dir }}/{{ item.item }}/.ssh/authorized_keys
+        chmod 600 {{ backup_dir }}/{{ item.item }}/.ssh/authorized_keys'
+      EOF'
     responses:
-      (?i)password: "{{ hetzner_storagebox_password }}"
-  delegate_to: localhost
+      (?i)password: "{{ storagebox_password }}"

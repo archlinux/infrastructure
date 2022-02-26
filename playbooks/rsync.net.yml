@@ -1,7 +1,10 @@
 ---
 
 - name: setup rsync.net account
-  hosts: zh1905.rsync.net
+  hosts: localhost
   gather_facts: false
   roles:
-    - { role: rsync_net, backup_dir: "backup", backup_clients: "{{ groups['borg_clients'] }}", tags: ["borg"] }
+    - role: rsync_net
+      backup_clients: "{{ groups['borg_clients'] }}"
+      backup_dir: backup
+      tags: ["borg"]
