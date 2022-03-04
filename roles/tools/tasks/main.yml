@@ -1,3 +1,5 @@
+---
+
 - name: install misc utils
   pacman:
     state: present
@@ -8,3 +10,7 @@
       - git
       - parallel
       - nnn  # Added for it's screen reader support
+
+- name: install extra utils
+  pacman: state=present name={{ extra_utils }}
+  when: extra_utils is defined

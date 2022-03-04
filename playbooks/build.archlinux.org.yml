@@ -5,7 +5,7 @@
   remote_user: root
   roles:
     - { role: common }
-    - { role: tools }
+    - { role: tools, extra_utils: ['setconf'] }
     - { role: sshd }
     - { role: root_ssh }
     - { role: archusers }
