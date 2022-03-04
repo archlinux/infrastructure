@@ -1,0 +1,29 @@
+---
+
+- name: install geoipupdate
+  pacman: name=geoipupdate state=present
+
+- name: configure geoipupdate
+  lineinfile:
+    path: /etc/GeoIP.conf
+    regex: '^#*\s*{{ item.setting }} '
+    line: '{{ item.setting }} {{ item.value }}'
+    owner: root
+    group: root
+    mode: 0600
+  no_log: true
+  loop:
+    - { setting: AccountID, value: '{{ vault_mirror_maxmind_id }}' }
+    - { setting: LicenseKey, value: '{{ vault_mirror_maxmind_license }}' }
+    - { setting: EditionIDs, value: '{{ geoipupdate_edition_ids }}' }
+
+- name: create drop-in directory for geoipupdate.service
+  file: path=/etc/systemd/system/geoipupdate.service.d state=directory owner=root group=root mode=0755
+
+- name: install drop-in for geoipupdate.service
+  copy: src=hardening.conf dest=/etc/systemd/system/geoipupdate.service.d/ owner=root group=root mode=0644
+  notify:
+    - daemon reload
+
+- name: start and enable geoipupdate.timer
+  systemd: name=geoipupdate.timer enabled=yes state=started
