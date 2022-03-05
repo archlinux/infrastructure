@@ -8,9 +8,12 @@
 
 - name: upgrade all packages
   pacman:
-    update_cache: yes
     upgrade: yes
   register: pacman_upgrade
+
+- name: stop if no packages were upgraded
+  meta: end_host
+  when: pacman_upgrade is not changed
 
 - name: check for running builds
   block:
@@ -59,4 +62,3 @@
 
 - name: reboot
   reboot:
-  when: pacman_upgrade is changed
