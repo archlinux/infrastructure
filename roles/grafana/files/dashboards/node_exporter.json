@@ -23,7 +23,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 1860,
   "graphTooltip": 0,
-  "iteration": 1646552473113,
+  "iteration": 1646553454514,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -638,7 +638,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^{instance=\"aur.archlinux.org\", job=\"node_exporter\"}$/",
+          "fields": "",
           "values": false
         },
         "textMode": "auto"
@@ -717,7 +717,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^node_filesystem_size_bytes{device=\"/dev/sda2\", fstype=\"btrfs\", instance=\"aur.archlinux.org\", job=\"node_exporter\", mountpoint=\"/\"}$/",
+          "fields": "",
           "values": false
         },
         "textMode": "auto"
@@ -747,7 +747,7 @@
           "color": {
             "mode": "thresholds"
           },
-          "decimals": 0,
+          "decimals": 1,
           "mappings": [
             {
               "options": {
@@ -794,7 +794,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^node_memory_MemTotal_bytes{instance=\"aur.archlinux.org\", job=\"node_exporter\"}$/",
+          "fields": "",
           "values": false
         },
         "textMode": "auto"
@@ -822,7 +822,7 @@
           "color": {
             "mode": "thresholds"
           },
-          "decimals": 0,
+          "decimals": 1,
           "mappings": [
             {
               "options": {
@@ -869,7 +869,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^node_memory_SwapTotal_bytes{instance=\"aur.archlinux.org\", job=\"node_exporter\"}$/",
+          "fields": "",
           "values": false
         },
         "textMode": "auto"
@@ -1883,6 +1883,6 @@
   "timezone": "browser",
   "title": "Server Monitoring",
   "uid": "rYdddlPWk",
-  "version": 5,
+  "version": 6,
   "weekStart": ""
 }
