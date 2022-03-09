@@ -28,9 +28,11 @@ blackbox_targets:
     - https://bugs.archlinux.org
     - https://conf.archlinux.org
     - https://dashboards.archlinux.org/healthz
+    - https://debuginfod.archlinux.org
     - https://dev.archlinux.org
     - https://europe.archive.pkgbuild.com
     - https://europe.mirror.pkgbuild.com
+    - https://geo.mirror.pkgbuild.com
     - https://gitlab.archlinux.org
     - https://ipxe.archlinux.org
     - https://lists.archlinux.org
@@ -46,6 +48,7 @@ blackbox_targets:
     - https://mta-sts.lists.archlinux.org/.well-known/mta-sts.txt
     - https://mta-sts.master-key.archlinux.org/.well-known/mta-sts.txt
     - https://openpgpkey.archlinux.org/.well-known/openpgpkey/archlinux.org/policy
+    - https://openpgpkey.master-key.archlinux.org/.well-known/openpgpkey/master-key.archlinux.org/policy
     - https://packages.archlinux.org
     - https://patchwork.archlinux.org
     - https://ping.archlinux.org
@@ -56,6 +59,8 @@ blackbox_targets:
     - https://security.archlinux.org
     - https://sources.archlinux.org
     - https://static.conf.archlinux.org/README.md
+    - https://terms.archlinux.org
+    - https://tu-bylaws.aur.archlinux.org
     - https://whatcanidofor.archlinux.org
     - https://wiki.archlinux.org
     - https://www.archlinux.org
@@ -64,7 +69,8 @@ blackbox_targets:
     - mail.archlinux.org:465
     - mail.archlinux.org:993
     - coc.archlinux.org:443
-    - debuginfod.archlinux.org:443
+    - git.archlinux.org:443
+    - rsync.archlinux.org:443
   smtp_starttls:
     - mail.archlinux.org:25
     - lists.archlinux.org:25
