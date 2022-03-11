@@ -2,7 +2,7 @@
 hostname: "build.archlinux.org"
 network_interface: "enp195s0"
 ipv4_address: "135.181.138.48"
-ipv4_netmask: "/26"
+ipv4_netmask: "/32"
 ipv6_address: "2a01:4f9:3a:120f::2"
 ipv6_netmask: "/128"
 ipv4_gateway: "135.181.138.1"
