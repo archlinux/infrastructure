@@ -1,6 +1,7 @@
 [hetzner]
 secure-runner1.archlinux.org
 gemini.archlinux.org
+build.archlinux.org
 
 [packet_net]
 runner2.archlinux.org
