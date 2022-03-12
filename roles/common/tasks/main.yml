@@ -84,15 +84,19 @@
     sysctl_file: /etc/sysctl.d/net.conf
   when: tcp_wmem is defined
 
-- name: configure journald
-  template: src={{ item }}.j2 dest=/etc/systemd/{{ item }} owner=root group=root mode=644
-  with_items:
+- name: create drop-in directories for systemd configuration
+  file: path=/etc/systemd/{{ item }}.d state=directory owner=root group=root mode=0755
+  loop:
+    - system.conf
     - journald.conf
+
+- name: install journald.conf overrides
+  template: src=journald.conf.j2 dest=/etc/systemd/journald.conf.d/override.conf owner=root group=root mode=644
   notify:
     - restart journald
 
-- name: install system.conf
-  template: src=system.conf.j2 dest=/etc/systemd/system.conf owner=root group=root mode=0644
+- name: install system.conf overrides
+  template: src=system.conf.j2 dest=/etc/systemd/system.conf.d/override.conf owner=root group=root mode=0644
   notify:
     - systemd daemon-reload
 
