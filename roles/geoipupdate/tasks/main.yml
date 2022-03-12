@@ -4,18 +4,7 @@
   pacman: name=geoipupdate state=present
 
 - name: configure geoipupdate
-  lineinfile:
-    path: /etc/GeoIP.conf
-    regex: '^#*\s*{{ item.setting }} '
-    line: '{{ item.setting }} {{ item.value }}'
-    owner: root
-    group: root
-    mode: 0600
-  no_log: true
-  loop:
-    - { setting: AccountID, value: '{{ vault_mirror_maxmind_id }}' }
-    - { setting: LicenseKey, value: '{{ vault_mirror_maxmind_license }}' }
-    - { setting: EditionIDs, value: '{{ geoipupdate_edition_ids }}' }
+  template: src=GeoIP.conf.j2 dest=/etc/GeoIP.conf owner=root group=root mode=0600
 
 - name: create drop-in directory for geoipupdate.service
   file: path=/etc/systemd/system/geoipupdate.service.d state=directory owner=root group=root mode=0755
