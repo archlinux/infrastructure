@@ -394,6 +394,7 @@ resource "hetznerdns_record" "pkgbuild_com_origin_ns3" {
   name    = "@"
   value   = "helium.ns.hetzner.de."
   type    = "NS"
+  ttl     = 86400
 }
 
 resource "hetznerdns_record" "pkgbuild_com_origin_ns2" {
@@ -401,6 +402,7 @@ resource "hetznerdns_record" "pkgbuild_com_origin_ns2" {
   name    = "@"
   value   = "oxygen.ns.hetzner.com."
   type    = "NS"
+  ttl     = 86400
 }
 
 resource "hetznerdns_record" "pkgbuild_com_origin_ns1" {
@@ -408,6 +410,7 @@ resource "hetznerdns_record" "pkgbuild_com_origin_ns1" {
   name    = "@"
   value   = "hydrogen.ns.hetzner.com."
   type    = "NS"
+  ttl     = 86400
 }
 
 # TODO: Commented currently as we have no idea how to handle SOA stuff with Terraform:
@@ -439,6 +442,7 @@ resource "hetznerdns_record" "archlinux_org_origin_ns3" {
   name    = "@"
   value   = "helium.ns.hetzner.de."
   type    = "NS"
+  ttl     = 86400
 }
 
 resource "hetznerdns_record" "archlinux_org_origin_ns2" {
@@ -446,6 +450,7 @@ resource "hetznerdns_record" "archlinux_org_origin_ns2" {
   name    = "@"
   value   = "oxygen.ns.hetzner.com."
   type    = "NS"
+  ttl     = 86400
 }
 
 resource "hetznerdns_record" "archlinux_org_origin_ns1" {
@@ -453,6 +458,7 @@ resource "hetznerdns_record" "archlinux_org_origin_ns1" {
   name    = "@"
   value   = "hydrogen.ns.hetzner.com."
   type    = "NS"
+  ttl     = 86400
 }
 
 # TODO: Commented currently as we have no idea how to handle SOA stuff with Terraform:
