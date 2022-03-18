@@ -10,6 +10,11 @@ upstream smartgit {
     server unix://{{ smartgit_socket }};
 }
 
+# limit Git requests to block Git DoS attempts.
+# # grep aurwebgitlimit /var/log/nginx/aur.archlinux.org/error.log | awk '{ print $14 }' | sort | uniq | sort
+limit_req_zone $binary_remote_addr zone=aurwebgitlimit:10m rate=30r/m;
+limit_req_status 429;
+
 server {
     listen       80;
     listen       [::]:80;
@@ -47,6 +52,7 @@ server {
     }
 
     location ~ "^/([a-z0-9][a-z0-9.+_-]*?)(\.git)?/(git-(receive|upload)-pack|HEAD|info/refs|objects/(info/(http-)?alternates|packs)|[0-9a-f]{2}/[0-9a-f]{38}|pack/pack-[0-9a-f]{40}\.(pack|idx))$" {
+	limit_req zone=aurwebgitlimit burst=300 nodelay;
         include      uwsgi_params;
         uwsgi_pass   smartgit;
         uwsgi_modifier1 9;
@@ -58,6 +64,7 @@ server {
     }
 
     location ~ ^/cgit {
+        limit_req zone=aurwebgitlimit burst=300 nodelay;
         include uwsgi_params;
         rewrite ^/cgit/([^?/]+/[^?]*)?(?:\?(.*))?$ /cgit.cgi?url=$1&$2 last;
         uwsgi_modifier1 9;
