@@ -1,4 +1,7 @@
-{% if 'mirrors' in group_names or 'buildservers' in group_names %}
+{% if 'buildservers' in group_names %}
+Server = https://repos.archlinux.org/$repo/os/$arch
+{% endif %}
+{% if 'mirrors' in group_names or inventory_hostname == 'gemini.archlinux.org' %}
 Server = file:///srv/ftp/$repo/os/$arch
 {% endif %}
-Server = https://mirror.pkgbuild.com/$repo/os/$arch/
+Server = https://mirror.pkgbuild.com/$repo/os/$arch
