@@ -25,7 +25,7 @@ server {
         satisfy any;
         auth_request /devel/mirrorauth/;
 
-{% for host in groups['buildservers'] | sort | unique %}
+{% for host in groups['buildservers'] | sort %}
         # {{ host }}
 {% for address in ['ipv4_address', 'ipv6_address'] if address in hostvars[host] %}
         allow {{ hostvars[host][address] }};
