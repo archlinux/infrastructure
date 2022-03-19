@@ -14,8 +14,6 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ repos_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ repos_domain }}/chain.pem;
 
-    satisfy  any;
-
     access_log   /var/log/nginx/{{ repos_domain }}/access.log reduced;
     access_log   /var/log/nginx/{{ repos_domain }}/access.log.json json_reduced;
 
@@ -24,8 +22,18 @@ server {
     }
 
     location / {
+        satisfy any;
         auth_request /devel/mirrorauth/;
 
+{% for host in groups['buildservers'] | sort | unique %}
+        # {{ host }}
+{% for address in ['ipv4_address', 'ipv6_address'] if address in hostvars[host] %}
+        allow {{ hostvars[host][address] }};
+{% else %}
+        # no addresses defined in hostvars
+{% endfor %}
+
+{% endfor %}
         autoindex  on;
     }
 
@@ -50,7 +58,7 @@ server {
 
         # Authentication to archweb
         proxy_pass https://archlinux.org;
-	proxy_ssl_verify on;
-	proxy_ssl_trusted_certificate /etc/ssl/certs/ca-certificates.crt;
+        proxy_ssl_verify on;
+        proxy_ssl_trusted_certificate /etc/ssl/certs/ca-certificates.crt;
     }
 }
