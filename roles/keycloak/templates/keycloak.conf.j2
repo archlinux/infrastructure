@@ -1,0 +1,14 @@
+hostname={{ inventory_hostname }}
+spi-theme-welcome-theme=archlinux
+metrics-enabled=true
+
+http-enabled=true
+http-host=127.0.0.1
+http-port={{ keycloak_port }}
+http-relative-path=/auth
+proxy=edge
+
+db=postgres
+db-username={{ vault_keycloak_db_user }}
+db-password={{ vault_keycloak_db_password }}
+db-url=jdbc:postgresql://localhost/{{ keycloak_db_name }}
