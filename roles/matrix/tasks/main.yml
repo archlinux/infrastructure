@@ -106,6 +106,7 @@
     repo: https://github.com/matrix-org/mjolnir
     dest: /var/lib/synapse/mjolnir
     version: v1.4.1
+    force: true
   become: true
   become_user: synapse
   become_method: sudo
@@ -148,6 +149,7 @@
     repo: https://github.com/matrix-org/matrix-appservice-irc
     dest: /var/lib/synapse/matrix-appservice-irc
     version: 0.33.0
+    force: true
   become: true
   become_user: synapse
   become_method: sudo
