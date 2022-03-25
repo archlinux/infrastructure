@@ -221,7 +221,7 @@ resource "keycloak_saml_client" "saml_gitlab" {
   realm_id  = "archlinux"
   client_id = "saml_gitlab"
 
-  name    = "Arch Linux Accounts"
+  name    = "Arch Linux GitLab"
   enabled = true
 
   signature_algorithm = "RSA_SHA256"
