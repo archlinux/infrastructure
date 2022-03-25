@@ -1,5 +1,4 @@
 keycloak_db_name: keycloak
 keycloak_domain: accounts.archlinux.org
-keycloak_home_dir: /opt/keycloak
-keycloak_port: "8443"
+keycloak_port: "8080"
 keycloak_nginx_htpasswd: /etc/nginx/auth/prometheus
