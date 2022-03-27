@@ -1,2 +1,11 @@
 [flask]
 secret_key = '{{ vault_security_tracker.secret_key }}'
+
+[sso]
+enabled = yes
+metadata_url = https://accounts.archlinux.org/auth/realms/archlinux/.well-known/openid-configuration
+client_id = openid_security_tracker
+client_secret = {{ vault_security_tracker_openid_client_secret }}
+administrator_group = /Arch Linux Staff/Security Team/Admins
+security_team_group = /Arch Linux Staff/Security Team/Members
+reporter_group = /External Contributors/Security Team/Reporters

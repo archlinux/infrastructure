@@ -16,7 +16,8 @@
       - git
       - make
       - python
-      - python-sqlalchemy1.3
+      - python-authlib
+      - python-sqlalchemy
       - python-sqlalchemy-continuum
       - python-flask
       - python-flask-sqlalchemy
@@ -29,6 +30,7 @@
       - python-feedgen
       - python-pytz
       - python-email-validator
+      - python-markupsafe
       - pyalpm
       - sqlite
       - expac
@@ -102,7 +104,7 @@
 - name: deploy new release
   become: true
   become_user: security
-  file: path=/etc/uwsgi/vassals/security-tracker.ini state=touch owner=root group=root mode=0644
+  file: path=/etc/uwsgi/vassals/security-tracker.ini state=touch owner=security group=http mode=0644
   when: release.changed
 
 - name: start and enable security-tracker timer

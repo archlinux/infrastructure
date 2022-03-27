@@ -46,6 +46,12 @@ data "external" "vault_matrix" {
   "--format", "json"]
 }
 
+data "external" "vault_security_tracker" {
+  program = ["${path.module}/../misc/get_key.py", "${path.module}/../group_vars/all/vault_security_tracker.yml",
+    "vault_security_tracker_openid_client_secret",
+  "--format", "json"]
+}
+
 provider "keycloak" {
   client_id = "admin-cli"
   username  = data.external.vault_keycloak.result.vault_keycloak_admin_user
@@ -854,4 +860,28 @@ resource "keycloak_openid_client" "gluebuddy_openid_client" {
   valid_redirect_uris = [
     "https://gitlab.archlinux.org/"
   ]
+}
+
+resource "keycloak_openid_client" "security_tracker_openid_client" {
+  realm_id      = "archlinux"
+  client_id     = "openid_security_tracker"
+  client_secret = data.external.vault_security_tracker.result.vault_security_tracker_openid_client_secret
+
+  name    = "Security Tracker"
+  enabled = true
+
+  access_type           = "CONFIDENTIAL"
+  standard_flow_enabled = true
+  valid_redirect_uris   = [
+    "https://security.archlinux.org/*",
+  ]
+  web_origins           = []
+}
+
+resource "keycloak_openid_group_membership_protocol_mapper" "group_membership_mapper" {
+  realm_id  = "archlinux"
+  client_id = keycloak_openid_client.security_tracker_openid_client.id
+  name      = "group-membership-mapper"
+
+  claim_name = "groups"
 }
