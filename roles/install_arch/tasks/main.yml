@@ -14,7 +14,7 @@
   when: ansible_facts['os_family'] == "Alpine"
 
 - name: create GRUB embed partitions
-  command: sgdisk -g --clear -n 1:0:+10M {{ item }} -c 1:boot -t 1:ef02
+  command: sgdisk -g --clear -n 1:0:+1M {{ item }} -c 1:boot -t 1:ef02
   with_items:
     - "{{ system_disks }}"
   register: sgdisk

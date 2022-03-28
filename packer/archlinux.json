@@ -10,16 +10,17 @@
             "custom_image": "archlinux"
         },
         "token": "{{ user `hetzner_cloud_api_key` }}",
-        "image": "ubuntu-18.04",
+        "image": "ubuntu-20.04",
         "server_type": "cx11",
         "ssh_username": "root",
-        "location": "nbg1",
+        "location": "fsn1",
         "rescue": "linux64"
     }],
     "provisioners": [{
         "type": "ansible",
         "playbook_file": "playbooks/tasks/install_arch.yml",
         "host_alias": "packer-base-image",
-        "inventory_directory": "."
+        "inventory_directory": ".",
+        "use_proxy": false
     }]
 }
