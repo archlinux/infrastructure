@@ -41,6 +41,7 @@ arch_users:
     ssh_key: alex19ep.pub
     groups:
       - tu
+      - multilib
   allan:
     name: "Allan McRae"
     ssh_key: allan.pub
