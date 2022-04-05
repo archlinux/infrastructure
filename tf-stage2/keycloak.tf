@@ -872,10 +872,10 @@ resource "keycloak_openid_client" "security_tracker_openid_client" {
 
   access_type           = "CONFIDENTIAL"
   standard_flow_enabled = true
-  valid_redirect_uris   = [
+  web_origins           = []
+  valid_redirect_uris = [
     "https://security.archlinux.org/*",
   ]
-  web_origins           = []
 }
 
 resource "keycloak_openid_group_membership_protocol_mapper" "group_membership_mapper" {
