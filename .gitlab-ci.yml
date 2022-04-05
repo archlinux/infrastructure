@@ -1,9 +1,8 @@
 image: "archlinux:latest"
 
-before_script:
-  - pacman -Syu --needed --noconfirm ansible-lint ansible yamllint terraform
-
 ansible-lint:
+  before_script:
+    - pacman -Syu --needed --noconfirm ansible-lint ansible
   script:
     # Fix weird ansible bug: https://github.com/trailofbits/algo/issues/1637
     # This probably happens due to gitlab-runner mounting the git repo into the container
@@ -15,6 +14,8 @@ ansible-lint:
     - ansible-lint $(printf -- "--exclude %s " */*/vault_*)
 
 terraform-validate:
+  before_script:
+    - pacman -Syu --needed --noconfirm terraform diffutils
   script:
     - cd tf-stage1
     - terraform init -backend=false
