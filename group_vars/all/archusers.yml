@@ -29,6 +29,7 @@ arch_users:
     ssh_key: alad.pub
     hosts:
       - mail.archlinux.org
+      - homedir.archlinux.org
     groups:
       - support-staff
   alerque:
