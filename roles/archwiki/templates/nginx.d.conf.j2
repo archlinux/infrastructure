@@ -122,11 +122,15 @@ server {
         limit_req zone=archwikilimit burst=10 nodelay;
     }
 
-    # whitelist known OK directories
-    location ~ ^/(?:skins|resources|images|extensions/ArchLinux/modules|extensions/WikiEditor/modules/images/toolbar|extensions/CodeMirror/resources/mode/mediawiki/img)/ {
+    # MediaWiki assets
+    location ~ ^/(?:images|resources/(?:assets|lib|src)|(?:skins|extensions)/.+\.(?:css|js|gif|jpg|jpeg|png|svg|wasm)$) {
         expires 30d;
         add_header Pragma public;
         add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+    }
+    location /images/deleted {
+        # Deny access to deleted images folder
+        deny all;
     }
 
     # block all other directories
