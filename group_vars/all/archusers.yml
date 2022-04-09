@@ -473,12 +473,6 @@ arch_users:
     ssh_key: sangy.pub
     groups:
       - tu
-  schuay:
-    name: "Jakob Gruber"
-    ssh_key: schuay.pub
-    groups:
-      - tu
-      - multilib
   morganamilo:
     name: "Morgan Adamiec"
     ssh_key: morganamilo.pub
