@@ -150,8 +150,17 @@
   register: chroot_grub_mkconfig
   changed_when: "chroot_grub_mkconfig.rc == 0"
 
+- name: setup pacman-init.service on first boot
+  copy: src=pacman-init.service dest=/mnt/etc/systemd/system/ owner=root group=root mode=0644
+
+- name: remove generated keyring in the installation process
+  file: path=/mnt/etc/pacman.d/gnupg state=absent
+
+- name: make sure /etc/machine-id is absent
+  file: path=/mnt/etc/machine-id state=absent
+
 - name: enable services inside chroot
-  command: chroot /mnt systemctl enable sshd systemd-networkd systemd-resolved fstrim.timer
+  command: chroot /mnt systemctl enable sshd systemd-networkd systemd-resolved fstrim.timer pacman-init
   register: chroot_systemd_services
   changed_when: "chroot_systemd_services.rc == 0"
 
