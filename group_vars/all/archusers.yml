@@ -462,12 +462,6 @@ arch_users:
     groups:
       - dev
       - tu
-  ronald:
-    name: "Ronald van Haren"
-    ssh_key: ronald.pub
-    groups:
-      - dev
-      - tu
   sangy:
     name: "Santiago Torres-Arias"
     ssh_key: sangy.pub
