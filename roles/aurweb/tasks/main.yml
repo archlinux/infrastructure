@@ -40,7 +40,7 @@
   register: gpg
   changed_when: "gpg.rc == 0"
 
-- name: clone aurweb repo
+- name: aurweb git repo check
   git: >
     repo={{ aurweb_repository }}
     dest="{{ aurweb_dir }}"
@@ -50,6 +50,51 @@
   become: true
   become_user: "{{ aurweb_user }}"
   register: release
+  check_mode: true
+
+- name: install AUR systemd service and timers
+  template: src={{ item }}.j2 dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - aurweb-git.service
+    - aurweb-git.timer
+    - aurweb-aurblup.service
+    - aurweb-aurblup.timer
+    - aurweb-mkpkglists.service
+    - aurweb-mkpkglists.timer
+    - aurweb-pkgmaint.service
+    - aurweb-pkgmaint.timer
+    - aurweb-popupdate.service
+    - aurweb-popupdate.timer
+    - aurweb-tuvotereminder.service
+    - aurweb-tuvotereminder.timer
+    - aurweb-usermaint.service
+    - aurweb-usermaint.timer
+    - aurweb.service
+  when: release.changed
+
+- name: stop AUR systemd services and timers
+  service: name={{ item }} enabled=yes state=stopped
+  with_items:
+    - aurweb-git.timer
+    - aurweb-aurblup.timer
+    - aurweb-mkpkglists.timer
+    - aurweb-pkgmaint.timer
+    - aurweb-popupdate.timer
+    - aurweb-tuvotereminder.timer
+    - aurweb-usermaint.timer
+    - aurweb.service
+  when: release.changed
+
+- name: clone aurweb repo
+  git: >
+    repo={{ aurweb_repository }}
+    dest="{{ aurweb_dir }}"
+    version={{ aurweb_version }}
+    verify_commit: true
+    gpg_whitelist: '{{ aurweb_pgp_keys }}'
+  become: true
+  become_user: "{{ aurweb_user }}"
+  when: release.changed
 
 - name: create necessary directories
   file: path={{ aurweb_dir }}/{{ item }} state=directory owner={{ aurweb_user }} group={{ aurweb_user }} mode=0755
@@ -239,32 +284,13 @@
   tags:
     - skip_ansible_lint
 
-- name: install AUR systemd service and timers
-  template: src={{ item }}.j2 dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
-  with_items:
-    - aurweb-git.service
-    - aurweb-git.timer
-    - aurweb-aurblup.service
-    - aurweb-aurblup.timer
-    - aurweb-mkpkglists.service
-    - aurweb-mkpkglists.timer
-    - aurweb-pkgmaint.service
-    - aurweb-pkgmaint.timer
-    - aurweb-popupdate.service
-    - aurweb-popupdate.timer
-    - aurweb-tuvotereminder.service
-    - aurweb-tuvotereminder.timer
-    - aurweb-usermaint.service
-    - aurweb-usermaint.timer
-    - aurweb.service
-
 - name: configure sshd
   template: src=aurweb_config.j2 dest={{ sshd_includes_dir }}/aurweb_config owner=root group=root mode=0600 validate='/usr/sbin/sshd -t -f %s'
   notify:
     - restart sshd
 
 - name: start and enable AUR systemd services and timers
-  service: name={{ item }} enabled=yes state=restarted daemon_reload=yes
+  service: name={{ item }} enabled=yes state=started daemon_reload=yes
   with_items:
     - aurweb-git.timer
     - aurweb-aurblup.timer
