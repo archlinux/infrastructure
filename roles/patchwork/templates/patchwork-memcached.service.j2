@@ -6,7 +6,7 @@ After=network.target
 User=patchwork
 Group=memcached
 # Remove '-l 127.0.0.1' to listen on all addresses
-ExecStart=/usr/bin/memcached -s /run/memcached/patchwork.sock -o modern
+ExecStart=/usr/bin/memcached -s /run/memcached/patchwork.sock -o modern -a 770
 Restart=always
 PrivateTmp=yes
 PrivateDevices=yes
