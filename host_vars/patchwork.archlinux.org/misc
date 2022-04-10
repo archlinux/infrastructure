@@ -1,6 +1,6 @@
 ---
 filesystem: btrfs
-memcached_socket: "/var/run/patchwork.sock"
+memcached_socket: "/run/memcached/patchwork.sock"
 fetchmail_user: "patchwork@archlinux.org"
 fetchmail_delivery_cmd: "/usr/local/bin/patchwork-parsemail-wrapper.sh"
 
