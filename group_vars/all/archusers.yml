@@ -538,6 +538,13 @@ arch_users:
     ssh_key: tensor5.pub
     groups:
       - tu
+  torxed:
+    name: "Anton Hvornum"
+    ssh_key: torxed.pub
+    hosts:
+      - mail.archlinux.org
+    groups:
+      - support-staff
   tpowa:
     name: "Tobias Powalowski"
     ssh_key: tpowa.pub
