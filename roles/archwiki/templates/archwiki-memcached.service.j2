@@ -5,7 +5,7 @@ After=network.target
 [Service]
 User={{ archwiki_user }}
 Group=memcached
-ExecStart=/usr/bin/memcached -s {{ archwiki_memcached_socket }} -m {{ archwiki_memcached_memory }} -o modern
+ExecStart=/usr/bin/memcached -s {{ archwiki_memcached_socket }} -m {{ archwiki_memcached_memory }} -o modern -a 770
 Restart=always
 NoNewPrivileges=yes
 PrivateTmp=yes
