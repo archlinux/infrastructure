@@ -26,14 +26,6 @@
 ### Services
   - aurweb
 
-## aur-dev.archlinux.org
-
-### Services
-  - aurweb deployed with the `pu` branch
-
-  The database is filled using the `./schema/gendummydata.py` script in the aurweb repository with a
-  modification to create suspended users. Test users can sign up using the normal registration flow.
-
 ## bugs.archlinux.org
 
 ### Services

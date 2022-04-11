@@ -20,7 +20,6 @@ europe.mirror.pkgbuild.com
 
 [borg_clients]
 archlinux.org
-aur-dev.archlinux.org
 state.archlinux.org
 matrix.archlinux.org
 quassel.archlinux.org
@@ -64,7 +63,6 @@ archlinux.org
 bbs.archlinux.org
 bugs.archlinux.org
 aur.archlinux.org
-aur-dev.archlinux.org
 wiki.archlinux.org
 patchwork.archlinux.org
 security.archlinux.org
@@ -98,7 +96,6 @@ monitoring.archlinux.org
 [node_exporters]
 archlinux.org
 aur.archlinux.org
-aur-dev.archlinux.org
 monitoring.archlinux.org
 gitlab.archlinux.org
 reproducible.archlinux.org
@@ -136,7 +133,6 @@ debuginfod.archlinux.org
 [wireguard]
 archlinux.org
 aur.archlinux.org
-aur-dev.archlinux.org
 monitoring.archlinux.org
 gitlab.archlinux.org
 reproducible.archlinux.org

@@ -23,7 +23,6 @@ blackbox_targets:
     - https://asia.archive.pkgbuild.com
     - https://asia.mirror.pkgbuild.com
     - https://aur.archlinux.org
-    - https://aur-dev.archlinux.org
     - https://bbs.archlinux.org
     - https://bugs.archlinux.org
     - https://conf.archlinux.org

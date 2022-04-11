@@ -55,10 +55,6 @@ locals {
       server_type = "cx11"
       domain      = "accounts"
     }
-    "aur-dev.archlinux.org" = {
-      server_type = "cpx11"
-      domain      = "aur-dev"
-    }
     "aur.archlinux.org" = {
       server_type = "cpx41"
       domain      = "aur"
