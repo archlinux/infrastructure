@@ -3,3 +3,4 @@
 
 /netctl.git https://gitlab.archlinux.org/archlinux/netctl;
 /mkinitcpio.git https://github.com/archlinux/mkinitcpio;
+/linux.git https://github.com/archlinux/linux;
