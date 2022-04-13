@@ -43,5 +43,8 @@
   tags:
     - firewall
 
+- name: open firewall hole
+  ansible.posix.firewalld: service=dns permanent=true state=enabled immediate=yes
+
 - name: start and enable powerdns
   systemd: name=pdns.service enabled=yes daemon_reload=yes state=started
