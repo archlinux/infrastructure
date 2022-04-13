@@ -6,7 +6,7 @@
     - { role: common }
     - { role: sshd }
     - { role: root_ssh }
-    - { role: certbot, certbot_dns_support: true }
+    - { role: certbot }
     - { role: nginx }
     - { role: syncrepo, tags: ['nginx'] }
     - { role: syncdebug, when: mirror_debug_packages is not defined or mirror_debug_packages }
