@@ -75,6 +75,12 @@ scrape_configs:
       labels:
         instance: "debuginfod.archlinux.org"
 
+  - job_name: 'powerdns'
+    static_configs:
+    - targets: ['{{ hostvars['mirror.pkgbuild.com']['wireguard_address'] }}:8081']
+      labels:
+        instance: "mirror.pkgbuild.com"
+
   - job_name: 'gitlab_runner_exporter'
     static_configs:
     {% for host in groups['gitlab_runners'] %}

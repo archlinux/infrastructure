@@ -13,6 +13,11 @@ asia.mirror.pkgbuild.com
 america.mirror.pkgbuild.com
 europe.mirror.pkgbuild.com
 
+[geo_mirrors]
+asia.mirror.pkgbuild.com
+america.mirror.pkgbuild.com
+europe.mirror.pkgbuild.com
+
 [archive_mirrors]
 asia.mirror.pkgbuild.com
 america.mirror.pkgbuild.com

@@ -426,6 +426,13 @@ resource "hetznerdns_record" "pkgbuild_com_origin_txt" {
   type    = "TXT"
 }
 
+resource "hetznerdns_record" "pkgbuild_com_geo_mirror_ns" {
+  zone_id = hetznerdns_zone.pkgbuild.id
+  name    = "geo.mirror"
+  value   = "mirror.pkgbuild.com."
+  type    = "NS"
+}
+
 resource "hetznerdns_record" "archlinux_org_origin_caa" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "@"

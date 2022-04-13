@@ -7,6 +7,14 @@
     domains: ["{{ mirror_domain }}"]
   when: 'mirror_domain is defined'
 
+- name: create ssl cert for geo mirror
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ geo_mirror_domain }}"]
+    challenge: "DNS-01"
+  when: "'geo_mirrors' in group_names"
+
 - name: install rsync
   pacman: name=rsync state=present
 
@@ -42,12 +50,15 @@
     owner: root
     group: root
 
-- name: make nginx log dir
-  file: path=/var/log/nginx/{{ mirror_domain }} state=directory owner=root group=root mode=0755
+- name: make nginx log dirs
+  file: path=/var/log/nginx/{{ item }} state=directory owner=root group=root mode=0755
+  loop: "{{ [mirror_domain, geo_mirror_domain] if 'geo_mirrors' in group_names else [mirror_domain] }}"
   when: 'mirror_domain is defined'
 
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/syncrepo.conf owner=root group=root mode=0644
+  vars:
+    mirror_domains: "{{ [mirror_domain, geo_mirror_domain] if 'geo_mirrors' in group_names else [mirror_domain] }}"
   notify:
     - reload nginx
   when: 'mirror_domain is defined'
