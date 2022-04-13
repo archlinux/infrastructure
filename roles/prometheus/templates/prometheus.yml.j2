@@ -77,9 +77,13 @@ scrape_configs:
 
   - job_name: 'powerdns'
     static_configs:
-    - targets: ['{{ hostvars['mirror.pkgbuild.com']['wireguard_address'] }}:8081']
+    {% for host in groups['geo_mirrors'] + ['mirror.pkgbuild.com'] %}
+
+    - targets: ['{{ hostvars[host]['wireguard_address'] }}:8081']
       labels:
-        instance: "mirror.pkgbuild.com"
+        instance: "{{ host }}"
+
+    {% endfor %}
 
   - job_name: 'gitlab_runner_exporter'
     static_configs:

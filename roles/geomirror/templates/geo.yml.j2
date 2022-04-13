@@ -8,10 +8,17 @@ domains:
         - soa: mirror.pkgbuild.com. root.archlinux.org. 2022011501 3600 1800 604800 3600
         - ns: mirror.pkgbuild.com
       {% for host in groups['geo_mirrors'] %}
+        - ns: {{ host }}
+      {% endfor %}
+      {% for host in groups['geo_mirrors'] %}
       {{ host.split(".")[0] }}.{{ geo_mirror_domain }}:
         - a: {{ hostvars[host]['ipv4_address'] }}
         - aaaa: {{ hostvars[host]['ipv6_address'] }}
       {% endfor %}
+      {% if not geomirror_acme_challenge %}
+      _acme-challenge.{{ geo_mirror_domain }}:
+        - ns: mirror.pkgbuild.com
+      {% endif %}
     services:
       {{ geo_mirror_domain }}: '%mp.geo.mirror.pkgbuild.com'
 mapping_lookup_formats: ['%cn']
