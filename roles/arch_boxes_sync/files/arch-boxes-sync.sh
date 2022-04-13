@@ -32,6 +32,13 @@ unzip output.zip
 rm output/*.box{,.*}
 mv output/* "${LATEST_RELEASE_TAG}"
 
+for FILE in "${LATEST_RELEASE_TAG}"/*; do
+  if [[ $FILE == *${LATEST_RELEASE_TAG:1}* ]]; then
+    FILE="${FILE##*/}"
+    ln -s "${FILE}" "${LATEST_RELEASE_TAG}/${FILE//-${LATEST_RELEASE_TAG:1}}"
+  fi
+done
+
 mv "${LATEST_RELEASE_TAG}" "${ARCH_BOXES_PATH}/"
 ln -nsf "${LATEST_RELEASE_TAG}" "${ARCH_BOXES_PATH}/latest"
 
