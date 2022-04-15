@@ -13,3 +13,17 @@
 - name: enable and start rebuilderd-worker@{{ item }}
   systemd: name=rebuilderd-worker@{{ item }} enabled=yes state=started
   with_items: '{{ rebuilderd_workers }}'
+
+- name: install cleanup script
+  copy: src=clean-repro dest=/usr/local/bin/clean-repro owner=root group=root mode=0755
+
+- name: install cleanup units
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  loop:
+    - clean-repro.timer
+    - clean-repro.service
+  notify:
+    - daemon reload
+
+- name: start and enable cleanup timer
+  service: name=clean-repro.timer enabled=yes state=started

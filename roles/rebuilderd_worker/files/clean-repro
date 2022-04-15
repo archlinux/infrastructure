@@ -1,0 +1,3 @@
+#!/bin/bash -e
+
+find /var/lib/repro -maxdepth 1 -name '*?_?*' -mtime +6 -exec rm -rf {} +
