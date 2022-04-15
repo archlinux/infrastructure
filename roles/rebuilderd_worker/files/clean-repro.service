@@ -1,0 +1,10 @@
+[Unit]
+Description=Clean up stale repro chroots
+ConditionPathExists=/var/lib/repro
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/clean-repro
+Nice=19
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
