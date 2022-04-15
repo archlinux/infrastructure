@@ -15,4 +15,4 @@
     - { role: promtail }
     - { role: fail2ban }
     - { role: wireguard }
-    - { role: geomirror, when: inventory_hostname == "mirror.pkgbuild.com" }
+    - { role: geomirror, when: "inventory_hostname == 'mirror.pkgbuild.com' or 'geo_mirrors' in group_names" }

@@ -426,10 +426,31 @@ resource "hetznerdns_record" "pkgbuild_com_origin_txt" {
   type    = "TXT"
 }
 
-resource "hetznerdns_record" "pkgbuild_com_geo_mirror_ns" {
+resource "hetznerdns_record" "pkgbuild_com_geo_mirror_ns1" {
   zone_id = hetznerdns_zone.pkgbuild.id
   name    = "geo.mirror"
   value   = "mirror.pkgbuild.com."
+  type    = "NS"
+}
+
+resource "hetznerdns_record" "pkgbuild_com_geo_mirror_n2" {
+  zone_id = hetznerdns_zone.pkgbuild.id
+  name    = "geo.mirror"
+  value   = "asia.mirror.pkgbuild.com."
+  type    = "NS"
+}
+
+resource "hetznerdns_record" "pkgbuild_com_geo_mirror_ns3" {
+  zone_id = hetznerdns_zone.pkgbuild.id
+  name    = "geo.mirror"
+  value   = "america.mirror.pkgbuild.com."
+  type    = "NS"
+}
+
+resource "hetznerdns_record" "pkgbuild_com_geo_mirror_ns4" {
+  zone_id = hetznerdns_zone.pkgbuild.id
+  name    = "geo.mirror"
+  value   = "europe.mirror.pkgbuild.com."
   type    = "NS"
 }
 

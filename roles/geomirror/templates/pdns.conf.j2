@@ -4,9 +4,13 @@ local-address={{ ipv4_address }},{{ ipv6_address }}
 webserver=yes
 webserver-address=0.0.0.0
 webserver-allow-from=127.0.0.1,::1,{{ hostvars['monitoring.archlinux.org']['wireguard_address'] }}
+{% if geomirror_acme_challenge %}
 launch=geoip,gsqlite3
-geoip-database-files=/var/lib/GeoIP/GeoLite2-Country.mmdb
-geoip-zones-file=/etc/powerdns/geo.yml
 gsqlite3-database=/var/lib/powerdns/pdns.sqlite3
 dnsupdate=yes
 lua-dnsupdate-policy-script=/etc/powerdns/dnsupdate-policy.lua
+{% else %}
+launch=geoip
+{% endif %}
+geoip-database-files=/var/lib/GeoIP/GeoLite2-Country.mmdb
+geoip-zones-file=/etc/powerdns/geo.yml
