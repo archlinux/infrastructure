@@ -1,3 +1,8 @@
 #!/bin/bash -e
 
+# remove leftover chroots that are more than a week old
 find /var/lib/repro -maxdepth 1 -name '*?_?*' -mtime +6 -exec rm -rf {} +
+
+# clean the package cache but keep recently accessed files
+flock /var/lib/rebuilderd-worker/cache.lock \
+  paccache -r -q -c /var/lib/rebuilderd-worker/cache --min-atime '2 weeks ago'

@@ -1,6 +1,7 @@
 [Unit]
-Description=Clean up stale repro chroots
+Description=Clean up rebuilderd-worker chroots and cache
 ConditionPathExists=/var/lib/repro
+ConditionPathExists=/var/lib/rebuilderd-worker/cache
 
 [Service]
 Type=oneshot

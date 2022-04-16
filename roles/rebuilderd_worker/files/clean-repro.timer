@@ -1,5 +1,5 @@
 [Unit]
-Description=Daily repro cleanup
+Description=Daily rebuilderd-worker chroot and cache cleanup
 
 [Timer]
 OnCalendar=daily
