@@ -164,8 +164,18 @@ scrape_configs:
       module: [{{ module }}]
     static_configs:
     - targets:
-    {% for target in blackbox_targets[module] %}
+    {% for target in blackbox_targets[module] | select('string') %}
       - {{ target }}
+    {% endfor %}
+
+    {% for vhost in blackbox_targets[module] | select('mapping') %}
+
+    - labels:
+        vhost: {{ vhost.hostname }}
+      targets:
+    {% for target in vhost.targets %}
+      - http{{ 's' if vhost.secure }}://{{ target }}
+    {% endfor %}
     {% endfor %}
 
     relabel_configs:
@@ -175,7 +185,10 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: 127.0.0.1:9115
+      - source_labels: [vhost]
+        target_label: __param_hostname
 {% endfor %}
+
 {% for endpoint in matrix_metrics_endpoints %}
 
   - job_name: 'synapse_{{ endpoint }}'
