@@ -14,6 +14,9 @@ prometheus_remote_write_relabel_configs:
 # for d in $(curl -sf "https://crt.sh/?q=archlinux.org&output=json" "https://crt.sh/?q=pkgbuild.com&output=json" | jq -r ".[].name_value" | sort -u); do if curl -o /dev/null -sS "https://$d"; then echo $d; fi; done | grep -v "\@" | sort | sed "s/^/  - https:\/\//"
 blackbox_targets:
   http_prometheus:
+    - targets: "{{ groups['geo_mirrors'] }}"
+      hostname: geo.mirror.pkgbuild.com
+      secure: true
     - http://{{ hostvars['monitoring.archlinux.org']['wireguard_address'] }}
     - https://accounts.archlinux.org
     - https://america.archive.pkgbuild.com
@@ -31,7 +34,6 @@ blackbox_targets:
     - https://dev.archlinux.org
     - https://europe.archive.pkgbuild.com
     - https://europe.mirror.pkgbuild.com
-    - https://geo.mirror.pkgbuild.com
     - https://gitlab.archlinux.org
     - https://ipxe.archlinux.org
     - https://lists.archlinux.org
