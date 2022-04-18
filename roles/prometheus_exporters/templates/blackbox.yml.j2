@@ -1,0 +1,46 @@
+modules:
+  http_prometheus:
+    prober: http
+    timeout: 5s
+    http:
+      headers:
+        User-Agent: "blackbox-monitoring"
+  tls_connect:
+    prober: tcp
+    timeout: 5s
+    tcp:
+      tls: true
+  smtp_starttls:
+    prober: tcp
+    timeout: 5s
+    tcp:
+      query_response:
+        - expect: "^220 ([^ ]+) ESMTP (.+)$"
+        - send: "EHLO prober\r"
+        - expect: "^250-STARTTLS"
+        - send: "STARTTLS\r"
+        - expect: "^220"
+        - starttls: true
+        - send: "EHLO prober\r"
+        - expect: "^250"
+        - send: "QUIT\r"
+  dns_geomirror_a:
+    prober: dns
+    timeout: 5s
+    dns:
+      query_name: geo.mirror.pkgbuild.com
+      query_type: A
+      preferred_ip_protocol: ip4
+      validate_answer_rrs:
+        fail_if_not_matches_regexp:
+          - geo\.mirror\.pkgbuild\.com\.\t.*\tIN\tA\t({{ groups['geo_mirrors'] | map('extract', hostvars, ['ipv4_address']) | join('|') | replace('.', '\.') }})
+  dns_geomirror_aaaa:
+    prober: dns
+    timeout: 5s
+    dns:
+      query_name: geo.mirror.pkgbuild.com
+      query_type: AAAA
+      preferred_ip_protocol: ip6
+      validate_answer_rrs:
+        fail_if_not_matches_regexp:
+          - geo\.mirror\.pkgbuild\.com\.\t.*\tIN\tAAAA\t({{ groups['geo_mirrors'] | map('extract', hostvars, ['ipv6_address']) | join('|') }})
