@@ -155,6 +155,7 @@ scrape_configs:
         {% for target in blackbox_targets[module] | select('string') %}
         - {{ target }}
         {% endfor %}
+{% if module == 'http_prometheus' %}
       {% for vhost in blackbox_targets[module] | select('mapping') %}
       - targets:
           {% for target in vhost.targets %}
@@ -163,6 +164,7 @@ scrape_configs:
         labels:
           vhost: {{ vhost.hostname }}
       {% endfor %}
+{% endif %}
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -170,8 +172,10 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: 127.0.0.1:9115
+{% if module == 'http_prometheus' %}
       - source_labels: [vhost]
         target_label: __param_hostname
+{% endif %}
   {% endfor %}
   {% for endpoint in matrix_metrics_endpoints %}
 
