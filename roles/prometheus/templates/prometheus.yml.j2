@@ -156,12 +156,12 @@ scrape_configs:
         - {{ target }}
         {% endfor %}
       {% for vhost in blackbox_targets[module] | select('mapping') %}
-      - labels:
-          vhost: {{ vhost.hostname }}
-        targets:
-        {% for target in vhost.targets %}
+      - targets:
+          {% for target in vhost.targets %}
           - http{{ 's' if vhost.secure }}://{{ target }}
-        {% endfor %}
+          {% endfor %}
+        labels:
+          vhost: {{ vhost.hostname }}
       {% endfor %}
     relabel_configs:
       - source_labels: [__address__]
