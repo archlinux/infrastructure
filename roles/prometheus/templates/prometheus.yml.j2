@@ -1,3 +1,4 @@
+#jinja2: lstrip_blocks: True
 {% if not prometheus_receive_only %}
 global:
   scrape_interval: 60s
@@ -9,28 +10,28 @@ rule_files:
 # Alertmanager configuration
 alerting:
   alertmanagers:
-  - static_configs:
-    - targets:
-       - localhost:9093
+    - static_configs:
+      - targets:
+        - localhost:9093
 
 remote_write:
-{% for relabel_config in prometheus_remote_write_relabel_configs %}
-- url: http://{{ prometheus_domain }}:9090/api/v1/write
-  write_relabel_configs:
-  - source_labels: [{{ relabel_config.label }}]
-    regex: "{{ relabel_config.regex }}"
-    action: keep
-  basic_auth:
-    username: {{ vault_prometheus_user }}
-    password: {{ vault_prometheus_passwd }}
-{% endfor %}
+  {% for relabel_config in prometheus_remote_write_relabel_configs %}
+  - url: http://{{ prometheus_domain }}:9090/api/v1/write
+    write_relabel_configs:
+      - source_labels: [{{ relabel_config.label }}]
+        regex: "{{ relabel_config.regex }}"
+        action: keep
+    basic_auth:
+      username: {{ vault_prometheus_user }}
+      password: {{ vault_prometheus_passwd }}
 
+  {% endfor %}
 scrape_configs:
   - job_name: prometheus
     static_configs:
-    - targets: ['127.0.0.1:9090']
-      labels:
-        instance: "{{ ansible_fqdn }}"
+      - targets: ['127.0.0.1:9090']
+        labels:
+          instance: "{{ ansible_fqdn }}"
 
   - job_name: prometheus-domain
     scheme: http
@@ -38,62 +39,54 @@ scrape_configs:
       username: {{ vault_prometheus_user }}
       password: {{ vault_prometheus_passwd }}
     static_configs:
-    - targets: ['{{ prometheus_domain }}:9090']
-      labels:
-        job: prometheus
-        instance: "dashboards.archlinux.org"
+      - targets: ['{{ prometheus_domain }}:9090']
+        labels:
+          job: prometheus
+          instance: "dashboards.archlinux.org"
 
   - job_name: loki
     static_configs:
-    - targets: ['127.0.0.1:3100']
-      labels:
-        instance: "{{ ansible_fqdn }}"
+      - targets: ['127.0.0.1:3100']
+        labels:
+          instance: "{{ ansible_fqdn }}"
 
   - job_name: 'node_exporter'
     static_configs:
-    {% for host in groups['node_exporters'] %}
-
-    - targets: ['{{ host }}:{{ prometheus_exporter_port }}']
-      labels:
-        instance: "{{ host }}"
-
-    {% endfor %}
+      {% for host in groups['node_exporters'] %}
+      - targets: ['{{ host }}:{{ prometheus_exporter_port }}']
+        labels:
+          instance: "{{ host }}"
+      {% endfor %}
 
   - job_name: 'promtail'
     static_configs:
-    {% for host in groups['node_exporters'] %}
-
-    - targets: ['{{ hostvars[host]['wireguard_address'] }}:9080']
-      labels:
-        instance: "{{ host }}"
-
-    {% endfor %}
+      {% for host in groups['node_exporters'] %}
+      - targets: ['{{ hostvars[host]['wireguard_address'] }}:9080']
+        labels:
+          instance: "{{ host }}"
+      {% endfor %}
 
   - job_name: 'debuginfod'
     static_configs:
-    - targets: ['{{ hostvars['debuginfod.archlinux.org']['wireguard_address'] }}:8002']
-      labels:
-        instance: "debuginfod.archlinux.org"
+      - targets: ['{{ hostvars['debuginfod.archlinux.org']['wireguard_address'] }}:8002']
+        labels:
+          instance: "debuginfod.archlinux.org"
 
   - job_name: 'powerdns'
     static_configs:
-    {% for host in groups['geo_mirrors'] + ['mirror.pkgbuild.com'] %}
-
-    - targets: ['{{ hostvars[host]['wireguard_address'] }}:8081']
-      labels:
-        instance: "{{ host }}"
-
-    {% endfor %}
+      {% for host in groups['geo_mirrors'] + ['mirror.pkgbuild.com'] %}
+      - targets: ['{{ hostvars[host]['wireguard_address'] }}:8081']
+        labels:
+          instance: "{{ host }}"
+      {% endfor %}
 
   - job_name: 'gitlab_runner_exporter'
     static_configs:
-    {% for host in groups['gitlab_runners'] %}
-
-    - targets: ['{{ host }}:{{ gitlab_runner_exporter_port }}']
-      labels:
-        instance: "{{ host }}"
-
-    {% endfor %}
+      {% for host in groups['gitlab_runners'] %}
+      - targets: ['{{ host }}:{{ gitlab_runner_exporter_port }}']
+        labels:
+          instance: "{{ host }}"
+      {% endfor %}
 
   - job_name: 'keycloak'
     scheme: https
@@ -102,9 +95,9 @@ scrape_configs:
        username: "{{ vault_keycloak_nginx_user }}"
        password: "{{ vault_keycloak_nginx_passwd }}"
     static_configs:
-    - targets: ['accounts.archlinux.org:443']
-      labels:
-        instance: "accounts.archlinux.org"
+      - targets: ['accounts.archlinux.org:443']
+        labels:
+          instance: "accounts.archlinux.org"
 
   - job_name: 'gitlab_exporter'
     scheme: https
@@ -112,72 +105,64 @@ scrape_configs:
     params:
       token: ["{{ vault_gitlab_prometheus_token }}"]
     static_configs:
-    - targets: ['gitlab.archlinux.org:443']
-      labels:
-        instance: "gitlab.archlinux.org"
+      - targets: ['gitlab.archlinux.org:443']
+        labels:
+          instance: "gitlab.archlinux.org"
 
   - job_name: 'mysqld_exporter'
     static_configs:
-    {% for host in groups['mysql_servers'] %}
-
-    - targets: ['{{ host }}:{{ prometheus_mysqld_exporter_port }}']
-      labels:
-        instance: "{{ host }}"
-
-    {% endfor %}
-
+      {% for host in groups['mysql_servers'] %}
+      - targets: ['{{ host }}:{{ prometheus_mysqld_exporter_port }}']
+        labels:
+          instance: "{{ host }}"
+      {% endfor %}
 
   - job_name: 'memcached_exporter'
     static_configs:
-    {% for host in groups['memcached'] %}
-
-    - targets: ['{{ host }}:{{ prometheus_memcached_exporter_port }}']
-      labels:
-        instance: "{{ host }}"
-
-    {% endfor %}
+      {% for host in groups['memcached'] %}
+      - targets: ['{{ host }}:{{ prometheus_memcached_exporter_port }}']
+        labels:
+          instance: "{{ host }}"
+      {% endfor %}
 
   - job_name: hedgedoc
     scheme: https
     authorization:
       credentials: {{ vault_hedgedoc_metrics_token }}
     static_configs:
-    - targets: ['md.archlinux.org:443']
+      - targets: ['md.archlinux.org:443']
 
   - job_name: aurweb
     scheme: https
     static_configs:
-    - targets: ['aur.archlinux.org:443']
+      - targets: ['aur.archlinux.org:443']
 
   - job_name: grafana
     scheme: https
     authorization:
       credentials: {{ vault_grafana_metrics_token }}
     static_configs:
-    - targets: ['monitoring.archlinux.org:443', 'dashboards.archlinux.org:443']
+      - targets: ['monitoring.archlinux.org:443', 'dashboards.archlinux.org:443']
+  {% for module in blackbox_targets.keys() %}
 
-{% for module in blackbox_targets.keys() %}
   - job_name: 'blackbox_{{ module }}'
     metrics_path: /probe
     scrape_interval: 15s
     params:
       module: [{{ module }}]
     static_configs:
-    - targets:
-    {% for target in blackbox_targets[module] | select('string') %}
-      - {{ target }}
-    {% endfor %}
-
-    {% for vhost in blackbox_targets[module] | select('mapping') %}
-
-    - labels:
-        vhost: {{ vhost.hostname }}
-      targets:
-    {% for target in vhost.targets %}
-      - http{{ 's' if vhost.secure }}://{{ target }}
-    {% endfor %}
-    {% endfor %}
-
+      - targets:
+        {% for target in blackbox_targets[module] | select('string') %}
+        - {{ target }}
+        {% endfor %}
+      {% for vhost in blackbox_targets[module] | select('mapping') %}
+      - labels:
+          vhost: {{ vhost.hostname }}
+        targets:
+        {% for target in vhost.targets %}
+          - http{{ 's' if vhost.secure }}://{{ target }}
+        {% endfor %}
+      {% endfor %}
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -187,9 +172,8 @@ scrape_configs:
         replacement: 127.0.0.1:9115
       - source_labels: [vhost]
         target_label: __param_hostname
-{% endfor %}
-
-{% for endpoint in matrix_metrics_endpoints %}
+  {% endfor %}
+  {% for endpoint in matrix_metrics_endpoints %}
 
   - job_name: 'synapse_{{ endpoint }}'
     scrape_interval: 15s
@@ -199,5 +183,5 @@ scrape_configs:
       credentials: {{ vault_matrix_secrets.metrics_token }}
     static_configs:
       - targets: ["matrix.archlinux.org:443"]
-{% endfor %}
+  {% endfor %}
 {% endif %}
