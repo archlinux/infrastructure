@@ -505,12 +505,6 @@ variable "gitlab_pages_ipv6" {
   default = "2a01:4f8:c2c:5d2d::2"
 }
 
-resource "hcloud_volume" "gitlab" {
-  name      = "gitlab"
-  size      = 200
-  server_id = hcloud_server.machine["gitlab.archlinux.org"].id
-}
-
 resource "hcloud_volume" "mirror" {
   name      = "mirror"
   size      = 100
