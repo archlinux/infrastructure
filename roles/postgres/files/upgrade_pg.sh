@@ -5,7 +5,7 @@ set -e
 TO_VERSION=$(pacman -Q postgresql | grep -Po '(?<=postgresql )[0-9]+\.[0-9]')
 
 to_major=${TO_VERSION%%.*}
-if (( $to_major != 13 )); then
+if (( $to_major != 14 )); then
 	# NOTE: When this happens you should check the changelog and add any
 	# necessary changes here. Then bump the version check.
 	echo "ERROR: major upgrade detected, aborting..."
