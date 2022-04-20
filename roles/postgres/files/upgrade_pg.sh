@@ -30,7 +30,7 @@ if [[ -d /var/lib/postgres/data-$FROM_VERSION ]]; then
 	exit 3
 fi
 
-pacman -S --needed postgresql-old-upgrade
+pacman -S --needed "postgresql-old-upgrade>=$FROM_VERSION"
 
 # mask postgresql.service to make sure that other services with
 # Wants=postgresql.service and Restart=on-failure will not start
