@@ -56,12 +56,14 @@ aur.archlinux.org
 wiki.archlinux.org
 
 [postgresql_servers]
-archlinux.org
-state.archlinux.org
-quassel.archlinux.org
 accounts.archlinux.org
-patchwork.archlinux.org
+archlinux.org
+md.archlinux.org
+matrix.archlinux.org
 man.archlinux.org
+patchwork.archlinux.org
+quassel.archlinux.org
+state.archlinux.org
 
 [nginx]
 archlinux.org
