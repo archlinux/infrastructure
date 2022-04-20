@@ -172,7 +172,7 @@
     - restart postgres
 
 - name: add synapse postgres db
-  postgresql_db: db=synapse
+  postgresql_db: db=synapse lc_collate=C lc_ctype=C template=template0
   become: true
   become_user: postgres
   become_method: su
