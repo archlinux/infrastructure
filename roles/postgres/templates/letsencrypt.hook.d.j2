@@ -7,9 +7,13 @@ postgres_domain="{{ inventory_hostname }}"
 for domain in $RENEWED_DOMAINS; do
     case "$domain" in
         $postgres_domain)
-            for pem in /etc/letsencrypt/live/$postgres_domain/{privkey,fullchain,chain}.pem; do
-                install -o postgres -g postgres -m 400 $pem /var/lib/postgres/data/$pem
+            for pem in {privkey,fullchain,chain}.pem; do
+                install -o postgres -g postgres -m 400 \
+                    /etc/letsencrypt/live/$postgres_domain/$pem \
+                    /var/lib/postgres/data/$pem
             done
+            systemctl reload postgresql
+            break
             ;;
     esac
 done
