@@ -45,14 +45,13 @@ mkdir /var/lib/postgres/data
 chown postgres: /var/lib/postgres/data
 chattr -f +C /var/lib/postgres/data || :
 
+# initialize the new cluster
 su - postgres -c 'initdb --locale en_US.UTF-8 -E UTF8 -D /var/lib/postgres/data'
-vimdiff /var/lib/postgres/{data,data-$FROM_VERSION}/pg_hba.conf
-vimdiff /var/lib/postgres/{data,data-$FROM_VERSION}/postgresql.conf
 
-# copy existing SSL certs from data-$FROM_VERSION to data
-for f in {fullchain,chain,privkey}.pem; do
+# copy existing configuration and SSL certs from the old cluster
+for f in pg_hba.conf postgresql.conf {fullchain,chain,privkey}.pem; do
 	if [[ -e /var/lib/postgres/data-$FROM_VERSION/$f ]]; then
-		cp -avx /var/lib/postgres/{data-$FROM_VERSION,data}/$f
+		cp -av /var/lib/postgres/{data-$FROM_VERSION,data}/$f
 	fi
 done
 
