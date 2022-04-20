@@ -65,7 +65,6 @@ systemctl unmask postgresql.service
 systemctl daemon-reload
 systemctl start postgresql.service
 
-su - postgres -c /var/lib/postgres/analyze_new_cluster.sh
 # We probably want to manually delete things for now in case this script misses
 # some stuff
 #su - postgres -c /var/lib/postgres/delete_old_cluster.sh
