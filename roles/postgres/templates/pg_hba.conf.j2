@@ -87,31 +87,31 @@
 
 # "local" is for Unix domain socket connections only
 local   all             postgres                                peer
-local   sameuser        all                                     md5
+local   sameuser        all                                     scram-sha-256
 # IPv4 local connections:
-host    all             postgres        127.0.0.1/32            md5
-host    sameuser        all             127.0.0.1/32            md5
+host    all             postgres        127.0.0.1/32            scram-sha-256
+host    sameuser        all             127.0.0.1/32            scram-sha-256
 # IPv6 local connections:
-host    all             postgres        ::1/128                 md5
-host    sameuser        all             ::1/128                 md5
+host    all             postgres        ::1/128                 scram-sha-256
+host    sameuser        all             ::1/128                 scram-sha-256
 # Allow replication connections from localhost, by a user with the
 # replication privilege.
 #local   replication     all                                     peer
-#host    replication     all             127.0.0.1/32            md5
-#host    replication     all             ::1/128                 md5
+#host    replication     all             127.0.0.1/32            scram-sha-256
+#host    replication     all             ::1/128                 scram-sha-256
 
 # IPv4 Remote Clients
 {% for host in postgres_hosts4 %}
-host    all             all             {{ host }}              md5
+host    all             all             {{ host }}              scram-sha-256
 {% endfor %}
 {% for host in postgres_ssl_hosts4 %}
-hostssl all             all             {{ host }}              md5
+hostssl all             all             {{ host }}              scram-sha-256
 {% endfor %}
 
 # IPv6 Remote Clients
 {% for host in postgres_hosts6 %}
-host    all             all             {{ host }}              md5
+host    all             all             {{ host }}              scram-sha-256
 {% endfor %}
 {% for host in postgres_ssl_hosts6 %}
-hostssl all             all             {{ host }}              md5
+hostssl all             all             {{ host }}              scram-sha-256
 {% endfor %}
