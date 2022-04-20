@@ -2,7 +2,7 @@
 Description=GitLab Cleanup
 
 [Timer]
-OnCalendar=weekly
+OnCalendar=daily
 Persistent=true
 RandomizedDelaySec=1h
 
