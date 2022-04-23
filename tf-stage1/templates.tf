@@ -107,11 +107,13 @@ resource "hcloud_rdns" "rdns_ipv6" {
 resource "hcloud_server" "machine" {
   for_each = local.machines
 
-  name        = each.key
-  image       = data.hcloud_image.archlinux.id
-  server_type = each.value.server_type
-  keep_disk   = true
-  location    = "fsn1"
+  name               = each.key
+  image              = data.hcloud_image.archlinux.id
+  server_type        = each.value.server_type
+  keep_disk          = true
+  location           = "fsn1"
+  delete_protection  = true
+  rebuild_protection = true
   lifecycle {
     ignore_changes = [image, location]
   }

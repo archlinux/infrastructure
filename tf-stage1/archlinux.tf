@@ -496,9 +496,10 @@ resource "hetznerdns_record" "archlinux_org_origin_ns1" {
 # }
 
 resource "hcloud_floating_ip" "gitlab_pages" {
-  type        = "ipv4"
-  description = "GitLab Pages"
-  server_id   = hcloud_server.machine["gitlab.archlinux.org"].id
+  type              = "ipv4"
+  description       = "GitLab Pages"
+  server_id         = hcloud_server.machine["gitlab.archlinux.org"].id
+  delete_protection = true
 }
 
 variable "gitlab_pages_ipv6" {
@@ -506,25 +507,29 @@ variable "gitlab_pages_ipv6" {
 }
 
 resource "hcloud_volume" "mirror" {
-  name      = "mirror"
-  size      = 100
-  server_id = hcloud_server.machine["mirror.pkgbuild.com"].id
+  name              = "mirror"
+  size              = 100
+  server_id         = hcloud_server.machine["mirror.pkgbuild.com"].id
+  delete_protection = true
 }
 
 resource "hcloud_volume" "homedir" {
-  name      = "homedir"
-  size      = 100
-  server_id = hcloud_server.machine["homedir.archlinux.org"].id
+  name              = "homedir"
+  size              = 100
+  server_id         = hcloud_server.machine["homedir.archlinux.org"].id
+  delete_protection = true
 }
 
 resource "hcloud_volume" "monitoring" {
-  name      = "monitoring"
-  size      = 200
-  server_id = hcloud_server.machine["monitoring.archlinux.org"].id
+  name              = "monitoring"
+  size              = 200
+  server_id         = hcloud_server.machine["monitoring.archlinux.org"].id
+  delete_protection = true
 }
 
 resource "hcloud_volume" "debuginfod" {
-  name      = "debuginfod"
-  size      = 25
-  server_id = hcloud_server.machine["debuginfod.archlinux.org"].id
+  name              = "debuginfod"
+  size              = 25
+  server_id         = hcloud_server.machine["debuginfod.archlinux.org"].id
+  delete_protection = true
 }
