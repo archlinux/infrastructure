@@ -115,3 +115,6 @@
 
 - name: install archbuild sudoers config
   copy: src=sudoers dest=/etc/sudoers.d/archbuild owner=root group=root mode=0440
+
+- name: install gitconfig
+  copy: src=gitconfig dest=/etc/gitconfig owner=root group=root mode=0644
