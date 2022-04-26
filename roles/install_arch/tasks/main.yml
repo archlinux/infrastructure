@@ -42,6 +42,11 @@
 - name: touch LOCK file on mountpoint
   file: path=/mnt/LOCK state=touch owner=root group=root mode=0644
 
+- name: fetch latest bootstrap version
+  set_fact:
+    bootstrap_version: "{{ lookup('url', 'https://geo.mirror.pkgbuild.com/iso/latest/arch/version') }}"
+  when: bootstrap_version == 'latest'
+
 - name: download bootstrap image
   get_url:
     url: https://geo.mirror.pkgbuild.com/iso/{{ bootstrap_version }}/archlinux-bootstrap-{{ bootstrap_version }}-x86_64.tar.gz

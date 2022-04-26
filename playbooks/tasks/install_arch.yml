@@ -9,5 +9,5 @@
   roles:
     - install_arch
   vars:
-    - bootstrap_version: "2022.03.01"
+    - bootstrap_version: "latest"
     - sshd_enable_includes: false
