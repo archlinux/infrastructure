@@ -10,7 +10,7 @@
             "custom_image": "archlinux"
         },
         "token": "{{ user `hetzner_cloud_api_key` }}",
-        "image": "ubuntu-20.04",
+        "image": "ubuntu-22.04",
         "server_type": "cx11",
         "ssh_username": "root",
         "location": "fsn1",
