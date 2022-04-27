@@ -1,3 +1,5 @@
 ---
 dependencies:
   - role: geoipupdate
+    vars:
+      geoipupdate_edition_ids: GeoLite2-City
