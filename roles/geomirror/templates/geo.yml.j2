@@ -5,11 +5,12 @@ domains:
     ttl: 3600
     records:
       {{ geo_mirror_domain }}:
-        - soa: mirror.pkgbuild.com. root.archlinux.org. 2022011501 3600 1800 604800 3600
-        - ns: mirror.pkgbuild.com
-      {% for host in groups['geo_mirrors'] %}
-        - ns: {{ host }}
-      {% endfor %}
+        - soa: mirror.pkgbuild.com. root.archlinux.org. 2022042701 3600 1800 604800 3600
+        {% for host in groups['geo_mirrors'] + ['mirror.pkgbuild.com'] %}
+        - ns:
+            ttl: 86400
+            content: {{ host }}
+        {% endfor %}
         - lua:
             ttl: 300
             content: >
