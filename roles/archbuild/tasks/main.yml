@@ -62,6 +62,9 @@
     - mkpkg@.timer
     - mkpkg@.service
 
+- name: install user-.slice snippet
+  copy: src=user-.slice.d dest=/etc/systemd/system owner=root group=root mode=0644
+
 - name: start and enable archbuild mounts
   service: name={{ item }} enabled={{ "yes" if archbuild_fs == 'tmpfs' else "no" }} state={{ "started" if archbuild_fs == 'tmpfs' else "stopped" }}
   with_items:
