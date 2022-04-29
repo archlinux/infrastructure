@@ -5,29 +5,25 @@ domains:
     ttl: 3600
     records:
       {{ geo_mirror_domain }}:
-        - soa: mirror.pkgbuild.com. root.archlinux.org. 2022011501 3600 1800 604800 3600
-        - ns: mirror.pkgbuild.com
-      {% for host in groups['geo_mirrors'] %}
-        - ns: {{ host }}
-      {% endfor %}
-      {% for host in groups['geo_mirrors'] %}
-      {{ host.split(".")[0] }}.{{ geo_mirror_domain }}:
-        - a: {{ hostvars[host]['ipv4_address'] }}
-        - aaaa: {{ hostvars[host]['ipv6_address'] }}
-      {% endfor %}
+        - soa: mirror.pkgbuild.com. root.archlinux.org. 2022042701 3600 1800 604800 3600
+        {% for host in groups['geo_mirrors'] + ['mirror.pkgbuild.com'] %}
+        - ns:
+            ttl: 86400
+            content: {{ host }}
+        {% endfor %}
+        - lua:
+            ttl: 300
+            content: >
+              A "ifurlup('https://{{ geo_mirror_domain }}/lastupdate',
+              {'{{ groups['geo_mirrors'] | map('extract', hostvars, ['ipv4_address']) | join("', '") }}'},
+              {selector='pickclosest', useragent='pdns on {{ inventory_hostname }}'})"
+        - lua:
+            ttl: 300
+            content: >
+              AAAA "ifurlup('https://{{ geo_mirror_domain }}/lastupdate',
+              {'{{ groups['geo_mirrors'] | map('extract', hostvars, ['ipv6_address']) | join("', '") }}'},
+              {selector='pickclosest', useragent='pdns on {{ inventory_hostname }}'})"
       {% if not geomirror_acme_challenge %}
       _acme-challenge.{{ geo_mirror_domain }}:
         - ns: mirror.pkgbuild.com
       {% endif %}
-    services:
-      {{ geo_mirror_domain }}: '%mp.geo.mirror.pkgbuild.com'
-mapping_lookup_formats: ['%cn']
-custom_mapping:
-  af: europe
-  an: europe
-  as: asia
-  eu: europe
-  na: america
-  oc: asia
-  sa: america
-  unknown: europe

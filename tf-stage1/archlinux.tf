@@ -431,13 +431,15 @@ resource "hetznerdns_record" "pkgbuild_com_geo_mirror_ns1" {
   name    = "geo.mirror"
   value   = "mirror.pkgbuild.com."
   type    = "NS"
+  ttl     = 86400
 }
 
-resource "hetznerdns_record" "pkgbuild_com_geo_mirror_n2" {
+resource "hetznerdns_record" "pkgbuild_com_geo_mirror_ns2" {
   zone_id = hetznerdns_zone.pkgbuild.id
   name    = "geo.mirror"
   value   = "asia.mirror.pkgbuild.com."
   type    = "NS"
+  ttl     = 86400
 }
 
 resource "hetznerdns_record" "pkgbuild_com_geo_mirror_ns3" {
@@ -445,6 +447,7 @@ resource "hetznerdns_record" "pkgbuild_com_geo_mirror_ns3" {
   name    = "geo.mirror"
   value   = "america.mirror.pkgbuild.com."
   type    = "NS"
+  ttl     = 86400
 }
 
 resource "hetznerdns_record" "pkgbuild_com_geo_mirror_ns4" {
@@ -452,6 +455,7 @@ resource "hetznerdns_record" "pkgbuild_com_geo_mirror_ns4" {
   name    = "geo.mirror"
   value   = "europe.mirror.pkgbuild.com."
   type    = "NS"
+  ttl     = 86400
 }
 
 resource "hetznerdns_record" "archlinux_org_origin_caa" {
