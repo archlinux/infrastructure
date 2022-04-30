@@ -15,6 +15,10 @@ server {
     }
 }
 
+map $uri $migrated_uri {
+    include maps/migrated-lists.map;
+}
+
 server {
     listen       443 ssl http2;
     listen       [::]:443 ssl http2;
@@ -27,6 +31,10 @@ server {
     ssl_certificate      /etc/letsencrypt/live/{{ lists_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ lists_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ lists_domain }}/chain.pem;
+
+    if ($migrated_uri) {
+        return 302 $migrated_uri;
+    }
 
     # redirect old urls
     location /mailman/ {
