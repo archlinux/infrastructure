@@ -27,8 +27,8 @@ def get_host_details(server):
 
 def main():
     args = parse_args()
-    loaded = load_vault('misc/vaults/vault_hetzner.yml')
-    client = Client(token=loaded["hetzner_cloud_api_key"])
+    loaded = load_vault('misc/vaults/vault_hcloud.yml')
+    client = Client(token=loaded["hcloud_api_key_readonly"])
     servers = client.servers.get_all()
 
     hostvars = {server.name: get_host_details(server) for server in servers}
