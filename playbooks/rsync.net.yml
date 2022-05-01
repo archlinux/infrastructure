@@ -3,6 +3,8 @@
 - name: setup rsync.net account
   hosts: localhost
   gather_facts: false
+  vars_files:
+    - ../misc/vaults/vault_rsync.net.yml
   roles:
     - role: rsync_net
       backup_clients: "{{ groups['borg_clients'] }}"

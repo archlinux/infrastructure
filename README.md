@@ -20,7 +20,7 @@ run the provisioning script: `ansible-playbook playbooks/tasks/install-arch.yml 
 The provisioning script configures a sane basic systemd with sshd. By design, it is NOT idempotent.
 After the provisioning script has run, it is safe to reboot.
 
-Once in the new system, run the regular playbook: `HCLOUD_TOKEN=$(misc/get_key.py misc/vault_hetzner.yml hetzner_cloud_api_key) ansible-playbook playbooks/$hostname.yml`.
+Once in the new system, run the regular playbook: `HCLOUD_TOKEN=$(misc/get_key.py misc/vaults/vault_hetzner.yml hetzner_cloud_api_key) ansible-playbook playbooks/$hostname.yml`.
 This playbook is the one regularity used for administrating the server and is entirely idempotent.
 
 When adding a new machine you should also deploy our SSH known_hosts file and update the SSH hostkeys file in this git repo.
@@ -29,9 +29,16 @@ It will also deploy any new SSH host keys to all our machines.
 
 #### Note about GPG keys
 
-The `root_access.yml` file contains the `root_gpgkeys` variable that determine the users that have access to the vault, as well as the borg backup keys.
-All the keys should be on the local user gpg keyring and at **minimum** be locally signed with `--lsign-key`. This is necessary for running either the reencrypt-vault-key
-or the fetch-borg-keys tasks.
+The `root_access.yml` file contains the `vault_default_pgpkeys` variable which
+determines the users that have access to the `default` vault, as well as the
+borg backup keys. A separate `super` vault exists for storing highly sensitive
+secrets like Hetzner credentials; access to the `super` vault is controlled by
+the `vault_super_pgpkeys` variable.
+
+All the keys should be on the local user gpg keyring and at **minimum** be
+locally signed with `--lsign-key`. This is necessary for running any of the
+`reencrypt-vault-default-key`, `reencrypt-vault-super-key `or `fetch-borg-keys`
+tasks.
 
 #### Note about Ansible dynamic inventories
 
@@ -45,7 +52,7 @@ They'll be available automatically.
 We use packer to build snapshots on hcloud to use as server base images.
 In order to use this, you need to install packer and then run
 
-    packer build -var $(misc/get_key.py misc/vault_hetzner.yml hetzner_cloud_api_key --format env) packer/archlinux.json
+    packer build -var $(misc/get_key.py misc/vaults/vault_hetzner.yml hetzner_cloud_api_key --format env) packer/archlinux.json
 
 This will take some time after which a new snapshot will have been created on the primary hcloud archlinux project.
 
@@ -151,25 +158,19 @@ This section has been moved to [docs/servers.md](docs/servers.md).
 
 ## Ansible repo workflows
 
-### Replace vault password and change vaulted passwords
-
-  - Generate a new key and save it as ./new-vault-pw: `pwgen -s 64 1 > new-vault-pw`
-  - `for i in $(ag ANSIBLE_VAULT -l); do ansible-vault rekey --new-vault-password-file new-vault-pw $i; done`
-  - Change the key in misc/vault-password.gpg
-  - `rm new-vault-pw`
-
-### Re-encrypting the vault after adding or removing a new GPG key
-
-  - Make sure you have all the GPG keys **at least** locally signed
-  - Run the `playbooks/tasks/reencrypt-vault-key.yml` playbook and make sure it does not have **any** failed task
-  - Test that the vault is working by running ansible-vault view on any encrypted vault file
-  - Commit and push your changes
-
 ### Fetching the borg keys for local storage
 
   - Make sure you have all the GPG keys **at least** locally signed
   - Run the `playbooks/tasks/fetch-borg-keys.yml` playbook
   - Make sure the playbook runs successfully and check the keys under the borg-keys directory
+
+### Re-encrypting the vaults after adding a new PGP key
+
+Follow the instructions in [group_vars/all/root_access.yml](group_vars/all/root_access.yml).
+
+### Changing the vault password on encrypted files
+
+See [docs/vault-rekeying.md](docs/vault-rekeying.md).
 
 ## Backup documentation
 

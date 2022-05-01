@@ -182,7 +182,7 @@ scrape_configs:
     metrics_path: "/metrics/synapse.{{ endpoint }}"
     scheme: https
     authorization:
-      credentials: {{ vault_matrix_secrets.metrics_token }}
+      credentials: {{ vault_matrix_metrics_token }}
     static_configs:
       - targets: ["matrix.archlinux.org:443"]
   {% endfor %}

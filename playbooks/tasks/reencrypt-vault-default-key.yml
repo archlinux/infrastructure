@@ -1,0 +1,10 @@
+---
+
+- name: reencrypt vault default key
+  hosts: localhost
+  tasks:
+    - name: reencrypt vault default key
+      include_tasks: include/reencrypt-vault-key.yml
+      vars:
+        vault_id: default
+        vault_pgpkeys: "{{ vault_default_pgpkeys }}"

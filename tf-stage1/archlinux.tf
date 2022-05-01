@@ -6,7 +6,7 @@ terraform {
 
 data "external" "vault_hetzner" {
   program = [
-    "${path.module}/../misc/get_key.py", "${path.module}/../misc/vault_hetzner.yml",
+    "${path.module}/../misc/get_key.py", "${path.module}/../misc/vaults/vault_hetzner.yml",
     "hetzner_cloud_api_key",
     "hetzner_dns_api_key",
     "--format", "json"

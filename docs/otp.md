@@ -14,7 +14,7 @@ Run
 
     pass otp insert -i GitHub -a archlinux-master-token github.com/archlinux-master-token -s
 
-When asked for a secret, provide the `github_master_seed` from `misc/vault_github.yml`.
+When asked for a secret, provide the `github_master_seed` from `misc/vaults/vault_github.yml`.
 You can then run
 
     pass otp code github.com/archlinux-master-token
@@ -30,7 +30,7 @@ Run
 
     pass otp insert -i Hetzner -a archlinux-master-token Hetzner/archlinux-master-token -s
 
-When asked for a secret, provide the `hetzner_master_seed` from `misc/vault_hetzner.yml`.
+When asked for a secret, provide the `hetzner_master_seed` from `misc/vaults/vault_hetzner.yml`.
 You can then run
 
     pass otp code Hetzner/archlinux-master-token
@@ -43,7 +43,7 @@ Run
 
     pass otp insert -i UptimeRobot -a archlinux UptimeRobot/archlinux-master-token -s
 
-When asked for a secret, provide the `2FA token seed` from `misc/additional-credentials.vault`.
+When asked for a secret, provide the `2FA token seed` from `misc/vaults/additional-credentials.vault`.
 You can then run
 
     pass otp code UptimeRobot/archlinux-master-token

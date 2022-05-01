@@ -38,9 +38,9 @@ If you want to add a new official project, here are some guidelines to follow:
    - All of these should be activated by default as per group rules but it's good to check.
 1. [ ] The *Protected Branches* in https://gitlab.archlinux.org/archlinux/my-example/-/settings/repository should specify
        `Allowed to merge` and `Allowed to push` as `Developers + Maintainers.`
-1. [ ] Disable unneeded project features under *Visibility, project features, permissions* (https://gitlab.archlinux.org/archlinux/my-example/edit)  
+1. [ ] Disable unneeded project features under *Visibility, project features, permissions* (https://gitlab.archlinux.org/archlinux/my-example/edit)
    Always:
-   - `Users can request access`: `off`  
+   - `Users can request access`: `off`
    Often, but not always:
    - Repository -> Container registry
    - Repository -> Git Large File Storage (LFS)
@@ -86,7 +86,7 @@ If you want to add a new official project, here are some guidelines to follow:
    - `Issues`
    - `Projects`
 1. [ ] Go to https://github.com/archlinux/my-example/settings/hooks and add a new webhook
-   - `Payload URL`: `$(misc/get_key.py misc/vault_github.yml github_pull_closer_webhook_url)`
+   - `Payload URL`: `$(misc/get_key.py misc/vaults/vault_github.yml github_pull_closer_webhook_url)`
    - `Content type`: `application/json`
    - `Which events would you like to trigger this webhook?`
      - `Let me select individual events.`: `Pull requests`
