@@ -114,6 +114,25 @@
   systemd: name=prometheus-hetzner-textcollector.timer enabled=yes daemon_reload=yes state=started
   when: "inventory_hostname == 'monitoring.archlinux.org'"
 
+- name: install gitlab-exporter
+  pacman: name=gitlab-exporter state=present
+  when: "inventory_hostname == 'gitlab.archlinux.org'"
+
+- name: install gitlab-exporter service and configuration
+  template: src="{{ item.src }}" dest="{{ item.dest }}" owner=root group=root mode="{{ item.mode }}"
+  with_items:
+    - { src: 'gitlab-exporter.conf.j2', dest: '/etc/conf.d/gitlab-exporter', mode: '0600' }
+    - { src: 'gitlab-exporter.service.j2', dest: '/etc/systemd/system/gitlab-exporter.service', mode: '0644' }
+  when: "inventory_hostname == 'gitlab.archlinux.org'"
+
+- name: install gitlab-exporter timer
+  copy: src=gitlab-exporter.timer dest="/etc/systemd/system/gitlab-exporter.timer" owner=root group=root mode=0644
+  when: "inventory_hostname == 'gitlab.archlinux.org'"
+
+- name: enable and start gitlab-exporter timer
+  systemd: name=gitlab-exporter.timer enabled=yes daemon_reload=yes state=started
+  when: "inventory_hostname == 'gitlab.archlinux.org'"
+
 - name: install fail2ban textcollector service
   template: src=prometheus-fail2ban-textcollector.service.j2 dest=/etc/systemd/system/prometheus-fail2ban-textcollector.service owner=root group=root mode=644
 
