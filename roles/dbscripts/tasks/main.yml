@@ -40,11 +40,6 @@
   tags:
     - nginx
 
-- name: put dbscripts.htpasswd in place
-  copy: src=dbscripts.htpasswd dest=/etc/nginx/auth/dbscripts.htpasswd owner=root group=http mode=0640
-  tags:
-    - nginx
-
 - name: create Arch Linux-specific users
   user:
     name: "{{ item.key }}"
