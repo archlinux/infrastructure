@@ -23,6 +23,11 @@ root_ssh_keys:
   - key: anthraxx.pub
   - key: klausenbusk.pub
     additional_keys: [klausenbusk_2.pub]
+  - key: artafinde.pub
+    hosts:
+      - dashboards.archlinux.org
+      - gitlab.archlinux.org
+      - monitoring.archlinux.org
 
 # - run 'playbooks/tasks/reencrypt-vault-{super,default}-key.yml' when this
 #   changes; before doing so, make sure to 'gpg --lsign-key' all listed keys
@@ -45,3 +50,4 @@ vault_super_pgpkeys: &vault_super_pgpkeys
 #   is working by running `ansible-vault view misc/vaults/vault_hcloud.yml`
 vault_default_pgpkeys:
   - *vault_super_pgpkeys
+  - B4B759625D4633430B74877059E43E106B247368  # artafinde
