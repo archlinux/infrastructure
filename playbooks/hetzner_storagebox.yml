@@ -3,6 +3,9 @@
 - name: setup Hetzner storagebox account
   hosts: localhost
   gather_facts: false
+  vars_files:
+    - ../misc/vaults/vault_hetzner_storagebox.yml
+    - ../misc/vaults/vault_hetzner_webservice.yml
   roles:
     - role: hetzner_storagebox
       backup_clients: "{{ groups['borg_clients'] }}"

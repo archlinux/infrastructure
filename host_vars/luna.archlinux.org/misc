@@ -1,9 +1,0 @@
----
-configure_network: false
-filesystem: "ext4"
-system_disks:
-  - /dev/sda
-  - /dev/sdb
-
-vault_mariadb_users:
-  root: "{{encrypted_mariadb_users_root_password}}"

@@ -3,6 +3,8 @@
 - name: setup matrix
   hosts: matrix.archlinux.org
   remote_user: root
+  vars_files:
+    - ../misc/vaults/vault_matrix.yml
   roles:
     - { role: common }
     - { role: firewalld }

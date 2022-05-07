@@ -30,7 +30,7 @@ https://www.gnupg.org/gph/en/manual/x135.html
 -->
 
 ## All roles checklist
-The mailing list password can be found in [`misc/additional-credentials.vault`](misc/additional-credentials.vault).
+The mailing list password can be found in [`misc/vaults/additional-credentials.vault`](misc/vaults/additional-credentials.vault).
 
 - [ ] Add new user email as per [`docs/email.md`](docs/email.md).
 - [ ] Create a new user in [archweb](https://www.archlinux.org/devel/newuser/). Select the appropriate group membership and allowed repos (if applicable).

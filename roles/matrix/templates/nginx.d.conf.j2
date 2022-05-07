@@ -60,7 +60,7 @@ server {
 {% endfor %}
 {% for ep in matrix_metrics_endpoints %}
     location = /metrics/{{ ep.name }} {
-        if ($http_authorization != "Bearer {{ vault_matrix_secrets.metrics_token }}") {
+        if ($http_authorization != "Bearer {{ vault_matrix_metrics_token }}") {
             return 403;
         }
         proxy_pass http://127.0.0.1:{{ ep.port }}/{{ ep.path | default('') }};
@@ -68,7 +68,7 @@ server {
 
 {% endfor %}
     location = /metrics {
-        if ($http_authorization != "Bearer {{ vault_matrix_secrets.metrics_token }}") {
+        if ($http_authorization != "Bearer {{ vault_matrix_metrics_token }}") {
             return 403;
         }
         default_type text/plain;
