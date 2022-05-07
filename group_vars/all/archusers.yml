@@ -572,3 +572,9 @@ arch_users:
     ssh_key: yan12125.pub
     groups:
       - tu
+
+# utility accounts to protect from the "disable ssh keys of disabled users" task
+utility_users:
+  gemini.archlinux.org:
+    - svn-packages
+    - svn-community
