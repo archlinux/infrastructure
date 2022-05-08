@@ -198,6 +198,9 @@ server {
         uwsgi_cache_key $cache_key;
         add_header X-Cache-Status $upstream_cache_status;
 
+        # re-add HSTS (inheritance from sslsettings.conf broken by above header)
+        add_header Strict-Transport-Security $hsts_header always;
+
         limit_req zone=archweblimit burst=10 nodelay;
     }
 }
