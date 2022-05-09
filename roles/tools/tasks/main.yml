@@ -4,7 +4,6 @@
   pacman:
     state: present
     name:
-      - bash-completion
       - zsh
       - fish
       - git
