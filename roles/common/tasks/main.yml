@@ -46,12 +46,6 @@
     - item.fstype == 'btrfs'
     - not 'backup' in item.mount
 
-- name: install mlocate
-  pacman: name=mlocate state=present
-
-- name: activate regular updatedb for mlocate
-  service: name=updatedb.timer enabled=yes state=started
-
 - name: generate locales
   locale_gen: name={{ item }} state=present
   with_items:
