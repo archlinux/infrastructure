@@ -218,9 +218,7 @@ resource "keycloak_oidc_identity_provider" "realm_identity_provider" {
   trust_email                  = false
   store_token                  = false
   backchannel_supported        = false
-  extra_config = {
-    syncMode = "IMPORT"
-  }
+  sync_mode                    = "IMPORT"
 }
 
 resource "keycloak_saml_client" "saml_gitlab" {
@@ -242,6 +240,7 @@ resource "keycloak_saml_client" "saml_gitlab" {
   base_url                   = "/"
   master_saml_processing_url = var.gitlab_instance.saml_redirect_url
   idp_initiated_sso_url_name = "saml_gitlab"
+  front_channel_logout       = false
 
   assertion_consumer_post_url = var.gitlab_instance.saml_redirect_url
 }
@@ -257,6 +256,7 @@ resource "keycloak_openid_client" "openid_gitlab" {
 
   access_type           = "PUBLIC"
   standard_flow_enabled = true
+  use_refresh_tokens    = false
   full_scope_allowed    = false
   valid_redirect_uris = [
     "https://gitlab.archlinux.org"
@@ -775,6 +775,7 @@ resource "keycloak_openid_client" "grafana_openid_client" {
 
   access_type           = "CONFIDENTIAL"
   standard_flow_enabled = true
+  use_refresh_tokens    = false
   valid_redirect_uris = [
     "https://monitoring.archlinux.org",
     "https://monitoring.archlinux.org/login/generic_oauth"
@@ -802,6 +803,7 @@ resource "keycloak_openid_client" "hedgedoc_openid_client" {
 
   access_type           = "CONFIDENTIAL"
   standard_flow_enabled = true
+  use_refresh_tokens    = false
   valid_redirect_uris = [
     "https://md.archlinux.org/*",
   ]
@@ -828,6 +830,7 @@ resource "keycloak_openid_client" "matrix_openid_client" {
 
   access_type           = "CONFIDENTIAL"
   standard_flow_enabled = true
+  use_refresh_tokens    = false
   valid_redirect_uris = [
     "https://matrix.archlinux.org/_synapse/client/oidc/callback"
   ]
@@ -857,6 +860,7 @@ resource "keycloak_openid_client" "gluebuddy_openid_client" {
 
   access_type           = "CONFIDENTIAL"
   standard_flow_enabled = true
+  use_refresh_tokens    = false
   valid_redirect_uris = [
     "https://gitlab.archlinux.org/"
   ]
@@ -872,6 +876,7 @@ resource "keycloak_openid_client" "security_tracker_openid_client" {
 
   access_type           = "CONFIDENTIAL"
   standard_flow_enabled = true
+  use_refresh_tokens    = false
   web_origins           = []
   valid_redirect_uris = [
     "https://security.archlinux.org/*",

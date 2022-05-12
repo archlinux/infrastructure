@@ -4,12 +4,10 @@ terraform {
       source = "hashicorp/external"
     }
     keycloak = {
-      source  = "mrparkers/keycloak"
-      version = "2.0.0"
+      source = "mrparkers/keycloak"
     }
     uptimerobot = {
-      source  = "louy/uptimerobot"
-      version = "0.5.1"
+      source = "louy/uptimerobot"
     }
   }
   required_version = ">= 0.13"
