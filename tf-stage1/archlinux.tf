@@ -148,6 +148,11 @@ locals {
       server_type = "cx11"
       domain      = "debuginfod"
     }
+    "buildbot.pkgbuild.com" = {
+      server_type = "cx21"
+      domain      = "buildbot"
+      zone        = hetznerdns_zone.pkgbuild.id
+    }
   }
 
   # This creates gitlab pages verification entries.
