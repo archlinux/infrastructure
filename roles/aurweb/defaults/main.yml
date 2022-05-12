@@ -10,7 +10,7 @@ aurweb_git_dir: "{{ aurweb_dir }}/aur.git"
 aurweb_git_hook: '/usr/local/bin/aurweb-git-update'
 aurweb_nginx_conf: '/etc/nginx/nginx.d/aurweb.conf'
 aurweb_version: 'live'
-aurweb_pgp_keys: ['0F985B6F99B6686854C44EC3F7E46DED420788F3']
+aurweb_pgp_keys: ['0F985B6F99B6686854C44EC3F7E46DED420788F3', 'DB650286BD9EAE39890D3FE6FE3DC1668CB24956']
 
 aurweb_db: 'aur'
 aurweb_db_host: 'localhost'
