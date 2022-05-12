@@ -17,7 +17,7 @@ aurweb_db_host: 'localhost'
 aurweb_db_user: 'aur'
 
 aurweb_user: 'aur'
-aurweb_socket: '/run/php-fpm/{{aurweb_user}}.socket'
+aurweb_socket: '/run/php-fpm/{{ aurweb_user }}.socket'
 cgit_socket: '/run/uwsgi/cgit.sock'
 smartgit_socket: '/run/uwsgi/smartgit.sock'
 
