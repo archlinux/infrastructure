@@ -52,7 +52,7 @@ scrape_configs:
 
   - job_name: 'node_exporter'
     static_configs:
-      {% for host in groups['node_exporters'] %}
+      {% for host in groups['all'] %}
       - targets: ['{{ host }}:{{ prometheus_exporter_port }}']
         labels:
           instance: "{{ host }}"
@@ -60,7 +60,7 @@ scrape_configs:
 
   - job_name: 'promtail'
     static_configs:
-      {% for host in groups['node_exporters'] %}
+      {% for host in groups['all'] %}
       - targets: ['{{ hostvars[host]['wireguard_address'] }}:9080']
         labels:
           instance: "{{ host }}"

@@ -40,13 +40,6 @@ locally signed with `--lsign-key`. This is necessary for running any of the
 `reencrypt-vault-default-key`, `reencrypt-vault-super-key `or `fetch-borg-keys`
 tasks.
 
-#### Note about Ansible dynamic inventories
-
-We use a dynamic inventory script in order to automatically get information for
-all servers directly from hcloud. You don't really have to do anything to make
-this work but you should keep in mind to NOT add hcloud servers to `hosts`!
-They'll be available automatically.
-
 #### Note about packer
 
 We use packer to build snapshots on hcloud to use as server base images.
