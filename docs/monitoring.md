@@ -5,7 +5,6 @@ To access our monitoring system, go to https://monitoring.archlinux and log in v
 
 ## Adding a new host to monitoring
 
-* Add $host to node_exporters in `hosts`
 * Rollout exporter on host: `ansible-playbook playbooks/host.yml -t prometheus_exporters`
 * Rollout changes on monitoring host: `ansible-playbook playbooks/monitoring.archlinux.org.yml -t prometheus`
 
