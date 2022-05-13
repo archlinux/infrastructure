@@ -15,4 +15,4 @@
     - { role: promtail }
     - { role: fail2ban }
     - { role: wireguard }
-    - { role: geomirror, when: "'geo_mirrors' in group_names" }
+    - { role: geo_dns, when: "'geo_mirrors' in group_names" }
