@@ -148,7 +148,7 @@ resource "hetznerdns_record" "geo_ns1" {
 
   zone_id = each.value.zone_id
   name    = each.value.name
-  value   = "mirror.pkgbuild.com."
+  value   = "asia.mirror.pkgbuild.com."
   type    = "NS"
   ttl     = 86400
 }
@@ -158,22 +158,12 @@ resource "hetznerdns_record" "geo_ns2" {
 
   zone_id = each.value.zone_id
   name    = each.value.name
-  value   = "asia.mirror.pkgbuild.com."
-  type    = "NS"
-  ttl     = 86400
-}
-
-resource "hetznerdns_record" "geo_ns3" {
-  for_each = local.geo_domains
-
-  zone_id = each.value.zone_id
-  name    = each.value.name
   value   = "america.mirror.pkgbuild.com."
   type    = "NS"
   ttl     = 86400
 }
 
-resource "hetznerdns_record" "geo_ns4" {
+resource "hetznerdns_record" "geo_ns3" {
   for_each = local.geo_domains
 
   zone_id = each.value.zone_id

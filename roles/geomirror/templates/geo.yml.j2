@@ -1,12 +1,13 @@
 #jinja2:lstrip_blocks: True
 ---
 domains:
-  - domain: {{ geo_mirror_domain }}
+  {% for domain in geo_domains %}
+  - domain: {{ domain }}
     ttl: 3600
     records:
-      {{ geo_mirror_domain }}:
-        - soa: mirror.pkgbuild.com. root.archlinux.org. 2022042701 3600 1800 604800 3600
-        {% for host in groups['geo_mirrors'] + ['mirror.pkgbuild.com'] %}
+      {{ domain }}:
+        - soa: {{ groups['geo_mirrors'] | first }}. root.archlinux.org. 2022042701 3600 1800 604800 3600
+        {% for host in groups['geo_mirrors'] %}
         - ns:
             ttl: 86400
             content: {{ host }}
@@ -14,16 +15,15 @@ domains:
         - lua:
             ttl: 300
             content: >
-              A "ifurlup('https://{{ geo_mirror_domain }}/lastupdate',
+              A "ifurlup('https://{{ domain }}{{ geo_health_check_paths[domain] | default('/') }}',
               {'{{ groups['geo_mirrors'] | map('extract', hostvars, ['ipv4_address']) | join("', '") }}'},
               {selector='pickclosest', useragent='pdns on {{ inventory_hostname }}'})"
         - lua:
             ttl: 300
             content: >
-              AAAA "ifurlup('https://{{ geo_mirror_domain }}/lastupdate',
+              AAAA "ifurlup('https://{{ domain }}{{ geo_health_check_paths[domain] | default('/') }}',
               {'{{ groups['geo_mirrors'] | map('extract', hostvars, ['ipv6_address']) | join("', '") }}'},
               {selector='pickclosest', useragent='pdns on {{ inventory_hostname }}'})"
-      {% if not geomirror_acme_challenge %}
-      _acme-challenge.{{ geo_mirror_domain }}:
-        - ns: mirror.pkgbuild.com
-      {% endif %}
+      _acme-challenge.{{ domain }}:
+        - ns: {{ geo_acme_dns_challenge_ns }}
+  {% endfor %}

@@ -4,8 +4,7 @@ local-address={{ ipv4_address }},{{ ipv6_address }}
 webserver=yes
 webserver-address=0.0.0.0
 webserver-allow-from=127.0.0.1,::1,{{ hostvars['monitoring.archlinux.org']['wireguard_address'] }}
-launch=geoip
-geoip-database-files=/var/lib/GeoIP/GeoLite2-City.mmdb
-geoip-zones-file=/etc/powerdns/geo.yml
-enable-lua-records
-lua-health-checks-interval=60
+launch=gsqlite3
+gsqlite3-database=/var/lib/powerdns/pdns.sqlite3
+dnsupdate=yes
+lua-dnsupdate-policy-script=/etc/powerdns/dnsupdate-policy.lua

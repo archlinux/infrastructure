@@ -74,7 +74,7 @@ scrape_configs:
 
   - job_name: 'powerdns'
     static_configs:
-      {% for host in groups['geo_mirrors'] + ['mirror.pkgbuild.com'] %}
+      {% for host in groups['geo_mirrors'] + [geo_acme_dns_challenge_ns] %}
       - targets: ['{{ hostvars[host]['wireguard_address'] }}:8081']
         labels:
           instance: "{{ host }}"

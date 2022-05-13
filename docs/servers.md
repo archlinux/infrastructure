@@ -85,7 +85,6 @@ So to set up this server from scratch, run:
 
 ### Services
   - Regular mirror.
-  - Running a authoritative DNS server (PowerDNS) for our GeoIP mirror
 
 ## reproducible.archlinux.org
 
@@ -135,6 +134,7 @@ Prometheus, and Grafana server which receives selected performance/metrics from 
 
 ### Services
   - Redirects (nginx redirects)
+  - Authoritative DNS server (PowerDNS) for ACME DNS challenges
   - ping
 
 ## security.archlinux.org

@@ -7,35 +7,7 @@
   loop:
     - {src: pdns.conf.j2, dest: pdns.conf}
     - {src: geo.yml.j2, dest: geo.yml}
-    - {src: dnsupdate-policy.lua.j2, dest: dnsupdate-policy.lua}
   notify: restart powerdns
-
-- name: create directory for sqlite3 dbs
-  file: path=/var/lib/powerdns state=directory owner=powerdns group=powerdns mode=0755
-  when: geomirror_acme_challenge
-
-- name: initialize sqlite3 database for _acme-challenge zone
-  command: sqlite3 -init /usr/share/doc/powerdns/schema.sqlite3.sql /var/lib/powerdns/pdns.sqlite3 ""
-  become: true
-  become_user: powerdns
-  args:
-    creates: /var/lib/powerdns/pdns.sqlite3
-  register: init
-  when: geomirror_acme_challenge
-
-- name: create _acme-challenge zone
-  command: "{{ item }}"
-  loop:
-    - pdnsutil create-zone _acme-challenge.{{ geo_mirror_domain }} mirror.pkgbuild.com
-    - pdnsutil replace-rrset _acme-challenge.{{ geo_mirror_domain }} @ SOA "mirror.pkgbuild.com. root.archlinux.org. 0 10800 3600 604800 3600"
-  become: true
-  become_user: powerdns
-  when: init.changed
-
-- name: import TSIG key (for certbot)
-  command: pdnsutil import-tsig-key {{ certbot_rfc2136_key }} {{ certbot_rfc2136_algorithm }} {{ certbot_rfc2136_secret }}
-  changed_when: false
-  when: geomirror_acme_challenge
 
 - name: open powerdns ipv4 port for monitoring.archlinux.org
   ansible.posix.firewalld: zone=wireguard state=enabled permanent=true immediate=yes
