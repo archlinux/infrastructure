@@ -364,6 +364,14 @@ locals {
       ipv6_address = hcloud_server.machine["homedir.archlinux.org"].ipv6_address
     }
   }
+
+  # Domains served by machines in the geo_mirrors group
+  geo_domains = {
+    "geo.mirror.pkgbuild.com" = {
+      zone_id = hetznerdns_zone.pkgbuild.id
+      name    = "geo.mirror"
+    }
+  }
 }
 
 resource "hetznerdns_zone" "archlinux" {
@@ -429,38 +437,6 @@ resource "hetznerdns_record" "pkgbuild_com_origin_txt" {
   name    = "@"
   value   = "\"v=spf1 -all\""
   type    = "TXT"
-}
-
-resource "hetznerdns_record" "pkgbuild_com_geo_mirror_ns1" {
-  zone_id = hetznerdns_zone.pkgbuild.id
-  name    = "geo.mirror"
-  value   = "mirror.pkgbuild.com."
-  type    = "NS"
-  ttl     = 86400
-}
-
-resource "hetznerdns_record" "pkgbuild_com_geo_mirror_ns2" {
-  zone_id = hetznerdns_zone.pkgbuild.id
-  name    = "geo.mirror"
-  value   = "asia.mirror.pkgbuild.com."
-  type    = "NS"
-  ttl     = 86400
-}
-
-resource "hetznerdns_record" "pkgbuild_com_geo_mirror_ns3" {
-  zone_id = hetznerdns_zone.pkgbuild.id
-  name    = "geo.mirror"
-  value   = "america.mirror.pkgbuild.com."
-  type    = "NS"
-  ttl     = 86400
-}
-
-resource "hetznerdns_record" "pkgbuild_com_geo_mirror_ns4" {
-  zone_id = hetznerdns_zone.pkgbuild.id
-  name    = "geo.mirror"
-  value   = "europe.mirror.pkgbuild.com."
-  type    = "NS"
-  ttl     = 86400
 }
 
 resource "hetznerdns_record" "archlinux_org_origin_caa" {
