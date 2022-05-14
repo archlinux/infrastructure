@@ -1,7 +1,6 @@
 ---
 mirror_domain: mirror.pkgbuild.com
 mirror_debug_packages: false
-geomirror_acme_challenge: true
 archweb_mirrorcheck_locations: [20, 21]
 filesystem: btrfs
 

@@ -1,0 +1,22 @@
+---
+- name: install powerdns and geoip
+  pacman: name=powerdns,libmaxminddb,geoip,yaml-cpp state=present
+
+- name: install PowerDNS configuration
+  template: src={{ item.src }} dest=/etc/powerdns/{{ item.dest }} owner=root group=root mode=0644
+  loop:
+    - {src: pdns.conf.j2, dest: pdns.conf}
+    - {src: geo.yml.j2, dest: geo.yml}
+  notify: restart powerdns
+
+- name: open powerdns ipv4 port for monitoring.archlinux.org
+  ansible.posix.firewalld: zone=wireguard state=enabled permanent=true immediate=yes
+    rich_rule="rule family=ipv4 source address={{ hostvars['monitoring.archlinux.org']['wireguard_address'] }} port protocol=tcp port=8081 accept"
+  tags:
+    - firewall
+
+- name: open firewall hole
+  ansible.posix.firewalld: service=dns permanent=true state=enabled immediate=yes
+
+- name: start and enable powerdns
+  systemd: name=pdns.service enabled=yes daemon_reload=yes state=started

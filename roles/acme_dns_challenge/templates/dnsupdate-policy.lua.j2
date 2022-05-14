@@ -1,6 +1,11 @@
+#jinja2: lstrip_blocks: True
 -- Based on https://github.com/PowerDNS/pdns/wiki/Lua-Examples-(Authoritative)#updatepolicy-access-control-for-rfc2136-dynamic-updates
 function updatepolicy(input)
-  acme_challenge_rrname = "_acme-challenge.{{ geo_mirror_domain }}."
+  valid_rrnames = {
+    {% for domain in geo_domains %}
+    ["_acme-challenge.{{ domain }}."]=true,
+    {% endfor %}
+  }
 
   -- only allow updates from our servers
   mynetworks = newNMG()
@@ -26,7 +31,7 @@ function updatepolicy(input)
   end
 
   -- only accept TXT record updates for _acme_challenge
-  if input:getQType() == pdns.TXT and input:getQName():toString() == acme_challenge_rrname
+  if input:getQType() == pdns.TXT and valid_rrnames[input:getQName():toString()]
   then
     pdnslog("updatepolicy: query checks successful", pdns.loglevels.Info)
     return true

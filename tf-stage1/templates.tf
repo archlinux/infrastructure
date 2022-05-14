@@ -142,3 +142,33 @@ resource "hetznerdns_record" "machine_aaaa" {
   value   = hcloud_server.machine[each.key].ipv6_address
   type    = "AAAA"
 }
+
+resource "hetznerdns_record" "geo_ns1" {
+  for_each = local.geo_domains
+
+  zone_id = each.value.zone_id
+  name    = each.value.name
+  value   = "asia.mirror.pkgbuild.com."
+  type    = "NS"
+  ttl     = 86400
+}
+
+resource "hetznerdns_record" "geo_ns2" {
+  for_each = local.geo_domains
+
+  zone_id = each.value.zone_id
+  name    = each.value.name
+  value   = "america.mirror.pkgbuild.com."
+  type    = "NS"
+  ttl     = 86400
+}
+
+resource "hetznerdns_record" "geo_ns3" {
+  for_each = local.geo_domains
+
+  zone_id = each.value.zone_id
+  name    = each.value.name
+  value   = "europe.mirror.pkgbuild.com."
+  type    = "NS"
+  ttl     = 86400
+}
