@@ -1,0 +1,23 @@
+[mailman]
+site_owner: root@{{ lists_domain }}
+layout: fhs
+
+[database]
+class: mailman.database.postgresql.PostgreSQLDatabase
+url: postgres://{{ vault_mailman_db_user }}:{{ vault_mailman_db_password }}@/mailman
+
+[webservice]
+admin_user: {{ vault_mailman_admin_user }}
+admin_pass: {{ vault_mailman_admin_pass }}
+
+[mta]
+configuration: /etc/postfix.cfg
+lmtp_host: {{ hostvars['mailman3.archlinux.org']['wireguard_address'] }}
+lmtp_port: 8024
+smtp_host: {{ hostvars['lists.archlinux.org']['wireguard_address'] }}
+smtp_port: 25
+
+[archiver.hyperkitty]
+class: mailman_hyperkitty.Archiver
+enable: yes
+configuration: /etc/mailman-hyperkitty.cfg

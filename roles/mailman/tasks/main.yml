@@ -21,10 +21,19 @@
   loop:
     - aliases
     - milter_header_checks
-  notify: reload postfix
+  notify: run postmap
+
+- name: install postfix templated maps
+  template: src={{ item }}.j2 dest=/etc/postfix/{{ item }} owner=root group=root mode=0644
+  loop:
+    - transport
+  notify: run postmap
 
 - name: open firewall holes for postfix
-  ansible.posix.firewalld: service=smtp permanent=true state=enabled immediate=yes
+  ansible.posix.firewalld: service=smtp zone={{ item }} permanent=true state=enabled immediate=yes
+  loop:
+    -
+    - wireguard
   when: configure_firewall
   tags:
     - firewall
@@ -39,6 +48,10 @@
 
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ lists_domain }} state=directory owner=root group=root mode=0755
+
+- name: install nginx mailman2->mailman3 redirect map
+  copy: src=migrated-lists.map dest=/etc/nginx/maps/ owner=root group=root mode=0644
+  notify: reload nginx
 
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest="/etc/nginx/nginx.d/mailman.conf" owner=root group=root mode=644

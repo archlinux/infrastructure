@@ -1,0 +1,6 @@
+---
+- name: reload mailman
+  service: name=mailman3 state=reloaded
+
+- name: restart mailman-web
+  service: name=uwsgi@mailman\\x2dweb.service state=restarted
