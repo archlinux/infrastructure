@@ -1,3 +1,4 @@
+#jinja2: lstrip_blocks: True
 modules:
   http_prometheus:
     prober: http
@@ -24,23 +25,25 @@ modules:
         - send: "EHLO prober\r"
         - expect: "^250"
         - send: "QUIT\r"
-  dns_geomirror_a:
+  {% for domain in geo_domains %}
+  geo_dns_{{ domain }}_a:
     prober: dns
     timeout: 5s
     dns:
-      query_name: geo.mirror.pkgbuild.com
+      query_name: {{ domain }}
       query_type: A
       preferred_ip_protocol: ip4
       validate_answer_rrs:
         fail_if_not_matches_regexp:
-          - geo\.mirror\.pkgbuild\.com\.\t.*\tIN\tA\t({{ groups['geo_mirrors'] | map('extract', hostvars, ['ipv4_address']) | join('|') | replace('.', '\.') }})
-  dns_geomirror_aaaa:
+          - {{ domain | replace('.', '\.') }}\.\t.*\tIN\tA\t({{ groups['geo_mirrors'] | map('extract', hostvars, ['ipv4_address']) | join('|') | replace('.', '\.') }})
+  geo_dns_{{ domain }}_aaaa:
     prober: dns
     timeout: 5s
     dns:
-      query_name: geo.mirror.pkgbuild.com
+      query_name: {{ domain }}
       query_type: AAAA
       preferred_ip_protocol: ip6
       validate_answer_rrs:
         fail_if_not_matches_regexp:
-          - geo\.mirror\.pkgbuild\.com\.\t.*\tIN\tAAAA\t({{ groups['geo_mirrors'] | map('extract', hostvars, ['ipv6_address']) | join('|') }})
+          - {{ domain | replace('.', '\.') }}\.\t.*\tIN\tAAAA\t({{ groups['geo_mirrors'] | map('extract', hostvars, ['ipv6_address']) | join('|') }})
+  {% endfor %}

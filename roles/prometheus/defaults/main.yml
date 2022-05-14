@@ -75,8 +75,8 @@ blackbox_targets:
   smtp_starttls:
     - mail.archlinux.org:25
     - lists.archlinux.org:25
-  dns_geomirror_a: "{{ groups['geo_mirrors'] }}"
-  dns_geomirror_aaaa: "{{ groups['geo_mirrors'] }}"
+  geo_dns_geo.mirror.pkgbuild.com_a: "{{ groups['geo_mirrors'] }}"
+  geo_dns_geo.mirror.pkgbuild.com_aaaa: "{{ groups['geo_mirrors'] }}"
 matrix_metrics_endpoints:
   - homeserver
   - appservice
