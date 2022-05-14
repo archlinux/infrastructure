@@ -67,6 +67,5 @@
   loop:
     - mailman3.service
     - mailman3-digests.timer
-    - mailman3-gatenews.timer
     - mailman3-notify.timer
     - uwsgi@mailman\x2dweb.service
