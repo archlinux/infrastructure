@@ -1,4 +1,17 @@
 /listinfo/arch-announce /archives/list/arch-announce@lists.archlinux.org/;
+/listinfo/arch-dev /archives/list/arch-dev@lists.archlinux.org/;
+/listinfo/arch-dev-public /archives/list/arch-dev-public@lists.archlinux.org/;
+/listinfo/arch-devops /archives/list/arch-devops@lists.archlinux.org/;
 /listinfo/arch-devops-private /archives/list/arch-devops-private@lists.archlinux.org/;
 /listinfo/arch-events /archives/list/arch-events@lists.archlinux.org/;
+/listinfo/arch-mirrors /archives/list/arch-mirrors@lists.archlinux.org/;
+/listinfo/arch-mirrors-announce /archives/list/arch-mirrors-announce@lists.archlinux.org/;
+/listinfo/arch-multilib /archives/list/arch-multilib@lists.archlinux.org/;
+/listinfo/arch-ports /archives/list/arch-ports@lists.archlinux.org/;
+/listinfo/arch-proaudio /archives/list/arch-proaudio@lists.archlinux.org/;
+/listinfo/arch-projects /archives/list/arch-projects@lists.archlinux.org/;
+/listinfo/arch-releng /archives/list/arch-releng@lists.archlinux.org/;
+/listinfo/arch-tu /archives/list/arch-tu@lists.archlinux.org/;
 /listinfo/arch-wiki-admins /archives/list/arch-wiki-admins@lists.archlinux.org/;
+/listinfo/arch-women /archives/list/arch-women@lists.archlinux.org/;
+/listinfo/staff /archives/list/staff@lists.archlinux.org/;
