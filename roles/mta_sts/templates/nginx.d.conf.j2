@@ -32,6 +32,7 @@ server {
 
     location = /.well-known/mta-sts.txt {
         default_type text/plain;
+        # Remember to bump the MTA-STS id in tf-stage1/archlinux.tf
         return 200 'version: STSv1\nmode: enforce\nmax_age: 2592000\nmx: {{ config.mx | join('\\nmx: ')}}\n';
     }
 
