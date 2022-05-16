@@ -150,7 +150,7 @@ resource "hetznerdns_record" "geo_ns1" {
   name    = each.value.name
   value   = "asia.mirror.pkgbuild.com."
   type    = "NS"
-  ttl     = 86400
+  ttl     = lookup(local.geo_domains[each.key], "ttl", 86400)
 }
 
 resource "hetznerdns_record" "geo_ns2" {
@@ -160,7 +160,7 @@ resource "hetznerdns_record" "geo_ns2" {
   name    = each.value.name
   value   = "america.mirror.pkgbuild.com."
   type    = "NS"
-  ttl     = 86400
+  ttl     = lookup(local.geo_domains[each.key], "ttl", 86400)
 }
 
 resource "hetznerdns_record" "geo_ns3" {
@@ -170,5 +170,5 @@ resource "hetznerdns_record" "geo_ns3" {
   name    = each.value.name
   value   = "europe.mirror.pkgbuild.com."
   type    = "NS"
-  ttl     = 86400
+  ttl     = lookup(local.geo_domains[each.key], "ttl", 86400)
 }

@@ -366,6 +366,11 @@ locals {
   }
 
   # Domains served by machines in the geo_mirrors group
+  # Valid parameters are:
+  #   - zone_id (mandatory, either of hetznerdns_zone.{archlinux,pkgbuild}.id)
+  #   - name (mandatory, specifies the subdomain to create in the above zone)
+  #   - ttl (optional, the TTL of the NS records, defaults to 86400 if unset)
+  #
   geo_domains = {
     "geo.mirror.pkgbuild.com" = {
       zone_id = hetznerdns_zone.pkgbuild.id
