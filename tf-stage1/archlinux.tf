@@ -371,6 +371,9 @@ locals {
   #   - name (mandatory, specifies the subdomain to create in the above zone)
   #   - ttl (optional, the TTL of the NS records, defaults to 86400 if unset)
   #
+  # Note: If you use a custom TTL, also add it to geo_options[domain]['ns_ttl']
+  #       in Ansible (see the 'geo_options' variable in group_vars/all/geo.yml)
+  #
   geo_domains = {
     "geo.mirror.pkgbuild.com" = {
       zone_id = hetznerdns_zone.pkgbuild.id

@@ -1,5 +1,6 @@
 geo_acme_dns_challenge_ns: redirect.archlinux.org
 geo_domains:
   - geo.mirror.pkgbuild.com
-geo_health_check_paths:
-  geo.mirror.pkgbuild.com: /lastupdate
+geo_options:
+  geo.mirror.pkgbuild.com:
+    health_check_path: /lastupdate

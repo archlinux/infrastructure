@@ -9,19 +9,19 @@ domains:
         - soa: {{ groups['geo_mirrors'] | first }}. root.archlinux.org. 2022042701 3600 1800 604800 3600
         {% for host in groups['geo_mirrors'] %}
         - ns:
-            ttl: 86400
+            ttl: {{ geo_options[domain]['ns_ttl'] | default(86400) }}
             content: {{ host }}
         {% endfor %}
         - lua:
             ttl: 300
             content: >
-              A "ifurlup('https://{{ domain }}{{ geo_health_check_paths[domain] | default('/') }}',
+              A "ifurlup('https://{{ domain }}{{ geo_options[domain]['health_check_path'] | default('/') }}',
               {'{{ groups['geo_mirrors'] | map('extract', hostvars, ['ipv4_address']) | join("', '") }}'},
               {selector='pickclosest', useragent='pdns on {{ inventory_hostname }}'})"
         - lua:
             ttl: 300
             content: >
-              AAAA "ifurlup('https://{{ domain }}{{ geo_health_check_paths[domain] | default('/') }}',
+              AAAA "ifurlup('https://{{ domain }}{{ geo_options[domain]['health_check_path'] | default('/') }}',
               {'{{ groups['geo_mirrors'] | map('extract', hostvars, ['ipv6_address']) | join("', '") }}'},
               {selector='pickclosest', useragent='pdns on {{ inventory_hostname }}'})"
       _acme-challenge.{{ domain }}:
