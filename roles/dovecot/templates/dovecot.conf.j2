@@ -40,7 +40,7 @@ plugin {
 	sieve = ~/.dovecot.sieve
 	sieve_dir = ~/.sieve
 	# fileinto and mailbox is required by the global spam-to-folder.sieve script
-	sieve_extensions = envelope fileinto imap4flags mailbox regex variables
+	sieve_extensions = duplicate envelope fileinto imap4flags mailbox regex variables
 	sieve_global_dir = /etc/dovecot/sieve/global/
 	sieve_global_path = /etc/dovecot/sieve/default.sieve
 	sieve_before = /etc/dovecot/sieve/spam-to-folder.sieve
