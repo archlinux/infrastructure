@@ -4,7 +4,9 @@ backup_hosts:
     dir: "~/repo"
     suffix: ""
     borg_cmd: "borg"
+    compact_after_prune: true
   - host: "ssh://zh1905@zh1905.rsync.net:22"
     dir: "~/backup/{{ inventory_hostname }}"
     suffix: "-offsite"
     borg_cmd: "borg --remote-path=borg1"
+    compact_after_prune: false # not upgraded to borg 1.2 yet
