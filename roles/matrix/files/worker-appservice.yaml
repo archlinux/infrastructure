@@ -1,5 +1,5 @@
 worker_name: appservice
-worker_app: synapse.app.appservice
+worker_app: synapse.app.generic_worker
 worker_listeners:
   - port: 8020
     type: metrics
