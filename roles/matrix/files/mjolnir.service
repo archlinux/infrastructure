@@ -9,6 +9,8 @@ WorkingDirectory=/var/lib/synapse/mjolnir
 Environment=NODE_ENV=production
 Environment=NODE_CONFIG_DIR=/etc/synapse/mjolnir
 ExecStart=/usr/bin/node --dns-result-order=ipv4first lib/index.js
+Restart=on-failure
+RestartSec=30s
 
 [Install]
 WantedBy=multi-user.target
