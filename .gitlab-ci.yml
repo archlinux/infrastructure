@@ -8,8 +8,8 @@ ansible-lint:
     # This probably happens due to gitlab-runner mounting the git repo into the container
     - chmod o-w .
     # Fix syntax-check rule (https://github.com/ansible-community/ansible-lint/issues/1350#issuecomment-778764110)
-    - sed "/^vault_identity_list/d" -i ansible.cfg
-    - sed "/misc\/vaults\/vault_/d" -i playbooks/*.yml
+    - sed -i "/^vault_identity_list/d" ansible.cfg
+    - sed -i -e "/vars_files:/d" -e "/misc\/vaults\/vault_/d" playbooks/*.yml
     # Fix load-failure: Failed to load or parse file
     - ansible-lint $(printf -- "--exclude %s " */*/vault_*)
 
