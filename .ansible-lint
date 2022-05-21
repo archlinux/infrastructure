@@ -4,10 +4,10 @@ exclude_paths:
   - playbooks/tasks
   - roles/prometheus/files/node.rules.yml
 skip_list:
-  # line too long (x > 80 characters) (line-length)
-  - 'line-length'
-  # yaml: too many spaces inside braces (braces)
-  - 'braces'
+  # yaml: line too long (x > 160 characters) (yaml[line-length])
+  - yaml[line-length]
+  # yaml: too many spaces inside braces (yaml[braces])
+  - yaml[braces]
   # Do not recommend running tasks as handlers
   - 'no-handler'
   # Do not force galaxy info in meta/main.yml
