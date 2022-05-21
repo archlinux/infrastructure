@@ -51,6 +51,7 @@
   get_url:
     url: https://geo.mirror.pkgbuild.com/iso/{{ bootstrap_version }}/archlinux-bootstrap-{{ bootstrap_version }}-x86_64.tar.gz
     dest: /tmp/
+    mode: 0644
 
 - name: extract boostrap image  # noqa 208
   unarchive:
