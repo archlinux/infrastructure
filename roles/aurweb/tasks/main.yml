@@ -137,7 +137,7 @@
   args:
     chdir: "{{ aurweb_dir }}"
   environment:
-    - PYTHONPATH: .
+    PYTHONPATH: .
   become: true
   become_user: "{{ aurweb_user }}"
   when: release.changed or db_created.changed
