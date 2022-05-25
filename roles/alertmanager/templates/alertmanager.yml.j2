@@ -27,11 +27,6 @@ receivers:
     email_configs:
       - to: 'alerts@archlinux.org'
         send_resolved: true
-    webhook_configs:
-    - http_config:
-        bearer_token: {{ vault_monitoring_alertmanager_webhook_bearer_token }}
-      send_resolved: true
-      url: https://gitlab.archlinux.org/archlinux/infrastructure/prometheus/alerts/notify.json
   - name: 'rebuilderd'
     email_configs:
       - to: 'jelle@archlinux.org'
