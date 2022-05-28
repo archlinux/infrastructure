@@ -34,8 +34,17 @@ mv output/* "${LATEST_RELEASE_TAG}"
 
 for FILE in "${LATEST_RELEASE_TAG}"/*; do
   if [[ $FILE == *${LATEST_RELEASE_TAG:1}* ]]; then
-    FILE="${FILE##*/}"
-    ln -s "${FILE}" "${LATEST_RELEASE_TAG}/${FILE//-${LATEST_RELEASE_TAG:1}}"
+    DEST="${FILE//-${LATEST_RELEASE_TAG:1}}"
+    if [[ $FILE =~ .*\.SHA256$ ]]; then
+      sed "s/-${LATEST_RELEASE_TAG:1}//" "${FILE}" > "${DEST}"
+      touch --no-create --reference="${FILE}" "${DEST}"
+    # Don't create a symlink for the .SHA256.sig file, as we break the signature by fixing the checksum file.
+    elif [[ $FILE =~ .*\.SHA256.sig$ ]]; then
+      continue
+    else
+      FILE="${FILE##*/}"
+      ln -s "${FILE}" "${DEST}"
+    fi
   fi
 done
 
