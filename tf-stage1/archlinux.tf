@@ -84,7 +84,7 @@ locals {
       domain      = "mail"
     }
     "mailman3.archlinux.org" = {
-      server_type = "cx11"
+      server_type = "cx21"
       domain      = "mailman3"
     }
     "man.archlinux.org" = {
