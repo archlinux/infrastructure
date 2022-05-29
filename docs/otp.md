@@ -63,6 +63,19 @@ You can then run
 
 to generate a token to log in.
 
+## Vagrant Cloud
+
+Run
+
+    pass otp insert -i VagrantCloud -a archlinux VagrantCloud/archlinux-master-token -s
+
+When asked for a secret, provide the `vagrant_cloud_seed` from `misc/vaults/vault_vagrant_cloud.yml`.
+You can then run
+
+    pass otp code VagrantCloud/archlinux-master-token
+
+to generate a token to log in.
+
 ### Adding your own account
 
 Hetzner supports multiple 2FA devices at once which allows you to add your own 2FA app of choice
