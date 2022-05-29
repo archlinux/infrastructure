@@ -8,19 +8,19 @@ runner2.archlinux.org
 repro1.pkgbuild.com
 
 [mirrors]
-mirror.pkgbuild.com
-asia.mirror.pkgbuild.com
 america.mirror.pkgbuild.com
+asia.mirror.pkgbuild.com
 europe.mirror.pkgbuild.com
+mirror.pkgbuild.com
 
 [geo_mirrors]
-asia.mirror.pkgbuild.com
 america.mirror.pkgbuild.com
+#asia.mirror.pkgbuild.com
 europe.mirror.pkgbuild.com
 
 [archive_mirrors]
-asia.mirror.pkgbuild.com
 america.mirror.pkgbuild.com
+asia.mirror.pkgbuild.com
 europe.mirror.pkgbuild.com
 
 [borg_clients]
@@ -102,8 +102,8 @@ patchwork.archlinux.org
 monitoring.archlinux.org
 
 [kape_servers]
-asia.mirror.pkgbuild.com
 america.mirror.pkgbuild.com
+asia.mirror.pkgbuild.com
 europe.mirror.pkgbuild.com
 repro2.pkgbuild.com
 runner1.archlinux.org
