@@ -3,6 +3,7 @@ set -o nounset -o errexit -o pipefail
 # https://docs.gitlab.com/ee/api/README.html#namespaced-path-encoding
 readonly PROJECT_ID="archlinux%2Farch-boxes"
 readonly ARCH_BOXES_PATH="/srv/ftp/images"
+readonly LASTUPDATE_PATH="/srv/ftp/lastupdate"
 readonly MAX_RELEASES="6" # 3 months
 
 PACKAGES="$(curl --silent --show-error --fail "https://gitlab.archlinux.org/api/v4/projects/${PROJECT_ID}/packages?per_page=1&sort=desc")"
@@ -68,3 +69,5 @@ ln -nsf "${LATEST_VERSION}" "${ARCH_BOXES_PATH}/latest"
 echo "Removing old releases"
 cd "${ARCH_BOXES_PATH}"
 comm --output-delimiter="" -3 <({ ls | grep -v latest | sort -r | head -n "${MAX_RELEASES}"; echo latest; } | sort) <(ls | sort) | tr -d '\0' | xargs --no-run-if-empty rm -rvf
+
+date +%s > "${LASTUPDATE_PATH}"
