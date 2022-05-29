@@ -55,8 +55,9 @@ for FILE in "${LATEST_VERSION}"/*; do
     elif [[ $FILE =~ .*\.SHA256.sig$ ]]; then
       continue
     else
-      FILE="${FILE##*/}"
-      ln -s "${FILE}" "${DEST}"
+      SYMLINK="${FILE##*/}"
+      ln -s "${SYMLINK}" "${DEST}"
+      touch --no-create --reference="${FILE}" --no-dereference "${DEST}"
     fi
   fi
 done
