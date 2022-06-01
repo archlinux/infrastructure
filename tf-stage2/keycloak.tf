@@ -138,11 +138,12 @@ resource "keycloak_required_action" "custom-terms-and-conditions" {
 }
 
 resource "keycloak_required_action" "configure_otp" {
-  realm_id = "archlinux"
-  alias    = "CONFIGURE_TOTP"
-  enabled  = true
-  name     = "Configure OTP"
-  priority = 0
+  realm_id       = "archlinux"
+  alias          = "CONFIGURE_TOTP"
+  default_action = true
+  enabled        = true
+  name           = "Configure OTP"
+  priority       = 0
 }
 
 resource "keycloak_required_action" "update_password" {
