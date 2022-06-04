@@ -11,7 +11,11 @@
 # If you wish to use different paths, uncomment and update the paths.
 #RootDir     = /
 #DBPath      = /var/lib/pacman/
+{% if 'mirrors' in group_names or inventory_hostname in ['gemini.archlinux.org', 'build.archlinux.org'] %}
 CacheDir     = /var/cache/pacman/pkg/ /srv/ftp/pool/packages/ /srv/ftp/pool/community/
+{% else %}
+#CacheDir    = /var/cache/pacman/pkg/
+{% endif %}
 #LogFile     = /var/log/pacman.log
 #GPGDir      = /etc/pacman.d/gnupg/
 #HookDir     = /etc/pacman.d/hooks/
