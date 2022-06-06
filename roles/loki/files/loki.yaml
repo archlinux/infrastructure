@@ -32,6 +32,13 @@ schema_config:
       index:
         prefix: index_
         period: 24h
+    - from: 2022-06-07
+      store: boltdb-shipper
+      object_store: filesystem
+      schema: v12
+      index:
+        prefix: index_
+        period: 24h
 
 compactor:
   retention_enabled: true
