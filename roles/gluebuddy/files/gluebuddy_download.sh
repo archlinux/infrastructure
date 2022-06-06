@@ -31,7 +31,8 @@ do
   curl -O $i
 done
 
-sq verify --signer-cert <(sq wkd get anthraxx@archlinux.org) --detached ${NAME}.sig ${NAME}
+sq verify --signer-cert <(sq wkd get anthraxx@archlinux.org) --detached ${NAME}.sig ${NAME} || \
+	sq verify --signer-cert <(sq wkd get jelle@archlinux.org) --detached ${NAME}.sig ${NAME}
 
 mv ${NAME} /usr/local/bin/${NAME}
 chmod +x /usr/local/bin/${NAME}
