@@ -49,6 +49,7 @@ limits_config:
   max_query_series: 10000
   retention_period: 31d
   max_query_lookback: 31d
+  split_queries_by_interval: 24h
 
 analytics:
   reporting_enabled: false
