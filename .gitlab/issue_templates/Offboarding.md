@@ -37,7 +37,7 @@ This template should be used for offboarding Arch Linux team members.
 ## DevOps offboarding checklist
 
 - [ ] Remove entries in `group_vars/all/root_access.yml`.
-- [ ] Run `ansible-playbook -t root_ssh playbooks/*.yml`.
+- [ ] Run `ansible-playbook -t root_ssh playbooks/all-hosts-basic.yml`.
 - [ ] Run `ansible-playbook playbooks/hetzner_storagebox.yml playbooks/rsync.net.yml`.
 - [ ] Remove the user from the `DevOps` group on Keycloak.
 - [ ] Remove member from [arch-devops-private mailing lists](https://lists.archlinux.org/admin/arch-devops-private/members)
