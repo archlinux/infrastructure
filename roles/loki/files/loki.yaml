@@ -5,6 +5,7 @@ server:
   http_listen_port: 3100
   grpc_listen_address: 127.0.0.1
   grpc_listen_port: 9095
+  log_level: warn
 
 common:
   path_prefix: /var/lib/loki
@@ -13,6 +14,7 @@ common:
       chunks_directory: /var/lib/loki/chunks
       rules_directory: /var/lib/loki/rules
   replication_factor: 1
+  instance_addr: 127.0.0.1
   ring:
     instance_addr: 127.0.0.1
     kvstore:
@@ -32,11 +34,22 @@ schema_config:
       index:
         prefix: index_
         period: 24h
+    - from: 2022-06-07
+      store: boltdb-shipper
+      object_store: filesystem
+      schema: v12
+      index:
+        prefix: index_
+        period: 24h
 
 compactor:
   retention_enabled: true
 
 limits_config:
   max_query_series: 10000
-  retention_period: 61d
-  max_query_lookback: 61d
+  retention_period: 31d
+  max_query_lookback: 31d
+  split_queries_by_interval: 24h
+
+analytics:
+  reporting_enabled: false
