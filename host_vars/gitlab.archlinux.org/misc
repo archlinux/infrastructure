@@ -1,4 +1,3 @@
----
 filesystem: btrfs
 additional_addresses: ["116.203.6.156/32", "2a01:4f8:c2c:5d2d::2/64"]
 wireguard_address: 10.0.0.5

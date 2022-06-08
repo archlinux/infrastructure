@@ -1,3 +1,2 @@
----
 configure_network: false
 enable_zram_swap: false

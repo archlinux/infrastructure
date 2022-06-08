@@ -1,4 +1,3 @@
----
 - name: install powerdns and geoip
   pacman: name=powerdns,libmaxminddb,geoip,yaml-cpp state=present
 

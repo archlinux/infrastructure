@@ -1,5 +1,3 @@
----
-
 - name: setup gemini.archlinux.org
   hosts: gemini.archlinux.org
   remote_user: root

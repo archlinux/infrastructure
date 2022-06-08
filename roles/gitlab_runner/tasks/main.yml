@@ -1,5 +1,3 @@
----
-
 - name: install dependencies
   pacman: name=docker,python-docker,python-gitlab,gitlab-runner state=latest update_cache=yes
   notify: restart gitlab-runner

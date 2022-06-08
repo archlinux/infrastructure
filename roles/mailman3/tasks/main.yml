@@ -1,4 +1,3 @@
----
 - name: install mailman3 and related packages
   pacman: name=mailman3,mailman3-hyperkitty,python-psycopg2,mailman-web,uwsgi-plugin-python state=present
   register: install

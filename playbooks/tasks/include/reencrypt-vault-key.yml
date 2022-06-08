@@ -1,5 +1,3 @@
----
-
 - name: check if moreutils is installed
   pacman: name=moreutils state=present
 

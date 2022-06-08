@@ -1,4 +1,3 @@
----
 filesystem: btrfs
 fetchmail_user: "donate@archlinux.org"
 fetchmail_delivery_cmd: "/usr/local/bin/donor_import_wrapper.sh"

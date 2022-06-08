@@ -1,4 +1,3 @@
----
 - name: setup gitlab-runners
   hosts: gitlab_runners
   remote_user: root

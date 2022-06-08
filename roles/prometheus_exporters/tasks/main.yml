@@ -1,5 +1,3 @@
----
-
 - name: install prometheus-node-exporter
   pacman: name=prometheus-node-exporter,arch-audit,pacman-contrib,jq,hq,sudo state=present
 

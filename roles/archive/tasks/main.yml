@@ -1,5 +1,3 @@
----
-
 - name: install archivetools package
   pacman: name=archivetools state=present
 

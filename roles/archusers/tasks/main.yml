@@ -1,5 +1,3 @@
----
-
 - name: create Arch Linux-specific groups
   group: name="{{ item }}" state=present system=no
   with_items: "{{ arch_groups }}"

@@ -1,5 +1,3 @@
----
-
 - name: create terraform state db
   postgresql_db: db="{{ terraform_db }}"
   become: true

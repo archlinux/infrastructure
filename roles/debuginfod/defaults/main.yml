@@ -1,4 +1,3 @@
----
 debuginfod_httpd: false
 debuginfod_domain: debuginfod.archlinux.org
 debuginfod_port: 8002

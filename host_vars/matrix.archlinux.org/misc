@@ -1,4 +1,3 @@
----
 filesystem: btrfs
 static_dns: true
 wireguard_address: 10.0.0.15

@@ -1,4 +1,3 @@
----
 - name: install arch-boxes-sync.sh script dependencies
   pacman: name=curl,jq,unzip state=present
 

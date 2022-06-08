@@ -1,5 +1,3 @@
----
-
 - name: install firewalld
   pacman:
     name: firewalld

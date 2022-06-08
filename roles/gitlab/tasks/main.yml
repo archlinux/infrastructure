@@ -1,5 +1,3 @@
----
-
 - name: install docker dependencies
   pacman: name=docker,python-docker state=present
 

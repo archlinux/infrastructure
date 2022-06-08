@@ -1,5 +1,3 @@
----
-
 - name: install svn, git, rsync and some perl stuff
   pacman: name=git,subversion,rsync,perl-dbd-pg,perl-timedate,diffstat state=present
 

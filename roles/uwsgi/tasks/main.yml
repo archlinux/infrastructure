@@ -1,5 +1,3 @@
----
-
 - name: install uwsgi
   pacman: name=uwsgi,uwsgitop state=present
 

@@ -1,4 +1,3 @@
----
 flyspray_dir: '/srv/http/flyspray'
 flyspray_commit: 'ce4a09c8cb5de0483bb9875135bd5645039765f9'
 flyspray_domain: 'bugs.archlinux.org'

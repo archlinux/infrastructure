@@ -1,5 +1,3 @@
----
-
 - name: install postfwd
   pacman: name=postfwd state=present
 

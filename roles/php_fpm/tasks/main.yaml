@@ -1,4 +1,3 @@
----
 - name: install php-fpm
   pacman: name=php-fpm,php-gd,php-pgsql state=present
 

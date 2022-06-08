@@ -1,5 +1,3 @@
----
-
 - name: upgrade and reboot all hetzner servers
   hosts: all,!kape_servers,!packet_net
   max_fail_percentage: 0

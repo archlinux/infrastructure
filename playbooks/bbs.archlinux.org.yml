@@ -1,5 +1,3 @@
----
-
 - name: setup bbs.archlinux.org
   hosts: bbs.archlinux.org
   remote_user: root

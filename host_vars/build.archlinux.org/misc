@@ -1,4 +1,3 @@
----
 hostname: "build.archlinux.org"
 network_interface: "enp195s0"
 ipv4_address: "135.181.138.48"

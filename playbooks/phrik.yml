@@ -1,5 +1,3 @@
----
-
 - name: setup phrik bot server
   hosts: phrik.archlinux.org
   remote_user: root

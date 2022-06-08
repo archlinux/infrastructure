@@ -1,5 +1,3 @@
----
-
 - name: install essential tools
   pacman: name=vim,nano,tmux,htop,ncdu,bash-completion,rsync,vnstat state=present
 

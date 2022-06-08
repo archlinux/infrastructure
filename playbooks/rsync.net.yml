@@ -1,5 +1,3 @@
----
-
 - name: setup rsync.net account
   hosts: localhost
   gather_facts: false

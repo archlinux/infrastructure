@@ -1,4 +1,3 @@
----
 - name: setup debuginfod.archlinux.org
   hosts: debuginfod.archlinux.org
   remote_user: root

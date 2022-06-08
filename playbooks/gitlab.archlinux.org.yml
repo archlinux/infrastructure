@@ -1,5 +1,3 @@
----
-
 - name: setup gitlab server
   hosts: gitlab.archlinux.org
   remote_user: root

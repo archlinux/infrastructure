@@ -1,5 +1,3 @@
----
-
 - name: install fetchmail
   pacman: name=fetchmail state=present
 

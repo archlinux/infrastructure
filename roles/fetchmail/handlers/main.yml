@@ -1,4 +1,2 @@
----
-
 - name: restart fetchmail
   service: name=fetchmail state=restarted

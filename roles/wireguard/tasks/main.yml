@@ -1,4 +1,3 @@
----
 # Used for debugging
 - name: install wireguard-tools
   pacman: name=wireguard-tools state=present

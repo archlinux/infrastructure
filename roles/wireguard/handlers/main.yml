@@ -1,4 +1,3 @@
----
 # https://github.com/systemd/systemd/issues/9627
 - name: delete wg0
   command: networkctl delete wg0
