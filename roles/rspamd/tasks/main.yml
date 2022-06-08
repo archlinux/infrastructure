@@ -1,4 +1,3 @@
----
 - name: install rspamd
   pacman: name=rspamd state=present
 

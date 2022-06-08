@@ -1,5 +1,3 @@
----
-
 - name: setup aur.archlinux.org
   hosts: aur.archlinux.org
   remote_user: root

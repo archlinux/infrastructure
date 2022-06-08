@@ -1,5 +1,3 @@
----
-
 - name: setup man.archlinux.org
   hosts: man.archlinux.org
   remote_user: root

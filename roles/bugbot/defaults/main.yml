@@ -1,4 +1,3 @@
----
 irc_host: 'irc.libera.chat'
 irc_port: '6697'
 irc_channel: '#archlinux-bugs'

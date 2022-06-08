@@ -1,4 +1,3 @@
----
 - name: install rsync
   pacman: name=rsync state=present
 

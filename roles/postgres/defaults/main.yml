@@ -1,4 +1,3 @@
----
 postgres_listen_addresses: 'localhost'
 postgres_max_connections: '100'
 postgres_firewalld_zone:

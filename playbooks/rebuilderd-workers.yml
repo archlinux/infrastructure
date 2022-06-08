@@ -1,5 +1,3 @@
----
-
 - name: common playbook for rebuilderd_workers
   hosts: rebuilderd_workers
   remote_user: root

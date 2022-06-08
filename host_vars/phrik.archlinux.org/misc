@@ -1,4 +1,3 @@
----
 filesystem: btrfs
 arch_users:
   demize:

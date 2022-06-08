@@ -1,4 +1,3 @@
----
 hostname: "archlinux-packer"
 
 dhcp: true

@@ -1,5 +1,3 @@
----
-
 - name: create .ssh directory
   file: path={{ root_ssh_directory }} state=directory owner=root group=root mode=0700
 

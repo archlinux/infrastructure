@@ -1,5 +1,3 @@
----
-
 - name: install dovecot
   pacman: name=dovecot,pigeonhole state=present
 

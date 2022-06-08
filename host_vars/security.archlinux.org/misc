@@ -1,4 +1,3 @@
----
 filesystem: btrfs
 
 fail2ban_jails:

@@ -1,4 +1,3 @@
----
 backup_hosts:
   - host: "ssh://u236610.your-storagebox.de:23"
     dir: "~/repo"

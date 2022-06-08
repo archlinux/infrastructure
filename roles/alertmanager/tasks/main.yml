@@ -1,5 +1,3 @@
----
-
 - name: install alertmanager server
   pacman: name=alertmanager state=present
 

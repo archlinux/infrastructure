@@ -1,5 +1,3 @@
----
-
 - name: setup matrix
   hosts: matrix.archlinux.org
   remote_user: root

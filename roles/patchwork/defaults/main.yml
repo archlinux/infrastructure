@@ -1,4 +1,3 @@
----
 patchwork_dir: '/srv/http/patchwork'
 patchwork_domain: 'patchwork.archlinux.org'
 patchwork_nginx_conf: '/etc/nginx/nginx.d/patchwork.conf'

@@ -1,5 +1,3 @@
----
-
 - name: setup build.archlinux.org
   hosts: build.archlinux.org
   remote_user: root

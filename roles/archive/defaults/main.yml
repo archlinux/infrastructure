@@ -1,5 +1,3 @@
----
-
 archive_user_name: 'archive'
 archive_user_home: '/home/archive'
 archive_repo: '{{ archive_user_home }}/archive-uploader'

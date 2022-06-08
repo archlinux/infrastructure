@@ -1,4 +1,3 @@
----
 - name: reload mailman
   service: name=mailman3 state=reloaded
 

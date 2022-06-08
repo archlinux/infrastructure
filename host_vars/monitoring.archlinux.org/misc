@@ -1,4 +1,3 @@
----
 filesystem: btrfs
 ipv4_address: 95.217.220.31
 wireguard_address: 10.0.0.4

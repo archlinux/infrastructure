@@ -1,3 +1,2 @@
----
 - name: restart loki
   service: name=loki state=restarted

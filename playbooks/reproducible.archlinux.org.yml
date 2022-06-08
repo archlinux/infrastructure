@@ -1,5 +1,3 @@
----
-
 - name: setup reproducible builds rebuilder
   hosts: reproducible.archlinux.org
   remote_user: root

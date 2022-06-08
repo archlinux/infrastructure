@@ -1,5 +1,3 @@
----
-
 # deploy tag 'sudo' when this changes
 sudo_users:
   - root

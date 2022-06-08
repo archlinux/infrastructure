@@ -1,5 +1,3 @@
----
-
 - name: upgrade database
   become: true
   become_user: security

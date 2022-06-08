@@ -1,5 +1,3 @@
----
-
 - name: install quassel
   pacman: name=quassel-core,python-pexpect state=present
 

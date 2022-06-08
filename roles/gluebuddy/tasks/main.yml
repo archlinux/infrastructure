@@ -1,5 +1,3 @@
----
-
 - name: install sequoia
   pacman: name=sequoia-sq state=present
 

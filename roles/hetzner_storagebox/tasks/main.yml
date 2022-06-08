@@ -1,5 +1,3 @@
----
-
 # This role runs on localhost; use commands like sftp to upload configuration
 
 - name: create the root backup directory at {{ backup_dir }}

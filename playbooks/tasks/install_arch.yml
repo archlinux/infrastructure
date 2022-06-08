@@ -1,5 +1,3 @@
----
-
 # This script is for provisioning a server for first boot.
 # Care: It is not idempotent by design.
 

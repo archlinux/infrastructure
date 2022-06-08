@@ -1,4 +1,3 @@
----
 archweb_dir: '/srv/http/archweb'
 archweb_domain: 'archlinux.org'
 archweb_alternate_domains: ['www.archlinux.org', 'master-key.archlinux.org', 'dev.archlinux.org', 'packages.archlinux.org', 'ipxe.archlinux.org', 'planet.archlinux.org']

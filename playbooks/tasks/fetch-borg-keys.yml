@@ -1,5 +1,3 @@
----
-
 - name: prepare local storage directory
   hosts: localhost
   tasks:

@@ -1,4 +1,2 @@
----
-
 - name: reload debuginfod
   service: name=debuginfod state=reloaded

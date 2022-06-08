@@ -1,4 +1,3 @@
----
 archweb_db_host: "{{ hostvars['archlinux.org']['wireguard_address'] }}"
 
 # raise tcp window limits to 32MiB

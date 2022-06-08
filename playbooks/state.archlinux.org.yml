@@ -1,5 +1,3 @@
----
-
 - name: setup state.archlinux.org (terraform state store)
   hosts: state.archlinux.org
   remote_user: root

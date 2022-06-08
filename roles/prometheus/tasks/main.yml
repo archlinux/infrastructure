@@ -1,5 +1,3 @@
----
-
 - name: install prometheus server
   pacman: name=prometheus,python-passlib,python-bcrypt state=present
 

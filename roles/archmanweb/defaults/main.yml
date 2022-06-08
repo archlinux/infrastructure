@@ -1,4 +1,3 @@
----
 archmanweb_dir: '/srv/http/archmanweb'
 archmanweb_cache_dir: '{{ archmanweb_dir }}/cache'
 archmanweb_domain: 'man.archlinux.org'

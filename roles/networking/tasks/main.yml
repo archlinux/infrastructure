@@ -1,4 +1,3 @@
----
 - name: configure network (static)
   block:
     - name: install 10-static-ethernet.network

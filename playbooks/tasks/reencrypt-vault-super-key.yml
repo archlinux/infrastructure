@@ -1,5 +1,3 @@
----
-
 - name: reencrypt vault super key
   hosts: localhost
   tasks:

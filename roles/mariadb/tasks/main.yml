@@ -1,4 +1,3 @@
----
 - name: install mariadb
   pacman: name=mariadb,python-mysqlclient state=present
 

@@ -1,4 +1,3 @@
----
 - name: install loki and logcli
   pacman: name=loki,logcli state=present
 

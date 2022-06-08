@@ -1,5 +1,3 @@
----
-
 - name: install keycloak
   pacman: name=jre11-openjdk,keycloak,keycloak-archlinux-theme,keycloak-metrics-spi,python-passlib state=present
 

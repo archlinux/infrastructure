@@ -1,5 +1,3 @@
----
-
 - name: setup Keycloak server
   hosts: accounts.archlinux.org
   remote_user: root

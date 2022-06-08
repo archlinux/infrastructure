@@ -1,5 +1,3 @@
----
-
 prometheus_textfile_dir: /var/lib/node_exporter
 
 gitlab_runner_exporter_port: '9252'

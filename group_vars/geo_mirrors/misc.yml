@@ -1,3 +1,2 @@
----
 certbot_dns_support: true
 geo_mirror_domain: "geo.mirror.pkgbuild.com"

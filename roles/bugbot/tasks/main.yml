@@ -1,5 +1,3 @@
----
-
 - name: install bugbot utilities
   pacman: name=python-irc,python-beautifulsoup4,python-lxml state=present
 
