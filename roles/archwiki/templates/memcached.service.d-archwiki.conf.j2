@@ -1,0 +1,6 @@
+[Service]
+User={{ archwiki_user }}
+Group=memcached
+Environment=CACHESIZE={{ archwiki_memcached_memory }}
+Environment=LISTEN="-s {{ archwiki_memcached_socket }} -a 770"
+ProtectHome=true
