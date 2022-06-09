@@ -90,7 +90,7 @@
 
 - name: match usernames to backup clients
   set_fact:
-    backup_client_usernames: "{{ backup_client_usernames|default({}) | combine({item.comment: item.username}) }}"
+    backup_client_usernames: "{{ backup_client_usernames | default({}) | combine({item.comment: item.username}) }}"
   loop: "{{ subaccounts }}"
   loop_control:
     label: "{{ {item.comment: item.username} }}"
