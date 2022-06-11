@@ -112,7 +112,7 @@
   changed_when: "chroot_locale_gen.rc == 0"
 
 - name: run systemd-firstboot
-  command: chroot /mnt systemd-firstboot --locale=en_US.UTF-8 --timezone=UTC --hostname={{ hostname }}
+  command: chroot /mnt systemd-firstboot --locale=C.UTF-8 --timezone=UTC --hostname={{ hostname }}
   register: chroot_systemd_firstboot
   changed_when: "chroot_systemd_firstboot.rc == 0"
 
