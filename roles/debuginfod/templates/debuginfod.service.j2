@@ -4,6 +4,7 @@ After=network.target network-online.target nss-lookup.target
 
 [Service]
 Type=simple
+Environment=TMPDIR=/var/tmp
 ExecStart=/usr/bin/debuginfod -d {{debuginfod_database}} -p {{debuginfod_port}} -F -Z .tar.zst=zstdcat {{debuginfod_package_path}}
 Restart=on-failure
 DynamicUser=yes
