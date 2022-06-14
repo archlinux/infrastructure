@@ -9,7 +9,7 @@
   when: debuginfod_domain
 
 - name: configure debuginfod systemd service
-  template: src=debuginfod.service.j2 dest=/usr/lib/systemd/system/debuginfod.service owner=root group=root mode=0644
+  template: src=debuginfod.service.j2 dest=/etc/systemd/system/debuginfod.service owner=root group=root mode=0644
   vars:
     debuginfod_package_path: "{{ debuginfod_package_paths | join(' ') }}"
   notify:
