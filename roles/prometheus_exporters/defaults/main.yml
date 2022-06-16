@@ -4,3 +4,5 @@ gitlab_runner_exporter_port: '9252'
 
 prometheus_mysqld_user: mysqld_exporter
 prometheus_mysqld_exporter_port: '9104'
+
+gitlab_exporter_top_nth: 15
