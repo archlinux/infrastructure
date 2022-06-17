@@ -7,7 +7,6 @@ namespaces:
 {% for network in vault_matrix_secrets.irc_networks %}
     - exclusive: true
       regex: '@{{ network.name | regex_escape() }}_.*:{{ matrix_server_name | regex_escape() }}'
-      group_id: '+{{ network.name }}:{{ matrix_server_name }}'
 {% endfor %}
 
   aliases:

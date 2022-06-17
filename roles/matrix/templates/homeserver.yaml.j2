@@ -386,6 +386,13 @@ manhole_settings:
 #
 #dummy_events_threshold: 5
 
+# An optional duration. If set, Synapse will run a daily background task to log out and
+# delete any device that hasn't been accessed for more than the specified amount of time.
+#
+# Defaults to no duration, which means devices are never pruned.
+#
+delete_stale_devices_after: 1y
+
 
 ## Homeserver blocking ##
 
@@ -1076,6 +1083,14 @@ max_upload_size: {{ matrix_max_upload_size }}
 #  - width: 800
 #    height: 600
 #    method: scale
+
+# Controls whether local media and entries in the remote media cache
+# (media that is downloaded from other homeservers) should be removed
+# under certain conditions, typically for the purpose of saving space.
+#
+media_retention:
+  local_media_lifetime: 1y
+  remote_media_lifetime: 28d
 
 # Is the preview URL API enabled?
 #
@@ -2562,16 +2577,6 @@ push:
 #            "m.room.server_acl": 100
 #            "m.room.tombstone": 100
 #        "events_default": 1
-
-
-# Uncomment to allow non-server-admin users to create groups on this server
-#
-#enable_group_creation: true
-
-# If enabled, non server admins can only create groups with local parts
-# starting with this prefix
-#
-#group_creation_prefix: "unofficial_"
 
 
 
