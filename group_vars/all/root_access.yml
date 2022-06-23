@@ -26,6 +26,8 @@ root_ssh_keys:
       - dashboards.archlinux.org
       - gitlab.archlinux.org
       - monitoring.archlinux.org
+      - lists.archlinux.org
+      - mailman3.archlinux.org
 
 # - run 'playbooks/tasks/reencrypt-vault-{super,default}-key.yml' when this
 #   changes; before doing so, make sure to 'gpg --lsign-key' all listed keys
