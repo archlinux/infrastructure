@@ -24,6 +24,7 @@ blackbox_targets:
     - https://america.mirror.pkgbuild.com
     - https://archive.archlinux.org
     - https://archlinux.org
+    - https://archlinux.page
     - https://asia.archive.pkgbuild.com
     - https://asia.mirror.pkgbuild.com
     - https://aur.archlinux.org

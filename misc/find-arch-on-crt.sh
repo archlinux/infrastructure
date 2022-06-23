@@ -8,6 +8,7 @@ set -eo pipefail
 readonly DOMAINS=(
   archlinux.org
   pkgbuild.com
+  archlinux.page
 )
 readonly LOOKUP_URLS=(
   "${DOMAINS[@]/#/https://crt.sh/?exclude=expired&deduplicate=Y&output=json&q=}"
