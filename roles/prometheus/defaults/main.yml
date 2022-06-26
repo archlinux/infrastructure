@@ -46,6 +46,7 @@ blackbox_targets:
     - https://md.archlinux.org
     - https://mirror.pkgbuild.com
     - https://monitoring.archlinux.org/healthz
+    - https://monthly-reports.archlinux.page
     - https://mta-sts.archlinux.org/.well-known/mta-sts.txt
     - https://mta-sts.aur.archlinux.org/.well-known/mta-sts.txt
     - https://mta-sts.lists.archlinux.org/.well-known/mta-sts.txt
