@@ -57,6 +57,7 @@ blackbox_targets:
     - https://ping.archlinux.org
     - https://pkgbuild.com
     - https://planet.archlinux.org
+    - https://repod.archlinux.page
     - https://repos.archlinux.org/lastupdate
     - https://reproducible.archlinux.org
     - https://security.archlinux.org

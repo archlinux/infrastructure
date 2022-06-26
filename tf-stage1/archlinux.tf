@@ -172,6 +172,7 @@ locals {
   }
 
   archlinux_page_gitlab_pages = {
+    "repod" = "f2d1ad84f7e9f22cd881d3bef58263e0"
   }
 
   # This creates archlinux.org TXT DNS entries
