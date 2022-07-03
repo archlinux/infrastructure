@@ -18,6 +18,44 @@ resource "hetznerdns_record" "archlinux_org_gitlab_pages_verification_code_txt" 
   type    = "TXT"
 }
 
+resource "hetznerdns_record" "archlinux_page_gitlab_pages_cname" {
+  for_each = local.archlinux_page_gitlab_pages
+
+  zone_id = hetznerdns_zone.archlinux_page.id
+  name    = each.key
+  value   = "pages.archlinux.org."
+  type    = "CNAME"
+}
+
+resource "hetznerdns_record" "archlinux_page_gitlab_pages_verification_code_txt" {
+  for_each = local.archlinux_page_gitlab_pages
+
+  zone_id = hetznerdns_zone.archlinux_page.id
+  name    = "_gitlab-pages-verification-code.${each.key}"
+  value   = "gitlab-pages-verification-code=${each.value}"
+  type    = "TXT"
+}
+
+resource "hetznerdns_record" "archlinux_page_a" {
+  for_each = local.archlinux_page_a_aaaa
+
+  zone_id = hetznerdns_zone.archlinux_page.id
+  name    = each.key
+  ttl     = lookup(local.archlinux_page_a_aaaa[each.key], "ttl", null)
+  value   = each.value.ipv4_address
+  type    = "A"
+}
+
+resource "hetznerdns_record" "archlinux_page_aaaa" {
+  for_each = local.archlinux_page_a_aaaa
+
+  zone_id = hetznerdns_zone.archlinux_page.id
+  name    = each.key
+  ttl     = lookup(local.archlinux_page_a_aaaa[each.key], "ttl", null)
+  value   = each.value.ipv6_address
+  type    = "AAAA"
+}
+
 resource "hetznerdns_record" "pkgbuild_org_a" {
   for_each = local.pkgbuild_com_a_aaaa
 
