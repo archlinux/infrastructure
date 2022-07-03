@@ -184,11 +184,6 @@ $wgEnableUploads  = true;
 # InstantCommons allows wiki to use images from http://commons.wikimedia.org
 $wgUseInstantCommons  = false;
 
-## If you use ImageMagick (or any other shell command) on a
-## Linux server, this will need to be set to the name of an
-## available UTF-8 locale
-$wgShellLocale = "en_US.utf8";
-
 ## If you want to use image uploads under safe mode,
 ## create the directories images/archive, images/thumb and
 ## images/temp, and make them all writable. Then uncomment
@@ -205,11 +200,8 @@ $wgShellLocale = "en_US.utf8";
 wfLoadSkin( 'MonoBook' );
 wfLoadSkin( 'Vector' );
 $wgVectorResponsive = true;
-$wgVectorDefaultSkinVersion = '2';
-$wgVectorDefaultSkinVersionForNewAccounts = '2';
 wfLoadExtension( 'ArchLinux' );
-$wgDefaultSkin = 'vector';
-$wgDefaultUserOptions['skin'] = 'vector';
+$wgDefaultSkin = 'vector-2022';
 $wgArchHome = 'https://www.archlinux.org/';
 $wgArchNavBar = array(
 			'Home' => 'https://www.archlinux.org/',
