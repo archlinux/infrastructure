@@ -48,7 +48,6 @@ $wgScriptPath = "";
 $wgArticlePath = "/title/$1";
 # $wgUsePathInfo is not necessary: https://github.com/wikimedia/mediawiki/blob/bb92c4d1acc029eed0f6848360dff5b2436695fc/includes/WebRequest.php#L151-L153
 #$wgUsePathInfo = true;
-$wgScriptExtension  = ".php";
 
 ## The relative URL path to the skins directory
 $wgStylePath        = "$wgScriptPath/skins";
@@ -98,9 +97,6 @@ $wgDBprefix         = "";
 # MySQL table options to use during installation or update
 $wgDBTableOptions   = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
 
-# Experimental charset support for MySQL 5.0.
-$wgDBmysql5 = false;
-
 
 ##
 ## Email settings
@@ -145,12 +141,10 @@ $wgMemCachedServers = [ "unix://{{ archwiki_memcached_socket }}" ];
 ## to make your wiki go slightly faster. The directory should not
 ## be publically accessible from the web.
 $wgCacheDirectory = "$IP/../cache/data";
-$wgShowIPinHeader = false;
 $wgEnableSidebarCache = true;
 $wgUseFileCache = true;
 $wgFileCacheDirectory = "$IP/../cache/html";
 $wgUseGzip = true;
-$wgUseETag = true;
 
 # CSS-based preferences supposedly cause about 20 times slower page loads
 # https://phabricator.wikimedia.org/rSVN63707
@@ -282,7 +276,6 @@ $wgGroupPermissions['sysop']['editprotected2'] = true;
 $wgGroupPermissions['cosysop']['editprotected2'] = true;
 $wgGroupPermissions['privileged']['editprotected2'] = true;
 
-$wgEnableWriteAPI = true;
 # disable user account creation via API
 $wgAPIModules['createaccount'] = 'ApiDisabled';
 # remove 'writeapi' right from users
@@ -448,5 +441,4 @@ wfLoadExtension( 'CodeEditor' );
 # temporary disable registration; reverted 2016-6-26 bluewind
 #$wgGroupPermissions['*']['createaccount'] = false;
 
-# $wgShowSQLErrors = true;
 # $wgReadOnly = 'Database migration in progress. We`ll be back in a few minutes.';
