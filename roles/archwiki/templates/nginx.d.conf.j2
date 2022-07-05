@@ -75,16 +75,6 @@ server {
         rewrite ^ /rest.php;
     }
 
-    # https://phabricator.wikimedia.org/T288686
-    location ^~ /w/rest.php/v1/search/title {
-        return 302 /rest.php/v1/search/title$is_args$args;
-    }
-
-    # Workaround for "Search for pages containing" hard-coded to /w/index.php
-    location ^~ /w/index.php {
-        return 302 /index.php$is_args$args;
-    }
-
     # special case for '/load.php' type URLs to cache css/js in nginx to relieve php-fpm
     location = /load.php {
         access_log   /var/log/nginx/{{ archwiki_domain }}/access.log main;
