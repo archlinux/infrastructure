@@ -496,6 +496,7 @@ arch_users:
     ssh_key: kpcyrd.pub
     groups:
       - tu
+      - multilib
   raster:
     name: "Carsten Haitzler"
     ssh_key: raster.pub
