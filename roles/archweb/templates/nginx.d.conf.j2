@@ -151,12 +151,14 @@ server {
         alias {{ archweb_dir }}/archlinux.org/logos/;
     }
 
-    location ~ ^/iso/(.*\.(iso|img|tar\.gz|sfs)$) {
-        deny all;
-    }
-
     location /iso/ {
         alias {{ archweb_rsync_iso_dir }};
+
+        location ~ ^/iso/.*\.(sig|torrent|txt)$ {
+        }
+        location /iso/ {
+            deny all;
+        }
     }
 
     # Cache django's css, js and png files.
