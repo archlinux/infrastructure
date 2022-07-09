@@ -3,6 +3,8 @@
   remote_user: root
   roles:
     - { role: common }
+    - { role: firewalld }
+    - { role: wireguard }
     - { role: sshd }
     - { role: root_ssh }
     - { role: certbot }
@@ -13,5 +15,4 @@
     - { role: prometheus_exporters }
     - { role: promtail }
     - { role: fail2ban }
-    - { role: wireguard }
     - { role: geo_dns, when: "'geo_mirrors' in group_names" }
