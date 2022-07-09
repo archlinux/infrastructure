@@ -1,18 +1,8 @@
-modules:
-  - module: mjolnir.Module
-    config:
-      block_invites: true
-      block_messages: false
-      block_usernames: false
-      ban_lists:
-        - "!WuBtumawCeOGEieRrp:matrix.org"     # #matrix-org-coc-bl:matrix.org
-        - "!tUPwPPmVTaiKXMiijj:matrix.org"     # #matrix-org-hs-tos-bl:matrix.org
-        - "!vmRBOqUEHGdNBeweth:archlinux.org"  # #banlist:archlinux.org
 server_name: "{{ matrix_server_name }}"
 public_baseurl: https://{{ matrix_domain }}/
-presence:
-allow_public_rooms_without_auth: true
-allow_public_rooms_over_federation: true
+
+log_config: "/etc/synapse/log_config.yaml"
+
 listeners:
   - port: 8008
     tls: false
@@ -31,10 +21,44 @@ listeners:
   - port: 8019
     type: metrics
     bind_addresses: ['127.0.0.1']
-manhole_settings:
+
+database:
+  name: psycopg2
+  txn_limit: 10000
+  args:
+    dbname: synapse
+    user: synapse
+    password: {{ vault_postgres_users.synapse }}
+    cp_min: 1
+    cp_max: 8
+
+email:
+  smtp_host: 127.0.0.1
+  smtp_port: 25
+  notif_from: "Arch Linux %(app)s server <noreply@{{ matrix_server_name }}>"
+  enable_notifs: true
+
+app_service_config_files:
+  - /etc/synapse/appservice-registration-irc.yaml
+
+modules:
+  - module: mjolnir.Module
+    config:
+      block_invites: true
+      block_messages: false
+      block_usernames: false
+      ban_lists:
+        - "!WuBtumawCeOGEieRrp:matrix.org"     # #matrix-org-coc-bl:matrix.org
+        - "!tUPwPPmVTaiKXMiijj:matrix.org"     # #matrix-org-hs-tos-bl:matrix.org
+        - "!vmRBOqUEHGdNBeweth:archlinux.org"  # #banlist:archlinux.org
+
+caches:
+  global_factor: 0.7
+  per_cache_factors:
+    get_users_in_room: 5.0
+
+# Retention
 delete_stale_devices_after: 1y
-limit_remote_rooms:
-templates:
 retention:
   enabled: true
   default_policy:
@@ -47,29 +71,13 @@ retention:
       interval: 12h
     - shortest_max_lifetime: 3d
       interval: 1d
-federation_metrics_domains:
-  - matrix.org
-caches:
-  global_factor: 0.7
-  per_cache_factors:
-    get_users_in_room: 5.0
-database:
-  name: psycopg2
-  txn_limit: 10000
-  args:
-    dbname: synapse
-    user: synapse
-    password: {{ vault_postgres_users.synapse }}
-    cp_min: 1
-    cp_max: 8
-log_config: "/etc/synapse/log_config.yaml"
-worker_log_config: "/etc/synapse/log_config.yaml"
-enable_media_repo: false
-media_store_path: "/var/lib/synapse/media_store"
-max_upload_size: {{ matrix_max_upload_size }}
 media_retention:
   local_media_lifetime: 1y
   remote_media_lifetime: 28d
+
+# Media repository
+media_store_path: "/var/lib/synapse/media_store"
+max_upload_size: {{ matrix_max_upload_size }}
 url_preview_enabled: true
 url_preview_ip_range_blacklist:
   - '127.0.0.0/8'
@@ -91,18 +99,24 @@ url_preview_ip_range_blacklist:
   - '2001:db8::/32'
   - 'ff00::/8'
   - 'fec0::/10'
-url_preview_accept_language:
-oembed:
+
+# WebRTC
 turn_uris:
   - "turns:{{ matrix_domain }}:5349?transport=udp"
   - "turns:{{ matrix_domain }}:5349?transport=tcp"
   - "turn:{{ matrix_domain }}:3478?transport=udp"
   - "turn:{{ matrix_domain }}:3478?transport=tcp"
 turn_shared_secret: "{{ vault_matrix_secrets.turn_shared_secret }}"
-registration_shared_secret: "{{ vault_matrix_secrets.registration_shared_secret }}"
-default_identity_server: https://matrix.org
-account_threepid_delegates:
-    msisdn: https://vector.im
+
+# Metrics
+enable_metrics: true
+metrics_flags:
+    known_servers: true
+report_stats: true
+federation_metrics_domains:
+  - matrix.org
+
+# Auto-join new users to rooms
 auto_join_rooms:
 {% for room in vault_matrix_secrets.auto_join_rooms %}
   - {{ room | quote }}
@@ -110,24 +124,17 @@ auto_join_rooms:
 autocreate_auto_join_rooms: false
 auto_join_mxid_localpart: mjolnir
 auto_join_rooms_for_guests: false
-enable_metrics: true
-metrics_flags:
-    known_servers: true
-report_stats: true
-room_prejoin_state:
-app_service_config_files:
-  - /etc/synapse/appservice-registration-irc.yaml
+
+# Login and registration
+
+registration_shared_secret: "{{ vault_matrix_secrets.registration_shared_secret }}"
 macaroon_secret_key: "{{ vault_matrix_secrets.macaroon_secret_key }}"
 form_secret: "{{ vault_matrix_secrets.form_secret }}"
-signing_key_path: "/etc/synapse/{{ matrix_server_name }}.signing.key"
-old_signing_keys:
-trusted_key_servers:
-  - server_name: "matrix.org"
-suppress_key_server_warning: true
-saml2_config:
-  sp_config:
-  user_mapping_provider:
-    config:
+
+password_config:
+   enabled: false
+   pepper: "{{ vault_matrix_secrets.pepper }}"
+
 oidc_providers:
   - idp_id: oidc
     idp_name: "Arch Linux"
@@ -146,31 +153,34 @@ oidc_providers:
     attribute_requirements:
       - attribute: roles
         value: "Staff"
-cas_config:
-sso:
-password_config:
-   enabled: false
-   pepper: "{{ vault_matrix_secrets.pepper }}"
-   policy:
-ui_auth:
-email:
-  smtp_host: 127.0.0.1
-  smtp_port: 25
-  notif_from: "Arch Linux %(app)s server <noreply@{{ matrix_server_name }}>"
-  enable_notifs: true
-push:
+
+# Directories
 user_directory:
     prefer_local_users: true
-stats:
-opentracing:
+allow_public_rooms_without_auth: true
+allow_public_rooms_over_federation: true
+default_identity_server: https://matrix.org
+account_threepid_delegates:
+    msisdn: https://vector.im
+
+# Federation
+signing_key_path: "/etc/synapse/{{ matrix_server_name }}.signing.key"
+trusted_key_servers:
+  - server_name: "matrix.org"
+suppress_key_server_warning: true
+
+# Worker config
 worker_app: synapse.app.homeserver
 worker_replication_host: 127.0.0.1
 worker_replication_http_port: 9093
+enable_media_repo: false
 send_federation: false
 notify_appservices_from_worker: appservice
 federation_sender_instances:
   - federation_sender
 worker_replication_secret: "{{ vault_matrix_secrets.worker_replication_secret }}"
+worker_log_config: "/etc/synapse/log_config.yaml"
 redis:
   enabled: true
-background_updates:
+
+# vim:set ft=yaml sw=2 sts=-1 et:
