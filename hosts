@@ -6,17 +6,23 @@ build.archlinux.org
 [packet_net]
 runner2.archlinux.org
 repro1.pkgbuild.com
+seoul.mirror.pkgbuild.com
+sydney.mirror.pkgbuild.com
 
 [mirrors]
 america.mirror.pkgbuild.com
 asia.mirror.pkgbuild.com
 europe.mirror.pkgbuild.com
 mirror.pkgbuild.com
+seoul.mirror.pkgbuild.com
+sydney.mirror.pkgbuild.com
 
 [geo_mirrors]
 america.mirror.pkgbuild.com
 #asia.mirror.pkgbuild.com
 europe.mirror.pkgbuild.com
+seoul.mirror.pkgbuild.com
+sydney.mirror.pkgbuild.com
 
 [archive_mirrors]
 america.mirror.pkgbuild.com

@@ -356,6 +356,14 @@ locals {
       ipv4_address = "89.187.191.12"
       ipv6_address = "2a02:6ea0:c237::2"
     }
+    "seoul.mirror" = {
+      ipv4_address = "145.40.87.75"
+      ipv6_address = "2604:1380:11:2600::1"
+    }
+    "sydney.mirror" = {
+      ipv4_address = "147.75.48.159"
+      ipv6_address = "2604:1380:40f1:6a00::1"
+    }
     repro1 = {
       ipv4_address = "147.75.81.79"
       ipv6_address = "2604:1380:2001:4500::1"
