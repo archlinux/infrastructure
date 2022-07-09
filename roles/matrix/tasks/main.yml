@@ -103,7 +103,7 @@
   git:
     repo: https://github.com/matrix-org/mjolnir
     dest: /var/lib/synapse/mjolnir
-    version: v1.4.2
+    version: v1.5.0
     force: true
   become: true
   become_user: synapse
