@@ -6,7 +6,7 @@
         - restart networkd
 
     - name: create drop-in directory for 10-static-ethernet.network
-      file: path=/etc/systemd/network/10-static-ethernet.network.d state=directory owner=root group=root mode=0755
+      file: path={{ chroot_path }}/etc/systemd/network/10-static-ethernet.network.d state=directory owner=root group=root mode=0755
 
     - name: configure static dns (static)
       copy: src=dns.conf dest={{ chroot_path }}/etc/systemd/network/10-static-ethernet.network.d/dns.conf owner=root group=root mode=0644
@@ -23,7 +23,7 @@
         - restart networkd
 
     - name: create drop-in directory for 10-dhcp-ethernet.network
-      file: path=/etc/systemd/network/10-dhcp-ethernet.network.d state=directory owner=root group=root mode=0755
+      file: path={{ chroot_path }}/etc/systemd/network/10-dhcp-ethernet.network.d state=directory owner=root group=root mode=0755
 
     - name: configure static dns (dhcp)
       copy: src=dns.conf dest={{ chroot_path }}/etc/systemd/network/10-dhcp-ethernet.network.d/dns.conf owner=root group=root mode=0644
