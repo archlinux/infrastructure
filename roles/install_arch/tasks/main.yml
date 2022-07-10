@@ -3,7 +3,7 @@
   register: motd_contents
   changed_when: motd_contents.stdout | length > 0
 
-- name: check whether we're running in Hetzner or Packet.net rescue environment
+- name: check whether we're running in Hetzner or Equinix Metal rescue environment
   fail: msg="Not running in rescue system!"
   when: "'Hetzner Rescue' not in motd_contents.stdout and 'Rescue environment based on Alpine Linux' not in motd_contents.stdout"
 

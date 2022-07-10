@@ -210,3 +210,23 @@ resource "hetznerdns_record" "geo_ns3" {
   type    = "NS"
   ttl     = lookup(local.geo_domains[each.key], "ttl", 86400)
 }
+
+resource "hetznerdns_record" "geo_ns4" {
+  for_each = local.geo_domains
+
+  zone_id = each.value.zone_id
+  name    = each.value.name
+  value   = "seoul.mirror.pkgbuild.com."
+  type    = "NS"
+  ttl     = lookup(local.geo_domains[each.key], "ttl", 86400)
+}
+
+resource "hetznerdns_record" "geo_ns5" {
+  for_each = local.geo_domains
+
+  zone_id = each.value.zone_id
+  name    = each.value.name
+  value   = "sydney.mirror.pkgbuild.com."
+  type    = "NS"
+  ttl     = lookup(local.geo_domains[each.key], "ttl", 86400)
+}

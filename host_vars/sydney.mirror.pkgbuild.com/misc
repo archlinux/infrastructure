@@ -1,0 +1,16 @@
+hostname: "sydney.mirror.pkgbuild.com"
+mirror_domain: "sydney.mirror.pkgbuild.com"
+ipv4_address: "147.75.48.159"
+ipv4_netmask: "/31"
+ipv6_address: "2604:1380:40f1:6a00::1"
+ipv6_netmask: "/127"
+ipv4_gateway: "147.75.48.158"
+ipv6_gateway: "2604:1380:40f1:6a00::"
+filesystem: "btrfs"
+network_interface: "enp2s0f0np0"
+system_disks:
+  - /dev/sda
+  - /dev/sdb
+configure_network: true
+wireguard_address: 10.0.0.39
+wireguard_public_key: nBu1/pofjzyD31D32VHIs8ajNc5thkzweOWsW28WSFU=
