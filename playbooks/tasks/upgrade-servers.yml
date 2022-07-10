@@ -1,5 +1,5 @@
 - name: upgrade and reboot all hetzner servers
-  hosts: all,!kape_servers,!packet_net
+  hosts: all,!kape_servers,!equinix_metal
   max_fail_percentage: 0
   serial: 20%
   gather_facts: false
@@ -8,8 +8,8 @@
     - name: upgrade each host in this batch
       include_tasks: include/upgrade-server.yml
 
-- name: upgrade and reboot all kape and packet.net servers
-  hosts: kape_servers,packet_net
+- name: upgrade and reboot all Kape and Equinix Metal servers
+  hosts: kape_servers,equinix_metal
   max_fail_percentage: 0
   serial: 1
   gather_facts: false

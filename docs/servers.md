@@ -91,12 +91,18 @@ So to set up this server from scratch, run:
 [Rebuilderd docs](./docs/rebuilderd.md)
 
 ### Services
-  - Runs a master [rebuilderd](https://reproducible.archlinux.org) instance two workers:
-    - repro1.pkgbuild.com (packet.net Arch Linux box)
+  - Runs a master [rebuilderd](https://reproducible.archlinux.org) instance
+    with two workers:
+    - repro1.pkgbuild.com (Equinix Metal box with a Xeon E-2278G and 32G RAM)
+    - repro2.pkgbuild.com (Kape server with an EPYC 7702P and 256G RAM)
+
+## runner1.archlinux.org
+
+Medium-fast-ish Kape Arch Linux box.
 
 ## runner2.archlinux.org
 
-Medium-fast-ish packet.net Arch Linux box.
+Medium-fast-ish Equinix Metal Arch Linux box.
 
 ### Services
   - GitLab runner

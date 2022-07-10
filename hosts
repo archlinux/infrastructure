@@ -3,7 +3,7 @@ secure-runner1.archlinux.org
 gemini.archlinux.org
 build.archlinux.org
 
-[packet_net]
+[equinix_metal]
 runner2.archlinux.org
 repro1.pkgbuild.com
 seoul.mirror.pkgbuild.com
