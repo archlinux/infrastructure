@@ -99,6 +99,10 @@
       - "/srv/gitlab/data:/var/opt/gitlab"
       - "/srv/gitlab/sshd_config:/assets/sshd_config"
 
+- name: prune unused docker images
+  docker_prune:
+    images: true
+
 - name: open firewall holes
   ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes
   when: configure_firewall
