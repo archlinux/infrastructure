@@ -47,13 +47,13 @@ locals {
   #   ttl         = 3600
   # }
   machines = {
-    "archlinux.org" = {
-      server_type = "cpx11"
-      domain      = "@"
-    }
     "accounts.archlinux.org" = {
       server_type = "cx11"
       domain      = "accounts"
+    }
+    "archlinux.org" = {
+      server_type = "cpx11"
+      domain      = "@"
     }
     "aur.archlinux.org" = {
       server_type = "cpx41"
@@ -67,9 +67,26 @@ locals {
       server_type = "cx11"
       domain      = "bugs"
     }
+    "buildbot.pkgbuild.com" = {
+      server_type = "cx21"
+      domain      = "buildbot"
+      zone        = hetznerdns_zone.pkgbuild.id
+    }
+    "dashboards.archlinux.org" = {
+      server_type = "cx11"
+      domain      = "dashboards"
+    }
+    "debuginfod.archlinux.org" = {
+      server_type = "cx11"
+      domain      = "debuginfod"
+    }
     "gitlab.archlinux.org" = {
       server_type = "cpx41"
       domain      = "gitlab"
+    }
+    "gluebuddy.archlinux.org" = {
+      server_type = "cx11"
+      domain      = "gluebuddy"
     }
     "homedir.archlinux.org" = {
       server_type = "cx11"
@@ -95,13 +112,18 @@ locals {
       server_type = "cpx31"
       domain      = "matrix"
     }
+    "md.archlinux.org" = {
+      server_type = "cx11"
+      domain      = "md"
+    }
+    "mirror.pkgbuild.com" = {
+      server_type = "cx11"
+      domain      = "mirror"
+      zone        = hetznerdns_zone.pkgbuild.id
+    }
     "monitoring.archlinux.org" = {
       server_type = "cx31"
       domain      = "monitoring"
-    }
-    "dashboards.archlinux.org" = {
-      server_type = "cx11"
-      domain      = "dashboards"
     }
     "patchwork.archlinux.org" = {
       server_type = "cx11"
@@ -130,28 +152,6 @@ locals {
     "wiki.archlinux.org" = {
       server_type = "cpx21"
       domain      = "wiki"
-    }
-    "mirror.pkgbuild.com" = {
-      server_type = "cx11"
-      domain      = "mirror"
-      zone        = hetznerdns_zone.pkgbuild.id
-    }
-    "md.archlinux.org" = {
-      server_type = "cx11"
-      domain      = "md"
-    },
-    "gluebuddy.archlinux.org" = {
-      server_type = "cx11"
-      domain      = "gluebuddy"
-    },
-    "debuginfod.archlinux.org" = {
-      server_type = "cx11"
-      domain      = "debuginfod"
-    }
-    "buildbot.pkgbuild.com" = {
-      server_type = "cx21"
-      domain      = "buildbot"
-      zone        = hetznerdns_zone.pkgbuild.id
     }
   }
 
