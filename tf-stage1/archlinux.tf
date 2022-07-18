@@ -149,6 +149,11 @@ locals {
       server_type = "cx11"
       domain      = "security"
     }
+    "state.archlinux.org" = {
+      server_type = "cx11"
+      domain      = "state"
+      backups     = true
+    }
     "wiki.archlinux.org" = {
       server_type = "cpx21"
       domain      = "wiki"
@@ -270,10 +275,6 @@ locals {
     secure-runner1 = {
       ipv4_address = "116.202.134.150"
       ipv6_address = "2a01:4f8:231:4e1e::2"
-    }
-    state = {
-      ipv4_address = "116.203.16.252"
-      ipv6_address = "2a01:4f8:c2c:474::1"
     }
     www = {
       ipv4_address = hcloud_server.machine["archlinux.org"].ipv4_address

@@ -148,6 +148,7 @@ resource "hcloud_server" "machine" {
   name               = each.key
   image              = data.hcloud_image.archlinux.id
   server_type        = each.value.server_type
+  backups            = lookup(local.machines[each.key], "backups", false)
   keep_disk          = true
   location           = "fsn1"
   delete_protection  = true
