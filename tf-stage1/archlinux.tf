@@ -484,7 +484,7 @@ resource "hetznerdns_record" "archlinux_page_origin_txt" {
 resource "hetznerdns_record" "pages_verification_code_archlinux_page_origin_txt" {
   zone_id = hetznerdns_zone.archlinux_page.id
   name    = "_gitlab-pages-verification-code"
-  value   = "_gitlab-pages-verification-code=d66f6b2195948e509da553a5e4f3ebcd"
+  value   = "gitlab-pages-verification-code=0b9e3fc74735f5d83c7cfc86883b40cb"
   type    = "TXT"
 }
 
