@@ -1,6 +1,0 @@
-[Unit]
-Description=Create updated VM image with the required tools
-
-[Service]
-Type=oneshot
-ExecStart=/usr/local/bin/libvirt-executor create-vm-template

@@ -7,8 +7,5 @@
 - name: restart gitlab-runner-docker-cleanup.timer
   service: name=gitlab-runner-docker-cleanup.timer state=restarted daemon_reload=yes
 
-- name: restart libvirt-executor-vm-template.timer
-  service: name=libvirt-executor-vm-template.timer state=restarted daemon_reload=yes
-
 - name: restart docker
   service: name=docker state=restarted

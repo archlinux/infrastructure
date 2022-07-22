@@ -1,0 +1,40 @@
+<domain type='kvm'>
+  <name>$vm_name</name>
+  <memory unit='MiB'>1024</memory>
+  <vcpu>4</vcpu>
+  <os>
+    <type arch='x86_64' machine='q35'>hvm</type>
+  </os>
+  <features>
+    <acpi/>
+    <apic/>
+  </features>
+  <cpu mode='host-passthrough'/>
+  <!-- https://github.com/virt-manager/virt-manager/blob/7ae10b5566ac4d8c7afd94499a9733ed42cf3d07/virtinst/domain/clock.py#L49-L59 -->
+  <clock offset='utc'>
+    <timer name='rtc' tickpolicy='catchup'/>
+    <timer name='pit' tickpolicy='delay'/>
+    <timer name='hpet' present='no'/>
+  </clock>
+  <devices>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='qcow2'/>
+      <source file='/var/lib/libvirt/images/$vm_name.qcow2'/>
+      <target dev='sdb' bus='scsi'/>
+    </disk>
+    <controller type='pci' model='pcie-root'/>
+    <controller type='scsi' model='virtio-scsi'/>
+    <controller type='usb' model='none'/>
+    <interface type='network'>
+      <source network='default'/>
+      <model type='virtio'/>
+    </interface>
+    <rng model='virtio'>
+      <backend model='random'>/dev/urandom</backend>
+    </rng>
+    <video>
+      <model type='virtio'/>
+    </video>
+    <graphics type='vnc'/>
+  </devices>
+</domain>

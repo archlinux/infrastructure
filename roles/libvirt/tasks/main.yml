@@ -3,7 +3,7 @@
   pacman: name=iptables force=yes state=absent
 
 - name: install libvirt and needed optional dependencies
-  pacman: name=libvirt,virt-install,cdrtools,qemu-headless,dnsmasq,iptables-nft state=present
+  pacman: name=libvirt,qemu-headless,dnsmasq,iptables-nft state=present
   register: result
 
 - name: reload firewalld

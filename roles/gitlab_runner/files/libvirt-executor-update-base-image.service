@@ -1,0 +1,8 @@
+[Unit]
+Description=Update libvirt-executor base image
+Wants=network-online.target
+After=network-online.target nss-lookup.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/libvirt-executor-update-base-image

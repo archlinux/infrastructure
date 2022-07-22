@@ -62,28 +62,34 @@
 
 - name: setup libvirt-executor
   block:
-    - name: install libvirt-executor script
-      copy: src=libvirt-executor dest=/usr/local/bin/ owner=root group=root mode=0755
+    - name: install libvirt-executor-update-base-image dependencies
+      pacman: name=arch-install-scripts,sequoia-sq state=present
 
-    - name: create libvirt-executor state directory
-      file: path=/usr/local/lib/libvirt-executor state=directory owner=root group=root mode=0700
+    - name: create libvirt-executor configuration and data directories
+      file: path={{ item }} state=directory owner=root group=root mode=0755
+      loop:
+        - /etc/libvirt-executor
+        - /usr/local/lib/libvirt-executor
+
+    - name: install libvirt-executor
+      copy: src={{ item.src }} dest={{ item.dest }} owner=root group=root mode={{ item.mode }}
+      loop:
+        - {src: arch-boxes.asc, dest: /usr/local/lib/libvirt-executor/, mode: 644}
+        - {src: domain_template.xml, dest: /usr/local/lib/libvirt-executor/, mode: 755}
+        - {src: libvirt-executor, dest: /usr/local/bin/, mode: 755}
+        - {src: libvirt-executor-update-base-image, dest: /usr/local/bin/, mode: 755}
 
     - name: create SSH keys for libvirt-executor
-      command: ssh-keygen -N "" -f /usr/local/lib/libvirt-executor/id_rsa
+      command: ssh-keygen -N "" -f /etc/libvirt-executor/id_ed25519 -t ed25519
       args:
-        creates: /usr/local/lib/libvirt-executor/id_rsa
+        creates: /etc/libvirt-executor/id_ed25519
 
-    - name: install user-data for libvirt-executor
-      copy: src=user-data dest=/usr/local/lib/libvirt-executor/ owner=root group=root mode=0755
-
-    - name: install libvirt-executor-vm-template.{service,timer}
+    - name: install libvirt-executor-update-base-image.{service,timer}
       copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
       loop:
-        - libvirt-executor-vm-template.service
-        - libvirt-executor-vm-template.timer
-      notify:
-        - restart libvirt-executor-vm-template.timer
+        - libvirt-executor-update-base-image.service
+        - libvirt-executor-update-base-image.timer
 
-    - name: enable and start libvirt-executor-vm-template.timer
-      systemd: name=libvirt-executor-vm-template.timer state=started enabled=yes daemon_reload=yes
+    - name: enable and start libvirt-executor-update-base-image.timer
+      systemd: name=libvirt-executor-update-base-image.timer state=started enabled=yes daemon_reload=yes
   when: "'gitlab_vm_runners' in group_names"
