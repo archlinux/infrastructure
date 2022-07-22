@@ -129,12 +129,7 @@ prepare() {
 run() {
   vm_name="$(get_vm_name)"
   wait_for_ssh "${vm_name}"
-  # Upstream issue: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/28189
-  if [[ "${2}" == *'_artifacts'* ]]; then
-    ssh 'TMPDIR=/var/tmp bash' < "${1}" || exit "${BUILD_FAILURE_EXIT_CODE:-1}"
-  else
-    ssh bash < "${1}" || exit "${BUILD_FAILURE_EXIT_CODE:-1}"
-  fi
+  ssh bash < "${1}" || exit "${BUILD_FAILURE_EXIT_CODE:-1}"
 }
 
 # https://docs.gitlab.com/runner/executors/custom.html#cleanup

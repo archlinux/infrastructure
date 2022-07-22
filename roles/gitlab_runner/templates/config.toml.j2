@@ -33,6 +33,7 @@ listen_address = ":9252"
   builds_dir = "/builds"
   cache_dir = "/cache"
   limit = {{ (ansible_memtotal_mb * 0.9 / 1024) | round | int }}
+  environment = ["ARCHIVER_STAGING_DIR=/var/tmp"]
   [runners.custom]
     prepare_exec = "/usr/local/bin/libvirt-executor"
     prepare_args = [ "prepare" ]
