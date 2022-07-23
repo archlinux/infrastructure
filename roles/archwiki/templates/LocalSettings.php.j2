@@ -3,12 +3,12 @@
 # installer. If you make manual changes, please keep track in case you
 # need to recreate them later.
 #
-# See includes/DefaultSettings.php for all configurable settings
+# See docs/Configuration.md for all configurable settings
 # and their default values, but don't forget to make changes in _this_
 # file, not there.
 #
 # Further documentation for configuration settings may be found at:
-# http://www.mediawiki.org/wiki/Manual:Configuration_settings
+# https://www.mediawiki.org/wiki/Manual:Configuration_settings
 
 # Protect against web entry
 if ( !defined( 'MEDIAWIKI' ) ) {
@@ -30,9 +30,10 @@ $wgSitename      = "ArchWiki";
 ## The protocol and server name to use in fully-qualified URLs
 $wgServer           = "https://wiki.archlinux.org";
 
+# Time zone
 $wgLocaltimezone = 'UTC';
 
-# Site language code, should be one of the list in ./languages/Names.php
+# Site language code, should be one of the list in ./languages/data/Names.php
 $wgLanguageCode = "en";
 
 # Allow to change the page language
@@ -49,6 +50,9 @@ $wgArticlePath = "/title/$1";
 # $wgUsePathInfo is not necessary: https://github.com/wikimedia/mediawiki/blob/bb92c4d1acc029eed0f6848360dff5b2436695fc/includes/WebRequest.php#L151-L153
 #$wgUsePathInfo = true;
 
+## The URL path to static resources (images, scripts, etc.)
+$wgResourceBasePath = $wgScriptPath;
+
 ## The relative URL path to the skins directory
 $wgStylePath        = "$wgScriptPath/skins";
 
@@ -60,9 +64,9 @@ $wgLogos = ["1x" => ""];
 ## appropriate copyright notice / icon. GNU Free Documentation
 ## License and Creative Commons licenses are supported so far.
 $wgRightsPage = ""; # Set to the title of a wiki page that describes your license/copyright
-$wgRightsUrl  = "http://www.gnu.org/copyleft/fdl.html";
+$wgRightsUrl = "https://www.gnu.org/copyleft/fdl.html";
 $wgRightsText = "GNU Free Documentation License 1.3 or later";
-$wgRightsIcon = "$wgScriptPath/resources/assets/licenses/gnu-fdl.png";
+$wgRightsIcon = "$wgResourceBasePath/resources/assets/licenses/gnu-fdl.png";
 
 # Query string length limit for ResourceLoader. You should only set this if
 # your web server has a query string length limit (then set it to that limit),
@@ -71,7 +75,7 @@ $wgRightsIcon = "$wgScriptPath/resources/assets/licenses/gnu-fdl.png";
 # TODO: -1 is the default
 $wgResourceLoaderMaxQueryLength = -1;
 
-$wgGitRepositoryViewers['.+projects\.archlinux\.org/vhosts/wiki\.archlinux\.org\.git(.*)'] = 'https://projects.archlinux.org/vhosts/wiki.archlinux.org.git/commit/?id=%H';
+$wgGitRepositoryViewers['https://github.com/(.*?)(.git)?'] = 'https://github.com/$1/commit/%H';
 
 $wgJobRunRate = 0;
 $wgRunJobsAsync = 1;
@@ -139,7 +143,7 @@ $wgMemCachedServers = [ "unix://{{ archwiki_memcached_socket }}" ];
 
 ## Set $wgCacheDirectory to a writable directory on the web server
 ## to make your wiki go slightly faster. The directory should not
-## be publically accessible from the web.
+## be publicly accessible from the web.
 $wgCacheDirectory = "$IP/../cache/data";
 $wgEnableSidebarCache = true;
 $wgUseFileCache = true;
@@ -172,7 +176,7 @@ $wgEnableUploads  = true;
 #$wgUseImageMagick = true;
 #$wgImageMagickConvertCommand = "/usr/bin/convert";
 
-# InstantCommons allows wiki to use images from http://commons.wikimedia.org
+# InstantCommons allows wiki to use images from https://commons.wikimedia.org
 $wgUseInstantCommons  = false;
 
 ## If you want to use image uploads under safe mode,
@@ -191,18 +195,19 @@ $wgUseInstantCommons  = false;
 wfLoadSkin( 'MonoBook' );
 wfLoadSkin( 'Vector' );
 $wgVectorResponsive = true;
-wfLoadExtension( 'ArchLinux' );
 $wgDefaultSkin = 'vector-2022';
-$wgArchHome = 'https://www.archlinux.org/';
+
+wfLoadExtension( 'ArchLinux' );
+$wgArchHome = 'https://archlinux.org/';
 $wgArchNavBar = array(
-			'Home' => 'https://www.archlinux.org/',
-			'Packages' => 'https://www.archlinux.org/packages/',
+			'Home' => 'https://archlinux.org/',
+			'Packages' => 'https://archlinux.org/packages/',
 			'Forums' => 'https://bbs.archlinux.org/',
 			'Wiki' => 'https://wiki.archlinux.org/',
 			'Bugs' => 'https://bugs.archlinux.org/',
 			'Security' => 'https://security.archlinux.org/',
 			'AUR' => 'https://aur.archlinux.org/',
-			'Download' => 'https://www.archlinux.org/download/'
+			'Download' => 'https://archlinux.org/download/'
 		);
 $wgArchNavBarSelectedDefault = 'Wiki';
 $wgFooterIcons = ['copyright' => ['copyright' => '']];
