@@ -20,7 +20,7 @@
         | sed 's#^127.0.0.1#{{ inventory_hostname }}#' \
         | sort
       environment:
-        LC_COLLATE: C  # to ensure reproducible ordering
+        LC_COLLATE: C.UTF-8  # to ensure reproducible ordering
       args:
         executable: /bin/bash
       register: known_hosts
