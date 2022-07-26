@@ -28,7 +28,7 @@ vm_ip() {
 }
 
 wait_for_ssh() {
-  for _ in {1..60}; do
+  for _ in {1..30}; do
     if ! ip="$(vm_ip "${1}")"; then
       echo "Waiting for network"
       sleep 1
@@ -42,7 +42,7 @@ wait_for_ssh() {
     printf "%s" "${ip}"
     return 0
   done
-  echo 'Waited 60 seconds for VM to start, exiting...'
+  echo 'Waited 30 seconds for VM to start, exiting...'
   exit "${SYSTEM_FAILURE_EXIT_CODE:-1}"
 }
 

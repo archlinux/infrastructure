@@ -26,7 +26,9 @@ qemu-img convert -f qcow2 -O raw Arch-Linux-x86_64-basic.qcow2 Arch-Linux-x86_64
 
 loopdev="$(losetup --find --partscan --show "${image}")"
 mount --mkdir "${loopdev}p2" mnt
-mount --mkdir --bind -o ro /etc/pacman.d/gnupg mnt/etc/pacman.d/gnupg
+
+arch-chroot mnt pacman-key --init
+arch-chroot mnt pacman-key --populate
 
 # shellcheck disable=SC2016
 printf 'Server = https://geo.mirror.pkgbuild.com/$repo/os/$arch' > mnt/etc/pacman.d/mirrorlist
@@ -41,8 +43,8 @@ rm -f mnt/etc/machine-id
 
 cp -a mnt/boot/{initramfs-linux-fallback.img,initramfs-linux.img}
 
-umount mnt/etc/pacman.d/gnupg
-rmdir mnt/etc/pacman.d/gnupg
+rm -r mnt/etc/pacman.d/gnupg/{openpgp-revocs.d,private-keys-v1.d}/
+arch-chroot mnt pacman-key --delete pacman@localhost
 umount mnt
 losetup -d "${loopdev}"
 loopdev=""
