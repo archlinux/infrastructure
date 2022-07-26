@@ -83,11 +83,17 @@
   notify:
     - restart php-fpm@{{ archwiki_user }}
 
-- name: install archwiki memcached service
-  template: src="archwiki-memcached.service.j2" dest="/etc/systemd/system/archwiki-memcached.service" owner=root group=root mode=0644
-
 - name: start and enable systemd socket
   service: name=php-fpm@{{ archwiki_user }}.socket state=started enabled=true
+
+- name: create memcached.service.d drop-in directory
+  file: path=/etc/systemd/system/memcached@archwiki.service.d state=directory owner=root group=root mode=0755
+
+- name: install memcached.service drop-in
+  template: src="memcached.service.d-archwiki.conf.j2" dest="/etc/systemd/system/memcached@archwiki.service.d/archwiki.conf" owner=root group=root mode=0644
+
+- name: start and enable memcached service
+  service: name=memcached@archwiki.service state=started enabled=true daemon_reload=true
 
 - name: install systemd services/timers
   template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
@@ -98,7 +104,6 @@
     - archwiki-prune-cache.service
     - archwiki-prune-cache.timer
     - archwiki-question-updater.service
-    - archwiki-memcached.service
 
 - name: start and enable archwiki timers and services
   systemd:
@@ -110,7 +115,6 @@
     - archwiki-runjobs.timer
     - archwiki-prune-cache.timer
     - archwiki-runjobs-wait.service
-    - archwiki-memcached.service
 
 - name: create question answer file
   systemd:
