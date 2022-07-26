@@ -11,7 +11,7 @@ sydney.mirror.pkgbuild.com
 
 [mirrors]
 america.mirror.pkgbuild.com
-asia.mirror.pkgbuild.com
+#asia.mirror.pkgbuild.com
 europe.mirror.pkgbuild.com
 mirror.pkgbuild.com
 seoul.mirror.pkgbuild.com
@@ -26,7 +26,7 @@ sydney.mirror.pkgbuild.com
 
 [archive_mirrors]
 america.mirror.pkgbuild.com
-asia.mirror.pkgbuild.com
+#asia.mirror.pkgbuild.com
 europe.mirror.pkgbuild.com
 
 [borg_clients]
@@ -109,7 +109,7 @@ monitoring.archlinux.org
 
 [kape_servers]
 america.mirror.pkgbuild.com
-asia.mirror.pkgbuild.com
+#asia.mirror.pkgbuild.com
 europe.mirror.pkgbuild.com
 repro2.pkgbuild.com
 runner1.archlinux.org
