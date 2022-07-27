@@ -1,0 +1,5 @@
+[Service]
+Type=oneshot
+User={{ aurweb_user }}
+WorkingDirectory={{ aurweb_git_dir }}
+ExecStart=git push --all git@github.com:archlinux/aur.git
