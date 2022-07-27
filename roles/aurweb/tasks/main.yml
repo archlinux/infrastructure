@@ -27,6 +27,24 @@
 
 - name: make aur user
   user: name="{{ aurweb_user }}" shell=/bin/bash createhome=yes
+  register: aur_user
+
+- name: create .ssh for the aur user
+  file: path={{ aur_user.home }}/.ssh state=directory owner={{ aur_user.name }} group={{ aur_user.name }} mode=0700
+
+- name: install SSH key for mirroring to GitHub
+  copy: src=id_ed25519 dest={{ aur_user.home }}/.ssh/ owner={{ aur_user.name }} group={{ aur_user.name }} mode=0600
+
+- name: fetch host keys for github.com
+  command: ssh-keyscan github.com
+  args:
+    creates: "{{ aur_user.home }}/.ssh/known_hosts"
+  register: github_host_keys
+
+- name: write github.com host keys to the aur user's known_hosts
+  lineinfile: name={{ aur_user.home }}/.ssh/known_hosts create=yes line={{ item }} owner={{ aur_user.name }} group={{ aur_user.name }} mode=0644
+  loop: "{{ github_host_keys.stdout_lines }}"
+  when: github_host_keys.changed
 
 - name: Create directory
   file: path={{ aurweb_dir }} state=directory owner={{ aurweb_user }} group=http mode=0775
@@ -69,6 +87,8 @@
     - aurweb-usermaint.service
     - aurweb-usermaint.timer
     - aurweb.service
+    - aurweb-github-mirror.service
+    - aurweb-github-mirror.timer
   when: release.changed
 
 - name: stop AUR systemd services and timers
@@ -82,6 +102,7 @@
     - aurweb-tuvotereminder.timer
     - aurweb-usermaint.timer
     - aurweb.service
+    - aurweb-github-mirror.timer
   when: release.changed
 
 - name: clone aurweb repo
@@ -299,4 +320,5 @@
     - aurweb-tuvotereminder.timer
     - aurweb-usermaint.timer
     - aurweb.service
+    - aurweb-github-mirror.timer
   when: release.changed
