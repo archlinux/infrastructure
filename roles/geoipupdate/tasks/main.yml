@@ -6,14 +6,6 @@
   template: src=GeoIP.conf.j2 dest=/etc/GeoIP.conf owner=root group=root mode=0600
   register: configuration
 
-- name: create drop-in directory for geoipupdate.service
-  file: path=/etc/systemd/system/geoipupdate.service.d state=directory owner=root group=root mode=0755
-
-- name: install drop-in for geoipupdate.service
-  copy: src=hardening.conf dest=/etc/systemd/system/geoipupdate.service.d/ owner=root group=root mode=0644
-  notify:
-    - daemon reload
-
 - name: run geoipupdate after installation or configuration change
   systemd: name=geoipupdate state=restarted
   when: installation is changed or configuration is changed
