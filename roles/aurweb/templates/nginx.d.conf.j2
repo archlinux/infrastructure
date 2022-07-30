@@ -52,7 +52,7 @@ server {
     }
 
     location ~ "^/([a-z0-9][a-z0-9.+_-]*?)(\.git)?/(git-(receive|upload)-pack|HEAD|info/refs|objects/(info/(http-)?alternates|packs)|[0-9a-f]{2}/[0-9a-f]{38}|pack/pack-[0-9a-f]{40}\.(pack|idx))$" {
-	limit_req zone=aurwebgitlimit burst=300 nodelay;
+	limit_req zone=aurwebgitlimit burst=900 nodelay;
         include      uwsgi_params;
         uwsgi_pass   smartgit;
         uwsgi_modifier1 9;
