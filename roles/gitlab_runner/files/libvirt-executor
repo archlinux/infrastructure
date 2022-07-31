@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+set -o nounset -o errexit -o pipefail
+readonly libvirt_default_pool_path="/var/lib/libvirt/images"
+
+ssh() {
+  command ssh \
+    -i "/etc/libvirt-executor/id_ed25519" \
+    -F /dev/null \
+    -o ServerAliveCountMax=2 \
+    -o ServerAliveInterval=15 \
+    -o UserKnownHostsFile=/dev/null \
+    -o StrictHostKeyChecking=off \
+    "root@${1}" "${@:2}"
+}
+
+vm_name() {
+  printf 'runner-%s-project-%d-pipeline-%d-job-%d\n' "${CUSTOM_ENV_CI_RUNNER_SHORT_TOKEN}" "${CUSTOM_ENV_CI_PROJECT_ID}" "${CUSTOM_ENV_CI_PIPELINE_IID}" "${CUSTOM_ENV_CI_JOB_ID}"
+}
+
+vm_ip() {
+  local ip
+  ip="$(virsh -q domifaddr "${1}" | awk -F'[ /]+' '{print $5}')"
+  if [[ -n ${ip} ]]; then
+    echo "${ip}"
+    return 0
+  fi
+  return 1
+}
+
+wait_for_ssh() {
+  for _ in {1..30}; do
+    if ! ip="$(vm_ip "${1}")"; then
+      echo "Waiting for network"
+      sleep 1
+      continue
+    fi
+    if ! ssh "${ip}" true; then
+      echo "Waiting for SSH to be ready"
+      sleep 1
+      continue
+    fi
+    printf "%s" "${ip}"
+    return 0
+  done
+  echo 'Waited 30 seconds for VM to start, exiting...'
+  exit "${SYSTEM_FAILURE_EXIT_CODE:-1}"
+}
+
+# https://docs.gitlab.com/runner/executors/custom.html#prepare
+prepare() {
+  # shellcheck disable=SC2064
+  trap "exit ${SYSTEM_FAILURE_EXIT_CODE:-1}" ERR
+  local base_image
+  base_image="$(compgen -G "${libvirt_default_pool_path}/runner-base-*.qcow2" | sort -n -t - -k3,3 | tail -n 1)"
+
+  if [[ -z ${base_image} ]]; then
+    echo 'Base image not found...'
+    exit "${SYSTEM_FAILURE_EXIT_CODE:-1}"
+  fi
+
+  qemu-img create -f qcow2 -b "${base_image}" -F qcow2 "${libvirt_default_pool_path}/$(vm_name).qcow2"
+  virsh define <(sed "s/\$vm_name/$(vm_name)/" /usr/local/lib/libvirt-executor/domain_template.xml)
+  virsh start "$(vm_name)"
+
+  wait_for_ssh "$(vm_name)"
+}
+
+# https://docs.gitlab.com/runner/executors/custom.html#run
+run() {
+  local ip
+  ip="$(wait_for_ssh "$(vm_name)")"
+  ssh "${ip}" bash < "${1}" || exit "${BUILD_FAILURE_EXIT_CODE:-1}"
+}
+
+# https://docs.gitlab.com/runner/executors/custom.html#cleanup
+cleanup() {
+  virsh destroy "$(vm_name)" || true
+  rm "${libvirt_default_pool_path}/$(vm_name).qcow2"
+  virsh undefine "$(vm_name)"
+}
+
+case "${1:-}" in
+  prepare)
+    prepare
+    ;;
+  run)
+    run "${2}" "${3}"
+    ;;
+  cleanup)
+    cleanup
+    ;;
+  *)
+    echo "Error invalid command: ${1:-}"
+    exit 1;
+esac

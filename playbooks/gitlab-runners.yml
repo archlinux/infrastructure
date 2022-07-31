@@ -11,4 +11,5 @@
     - { role: fail2ban }
     - { role: prometheus_exporters }
     - { role: promtail }
+    - { role: libvirt, when: "'gitlab_vm_runners' in group_names" }
     - { role: gitlab_runner }

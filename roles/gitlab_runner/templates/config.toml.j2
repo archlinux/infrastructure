@@ -23,3 +23,24 @@ listen_address = ":9252"
     disable_cache = false
     volumes = ["/cache"]
     shm_size = 0
+{% if 'gitlab_vm_runners' in group_names %}
+
+[[runners]]
+  name = "{{ inventory_hostname }}"
+  url = "https://gitlab.archlinux.org"
+  token = "{{ vault_gitlab_vm_runner_token }}"
+  executor = "custom"
+  builds_dir = "/builds"
+  cache_dir = "/cache"
+  limit = {{ (ansible_memtotal_mb * 0.9 / 1024) | round | int }}
+  environment = ["ARCHIVER_STAGING_DIR=/var/tmp"]
+  [runners.custom]
+    prepare_exec = "/usr/local/bin/libvirt-executor"
+    prepare_args = [ "prepare" ]
+
+    run_exec = "/usr/local/bin/libvirt-executor"
+    run_args = [ "run" ]
+
+    cleanup_exec = "/usr/local/bin/libvirt-executor"
+    cleanup_args = [ "cleanup" ]
+{% endif %}

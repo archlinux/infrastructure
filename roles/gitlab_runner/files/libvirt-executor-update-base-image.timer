@@ -1,0 +1,10 @@
+[Unit]
+Description=Run libvirt-executor-vm-template.service daily
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+RandomizedDelaySec=1d
+
+[Install]
+WantedBy=timers.target

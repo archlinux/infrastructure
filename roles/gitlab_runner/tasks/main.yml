@@ -34,7 +34,7 @@
 #   --non-interactive \
 #   --url=https://gitlab.archlinux.org/ \
 #   --docker-image=archlinux:latest \
-#   --tag-list=docker \ # Use docker,secure for secure runners
+#   --tag-list=docker \ # Use docker,secure for secure runners and docker,secure-vm for secure VM runners
 #   --registration-token="{{ vault_gitlab_runner_registration_token }}" \
 #   --executor=docker \
 #   --description="{{ inventory_hostname }}" \
@@ -59,3 +59,37 @@
 
 - name: enable and start gitlab runner service
   systemd: name=gitlab-runner state=started enabled=yes daemon_reload=yes
+
+- name: setup libvirt-executor
+  block:
+    - name: install libvirt-executor-update-base-image dependencies
+      pacman: name=arch-install-scripts,sequoia-sq state=present
+
+    - name: create libvirt-executor configuration and data directories
+      file: path={{ item }} state=directory owner=root group=root mode=0755
+      loop:
+        - /etc/libvirt-executor
+        - /usr/local/lib/libvirt-executor
+
+    - name: install libvirt-executor
+      copy: src={{ item.src }} dest={{ item.dest }} owner=root group=root mode={{ item.mode }}
+      loop:
+        - {src: arch-boxes.asc, dest: /usr/local/lib/libvirt-executor/, mode: 644}
+        - {src: domain_template.xml, dest: /usr/local/lib/libvirt-executor/, mode: 755}
+        - {src: libvirt-executor, dest: /usr/local/bin/, mode: 755}
+        - {src: libvirt-executor-update-base-image, dest: /usr/local/bin/, mode: 755}
+
+    - name: create SSH keys for libvirt-executor
+      command: ssh-keygen -N "" -f /etc/libvirt-executor/id_ed25519 -t ed25519
+      args:
+        creates: /etc/libvirt-executor/id_ed25519
+
+    - name: install libvirt-executor-update-base-image.{service,timer}
+      copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+      loop:
+        - libvirt-executor-update-base-image.service
+        - libvirt-executor-update-base-image.timer
+
+    - name: enable and start libvirt-executor-update-base-image.timer
+      systemd: name=libvirt-executor-update-base-image.timer state=started enabled=yes daemon_reload=yes
+  when: "'gitlab_vm_runners' in group_names"

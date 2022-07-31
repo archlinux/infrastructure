@@ -1,0 +1,58 @@
+#!/bin/bash
+set -o nounset -o errexit
+readonly libvirt_default_pool_path="/var/lib/libvirt/images"
+
+cleanup() {
+  set +o errexit
+
+  if mountpoint -q mnt; then
+    umount -R mnt
+  fi
+  if [[ -n ${loopdev} ]]; then
+    losetup -d "${loopdev}"
+  fi
+  rm -r "${tmpdir}"
+}
+
+tmpdir="$(mktemp --directory --tmpdir="/var/tmp")"
+trap cleanup EXIT
+
+cd "${tmpdir}"
+curl -sSf --remote-name-all https://geo.mirror.pkgbuild.com/images/latest/Arch-Linux-x86_64-basic.qcow2{,.sig}
+sq verify --signer-cert /usr/local/lib/libvirt-executor/arch-boxes.asc --detached Arch-Linux-x86_64-basic.qcow2.sig Arch-Linux-x86_64-basic.qcow2
+
+image=Arch-Linux-x86_64-basic.img
+qemu-img convert -f qcow2 -O raw Arch-Linux-x86_64-basic.qcow2 Arch-Linux-x86_64-basic.img
+
+loopdev="$(losetup --find --partscan --show "${image}")"
+mount --mkdir "${loopdev}p2" mnt
+
+arch-chroot mnt pacman-key --init
+arch-chroot mnt pacman-key --populate
+
+# shellcheck disable=SC2016
+printf 'Server = https://geo.mirror.pkgbuild.com/$repo/os/$arch' > mnt/etc/pacman.d/mirrorlist
+arch-chroot mnt systemctl disable reflector-init
+arch-chroot mnt pacman -Sy --noconfirm --needed archlinux-keyring
+arch-chroot mnt pacman -Syu --noconfirm --needed git git-lfs gitlab-runner
+sed -E 's/^#(IgnorePkg *=)/\1 linux/' -i mnt/etc/pacman.conf
+arch-chroot mnt userdel -r arch
+install -d -m0700 mnt/root/.ssh
+install -m0600 /etc/libvirt-executor/id_ed25519.pub mnt/root/.ssh/authorized_keys
+rm -f mnt/etc/machine-id
+
+cp -a mnt/boot/{initramfs-linux-fallback.img,initramfs-linux.img}
+
+rm -r mnt/etc/pacman.d/gnupg/{openpgp-revocs.d,private-keys-v1.d}/
+arch-chroot mnt pacman-key --delete pacman@localhost
+umount mnt
+losetup -d "${loopdev}"
+loopdev=""
+
+qemu-img convert -f raw -O qcow2 Arch-Linux-x86_64-basic.img Arch-Linux-x86_64-basic.qcow2
+printf -v image_path '%s/runner-base-%(%s)T.qcow2' "${libvirt_default_pool_path}"
+cp Arch-Linux-x86_64-basic.qcow2 "${image_path}.tmp"
+mv "${image_path}"{.tmp,}
+
+# Keep one week of base images
+compgen -G "${libvirt_default_pool_path}/runner-base-*.qcow2" | sort -n -t - -k3,3 | head -n -7 | xargs --no-run-if-empty rm -vf
