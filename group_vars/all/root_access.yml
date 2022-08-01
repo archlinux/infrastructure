@@ -23,11 +23,12 @@ root_ssh_keys:
     additional_keys: [klausenbusk_2.pub]
   - key: artafinde.pub
     hosts:
+      - aur.archlinux.org
       - dashboards.archlinux.org
       - gitlab.archlinux.org
-      - monitoring.archlinux.org
       - lists.archlinux.org
       - mailman3.archlinux.org
+      - monitoring.archlinux.org
 
 # - run 'playbooks/tasks/reencrypt-vault-{super,default}-key.yml' when this
 #   changes; before doing so, make sure to 'gpg --lsign-key' all listed keys
