@@ -42,19 +42,19 @@ server {
     root {{ rebuilder_website_loc }};
 
     location ~* (css|js|svg)$ {
-           expires 30d;
-           add_header Pragma public;
-           add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+        expires 30d;
+        add_header Pragma public;
+        add_header Cache-Control "public, must-revalidate, proxy-revalidate";
     }
 
     location /api/ {
-            proxy_set_header    X-Real-IP          $remote_addr;
-	    proxy_pass http://127.0.0.1:8484;
+        proxy_set_header    X-Real-IP          $remote_addr;
+        proxy_pass http://127.0.0.1:8484;
     }
 
     location = /api/v0/build/report {
-	    client_max_body_size 25M;
-            proxy_set_header    X-Real-IP          $remote_addr;
-	    proxy_pass http://127.0.0.1:8484;
+        client_max_body_size 25M;
+        proxy_set_header    X-Real-IP          $remote_addr;
+        proxy_pass http://127.0.0.1:8484;
     }
 }
