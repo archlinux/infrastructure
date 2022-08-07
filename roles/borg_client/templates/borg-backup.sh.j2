@@ -91,6 +91,4 @@ fi
 
 {{ item['borg_cmd'] }} prune -v {{ item['host'] }}/{{ item['dir'] }} --keep-daily=7 --keep-weekly=4 --keep-monthly=6
 
-{% if item['compact_after_prune'] %}
 {{ item['borg_cmd'] }} compact -v {{ item['host'] }}/{{ item['dir'] }}
-{% endif %}
