@@ -105,7 +105,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "exemplar": true,
-          "expr": "rate(http_requests_total[5m])",
+          "expr": "rate(http_requests_total{job=\"aurweb\"}[5m])",
           "interval": "",
           "legendFormat": "{{ path }} {{ status }}",
           "refId": "A"
