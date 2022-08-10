@@ -141,6 +141,10 @@ locals {
       server_type = "cx11"
       domain      = "redirect"
     }
+    "repos-git.archlinux.org" = {
+      server_type = "cpx11"
+      domain      = "repos-git"
+    }
     "reproducible.archlinux.org" = {
       server_type = "cx11"
       domain      = "reproducible"
@@ -621,5 +625,12 @@ resource "hcloud_volume" "debuginfod" {
   name              = "debuginfod"
   size              = 25
   server_id         = hcloud_server.machine["debuginfod.archlinux.org"].id
+  delete_protection = true
+}
+
+resource "hcloud_volume" "repos-git" {
+  name              = "repos-git"
+  size              = 100
+  server_id         = hcloud_server.machine["repos-git.archlinux.org"].id
   delete_protection = true
 }
