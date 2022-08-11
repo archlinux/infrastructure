@@ -248,10 +248,6 @@ locals {
   #   ttl          = 3600
   # }
   archlinux_org_a_aaaa = {
-    aur4 = {
-      ipv4_address = "5.9.250.164"
-      ipv6_address = "2a01:4f8:160:3033::2"
-    }
     build = {
       ipv4_address = "135.181.138.48"
       ipv6_address = "2a01:4f9:3a:120f::2"
