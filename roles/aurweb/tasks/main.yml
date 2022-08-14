@@ -177,6 +177,8 @@
   command: poetry install
   args:
     chdir: "{{ aurweb_dir }}"
+  environment:
+    POETRY_VIRTUALENVS_IN_PROJECT: "true"
   become: true
   become_user: "{{ aurweb_user }}"
   when: release.changed or aurweb_installed.rc != 0
