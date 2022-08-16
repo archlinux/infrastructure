@@ -525,11 +525,6 @@ arch_users:
       - dev
       - tu
       - multilib
-  tensor5:
-    name: "Nicola Squartini"
-    ssh_key: tensor5.pub
-    groups:
-      - tu
   torxed:
     name: "Anton Hvornum"
     ssh_key: torxed.pub
