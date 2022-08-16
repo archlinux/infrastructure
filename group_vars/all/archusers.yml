@@ -12,11 +12,6 @@ arch_users:
   accounts:
     name: ""
     groups: []
-  aginiewicz:
-    name: "Andrzej Giniewicz"
-    ssh_key: aginiewicz.pub
-    groups:
-      - tu
   ainola:
     name: "Brett Cornwall"
     ssh_key: ainola.pub
