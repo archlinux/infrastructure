@@ -473,6 +473,11 @@ arch_users:
       - dev
       - tu
       - multilib
+  serebit:
+    name: "Campbell Jones"
+    ssh_key: serebit.pub
+    groups:
+      - tu
   shibumi:
     name: "Christian Rebischke"
     ssh_key: shibumi.pub
