@@ -37,6 +37,8 @@ arch-chroot mnt pacman -Sy --noconfirm --needed archlinux-keyring
 arch-chroot mnt pacman -Syu --noconfirm --needed git git-lfs gitlab-runner
 sed -E 's/^#(IgnorePkg *=)/\1 linux/' -i mnt/etc/pacman.conf
 arch-chroot mnt userdel -r arch
+sed 's/^\(GRUB_CMDLINE_LINUX=".*\)"$/\1 lockdown=confidentiality"/' -i mnt/etc/default/grub
+arch-chroot mnt /usr/bin/grub-mkconfig -o /boot/grub/grub.cfg
 install -d -m0700 mnt/root/.ssh
 install -m0600 /etc/libvirt-executor/id_ed25519.pub mnt/root/.ssh/authorized_keys
 rm -f mnt/etc/machine-id
