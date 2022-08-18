@@ -388,7 +388,7 @@ allow_sign_up = false
 ;default_locale = en-US
 
 # Path to a custom home page. Users are only redirected to this if the default home dashboard is used. It should match a frontend route and contain a leading slash.
-; home_page =
+;home_page =
 
 # External user management, these options affect the organization users view
 ;external_manage_link_url =
@@ -575,6 +575,7 @@ role_attribute_strict = true
 ;tls_client_key =
 ;tls_client_ca =
 ;use_pkce = false
+;auth_style =
 {% endif %}
 
 #################################### Basic Auth ##########################
@@ -805,7 +806,7 @@ mode = syslog
 #################################### Unified Alerting ####################
 [unified_alerting]
 #Enable the Unified Alerting sub-system and interface. When enabled we'll migrate all of your alert rules and notification channels to the new system. New alert rules will be created and your notification channels will be converted into an Alertmanager configuration. Previous data is preserved to enable backwards compatibility but new data is removed.```
-enabled = true
+;enabled = true
 
 # Comma-separated list of organization IDs for which to disable unified alerting. Only supported if unified alerting is enabled.
 ;disabled_orgs =
