@@ -8,6 +8,12 @@
     - {src: geo.yml.j2, dest: geo.yml}
   notify: restart powerdns
 
+- name: create drop-in directory for geoipupdate
+  file: path=/etc/systemd/system/geoipupdate.service.d state=directory owner=root group=root mode=0755
+
+- name: install drop-in snippet for geoipupdate
+  copy: src=geoipupdate-pdns-reload.conf dest=/etc/systemd/system/geoipupdate.service.d/pdns-reload.conf owner=root group=root mode=0644
+
 - name: open powerdns ipv4 port for monitoring.archlinux.org
   ansible.posix.firewalld: zone=wireguard state=enabled permanent=true immediate=yes
     rich_rule="rule family=ipv4 source address={{ hostvars['monitoring.archlinux.org']['wireguard_address'] }} port protocol=tcp port=8081 accept"
