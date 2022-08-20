@@ -52,8 +52,9 @@ modules:
         - "!tUPwPPmVTaiKXMiijj:matrix.org"     # #matrix-org-hs-tos-bl:matrix.org
         - "!vmRBOqUEHGdNBeweth:archlinux.org"  # #banlist:archlinux.org
 
+event_cache_size: 15K
 caches:
-  global_factor: 0.7
+  global_factor: 1.0
   per_cache_factors:
     get_users_in_room: 5.0
 
@@ -99,6 +100,8 @@ url_preview_ip_range_blacklist:
   - '2001:db8::/32'
   - 'ff00::/8'
   - 'fec0::/10'
+url_preview_accept_language:
+  - 'en'
 
 # WebRTC
 turn_uris:
