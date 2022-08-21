@@ -1,6 +1,7 @@
 #jinja2:lstrip_blocks: True
 domains:
   {% for domain in geo_domains %}
+  {% set hosts = geo_options[domain]['hosts'] | default(groups['geo_mirrors']) %}
   - domain: {{ domain }}
     ttl: 3600
     records:
@@ -15,13 +16,13 @@ domains:
             ttl: 300
             content: >
               A "ifurlup('https://{{ domain }}{{ geo_options[domain]['health_check_path'] | default('/') }}',
-              {'{{ groups['geo_mirrors'] | map('extract', hostvars, ['ipv4_address']) | join("', '") }}'},
+              {'{{ hosts | map('extract', hostvars, ['ipv4_address']) | join("', '") }}'},
               {selector='pickclosest', useragent='pdns on {{ inventory_hostname }}'})"
         - lua:
             ttl: 300
             content: >
               AAAA "ifurlup('https://{{ domain }}{{ geo_options[domain]['health_check_path'] | default('/') }}',
-              {'{{ groups['geo_mirrors'] | map('extract', hostvars, ['ipv6_address']) | join("', '") }}'},
+              {'{{ hosts | map('extract', hostvars, ['ipv6_address']) | join("', '") }}'},
               {selector='pickclosest', useragent='pdns on {{ inventory_hostname }}'})"
       _acme-challenge.{{ domain }}:
         - ns: {{ geo_acme_dns_challenge_ns }}

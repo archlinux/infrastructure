@@ -185,7 +185,7 @@ resource "hetznerdns_record" "machine_aaaa" {
 resource "hetznerdns_record" "geo_ns1" {
   for_each = local.geo_domains
 
-  zone_id = each.value.zone_id
+  zone_id = lookup(each.value, "zone", hetznerdns_zone.archlinux.id)
   name    = each.value.name
   value   = "america.mirror.pkgbuild.com."
   type    = "NS"
@@ -195,7 +195,7 @@ resource "hetznerdns_record" "geo_ns1" {
 resource "hetznerdns_record" "geo_ns2" {
   for_each = local.geo_domains
 
-  zone_id = each.value.zone_id
+  zone_id = lookup(each.value, "zone", hetznerdns_zone.archlinux.id)
   name    = each.value.name
   value   = "asia.mirror.pkgbuild.com."
   type    = "NS"
@@ -205,7 +205,7 @@ resource "hetznerdns_record" "geo_ns2" {
 resource "hetznerdns_record" "geo_ns3" {
   for_each = local.geo_domains
 
-  zone_id = each.value.zone_id
+  zone_id = lookup(each.value, "zone", hetznerdns_zone.archlinux.id)
   name    = each.value.name
   value   = "europe.mirror.pkgbuild.com."
   type    = "NS"
@@ -215,7 +215,7 @@ resource "hetznerdns_record" "geo_ns3" {
 resource "hetznerdns_record" "geo_ns4" {
   for_each = local.geo_domains
 
-  zone_id = each.value.zone_id
+  zone_id = lookup(each.value, "zone", hetznerdns_zone.archlinux.id)
   name    = each.value.name
   value   = "seoul.mirror.pkgbuild.com."
   type    = "NS"
@@ -225,7 +225,7 @@ resource "hetznerdns_record" "geo_ns4" {
 resource "hetznerdns_record" "geo_ns5" {
   for_each = local.geo_domains
 
-  zone_id = each.value.zone_id
+  zone_id = lookup(each.value, "zone", hetznerdns_zone.archlinux.id)
   name    = each.value.name
   value   = "sydney.mirror.pkgbuild.com."
   type    = "NS"

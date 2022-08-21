@@ -1,6 +1,7 @@
 geo_acme_dns_challenge_ns: redirect.archlinux.org
 geo_domains:
   - geo.mirror.pkgbuild.com
+# geo_options.*.hosts defaults to "{{ groups['geo_mirrors'] }}"
 geo_options:
   geo.mirror.pkgbuild.com:
     health_check_path: /lastupdate
