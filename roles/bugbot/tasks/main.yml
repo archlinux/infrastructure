@@ -1,13 +1,13 @@
-- name: install bugbot utilities
+- name: Install bugbot utilities
   pacman: name=python-irc,python-beautifulsoup4,python-lxml state=present
 
-- name: receive valid signing keys
+- name: Receive valid signing keys
   command: /usr/bin/gpg --keyserver keys.openpgp.org --auto-key-locate wkd,keyserver --locate-keys {{ item }}
   with_items: '{{ bugbot_pgp_emails }}'
   register: gpg
   changed_when: "gpg.rc == 0"
 
-- name: clone bugbot source
+- name: Clone bugbot source
   git:
     repo: https://gitlab.archlinux.org/archlinux/bugbot.git
     dest: /srv/bugbot
@@ -16,11 +16,11 @@
     gpg_whitelist: '{{ bugbot_pgp_keys }}'
     version: '{{ bugbot_version }}'
 
-- name: install env file
+- name: Install env file
   template: src=bugbot.j2 dest=/srv/bugbot/env owner=root group=root mode=0600
 
-- name: install bugbot systemd service
+- name: Install bugbot systemd service
   copy: src=bugbot.service dest=/etc/systemd/system/bugbot.service owner=root group=root mode=0644
 
-- name: start and enable bugbot service
+- name: Start and enable bugbot service
   systemd: name=bugbot.service enabled=yes state=started daemon_reload=yes

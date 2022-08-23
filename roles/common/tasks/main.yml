@@ -1,66 +1,66 @@
-- name: install essential tools
+- name: Install essential tools
   pacman: name=vim,nano,tmux,htop,ncdu,bash-completion,rsync,vnstat state=present
 
-- name: start and enable vnstatd
+- name: Start and enable vnstatd
   service: name=vnstat enabled=yes state=started
 
-- name: install inetutils for hostname
+- name: Install inetutils for hostname
   pacman: name=inetutils state=present
 
-- name: set hostname
+- name: Set hostname
   hostname: name="{{ inventory_hostname }}"
 
-- name: install pacman config
+- name: Install pacman config
   template: src=pacman.conf.j2 dest=/etc/pacman.conf mode=0644 owner=root group=root
 
-- name: configure pacman mirror
+- name: Configure pacman mirror
   template: src=mirrorlist.j2 dest=/etc/pacman.d/mirrorlist owner=root group=root mode=0644
 
-- name: update package cache
+- name: Update package cache
   pacman: update_cache=yes
 
-- name: start and enable auditd
+- name: Start and enable auditd
   service: name=auditd enabled=yes state=started
 
-- name: start and enable systemd-timesyncd
+- name: Start and enable systemd-timesyncd
   service: name=systemd-timesyncd enabled=yes state=started
 
-- name: install smart
+- name: Install smart
   pacman: name=smartmontools state=present
   when: "'hcloud' not in group_names"
 
-- name: configure smartd to do periodic health checks
+- name: Configure smartd to do periodic health checks
   copy: src=smartd.conf dest=/etc/smartd.conf owner=root group=root mode=0644
   when: "'hcloud' not in group_names"
 
-- name: start and enable smart
+- name: Start and enable smart
   service: name=smartd enabled=yes state=started
   when: "'hcloud' not in group_names"
 
-- name: start and enable btrfs scrub timer
+- name: Start and enable btrfs scrub timer
   service: name=btrfs-scrub@{{ '-' if (item.mount | length == 1) else (item.mount.split("/", 1)[1] | replace("/", "-")) }}.timer enabled=yes state=started
   loop: "{{ ansible_mounts | sort(attribute='mount') | groupby('uuid') | map(attribute=1) | map('first') }}"
   when:
     - item.fstype == 'btrfs'
     - not 'backup' in item.mount
 
-- name: generate locales
+- name: Generate locales
   locale_gen: name={{ item }} state=present
   with_items:
     - en_US.UTF-8
 
-- name: configure locales
+- name: Configure locales
   template: src=locale.conf.j2 dest=/etc/locale.conf owner=root group=root mode=0644
 
-- name: generate ssh key for root
+- name: Generate ssh key for root
   command: ssh-keygen -b 4096 -N "" -f /root/.ssh/id_rsa creates="/root/.ssh/id_rsa"
 
-- name: configure networking
+- name: Configure networking
   include_role:
     name: networking
   when: configure_network
 
-- name: configure tcp receive window limits
+- name: Configure tcp receive window limits
   sysctl:
     name: net.ipv4.tcp_rmem
     value: "{{ tcp_rmem }}"
@@ -68,7 +68,7 @@
     sysctl_file: /etc/sysctl.d/net.conf
   when: tcp_rmem is defined
 
-- name: configure tcp send window limits
+- name: Configure tcp send window limits
   sysctl:
     name: net.ipv4.tcp_wmem
     value: "{{ tcp_wmem }}"
@@ -76,48 +76,48 @@
     sysctl_file: /etc/sysctl.d/net.conf
   when: tcp_wmem is defined
 
-- name: create drop-in directories for systemd configuration
+- name: Create drop-in directories for systemd configuration
   file: path=/etc/systemd/{{ item }}.d state=directory owner=root group=root mode=0755
   loop:
     - system.conf
     - journald.conf
 
-- name: install journald.conf overrides
+- name: Install journald.conf overrides
   template: src=journald.conf.j2 dest=/etc/systemd/journald.conf.d/override.conf owner=root group=root mode=644
   notify:
     - restart journald
 
-- name: install system.conf overrides
+- name: Install system.conf overrides
   template: src=system.conf.j2 dest=/etc/systemd/system.conf.d/override.conf owner=root group=root mode=0644
   notify:
     - systemd daemon-reload
 
-- name: install zram-generator
+- name: Install zram-generator
   pacman: name=zram-generator state=present
   when: enable_zram_swap
 
-- name: install zram-generator config for zram
+- name: Install zram-generator config for zram
   template: src=zram-generator.conf dest=/etc/systemd/zram-generator.conf owner=root group=root mode=0644
   notify:
     - restart systemd-zram-setup@zram0
   when: enable_zram_swap
 
-- name: disable zswap to prevent conflict with zram
+- name: Disable zswap to prevent conflict with zram
   copy: content="w- /sys/module/zswap/parameters/enabled - - - - N" dest=/etc/tmpfiles.d/zram.conf owner=root group=root mode=0644
   register: zramtmpfiles
   when: enable_zram_swap
 
-- name: use tmpfiles.d/zram.conf
+- name: Use tmpfiles.d/zram.conf
   command: systemd-tmpfiles --create
   when: zramtmpfiles.changed
 
-- name: create drop-in directories for oomd
+- name: Create drop-in directories for oomd
   file: path=/etc/systemd/system/{{ item }}.d state=directory owner=root group=root mode=0755
   with_items:
     - "-.slice"
     - user@.service
 
-- name: install drop-in snippets for oomd
+- name: Install drop-in snippets for oomd
   copy: src=oomd-override_{{ item }}.conf dest=/etc/systemd/system/{{ item }}.d/override.conf owner=root group=root mode=0644
   with_items:
     - "-.slice"
@@ -125,32 +125,32 @@
   notify:
     - systemd daemon-reload
 
-- name: start systemd-oomd
+- name: Start systemd-oomd
   service: name=systemd-oomd state=started enabled=yes
 
-- name: install logrotate
+- name: Install logrotate
   pacman: name=logrotate state=present
 
-- name: configure logrotate
+- name: Configure logrotate
   template: src=logrotate.conf.j2 dest=/etc/logrotate.conf owner=root group=root mode=0644
 
-- name: enable logrotate timer
+- name: Enable logrotate timer
   service: name=logrotate.timer state=started enabled=yes
 
-- name: create zsh directory
+- name: Create zsh directory
   file: path=/root/.zsh state=directory owner=root group=root mode=0700
 
-- name: install root shell config
+- name: Install root shell config
   copy: src={{ item }} dest=/root/.{{ item }} owner=root group=root mode=0644
   with_items:
     - zshrc
     - dircolors
 
-- name: install pacman-contrib,archlinux-contrib
+- name: Install pacman-contrib,archlinux-contrib
   pacman: name=pacman-contrib,archlinux-contrib state=installed
 
-- name: install custom paccache.service
+- name: Install custom paccache.service
   copy: src=paccache.service dest=/etc/systemd/system/paccache.service owner=root group=root mode=0644
 
-- name: enable paccache timer
+- name: Enable paccache timer
   systemd: name=paccache.timer enabled=yes state=started daemon_reload=yes

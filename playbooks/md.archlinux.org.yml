@@ -1,4 +1,4 @@
-- name: setup hedgedoc server
+- name: Setup hedgedoc server
   hosts: md.archlinux.org
   remote_user: root
   roles:

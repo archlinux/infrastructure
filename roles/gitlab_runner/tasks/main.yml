@@ -1,15 +1,15 @@
-- name: install dependencies
+- name: Install dependencies
   pacman: name=docker,python-docker,python-gitlab,gitlab-runner state=latest update_cache=yes
   notify: restart gitlab-runner
 
-- name: install docker.slice
+- name: Install docker.slice
   copy: src=docker.slice dest=/etc/systemd/system/ owner=root group=root mode=0644
   notify: systemd daemon-reload
 
-- name: start docker
+- name: Start docker
   systemd: name=docker enabled=yes state=started daemon_reload=yes
 
-- name: configure Docker daemon for IPv6
+- name: Configure Docker daemon for IPv6
   copy: src=daemon.json dest=/etc/docker/daemon.json owner=root group=root mode=0644
   notify: restart docker
 
@@ -17,7 +17,7 @@
 # https://medium.com/@skleeschulte/how-to-enable-ipv6-for-docker-containers-on-ubuntu-18-04-c68394a219a2
 # https://github.com/docker/docker.github.io/blob/c0eb65aabe4de94d56bbc20249179f626df5e8c3/engine/userguide/networking/default_network/ipv6.md
 # https://github.com/moby/moby/issues/36954
-- name: add IPv6 NAT for docker
+- name: Add IPv6 NAT for docker
   ansible.posix.firewalld:
     zone: public
     permanent: true
@@ -42,11 +42,11 @@
 #   --locked=false \ # Use true for secure runners
 #   --access-level=not_protected # Use ref_protected for secure runners
 # Note: Secure runners must be added manually to the relevant projects
-- name: install runner configuration
+- name: Install runner configuration
   template: src=config.toml.j2 dest=/etc/gitlab-runner/config.toml owner=root group=root mode=0600
   notify: restart gitlab-runner
 
-- name: install gitlab-runner-docker-cleanup.{service,timer}
+- name: Install gitlab-runner-docker-cleanup.{service,timer}
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   loop:
     - gitlab-runner-docker-cleanup.service
@@ -54,24 +54,24 @@
   notify:
     - restart gitlab-runner-docker-cleanup.timer
 
-- name: enable and start gitlab-runner-docker-cleanup.timer
+- name: Enable and start gitlab-runner-docker-cleanup.timer
   systemd: name=gitlab-runner-docker-cleanup.timer state=started enabled=yes daemon_reload=yes
 
-- name: enable and start gitlab runner service
+- name: Enable and start gitlab runner service
   systemd: name=gitlab-runner state=started enabled=yes daemon_reload=yes
 
-- name: setup libvirt-executor
+- name: Setup libvirt-executor
   block:
-    - name: install libvirt-executor-update-base-image dependencies
+    - name: Install libvirt-executor-update-base-image dependencies
       pacman: name=arch-install-scripts,sequoia-sq state=present
 
-    - name: create libvirt-executor configuration and data directories
+    - name: Create libvirt-executor configuration and data directories
       file: path={{ item }} state=directory owner=root group=root mode=0755
       loop:
         - /etc/libvirt-executor
         - /usr/local/lib/libvirt-executor
 
-    - name: install libvirt-executor
+    - name: Install libvirt-executor
       copy: src={{ item.src }} dest={{ item.dest }} owner=root group=root mode={{ item.mode }}
       loop:
         - {src: arch-boxes.asc, dest: /usr/local/lib/libvirt-executor/, mode: 644}
@@ -79,17 +79,17 @@
         - {src: libvirt-executor, dest: /usr/local/bin/, mode: 755}
         - {src: libvirt-executor-update-base-image, dest: /usr/local/bin/, mode: 755}
 
-    - name: create SSH keys for libvirt-executor
+    - name: Create SSH keys for libvirt-executor
       command: ssh-keygen -N "" -f /etc/libvirt-executor/id_ed25519 -t ed25519
       args:
         creates: /etc/libvirt-executor/id_ed25519
 
-    - name: install libvirt-executor-update-base-image.{service,timer}
+    - name: Install libvirt-executor-update-base-image.{service,timer}
       copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
       loop:
         - libvirt-executor-update-base-image.service
         - libvirt-executor-update-base-image.timer
 
-    - name: enable and start libvirt-executor-update-base-image.timer
+    - name: Enable and start libvirt-executor-update-base-image.timer
       systemd: name=libvirt-executor-update-base-image.timer state=started enabled=yes daemon_reload=yes
   when: "'gitlab_vm_runners' in group_names"

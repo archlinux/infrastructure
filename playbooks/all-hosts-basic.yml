@@ -1,4 +1,4 @@
-- name: basic setup for all hosts
+- name: Basic setup for all hosts
   hosts: all
   remote_user: root
   roles:

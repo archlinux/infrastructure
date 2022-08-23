@@ -1,4 +1,4 @@
-- name: setup mailman3 server
+- name: Setup mailman3 server
   hosts: mailman3.archlinux.org
   remote_user: root
   roles:

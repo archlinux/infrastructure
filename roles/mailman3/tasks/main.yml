@@ -1,8 +1,8 @@
-- name: install mailman3 and related packages
+- name: Install mailman3 and related packages
   pacman: name=mailman3,mailman3-hyperkitty,python-psycopg2,mailman-web,uwsgi-plugin-python state=present
   register: install
 
-- name: install {mailman,mailman-web} configuration
+- name: Install {mailman,mailman-web} configuration
   template: src={{ item.src }} dest={{ item.dest }} owner=root group={{ item.group }} mode=0640
   loop:
     - {src: mailman.cfg.j2, dest: /etc/mailman.cfg, group: mailman}
@@ -13,19 +13,19 @@
     - reload mailman
     - restart mailman-web
 
-- name: install mailman postfix.cfg configuration
+- name: Install mailman postfix.cfg configuration
   copy: src=postfix.cfg dest=/etc/postfix.cfg owner=root group=root mode=0644
   notify: reload mailman
 
-- name: make nginx log dir
+- name: Make nginx log dir
   file: path=/var/log/nginx/{{ lists_domain }} state=directory owner=root group=root mode=0755
 
-- name: set up nginx
+- name: Set up nginx
   template: src=nginx.d.conf.j2 dest="/etc/nginx/nginx.d/mailman.conf" owner=root group=root mode=644
   notify: reload nginx
   tags: ['nginx']
 
-- name: create postgres {mailman,mailman-web} user
+- name: Create postgres {mailman,mailman-web} user
   postgresql_user: name={{ item.username }} password={{ item.password }}
   loop:
     - {username: "{{ vault_mailman_db_user }}", password: "{{ vault_mailman_db_password }}"}
@@ -35,7 +35,7 @@
   become_method: su
   no_log: true
 
-- name: create {mailman,mailman-web} db
+- name: Create {mailman,mailman-web} db
   postgresql_db: name={{ item.db }} owner={{ item.owner }}
   loop:
     - {db: mailman, owner: "{{ vault_mailman_db_user }}"}
@@ -44,7 +44,7 @@
   become_user: postgres
   become_method: su
 
-- name: run Django management tasks
+- name: Run Django management tasks
   command: django-admin {{ item }} --pythonpath /etc/webapps/mailman-web --settings settings
   loop:
     - migrate
@@ -55,13 +55,13 @@
   become_user: mailman-web
   when: install.changed
 
-- name: open LMTP ipv4 port for lists.archlinux.org
+- name: Open LMTP ipv4 port for lists.archlinux.org
   ansible.posix.firewalld: zone=wireguard state=enabled permanent=true immediate=yes
     rich_rule="rule family=ipv4 source address={{ hostvars['lists.archlinux.org']['wireguard_address'] }} port protocol=tcp port=8024 accept"
   tags:
     - firewall
 
-- name: start and enable mailman{.service,-*.timer}
+- name: Start and enable mailman{.service,-*.timer}
   systemd: name={{ item }} enabled=yes daemon_reload=yes state=started
   loop:
     - mailman3.service

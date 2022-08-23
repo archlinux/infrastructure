@@ -1,4 +1,4 @@
-- name: setup gemini.archlinux.org
+- name: Setup gemini.archlinux.org
   hosts: gemini.archlinux.org
   remote_user: root
   vars:

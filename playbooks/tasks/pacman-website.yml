@@ -8,13 +8,13 @@
       tempfile: state=directory suffix=pacman
       register: tempdir
 
-    - name: fetch pacman tarball
+    - name: Fetch pacman tarball
       get_url: url=https://sources.archlinux.org/other/pacman/pacman-{{ pacman_version }}.tar.xz dest={{ tempdir.path }}/pacman.tar.xz
 
-    - name: unpack tarball
+    - name: Unpack tarball
       unarchive: src={{ tempdir.path }}/pacman.tar.xz dest={{ tempdir.path }}
 
-    - name: build website
+    - name: Build website
       command: "{{ item }}"
       args:
         chdir: "{{ tempdir.path }}/pacman-{{ pacman_version }}"
@@ -23,10 +23,10 @@
         - ninja -C build doc/website.tar.gz
 
     - block:
-      - name: create website directory
+      - name: Create website directory
         file: state=directory owner=root group=root mode=0755 path={{ pacman_dir }}
 
-      - name: upload website
+      - name: Upload website
         unarchive:
           src: "{{ tempdir.path }}/pacman-{{ pacman_version }}/build/doc/website.tar.gz"
           dest: "{{ pacman_dir }}"

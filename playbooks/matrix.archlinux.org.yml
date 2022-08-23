@@ -1,4 +1,4 @@
-- name: setup matrix
+- name: Setup matrix
   hosts: matrix.archlinux.org
   remote_user: root
   vars_files:

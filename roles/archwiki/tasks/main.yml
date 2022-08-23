@@ -1,4 +1,4 @@
-- name: run maintenance mode
+- name: Run maintenance mode
   include_role:
     name: maintenance
   vars:
@@ -8,49 +8,49 @@
     service_nginx_conf: "{{ archwiki_nginx_conf }}"
   when: maintenance is defined
 
-- name: create ssl cert
+- name: Create ssl cert
   include_role:
     name: certificate
   vars:
     domains: ["{{ archwiki_domain }}"]
   when: 'archwiki_domain is defined'
 
-- name: install packages
+- name: Install packages
   pacman: name=git,php-intl state=present
 
-- name: make archwiki user
+- name: Make archwiki user
   user: name="{{ archwiki_user }}" shell=/bin/false home="{{ archwiki_dir }}" createhome=no
   register: user_created
 
-- name: fix home permissions
+- name: Fix home permissions
   file: state=directory owner="{{ archwiki_user }}" group="{{ archwiki_user }}" mode=0751 path="{{ archwiki_dir }}"
 
-- name: fix cache permissions
+- name: Fix cache permissions
   file: state=directory owner="{{ archwiki_user }}" group="{{ archwiki_user }}" mode=0750 path="{{ archwiki_dir }}/cache"
 
-- name: fix sessions permissions
+- name: Fix sessions permissions
   file: state=directory owner="{{ archwiki_user }}" group="{{ archwiki_user }}" mode=0750 path="{{ archwiki_dir }}/sessions"
 
-- name: fix uploads permissions
+- name: Fix uploads permissions
   file: state=directory owner="{{ archwiki_user }}" group="{{ archwiki_user }}" mode=0755 path="{{ archwiki_dir }}/uploads"
 
-- name: set up nginx
+- name: Set up nginx
   template: src=nginx.d.conf.j2 dest="{{ archwiki_nginx_conf }}" owner=root group=root mode=644
   notify:
     - reload nginx
   when: maintenance is not defined
   tags: ['nginx']
 
-- name: configure robots.txt
+- name: Configure robots.txt
   copy: src=robots.txt dest="{{ archwiki_dir }}/robots.txt" owner=root group=root mode=0644
 
-- name: make nginx log dir
+- name: Make nginx log dir
   file: path=/var/log/nginx/{{ archwiki_domain }} state=directory owner=root group=root mode=0755
 
-- name: make debug log dir
+- name: Make debug log dir
   file: path=/var/log/archwiki state=directory owner={{ archwiki_user }} group=root mode=0700
 
-- name: clone archwiki repo
+- name: Clone archwiki repo
   git: repo={{ archwiki_repository }} dest="{{ archwiki_dir }}/public" version={{ archwiki_version }}
   become: true
   become_user: "{{ archwiki_user }}"
@@ -61,41 +61,41 @@
     - purge nginx cache
     - invalidate MediaWiki file cache
 
-- name: configure archwiki
+- name: Configure archwiki
   template: src=LocalSettings.php.j2 dest="{{ archwiki_dir }}/public/LocalSettings.php" owner="{{ archwiki_user }}" group="{{ archwiki_user }}" mode=0640
   register: config
   no_log: true
 
-- name: create archwiki db
+- name: Create archwiki db
   mysql_db: name="{{ archwiki_db }}" login_host="{{ archwiki_db_host }}" login_password="{{ vault_mariadb_users.root }}"
   register: db_created
 
-- name: create archwiki db user
+- name: Create archwiki db user
   mysql_user: name={{ archwiki_db_user }} password={{ vault_archwiki_db_password }}
               login_host="{{ archwiki_db_host }}" login_password="{{ vault_mariadb_users.root }}"
               priv="{{ archwiki_db }}.*:ALL"
   no_log: true
 
-- name: configure php-fpm
+- name: Configure php-fpm
   template:
     src=php-fpm.conf.j2 dest="/etc/php/php-fpm.d/{{ archwiki_user }}.conf"
     owner=root group=root mode=0644
   notify:
     - restart php-fpm@{{ archwiki_user }}
 
-- name: start and enable systemd socket
+- name: Start and enable systemd socket
   service: name=php-fpm@{{ archwiki_user }}.socket state=started enabled=true
 
-- name: create memcached.service.d drop-in directory
+- name: Create memcached.service.d drop-in directory
   file: path=/etc/systemd/system/memcached@archwiki.service.d state=directory owner=root group=root mode=0755
 
-- name: install memcached.service drop-in
+- name: Install memcached.service drop-in
   template: src="memcached.service.d-archwiki.conf.j2" dest="/etc/systemd/system/memcached@archwiki.service.d/archwiki.conf" owner=root group=root mode=0644
 
-- name: start and enable memcached service
+- name: Start and enable memcached service
   service: name=memcached@archwiki.service state=started enabled=true daemon_reload=true
 
-- name: install systemd services/timers
+- name: Install systemd services/timers
   template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
   loop:
     - archwiki-runjobs.service
@@ -105,7 +105,7 @@
     - archwiki-prune-cache.timer
     - archwiki-question-updater.service
 
-- name: start and enable archwiki timers and services
+- name: Start and enable archwiki timers and services
   systemd:
     name: "{{ item }}"
     enabled: true
@@ -116,17 +116,17 @@
     - archwiki-prune-cache.timer
     - archwiki-runjobs-wait.service
 
-- name: create question answer file
+- name: Create question answer file
   systemd:
     name: archwiki-question-updater.service
     state: started
     daemon_reload: true
 
-- name: ensure question answer file exists and set permissions
+- name: Ensure question answer file exists and set permissions
   file: state=file path="{{ archwiki_question_answer_file }}" owner=root group=root mode=0644
 
-- name: create pacman.d hooks dir
+- name: Create pacman.d hooks dir
   file: state=directory owner=root group=root mode=0755 path=/etc/pacman.d/hooks
 
-- name: install archwiki question updater hook
+- name: Install archwiki question updater hook
   template: src=archwiki-question-updater.hook.j2 dest=/etc/pacman.d/hooks/archwiki-question-updater.hook owner=root group=root mode=0644

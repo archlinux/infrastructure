@@ -1,4 +1,4 @@
-- name: setup reproducible builds rebuilder
+- name: Setup reproducible builds rebuilder
   hosts: reproducible.archlinux.org
   remote_user: root
   roles:

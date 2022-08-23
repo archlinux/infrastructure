@@ -1,56 +1,56 @@
-- name: install keycloak
+- name: Install keycloak
   pacman: name=jre11-openjdk,keycloak,keycloak-archlinux-theme,keycloak-metrics-spi,python-passlib state=present
 
-- name: create postgres keycloak user
+- name: Create postgres keycloak user
   postgresql_user: name="{{ vault_keycloak_db_user }}" password="{{ vault_keycloak_db_password }}"
   become: true
   become_user: postgres
   become_method: su
   no_log: true
 
-- name: create keycloak db
+- name: Create keycloak db
   postgresql_db: name="{{ keycloak_db_name }}" owner="{{ vault_keycloak_db_user }}"
   become: true
   become_user: postgres
   become_method: su
 
-- name: template keycloak config
+- name: Template keycloak config
   template: src=keycloak.conf.j2 dest=/etc/keycloak/keycloak.conf owner=root group=keycloak mode=640
   no_log: true
   notify:
     - restart keycloak
 
-- name: create drop-in directory for keycloak.service
+- name: Create drop-in directory for keycloak.service
   file: path=/etc/systemd/system/keycloak.service.d state=directory owner=root group=root mode=0755
 
-- name: get service facts
+- name: Get service facts
   service_facts:
 
-- name: create an admin user when first starting keycloak
+- name: Create an admin user when first starting keycloak
   block:
-    - name: install admin creation drop-in for keycloak.service
+    - name: Install admin creation drop-in for keycloak.service
       copy: src=create-keycloak-admin.conf dest=/etc/systemd/system/keycloak.service.d/ owner=root group=root mode=0644
 
-    - name: install temporary environment file with admin credentials
+    - name: Install temporary environment file with admin credentials
       template: src=admin-user.conf.j2 dest=/etc/keycloak/admin-user.conf owner=root group=root mode=0600
       no_log: true
 
-    - name: start and enable keycloak
+    - name: Start and enable keycloak
       service: name=keycloak enabled=yes daemon_reload=yes state=started
 
-    - name: wait for keycloak to initialize
+    - name: Wait for keycloak to initialize
       wait_for: port={{ keycloak_port }}
   always:
-    - name: remove admin credentials once keycloak is running
+    - name: Remove admin credentials once keycloak is running
       file: path=/etc/keycloak/admin-user.conf state=absent
 
-    - name: remove admin creation drop-in
+    - name: Remove admin creation drop-in
       file: path=/etc/systemd/system/keycloak.service.d/create-keycloak-admin.conf state=absent
       notify:
         - daemon reload
   when: ansible_facts.services["keycloak.service"]["state"] != "running"
 
-- name: open firewall hole
+- name: Open firewall hole
   ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes
   when: configure_firewall
   with_items:
@@ -59,7 +59,7 @@
   tags:
     - firewall
 
-- name: create htpasswd for nginx prometheus endpoint
+- name: Create htpasswd for nginx prometheus endpoint
   htpasswd:
     path: "{{ keycloak_nginx_htpasswd }}"
     name: "{{ vault_keycloak_nginx_user }}"
@@ -68,16 +68,16 @@
     group: http
     mode: 0640
 
-- name: create ssl cert
+- name: Create ssl cert
   include_role:
     name: certificate
   vars:
     domains: ["{{ keycloak_domain }}"]
 
-- name: make nginx log dir
+- name: Make nginx log dir
   file: path="/var/log/nginx/{{ keycloak_domain }}" state=directory owner=root mode=0755
 
-- name: set up nginx
+- name: Set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/keycloak.conf owner=root group=root mode=0644
   notify:
     - reload nginx

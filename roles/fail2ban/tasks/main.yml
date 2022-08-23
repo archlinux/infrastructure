@@ -1,11 +1,11 @@
-- name: install fail2ban
+- name: Install fail2ban
   package:
     name: "fail2ban"
     state: "present"
   notify:
     - restart fail2ban
 
-- name: create systemd unit override path
+- name: Create systemd unit override path
   file:
     path: "/etc/systemd/system/fail2ban.service.d"
     state: "directory"
@@ -13,7 +13,7 @@
     group: "root"
     mode: 0755
 
-- name: install systemd unit override file
+- name: Install systemd unit override file
   template:
     src: "fail2ban.service.j2"
     dest: "/etc/systemd/system/fail2ban.service.d/override.conf"
@@ -21,7 +21,7 @@
     group: "root"
     mode: 0644
 
-- name: install local config files
+- name: Install local config files
   template:
     src: "{{ item }}.j2"
     dest: "/etc/fail2ban/{{ item }}"
@@ -34,7 +34,7 @@
   notify:
     - restart fail2ban
 
-- name: install firewallcmd-allports.local
+- name: Install firewallcmd-allports.local
   template:
     src: "firewallcmd-allports.local.j2"
     dest: "/etc/fail2ban/action.d/firewallcmd-allports.local"
@@ -44,7 +44,7 @@
   notify:
     - restart fail2ban
 
-- name: install sshd jail
+- name: Install sshd jail
   when: fail2ban_jails.sshd
   template:
     src: "sshd.jail.j2"
@@ -55,7 +55,7 @@
   notify:
     - reload fail2ban jails
 
-- name: install postfix jail
+- name: Install postfix jail
   when: fail2ban_jails.postfix
   template:
     src: "postfix.jail.j2"
@@ -66,7 +66,7 @@
   notify:
     - reload fail2ban jails
 
-- name: install dovecot jail
+- name: Install dovecot jail
   when: fail2ban_jails.dovecot
   template:
     src: "dovecot.jail.j2"
@@ -77,7 +77,7 @@
   notify:
     - reload fail2ban jails
 
-- name: install nginx-limit-req jail
+- name: Install nginx-limit-req jail
   when: fail2ban_jails.nginx_limit_req
   template:
     src: "nginx-limit-req.jail.j2"
@@ -88,7 +88,7 @@
   notify:
     - reload fail2ban jails
 
-- name: start and enable service
+- name: Start and enable service
   systemd:
     name: "fail2ban.service"
     enabled: true

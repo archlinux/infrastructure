@@ -1,11 +1,11 @@
-- name: create ssl cert
+- name: Create ssl cert
   include_role:
     name: certificate
   vars:
     domains: ["{{ matrix_domain }}"]
   when: 'matrix_domain is defined'
 
-- name: install packages
+- name: Install packages
   pacman:
     name:
       - coturn
@@ -32,13 +32,13 @@
       - yarn
       - zlib
 
-- name: add synapse group
+- name: Add synapse group
   group: name=synapse system=yes gid=198
 
-- name: add synapse user
+- name: Add synapse user
   user: name=synapse system=yes uid=198 group=synapse home=/var/lib/synapse shell=/bin/false createhome=no
 
-- name: create synapse home
+- name: Create synapse home
   file: path={{ item }} state=directory owner=synapse group=synapse mode=0700
   with_items:
     - /var/lib/synapse
@@ -46,7 +46,7 @@
     - /var/lib/synapse/mjolnir-data
     - /var/lib/synapse/pantalaimon-data
 
-- name: make virtualenvs
+- name: Make virtualenvs
   command: 'python -m venv {{ item }}'
   args:
     creates: '{{ item }}/bin/python'
@@ -57,7 +57,7 @@
     - /var/lib/synapse/venv
     - /var/lib/synapse/venv-pantalaimon
 
-- name: update virtualenvs
+- name: Update virtualenvs
   pip:
     name:
       - pip
@@ -72,7 +72,7 @@
     - /var/lib/synapse/venv
     - /var/lib/synapse/venv-pantalaimon
 
-- name: install synapse
+- name: Install synapse
   pip:
     name:
       - 'matrix-synapse[postgres,systemd,url_preview,redis,oidc]==1.65.0'
@@ -86,7 +86,7 @@
   notify:
     - restart synapse
 
-- name: install pantalaimon
+- name: Install pantalaimon
   pip:
     name:
       - 'pantalaimon==0.10.4'
@@ -99,7 +99,7 @@
   notify:
     - restart pantalaimon
 
-- name: download mjolnir
+- name: Download mjolnir
   git:
     repo: https://github.com/matrix-org/mjolnir
     dest: /var/lib/synapse/mjolnir
@@ -112,7 +112,7 @@
   notify:
     - restart mjolnir
 
-- name: install mjolnir
+- name: Install mjolnir
   community.general.yarn:
     path: /var/lib/synapse/mjolnir
   become: true
@@ -120,7 +120,7 @@
   become_method: sudo
   when: mjolnir_git.changed
 
-- name: build mjolnir
+- name: Build mjolnir
   command: yarn build
   args:
     chdir: /var/lib/synapse/mjolnir
@@ -129,7 +129,7 @@
   become_method: sudo
   when: mjolnir_git.changed
 
-- name: install mjolnir antispam module
+- name: Install mjolnir antispam module
   pip:
     name:
       - /var/lib/synapse/mjolnir/synapse_antispam
@@ -142,7 +142,7 @@
   notify:
     - restart synapse
 
-- name: download matrix-appservice-irc
+- name: Download matrix-appservice-irc
   git:
     repo: https://github.com/matrix-org/matrix-appservice-irc
     dest: /var/lib/synapse/matrix-appservice-irc
@@ -155,7 +155,7 @@
   notify:
     - restart matrix-appservice-irc
 
-- name: install matrix-appservice-irc
+- name: Install matrix-appservice-irc
   community.general.npm:
     path: /var/lib/synapse/matrix-appservice-irc
     ci: true
@@ -164,41 +164,41 @@
   become_method: sudo
   when: irc_git.changed
 
-- name: install pg_hba.conf
+- name: Install pg_hba.conf
   copy: src=pg_hba.conf dest=/var/lib/postgres/data/pg_hba.conf owner=postgres group=postgres mode=0600
   notify:
     - restart postgres
 
-- name: add synapse postgres db
+- name: Add synapse postgres db
   postgresql_db: db=synapse lc_collate=C lc_ctype=C template=template0
   become: true
   become_user: postgres
   become_method: su
 
-- name: add synapse postgres user
+- name: Add synapse postgres user
   postgresql_user: db=synapse user=synapse password={{ vault_postgres_users.synapse }}
   become: true
   become_user: postgres
   become_method: su
 
-- name: add irc postgres db
+- name: Add irc postgres db
   postgresql_db: db=irc
   become: true
   become_user: postgres
   become_method: su
 
-- name: create synapse config dir
+- name: Create synapse config dir
   file: path={{ item }} state=directory owner=root group=synapse mode=0750
   with_items:
     - /etc/synapse
     - /etc/synapse/mjolnir
 
-- name: install homeserver config
+- name: Install homeserver config
   template: src=homeserver.yaml.j2 dest=/etc/synapse/homeserver.yaml owner=root group=synapse mode=0640
   notify:
     - restart synapse
 
-- name: install static config
+- name: Install static config
   copy: src={{ item }} dest=/etc/synapse/{{ item }} owner=root group=root mode=0644
   with_items:
     - log_config.yaml
@@ -209,27 +209,27 @@
   notify:
     - restart synapse
 
-- name: install pantalaimon config
+- name: Install pantalaimon config
   template: src=pantalaimon.conf.j2 dest=/etc/synapse/pantalaimon.conf owner=root group=synapse mode=0644
   notify:
     - restart pantalaimon
 
-- name: install mjolnir config
+- name: Install mjolnir config
   template: src=mjolnir.yaml.j2 dest=/etc/synapse/mjolnir/production.yaml owner=root group=synapse mode=0640
   notify:
     - restart mjolnir
 
-- name: install irc-bridge config
+- name: Install irc-bridge config
   template: src=irc-bridge.yaml.j2 dest=/etc/synapse/irc-bridge.yaml owner=root group=synapse mode=0640
   notify:
     - restart matrix-appservice-irc
 
-- name: install irc-bridge registration
+- name: Install irc-bridge registration
   template: src=appservice-registration-irc.yaml.j2 dest=/etc/synapse/appservice-registration-irc.yaml owner=root group=synapse mode=0640
   notify:
     - restart synapse
 
-- name: install signing key
+- name: Install signing key
   copy:
     content: '{{ vault_matrix_secrets.signing_key }}'
     dest: /etc/synapse/{{ matrix_server_name }}.signing.key
@@ -237,7 +237,7 @@
     group: synapse
     mode: 0640
 
-- name: install ircpass key
+- name: Install ircpass key
   copy:
     content: '{{ vault_matrix_secrets.ircpass_key }}'
     dest: /etc/synapse/{{ matrix_server_name }}.ircpass.key
@@ -245,25 +245,25 @@
     group: synapse
     mode: 0640
 
-- name: make nginx log dir
+- name: Make nginx log dir
   file: path=/var/log/nginx/{{ matrix_domain }} state=directory owner=root group=root mode=0755
 
-- name: set up nginx
+- name: Set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/matrix.conf owner=root group=root mode=0640
   notify:
     - reload nginx
   when: 'matrix_domain is defined'
   tags: ['nginx']
 
-- name: install turnserver.conf
+- name: Install turnserver.conf
   template: src=turnserver.conf.j2 dest=/etc/turnserver/turnserver.conf owner=turnserver group=turnserver mode=0600
   notify:
     - restart turnserver
 
-- name: install turnserver cert renewal hook
+- name: Install turnserver cert renewal hook
   copy: src=letsencrypt.hook.d dest=/etc/letsencrypt/hook.d/turnserver owner=root group=root mode=0755
 
-- name: install synapse units
+- name: Install synapse units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
     - synapse.service
@@ -271,28 +271,28 @@
   notify:
     - restart synapse
 
-- name: install pantalaimon units
+- name: Install pantalaimon units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
     - pantalaimon.service
   notify:
     - restart pantalaimon
 
-- name: install mjolnir units
+- name: Install mjolnir units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
     - mjolnir.service
   notify:
     - restart mjolnir
 
-- name: install matrix-appservice-irc units
+- name: Install matrix-appservice-irc units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
     - matrix-appservice-irc.service
   notify:
     - restart matrix-appservice-irc
 
-- name: enable synapse units
+- name: Enable synapse units
   service: name={{ item }} enabled=yes
   with_items:
     - synapse.service
@@ -303,35 +303,35 @@
   notify:
     - restart synapse
 
-- name: enable pantalaimon units
+- name: Enable pantalaimon units
   service: name={{ item }} enabled=yes
   with_items:
     - pantalaimon.service
   notify:
     - restart pantalaimon
 
-- name: enable mjolnir units
+- name: Enable mjolnir units
   service: name={{ item }} enabled=yes
   with_items:
     - mjolnir.service
   notify:
     - restart mjolnir
 
-- name: enable matrix-appservice-irc units
+- name: Enable matrix-appservice-irc units
   service: name={{ item }} enabled=yes
   with_items:
     - matrix-appservice-irc.service
   notify:
     - restart matrix-appservice-irc
 
-- name: enable turnserver units
+- name: Enable turnserver units
   service: name={{ item }} enabled=yes
   with_items:
     - turnserver.service
   notify:
     - restart turnserver
 
-- name: open firewall holes
+- name: Open firewall holes
   ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes
   with_items:
     # synapse's identd

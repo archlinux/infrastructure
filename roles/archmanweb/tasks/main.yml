@@ -1,11 +1,11 @@
-- name: create ssl cert
+- name: Create ssl cert
   include_role:
     name: certificate
   vars:
     domains: ["{{ archmanweb_domain }}"]
   when: 'archmanweb_domain is defined'
 
-- name: install required packages
+- name: Install required packages
   pacman:
     state: present
     name:
@@ -22,24 +22,24 @@
       - make
       - sassc
 
-- name: make archmanweb user
+- name: Make archmanweb user
   user: name=archmanweb shell=/bin/false home="{{ archmanweb_dir }}"
 
-- name: fix home permissions
+- name: Fix home permissions
   file: state=directory owner=archmanweb group=archmanweb mode=0755 path="{{ archmanweb_dir }}"
 
-- name: set archmanweb groups
+- name: Set archmanweb groups
   user: name=archmanweb groups=uwsgi
 
-- name: set up nginx
+- name: Set up nginx
   template: src=nginx.d.conf.j2 dest="{{ archmanweb_nginx_conf }}" owner=root group=root mode=644
   notify: reload nginx
   tags: ['nginx']
 
-- name: make nginx log dir
+- name: Make nginx log dir
   file: path=/var/log/nginx/{{ archmanweb_domain }} state=directory owner=root group=root mode=0755
 
-- name: clone archmanweb repo
+- name: Clone archmanweb repo
   git: >
     repo={{ archmanweb_repository }}
     dest="{{ archmanweb_dir }}/repo"
@@ -51,7 +51,7 @@
   become_user: archmanweb
   register: release
 
-- name: build archlinux-common-style
+- name: Build archlinux-common-style
   command:
     cmd: make SASS=sassc
     chdir: "{{ archmanweb_dir }}/repo/archlinux-common-style"
@@ -59,27 +59,27 @@
   become_user: archmanweb
   when: release.changed or archmanweb_forced_deploy
 
-- name: configure archmanweb
+- name: Configure archmanweb
   template: src=local_settings.py.j2 dest={{ archmanweb_dir }}/repo/local_settings.py owner=archmanweb group=archmanweb mode=0660
   register: config
   no_log: true
 
-- name: copy robots.txt
+- name: Copy robots.txt
   copy: src=robots.txt dest="{{ archmanweb_dir }}/repo/robots.txt" owner=root group=root mode=0644
 
-- name: create archmanweb db user
+- name: Create archmanweb db user
   postgresql_user: name={{ archmanweb_db_user }} password={{ vault_archmanweb_db_password }} login_host="{{ archmanweb_db_host }}" login_password="{{ vault_postgres_users.postgres }}" encrypted=yes
   no_log: true
 
-- name: create archmanweb db
+- name: Create archmanweb db
   postgresql_db: name="{{ archmanweb_db }}" login_host="{{ archmanweb_db_host }}" login_password="{{ vault_postgres_users.postgres }}" owner="{{ archmanweb_db_user }}"
   register: db_created
 
-- name: add pg_trgm extension to the archmanweb db
+- name: Add pg_trgm extension to the archmanweb db
   postgresql_ext: name="pg_trgm" db="{{ archmanweb_db }}" login_host="{{ archmanweb_db_host }}" login_password="{{ vault_postgres_users.postgres }}"
   when: db_created.changed or archmanweb_forced_deploy
 
-- name: run Django management tasks
+- name: Run Django management tasks
   django_manage: app_path="{{ archmanweb_dir }}/repo" command="{{ item }}"
   with_items:
     - migrate
@@ -89,18 +89,18 @@
   become_user: archmanweb
   when: db_created.changed or release.changed or config.changed or archmanweb_forced_deploy
 
-- name: configure UWSGI for archmanweb
+- name: Configure UWSGI for archmanweb
   template: src=archmanweb.ini.j2 dest=/etc/uwsgi/vassals/archmanweb.ini owner=archmanweb group=http mode=0640
 
-- name: deploy new release
+- name: Deploy new release
   file: path=/etc/uwsgi/vassals/archmanweb.ini state=touch owner=archmanweb group=http mode=0640
   when: release.changed or config.changed or archmanweb_forced_deploy
 
-- name: install systemd units
+- name: Install systemd units
   template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
   with_items:
     - archmanweb_update.service
     - archmanweb_update.timer
 
-- name: start and enable archmanweb update timer
+- name: Start and enable archmanweb update timer
   systemd: name="archmanweb_update.timer" enabled=yes state=started daemon_reload=yes

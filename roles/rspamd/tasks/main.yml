@@ -1,17 +1,17 @@
-- name: install rspamd
+- name: Install rspamd
   pacman: name=rspamd state=present
 
-- name: install config
+- name: Install config
   copy: src=local.d/ dest=/etc/rspamd/local.d/ owner=root group=root mode=0644
   notify:
     - reload rspamd
 
-- name: install dkim_signing.conf
+- name: Install dkim_signing.conf
   template: src=dkim_signing.conf.j2 dest=/etc/rspamd/local.d/dkim_signing.conf owner=root group=root mode=0644
   notify:
     - reload rspamd
 
-- name: create rspamd dkim directory
+- name: Create rspamd dkim directory
   file: path=/var/lib/rspamd/dkim state=directory owner=rspamd group=rspamd mode=0750
 
 # For this to run, you need to generate the keys first
@@ -25,7 +25,7 @@
 # roles/rspamd/files/archlinux.org.dkim-rsa.key
 # roles/rspamd/files/archlinux.org.dkim-ed25519.key
 #
-- name: install DKIM keys
+- name: Install DKIM keys
   copy: src={{ item }} dest=/var/lib/rspamd/dkim/ owner=rspamd group=rspamd mode=0600
   loop:
     - "{{ rspamd_dkim_domain }}.dkim-ed25519.key"
@@ -33,5 +33,5 @@
   notify:
     - reload rspamd
 
-- name: start and enable rspamd
+- name: Start and enable rspamd
   service: name=rspamd enabled=yes state=started

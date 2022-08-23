@@ -1,4 +1,4 @@
-- name: run maintenance mode
+- name: Run maintenance mode
   include_role:
     name: maintenance
   vars:
@@ -8,7 +8,7 @@
     service_nginx_conf: "{{ security_tracker_nginx_conf }}"
   when: maintenance is defined
 
-- name: install packages
+- name: Install packages
   pacman:
     state: present
     name:
@@ -35,13 +35,13 @@
       - expac
       - uwsgi-plugin-python
 
-- name: make security user
+- name: Make security user
   user: name=security shell=/bin/false home="{{ security_tracker_dir }}" createhome=no
 
-- name: fix home permissions
+- name: Fix home permissions
   file: state=directory mode=0750 owner=security group=http path="{{ security_tracker_dir }}"
 
-- name: copy security-tracker units
+- name: Copy security-tracker units
   copy: src="{{ item }}" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
   with_items:
     - security-tracker-update.timer
@@ -49,11 +49,11 @@
   notify:
     - daemon reload
 
-- name: disable security-tracker timer
+- name: Disable security-tracker timer
   service: name="security-tracker-update.timer" enabled=no state=stopped
   when: maintenance is defined
 
-- name: receive valid signing keys
+- name: Receive valid signing keys
   become: true
   become_user: security
   command: /usr/bin/gpg --keyserver keys.openpgp.org --recv "{{ item }}"
@@ -62,7 +62,7 @@
   register: gpg
   changed_when: "gpg.rc == 0"
 
-- name: clone security-tracker repo
+- name: Clone security-tracker repo
   git: repo=https://github.com/archlinux/arch-security-tracker.git version="{{ security_tracker_version }}" dest="{{ security_tracker_dir }}" force=true verify_commit=true
   become: true
   become_user: security
@@ -70,43 +70,43 @@
   notify:
     - post security-tracker deploy
 
-- name: run initial setup
+- name: Run initial setup
   become: true
   become_user: security
   command: /usr/bin/make chdir="{{ security_tracker_dir }}" creates=*.db
 
-- name: restrict database permissions
+- name: Restrict database permissions
   file: mode=0640 owner=security group=security path="{{ security_tracker_dir }}/tracker.db"
 
-- name: create ssl cert
+- name: Create ssl cert
   include_role:
     name: certificate
   vars:
     domains: ["{{ security_tracker_domain }}"]
 
-- name: set up nginx
+- name: Set up nginx
   template: src=nginx.d.conf.j2 dest="{{ security_tracker_nginx_conf }}" owner=root group=root mode=644
   notify:
     - reload nginx
   when: maintenance is not defined
   tags: ['nginx']
 
-- name: make nginx log dir
+- name: Make nginx log dir
   file: path=/var/log/nginx/{{ security_tracker_domain }} state=directory owner=root group=root mode=0755
 
-- name: configure security-tracker
+- name: Configure security-tracker
   template: src=20-user.local.conf.j2 dest={{ security_tracker_dir }}/config/20-user.local.conf owner=security group=security mode=0640
 
-- name: deploy security-tracker
+- name: Deploy security-tracker
   template: src=security-tracker.ini.j2 dest=/etc/uwsgi/vassals/security-tracker.ini owner=security group=http mode=0644
 
-- name: deploy new release
+- name: Deploy new release
   become: true
   become_user: security
   file: path=/etc/uwsgi/vassals/security-tracker.ini state=touch owner=security group=http mode=0644
   when: release.changed
 
-- name: start and enable security-tracker timer
+- name: Start and enable security-tracker timer
   systemd:
     name: security-tracker-update.timer
     enabled: true

@@ -1,28 +1,28 @@
-- name: install prometheus server
+- name: Install prometheus server
   pacman: name=prometheus,python-passlib,python-bcrypt state=present
 
-- name: install prometheus configuration
+- name: Install prometheus configuration
   template: src=prometheus.yml.j2 dest=/etc/prometheus/prometheus.yml owner=root group=prometheus mode=640
   notify: reload prometheus
 
-- name: install prometheus cli configuration
+- name: Install prometheus cli configuration
   template: src=prometheus.conf.j2 dest=/etc/conf.d/prometheus owner=root group=root mode=600
   notify: reload prometheus
 
-- name: install prometheus web-config configuration
+- name: Install prometheus web-config configuration
   template: src=web-config.yml.j2 dest=/etc/prometheus/web-config.yml owner=root group=prometheus mode=640
   notify: reload prometheus
   when: prometheus_receive_only
 
-- name: install prometheus alert configuration
+- name: Install prometheus alert configuration
   copy: src=node.rules.yml dest=/etc/prometheus/node.rules.yml owner=root group=root mode=644
   notify: reload prometheus
   when: not prometheus_receive_only
 
-- name: enable prometheus server service
+- name: Enable prometheus server service
   systemd: name=prometheus enabled=yes daemon_reload=yes state=started
 
-- name: open prometheus port for monitoring.archlinux.org
+- name: Open prometheus port for monitoring.archlinux.org
   ansible.posix.firewalld: zone=wireguard state=enabled permanent=true immediate=yes
     rich_rule="rule family=ipv4 source address={{ hostvars['monitoring.archlinux.org']['wireguard_address'] }} port protocol=tcp port=9090 accept"
   when: configure_firewall and prometheus_receive_only

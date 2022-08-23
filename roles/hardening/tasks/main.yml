@@ -1,40 +1,40 @@
-- name: set restricted access to kernel logs
+- name: Set restricted access to kernel logs
   copy: src=50-dmesg-restrict.conf dest=/etc/sysctl.d/50-dmesg-restrict.conf owner=root group=root mode=0644
   notify:
     - apply sysctl settings
 
-- name: set ptrace scope, restrict ptrace to CAP_SYS_PTRACE
+- name: Set ptrace scope, restrict ptrace to CAP_SYS_PTRACE
   copy: src=50-ptrace-restrict.conf dest=/etc/sysctl.d/50-ptrace-restrict.conf owner=root group=root mode=0644
   when: "'buildservers' not in group_names"
   notify:
     - apply sysctl settings
 
-- name: set restricted access to kernel pointers in proc fs
+- name: Set restricted access to kernel pointers in proc fs
   copy: src=50-kptr-restrict.conf dest=/etc/sysctl.d/50-kptr-restrict.conf owner=root group=root mode=0644
   notify:
     - apply sysctl settings
 
-- name: enable JIT hardening for all users
+- name: Enable JIT hardening for all users
   copy: src=50-bpf_jit_harden.conf dest=/etc/sysctl.d/50-bpf_jit_harden.conf owner=root group=root mode=0644
   notify:
     - apply sysctl settings
 
-- name: disable unprivileged bpf
+- name: Disable unprivileged bpf
   copy: src=50-unprivileged_bpf_disabled.conf dest=/etc/sysctl.d/50-unprivileged_bpf_disabled.conf owner=root group=root mode=0644
   notify:
     - apply sysctl settings
 
-- name: disable unprivileged userns
+- name: Disable unprivileged userns
   copy: src=50-unprivileged_userns_clone.conf dest=/etc/sysctl.d/50-unprivileged_userns_clone.conf owner=root group=root mode=0644
   notify:
     - apply sysctl settings
 
-- name: disable kexec load
+- name: Disable kexec load
   copy: src=50-kexec_load_disabled.conf dest=/etc/sysctl.d/50-kexec_load_disabled.conf owner=root group=root mode=0644
   notify:
     - apply sysctl settings
 
-- name: set kernel lockdown to restricted
+- name: Set kernel lockdown to restricted
   copy: src=50-lockdown.conf dest=/etc/tmpfiles.d/50-kernel-lockdown.conf owner=root group=root mode=0644
   when: "'hcloud' in group_names"
   notify:

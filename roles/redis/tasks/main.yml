@@ -1,5 +1,5 @@
-- name: install redis
+- name: Install redis
   pacman: name=redis state=present
 
-- name: start and enable redis
+- name: Start and enable redis
   service: name=redis enabled=yes state=started

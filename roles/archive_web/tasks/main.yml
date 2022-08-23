@@ -1,10 +1,10 @@
-- name: create ssl cert
+- name: Create ssl cert
   include_role:
     name: certificate
   vars:
     domains: ["{{ archive_domain }}"]
 
-- name: set up nginx
+- name: Set up nginx
   template:
     src: nginx.d.conf.j2
     dest: /etc/nginx/nginx.d/archive.conf
@@ -15,7 +15,7 @@
     - reload nginx
   tags: ['nginx']
 
-- name: make nginx log dir
+- name: Make nginx log dir
   file:
     path: /var/log/nginx/{{ archive_domain }}
     state: directory

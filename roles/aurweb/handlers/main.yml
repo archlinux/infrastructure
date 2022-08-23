@@ -1,9 +1,9 @@
-- name: daemon reload
+- name: Daemon reload
   systemd:
     daemon-reload: true
 
-- name: restart php-fpm@{{ aurweb_user }}
+- name: Restart php-fpm@{{ aurweb_user }}
   service: name=php-fpm@{{ aurweb_user }} state=restarted
 
-- name: restart sshd
+- name: Restart sshd
   service: name=sshd state=restarted

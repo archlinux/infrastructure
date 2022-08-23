@@ -1,25 +1,25 @@
-- name: install openssh
+- name: Install openssh
   pacman: name=openssh state=present
 
-- name: configure sshd
+- name: Configure sshd
   template: src=sshd_config.j2 dest=/etc/ssh/sshd_config owner=root group=root mode=0644 validate='/usr/sbin/sshd -t -f %s'
   notify:
     - restart sshd
 
-- name: set file permissions
+- name: Set file permissions
   file: path=/etc/ssh mode=0600
 
-- name: install motd
+- name: Install motd
   template: src=motd.j2 dest=/etc/motd owner=root group=root mode=0644
 
 - name: Create the includes dir
   file: path="{{ sshd_includes_dir }}" state=directory mode=0600
   when: sshd_enable_includes
 
-- name: start and enable sshd
+- name: Start and enable sshd
   service: name=sshd enabled=yes state=started
 
-- name: open firewall holes
+- name: Open firewall holes
   ansible.posix.firewalld: service=ssh permanent=true state=enabled immediate=yes
   when: configure_firewall is defined and configure_firewall
   tags:

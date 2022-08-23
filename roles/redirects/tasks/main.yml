@@ -1,18 +1,18 @@
-- name: create ssl cert
+- name: Create ssl cert
   include_role:
     name: certificate
   vars:
     domains: ["{{ item.domain }}"]
   loop: "{{ redirects }}"
 
-- name: make nginx log dir
+- name: Make nginx log dir
   file: path=/var/log/nginx/{{ item.domain }} state=directory owner=root group=root mode=0755
   loop: "{{ redirects }}"
 
-- name: set up nginx
+- name: Set up nginx
   template: src=nginx.d.conf.j2 dest="/etc/nginx/nginx.d/redirects.conf" owner=root group=root mode=644
   notify: reload nginx
   tags: ['nginx']
 
-- name: copy nginx map files
+- name: Copy nginx map files
   copy: src=maps dest=/etc/nginx/ owner=root group=root mode=0600

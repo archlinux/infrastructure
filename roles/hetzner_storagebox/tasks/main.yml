@@ -1,12 +1,12 @@
 # This role runs on localhost; use commands like sftp to upload configuration
 
-- name: create the root backup directory at {{ backup_dir }}
+- name: Create the root backup directory at {{ backup_dir }}
   expect:
     command: bash -c "echo 'mkdir {{ backup_dir }}' | sftp -P 23 {{ storagebox_username }}@{{ storagebox_hostname }}"
     responses:
       (?i)password: "{{ storagebox_password }}"
 
-- name: create a home directory for each sub-account
+- name: Create a home directory for each sub-account
   expect:
     command: |
       bash -c 'sftp -P 23 {{ storagebox_username }}@{{ storagebox_hostname }} <<EOF
@@ -17,7 +17,7 @@
     responses:
       (?i)password: "{{ storagebox_password }}"
 
-- name: fetch ssh keys from each borg client machine
+- name: Fetch ssh keys from each borg client machine
   command: cat /root/.ssh/id_rsa.pub
   check_mode: false
   register: client_ssh_keys
@@ -25,16 +25,16 @@
   with_items: "{{ backup_clients }}"
   changed_when: client_ssh_keys.changed
 
-- name: create tempfile
+- name: Create tempfile
   tempfile: state=file
   check_mode: false
   register: tempfile
 
-- name: fill tempfile
+- name: Fill tempfile
   copy: content="{{ lookup('template', 'authorized_keys.j2') }}" dest="{{ tempfile.path }}" mode=preserve
   no_log: true
 
-- name: upload authorized_keys for Arch DevOps
+- name: Upload authorized_keys for Arch DevOps
   expect:
     command: |
       bash -c 'sftp -P 23 {{ storagebox_username }}@{{ storagebox_hostname }} <<EOF
@@ -46,13 +46,13 @@
     responses:
       (?i)password: "{{ storagebox_password }}"
 
-- name: upload authorized_keys for each backup client
+- name: Upload authorized_keys for each backup client
   include_tasks: upload_client_authorized_keys.yml
   loop: "{{ client_ssh_keys.results }}"
   loop_control:
     label: "{{ item.item }}"
 
-- name: retrieve sub-account information
+- name: Retrieve sub-account information
   uri:
     url: https://robot-ws.your-server.de/storagebox/{{ storagebox_id }}/subaccount
     user: "{{ hetzner_webservice_username }}"
@@ -61,11 +61,11 @@
   register: subaccounts_raw
   no_log: true
 
-- name: get list of sub-accounts
+- name: Get list of sub-accounts
   set_fact:
     subaccounts: "{{ subaccounts_raw.json | json_query('[].subaccount') }}"
 
-- name: create missing sub-accounts
+- name: Create missing sub-accounts
   uri:
     timeout: 60
     url: https://robot-ws.your-server.de/storagebox/{{ storagebox_id }}/subaccount
@@ -81,21 +81,21 @@
   register: new_subaccounts_raw
   no_log: true
 
-- name: update list of sub-accounts
+- name: Update list of sub-accounts
   set_fact:
     subaccounts: "{{ subaccounts + [item.json.subaccount | combine({'comment': item.invocation.module_args.body.comment})] }}"
   loop: "{{ new_subaccounts_raw.results }}"
   loop_control:
     label: "{{ item.invocation.module_args.body.comment }}"
 
-- name: match usernames to backup clients
+- name: Match usernames to backup clients
   set_fact:
     backup_client_usernames: "{{ backup_client_usernames | default({}) | combine({item.comment: item.username}) }}"
   loop: "{{ subaccounts }}"
   loop_control:
     label: "{{ {item.comment: item.username} }}"
 
-- name: configure ssh on backup clients
+- name: Configure ssh on backup clients
   blockinfile:
     path: /root/.ssh/config
     create: true

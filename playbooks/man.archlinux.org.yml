@@ -1,4 +1,4 @@
-- name: setup man.archlinux.org
+- name: Setup man.archlinux.org
   hosts: man.archlinux.org
   remote_user: root
   roles:

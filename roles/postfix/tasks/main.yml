@@ -1,7 +1,7 @@
-- name: install postfix
+- name: Install postfix
   pacman: name=postfix,postfix-pcre state=present
 
-- name: install template configs
+- name: Install template configs
   template: src={{ item }}.j2 dest=/etc/postfix/{{ item }} owner=root group=root mode=0644
   with_items:
     - main.cf
@@ -15,7 +15,7 @@
     - postmap additional files
     - update aliases db
 
-- name: install additional files
+- name: Install additional files
   copy: src={{ item }} dest=/etc/postfix/{{ item }} owner=root group=root mode=0644
   with_items:
     - access_client
@@ -31,42 +31,42 @@
   notify:
     - postmap additional files
 
-- name: create dhparam 2048
+- name: Create dhparam 2048
   command: openssl dhparam -out /etc/postfix/dh2048.pem 2048 creates=/etc/postfix/dh2048.pem
   notify:
     - reload postfix
 
-- name: create ssl cert
+- name: Create ssl cert
   include_role:
     name: certificate
   vars:
     domains: ["{{ mail_domain }}"]
 
-- name: install postfix cert renewal hook
+- name: Install postfix cert renewal hook
   template: src=letsencrypt.hook.d.j2 dest=/etc/letsencrypt/hook.d/postfix owner=root group=root mode=0755
 
-- name: install bouncehandler config
+- name: Install bouncehandler config
   template: src=wiki-bouncehandler.conf.j2 dest={{ postfix_wiki_bounce_config }} owner={{ postfix_wiki_bounce_user }} group=root mode=0600
 
-- name: install packages for bounce handler
+- name: Install packages for bounce handler
   pacman: name=perl-mediawiki-api,perl-config-simple state=present
 
-- name: install bouncehandler script
+- name: Install bouncehandler script
   copy: src=bouncehandler.pl dest={{ postfix_wiki_bounce_mail_handler }} owner=root group=root mode=0755
 
-- name: make bouncehandler user
+- name: Make bouncehandler user
   user: name={{ postfix_wiki_bounce_user }} shell=/bin/false skeleton=/var/empty state=present
 
-- name: start and enable postfix
+- name: Start and enable postfix
   service: name=postfix enabled=yes state=started
 
-- name: remove old files
+- name: Remove old files
   file: path={{ item }} state=absent
   with_items:
     - compat_maps
     - compat_maps.db
 
-- name: open firewall holes
+- name: Open firewall holes
   ansible.posix.firewalld: service={{ item }} permanent=true state=enabled immediate=yes
   with_items:
     - smtp

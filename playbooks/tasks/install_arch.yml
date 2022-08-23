@@ -1,7 +1,7 @@
 # This script is for provisioning a server for first boot.
 # Care: It is not idempotent by design.
 
-- name: install_arch
+- name: Install arch
   hosts: all
   remote_user: root
   roles:

@@ -1,4 +1,4 @@
-- name: setup public dashboards server
+- name: Setup public dashboards server
   hosts: dashboards.archlinux.org
   remote_user: root
   roles:

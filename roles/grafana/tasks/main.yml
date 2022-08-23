@@ -1,25 +1,25 @@
-- name: install grafana
+- name: Install grafana
   pacman: name=grafana state=present
 
-- name: create ssl cert
+- name: Create ssl cert
   include_role:
     name: certificate
   vars:
     domains: ["{{ grafana_domain }}"]
 
-- name: set up nginx
+- name: Set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/grafana.conf owner=root group=http mode=640
   notify:
     - reload nginx
   tags: ['nginx']
 
-- name: make nginx log dir
+- name: Make nginx log dir
   file: path=/var/log/nginx/{{ grafana_domain }} state=directory owner=root group=root mode=0755
 
-- name: create grafana config directory
+- name: Create grafana config directory
   file: path=/etc/grafana mode=0700 owner=grafana group=grafana state=directory
 
-- name: create grafana provisioning directory
+- name: Create grafana provisioning directory
   file: path={{ item }} mode=0700 owner=grafana group=grafana state=directory
   with_items:
     - /etc/grafana/provisioning
@@ -29,27 +29,27 @@
     - /etc/grafana/provisioning/notifiers
     - /var/lib/grafana/dashboards
 
-- name: install grafana datasources provisioning
+- name: Install grafana datasources provisioning
   template: src=datasources.yaml.j2 dest=/etc/grafana/provisioning/datasources/prometheus.yml owner=grafana group=root mode=0600
   notify: restart grafana
 
-- name: install grafana dashboard provisioning
+- name: Install grafana dashboard provisioning
   template: src=dashboard.yaml.j2 dest=/etc/grafana/provisioning/dashboards/dasbhoard.yml owner=grafana group=root mode=0600
   notify: restart grafana
 
-- name: copy grafana dashboards
+- name: Copy grafana dashboards
   copy: src=dashboards dest=/var/lib/grafana/dashboards owner=grafana group=grafana mode=0600
 
-- name: copy (public) grafana dashboards
+- name: Copy (public) grafana dashboards
   copy: src=public-dashboards dest=/var/lib/grafana/ owner=root group=grafana mode=0640
   when: grafana_anonymous_access
 
-- name: install grafana config
+- name: Install grafana config
   template: src=grafana.ini.j2 dest=/etc/grafana.ini owner=grafana group=root mode=0600
   notify: restart grafana
 
-- name: fix /var/lib/grafana permissions
+- name: Fix /var/lib/grafana permissions
   file: path=/var/lib/grafana mode=0700 owner=grafana group=grafana
 
-- name: start and enable service
+- name: Start and enable service
   service: name=grafana state=started enabled=true

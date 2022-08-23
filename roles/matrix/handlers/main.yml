@@ -1,32 +1,32 @@
-- name: restart synapse
+- name: Restart synapse
   systemd:
     name: synapse
     state: restarted
     enabled: true
     daemon_reload: true
 
-- name: restart pantalaimon
+- name: Restart pantalaimon
   systemd:
     name: pantalaimon
     state: restarted
     enabled: true
     daemon_reload: true
 
-- name: restart mjolnir
+- name: Restart mjolnir
   systemd:
     name: mjolnir
     state: restarted
     enabled: true
     daemon_reload: true
 
-- name: restart matrix-appservice-irc
+- name: Restart matrix-appservice-irc
   systemd:
     name: matrix-appservice-irc
     state: restarted
     enabled: true
     daemon_reload: true
 
-- name: restart turnserver
+- name: Restart turnserver
   systemd:
     name: turnserver
     state: restarted

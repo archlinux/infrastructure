@@ -1,13 +1,13 @@
-- name: create postgres subvolume
+- name: Create postgres subvolume
   command: btrfs subvol create /var/lib/postgres
   args:
     creates: /var/lib/postgres
   when: filesystem == "btrfs"
 
-- name: install postgres
+- name: Install postgres
   pacman: name=postgresql,python-psycopg2 state=present
 
-- name: create nocow database directory
+- name: Create nocow database directory
   file:
     state: directory
     owner: postgres
@@ -17,7 +17,7 @@
     mode: 0700
   when: filesystem == "btrfs"
 
-- name: initialize postgres
+- name: Initialize postgres
   become: true
   become_user: postgres
   become_method: su
@@ -28,7 +28,7 @@
   notify:
     - restart postgres
 
-- name: configure postgres
+- name: Configure postgres
   template: src={{ item }}.j2 dest=/var/lib/postgres/data/{{ item }} owner=postgres group=postgres mode=0600
   with_items:
     - postgresql.conf
@@ -36,35 +36,35 @@
   notify:
     - restart postgres
 
-- name: install postgres certificate
+- name: Install postgres certificate
   copy: src=/etc/letsencrypt/live/{{ inventory_hostname }}/fullchain.pem dest={{ postgres_ssl_cert_file }}
         remote_src=true owner=postgres group=postgres mode=0400
   when: postgres_ssl == 'on'
 
-- name: install postgres private key
+- name: Install postgres private key
   copy: src=/etc/letsencrypt/live/{{ inventory_hostname }}/privkey.pem dest={{ postgres_ssl_key_file }}
         remote_src=true owner=postgres group=postgres mode=0400
   when: postgres_ssl == 'on'
 
-- name: install postgres ca
+- name: Install postgres ca
   copy: src=/etc/letsencrypt/live/{{ inventory_hostname }}/chain.pem dest={{ postgres_ssl_ca_file }}
         remote_src=true owner=postgres group=postgres mode=0400
   when: postgres_ssl == 'on'
 
-- name: start and enable postgres
+- name: Start and enable postgres
   service: name=postgresql enabled=yes state=started
 
-- name: set postgres user password
+- name: Set postgres user password
   postgresql_user: name=postgres password={{ vault_postgres_users.postgres }} encrypted=yes
   become: true
   become_user: postgres
   become_method: su
 
-- name: install postgres cert renewal hook
+- name: Install postgres cert renewal hook
   template: src=letsencrypt.hook.d.j2 dest=/etc/letsencrypt/hook.d/postgres owner=root group=root mode=0755
   when: postgres_ssl == 'on'
 
-- name: open firewall holes to known postgresql ipv4 clients
+- name: Open firewall holes to known postgresql ipv4 clients
   ansible.posix.firewalld: zone={{ postgres_firewalld_zone }} permanent=true state=enabled immediate=yes
     rich_rule="rule family=ipv4 source address={{ item }} port protocol=tcp port=5432 accept"
   with_items: "{{ postgres_hosts4 + postgres_ssl_hosts4 }}"
@@ -72,7 +72,7 @@
   tags:
     - firewall
 
-- name: open firewall holes to known postgresql ipv6 clients
+- name: Open firewall holes to known postgresql ipv6 clients
   ansible.posix.firewalld: zone={{ postgres_firewalld_zone }} permanent=true state=enabled immediate=yes
     rich_rule="rule family=ipv6 source address={{ item }} port protocol=tcp port=5432 accept"
   with_items: "{{ postgres_hosts6 + postgres_ssl_hosts6 }}"
@@ -80,5 +80,5 @@
   tags:
     - firewall
 
-- name: copy postgresql upgrade script
+- name: Copy postgresql upgrade script
   copy: src=upgrade_pg.sh dest=/usr/local/bin/upgrade_pg.sh mode=0755 owner=root group=root

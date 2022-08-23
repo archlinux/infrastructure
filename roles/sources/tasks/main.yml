@@ -1,23 +1,23 @@
-- name: create ssl cert
+- name: Create ssl cert
   include_role:
     name: certificate
   vars:
     domains: ["{{ sources_domain }}"]
 
-- name: set up nginx
+- name: Set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/sources.conf owner=root group=root mode=0644
   notify:
     - reload nginx
   tags: ['nginx']
 
-- name: make nginx log dir
+- name: Make nginx log dir
   file: path=/var/log/nginx/{{ sources_domain }} state=directory owner=root group=root mode=0755
 
-- name: make sources dir
+- name: Make sources dir
   file: path={{ sources_dir }} state=directory owner=root group=root mode=0755
 
-- name: make symlink to repo sources
+- name: Make symlink to repo sources
   file: path={{ sources_dir }}/sources src=/srv/ftp/sources state=link owner=root group=root mode=0755
 
-- name: make symlink to other sources
+- name: Make symlink to other sources
   file: path={{ sources_dir }}/other src=/srv/ftp/other state=link owner=root group=root mode=0755

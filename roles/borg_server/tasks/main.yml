@@ -1,12 +1,12 @@
-- name: install borg
+- name: Install borg
   pacman: name=borg state=present
 
-- name: create borg user
+- name: Create borg user
   user:
     name: borg
     home: "{{ backup_dir }}"
 
-- name: create borg user home
+- name: Create borg user home
   file:
     path: "{{ backup_dir }}"
     state: directory
@@ -14,7 +14,7 @@
     group: borg
     mode: 0700
 
-- name: create the root backup directory at {{ backup_dir }}
+- name: Create the root backup directory at {{ backup_dir }}
   file:
     path: "{{ backup_dir }}/{{ item }}"
     state: directory
@@ -23,14 +23,14 @@
     mode: 0700
   with_items: "{{ backup_clients }}"
 
-- name: fetch ssh keys from each borg client machine
+- name: Fetch ssh keys from each borg client machine
   command: cat /root/.ssh/id_rsa.pub
   register: ssh_keys
   delegate_to: "{{ item }}"
   with_items: "{{ backup_clients }}"
   changed_when: ssh_keys.stdout | length > 0
 
-- name: allow certain clients to connect
+- name: Allow certain clients to connect
   authorized_key:
     user: borg
     key: "{{ item.stdout }}"

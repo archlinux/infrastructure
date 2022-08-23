@@ -1,48 +1,48 @@
-- name: install dovecot
+- name: Install dovecot
   pacman: name=dovecot,pigeonhole state=present
 
 # FIXME: check directory permissions
-- name: create dovecot configuration directory
+- name: Create dovecot configuration directory
   file: path=/etc/dovecot state=directory owner=root group=root mode=0755
 
-- name: create dhparam
+- name: Create dhparam
   command: openssl dhparam -out /etc/dovecot/dh.pem 4096 creates=/etc/dovecot/dh.pem
 
-- name: install dovecot.conf
+- name: Install dovecot.conf
   template: src=dovecot.conf.j2 dest=/etc/dovecot/dovecot.conf owner=root group=root mode=0644
   notify:
     - reload dovecot
 
-- name: add vmail group
+- name: Add vmail group
   group: name=vmail gid=5000
 
-- name: add vmail user
+- name: Add vmail user
   user: name=vmail uid=5000 shell=/usr/bin/nologin group=vmail
 
-- name: install PAM config
+- name: Install PAM config
   copy: src=pam.d.dovecot dest=/etc/pam.d/dovecot mode=0644 owner=root group=root
 
-- name: create dovecot sieve dir
+- name: Create dovecot sieve dir
   file: path=/etc/dovecot/sieve state=directory owner=root group=root mode=0755
 
-- name: install spam-to-folder.sieve
+- name: Install spam-to-folder.sieve
   copy: src=spam-to-folder.sieve dest=/etc/dovecot/sieve/ mode=0644 owner=root group=root
   notify:
     - run sievec
 
-- name: create ssl cert
+- name: Create ssl cert
   include_role:
     name: certificate
   vars:
     domains: ["{{ mail_domain }}"]
 
-- name: install dovecot cert renewal hook
+- name: Install dovecot cert renewal hook
   template: src=letsencrypt.hook.d.j2 dest=/etc/letsencrypt/hook.d/dovecot owner=root group=root mode=0755
 
-- name: start and enable dovecot
+- name: Start and enable dovecot
   service: name=dovecot enabled=yes state=started
 
-- name: open firewall holes
+- name: Open firewall holes
   ansible.posix.firewalld: service={{ item }} permanent=true state=enabled immediate=yes
   with_items:
     - imaps
@@ -51,13 +51,13 @@
   tags:
     - firewall
 
-- name: install systemd timers
+- name: Install systemd timers
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
     - dovecot-cleanup.timer
     - dovecot-cleanup.service
 
-- name: activate systemd timers
+- name: Activate systemd timers
   systemd:
     name: "{{ item }}"
     state: started

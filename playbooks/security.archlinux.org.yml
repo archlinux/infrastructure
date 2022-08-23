@@ -1,4 +1,4 @@
-- name: setup security.archlinux.org
+- name: Setup security.archlinux.org
   hosts: security.archlinux.org
   remote_user: root
   roles:

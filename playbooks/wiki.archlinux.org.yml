@@ -1,4 +1,4 @@
-- name: setup wiki.archlinux.org
+- name: Setup wiki.archlinux.org
   hosts: wiki.archlinux.org
   remote_user: root
   roles:

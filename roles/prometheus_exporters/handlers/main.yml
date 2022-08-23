@@ -1,2 +1,2 @@
-- name: reload blackbox exporter
+- name: Reload blackbox exporter
   service: name=prometheus-blackbox-exporter state=reloaded

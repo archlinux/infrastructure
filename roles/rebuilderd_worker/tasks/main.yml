@@ -1,23 +1,23 @@
-- name: install required packages
+- name: Install required packages
   pacman: name=rebuilderd,archlinux-repro,binutils,unzip state=present
 
-- name: configure rebuilderd-worker.conf
+- name: Configure rebuilderd-worker.conf
   template: src=rebuilderd-worker.conf.j2 dest=/etc/rebuilderd-worker.conf owner=rebuilderd group=rebuilderd mode=0660
 
-- name: create arch repro configuration dir
+- name: Create arch repro configuration dir
   file: path=/etc/archlinux-repro state=directory owner=root group=root mode=0750
 
-- name: install archlinux-repro configuration
+- name: Install archlinux-repro configuration
   copy: src=repro.conf dest=/etc/archlinux-repro/repro.conf owner=root group=root mode=0660
 
-- name: enable and start rebuilderd-worker@{{ item }}
+- name: Enable and start rebuilderd-worker@{{ item }}
   systemd: name=rebuilderd-worker@{{ item }} enabled=yes state=started
   with_items: '{{ rebuilderd_workers }}'
 
-- name: install cleanup script
+- name: Install cleanup script
   copy: src=clean-repro dest=/usr/local/bin/clean-repro owner=root group=root mode=0755
 
-- name: install cleanup units
+- name: Install cleanup units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   loop:
     - clean-repro.timer
@@ -25,5 +25,5 @@
   notify:
     - daemon reload
 
-- name: start and enable cleanup timer
+- name: Start and enable cleanup timer
   service: name=clean-repro.timer enabled=yes state=started

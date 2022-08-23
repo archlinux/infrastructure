@@ -1,12 +1,12 @@
-- name: restart postfix
+- name: Restart postfix
   service:
     name: postfix
     state: restarted
 
-- name: reload postfix
+- name: Reload postfix
   command: postfix reload
 
-- name: postmap additional files
+- name: Postmap additional files
   command: postmap /etc/postfix/{{ item }}
   with_items:
     - access_client
@@ -19,5 +19,5 @@
     - domains
     - msa_header_checks
 
-- name: update aliases db
+- name: Update aliases db
   command: postalias /etc/postfix/aliases

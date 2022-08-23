@@ -1,21 +1,21 @@
-- name: install nginx
+- name: Install nginx
   pacman: name=nginx,nginx-mod-brotli state=present
 
-- name: install nginx.service snippet
+- name: Install nginx.service snippet
   copy: src=nginx.service.d dest=/etc/systemd/system owner=root group=root mode=0644
 
-- name: configure nginx
+- name: Configure nginx
   template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf owner=root group=root mode=0644
   notify:
     - reload nginx
 
-- name: snippets directories
+- name: Snippets directories
   file: state=directory path=/etc/nginx/{{ item }} owner=root group=root mode=0755
   with_items:
     - toplevel-snippets
     - snippets
 
-- name: copy snippets
+- name: Copy snippets
   template: src={{ item }} dest=/etc/nginx/snippets owner=root group=root mode=0644
   with_items:
     - letsencrypt.conf
@@ -23,41 +23,41 @@
   notify:
     - reload nginx
 
-- name: install cert renewal hook
+- name: Install cert renewal hook
   template: src=letsencrypt.hook.d.j2 dest=/etc/letsencrypt/hook.d/nginx owner=root group=root mode=0755
   when: "'certbot' in ansible_play_role_names"
 
-- name: create nginx.d directory
+- name: Create nginx.d directory
   file: state=directory path=/etc/nginx/nginx.d owner=root group=root mode=0755
 
-- name: create auth directory
+- name: Create auth directory
   file: state=directory path=/etc/nginx/auth owner=root group=root mode=0755
 
-- name: create maps directory
+- name: Create maps directory
   file: state=directory path=/etc/nginx/maps owner=root group=root mode=0755
 
-- name: create default nginx log directory
+- name: Create default nginx log directory
   file: state=directory path=/var/log/nginx/default owner=root group=root mode=0755
 
-- name: create unique DH group
+- name: Create unique DH group
   command: openssl dhparam -out /etc/ssl/dhparams.pem 2048 creates=/etc/ssl/dhparams.pem
 
-- name: create directory to store validation stuff in
+- name: Create directory to store validation stuff in
   file: owner=root group=http mode=0750 path={{ letsencrypt_validation_dir }} state=directory
 
-- name: install logrotate config
+- name: Install logrotate config
   copy: src=logrotate.conf dest=/etc/logrotate.d/nginx-ansible owner=root group=root mode=0644
 
-- name: install inventory_hostname vhost
+- name: Install inventory_hostname vhost
   template: src=nginx-hostname-vhost.conf.j2 dest=/etc/nginx/nginx.d/nginx-hostname-vhost.conf owner=root group=root mode=0644
   notify:
     - reload nginx
   tags: ['nginx']
 
-- name: enable nginx
+- name: Enable nginx
   service: name=nginx enabled=yes
 
-- name: open firewall holes
+- name: Open firewall holes
   ansible.posix.firewalld: service={{ item }} zone={{ nginx_firewall_zone }} permanent=true state=enabled immediate=yes
   with_items:
     - http

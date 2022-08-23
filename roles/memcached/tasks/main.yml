@@ -1,10 +1,10 @@
-- name: install memcached
+- name: Install memcached
   pacman: name=memcached state=present
 
-- name: put memcached.conf into tmpfiles
+- name: Put memcached.conf into tmpfiles
   template: src=memcached-tmpfiles.d.j2 dest=/etc/tmpfiles.d/memcached.conf owner=root group=root mode=0644
   register: memcachedtmpfiles
 
-- name: use tmpfiles.d/memcached.conf
+- name: Use tmpfiles.d/memcached.conf
   command: systemd-tmpfiles --create
   when: memcachedtmpfiles.changed

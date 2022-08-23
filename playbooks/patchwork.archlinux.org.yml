@@ -1,4 +1,4 @@
-- name: setup patchwork.archlinux.org
+- name: Setup patchwork.archlinux.org
   hosts: patchwork.archlinux.org
   remote_user: root
   roles:

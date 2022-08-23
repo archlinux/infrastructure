@@ -1,4 +1,4 @@
-- name: setup build.archlinux.org
+- name: Setup build.archlinux.org
   hosts: build.archlinux.org
   remote_user: root
   roles:
