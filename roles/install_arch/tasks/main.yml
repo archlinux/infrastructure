@@ -46,7 +46,7 @@
     dest: /tmp/
     mode: 0644
 
-- name: Extract boostrap image  # noqa 208
+- name: Extract boostrap image  # noqa risky-file-permissions
   unarchive:
     src: /tmp/archlinux-bootstrap-x86_64.tar.gz
     dest: /tmp

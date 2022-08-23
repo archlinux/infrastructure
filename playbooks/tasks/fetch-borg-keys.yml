@@ -2,7 +2,7 @@
   hosts: localhost
   tasks:
     - name: Create borg-keys directory
-      file: path="{{ playbook_dir }}/../../borg-keys/" state=directory  # noqa 208
+      file: path="{{ playbook_dir }}/../../borg-keys/" state=directory  # noqa risky-file-permissions
 
 - name: Fetch borg keys
   hosts: borg_clients
