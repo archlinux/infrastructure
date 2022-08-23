@@ -3,7 +3,7 @@
   with_items: "{{ arch_groups }}"
 
 - name: Filter arch_users for users with non-matching hosts
-  set_fact: arch_users_filtered="{{ (arch_users_filtered | default([])) + [ item ] }}"
+  set_fact: arch_users_filtered="{{ (arch_users_filtered | default([])) + [item] }}"
   when: item.value.hosts is not defined or inventory_hostname in item.value.hosts
   with_dict: "{{ arch_users }}"
 
