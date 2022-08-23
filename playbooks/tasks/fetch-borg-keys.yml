@@ -1,8 +1,8 @@
 - name: Prepare local storage directory
   hosts: localhost
   tasks:
-    - name: Create borg-keys directory
-      file: path="{{ playbook_dir }}/../../borg-keys/" state=directory  # noqa risky-file-permissions
+    - name: Create borg-keys directory  # noqa risky-file-permissions
+      file: path="{{ playbook_dir }}/../../borg-keys/" state=directory
 
 - name: Fetch borg keys
   hosts: borg_clients

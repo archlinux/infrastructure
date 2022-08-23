@@ -56,17 +56,17 @@
 - name: Copy resolv.conf to bootstrap chroot
   copy: remote_src=true src=/etc/resolv.conf dest=/tmp/root.x86_64/etc/resolv.conf owner=root group=root mode=0644
 
-- name: Mount /proc to bootstrap chroot
-  command: mount --rbind /proc /tmp/root.x86_64/proc creates=/tmp/root.x86_64/proc/uptime  # noqa command-instead-of-module
+- name: Mount /proc to bootstrap chroot  # noqa command-instead-of-module
+  command: mount --rbind /proc /tmp/root.x86_64/proc creates=/tmp/root.x86_64/proc/uptime
 
-- name: Mount /sys to bootstrap chroot
-  command: mount --rbind /sys /tmp/root.x86_64/sys creates=/tmp/root.x86_64/sys/dev  # noqa command-instead-of-module
+- name: Mount /sys to bootstrap chroot  # noqa command-instead-of-module
+  command: mount --rbind /sys /tmp/root.x86_64/sys creates=/tmp/root.x86_64/sys/dev
 
-- name: Mount /dev to bootstrap chroot
-  command: mount --rbind /dev /tmp/root.x86_64/dev creates=/tmp/root.x86_64/dev/zero  # noqa command-instead-of-module
+- name: Mount /dev to bootstrap chroot  # noqa command-instead-of-module
+  command: mount --rbind /dev /tmp/root.x86_64/dev creates=/tmp/root.x86_64/dev/zero
 
-- name: Mount /mnt to bootstrap chroot
-  command: mount --rbind /mnt /tmp/root.x86_64/mnt creates=/tmp/root.x86_64/mnt/LOCK  # noqa command-instead-of-module
+- name: Mount /mnt to bootstrap chroot  # noqa command-instead-of-module
+  command: mount --rbind /mnt /tmp/root.x86_64/mnt creates=/tmp/root.x86_64/mnt/LOCK
 
 - name: Configure pacman mirror
   template: src=mirrorlist.j2 dest=/tmp/root.x86_64/etc/pacman.d/mirrorlist owner=root group=root mode=0644
@@ -99,14 +99,14 @@
   args:
     creates: /tmp/root.x86_64/mnt/bin
 
-- name: Mount /proc to new chroot
-  command: mount --rbind /proc /mnt/proc creates=/mnt/proc/uptime  # noqa command-instead-of-module
+- name: Mount /proc to new chroot  # noqa command-instead-of-module
+  command: mount --rbind /proc /mnt/proc creates=/mnt/proc/uptime
 
-- name: Mount /sys to new chroot
-  command: mount --rbind /sys /mnt/sys creates=/mnt/sys/dev  # noqa command-instead-of-module
+- name: Mount /sys to new chroot  # noqa command-instead-of-module
+  command: mount --rbind /sys /mnt/sys creates=/mnt/sys/dev
 
-- name: Mount /dev to new chroot
-  command: mount --rbind /dev /mnt/dev creates=/mnt/dev/zero  # noqa command-instead-of-module
+- name: Mount /dev to new chroot  # noqa command-instead-of-module
+  command: mount --rbind /dev /mnt/dev creates=/mnt/dev/zero
 
 - name: Configure locale.gen
   lineinfile: dest=/mnt/etc/locale.gen line="en_US.UTF-8 UTF-8" owner=root group=root mode=0644
@@ -177,8 +177,8 @@
 - name: Configure sshd
   template: src=sshd_config.j2 dest=/mnt/etc/ssh/sshd_config owner=root group=root mode=0644
 
-- name: Clean pacman cache
-  shell: yes | chroot /mnt pacman -Scc  # noqa risky-shell-pipe ("Illegal option -o pipefail" in Hetzner's recovery environment (dash?))
+- name: Clean pacman cache  # noqa risky-shell-pipe ("Illegal option -o pipefail" in Hetzner's recovery environment (dash?))
+  shell: yes | chroot /mnt pacman -Scc
   register: chroot_pacman_clean_cache
   changed_when: "chroot_pacman_clean_cache.rc == 0"
 
