@@ -1,67 +1,67 @@
-- name: create user
+- name: Create user
   user: >
     name=fluxbb home="{{ fluxbb_dir }}"
     shell=/bin/false system=yes createhome=no
 
-- name: clone fluxbb
+- name: Clone fluxbb
   git:
     repo: https://gitlab.archlinux.org/archlinux/archbbs.git
     dest: "{{ fluxbb_dir }}"
     version: "{{ fluxbb_version }}"
 
-- name: fix home permissions
+- name: Fix home permissions
   file: state=directory owner=fluxbb group=fluxbb mode=0755  path="{{ fluxbb_dir }}"
   changed_when: false
 
-- name: create uploads directory
+- name: Create uploads directory
   file: state=directory owner=fluxbb group=fluxbb mode=0755 path="{{ fluxbb_dir }}/uploads"
 
-- name: create mariadb database
+- name: Create mariadb database
   mysql_db: name=fluxbb state=present
 
-- name: create mariadb user
+- name: Create mariadb user
   mysql_user: >
     user=fluxbb host=localhost password={{ fluxbb_db_password }}
     priv='fluxbb.*:ALL'
 
-- name: create ssl cert
+- name: Create ssl cert
   include_role:
     name: certificate
   vars:
     domains: ["{{ fluxbb_domain }}"]
 
-- name: create nginx log directory
+- name: Create nginx log directory
   file: path=/var/log/nginx/{{ fluxbb_domain }} state=directory owner=root group=root mode=0755
 
-- name: configure nginx
+- name: Configure nginx
   template: >
     src=nginx.conf.j2 dest=/etc/nginx/nginx.d/fluxbb.conf
     owner=root group=root mode=0644
   notify: reload nginx
 
-- name: install python-passlib
+- name: Install python-passlib
   pacman: name=python-passlib
 
-- name: create auth file
+- name: Create auth file
   htpasswd: >
     path=/etc/nginx/auth/fluxx
     name={{ fluxbb_htpasswd.username }}
     password={{ fluxbb_htpasswd.password }}
     owner=root group=http mode=0640
 
-- name: install forum config
+- name: Install forum config
   template: >
     src=config.php.j2 dest={{ fluxbb_dir }}/config.php
     owner=fluxbb group=fluxbb mode=400
 
-- name: install php-apcu
+- name: Install php-apcu
   pacman: name=php-apcu,php-intl
 
-- name: configure php-fpm
+- name: Configure php-fpm
   template: >
     src=php-fpm.conf.j2 dest=/etc/php/php-fpm.d/fluxbb.conf
     owner=root group=root mode=0644
   notify: restart php-fpm@fluxbb
 
-- name: start and enable systemd socket
+- name: Start and enable systemd socket
   service: name=php-fpm@fluxbb.socket state=started enabled=true

@@ -1,4 +1,4 @@
-- name: setup redirect.archlinux.org
+- name: Setup redirect.archlinux.org
   hosts: redirect.archlinux.org
   remote_user: root
   roles:

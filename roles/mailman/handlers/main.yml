@@ -1,13 +1,13 @@
-- name: restart mailman
+- name: Restart mailman
   service: name=mailman daemon_reload=yes state=restarted
 
-- name: reload mailman
+- name: Reload mailman
   service: name=mailman state=reloaded
 
-- name: reload postfix
+- name: Reload postfix
   service: name=postfix state=reloaded
 
-- name: run postmap
+- name: Run postmap
   command: postmap /etc/postfix/{{ item }}
   loop:
     - aliases

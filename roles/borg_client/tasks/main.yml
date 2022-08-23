@@ -1,7 +1,7 @@
-- name: install borg and tools
+- name: Install borg and tools
   pacman: name=borg state=present
 
-- name: check if borg repository already exists
+- name: Check if borg repository already exists
   command: "{{ item['borg_cmd'] }} list {{ item['host'] }}/{{ item['dir'] }}"
   environment:
     BORG_RELOCATED_REPO_ACCESS_IS_OK: "yes"
@@ -10,59 +10,57 @@
   loop: "{{ backup_hosts }}"
   changed_when: borg_list.stdout | length > 0
 
-- name: init borg repository
+- name: Init borg repository  # noqa ignore-errors
   command: "{{ item['borg_cmd'] }} init -e keyfile {{ item['host'] }}/{{ item['dir'] }}"
   when: borg_list is failed
   environment:
     BORG_PASSPHRASE: ""
   ignore_errors: true  # This can sometimes fail if a backup is in progress :/
   loop: "{{ backup_hosts }}"
-  tags:
-    - skip_ansible_lint
 
 
-- name: install convenience scripts
+- name: Install convenience scripts
   template: src=borg.j2 dest=/usr/local/bin/borg{{ item['suffix'] }} owner=root group=root mode=0755
   loop: "{{ backup_hosts }}"
 
-- name: install borg backup scripts
+- name: Install borg backup scripts
   template: src=borg-backup.sh.j2 dest=/usr/local/bin/borg-backup{{ item['suffix'] }}.sh owner=root group=root mode=0755
   loop: "{{ backup_hosts }}"
 
-- name: install postgres backup script
+- name: Install postgres backup script
   template: src=backup-postgres.sh.j2 dest=/usr/local/bin/backup-postgres.sh owner=root group=root mode=0755
   when: postgres_backup_dir is defined
 
-- name: check whether postgres user exists
+- name: Check whether postgres user exists
   command: getent passwd postgres
   register: check_postgres_user
   ignore_errors: true
   changed_when: check_postgres_user.stdout | length > 0
 
-- name: make postgres backup directory
+- name: Make postgres backup directory
   file: path={{ postgres_backup_dir }} owner=root group=root mode=0755 state=directory
   when: check_postgres_user is succeeded and postgres_backup_dir is defined
 
-- name: install mysql backup script
+- name: Install mysql backup script
   template: src=backup-mysql.sh.j2 dest=/usr/local/bin/backup-mysql.sh owner=root group=root mode=0755
   when: mysql_backup_dir is defined
 
-- name: install mysql backup config
+- name: Install mysql backup config
   template: src=backup-my.cnf.j2 dest={{ mysql_backup_defaults }} owner=root group=root mode=0644
   when: mysql_backup_defaults is defined
 
-- name: create mysql backup directory
+- name: Create mysql backup directory
   file: path={{ mysql_backup_dir }} state=directory owner=root group=root mode=0755
   when: mysql_backup_dir is defined
 
-- name: install systemd services for backup
+- name: Install systemd services for backup
   template: src={{ item }}.j2 dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
     - borg-backup.service
     - borg-backup-offsite.service
 
-- name: install systemd timer for backup
+- name: Install systemd timer for backup
   copy: src=borg-backup.timer dest=/etc/systemd/system/borg-backup.timer owner=root group=root mode=0644
 
-- name: activate systemd timer for backup
+- name: Activate systemd timer for backup
   systemd: name=borg-backup.timer enabled=yes state=started daemon-reload=yes

@@ -1,62 +1,62 @@
-- name: ensure latest keyring
+- name: Ensure latest keyring
   pacman:
     name: archlinux-keyring
     state: latest
     update_cache: yes
 
-- name: upgrade all packages
+- name: Upgrade all packages
   pacman:
     upgrade: yes
   register: pacman_upgrade
 
-- name: stop if no packages were upgraded
+- name: Stop if no packages were upgraded
   meta: end_host
   when: pacman_upgrade is not changed
 
-- name: check for running builds
+- name: Check for running builds
   block:
-    - name: list build-related processes
+    - name: List build-related processes
       command: pgrep -x 'mkarchroot|makechrootpkg|systemd-nspawn'
       register: pgrep
       ignore_errors: true
 
-    - name: abort reboot with running builds
+    - name: Abort reboot with running builds
       meta: end_host
       when: pgrep is succeeded
   when: "'buildservers' in group_names"
 
 
-- name: check for active borg backup jobs
+- name: Check for active borg backup jobs
   block:
-    - name: check if /backup exists
+    - name: Check if /backup exists
       stat: path=/backup
       register: backup_mountdir
 
-    - name: abort reboot when borg backup is running
+    - name: Abort reboot when borg backup is running
       meta: end_host
       when: backup_mountdir.stat.exists
   when: "'borg_clients' in group_names"
 
-- name: gemini pre-reboot checks
+- name: Gemini pre-reboot checks
   block:
-    - name: list logged on users
+    - name: List logged on users
       command: who
       register: who
 
-    - name: abort reboot with logged on users
+    - name: Abort reboot with logged on users
       meta: end_host
       when:
         - who is changed
         - who.stdout_lines|length > 1
 
-    - name: stop arch-svntogit.timer
+    - name: Stop arch-svntogit.timer
       service: name=arch-svntogit.timer state=stopped
 
-    - name: wait for svntogit to finish
+    - name: Wait for svntogit to finish
       wait_for:
         path: /srv/svntogit/update-repos.sh.lock
         state: absent
   when: inventory_hostname == "gemini.archlinux.org"
 
-- name: reboot
+- name: Reboot
   reboot:

@@ -1,2 +1,2 @@
-- name: reload prometheus
+- name: Reload prometheus
   service: name=prometheus state=reloaded

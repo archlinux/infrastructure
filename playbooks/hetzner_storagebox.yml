@@ -1,4 +1,4 @@
-- name: setup Hetzner storagebox account
+- name: Setup Hetzner storagebox account
   hosts: localhost
   gather_facts: false
   vars_files:

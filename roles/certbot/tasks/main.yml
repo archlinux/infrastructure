@@ -1,30 +1,30 @@
-- name: install certbot
+- name: Install certbot
   pacman: name=certbot{{ ",certbot-dns-rfc2136" if certbot_dns_support }} state=present
 
-- name: install rfc2136.ini
+- name: Install rfc2136.ini
   template: src=rfc2136.ini.j2 dest=/etc/letsencrypt/rfc2136.ini owner=root group=root mode=0600
   when: certbot_dns_support
 
-- name: install letsencrypt hook
+- name: Install letsencrypt hook
   copy: src=hook.sh dest=/etc/letsencrypt/hook.sh owner=root group=root mode=0755
 
-- name: create letsencrypt hook dir
+- name: Create letsencrypt hook dir
   file: state=directory path=/etc/letsencrypt/hook.d owner=root group=root mode=0755
 
-- name: install letsencrypt renewal service
+- name: Install letsencrypt renewal service
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
     - certbot-renewal.service
     - certbot-renewal.timer
 
-- name: activate letsencrypt renewal service
+- name: Activate letsencrypt renewal service
   systemd:
     name: certbot-renewal.timer
     enabled: true
     state: started
     daemon_reload: true
 
-- name: open firewall holes for certbot standalone authenticator
+- name: Open firewall holes for certbot standalone authenticator
   ansible.posix.firewalld: service={{ item }} permanent=true state=enabled immediate=yes
   with_items:
     - http

@@ -1,13 +1,13 @@
-- name: install docker dependencies
+- name: Install docker dependencies
   pacman: name=docker,python-docker state=present
 
-- name: start docker
+- name: Start docker
   service: name=docker enabled=yes state=started
 
-- name: copy sshd_config into place to change the port to 222
+- name: Copy sshd_config into place to change the port to 222
   copy: src=sshd_config dest=/srv/gitlab/sshd_config owner=root group=root mode=640
 
-- name: start docker gitlab image
+- name: Start docker gitlab image
   docker_container:
     name: gitlab
     image: gitlab/gitlab-ee:latest
@@ -99,11 +99,11 @@
       - "/srv/gitlab/data:/var/opt/gitlab"
       - "/srv/gitlab/sshd_config:/assets/sshd_config"
 
-- name: prune unused docker images
+- name: Prune unused docker images
   docker_prune:
     images: true
 
-- name: open firewall holes
+- name: Open firewall holes
   ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes
   when: configure_firewall
   with_items:
@@ -114,11 +114,11 @@
   tags:
     - firewall
 
-- name: copy gitlab-cleanup timer and service
+- name: Copy gitlab-cleanup timer and service
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
     - gitlab-cleanup.timer
     - gitlab-cleanup.service
 
-- name: activate systemd timers for gitlab-cleanup
+- name: Activate systemd timers for gitlab-cleanup
   systemd: name=gitlab-cleanup.timer enabled=yes state=started daemon-reload=yes

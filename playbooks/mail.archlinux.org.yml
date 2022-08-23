@@ -1,4 +1,4 @@
-- name: setup mail.archlinux.org
+- name: Setup mail.archlinux.org
   hosts: mail.archlinux.org
   remote_user: root
   roles:

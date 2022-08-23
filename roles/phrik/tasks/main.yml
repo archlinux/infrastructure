@@ -1,34 +1,34 @@
-- name: install phrik utilities
+- name: Install phrik utilities
   pacman: name=git,pkgfile,polkit state=present
 
-- name: add phrik group
+- name: Add phrik group
   group: name=phrik gid=1100 state=present
 
-- name: add phrik user
+- name: Add phrik user
   user: name=phrik group=phrik uid=1100 comment="phrik IRC bot" createhome=yes
 
-- name: adding users to phrik group
+- name: Adding users to phrik group
   user: groups=phrik name="{{ item }}" append=yes
   with_items:
     - demize
   tags: ['archusers']
 
-- name: adding users to systemd-journal group for monitoring
+- name: Adding users to systemd-journal group for monitoring
   user: groups=systemd-journal name="{{ item }}" append=yes
   with_items:
     - demize
   tags: ['archusers']
 
-- name: install phrik sudoers config
+- name: Install phrik sudoers config
   copy: src=sudoers dest=/etc/sudoers.d/phrik owner=root group=root mode=0440
 
-- name: install polkit rule for restarting phrik
+- name: Install polkit rule for restarting phrik
   copy: src=20-manage-phrik.rules dest=/etc/polkit-1/rules.d/20-manage-phrik.rules owner=root group=root mode=0644
 
-- name: install phrik systemd service
+- name: Install phrik systemd service
   copy: src=phrik.service dest=/etc/systemd/system/phrik.service owner=root group=root mode=0644
 
-- name: start and enable pkgfile and phrikservice
+- name: Start and enable pkgfile and phrikservice
   systemd:
     name: "{{ item }}"
     enabled: true

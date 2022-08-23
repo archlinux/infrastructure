@@ -1,4 +1,4 @@
-- name: setup rsync.net account
+- name: Setup rsync.net account
   hosts: localhost
   gather_facts: false
   vars_files:

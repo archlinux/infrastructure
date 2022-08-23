@@ -1,7 +1,7 @@
-- name: restart php-fpm@archwiki
+- name: Restart php-fpm@archwiki
   service: name=php-fpm@{{ archwiki_user }} state=restarted
 
-- name: run wiki updatescript
+- name: Run wiki updatescript
   command: php {{ archwiki_dir }}/public/maintenance/update.php --quick
   become: true
   become_user: "{{ archwiki_user }}"
@@ -11,7 +11,7 @@
 # otherwise nginx will spit errors into the log until it is restarted (even
 # reload is not enough).
 # reference: https://stackoverflow.com/a/6896903
-- name: purge nginx cache
+- name: Purge nginx cache
   command: find /var/lib/nginx/cache -type f -delete
 
 # The MediaWiki file cache can be invalidated by deleting the files in the
@@ -20,5 +20,5 @@
 # being set to true). References:
 # - https://www.mediawiki.org/wiki/Manual:File_cache
 # - https://www.mediawiki.org/wiki/Manual:$wgInvalidateCacheOnLocalSettingsChange
-- name: invalidate MediaWiki file cache
+- name: Invalidate MediaWiki file cache
   file: path="{{ archwiki_dir }}/public/LocalSettings.php" state=touch owner=archwiki group=archwiki mode=0640

@@ -1,4 +1,4 @@
-- name: run maintenance mode
+- name: Run maintenance mode
   include_role:
     name: maintenance
   vars:
@@ -9,41 +9,41 @@
     service_nginx_template: "maintenance-nginx.d.conf.j2"
   when: maintenance is defined and archweb_site
 
-- name: install required packages
+- name: Install required packages
   pacman: name=git,python-setuptools,python-psycopg2,llvm-libs,uwsgi-plugin-python state=present
 
-- name: make archweb user
+- name: Make archweb user
   user: name=archweb shell=/bin/false home="{{ archweb_dir }}" createhome=no
 
-- name: fix home permissions
+- name: Fix home permissions
   file: state=directory owner=archweb group=archweb mode=0755 path="{{ archweb_dir }}"
 
-- name: set archweb groups
+- name: Set archweb groups
   user: name=archweb groups=uwsgi
   when: archweb_site|bool
 
-- name: create ssl cert
+- name: Create ssl cert
   include_role:
     name: certificate
   vars:
     domains: "{{ [archweb_domain] + archweb_alternate_domains }}"
   when: archweb_site|bool and maintenance is not defined
 
-- name: set up nginx
+- name: Set up nginx
   template: src=nginx.d.conf.j2 dest="{{ archweb_nginx_conf }}" owner=root group=root mode=644
   notify: reload nginx
   when: archweb_site|bool and maintenance is not defined
   tags: ['nginx']
 
-- name: make nginx log dir
+- name: Make nginx log dir
   file: path=/var/log/nginx/{{ archweb_domain }} state=directory owner=root group=root mode=0755
   when: archweb_site|bool
 
-- name: make rsync iso dir
+- name: Make rsync iso dir
   file: path={{ archweb_rsync_iso_dir }} state=directory owner=archweb group=archweb mode=0755
   when: archweb_site|bool
 
-- name: clone archweb repo
+- name: Clone archweb repo
   git: >
     repo={{ archweb_repository }}
     dest="{{ archweb_dir }}"
@@ -54,36 +54,36 @@
   become_user: archweb
   register: release
 
-- name: make virtualenv
+- name: Make virtualenv
   command: python -m venv --system-site-packages "{{ archweb_dir }}"/env creates="{{ archweb_dir }}/env/bin/python"
   become: true
   become_user: archweb
 
-- name: install stuff into virtualenv
+- name: Install stuff into virtualenv
   pip: requirements="{{ archweb_dir }}/requirements_prod.txt" virtualenv="{{ archweb_dir }}/env"
   become: true
   become_user: archweb
   register: virtualenv
 
-- name: create media dir
+- name: Create media dir
   file: state=directory owner=archweb group=archweb mode=0755 path="{{ archweb_dir }}/media"
   when: archweb_site|bool
 
-- name: fix home permissions
+- name: Fix home permissions
   file: state=directory owner=archweb group=archweb mode=0755 path="{{ archweb_dir }}"
 
-- name: make archlinux.org dir
+- name: Make archlinux.org dir
   file: path="{{ archweb_dir }}/archlinux.org" state=directory owner=archweb group=archweb mode=0755
 
-- name: configure robots.txt
+- name: Configure robots.txt
   copy: src=robots.txt dest="{{ archweb_dir }}/archlinux.org/robots.txt" owner=root group=root mode=0644
 
-- name: configure archweb
+- name: Configure archweb
   template: src=local_settings.py.j2 dest={{ archweb_dir }}/local_settings.py owner=archweb group=archweb mode=0660
   register: config
   no_log: true
 
-- name: create archweb db users
+- name: Create archweb db users
   postgresql_user: name={{ item.user }} password={{ item.password }} login_host="{{ archweb_db_host }}" login_password="{{ vault_postgres_users.postgres }}" encrypted=yes
   no_log: true
   when: archweb_site or archweb_services
@@ -93,18 +93,18 @@
     - { user: "{{ archweb_db_dbscripts_user }}", password: "{{ vault_archweb_db_dbscripts_password }}" }
     - { user: "{{ archweb_db_backup_user }}", password: "{{ vault_archweb_db_backup_password }}" }
 
-- name: create archweb db
+- name: Create archweb db
   postgresql_db: name="{{ archweb_db }}" login_host="{{ archweb_db_host }}" login_password="{{ vault_postgres_users.postgres }}" owner="{{ archweb_db_site_user }}"
   when: archweb_site or archweb_services
   register: db_created
 
-- name: django migrate
+- name: Django migrate
   django_manage: app_path="{{ archweb_dir }}" command=migrate virtualenv="{{ archweb_dir }}/env"
   become: true
   become_user: archweb
   when: archweb_site and (db_created.changed or release.changed or config.changed or virtualenv.changed or archweb_forced_deploy)
 
-- name: db privileges for archweb users
+- name: DB privileges for archweb users
   postgresql_privs: database="{{ archweb_db }}" host="{{ archweb_db_host }}" login="{{ archweb_db_site_user }}" password="{{ vault_archweb_db_site_password }}"
                     privs=CONNECT roles="{{ item }}" type=database
   when: archweb_site or archweb_services
@@ -113,7 +113,7 @@
     - "{{ archweb_db_dbscripts_user }}"
     - "{{ archweb_db_backup_user }}"
 
-- name: table privileges for archweb users
+- name: Table privileges for archweb users
   postgresql_privs: database="{{ archweb_db }}" host="{{ archweb_db_host }}" login="{{ archweb_db_site_user }}" password="{{ vault_archweb_db_site_password }}"
                     privs=SELECT roles="{{ item.user }}" type=table objs="{{ item.objs }}"
   when: archweb_site or archweb_services
@@ -122,7 +122,7 @@
     - { user: "{{ archweb_db_dbscripts_user }}", objs: "{{ archweb_db_dbscripts_table_objs }}" }
     - { user: "{{ archweb_db_backup_user }}", objs: "{{ archweb_db_backup_table_objs }}" }
 
-- name: sequence privileges for archweb users
+- name: Sequence privileges for archweb users
   postgresql_privs: database="{{ archweb_db }}" host="{{ archweb_db_host }}" login="{{ archweb_db_site_user }}" password="{{ vault_archweb_db_site_password }}"
                     privs=SELECT roles="{{ item.user }}" type=sequence objs="{{ item.objs }}"
   when: archweb_site or archweb_services
@@ -130,25 +130,25 @@
     - { user: "{{ archweb_db_services_user }}", objs: "{{ archweb_db_services_sequence_objs }}" }
     - { user: "{{ archweb_db_backup_user }}", objs: "{{ archweb_db_backup_sequence_objs }}" }
 
-- name: django collectstatic
+- name: Django collectstatic
   django_manage: app_path="{{ archweb_dir }}" command=collectstatic virtualenv="{{ archweb_dir }}/env"
   become: true
   become_user: archweb
   when: archweb_site and (db_created.changed or release.changed or config.changed or virtualenv.changed or archweb_forced_deploy)
 
-- name: install reporead service
+- name: Install reporead service
   template: src="archweb-reporead.service.j2" dest="/etc/systemd/system/archweb-reporead.service" owner=root group=root mode=0644
   notify:
     - daemon reload
   when: archweb_services or archweb_reporead
 
-- name: install readlinks service
+- name: Install readlinks service
   template: src="archweb-readlinks.service.j2" dest="/etc/systemd/system/archweb-readlinks.service" owner=root group=root mode=0644
   notify:
     - daemon reload
   when: archweb_services or archweb_reporead
 
-- name: install mirrorcheck service and timer
+- name: Install mirrorcheck service and timer
   template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
   with_items:
     - archweb-mirrorcheck.service
@@ -157,7 +157,7 @@
     - daemon reload
   when: archweb_services or archweb_mirrorcheck
 
-- name: install mirrorresolv service and timer
+- name: Install mirrorresolv service and timer
   template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
   with_items:
     - archweb-mirrorresolv.service
@@ -166,7 +166,7 @@
     - daemon reload
   when: archweb_services or archweb_mirrorresolv
 
-- name: install populate_signoffs service and timer
+- name: Install populate_signoffs service and timer
   template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
   with_items:
     - archweb-populate_signoffs.service
@@ -175,7 +175,7 @@
     - daemon reload
   when: archweb_services or archweb_populate_signoffs
 
-- name: install planet service and timer
+- name: Install planet service and timer
   template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
   with_items:
     - archweb-planet.service
@@ -184,7 +184,7 @@
     - daemon reload
   when: archweb_planet
 
-- name: install rebuilderd status service and timer
+- name: Install rebuilderd status service and timer
   template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
   with_items:
     - archweb-rebuilderd.service
@@ -193,27 +193,27 @@
     - daemon reload
   when: archweb_site
 
-- name: install pgp_import service
+- name: Install pgp_import service
   template: src="archweb-pgp_import.service.j2" dest="/etc/systemd/system/archweb-pgp_import.service" owner=root group=root mode=0644
   notify:
     - daemon reload
   when: archweb_services or archweb_pgp_import
 
-- name: create pacman.d hooks dir
+- name: Create pacman.d hooks dir
   file: state=directory owner=root group=root mode=0750 path="/etc/pacman.d/hooks"
   when: archweb_services or archweb_pgp_import
 
-- name: install pgp_import hook
+- name: Install pgp_import hook
   template: src="archweb-pgp_import-pacman-hook.j2" dest="/etc/pacman.d/hooks/archweb-pgp_import.hook" owner=root group=root mode=0644
   when: archweb_services or archweb_pgp_import
 
-- name: install archweb memcached service
+- name: Install archweb memcached service
   template: src="archweb-memcached.service.j2" dest="/etc/systemd/system/archweb-memcached.service" owner=root group=root mode=0644
   notify:
     - daemon reload
   when: archweb_site|bool
 
-- name: install archweb rsync iso service and timer
+- name: Install archweb rsync iso service and timer
   template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
   with_items:
     - archweb-rsync_iso.service
@@ -222,16 +222,16 @@
     - daemon reload
   when: archweb_site|bool
 
-- name: deploy archweb
+- name: Deploy archweb
   template: src=archweb.ini.j2 dest=/etc/uwsgi/vassals/archweb.ini owner=archweb group=http mode=0640
   when: archweb_site|bool
 
-- name: deploy new release
+- name: Deploy new release
   file: path=/etc/uwsgi/vassals/archweb.ini state=touch owner=archweb group=http mode=0640
   when: archweb_site and (release.changed or config.changed or virtualenv.changed or archweb_forced_deploy)
   notify: restart archweb memcached
 
-- name: start and enable archweb memcached service and archweb-rsync_iso timer
+- name: Start and enable archweb memcached service and archweb-rsync_iso timer
   systemd:
     name: "{{ item }}"
     enabled: true
@@ -242,55 +242,55 @@
     - archweb-rsync_iso.timer
   when: archweb_site|bool
 
-- name: start and enable archweb reporead service
+- name: Start and enable archweb reporead service
   service: name="archweb-reporead.service" enabled=yes state=started
   when: archweb_services or archweb_reporead
 
-- name: restart archweb reporead service
+- name: Restart archweb reporead service
   service: name="archweb-reporead.service" state=restarted
   when: archweb_services or archweb_reporead and (release.changed or config.changed or virtualenv.changed or archweb_forced_deploy)
 
-- name: start and enable archweb readlinks service
+- name: Start and enable archweb readlinks service
   service: name="archweb-readlinks.service" enabled=yes state=started
   when: archweb_services or archweb_reporead
 
-- name: restart archweb readlinks service
+- name: Restart archweb readlinks service
   service: name="archweb-readlinks.service" state=restarted
   when: archweb_services or archweb_reporead and (release.changed or config.changed or virtualenv.changed or archweb_forced_deploy)
 
-- name: start and enable archweb mirrorcheck timer
+- name: Start and enable archweb mirrorcheck timer
   service: name="archweb-mirrorcheck.timer" enabled=yes state=started
   when: archweb_services or archweb_mirrorcheck
 
-- name: start and enable archweb mirrorresolv timer
+- name: Start and enable archweb mirrorresolv timer
   service: name="archweb-mirrorresolv.timer" enabled=yes state=started
   when: archweb_services or archweb_mirrorresolv
 
-- name: start and enable archweb populate_signoffs timer
+- name: Start and enable archweb populate_signoffs timer
   service: name="archweb-populate_signoffs.timer" enabled=yes state=started
   when: archweb_services or archweb_populate_signoffs
 
-- name: start and enable archweb planet timer
+- name: Start and enable archweb planet timer
   service: name="archweb-planet.timer" enabled=yes state=started
   when: archweb_planet
 
-- name: start and enable archweb rebulderd update timer
+- name: Start and enable archweb rebulderd update timer
   service: name="archweb-rebuilderd.timer" enabled=yes state=started
   when: archweb_site
 
-- name: install donation import wrapper script
+- name: Install donation import wrapper script
   template: src=donor_import_wrapper.sh.j2 dest=/usr/local/bin/donor_import_wrapper.sh owner=root group=root mode=0755
   when: archweb_site
 
-- name: install sudoer rights for fetchmail to call archweb django scripts
+- name: Install sudoer rights for fetchmail to call archweb django scripts
   template: src=sudoers-fetchmail-archweb.j2 dest=/etc/sudoers.d/fetchmail-archweb owner=root group=root mode=0440
   when: archweb_site
 
-- name: create retro dir
+- name: Create retro dir
   file: state=directory owner=archweb group=archweb mode=0755 path="{{ archweb_retro_dir }}"
   when: archweb_site|bool
 
-- name: clone archweb-retro repo
+- name: Clone archweb-retro repo
   git:
     repo: "{{ archweb_retro_repository }}"
     dest: "{{ archweb_retro_dir }}"

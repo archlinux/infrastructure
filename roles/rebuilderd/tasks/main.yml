@@ -1,30 +1,30 @@
-- name: install required packages
+- name: Install required packages
   pacman: name=rebuilderd,rebuilderd-website state=present
 
-- name: create ssl cert
+- name: Create ssl cert
   include_role:
     name: certificate
   vars:
     domains: ["{{ rebuilderd_domain }}"]
 
-- name: configure rebuilderd.conf
+- name: Configure rebuilderd.conf
   template: src=rebuilderd.conf.j2 dest=/etc/rebuilderd.conf owner=rebuilderd group=rebuilderd mode=0660
 
-- name: configure rebuilderd-sync.conf
+- name: Configure rebuilderd-sync.conf
   template: src=rebuilderd-sync.conf.j2 dest=/etc/rebuilderd-sync.conf owner=rebuilderd group=rebuilderd mode=0660
 
-- name: make nginx log dir
+- name: Make nginx log dir
   file: path=/var/log/nginx/{{ rebuilderd_domain }} state=directory owner=root group=root mode=0755
 
-- name: set up nginx
+- name: Set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/rebuilderd.conf owner=root group=root mode=0644
   notify:
     - reload nginx
   tags: ['nginx']
 
-- name: enable and start rebuilderd
+- name: Enable and start rebuilderd
   systemd: name=rebuilderd enabled=yes state=started
 
-- name: enable and start rebuilderd {{ item }} timer
+- name: Enable and start rebuilderd {{ item }} timer
   systemd: name=rebuilderd-sync@archlinux-{{ item }}.timer enabled=yes state=started
   with_items: "{{ suites }}"

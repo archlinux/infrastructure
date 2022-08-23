@@ -1,27 +1,27 @@
-- name: install prometheus-node-exporter
+- name: Install prometheus-node-exporter
   pacman: name=prometheus-node-exporter,arch-audit,pacman-contrib,jq,hq,sudo state=present
 
-- name: install prometheus-blackbox-exporter
+- name: Install prometheus-blackbox-exporter
   pacman: name=prometheus-blackbox-exporter state=present
   when: "'prometheus' in group_names"
 
-- name: install smartmontools for dedicated servers
+- name: Install smartmontools for dedicated servers
   pacman: name=smartmontools state=present
   when: "'dedicated_servers' in group_names"
 
-- name: install prometheus-memcached-exporter
+- name: Install prometheus-memcached-exporter
   pacman: name=prometheus-memcached-exporter state=present
   when: "'memcached' in group_names"
 
-- name: add node_exporter to rebuilderd group
+- name: Add node_exporter to rebuilderd group
   user: name=node_exporter groups=rebuilderd append=yes
   when: "'rebuilderd' in group_names"
 
-- name: install prometheus-mysqld-exporter
+- name: Install prometheus-mysqld-exporter
   pacman: name=prometheus-mysqld-exporter state=present
   when: "'mysql_servers' in group_names"
 
-- name: create prometheus mysqld database user
+- name: Create prometheus mysqld database user
   mysql_user:
     name: '{{ prometheus_mysqld_user }}'
     password: '{{ vault_monitoring_mysql_password }}'
@@ -31,25 +31,25 @@
       MAX_USER_CONNECTIONS: 3
   when: "'mysql_servers' in group_names"
 
-- name: copy prometheus mysqld exporter configuration
+- name: Copy prometheus mysqld exporter configuration
   template: src=prometheus-mysqld-exporter.j2 dest=/etc/conf.d/prometheus-mysqld-exporter owner=root group=root mode=600
   when: "'mysql_servers' in group_names"
 
-- name: enable prometheus-mysqld-exporter service
+- name: Enable prometheus-mysqld-exporter service
   systemd: name=prometheus-mysqld-exporter enabled=yes daemon_reload=yes state=started
   when: "'mysql_servers' in group_names"
 
-- name: copy prometheus memcached exporter configuration
+- name: Copy prometheus memcached exporter configuration
   template: src=prometheus-memcached-exporter.j2 dest=/etc/conf.d/prometheus-memcached-exporter owner=root group=root mode=600
   when: "'memcached' in group_names"
 
-- name: install node exporter configuration
+- name: Install node exporter configuration
   template: src=prometheus-node-exporter.env.j2 dest=/etc/conf.d/prometheus-node-exporter owner=root group=root mode=600
 
-- name: create textcollector directory
+- name: Create textcollector directory
   file: path="{{ prometheus_textfile_dir }}" state=directory owner=node_exporter group=node_exporter mode=700
 
-- name: install node exporter textcollector scripts
+- name: Install node exporter textcollector scripts
   copy: src={{ item }} dest=/usr/local/bin/{{ item }} owner=root group=root mode=0755
   with_items:
     - arch-textcollector.sh
@@ -65,177 +65,177 @@
     - fail2ban-textcollector.sh
     - smart-textcollector.sh
 
-- name: install arch textcollector service
+- name: Install arch textcollector service
   template: src=prometheus-arch-textcollector.service.j2 dest=/etc/systemd/system/prometheus-arch-textcollector.service owner=root group=root mode=644
 
-- name: install arch textcollector timer
+- name: Install arch textcollector timer
   template: src=prometheus-arch-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-arch-textcollector.timer owner=root group=root mode=644
 
-- name: enable and start prometheus arch textcollector timer
+- name: Enable and start prometheus arch textcollector timer
   systemd: name=prometheus-arch-textcollector.timer enabled=yes daemon_reload=yes state=started
 
-- name: install borg textcollector services
+- name: Install borg textcollector services
   template: src=prometheus-borg-textcollector.service.j2 dest=/etc/systemd/system/prometheus-{{ item.name }}-textcollector.service owner=root group=root mode=644
   loop:
     - { name: borg, service: borg-backup }
     - { name: borg-offsite, service: borg-backup-offsite }
   when: "'borg_clients' in group_names"
 
-- name: enable borg textcollector services
+- name: Enable borg textcollector services
   systemd: name=prometheus-{{ item.name }}-textcollector.service enabled=yes daemon_reload=yes
   loop:
     - { name: borg, service: borg-backup }
     - { name: borg-offsite, service: borg-backup-offsite }
   when: "'borg_clients' in group_names"
 
-- name: install smart textcollector service
+- name: Install smart textcollector service
   template: src=prometheus-smart-textcollector.service.j2 dest=/etc/systemd/system/prometheus-smart-textcollector.service owner=root group=root mode=644
   when: "'dedicated_servers' in group_names"
 
-- name: install smart textcollector timer
+- name: Install smart textcollector timer
   template: src=prometheus-smart-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-smart-textcollector.timer owner=root group=root mode=644
   when: "'dedicated_servers' in group_names"
 
-- name: enable and start prometheus smart textcollector timer
+- name: Enable and start prometheus smart textcollector timer
   systemd: name=prometheus-smart-textcollector.timer enabled=yes daemon_reload=yes state=started
   when: "'dedicated_servers' in group_names"
 
-- name: install hetzner textcollector service
+- name: Install hetzner textcollector service
   template: src=prometheus-hetzner-textcollector.service.j2 dest=/etc/systemd/system/prometheus-hetzner-textcollector.service owner=root group=root mode=644
   when: "inventory_hostname == 'monitoring.archlinux.org'"
 
-- name: install hetzner textcollector timer
+- name: Install hetzner textcollector timer
   template: src=prometheus-hetzner-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-hetzner-textcollector.timer owner=root group=root mode=644
   when: "inventory_hostname == 'monitoring.archlinux.org'"
 
-- name: enable and start prometheus hetzner textcollector timer
+- name: Enable and start prometheus hetzner textcollector timer
   systemd: name=prometheus-hetzner-textcollector.timer enabled=yes daemon_reload=yes state=started
   when: "inventory_hostname == 'monitoring.archlinux.org'"
 
-- name: install gitlab-exporter
+- name: Install gitlab-exporter
   pacman: name=gitlab-exporter state=present
   when: "inventory_hostname == 'gitlab.archlinux.org'"
 
-- name: install gitlab-exporter service and configuration
+- name: Install gitlab-exporter service and configuration
   template: src="{{ item.src }}" dest="{{ item.dest }}" owner=root group=root mode="{{ item.mode }}"
   with_items:
     - { src: 'gitlab-exporter.conf.j2', dest: '/etc/conf.d/gitlab-exporter', mode: '0600' }
     - { src: 'gitlab-exporter.service.j2', dest: '/etc/systemd/system/gitlab-exporter.service', mode: '0644' }
   when: "inventory_hostname == 'gitlab.archlinux.org'"
 
-- name: install gitlab-exporter timer
+- name: Install gitlab-exporter timer
   copy: src=gitlab-exporter.timer dest="/etc/systemd/system/gitlab-exporter.timer" owner=root group=root mode=0644
   when: "inventory_hostname == 'gitlab.archlinux.org'"
 
-- name: enable and start gitlab-exporter timer
+- name: Enable and start gitlab-exporter timer
   systemd: name=gitlab-exporter.timer enabled=yes daemon_reload=yes state=started
   when: "inventory_hostname == 'gitlab.archlinux.org'"
 
-- name: install fail2ban textcollector service
+- name: Install fail2ban textcollector service
   template: src=prometheus-fail2ban-textcollector.service.j2 dest=/etc/systemd/system/prometheus-fail2ban-textcollector.service owner=root group=root mode=644
 
-- name: install fail2ban textcollector timer
+- name: Install fail2ban textcollector timer
   template: src=prometheus-fail2ban-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-fail2ban-textcollector.timer owner=root group=root mode=644
 
-- name: enable and start prometheus fail2ban textcollector timer
+- name: Enable and start prometheus fail2ban textcollector timer
   systemd: name=prometheus-fail2ban-textcollector.timer enabled=yes daemon_reload=yes state=started
 
-- name: install blackbox exporter configuration
+- name: Install blackbox exporter configuration
   template: src=blackbox.yml.j2 dest=/etc/prometheus/blackbox.yml owner=root group=root mode=0644
   notify: reload blackbox exporter
   when: "'prometheus' in group_names"
 
-- name: install rebuilderd textcollector service
+- name: Install rebuilderd textcollector service
   template: src=prometheus-rebuilderd-textcollector.service.j2 dest=/etc/systemd/system/prometheus-rebuilderd-textcollector.service owner=root group=root mode=644
   when: "'rebuilderd' in group_names"
 
-- name: install rebuilderd textcollector timer
+- name: Install rebuilderd textcollector timer
   template: src=prometheus-rebuilderd-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-rebuilderd-textcollector.timer owner=root group=root mode=644
   when: "'rebuilderd' in group_names"
 
-- name: enable and start prometheus rebuilderd textcollector timer
+- name: Enable and start prometheus rebuilderd textcollector timer
   systemd: name=prometheus-rebuilderd-textcollector.timer enabled=yes daemon_reload=yes state=started
   when: "'rebuilderd' in group_names"
 
-- name: install rebuilderd textcollector service
+- name: Install rebuilderd textcollector service
   template: src=prometheus-archive-textcollector.service.j2 dest=/etc/systemd/system/prometheus-archive-textcollector.service owner=root group=root mode=644
   when: "'archive_mirrors' in group_names or inventory_hostname == 'gemini.archlinux.org'"
 
-- name: install rebuilderd textcollector service
+- name: Install rebuilderd textcollector service
   template: src=prometheus-repository-textcollector.service.j2 dest=/etc/systemd/system/prometheus-repository-textcollector.service owner=root group=root mode=644
   when: "inventory_hostname == 'gemini.archlinux.org'"
 
-- name: install rebuilderd textcollector timer
+- name: Install rebuilderd textcollector timer
   template: src=prometheus-archive-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-archive-textcollector.timer owner=root group=root mode=644
   when: "'archive_mirrors' in group_names or inventory_hostname == 'gemini.archlinux.org'"
 
-- name: enable and start prometheus archive textcollector timer
+- name: Enable and start prometheus archive textcollector timer
   systemd: name=prometheus-archive-textcollector.timer enabled=yes daemon_reload=yes state=started
   when: "'archive_mirrors' in group_names or inventory_hostname == 'gemini.archlinux.org'"
 
-- name: install rebuilderd textcollector timer
+- name: Install rebuilderd textcollector timer
   template: src=prometheus-repository-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-repository-textcollector.timer owner=root group=root mode=644
   when: "inventory_hostname == 'gemini.archlinux.org'"
 
-- name: enable and start prometheus repository textcollector timer
+- name: Enable and start prometheus repository textcollector timer
   systemd: name=prometheus-repository-textcollector.timer enabled=yes daemon_reload=yes state=started
   when: "inventory_hostname == 'gemini.archlinux.org'"
 
-- name: install sudoers for btrfs
+- name: Install sudoers for btrfs
   copy: src=sudoers dest=/etc/sudoers.d/node_exporter owner=root group=root mode=0440
   when: filesystem == "btrfs"
 
-- name: install btrfs textcollector service
+- name: Install btrfs textcollector service
   template: src=prometheus-btrfs-textcollector.service.j2 dest=/etc/systemd/system/prometheus-btrfs-textcollector.service owner=root group=root mode=644
   when: filesystem == "btrfs"
 
-- name: install btrfs textcollector timer
+- name: Install btrfs textcollector timer
   template: src=prometheus-btrfs-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-btrfs-textcollector.timer owner=root group=root mode=644
   when: filesystem == "btrfs"
 
-- name: enable and start prometheus btrfs textcollector timer
+- name: Enable and start prometheus btrfs textcollector timer
   systemd: name=prometheus-btrfs-textcollector.timer enabled=yes daemon_reload=yes state=started
   when: filesystem == "btrfs"
 
-- name: install aur textcollector service
+- name: Install aur textcollector service
   template: src=prometheus-aur-textcollector.service.j2 dest=/etc/systemd/system/prometheus-aur-textcollector.service owner=root group=root mode=644
   when: "'prometheus' in group_names"
 
-- name: install aur textcollector timer
+- name: Install aur textcollector timer
   template: src=prometheus-aur-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-aur-textcollector.timer owner=root group=root mode=644
   when: "'prometheus' in group_names"
 
-- name: enable and start prometheus aur textcollector timer
+- name: Enable and start prometheus aur textcollector timer
   systemd: name=prometheus-aur-textcollector.timer enabled=yes daemon_reload=yes state=started
   when: "'prometheus' in group_names"
 
-- name: enable prometheus-node-exporter service
+- name: Enable prometheus-node-exporter service
   systemd: name=prometheus-node-exporter enabled=yes daemon_reload=yes state=started
 
-- name: enable prometheus-blackbox-exporter service
+- name: Enable prometheus-blackbox-exporter service
   systemd: name=prometheus-blackbox-exporter enabled=yes daemon_reload=yes state=started
   when: "'prometheus' in group_names"
 
-- name: enable prometheus-memcached-exporter service
+- name: Enable prometheus-memcached-exporter service
   systemd: name=prometheus-memcached-exporter enabled=yes daemon_reload=yes state=started
   when: "'memcached' in group_names"
 
-- name: open prometheus-node-exporter ipv4 port for monitoring.archlinux.org
+- name: Open prometheus-node-exporter ipv4 port for monitoring.archlinux.org
   ansible.posix.firewalld: state=enabled permanent=true immediate=yes
         rich_rule="rule family=ipv4 source address={{ hostvars['monitoring.archlinux.org']['ipv4_address'] }} port protocol=tcp port={{ prometheus_exporter_port }} accept"
   when: "'prometheus' not in group_names"
 
-- name: open gitlab exporter ipv4 port for monitoring.archlinux.org
+- name: Open gitlab exporter ipv4 port for monitoring.archlinux.org
   ansible.posix.firewalld: state=enabled permanent=true immediate=yes
         rich_rule="rule family=ipv4 source address={{ hostvars['monitoring.archlinux.org']['ipv4_address'] }} port protocol=tcp port={{ gitlab_runner_exporter_port }} accept"
   when: "'gitlab_runners' in group_names"
 
-- name: open prometheus mysqld exporter ipv4 port for monitoring.archlinux.org
+- name: Open prometheus mysqld exporter ipv4 port for monitoring.archlinux.org
   ansible.posix.firewalld: state=enabled permanent=true immediate=yes
         rich_rule="rule family=ipv4 source address={{ hostvars['monitoring.archlinux.org']['ipv4_address'] }} port protocol=tcp port={{ prometheus_mysqld_exporter_port }} accept"
   when: "'mysql_servers' in group_names"
 
-- name: open prometheus memcached exporter ipv4 port for monitoring.archlinux.org
+- name: Open prometheus memcached exporter ipv4 port for monitoring.archlinux.org
   ansible.posix.firewalld: state=enabled permanent=true immediate=yes
         rich_rule="rule family=ipv4 source address={{ hostvars['monitoring.archlinux.org']['ipv4_address'] }} port protocol=tcp port={{ prometheus_memcached_exporter_port }} accept"
   when: "'memcached' in group_names"

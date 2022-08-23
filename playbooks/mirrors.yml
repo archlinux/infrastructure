@@ -1,4 +1,4 @@
-- name: common playbook for mirrors
+- name: Common playbook for mirrors
   hosts: mirrors
   remote_user: root
   roles:

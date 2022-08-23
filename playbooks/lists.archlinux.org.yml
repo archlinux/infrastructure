@@ -1,4 +1,4 @@
-- name: setup mailman server
+- name: Setup mailman server
   hosts: lists.archlinux.org
   remote_user: root
   roles:

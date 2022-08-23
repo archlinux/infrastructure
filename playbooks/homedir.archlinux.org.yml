@@ -1,4 +1,4 @@
-- name: setup homedir.archlinux.org
+- name: Setup homedir.archlinux.org
   hosts: homedir.archlinux.org
   remote_user: root
   roles:

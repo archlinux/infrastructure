@@ -1,8 +1,8 @@
-- name: fill tempfile
+- name: Fill tempfile
   copy: content="{{ lookup('template', 'authorized_keys_client.j2') }}" dest="{{ tempfile.path }}" mode=preserve
   no_log: true
 
-- name: upload authorized_keys file to {{ backup_dir }}/{{ item.item }}
+- name: Upload authorized_keys file to {{ backup_dir }}/{{ item.item }}
   expect:
     command: |
       bash -c 'sftp {{ storagebox_username }}@{{ storagebox_hostname }} <<EOF

@@ -1,4 +1,4 @@
-- name: setup phrik bot server
+- name: Setup phrik bot server
   hosts: phrik.archlinux.org
   remote_user: root
   roles:

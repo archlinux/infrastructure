@@ -1,31 +1,31 @@
-- name: create ssl cert
+- name: Create ssl cert
   include_role:
     name: certificate
   vars:
     domains: ["{{ public_domain }}", "www.{{ public_domain }}"]
 
-- name: copy webroot files
+- name: Copy webroot files
   copy: src=public_html dest=/srv owner=root group=root mode=0644 directory_mode=0755
 
-- name: install public_html scripts
+- name: Install public_html scripts
   template: src=generate-public_html.j2 dest=/usr/local/bin/generate-public_html owner=root group=root mode=0755
 
-- name: install public_html units
+- name: Install public_html units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
     - generate-public_html.timer
     - generate-public_html.service
 
-- name: start and enable public_html units
+- name: Start and enable public_html units
   service: name={{ item }} enabled=yes state=started
   with_items:
     - generate-public_html.timer
     - generate-public_html.service
 
-- name: make nginx log dir
+- name: Make nginx log dir
   file: path=/var/log/nginx/{{ public_domain }} state=directory owner=root group=root mode=0755
 
-- name: set up nginx
+- name: Set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/public_html.conf owner=root group=root mode=0644
   notify:
     - reload nginx

@@ -1,19 +1,19 @@
-- name: install uwsgi
+- name: Install uwsgi
   pacman: name=uwsgi,uwsgitop state=present
 
-- name: make uwsgi user
+- name: Make uwsgi user
   user: name=uwsgi shell=/bin/false home=/ createhome=no
 
-- name: configure uwsgi
+- name: Configure uwsgi
   template: src=emperor.ini.j2 dest=/etc/uwsgi/emperor.ini owner=root group=root mode=0644
   notify:
     - restart emperor.uwsgi
 
-- name: vassals directory
+- name: Vassals directory
   file: state=directory path=/etc/uwsgi/vassals owner=root group=root mode=0755
 
-- name: create default uwsgi log directory
+- name: Create default uwsgi log directory
   file: state=directory path=/var/log/uwsgi owner=uwsgi group=http mode=0770
 
-- name: enable and start emperor.uwsgi.service
+- name: Enable and start emperor.uwsgi.service
   service: name=emperor.uwsgi enabled=yes state=started

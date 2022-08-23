@@ -1,4 +1,4 @@
-- name: setup prometheus server
+- name: Setup prometheus server
   hosts: monitoring.archlinux.org
   remote_user: root
   roles:

@@ -1,4 +1,4 @@
-- name: install required packages
+- name: Install required packages
   pacman:
     state: present
     name:
@@ -11,37 +11,37 @@
       - gcc
       - pkg-config
 
-- name: install the cgit package
+- name: Install the cgit package
   pacman:
     state: present
     name:
       - cgit-aurweb
   register: cgit
 
-- name: install the git package
+- name: Install the git package
   pacman:
     state: present
     name:
       - git
   register: git
 
-- name: make aur user
+- name: Make aur user
   user: name="{{ aurweb_user }}" shell=/bin/bash createhome=yes
   register: aur_user
 
-- name: create .ssh for the aur user
+- name: Create .ssh for the aur user
   file: path={{ aur_user.home }}/.ssh state=directory owner={{ aur_user.name }} group={{ aur_user.name }} mode=0700
 
-- name: install SSH key for mirroring to GitHub
+- name: Install SSH key for mirroring to GitHub
   copy: src=id_ed25519 dest={{ aur_user.home }}/.ssh/ owner={{ aur_user.name }} group={{ aur_user.name }} mode=0600
 
-- name: fetch host keys for github.com
+- name: Fetch host keys for github.com
   command: ssh-keyscan github.com
   args:
     creates: "{{ aur_user.home }}/.ssh/known_hosts"
   register: github_host_keys
 
-- name: write github.com host keys to the aur user's known_hosts
+- name: Write github.com host keys to the aur user's known_hosts
   lineinfile: name={{ aur_user.home }}/.ssh/known_hosts create=yes line={{ item }} owner={{ aur_user.name }} group={{ aur_user.name }} mode=0644
   loop: "{{ github_host_keys.stdout_lines }}"
   when: github_host_keys.changed
@@ -49,7 +49,7 @@
 - name: Create directory
   file: path={{ aurweb_dir }} state=directory owner={{ aurweb_user }} group=http mode=0775
 
-- name: receive valid signing keys
+- name: Receive valid signing keys
   command: /usr/bin/gpg --keyserver keys.openpgp.org --recv {{ item }}
   loop: '{{ aurweb_pgp_keys }}'
   become: true
@@ -57,7 +57,7 @@
   register: gpg
   changed_when: "gpg.rc == 0"
 
-- name: aurweb git repo check
+- name: Aurweb git repo check
   git: >
     repo={{ aurweb_repository }}
     dest="{{ aurweb_dir }}"
@@ -69,7 +69,7 @@
   register: release
   check_mode: true
 
-- name: install AUR systemd service and timers
+- name: Install AUR systemd service and timers
   template: src={{ item }}.j2 dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
     - aurweb-git.service
@@ -91,7 +91,7 @@
     - aurweb-github-mirror.timer
   when: release.changed
 
-- name: stop AUR systemd services and timers
+- name: Stop AUR systemd services and timers
   service: name={{ item }} enabled=yes state=stopped
   with_items:
     - aurweb-git.timer
@@ -105,7 +105,7 @@
     - aurweb-github-mirror.timer
   when: release.changed
 
-- name: clone aurweb repo
+- name: Clone aurweb repo
   git: >
     repo={{ aurweb_repository }}
     dest="{{ aurweb_dir }}"
@@ -116,35 +116,35 @@
   become_user: "{{ aurweb_user }}"
   when: release.changed
 
-- name: create necessary directories
+- name: Create necessary directories
   file: path={{ aurweb_dir }}/{{ item }} state=directory owner={{ aurweb_user }} group={{ aurweb_user }} mode=0755
   with_items:
     - 'aurblup'
     - 'sessions'
     - 'uploads'
 
-- name: create aurweb conf dir
+- name: Create aurweb conf dir
   file: path={{ aurweb_conf_dir }} state=directory owner=root group=root mode=0755
 
-- name: copy aurweb configuration file
+- name: Copy aurweb configuration file
   copy: src={{ aurweb_dir }}/conf/config.defaults dest={{ aurweb_conf_dir }}/config.defaults remote_src=yes owner=root group=root mode=0644
 
 # Note: initdb needs the config
-- name: install custom aurweb configuration
+- name: Install custom aurweb configuration
   template: src=config.j2 dest={{ aurweb_conf_dir }}/config owner=root group=root mode=0644
 
-- name: create aur db
+- name: Create aur db
   mysql_db: name="{{ aurweb_db }}" login_host="{{ aurweb_db_host }}" login_password="{{ vault_mariadb_users.root }}" encoding=utf8
   register: db_created
   no_log: true
 
-- name: create aur db user
+- name: Create aur db user
   mysql_user: name={{ aurweb_db_user }} password={{ vault_aurweb_db_password }}
               login_host="{{ aurweb_db_host }}" login_password="{{ vault_mariadb_users.root }}"
               priv="{{ aurweb_db }}.*:ALL"
   no_log: true
 
-- name: initialize the database
+- name: Initialize the database
   command: poetry run python -m aurweb.initdb
   args:
     chdir: "{{ aurweb_dir }}"
@@ -152,7 +152,7 @@
   become_user: "{{ aurweb_user }}"
   when: db_created.changed
 
-- name: run migrations
+- name: Run migrations
   command: poetry run alembic upgrade head
   args:
     chdir: "{{ aurweb_dir }}"
@@ -162,7 +162,7 @@
   become_user: "{{ aurweb_user }}"
   when: release.changed or db_created.changed
 
-- name: Check python module availability
+- name: Check python module availability  # noqa no-changed-when
   command: poetry run python3 -c 'import aurweb'
   args:
     chdir: "{{ aurweb_dir }}"
@@ -170,8 +170,6 @@
   become_user: "{{ aurweb_user }}"
   ignore_errors: true
   register: aurweb_installed
-  tags:
-    - skip_ansible_lint
 
 - name: Install python module
   command: poetry install
@@ -183,19 +181,19 @@
   become_user: "{{ aurweb_user }}"
   when: release.changed or aurweb_installed.rc != 0
 
-- name: install custom aurweb-git-auth wrapper script
+- name: Install custom aurweb-git-auth wrapper script
   template: src=aurweb-git-auth.sh.j2 dest=/usr/local/bin/aurweb-git-auth.sh owner=root group=root mode=0755
   when: release.changed
 
-- name: install custom aurweb-git-serve wrapper script
+- name: Install custom aurweb-git-serve wrapper script
   template: src=aurweb-git-serve.sh.j2 dest=/usr/local/bin/aurweb-git-serve.sh owner=root group=root mode=0755
   when: release.changed
 
-- name: install custom aurweb-git-update wrapper script
+- name: Install custom aurweb-git-update wrapper script
   template: src=aurweb-git-update.sh.j2 dest=/usr/local/bin/aurweb-git-update.sh owner=root group=root mode=0755
   when: release.changed
 
-- name: link custom aurweb-git-update wrapper to hooks/update
+- name: Link custom aurweb-git-update wrapper to hooks/update
   file:
     src: /usr/local/bin/aurweb-git-update.sh
     dest: "{{ aurweb_dir }}/aur.git/hooks/update"
@@ -215,36 +213,36 @@
   become: true
   become_user: "{{ aurweb_user }}"
 
-- name: create ssl cert
+- name: Create ssl cert
   include_role:
     name: certificate
   vars:
     domains: ["{{ aurweb_domain }}"]
 
-- name: set up nginx
+- name: Set up nginx
   template: src=nginx.d.conf.j2 dest={{ aurweb_nginx_conf }} owner=root group=root mode=644
   notify: reload nginx
   tags: ['nginx']
 
-- name: make nginx log dir
+- name: Make nginx log dir
   file: path=/var/log/nginx/{{ aurweb_domain }} state=directory owner=root group=root mode=0755
 
-- name: install cgit configuration
+- name: Install cgit configuration
   template: src=cgitrc.j2 dest="{{ aurweb_conf_dir }}/cgitrc" owner=root group=root mode=0644
 
-- name: configure cgit uwsgi service
+- name: Configure cgit uwsgi service
   template: src=cgit.ini.j2 dest=/etc/uwsgi/vassals/cgit.ini owner={{ aurweb_user }} group=http mode=0644
 
-- name: deploy new cgit release
+- name: Deploy new cgit release
   become: true
   become_user: "{{ aurweb_user }}"
   file: path=/etc/uwsgi/vassals/cgit.ini state=touch owner=root group=root mode=0644
   when: cgit.changed
 
-- name: configure smartgit uwsgi service
+- name: Configure smartgit uwsgi service
   template: src=smartgit.ini.j2 dest=/etc/uwsgi/vassals/smartgit.ini owner={{ aurweb_user }} group=http mode=0644
 
-- name: deploy new smartgit release
+- name: Deploy new smartgit release
   become: true
   become_user: "{{ aurweb_user }}"
   file:
@@ -255,63 +253,53 @@
     mode: 0644
   when: git.changed
 
-- name: create git repo dir
+- name: Create git repo dir
   file: path={{ aurweb_git_dir }} state=directory owner={{ aurweb_user }} group=http mode=0775
 
-- name: init git directory
+- name: Init git directory  # noqa command-instead-of-module
   command: git init --bare {{ aurweb_git_dir }}
   args:
     creates: "{{ aurweb_git_dir }}/HEAD"
   become: true
   become_user: "{{ aurweb_user }}"
-  tags:
-    - skip_ansible_lint
 
-- name: save hideRefs setting on var
+- name: Save hideRefs setting on var  # noqa command-instead-of-module no-changed-when
   command: git config --local --get-all transfer.hideRefs
   register: git_config
   args:
     chdir: "{{ aurweb_git_dir }}"
   failed_when: git_config.rc == 2  # FIXME: does not work.
-  tags:
-    - skip_ansible_lint
 
-- name: configure git tranfser.hideRefs
+- name: Configure git tranfser.hideRefs  # noqa command-instead-of-module
   command: git config --local transfer.hideRefs '^refs/'
   args:
     chdir: "{{ aurweb_git_dir }}"
   become: true
   become_user: "{{ aurweb_user }}"
   when: git_config.stdout.find('^refs/') == -1
-  tags:
-    - skip_ansible_lint
 
-- name: configure git transfer.hideRefs second
+- name: Configure git transfer.hideRefs second  # noqa command-instead-of-module
   command: git config --local --add transfer.hideRefs '!refs/'
   args:
     chdir: "{{ aurweb_git_dir }}"
   become: true
   become_user: "{{ aurweb_user }}"
   when: git_config.stdout.find('!refs/') == -1
-  tags:
-    - skip_ansible_lint
 
-- name: configure git transfer.hideRefs third
+- name: Configure git transfer.hideRefs third  # noqa command-instead-of-module
   command: git config --local --add transfer.hideRefs '!HEAD'
   args:
     chdir: "{{ aurweb_git_dir }}"
   become: true
   become_user: "{{ aurweb_user }}"
   when: git_config.stdout.find('!HEAD') == -1
-  tags:
-    - skip_ansible_lint
 
-- name: configure sshd
+- name: Configure sshd
   template: src=aurweb_config.j2 dest={{ sshd_includes_dir }}/aurweb_config owner=root group=root mode=0600 validate='/usr/sbin/sshd -t -f %s'
   notify:
     - restart sshd
 
-- name: start and enable AUR systemd services and timers
+- name: Start and enable AUR systemd services and timers
   service: name={{ item }} enabled=yes state=started daemon_reload=yes
   with_items:
     - aurweb-git.timer

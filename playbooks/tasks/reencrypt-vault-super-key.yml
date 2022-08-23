@@ -1,7 +1,7 @@
-- name: reencrypt vault super key
+- name: Reencrypt vault super key
   hosts: localhost
   tasks:
-    - name: reencrypt vault super key
+    - name: Reencrypt vault super key
       include_tasks: include/reencrypt-vault-key.yml
       vars:
         vault_id: super

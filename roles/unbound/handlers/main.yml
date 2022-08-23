@@ -1,2 +1,2 @@
-- name: restart unbound
+- name: Restart unbound
   service: name=unbound state=restarted

@@ -1,4 +1,4 @@
-- name: upgrade database
+- name: Upgrade database
   become: true
   become_user: security
   command: /usr/bin/make db-upgrade chdir="{{ security_tracker_dir }}"

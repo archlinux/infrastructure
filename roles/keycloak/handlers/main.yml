@@ -1,6 +1,6 @@
-- name: restart keycloak
+- name: Restart keycloak
   service: name=keycloak state=restarted
 
-- name: daemon reload
+- name: Daemon reload
   systemd:
     daemon-reload: true

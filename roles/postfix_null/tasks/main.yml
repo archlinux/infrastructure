@@ -1,7 +1,7 @@
-- name: install postfix
+- name: Install postfix
   pacman: name=postfix state=present
 
-- name: install template configs
+- name: Install template configs
   template: src={{ item.file }}.j2 dest=/etc/postfix/{{ item.file }} owner=root group={{ item.group }} mode={{ item.mode }}
   with_items:
     - {file: main.cf, group: root, mode: 644}
@@ -9,7 +9,7 @@
   notify:
     - reload postfix
 
-- name: create user account on mail to relay with
+- name: Create user account on mail to relay with
   delegate_to: mail.archlinux.org
   user:
     name: "{{ inventory_hostname_short }}"
@@ -21,5 +21,5 @@
     home: /home/"{{ inventory_hostname }}"  # Set home directory so shadow.service does not fail
     create_home: true
 
-- name: start and enable postfix
+- name: Start and enable postfix
   service: name=postfix enabled=yes state=started

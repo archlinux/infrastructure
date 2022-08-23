@@ -1,4 +1,4 @@
-- name: run maintenance mode
+- name: Run maintenance mode
   include_role:
     name: maintenance
   vars:
@@ -8,40 +8,40 @@
     service_nginx_conf: "{{ flyspray_nginx_conf }}"
   when: maintenance is defined
 
-- name: install git
+- name: Install git
   pacman: name=git state=present
 
-- name: make flyspray user
+- name: Make flyspray user
   user: name="{{ flyspray_user }}" shell=/bin/false home="{{ flyspray_dir }}" createhome=no
   register: user_created
 
-- name: fix home permissions
+- name: Fix home permissions
   file: state=directory owner="{{ flyspray_user }}" group="{{ flyspray_user }}" path="{{ flyspray_dir }}" mode=0755
 
-- name: create ssl cert
+- name: Create ssl cert
   include_role:
     name: certificate
   vars:
     domains: ["{{ flyspray_domain }}"]
 
-- name: set up nginx
+- name: Set up nginx
   template: src=nginx.d.conf.j2 dest="{{ flyspray_nginx_conf }}" owner=root group=root mode=644
   notify:
     - reload nginx
   when: maintenance is not defined
   tags: ['nginx']
 
-- name: install nginx migrated-tasks.map
+- name: Install nginx migrated-tasks.map
   copy: src=migrated-tasks.map dest=/etc/nginx/maps/ owner=root group=root mode=0644
 
-- name: make nginx log dir
+- name: Make nginx log dir
   file: path=/var/log/nginx/{{ flyspray_domain }} state=directory owner=root group=root mode=0755
 
-- name: create setup dir with write permissions
+- name: Create setup dir with write permissions
   file: state=directory owner="{{ flyspray_user }}" group="{{ flyspray_user }}" path="{{ flyspray_dir }}/setup" mode=755
   when: not user_created.changed
 
-- name: clone flyspray repo
+- name: Clone flyspray repo
   git:
     repo: https://gitlab.archlinux.org/archlinux/flyspray.git
     version: "{{ flyspray_commit }}"
@@ -50,44 +50,44 @@
   become_user: "{{ flyspray_user }}"
   register: release
 
-- name: take away setup dir write permissions
+- name: Take away setup dir write permissions
   file: state=directory owner="{{ flyspray_user }}" group="{{ flyspray_user }}" path="{{ flyspray_dir }}/setup" mode=000
 
-- name: configure flyspray
+- name: Configure flyspray
   template: src=flyspray.conf.php.j2 dest=/srv/http/flyspray/flyspray.conf.php owner="{{ flyspray_user }}" group="{{ flyspray_user }}" mode=0660
   register: config
   no_log: true
 
-- name: create flyspray db
+- name: Create flyspray db
   mysql_db: name="{{ flyspray_db }}" login_host="{{ flyspray_db_host }}" login_password="{{ vault_mariadb_users.root }}"
   register: db_created
 
-- name: create flyspray db user
+- name: Create flyspray db user
   mysql_user: name={{ flyspray_db_user }} password={{ vault_flyspray_db_password }}
               login_host="{{ flyspray_db_host }}" login_password="{{ vault_mariadb_users.root }}"
               priv="{{ flyspray_db }}.*:ALL"
   no_log: true
 
-- name: configure php-fpm
+- name: Configure php-fpm
   template:
     src=php-fpm.conf.j2 dest="/etc/php7/php-fpm.d/{{ flyspray_user }}.conf"
     owner=root group=root mode=0644
   notify:
     - restart php-fpm7@flyspray
 
-- name: install fail2ban register ban filter
+- name: Install fail2ban register ban filter
   template: src=fail2ban.filter.j2 dest=/etc/fail2ban/filter.d/nginx-flyspray-register.local owner=root group=root mode=0644
   notify:
     - restart fail2ban
   tags:
     - fail2ban
 
-- name: install fail2ban register ban jail
+- name: Install fail2ban register ban jail
   template: src=fail2ban.jail.j2 dest=/etc/fail2ban/jail.d/nginx-flyspray-register.local owner=root group=root mode=0644
   notify:
     - restart fail2ban
   tags:
     - fail2ban
 
-- name: start and enable systemd socket
+- name: Start and enable systemd socket
   service: name=php-fpm7@flyspray.socket state=started enabled=true

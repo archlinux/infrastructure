@@ -1,4 +1,4 @@
-- name: setup bbs.archlinux.org
+- name: Setup bbs.archlinux.org
   hosts: bbs.archlinux.org
   remote_user: root
   roles:

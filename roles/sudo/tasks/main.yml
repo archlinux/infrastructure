@@ -1,18 +1,18 @@
-- name: install sudo
+- name: Install sudo
   pacman: name=sudo state=present
 
 # https://github.com/ansible/ansible/issues/11024
-- name: remove all users from wheel group
+- name: Remove all users from wheel group
   command: groupmems -g wheel --purge
   register: groupmems
   changed_when: "groupmems.rc == 0"
 
-- name: add sudo users to wheel
+- name: Add sudo users to wheel
   user: name="{{ item }}" append=yes groups=wheel
   with_items: "{{ sudo_users }}"
   tags: ['archusers']
 
-- name: allow wheel group to use sudo
+- name: Allow wheel group to use sudo
   lineinfile:
     dest: /etc/sudoers
     state: present
@@ -24,7 +24,7 @@
     owner: root
     group: root
 
-- name: secure path to protect against attacks
+- name: Secure path to protect against attacks
   lineinfile:
     dest: /etc/sudoers
     state: present

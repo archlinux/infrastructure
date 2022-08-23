@@ -1,40 +1,40 @@
-- name: create ssl cert
+- name: Create ssl cert
   include_role:
     name: certificate
   vars:
     domains: ["{{ hedgedoc_domain }}"]
 
-- name: install hedgedoc
+- name: Install hedgedoc
   pacman: name=hedgedoc state=present
 
-- name: add hedgedoc postgres db
+- name: Add hedgedoc postgres db
   postgresql_db: db=hedgedoc
   become: true
   become_user: postgres
   become_method: su
 
-- name: add hedgedoc postgres user
+- name: Add hedgedoc postgres user
   postgresql_user: db=hedgedoc name=hedgedoc password={{ vault_postgres_users.hedgedoc }} encrypted=true
   become: true
   become_user: postgres
   become_method: su
 
-- name: make nginx log dir
+- name: Make nginx log dir
   file: path=/var/log/nginx/{{ hedgedoc_domain }} state=directory owner=root group=root mode=0755
 
-- name: set up nginx
+- name: Set up nginx
   template: src=nginx.d.conf.j2 dest={{ hedgedoc_nginx_conf }} owner=root group=http mode=640
   notify: reload nginx
   tags: ['nginx']
 
-- name: add hedgedoc.service.d dir
+- name: Add hedgedoc.service.d dir
   file: state=directory path=/etc/systemd/system/hedgedoc.service.d owner=root group=root mode=0755
 
-- name: install hedgedoc.service snippet for configuration
+- name: Install hedgedoc.service snippet for configuration
   template: src=hedgedoc.service.d.j2 dest=/etc/systemd/system/hedgedoc.service.d/local.conf owner=root group=root mode=0644
 
-- name: install hedgedoc config file
+- name: Install hedgedoc config file
   template: src=config.json.j2 dest=/etc/webapps/hedgedoc/config.json owner=root group=root mode=0644
 
-- name: start and enable hedgedoc
+- name: Start and enable hedgedoc
   service: name=hedgedoc.service enabled=yes state=started

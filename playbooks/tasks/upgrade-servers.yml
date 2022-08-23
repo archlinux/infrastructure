@@ -1,19 +1,19 @@
-- name: upgrade and reboot all hetzner servers
+- name: Upgrade and reboot all hetzner servers
   hosts: all,!kape_servers,!equinix_metal
   max_fail_percentage: 0
   serial: 20%
   gather_facts: false
 
   tasks:
-    - name: upgrade each host in this batch
+    - name: Upgrade each host in this batch
       include_tasks: include/upgrade-server.yml
 
-- name: upgrade and reboot all Kape and Equinix Metal servers
+- name: Upgrade and reboot all Kape and Equinix Metal servers
   hosts: kape_servers,equinix_metal
   max_fail_percentage: 0
   serial: 1
   gather_facts: false
 
   tasks:
-    - name: upgrade each host in this batch
+    - name: Upgrade each host in this batch
       include_tasks: include/upgrade-server.yml

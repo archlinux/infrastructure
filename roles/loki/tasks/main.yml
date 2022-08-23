@@ -1,26 +1,26 @@
-- name: install loki and logcli
+- name: Install loki and logcli
   pacman: name=loki,logcli state=present
 
-- name: install loki configuration
+- name: Install loki configuration
   copy: src=loki.yaml dest=/etc/loki/ owner=root group=root mode=0644
   notify: restart loki
 
-- name: make nginx log dir
+- name: Make nginx log dir
   file: path=/var/log/nginx/loki state=directory owner=root group=root mode=0755
 
-- name: set up nginx
+- name: Set up nginx
   template: src=nginx.d.conf.j2 dest="/etc/nginx/nginx.d/logging.conf" owner=root group=root mode=640
   notify: reload nginx
   tags: ['nginx']
 
-- name: open firewall hole
+- name: Open firewall hole
   ansible.posix.firewalld: service=http zone=wireguard permanent=true state=enabled immediate=yes
 
-- name: create drop-in directory for loki
+- name: Create drop-in directory for loki
   file: path=/etc/systemd/system/loki.service.d state=directory owner=root group=root mode=0755
 
-- name: install drop-in snippet for loki
+- name: Install drop-in snippet for loki
   copy: src=loki-override.conf dest=/etc/systemd/system/loki.service.d/override.conf owner=root group=root mode=0644
 
-- name: start and enable loki
+- name: Start and enable loki
   systemd: name=loki.service enabled=yes daemon_reload=yes state=started

@@ -1,16 +1,16 @@
-- name: install rsync
+- name: Install rsync
   pacman: name=rsync state=present
 
-- name: install syncdebug script
+- name: Install syncdebug script
   copy: src=syncdebug dest=/usr/local/bin/syncdebug owner=root group=root mode=0755
 
-- name: install syncdebug units
+- name: Install syncdebug units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
     - syncdebug.timer
     - syncdebug.service
 
-- name: start and enable syncdebug units
+- name: Start and enable syncdebug units
   systemd:
     name: "{{ item }}"
     enabled: true

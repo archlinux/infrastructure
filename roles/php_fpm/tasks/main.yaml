@@ -1,7 +1,7 @@
-- name: install php-fpm
+- name: Install php-fpm
   pacman: name=php-fpm,php-gd,php-pgsql state=present
 
-- name: install php-fpm units
+- name: Install php-fpm units
   copy: >
     src={{ item }} dest=/etc/systemd/system/{{ item }}
     owner=root group=root mode=0644
@@ -10,7 +10,7 @@
     - php-fpm@.service
   notify: daemon reload
 
-- name: configure default php.ini
+- name: Configure default php.ini
   template: >
     src=php.ini.j2 dest=/etc/php/php.ini
     owner=root group=root mode=0644

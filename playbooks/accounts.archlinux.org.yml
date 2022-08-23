@@ -1,4 +1,4 @@
-- name: setup Keycloak server
+- name: Setup Keycloak server
   hosts: accounts.archlinux.org
   remote_user: root
   roles:

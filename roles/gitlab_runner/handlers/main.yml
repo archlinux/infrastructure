@@ -1,11 +1,11 @@
-- name: systemd daemon-reload
+- name: Systemd daemon-reload
   systemd: daemon_reload=yes
 
-- name: restart gitlab-runner
+- name: Restart gitlab-runner
   service: name=gitlab-runner state=restarted
 
-- name: restart gitlab-runner-docker-cleanup.timer
+- name: Restart gitlab-runner-docker-cleanup.timer
   service: name=gitlab-runner-docker-cleanup.timer state=restarted daemon_reload=yes
 
-- name: restart docker
+- name: Restart docker
   service: name=docker state=restarted

@@ -1,2 +1,2 @@
-- name: reload postfwd
+- name: Reload postfwd
   service: name=postfwd state=reloaded

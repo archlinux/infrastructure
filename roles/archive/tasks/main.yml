@@ -1,7 +1,7 @@
-- name: install archivetools package
+- name: Install archivetools package
   pacman: name=archivetools state=present
 
-- name: make archive dir
+- name: Make archive dir
   file:
     path: "{{ archive_dir }}"
     state: directory
@@ -9,7 +9,7 @@
     group: archive
     mode: 0755
 
-- name: setup archive configuration
+- name: Setup archive configuration
   template:
     src: archive.conf.j2
     dest: /etc/archive.conf
@@ -17,34 +17,34 @@
     group: root
     mode: 0644
 
-- name: setup archive timer
+- name: Setup archive timer
   systemd: name=archive.timer enabled=yes state=started
 
-- name: setup archive-hardlink timer
+- name: Setup archive-hardlink timer
   systemd: name=archive-hardlink.timer enabled=yes state=started
-- name: install internet archive packages
+- name: Install internet archive packages
   pacman: name=python-internetarchive,python-xtarfile state=present
 
-- name: create archive user
+- name: Create archive user
   user: name={{ archive_user_name }} shell=/bin/false home="{{ archive_user_home }}" createhome=yes
 
-- name: configure archive.org client
+- name: Configure archive.org client
   command: ia configure --username={{ vault_archive_username }} --password={{ vault_archive_password }} creates={{ archive_user_home }}/.config/ia.ini
   become: true
   become_user: "{{ archive_user_name }}"
 
-- name: clone archive uploader code
+- name: Clone archive uploader code
   git: repo=https://github.com/archlinux/arch-historical-archive.git dest="{{ archive_repo }}" version="{{ archive_uploader_version }}"
   become: true
   become_user: "{{ archive_user_name }}"
 
-- name: install system service
+- name: Install system service
   template: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   loop:
     - archive-uploader.service
     - archive-uploader.timer
 
-- name: start uploader timer
+- name: Start uploader timer
   systemd:
     name: archive-uploader.timer
     enabled: true

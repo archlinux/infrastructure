@@ -1,4 +1,4 @@
-- name: setup bugs.archlinux.org
+- name: Setup bugs.archlinux.org
   hosts: bugs.archlinux.org
   remote_user: root
   roles:

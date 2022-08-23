@@ -1,7 +1,7 @@
-- name: reencrypt vault default key
+- name: Reencrypt vault default key
   hosts: localhost
   tasks:
-    - name: reencrypt vault default key
+    - name: Reencrypt vault default key
       include_tasks: include/reencrypt-vault-key.yml
       vars:
         vault_id: default

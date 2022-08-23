@@ -1,26 +1,26 @@
 # This role runs on localhost; use commands like sftp to upload configuration
 
-- name: create the root backup directory at {{ backup_dir }}
+- name: Create the root backup directory at {{ backup_dir }}
   expect:
     command: bash -c "echo 'mkdir {{ backup_dir }}' | sftp {{ rsync_net_username }}@{{ rsync_net_username }}.rsync.net"
     responses:
       (?i)password: "{{ rsync_net_password }}"
 
-- name: fetch ssh keys from each borg client machine
+- name: Fetch ssh keys from each borg client machine
   command: cat /root/.ssh/id_rsa.pub
   register: client_ssh_keys
   delegate_to: "{{ item }}"
   with_items: "{{ backup_clients }}"
   changed_when: client_ssh_keys.changed
 
-- name: create tempfile
+- name: Create tempfile
   tempfile: state=file
   register: tempfile
 
-- name: fill tempfile
-  copy: content="{{ lookup('template', 'authorized_keys.j2') }}" dest="{{ tempfile.path }}" mode=0644  # noqa 208
+- name: Fill tempfile  # noqa risky-file-permissions
+  copy: content="{{ lookup('template', 'authorized_keys.j2') }}" dest="{{ tempfile.path }}" mode=0644
 
-- name: upload authorized_keys file
+- name: Upload authorized_keys file
   expect:
     command: |
       bash -c 'sftp {{ rsync_net_username }}@{{ rsync_net_username }}.rsync.net <<EOF

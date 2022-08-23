@@ -1,19 +1,19 @@
-- name: install quassel
+- name: Install quassel
   pacman: name=quassel-core,python-pexpect state=present
 
-- name: add quassel postgres db
+- name: Add quassel postgres db
   postgresql_db: db=quassel
   become: true
   become_user: postgres
   become_method: su
 
-- name: add quassel postgres user
+- name: Add quassel postgres user
   postgresql_user: db=quassel name=quassel password={{ vault_postgres_users.quassel }} encrypted=true
   become: true
   become_user: postgres
   become_method: su
 
-- name: initialize quassel
+- name: Initialize quassel
   become: true
   become_user: quassel
   become_method: sudo
@@ -31,16 +31,16 @@
       Database: ''
     creates: /var/lib/quassel/quasselcore.conf
 
-- name: create ssl cert
+- name: Create ssl cert
   include_role:
     name: certificate
   vars:
     domains: ["{{ quassel_domain }}"]
 
-- name: install quassel cert renewal hook
+- name: Install quassel cert renewal hook
   template: src=letsencrypt.hook.d.j2 dest=/etc/letsencrypt/hook.d/quassel owner=root group=root mode=0755
 
-- name: install quassel units
+- name: Install quassel units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
     - clean-quassel.timer
@@ -48,19 +48,19 @@
   notify:
     - daemon reload
 
-- name: add quassel.service.d dir
+- name: Add quassel.service.d dir
   file: state=directory path=/etc/systemd/system/quassel.service.d owner=root group=root mode=0755
 
-- name: install quassel.service snippet
+- name: Install quassel.service snippet
   copy: src=quassel.service.d dest=/etc/systemd/system/quassel.service.d/local.conf owner=root group=root mode=0644
 
-- name: start and enable quassel
+- name: Start and enable quassel
   service: name={{ item }} enabled=yes state=started
   with_items:
     - quassel.service
     - clean-quassel.timer
 
-- name: open firewall holes
+- name: Open firewall holes
   ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes
   with_items:
     - 4242/tcp

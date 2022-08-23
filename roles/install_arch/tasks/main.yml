@@ -1,138 +1,138 @@
-- name: read /etc/motd
+- name: Read /etc/motd
   command: cat /etc/motd
   register: motd_contents
   changed_when: motd_contents.stdout | length > 0
 
-- name: check whether we're running in Hetzner or Equinix Metal rescue environment
+- name: Check whether we're running in Hetzner or Equinix Metal rescue environment
   fail: msg="Not running in rescue system!"
   when: "'Hetzner Rescue' not in motd_contents.stdout and 'Rescue environment based on Alpine Linux' not in motd_contents.stdout"
 
-- name: make sure all required packages are installed in the rescue system for installation
+- name: Make sure all required packages are installed in the rescue system for installation
   apk: name=sgdisk,btrfs-progs,tar update_cache=yes
   when: ansible_facts['os_family'] == "Alpine"
 
-- name: create GRUB embed partitions
+- name: Create GRUB embed partitions
   command: sgdisk -g --clear -n 1:0:+1M {{ item }} -c 1:boot -t 1:ef02
   with_items:
     - "{{ system_disks }}"
   register: sgdisk
   changed_when: "sgdisk.rc == 0"
 
-- name: create root partitions
+- name: Create root partitions
   command: sgdisk -n 2:0:0 {{ item }} -c 2:root
   with_items:
     - "{{ system_disks }}"
   register: sgdisk
   changed_when: "sgdisk.rc == 0"
 
-- name: partition and format the disks (btrfs RAID)
-  command: mkfs.btrfs -f -L root -d {{ raid_level|default('raid1') }} -m {{ raid_level|default('raid1') }} -O no-holes {{ system_disks | map('regex_replace', '^(.*)$', '\g<1>p2' if 'nvme' in system_disks[0] else '\g<1>2') | join(' ') }}
+- name: Partition and format the disks (btrfs RAID)
+  command: mkfs.btrfs -f -L root -d {{ raid_level | default('raid1') }} -m {{ raid_level | default('raid1') }} -O no-holes {{ system_disks | map('regex_replace', '^(.*)$', '\g<1>p2' if 'nvme' in system_disks[0] else '\g<1>2') | join(' ') }}
   when: filesystem == "btrfs" and system_disks|length >= 2
 
-- name: partition and format the disks (btrfs single)
+- name: Partition and format the disks (btrfs single)
   command: mkfs.btrfs -f -L root -d single -m single -O no-holes {{ system_disks[0] }}{{ 'p2' if 'nvme' in system_disks[0] else '2' }}
   when: filesystem == "btrfs" and system_disks|length == 1
 
-- name: mount the filesystem (btrfs)
+- name: Mount the filesystem (btrfs)
   mount: src="{{ system_disks[0] }}{{ 'p2' if 'nvme' in system_disks[0] else '2' }}" path=/mnt state=mounted fstype=btrfs opts="compress-force=zstd,space_cache=v2"
   when: filesystem == "btrfs"
 
-- name: touch LOCK file on mountpoint
+- name: Touch LOCK file on mountpoint
   file: path=/mnt/LOCK state=touch owner=root group=root mode=0644
 
-- name: download bootstrap image
+- name: Download bootstrap image
   get_url:
     url: https://geo.mirror.pkgbuild.com/iso/{{ bootstrap_version }}/archlinux-bootstrap-x86_64.tar.gz
     dest: /tmp/
     mode: 0644
 
-- name: extract boostrap image  # noqa 208
+- name: Extract boostrap image  # noqa risky-file-permissions
   unarchive:
     src: /tmp/archlinux-bootstrap-x86_64.tar.gz
     dest: /tmp
     remote_src: true
     creates: /tmp/root.x86_64
 
-- name: copy resolv.conf to bootstrap chroot
+- name: Copy resolv.conf to bootstrap chroot
   copy: remote_src=true src=/etc/resolv.conf dest=/tmp/root.x86_64/etc/resolv.conf owner=root group=root mode=0644
 
-- name: mount /proc to bootstrap chroot
-  command: mount --rbind /proc /tmp/root.x86_64/proc creates=/tmp/root.x86_64/proc/uptime  # noqa 303
+- name: Mount /proc to bootstrap chroot  # noqa command-instead-of-module
+  command: mount --rbind /proc /tmp/root.x86_64/proc creates=/tmp/root.x86_64/proc/uptime
 
-- name: mount /sys to bootstrap chroot
-  command: mount --rbind /sys /tmp/root.x86_64/sys creates=/tmp/root.x86_64/sys/dev  # noqa 303
+- name: Mount /sys to bootstrap chroot  # noqa command-instead-of-module
+  command: mount --rbind /sys /tmp/root.x86_64/sys creates=/tmp/root.x86_64/sys/dev
 
-- name: mount /dev to bootstrap chroot
-  command: mount --rbind /dev /tmp/root.x86_64/dev creates=/tmp/root.x86_64/dev/zero  # noqa 303
+- name: Mount /dev to bootstrap chroot  # noqa command-instead-of-module
+  command: mount --rbind /dev /tmp/root.x86_64/dev creates=/tmp/root.x86_64/dev/zero
 
-- name: mount /mnt to bootstrap chroot
-  command: mount --rbind /mnt /tmp/root.x86_64/mnt creates=/tmp/root.x86_64/mnt/LOCK  # noqa 303
+- name: Mount /mnt to bootstrap chroot  # noqa command-instead-of-module
+  command: mount --rbind /mnt /tmp/root.x86_64/mnt creates=/tmp/root.x86_64/mnt/LOCK
 
-- name: configure pacman mirror
+- name: Configure pacman mirror
   template: src=mirrorlist.j2 dest=/tmp/root.x86_64/etc/pacman.d/mirrorlist owner=root group=root mode=0644
 
-- name: initialize pacman keyring inside bootstrap chroot
+- name: Initialize pacman keyring inside bootstrap chroot
   command: chroot /tmp/root.x86_64 pacman-key --init
   register: chroot_pacman_key_init
   changed_when: "chroot_pacman_key_init.rc == 0"
 
-- name: populate pacman keyring inside bootstrap chroot
+- name: Populate pacman keyring inside bootstrap chroot
   command: chroot /tmp/root.x86_64 pacman-key --populate archlinux
   register: chroot_pacman_key_populate
   changed_when: "chroot_pacman_key_populate.rc == 0"
 
-- name: install ucode update
+- name: Install ucode update
   block:
-    - name: install ucode update for Intel
+    - name: Install ucode update for Intel
       set_fact: ucode="intel-ucode"
       when: "'GenuineIntel' in ansible_facts['processor']"
 
-    - name: install ucode update for AMD
+    - name: Install ucode update for AMD
       set_fact: ucode="amd-ucode"
       when: "'AuthenticAMD' in ansible_facts['processor']"
   when:
     - "'hcloud' not in group_names"
     - inventory_hostname != 'packer-base-image'
 
-- name: install arch base from bootstrap chroot
+- name: Install arch base from bootstrap chroot
   command: chroot /tmp/root.x86_64 pacstrap /mnt base linux btrfs-progs grub openssh python-requests python-yaml inetutils {{ ucode | default('') }}
   args:
     creates: /tmp/root.x86_64/mnt/bin
 
-- name: mount /proc to new chroot
-  command: mount --rbind /proc /mnt/proc creates=/mnt/proc/uptime  # noqa 303
+- name: Mount /proc to new chroot  # noqa command-instead-of-module
+  command: mount --rbind /proc /mnt/proc creates=/mnt/proc/uptime
 
-- name: mount /sys to new chroot
-  command: mount --rbind /sys /mnt/sys creates=/mnt/sys/dev  # noqa 303
+- name: Mount /sys to new chroot  # noqa command-instead-of-module
+  command: mount --rbind /sys /mnt/sys creates=/mnt/sys/dev
 
-- name: mount /dev to new chroot
-  command: mount --rbind /dev /mnt/dev creates=/mnt/dev/zero  # noqa 303
+- name: Mount /dev to new chroot  # noqa command-instead-of-module
+  command: mount --rbind /dev /mnt/dev creates=/mnt/dev/zero
 
-- name: configure locale.gen
+- name: Configure locale.gen
   lineinfile: dest=/mnt/etc/locale.gen line="en_US.UTF-8 UTF-8" owner=root group=root mode=0644
 
-- name: run locale-gen inside chroot
+- name: Run locale-gen inside chroot
   command: chroot /mnt locale-gen
   register: chroot_locale_gen
   changed_when: "chroot_locale_gen.rc == 0"
 
-- name: run systemd-firstboot
+- name: Run systemd-firstboot
   command: chroot /mnt systemd-firstboot --locale=C.UTF-8 --timezone=UTC --hostname={{ hostname }}
   register: chroot_systemd_firstboot
   changed_when: "chroot_systemd_firstboot.rc == 0"
 
-- name: run mkinitcpio
+- name: Run mkinitcpio
   command: chroot /mnt mkinitcpio -p linux
   register: chroot_mkinitcpio
   changed_when: "chroot_mkinitcpio.rc == 0"
 
-- name: configure networking
+- name: Configure networking
   include_role:
     name: networking
   vars:
     chroot_path: "/mnt"
 
-- name: provide default mount options (btrfs)
+- name: Provide default mount options (btrfs)
   lineinfile:
     path: /mnt/etc/default/grub
     owner: root
@@ -142,45 +142,45 @@
     line: "GRUB_CMDLINE_LINUX_DEFAULT=\"rootflags=compress-force=zstd\""
   when: filesystem == "btrfs"
 
-- name: install grub
+- name: Install grub
   command: chroot /mnt grub-install --recheck {{ item }}
   with_items:
     - "{{ system_disks }}"
   register: chroot_grub_install
   changed_when: "chroot_grub_install.rc == 0"
 
-- name: configure grub
+- name: Configure grub
   command: chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
   register: chroot_grub_mkconfig
   changed_when: "chroot_grub_mkconfig.rc == 0"
 
-- name: setup pacman-init.service on first boot
+- name: Setup pacman-init.service on first boot
   copy: src=pacman-init.service dest=/mnt/etc/systemd/system/ owner=root group=root mode=0644
 
-- name: remove generated keyring in the installation process
+- name: Remove generated keyring in the installation process
   file: path=/mnt/etc/pacman.d/gnupg state=absent
 
-- name: make sure /etc/machine-id is absent
+- name: Make sure /etc/machine-id is absent
   file: path=/mnt/etc/machine-id state=absent
 
-- name: enable services inside chroot
+- name: Enable services inside chroot
   command: chroot /mnt systemctl enable sshd systemd-networkd systemd-resolved fstrim.timer pacman-init
   register: chroot_systemd_services
   changed_when: "chroot_systemd_services.rc == 0"
 
-- name: add authorized key for root
+- name: Add authorized key for root
   include_role:
     name: root_ssh
   vars:
     root_ssh_directory: /tmp/root.x86_64/mnt/root/.ssh
 
-- name: configure sshd
+- name: Configure sshd
   template: src=sshd_config.j2 dest=/mnt/etc/ssh/sshd_config owner=root group=root mode=0644
 
-- name: clean pacman cache
-  shell: yes | chroot /mnt pacman -Scc  # noqa risky-shell-pipe ("Illegal option -o pipefail" in Hetzner's recovery environment (dash?))
+- name: Clean pacman cache  # noqa risky-shell-pipe ("Illegal option -o pipefail" in Hetzner's recovery environment (dash?))
+  shell: yes | chroot /mnt pacman -Scc
   register: chroot_pacman_clean_cache
   changed_when: "chroot_pacman_clean_cache.rc == 0"
 
-- name: remove LOCK file on mountpoint
+- name: Remove LOCK file on mountpoint
   file: path=/mnt/LOCK state=absent

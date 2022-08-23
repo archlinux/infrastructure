@@ -1,7 +1,7 @@
-- name: check if moreutils is installed
+- name: Check if moreutils is installed
   pacman: name=moreutils state=present
 
-- name: reencrypt vault {{ vault_id }} key
+- name: Reencrypt vault {{ vault_id }} key
   shell: |
     set -eo pipefail
     gpg --decrypt --batch --quiet "{{ playbook_dir }}/../../misc/vault-{{ vault_id }}-password.gpg" \

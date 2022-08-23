@@ -1,11 +1,11 @@
-- name: create ssl cert
+- name: Create ssl cert
   include_role:
     name: certificate
   vars:
     domains: ["{{ mirror_domain }}"]
   when: 'mirror_domain is defined'
 
-- name: create ssl cert for geo mirror
+- name: Create ssl cert for geo mirror
   include_role:
     name: certificate
   vars:
@@ -13,22 +13,22 @@
     challenge: "DNS-01"
   when: "'geo_mirrors' in group_names"
 
-- name: install rsync
+- name: Install rsync
   pacman: name=rsync state=present
 
-- name: install syncrepo script
+- name: Install syncrepo script
   copy: src=syncrepo dest=/usr/local/bin/syncrepo owner=root group=root mode=0755
 
-- name: install syncrepo units
+- name: Install syncrepo units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
     - syncrepo.timer
     - syncrepo.service
 
-- name: install rsyncd config
+- name: Install rsyncd config
   copy: src=rsyncd.conf dest=/etc/rsyncd.conf owner=root group=root mode=0644
 
-- name: start and enable syncrepo units
+- name: Start and enable syncrepo units
   systemd:
     name: "{{ item }}"
     enabled: true
@@ -38,7 +38,7 @@
     - syncrepo.timer
     - rsyncd.socket
 
-- name: set local mirror as cachedir
+- name: Set local mirror as cachedir
   lineinfile:
     dest: /etc/pacman.conf
     insertafter: '^#CacheDir'
@@ -48,12 +48,12 @@
     owner: root
     group: root
 
-- name: make nginx log dirs
+- name: Make nginx log dirs
   file: path=/var/log/nginx/{{ item }} state=directory owner=root group=root mode=0755
   loop: "{{ [mirror_domain, geo_mirror_domain] if 'geo_mirrors' in group_names else [mirror_domain] }}"
   when: 'mirror_domain is defined'
 
-- name: set up nginx
+- name: Set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/syncrepo.conf owner=root group=root mode=0644
   vars:
     mirror_domains: "{{ [mirror_domain, geo_mirror_domain] if 'geo_mirrors' in group_names else [mirror_domain] }}"
@@ -62,7 +62,7 @@
   when: 'mirror_domain is defined'
   tags: ['nginx']
 
-- name: open firewall holes
+- name: Open firewall holes
   ansible.posix.firewalld: service=rsyncd permanent=true state=enabled immediate=yes
   when: configure_firewall
   tags:

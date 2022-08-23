@@ -1,8 +1,8 @@
-- name: fetch ssh hostkeys
+- name: Fetch ssh hostkeys
   hosts: all
   gather_facts: false
   tasks:
-    - name: fetch hostkey checksums
+    - name: Fetch hostkey checksums
       shell: |
         for type in sha256 md5; do
           for file in /etc/ssh/ssh_host_*.pub; do
@@ -13,7 +13,7 @@
       register: ssh_hostkeys
       changed_when: ssh_hostkeys | length > 0
 
-    - name: fetch known_hosts
+    - name: Fetch known_hosts
       shell: |
         set -eo pipefail
         ssh-keyscan 127.0.0.1 2>/dev/null \
@@ -26,10 +26,10 @@
       register: known_hosts
       changed_when: known_hosts | length > 0
 
-- name: store hostkeys
+- name: Store hostkeys
   hosts: localhost
   tasks:
-    - name: store hostkeys
+    - name: Store hostkeys
       copy:
         dest: "{{ playbook_dir }}/../../docs/ssh-hostkeys.txt"
         content: |
@@ -40,7 +40,7 @@
           {% endfor %}
         mode: preserve
 
-    - name: store known_hosts
+    - name: Store known_hosts
       blockinfile:
         path: "{{ playbook_dir }}/../../docs/ssh-known_hosts.txt"
         block: |
@@ -51,9 +51,9 @@
 
           {% endfor %}
 
-- name: upload known_hosts to all nodes
+- name: Upload known_hosts to all nodes
   hosts: all
   tasks:
-    - name: upload known_hosts
+    - name: Upload known_hosts
       copy: dest=/etc/ssh/ssh_known_hosts src="{{ playbook_dir }}/../../docs/ssh-known_hosts.txt" owner=root group=root mode=0644
       tags: ['upload-known-hosts']

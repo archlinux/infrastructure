@@ -1,15 +1,15 @@
-- name: create ssl cert
+- name: Create ssl cert
   include_role:
     name: certificate
   vars:
     domains: "{{ ['mta-sts.'] | product(item.domains) | map('join') }}"
   loop: "{{ mta_sts }}"
 
-- name: make nginx log dir
+- name: Make nginx log dir
   file: path=/var/log/nginx/{{ "mta-sts." + item.domains | first }} state=directory owner=root group=root mode=0755
   loop: "{{ mta_sts }}"
 
-- name: set up nginx
+- name: Set up nginx
   template: src=nginx.d.conf.j2 dest="/etc/nginx/nginx.d/mta-sts.conf" owner=root group=root mode=644
   notify: reload nginx
   tags: ['nginx']

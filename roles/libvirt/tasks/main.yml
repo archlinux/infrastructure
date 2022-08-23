@@ -1,17 +1,17 @@
 ---
-- name: remove iptables to solve iptables<->iptables-nft conflict
+- name: Remove iptables to solve iptables<->iptables-nft conflict
   pacman: name=iptables force=yes state=absent
 
-- name: install libvirt and needed optional dependencies
+- name: Install libvirt and needed optional dependencies
   pacman: name=libvirt,qemu-base,dnsmasq,iptables-nft state=present
   register: result
 
-- name: reload firewalld
+- name: Reload firewalld
   service: name=firewalld state=reloaded
   when: result.changed
 
-- name: autostart default network on boot
+- name: Autostart default network on boot
   file: src=/etc/libvirt/qemu/networks/default.xml dest=/etc/libvirt/qemu/networks/autostart/default.xml state=link owner=root group=root
 
-- name: start and enable libvirtd
+- name: Start and enable libvirtd
   systemd: name=libvirtd enabled=yes state=started daemon_reload=yes

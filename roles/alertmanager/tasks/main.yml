@@ -1,9 +1,9 @@
-- name: install alertmanager server
+- name: Install alertmanager server
   pacman: name=alertmanager state=present
 
-- name: install alertmanager configuration
+- name: Install alertmanager configuration
   template: src=alertmanager.yml.j2 dest=/etc/alertmanager/alertmanager.yml owner=root group=alertmanager mode=640
   notify: reload alertmanager
 
-- name: enable alertmanager server service
+- name: Enable alertmanager server service
   systemd: name=alertmanager enabled=yes daemon_reload=yes state=started

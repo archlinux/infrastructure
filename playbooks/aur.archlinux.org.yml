@@ -1,4 +1,4 @@
-- name: setup aur.archlinux.org
+- name: Setup aur.archlinux.org
   hosts: aur.archlinux.org
   remote_user: root
   roles:

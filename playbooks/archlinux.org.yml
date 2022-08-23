@@ -1,14 +1,14 @@
 - name: "prepare postgres ssl hosts list"
   hosts: archlinux.org
   tasks:
-    - name: assign ipv4 addresses to fact postgres_hosts4
+    - name: Assign ipv4 addresses to fact postgres_hosts4
       set_fact: postgres_hosts4="{{ [gemini4] + detected_ips }}"
       vars:
         gemini4: "{{ hostvars['gemini.archlinux.org']['wireguard_address'] }}/32"
         detected_ips: "{{ groups['mirrors'] | map('extract', hostvars, ['wireguard_address']) | select() | map('regex_replace', '^(.+)$', '\\1/32') | list }}"
       tags: ["postgres", "firewall"]
 
-- name: setup archlinux.org
+- name: Setup archlinux.org
   hosts: archlinux.org
   remote_user: root
   roles:

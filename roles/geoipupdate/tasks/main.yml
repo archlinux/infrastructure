@@ -1,14 +1,14 @@
-- name: install geoipupdate
+- name: Install geoipupdate
   pacman: name=geoipupdate state=present
   register: installation
 
-- name: configure geoipupdate
+- name: Configure geoipupdate
   template: src=GeoIP.conf.j2 dest=/etc/GeoIP.conf owner=root group=root mode=0600
   register: configuration
 
-- name: run geoipupdate after installation or configuration change
+- name: Run geoipupdate after installation or configuration change
   systemd: name=geoipupdate state=restarted
   when: installation is changed or configuration is changed
 
-- name: start and enable geoipupdate.timer
+- name: Start and enable geoipupdate.timer
   systemd: name=geoipupdate.timer enabled=yes state=started

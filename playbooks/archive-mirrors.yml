@@ -1,4 +1,4 @@
-- name: common playbook for archive-mirrors
+- name: Common playbook for archive-mirrors
   hosts: archive_mirrors
   remote_user: root
   roles:

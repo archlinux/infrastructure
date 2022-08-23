@@ -1,2 +1,2 @@
-- name: restart fetchmail
+- name: Restart fetchmail
   service: name=fetchmail state=restarted
