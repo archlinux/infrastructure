@@ -231,23 +231,19 @@
 - name: Add arch-svntogit user
   user: name=svntogit shell=/sbin/nologin home=/srv/svntogit generate_ssh_key=yes ssh_key_bits=4096
 
-- name: Configure svntogit git user name
+- name: Configure svntogit git user name  # noqa command-instead-of-module
   command: git config --global user.name svntogit
   become: true
   become_user: svntogit
   register: git_config_username
   changed_when: "git_config_username.rc == 0"
-  tags:
-    - skip_ansible_lint
 
-- name: Configure svntogit git user email
+- name: Configure svntogit git user email  # noqa command-instead-of-module
   command: git config --global user.email svntogit@repos.archlinux.org
   become: true
   become_user: svntogit
   register: git_config_email
   changed_when: "git_config_email.rc == 0"
-  tags:
-    - skip_ansible_lint
 
 - name: Template arch-svntogit
   copy: src=update-repos.sh dest=/srv/svntogit/update-repos.sh owner=root group=root mode=0755
@@ -255,17 +251,15 @@
 - name: Create svntogit repos subdir
   file: path="/srv/svntogit/repos" state=directory owner=svntogit group=svntogit mode=0775
 
-- name: Clone git-svn repos
+- name: Clone git-svn repos  # noqa command-instead-of-module
   command: git svn clone file:///srv/repos/svn-{{ item }}/svn /srv/svntogit/repos/{{ item }} creates=/srv/svntogit/repos/{{ item }}
   with_items:
     - community
     - packages
   become: true
   become_user: svntogit
-  tags:
-    - skip_ansible_lint
 
-- name: Add svntogit public remotes
+- name: Add svntogit public remotes  # noqa command-instead-of-module
   command: git remote add public git@github.com:archlinux/svntogit-{{ item }}.git chdir=/srv/svntogit/repos/{{ item }}
   with_items:
     - community
@@ -275,11 +269,9 @@
   ignore_errors: true
   register: git_public_remote
   changed_when: "git_public_remote.rc == 0"
-  tags:
-    - skip_ansible_lint
 
 # The following command also serves as a way to get the data the first time the repo is set up
-- name: Configure svntogit pull upstream branch
+- name: Configure svntogit pull upstream branch  # noqa command-instead-of-module
   command: git pull --set-upstream public master chdir=/srv/svntogit/repos/{{ item }}
   environment:
     SHELL: /bin/bash
@@ -290,8 +282,6 @@
   become_user: svntogit
   register: git_pull_upstream
   changed_when: "git_pull_upstream.rc == 0"
-  tags:
-    - skip_ansible_lint
 
 - name: Fix svntogit home permissions
   file: path="/srv/svntogit" state=directory owner=svntogit group=svntogit mode=0775

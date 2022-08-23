@@ -162,7 +162,7 @@
   become_user: "{{ aurweb_user }}"
   when: release.changed or db_created.changed
 
-- name: Check python module availability
+- name: Check python module availability  # noqa no-changed-when
   command: poetry run python3 -c 'import aurweb'
   args:
     chdir: "{{ aurweb_dir }}"
@@ -170,8 +170,6 @@
   become_user: "{{ aurweb_user }}"
   ignore_errors: true
   register: aurweb_installed
-  tags:
-    - skip_ansible_lint
 
 - name: Install python module
   command: poetry install
@@ -258,53 +256,43 @@
 - name: Create git repo dir
   file: path={{ aurweb_git_dir }} state=directory owner={{ aurweb_user }} group=http mode=0775
 
-- name: Init git directory
+- name: Init git directory  # noqa command-instead-of-module
   command: git init --bare {{ aurweb_git_dir }}
   args:
     creates: "{{ aurweb_git_dir }}/HEAD"
   become: true
   become_user: "{{ aurweb_user }}"
-  tags:
-    - skip_ansible_lint
 
-- name: Save hideRefs setting on var
+- name: Save hideRefs setting on var  # noqa command-instead-of-module no-changed-when
   command: git config --local --get-all transfer.hideRefs
   register: git_config
   args:
     chdir: "{{ aurweb_git_dir }}"
   failed_when: git_config.rc == 2  # FIXME: does not work.
-  tags:
-    - skip_ansible_lint
 
-- name: Configure git tranfser.hideRefs
+- name: Configure git tranfser.hideRefs  # noqa command-instead-of-module
   command: git config --local transfer.hideRefs '^refs/'
   args:
     chdir: "{{ aurweb_git_dir }}"
   become: true
   become_user: "{{ aurweb_user }}"
   when: git_config.stdout.find('^refs/') == -1
-  tags:
-    - skip_ansible_lint
 
-- name: Configure git transfer.hideRefs second
+- name: Configure git transfer.hideRefs second  # noqa command-instead-of-module
   command: git config --local --add transfer.hideRefs '!refs/'
   args:
     chdir: "{{ aurweb_git_dir }}"
   become: true
   become_user: "{{ aurweb_user }}"
   when: git_config.stdout.find('!refs/') == -1
-  tags:
-    - skip_ansible_lint
 
-- name: Configure git transfer.hideRefs third
+- name: Configure git transfer.hideRefs third  # noqa command-instead-of-module
   command: git config --local --add transfer.hideRefs '!HEAD'
   args:
     chdir: "{{ aurweb_git_dir }}"
   become: true
   become_user: "{{ aurweb_user }}"
   when: git_config.stdout.find('!HEAD') == -1
-  tags:
-    - skip_ansible_lint
 
 - name: Configure sshd
   template: src=aurweb_config.j2 dest={{ sshd_includes_dir }}/aurweb_config owner=root group=root mode=0600 validate='/usr/sbin/sshd -t -f %s'

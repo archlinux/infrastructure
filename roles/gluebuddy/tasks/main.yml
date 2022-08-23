@@ -18,7 +18,5 @@
 - name: Install download script
   copy: src=gluebuddy_download.sh dest=/usr/local/bin/gluebuddy_download.sh owner=root group=root mode=0755
 
-- name: Download latest gluebuddy
+- name: Download latest gluebuddy  # noqa no-changed-when
   command: /usr/local/bin/gluebuddy_download.sh
-  tags:
-    - skip_ansible_lint
