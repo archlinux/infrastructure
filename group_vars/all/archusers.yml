@@ -354,6 +354,7 @@ arch_users:
     name: "Konstantin Gizdov"
     ssh_key: kgizdov.pub
     groups:
+      - dev
       - tu
   kkeen:
     name: "Kyle Keen"
