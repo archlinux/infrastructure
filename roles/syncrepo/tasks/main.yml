@@ -58,7 +58,7 @@
   vars:
     mirror_domains: "{{ [mirror_domain, geo_mirror_domain] if 'geo_mirrors' in group_names else [mirror_domain] }}"
   notify:
-    - reload nginx
+    - Reload nginx
   when: 'mirror_domain is defined'
   tags: ['nginx']
 

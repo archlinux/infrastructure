@@ -7,7 +7,7 @@
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/sources.conf owner=root group=root mode=0644
   notify:
-    - reload nginx
+    - Reload nginx
   tags: ['nginx']
 
 - name: Make nginx log dir

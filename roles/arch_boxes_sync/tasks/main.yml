@@ -10,7 +10,7 @@
     - arch-boxes-sync.service
     - arch-boxes-sync.timer
   notify:
-    - daemon reload
+    - Daemon reload
 
 - name: Start and enable arch-boxes-sync.timer
   systemd: name=arch-boxes-sync.timer enabled=yes daemon_reload=yes state=started

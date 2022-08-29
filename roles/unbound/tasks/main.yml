@@ -4,7 +4,7 @@
 - name: Install unbound config file
   template: src=unbound.conf.j2 dest=/etc/unbound/unbound.conf owner=root group=root mode=0644
   notify:
-    - restart unbound
+    - Restart unbound
 
 - name: Create remote-control keys
   command: unbound-control-setup creates=/etc/unbound/unbound_control.key

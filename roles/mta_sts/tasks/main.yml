@@ -11,5 +11,5 @@
 
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest="/etc/nginx/nginx.d/mta-sts.conf" owner=root group=root mode=644
-  notify: reload nginx
+  notify: Reload nginx
   tags: ['nginx']

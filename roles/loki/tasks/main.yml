@@ -3,14 +3,14 @@
 
 - name: Install loki configuration
   copy: src=loki.yaml dest=/etc/loki/ owner=root group=root mode=0644
-  notify: restart loki
+  notify: Restart loki
 
 - name: Make nginx log dir
   file: path=/var/log/nginx/loki state=directory owner=root group=root mode=0755
 
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest="/etc/nginx/nginx.d/logging.conf" owner=root group=root mode=640
-  notify: reload nginx
+  notify: Reload nginx
   tags: ['nginx']
 
 - name: Open firewall hole

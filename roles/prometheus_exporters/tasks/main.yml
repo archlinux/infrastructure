@@ -142,7 +142,7 @@
 
 - name: Install blackbox exporter configuration
   template: src=blackbox.yml.j2 dest=/etc/prometheus/blackbox.yml owner=root group=root mode=0644
-  notify: reload blackbox exporter
+  notify: Reload blackbox exporter
   when: "'prometheus' in group_names"
 
 - name: Install rebuilderd textcollector service

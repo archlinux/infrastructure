@@ -47,7 +47,7 @@
     - security-tracker-update.timer
     - security-tracker-update.service
   notify:
-    - daemon reload
+    - Daemon reload
 
 - name: Disable security-tracker timer
   service: name="security-tracker-update.timer" enabled=no state=stopped
@@ -87,7 +87,7 @@
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest="{{ security_tracker_nginx_conf }}" owner=root group=root mode=644
   notify:
-    - reload nginx
+    - Reload nginx
   when: maintenance is not defined
   tags: ['nginx']
 

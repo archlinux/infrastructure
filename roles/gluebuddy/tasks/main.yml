@@ -7,7 +7,7 @@
     - gluebuddy.service
     - gluebuddy.timer
   notify:
-    - daemon reload
+    - Daemon reload
 
 - name: Enable timer
   systemd: name=gluebuddy.timer enabled=yes state=started

@@ -9,7 +9,7 @@
 - name: Configure mariadb
   template: src=server.cnf.j2 dest=/etc/my.cnf.d/server.cnf owner=root group=root mode=0644
   notify:
-    - restart mariadb
+    - Restart mariadb
 
 - name: Start and enable the service
   service: name=mariadb state=started enabled=yes

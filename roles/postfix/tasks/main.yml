@@ -11,9 +11,9 @@
     - aliases
     - users.pcre
   notify:
-    - restart postfix
-    - postmap additional files
-    - update aliases db
+    - Restart postfix
+    - Postmap additional files
+    - Update aliases db
 
 - name: Install additional files
   copy: src={{ item }} dest=/etc/postfix/{{ item }} owner=root group=root mode=0644
@@ -29,12 +29,12 @@
     - domains
     - msa_header_checks
   notify:
-    - postmap additional files
+    - Postmap additional files
 
 - name: Create dhparam 2048
   command: openssl dhparam -out /etc/postfix/dh2048.pem 2048 creates=/etc/postfix/dh2048.pem
   notify:
-    - reload postfix
+    - Reload postfix
 
 - name: Create ssl cert
   include_role:

@@ -3,20 +3,20 @@
 
 - name: Install prometheus configuration
   template: src=prometheus.yml.j2 dest=/etc/prometheus/prometheus.yml owner=root group=prometheus mode=640
-  notify: reload prometheus
+  notify: Reload prometheus
 
 - name: Install prometheus cli configuration
   template: src=prometheus.conf.j2 dest=/etc/conf.d/prometheus owner=root group=root mode=600
-  notify: reload prometheus
+  notify: Reload prometheus
 
 - name: Install prometheus web-config configuration
   template: src=web-config.yml.j2 dest=/etc/prometheus/web-config.yml owner=root group=prometheus mode=640
-  notify: reload prometheus
+  notify: Reload prometheus
   when: prometheus_receive_only
 
 - name: Install prometheus alert configuration
   copy: src=node.rules.yml dest=/etc/prometheus/node.rules.yml owner=root group=root mode=644
-  notify: reload prometheus
+  notify: Reload prometheus
   when: not prometheus_receive_only
 
 - name: Enable prometheus server service

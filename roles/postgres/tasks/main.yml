@@ -26,7 +26,7 @@
     chdir: /var/lib/postgres
     creates: /var/lib/postgres/data/postgresql.conf
   notify:
-    - restart postgres
+    - Restart postgres
 
 - name: Configure postgres
   template: src={{ item }}.j2 dest=/var/lib/postgres/data/{{ item }} owner=postgres group=postgres mode=0600
@@ -34,7 +34,7 @@
     - postgresql.conf
     - pg_hba.conf
   notify:
-    - restart postgres
+    - Restart postgres
 
 - name: Install postgres certificate
   copy: src=/etc/letsencrypt/live/{{ inventory_hostname }}/fullchain.pem dest={{ postgres_ssl_cert_file }}

@@ -10,7 +10,7 @@
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/grafana.conf owner=root group=http mode=640
   notify:
-    - reload nginx
+    - Reload nginx
   tags: ['nginx']
 
 - name: Make nginx log dir
@@ -31,11 +31,11 @@
 
 - name: Install grafana datasources provisioning
   template: src=datasources.yaml.j2 dest=/etc/grafana/provisioning/datasources/prometheus.yml owner=grafana group=root mode=0600
-  notify: restart grafana
+  notify: Restart grafana
 
 - name: Install grafana dashboard provisioning
   template: src=dashboard.yaml.j2 dest=/etc/grafana/provisioning/dashboards/dasbhoard.yml owner=grafana group=root mode=0600
-  notify: restart grafana
+  notify: Restart grafana
 
 - name: Copy grafana dashboards
   copy: src=dashboards dest=/var/lib/grafana/dashboards owner=grafana group=grafana mode=0600
@@ -46,7 +46,7 @@
 
 - name: Install grafana config
   template: src=grafana.ini.j2 dest=/etc/grafana.ini owner=grafana group=root mode=0600
-  notify: restart grafana
+  notify: Restart grafana
 
 - name: Fix /var/lib/grafana permissions
   file: path=/var/lib/grafana mode=0700 owner=grafana group=grafana

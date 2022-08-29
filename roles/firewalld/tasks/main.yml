@@ -6,7 +6,7 @@
 - name: Install firewalld config
   template: src=firewalld.conf.j2 dest=/etc/firewalld/firewalld.conf owner=root group=root mode=0644
   notify:
-    - restart firewalld
+    - Restart firewalld
 
 - name: Start and enable firewalld
   service:

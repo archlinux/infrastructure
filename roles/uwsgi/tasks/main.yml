@@ -7,7 +7,7 @@
 - name: Configure uwsgi
   template: src=emperor.ini.j2 dest=/etc/uwsgi/emperor.ini owner=root group=root mode=0644
   notify:
-    - restart emperor.uwsgi
+    - Restart emperor.uwsgi
 
 - name: Vassals directory
   file: state=directory path=/etc/uwsgi/vassals owner=root group=root mode=0755

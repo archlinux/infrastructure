@@ -46,7 +46,7 @@
     - clean-quassel.timer
     - clean-quassel.service
   notify:
-    - daemon reload
+    - Daemon reload
 
 - name: Add quassel.service.d dir
   file: state=directory path=/etc/systemd/system/quassel.service.d owner=root group=root mode=0755

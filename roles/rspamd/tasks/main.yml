@@ -4,12 +4,12 @@
 - name: Install config
   copy: src=local.d/ dest=/etc/rspamd/local.d/ owner=root group=root mode=0644
   notify:
-    - reload rspamd
+    - Reload rspamd
 
 - name: Install dkim_signing.conf
   template: src=dkim_signing.conf.j2 dest=/etc/rspamd/local.d/dkim_signing.conf owner=root group=root mode=0644
   notify:
-    - reload rspamd
+    - Reload rspamd
 
 - name: Create rspamd dkim directory
   file: path=/var/lib/rspamd/dkim state=directory owner=rspamd group=rspamd mode=0750
@@ -31,7 +31,7 @@
     - "{{ rspamd_dkim_domain }}.dkim-ed25519.key"
     - "{{ rspamd_dkim_domain }}.dkim-rsa.key"
   notify:
-    - reload rspamd
+    - Reload rspamd
 
 - name: Start and enable rspamd
   service: name=rspamd enabled=yes state=started

@@ -13,7 +13,7 @@
   vars:
     debuginfod_package_path: "{{ debuginfod_package_paths | join(' ') }}"
   notify:
-    - reload debuginfod
+    - Reload debuginfod
 
 - name: Create http directory for debuginfod website files
   file: path=/srv/http/debuginfod state=directory owner=root group=root mode=0755
@@ -39,7 +39,7 @@
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/debuginfod.conf owner=root group=root mode=0644
   notify:
-    - reload nginx
+    - Reload nginx
   when: debuginfod_domain
   tags: ['nginx']
 

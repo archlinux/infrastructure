@@ -12,7 +12,7 @@
     group: root
     mode: 0644
   notify:
-    - reload nginx
+    - Reload nginx
   tags: ['nginx']
 
 - name: Make nginx log dir

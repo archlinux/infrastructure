@@ -10,19 +10,19 @@
     - {src: settings.py.j2, dest: /etc/webapps/mailman-web/settings.py, group: mailman-web}
     - {src: urls.py.j2, dest: /etc/webapps/mailman-web/urls.py, group: mailman-web}
   notify:
-    - reload mailman
-    - restart mailman-web
+    - Reload mailman
+    - Restart mailman-web
 
 - name: Install mailman postfix.cfg configuration
   copy: src=postfix.cfg dest=/etc/postfix.cfg owner=root group=root mode=0644
-  notify: reload mailman
+  notify: Reload mailman
 
 - name: Make nginx log dir
   file: path=/var/log/nginx/{{ lists_domain }} state=directory owner=root group=root mode=0755
 
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest="/etc/nginx/nginx.d/mailman.conf" owner=root group=root mode=644
-  notify: reload nginx
+  notify: Reload nginx
   tags: ['nginx']
 
 - name: Create postgres {mailman,mailman-web} user

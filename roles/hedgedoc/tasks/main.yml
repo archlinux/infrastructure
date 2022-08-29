@@ -24,7 +24,7 @@
 
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest={{ hedgedoc_nginx_conf }} owner=root group=http mode=640
-  notify: reload nginx
+  notify: Reload nginx
   tags: ['nginx']
 
 - name: Add hedgedoc.service.d dir

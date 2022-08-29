@@ -23,7 +23,7 @@
     - clean-repro.timer
     - clean-repro.service
   notify:
-    - daemon reload
+    - Daemon reload
 
 - name: Start and enable cleanup timer
   service: name=clean-repro.timer enabled=yes state=started

@@ -29,7 +29,7 @@
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest="{{ patchwork_nginx_conf }}" owner=root group=root mode=644
   notify:
-    - reload nginx
+    - Reload nginx
   when: maintenance is not defined
   tags: ['nginx']
 
@@ -111,17 +111,17 @@
 - name: Install patchwork memcached service
   template: src="patchwork-memcached.service.j2" dest="/etc/systemd/system/patchwork-memcached.service" owner=root group=root mode=0644
   notify:
-    - daemon reload
+    - Daemon reload
 
 - name: Install patchwork notification service
   template: src="patchwork-notification.service.j2" dest="/etc/systemd/system/patchwork-notification.service" owner=root group=root mode=0644
   notify:
-    - daemon reload
+    - Daemon reload
 
 - name: Install patchwork notification timer
   template: src="patchwork-notification.timer.j2" dest="/etc/systemd/system/patchwork-notification.timer" owner=root group=root mode=0644
   notify:
-    - daemon reload
+    - Daemon reload
 
 - name: Deploy patchwork
   template: src=patchwork.ini.j2 dest=/etc/uwsgi/vassals/patchwork.ini owner=patchwork group=http mode=0644

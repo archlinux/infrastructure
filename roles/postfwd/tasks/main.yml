@@ -4,7 +4,7 @@
 - name: Install postfwd.cf
   template: src=postfwd.cf.j2 dest=/etc/postfwd/postfwd.cf owner=postfwd group=root mode=0600
   notify:
-    - reload postfwd
+    - Reload postfwd
 
 - name: Start and enable postfwd
   service: name=postfwd enabled=yes state=started

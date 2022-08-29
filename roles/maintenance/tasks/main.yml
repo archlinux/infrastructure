@@ -15,7 +15,7 @@
     owner: root
     group: root
     mode: 0644
-  notify: reload nginx
+  notify: Reload nginx
   when: service_nginx_template is not defined and maintenance is defined and maintenance|bool
 
 - name: Set up custom nginx maintenance mode
@@ -25,7 +25,7 @@
     owner: root
     group: root
     mode: 0644
-  notify: reload nginx
+  notify: Reload nginx
   when: service_nginx_template is defined and maintenance is defined and maintenance|bool
 
 - name: Create the 503 html file

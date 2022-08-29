@@ -3,7 +3,7 @@
 
 - name: Install promtail configuration
   template: src=promtail.yaml.j2 dest=/etc/loki/promtail.yaml owner=root group=promtail mode=0640
-  notify: restart promtail
+  notify: Restart promtail
 
 - name: Open promtail ipv4 port for monitoring.archlinux.org
   ansible.posix.firewalld: zone=wireguard state=enabled permanent=true immediate=yes
@@ -16,7 +16,7 @@
 
 - name: Install drop-in for promtail.service
   copy: src=override.conf dest=/etc/systemd/system/promtail.service.d/ owner=root group=root mode=0644
-  notify: restart promtail
+  notify: Restart promtail
 
 - name: Start and enable promtail
   systemd: name=promtail.service enabled=yes daemon_reload=yes state=started

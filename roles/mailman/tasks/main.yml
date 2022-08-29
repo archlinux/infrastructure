@@ -9,24 +9,24 @@
 
 - name: Install mailman configuration
   template: src=mm_cfg.py.j2 dest=/etc/mailman/mm_cfg.py follow=yes owner=root group=root mode=0644
-  notify: reload mailman
+  notify: Reload mailman
 
 - name: Install postfix configuration
   template: src=main.cf.j2 dest=/etc/postfix/main.cf owner=root group=root mode=0644
-  notify: reload postfix
+  notify: Reload postfix
 
 - name: Install postfix maps
   copy: src={{ item }} dest=/etc/postfix/ owner=root group=root mode=0644
   loop:
     - aliases
     - milter_header_checks
-  notify: run postmap
+  notify: Run postmap
 
 - name: Install postfix templated maps
   template: src={{ item }}.j2 dest=/etc/postfix/{{ item }} owner=root group=root mode=0644
   loop:
     - transport
-  notify: run postmap
+  notify: Run postmap
 
 - name: Open firewall holes for postfix
   ansible.posix.firewalld: service=smtp zone={{ item }} permanent=true state=enabled immediate=yes
@@ -50,11 +50,11 @@
 
 - name: Install nginx mailman2->mailman3 redirect map
   copy: src=migrated-lists.map dest=/etc/nginx/maps/ owner=root group=root mode=0644
-  notify: reload nginx
+  notify: Reload nginx
 
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest="/etc/nginx/nginx.d/mailman.conf" owner=root group=root mode=644
-  notify: reload nginx
+  notify: Reload nginx
   tags: ['nginx']
 
 - name: Start and enable postfix
@@ -65,7 +65,7 @@
 
 - name: Install drop-in for mailman.service
   copy: src=override.conf dest=/etc/systemd/system/mailman.service.d/ owner=root group=root mode=0644
-  notify: restart mailman
+  notify: Restart mailman
 
 - name: Start and enable mailman{.service,-*.timer}
   systemd: name={{ item }} enabled=yes daemon_reload=yes state=started

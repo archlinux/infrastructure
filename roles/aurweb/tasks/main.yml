@@ -221,7 +221,7 @@
 
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest={{ aurweb_nginx_conf }} owner=root group=root mode=644
-  notify: reload nginx
+  notify: Reload nginx
   tags: ['nginx']
 
 - name: Make nginx log dir
@@ -297,7 +297,7 @@
 - name: Configure sshd
   template: src=aurweb_config.j2 dest={{ sshd_includes_dir }}/aurweb_config owner=root group=root mode=0600 validate='/usr/sbin/sshd -t -f %s'
   notify:
-    - restart sshd
+    - Restart sshd
 
 - name: Start and enable AUR systemd services and timers
   service: name={{ item }} enabled=yes state=started daemon_reload=yes

@@ -84,7 +84,7 @@
   become_method: sudo
   register: synapse_pip
   notify:
-    - restart synapse
+    - Restart synapse
 
 - name: Install pantalaimon
   pip:
@@ -97,7 +97,7 @@
   become_user: synapse
   become_method: sudo
   notify:
-    - restart pantalaimon
+    - Restart pantalaimon
 
 - name: Download mjolnir
   git:
@@ -110,7 +110,7 @@
   become_method: sudo
   register: mjolnir_git
   notify:
-    - restart mjolnir
+    - Restart mjolnir
 
 - name: Install mjolnir
   community.general.yarn:
@@ -140,7 +140,7 @@
   become_method: sudo
   when: synapse_pip.changed or mjolnir_git.changed
   notify:
-    - restart synapse
+    - Restart synapse
 
 - name: Download matrix-appservice-irc
   git:
@@ -153,7 +153,7 @@
   become_method: sudo
   register: irc_git
   notify:
-    - restart matrix-appservice-irc
+    - Restart matrix-appservice-irc
 
 - name: Install matrix-appservice-irc
   community.general.npm:
@@ -167,7 +167,7 @@
 - name: Install pg_hba.conf
   copy: src=pg_hba.conf dest=/var/lib/postgres/data/pg_hba.conf owner=postgres group=postgres mode=0600
   notify:
-    - restart postgres
+    - Restart postgres
 
 - name: Add synapse postgres db
   postgresql_db: db=synapse lc_collate=C lc_ctype=C template=template0
@@ -196,7 +196,7 @@
 - name: Install homeserver config
   template: src=homeserver.yaml.j2 dest=/etc/synapse/homeserver.yaml owner=root group=synapse mode=0640
   notify:
-    - restart synapse
+    - Restart synapse
 
 - name: Install static config
   copy: src={{ item }} dest=/etc/synapse/{{ item }} owner=root group=root mode=0644
@@ -207,27 +207,27 @@
     - worker-federation_sender.yaml
     - worker-media_repository.yaml
   notify:
-    - restart synapse
+    - Restart synapse
 
 - name: Install pantalaimon config
   template: src=pantalaimon.conf.j2 dest=/etc/synapse/pantalaimon.conf owner=root group=synapse mode=0644
   notify:
-    - restart pantalaimon
+    - Restart pantalaimon
 
 - name: Install mjolnir config
   template: src=mjolnir.yaml.j2 dest=/etc/synapse/mjolnir/production.yaml owner=root group=synapse mode=0640
   notify:
-    - restart mjolnir
+    - Restart mjolnir
 
 - name: Install irc-bridge config
   template: src=irc-bridge.yaml.j2 dest=/etc/synapse/irc-bridge.yaml owner=root group=synapse mode=0640
   notify:
-    - restart matrix-appservice-irc
+    - Restart matrix-appservice-irc
 
 - name: Install irc-bridge registration
   template: src=appservice-registration-irc.yaml.j2 dest=/etc/synapse/appservice-registration-irc.yaml owner=root group=synapse mode=0640
   notify:
-    - restart synapse
+    - Restart synapse
 
 - name: Install signing key
   copy:
@@ -251,14 +251,14 @@
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/matrix.conf owner=root group=root mode=0640
   notify:
-    - reload nginx
+    - Reload nginx
   when: 'matrix_domain is defined'
   tags: ['nginx']
 
 - name: Install turnserver.conf
   template: src=turnserver.conf.j2 dest=/etc/turnserver/turnserver.conf owner=turnserver group=turnserver mode=0600
   notify:
-    - restart turnserver
+    - Restart turnserver
 
 - name: Install turnserver cert renewal hook
   copy: src=letsencrypt.hook.d dest=/etc/letsencrypt/hook.d/turnserver owner=root group=root mode=0755
@@ -269,28 +269,28 @@
     - synapse.service
     - synapse-worker@.service
   notify:
-    - restart synapse
+    - Restart synapse
 
 - name: Install pantalaimon units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
     - pantalaimon.service
   notify:
-    - restart pantalaimon
+    - Restart pantalaimon
 
 - name: Install mjolnir units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
     - mjolnir.service
   notify:
-    - restart mjolnir
+    - Restart mjolnir
 
 - name: Install matrix-appservice-irc units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
     - matrix-appservice-irc.service
   notify:
-    - restart matrix-appservice-irc
+    - Restart matrix-appservice-irc
 
 - name: Enable synapse units
   service: name={{ item }} enabled=yes
@@ -301,35 +301,35 @@
     - synapse-worker@federation_sender.service
     - synapse-worker@media_repository.service
   notify:
-    - restart synapse
+    - Restart synapse
 
 - name: Enable pantalaimon units
   service: name={{ item }} enabled=yes
   with_items:
     - pantalaimon.service
   notify:
-    - restart pantalaimon
+    - Restart pantalaimon
 
 - name: Enable mjolnir units
   service: name={{ item }} enabled=yes
   with_items:
     - mjolnir.service
   notify:
-    - restart mjolnir
+    - Restart mjolnir
 
 - name: Enable matrix-appservice-irc units
   service: name={{ item }} enabled=yes
   with_items:
     - matrix-appservice-irc.service
   notify:
-    - restart matrix-appservice-irc
+    - Restart matrix-appservice-irc
 
 - name: Enable turnserver units
   service: name={{ item }} enabled=yes
   with_items:
     - turnserver.service
   notify:
-    - restart turnserver
+    - Restart turnserver
 
 - name: Open firewall holes
   ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes

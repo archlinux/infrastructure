@@ -37,7 +37,7 @@
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest="{{ archwiki_nginx_conf }}" owner=root group=root mode=644
   notify:
-    - reload nginx
+    - Reload nginx
   when: maintenance is not defined
   tags: ['nginx']
 
@@ -55,11 +55,11 @@
   become: true
   become_user: "{{ archwiki_user }}"
   notify:
-    - run wiki updatescript
+    - Run wiki updatescript
     # purge the nginx cache and MediaWiki file cache to make sure clients get updated assets
     # as well as freshly rendered pages using the new assets
-    - purge nginx cache
-    - invalidate MediaWiki file cache
+    - Purge nginx cache
+    - Invalidate MediaWiki file cache
 
 - name: Configure archwiki
   template: src=LocalSettings.php.j2 dest="{{ archwiki_dir }}/public/LocalSettings.php" owner="{{ archwiki_user }}" group="{{ archwiki_user }}" mode=0640
@@ -81,7 +81,7 @@
     src=php-fpm.conf.j2 dest="/etc/php/php-fpm.d/{{ archwiki_user }}.conf"
     owner=root group=root mode=0644
   notify:
-    - restart php-fpm@{{ archwiki_user }}
+    - Restart php-fpm@{{ archwiki_user }}
 
 - name: Start and enable systemd socket
   service: name=php-fpm@{{ archwiki_user }}.socket state=started enabled=true

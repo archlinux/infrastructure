@@ -7,7 +7,7 @@
     - {file: main.cf, group: root, mode: 644}
     - {file: relay_passwords, group: postfix, mode: 640}
   notify:
-    - reload postfix
+    - Reload postfix
 
 - name: Create user account on mail to relay with
   delegate_to: mail.archlinux.org

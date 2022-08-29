@@ -33,7 +33,7 @@
 
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest="{{ archmanweb_nginx_conf }}" owner=root group=root mode=644
-  notify: reload nginx
+  notify: Reload nginx
   tags: ['nginx']
 
 - name: Make nginx log dir

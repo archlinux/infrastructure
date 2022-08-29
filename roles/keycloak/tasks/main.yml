@@ -18,7 +18,7 @@
   template: src=keycloak.conf.j2 dest=/etc/keycloak/keycloak.conf owner=root group=keycloak mode=640
   no_log: true
   notify:
-    - restart keycloak
+    - Restart keycloak
 
 - name: Create drop-in directory for keycloak.service
   file: path=/etc/systemd/system/keycloak.service.d state=directory owner=root group=root mode=0755
@@ -47,7 +47,7 @@
     - name: Remove admin creation drop-in
       file: path=/etc/systemd/system/keycloak.service.d/create-keycloak-admin.conf state=absent
       notify:
-        - daemon reload
+        - Daemon reload
   when: ansible_facts.services["keycloak.service"]["state"] != "running"
 
 - name: Open firewall hole
@@ -80,5 +80,5 @@
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/keycloak.conf owner=root group=root mode=0644
   notify:
-    - reload nginx
+    - Reload nginx
   tags: ['nginx']

@@ -11,7 +11,7 @@
 - name: Install dovecot.conf
   template: src=dovecot.conf.j2 dest=/etc/dovecot/dovecot.conf owner=root group=root mode=0644
   notify:
-    - reload dovecot
+    - Reload dovecot
 
 - name: Add vmail group
   group: name=vmail gid=5000
@@ -28,7 +28,7 @@
 - name: Install spam-to-folder.sieve
   copy: src=spam-to-folder.sieve dest=/etc/dovecot/sieve/ mode=0644 owner=root group=root
   notify:
-    - run sievec
+    - Run sievec
 
 - name: Create ssl cert
   include_role:

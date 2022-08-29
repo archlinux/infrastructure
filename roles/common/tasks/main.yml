@@ -85,12 +85,12 @@
 - name: Install journald.conf overrides
   template: src=journald.conf.j2 dest=/etc/systemd/journald.conf.d/override.conf owner=root group=root mode=644
   notify:
-    - restart journald
+    - Restart journald
 
 - name: Install system.conf overrides
   template: src=system.conf.j2 dest=/etc/systemd/system.conf.d/override.conf owner=root group=root mode=0644
   notify:
-    - systemd daemon-reload
+    - Systemd daemon-reload
 
 - name: Install zram-generator
   pacman: name=zram-generator state=present
@@ -99,7 +99,7 @@
 - name: Install zram-generator config for zram
   template: src=zram-generator.conf dest=/etc/systemd/zram-generator.conf owner=root group=root mode=0644
   notify:
-    - restart systemd-zram-setup@zram0
+    - Restart systemd-zram-setup@zram0
   when: enable_zram_swap
 
 - name: Disable zswap to prevent conflict with zram
@@ -123,7 +123,7 @@
     - "-.slice"
     - user@.service
   notify:
-    - systemd daemon-reload
+    - Systemd daemon-reload
 
 - name: Start systemd-oomd
   service: name=systemd-oomd state=started enabled=yes

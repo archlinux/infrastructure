@@ -11,7 +11,7 @@
 
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest="/etc/nginx/nginx.d/redirects.conf" owner=root group=root mode=644
-  notify: reload nginx
+  notify: Reload nginx
   tags: ['nginx']
 
 - name: Copy nginx map files

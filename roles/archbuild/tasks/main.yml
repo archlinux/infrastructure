@@ -45,14 +45,14 @@
     - var-lib-archbuilddest.mount
     - strictatime@.service
   notify:
-    - daemon reload
+    - Daemon reload
 
 - name: Install archbuild unit
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
     - var-lib-archbuild.mount
   notify:
-    - daemon reload
+    - Daemon reload
 
 - name: Install archbuild user units
   copy: src={{ item }} dest=/etc/systemd/user/{{ item }} owner=root group=root mode=0644

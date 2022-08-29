@@ -3,7 +3,7 @@
     name: "fail2ban"
     state: "present"
   notify:
-    - restart fail2ban
+    - Restart fail2ban
 
 - name: Create systemd unit override path
   file:
@@ -32,7 +32,7 @@
     - "fail2ban.local"
     - "jail.local"
   notify:
-    - restart fail2ban
+    - Restart fail2ban
 
 - name: Install firewallcmd-allports.local
   template:
@@ -42,7 +42,7 @@
     group: "root"
     mode: 0644
   notify:
-    - restart fail2ban
+    - Restart fail2ban
 
 - name: Install sshd jail
   when: fail2ban_jails.sshd
@@ -53,7 +53,7 @@
     group: "root"
     mode: 0644
   notify:
-    - reload fail2ban jails
+    - Reload fail2ban jails
 
 - name: Install postfix jail
   when: fail2ban_jails.postfix
@@ -64,7 +64,7 @@
     group: "root"
     mode: 0644
   notify:
-    - reload fail2ban jails
+    - Reload fail2ban jails
 
 - name: Install dovecot jail
   when: fail2ban_jails.dovecot
@@ -75,7 +75,7 @@
     group: "root"
     mode: 0644
   notify:
-    - reload fail2ban jails
+    - Reload fail2ban jails
 
 - name: Install nginx-limit-req jail
   when: fail2ban_jails.nginx_limit_req
@@ -86,7 +86,7 @@
     group: "root"
     mode: 0644
   notify:
-    - reload fail2ban jails
+    - Reload fail2ban jails
 
 - name: Start and enable service
   systemd:

@@ -27,7 +27,7 @@
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest="{{ flyspray_nginx_conf }}" owner=root group=root mode=644
   notify:
-    - reload nginx
+    - Reload nginx
   when: maintenance is not defined
   tags: ['nginx']
 
@@ -73,19 +73,19 @@
     src=php-fpm.conf.j2 dest="/etc/php7/php-fpm.d/{{ flyspray_user }}.conf"
     owner=root group=root mode=0644
   notify:
-    - restart php-fpm7@flyspray
+    - Restart php-fpm7@flyspray
 
 - name: Install fail2ban register ban filter
   template: src=fail2ban.filter.j2 dest=/etc/fail2ban/filter.d/nginx-flyspray-register.local owner=root group=root mode=0644
   notify:
-    - restart fail2ban
+    - Restart fail2ban
   tags:
     - fail2ban
 
 - name: Install fail2ban register ban jail
   template: src=fail2ban.jail.j2 dest=/etc/fail2ban/jail.d/nginx-flyspray-register.local owner=root group=root mode=0644
   notify:
-    - restart fail2ban
+    - Restart fail2ban
   tags:
     - fail2ban
 

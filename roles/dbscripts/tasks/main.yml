@@ -34,7 +34,7 @@
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/dbscripts.conf owner=root group=root mode=0644
   notify:
-    - reload nginx
+    - Reload nginx
   tags:
     - nginx
 
@@ -332,7 +332,7 @@
     - createlinks.timer
     - createlinks.service
   notify:
-    - daemon reload
+    - Daemon reload
 
 - name: Activate systemd timers
   service: name={{ item }} enabled=yes state=started

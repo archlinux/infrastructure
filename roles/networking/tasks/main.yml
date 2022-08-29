@@ -3,7 +3,7 @@
     - name: Install 10-static-ethernet.network
       template: src=10-static-ethernet.network.j2 dest={{ chroot_path }}/etc/systemd/network/10-static-ethernet.network owner=root group=root mode=0644
       notify:
-        - restart networkd
+        - Restart networkd
 
     - name: Create drop-in directory for 10-static-ethernet.network
       file: path={{ chroot_path }}/etc/systemd/network/10-static-ethernet.network.d state=directory owner=root group=root mode=0755
@@ -11,7 +11,7 @@
     - name: Configure static dns (static)
       copy: src=dns.conf dest={{ chroot_path }}/etc/systemd/network/10-static-ethernet.network.d/dns.conf owner=root group=root mode=0644
       notify:
-        - restart networkd
+        - Restart networkd
       when: static_dns|default(true)
   when: not dhcp|default(false)
 
@@ -20,7 +20,7 @@
     - name: Install 10-dhcp-ethernet.network
       template: src=10-dhcp-ethernet.network.j2 dest={{ chroot_path }}/etc/systemd/network/10-dhcp-ethernet.network owner=root group=root mode=0644
       notify:
-        - restart networkd
+        - Restart networkd
 
     - name: Create drop-in directory for 10-dhcp-ethernet.network
       file: path={{ chroot_path }}/etc/systemd/network/10-dhcp-ethernet.network.d state=directory owner=root group=root mode=0755
@@ -28,7 +28,7 @@
     - name: Configure static dns (dhcp)
       copy: src=dns.conf dest={{ chroot_path }}/etc/systemd/network/10-dhcp-ethernet.network.d/dns.conf owner=root group=root mode=0644
       notify:
-        - restart networkd
+        - Restart networkd
       when: static_dns|default(false)
   when: dhcp|default(false)
 

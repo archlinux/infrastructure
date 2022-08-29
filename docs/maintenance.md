@@ -39,7 +39,7 @@ as a variable, to make sure the right file is used.
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest="{{ service_nginx_conf }}" owner=root group=root mode=644
   notify:
-    - reload nginx
+    - Reload nginx
   when: maintenance is not defined
   tags: ['nginx']
 ```

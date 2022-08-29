@@ -4,7 +4,7 @@
 - name: Template fetchmail config
   template: src=fetchmailrc.j2 dest=/etc/fetchmailrc owner=fetchmail group=nobody mode=600
   notify:
-    - restart fetchmail
+    - Restart fetchmail
 
 - name: Start and enable fetchmail
   service: name=fetchmail enabled=yes state=started

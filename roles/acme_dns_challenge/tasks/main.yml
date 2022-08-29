@@ -6,7 +6,7 @@
   loop:
     - {src: pdns.conf.j2, dest: pdns.conf}
     - {src: dnsupdate-policy.lua.j2, dest: dnsupdate-policy.lua}
-  notify: restart powerdns
+  notify: Restart powerdns
 
 - name: Create directory for sqlite3 dbs
   file: path=/var/lib/powerdns state=directory owner=powerdns group=powerdns mode=0755

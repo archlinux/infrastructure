@@ -8,7 +8,7 @@
   with_items:
     - php-fpm@.socket
     - php-fpm@.service
-  notify: daemon reload
+  notify: Daemon reload
 
 - name: Configure default php.ini
   template: >

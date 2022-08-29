@@ -1,17 +1,17 @@
 - name: Install dependencies
   pacman: name=docker,python-docker,python-gitlab,gitlab-runner state=latest update_cache=yes
-  notify: restart gitlab-runner
+  notify: Restart gitlab-runner
 
 - name: Install docker.slice
   copy: src=docker.slice dest=/etc/systemd/system/ owner=root group=root mode=0644
-  notify: systemd daemon-reload
+  notify: Systemd daemon-reload
 
 - name: Start docker
   systemd: name=docker enabled=yes state=started daemon_reload=yes
 
 - name: Configure Docker daemon for IPv6
   copy: src=daemon.json dest=/etc/docker/daemon.json owner=root group=root mode=0644
-  notify: restart docker
+  notify: Restart docker
 
 # We want to give our gitlab-runners full IPv6 capabilities. Sadly, IPv6 and Docker aren't friends. :(
 # https://medium.com/@skleeschulte/how-to-enable-ipv6-for-docker-containers-on-ubuntu-18-04-c68394a219a2
@@ -44,7 +44,7 @@
 # Note: Secure runners must be added manually to the relevant projects
 - name: Install runner configuration
   template: src=config.toml.j2 dest=/etc/gitlab-runner/config.toml owner=root group=root mode=0600
-  notify: restart gitlab-runner
+  notify: Restart gitlab-runner
 
 - name: Install gitlab-runner-docker-cleanup.{service,timer}
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
@@ -52,7 +52,7 @@
     - gitlab-runner-docker-cleanup.service
     - gitlab-runner-docker-cleanup.timer
   notify:
-    - restart gitlab-runner-docker-cleanup.timer
+    - Restart gitlab-runner-docker-cleanup.timer
 
 - name: Enable and start gitlab-runner-docker-cleanup.timer
   systemd: name=gitlab-runner-docker-cleanup.timer state=started enabled=yes daemon_reload=yes

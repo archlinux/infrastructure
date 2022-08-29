@@ -37,7 +37,7 @@
   template: >
     src=nginx.conf.j2 dest=/etc/nginx/nginx.d/fluxbb.conf
     owner=root group=root mode=0644
-  notify: reload nginx
+  notify: Reload nginx
 
 - name: Install python-passlib
   pacman: name=python-passlib
@@ -61,7 +61,7 @@
   template: >
     src=php-fpm.conf.j2 dest=/etc/php/php-fpm.d/fluxbb.conf
     owner=root group=root mode=0644
-  notify: restart php-fpm@fluxbb
+  notify: Restart php-fpm@fluxbb
 
 - name: Start and enable systemd socket
   service: name=php-fpm@fluxbb.socket state=started enabled=true
