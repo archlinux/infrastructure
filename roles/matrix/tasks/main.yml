@@ -292,6 +292,11 @@
   notify:
     - Restart matrix-appservice-irc
 
+- name: Install turnserver unit snippet
+  copy: src=turnserver.service.d dest=/etc/systemd/system/turnserver.service.d/override.conf owner=root group=root mode=0644
+  notify:
+    - Restart turnserver
+
 - name: Enable synapse units
   service: name={{ item }} enabled=yes
   with_items:
