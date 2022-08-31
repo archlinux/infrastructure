@@ -15,7 +15,7 @@
 # Note: actually, TLS & DTLS sessions can connect to the
 # "plain" TCP & UDP port(s), too - if allowed by configuration.
 #
-#listening-port=3478
+listening-port=2410
 
 # TURN listener port for TLS (Default: 5349).
 # Note: actually, "plain" TCP & UDP sessions can connect to the TLS & DTLS
@@ -27,7 +27,7 @@
 # TLS version 1.0, 1.1 and 1.2.
 # For secure UDP connections, Coturn supports DTLS version 1.
 #
-#tls-listening-port=5349
+tls-listening-port=2420
 
 # Alternative listening port for UDP and TCP listeners;
 # default (or zero) value means "listening port plus one".
@@ -602,7 +602,7 @@ syslog
 # Run as TURN server only, all STUN requests will be ignored.
 # By default, this option is NOT set.
 #
-#no-stun
+no-stun
 
 # This is the timestamp/username separator symbol (character) in TURN REST API.
 # The default value is ':'.
