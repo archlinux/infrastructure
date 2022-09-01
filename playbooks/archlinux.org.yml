@@ -1,4 +1,4 @@
-- name: "prepare postgres ssl hosts list"
+- name: Prepare postgres ssl hosts list
   hosts: archlinux.org
   tasks:
     - name: Assign ipv4 addresses to fact postgres_hosts4
