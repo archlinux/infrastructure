@@ -891,3 +891,29 @@ resource "keycloak_openid_group_membership_protocol_mapper" "group_membership_ma
 
   claim_name = "groups"
 }
+
+resource "keycloak_openid_client" "buildbot_openid_client" {
+  realm_id  = "archlinux"
+  client_id = "openid_buildbot"
+
+  name    = "Buildbot"
+  enabled = true
+
+  access_type           = "PUBLIC"
+  standard_flow_enabled = true
+  valid_redirect_uris = [
+    "https://buildbot.pkgbuild.com/*",
+    "http://127.0.0.1:5000/*",
+  ]
+}
+
+resource "keycloak_openid_user_realm_role_protocol_mapper" "buildbot_user_realm_role_mapper" {
+  realm_id  = "archlinux"
+  client_id = keycloak_openid_client.buildbot_openid_client.id
+  name      = "user realms"
+
+  claim_name          = "roles"
+  multivalued         = true
+  add_to_id_token     = false
+  add_to_access_token = false
+}
