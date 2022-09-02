@@ -172,8 +172,8 @@ locals {
   archlinux_org_gitlab_pages = {
     "conf"                  = "60a06a1c02e42b36c3b4919f4d6de6bf"
     "whatcanidofor"         = "d9e45851002a623e10f6954ff9a85d21"
-    "openpgpkey"            = "7533dfbf3947a5730d9cbcc1e5e63102"
-    "openpgpkey.master-key" = "5c7f9c249885c62287dd75d0c1dd99d8"
+    "openpgpkey"            = "d20c137368e26dcc3db56d45a368e729"
+    "openpgpkey.master-key" = "3eea8f39a9b473a5dc7c188366f84072"
     "bugs-old"              = "1f3308c8d5763eecb4f9013291aeeac4"
     "tu-bylaws.aur"         = "bbafd3ed82f336e0c52d3eb9774b2432"
     "reproducible-notes"    = "8c657f2f2720db1c3db63be89605cf0d"
