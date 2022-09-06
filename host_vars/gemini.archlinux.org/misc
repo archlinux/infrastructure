@@ -12,7 +12,7 @@ system_disks:
   - /dev/sdb
   - /dev/sdc
   - /dev/sdd
-raid_level: "raid6"
+raid_level: "raid10"
 
 archive_domain: archive.archlinux.org
 wireguard_address: 10.0.0.20
