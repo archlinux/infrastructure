@@ -374,10 +374,6 @@ arch_users:
       - mail.archlinux.org
     groups:
       - support-staff
-    additional_ssh_keys:
-      - name: klausenbusk_2.pub
-        hosts:
-          - all
   lahwaacz:
     name: "Jakub Klinkovský"
     ssh_key: lahwaacz.pub

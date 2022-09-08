@@ -20,7 +20,6 @@ root_ssh_keys:
   - key: svenstaro.pub
   - key: anthraxx.pub
   - key: klausenbusk.pub
-    additional_keys: [klausenbusk_2.pub]
   - key: artafinde.pub
     hosts:
       - aur.archlinux.org
