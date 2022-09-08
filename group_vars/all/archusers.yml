@@ -119,6 +119,11 @@ arch_users:
     ssh_key: bgyorgy.pub
     groups:
       - tu
+  blakkheim:
+    name: "T.J. Townsend"
+    ssh_key: blakkheim.pub
+    groups:
+      - tu
   bluewind:
     name: "Florian Pritz"
     ssh_key: bluewind.pub
