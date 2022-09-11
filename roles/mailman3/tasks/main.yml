@@ -68,3 +68,14 @@
     - mailman3-digests.timer
     - mailman3-notify.timer
     - uwsgi@mailman\x2dweb.service
+
+- name: update list configurations
+  uri:
+    url: http://localhost:8001/3.1/lists/{{ item }}.lists.archlinux.org/config
+    user: "{{ vault_mailman_admin_user }}"
+    password: "{{ vault_mailman_admin_pass }}"
+    method: PUT
+    body_format: json
+    status_code: 204
+    body: "{{ lookup('file', 'list_base_configuration.json') | from_json | combine(lists[item]) | to_json }}"
+  loop: "{{ lists.keys() }}"

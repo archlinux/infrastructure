@@ -1,1 +1,80 @@
 lists_domain: lists.archlinux.org
+lists:
+  arch-announce:
+    allow_list_posts: false
+    bounce_info_stale_after: 60d
+    default_member_action: reject
+    default_nonmember_action: reject
+    description: This mailing list is for official announcements for the Arch Linux distribution.
+    display_name: Arch-announce
+    moderator_password: "{{ vault_archweb_mailman_password }}"
+  arch-dev:
+    advertised: false
+    archive_policy: private
+    description: Development Discussion for Arch Linux
+    display_name: Arch-dev
+    info: This list is for development discussion about Arch Linux.  This list is closed to the general public and only used by internal Arch Linux developers.
+    subscription_policy: confirm_then_moderate
+  arch-devops:
+    display_name: Arch-devops
+    description: Arch Linux Infrastructure development discussion
+  arch-devops-private:
+    advertised: false
+    archive_policy: private
+    description: List for internal discussion of the devops team
+    display_name: Arch-devops-private
+    subscription_policy: confirm_then_moderate
+  arch-dev-public:
+    default_member_action: hold
+    description: Public mailing list for Arch Linux development
+    display_name: Arch-dev-public
+  arch-events:
+    description: Arch Linux Events
+    display_name: Arch-events
+  arch-mirrors-announce:
+    description: List for mirror admins to send announcements (like downtime notifications) to our users
+    display_name: Arch-mirrors-announce
+    info: "This list is intended for admins of Arch Linux mirrors that want to notify our users about downtime of their mirror.\r\n\r\nThis list also accepts mails from non-subscribers."
+  arch-mirrors:
+    description: Arch Linux Mirroring Discussion and Announcements
+    display_name: Arch-mirrors
+    info: This list is intended for admins of Arch Linux mirrors. Discussion and announcements regarding mirroring will use this list.
+  arch-multilib:
+    description: Arch Linux Multilib (32bit libs on 64bit OSes)
+    display_name: Arch-multilib
+  arch-ports:
+    description: Discussion regarding the porting of Arch Linux to non-x86_64 architectures
+    display_name: Arch-ports
+    info: This list is primarily used to talk about porting Arch Linux to non-x86_64 platforms, such as PPC, ARM, i586, i686, etc.
+  arch-proaudio:
+    description: Discussion about real-time multimedia, including (semi-)pro audio and video
+    display_name: Arch-proaudio
+  arch-projects:
+    description: Arch Linux projects development discussion
+    display_name: Arch-projects
+    info: "Announcements, development discussion, patches and pull requests for the Arch Linux projects:<ul><li><a target=\"blank\" href=\"https://github.com/archlinux/archweb/\">archweb</a> (patches preferably on Github as pull requests)</li><li><a target=\"blank\" href=\"https://gitlab.archlinux.org/archlinux/arch-release-promotion/\">arch-release-promotion</a> (patches only on GitLab as merge requests)</li><li><a target=\"blank\" href=\"https://gitlab.archlinux.org/archlinux/dbscripts/\">dbscripts</a> (patches preferably on GitLab as merge requests)</li><li><a target=\"blank\" href=\"https://gitlab.archlinux.org/archlinux/devtools/\">devtools</a> (patches preferably on GitLab as merge requests)</li><li><a target=\"blank\" href=\"https://github.com/archlinux/mkinitcpio/\">mkinitcpio</a> (patches preferably on Github as pull requests)</li><li><a target=\"blank\" href=\"https://gitlab.archlinux.org/archlinux/namcap/\">namcap</a> (patches preferably on GitLab as merge requests)</li><li><a target=\"blank\" href=\"https://gitlab.archlinux.org/archlinux/netctl/\">netctl</a> (patches preferably on the mailing list)</li><li><a target=\"blank\" href=\"https://gitlab.archlinux.org/archlinux/pyalpm/\">pyalpm</a> (patches preferably on GitLab as merge requests)</li><li><a target=\"blank\" href=\"https://gitlab.archlinux.org/archlinux/repod/\">repod</a> (patches only on GitLab as merge requests)</li><li><a target=\"blank\" href=\"https://gitlab.archlinux.org/archlinux/shim-signed/\">shim-signed</a> (contributions preferably on GitLab as merge requests)</li></ul>\r\nPlease begin the email subject with the name of a project in square brackets (e.g. <code>[devtools]</code>). If no project matches, use <code>[projects]</code>.\r\n\r\nNote: No user discussion!"
+  arch-releng:
+    description: Arch Linux Release Engineering
+    display_name: Arch-releng
+  arch-tu:
+    advertised: false
+    archive_policy: private
+    description: Trusted Users Discussion for Arch Linux
+    display_name: Arch-tu
+    info: This list is for trusted users discussion about Arch Linux.  This list is closed to the general public and only used by internal Arch Linux trusted users.
+    subscription_policy: confirm_then_moderate
+  arch-wiki-admins:
+    advertised: false
+    archive_policy: private
+    display_name: Arch-wiki-admins
+    subscription_policy: confirm_then_moderate
+  arch-women:
+    description: Mailing list for the Arch Women project
+    display_name: Arch-women
+    info: "<a href=\"https://archwomen.org/\">Arch Women</a> is an all inclusive organization of Arch Linux enthusiasts with a focus on helping more women become involved in the Arch Linux community and FOSS.\r\n\r\nMailing list graciously hosted by the Arch Linux™ project."
+  staff:
+    advertised: false
+    archive_policy: private
+    description: Internal list that includes all Arch Linux staff members (devs, TUs, support staff)
+    display_name: Staff
+    subscription_policy: confirm_then_moderate
