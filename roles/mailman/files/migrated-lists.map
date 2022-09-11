@@ -1,4 +1,5 @@
 /listinfo/arch-announce /mailman3/lists/arch-announce@lists.archlinux.org/;
+/listinfo/arch-commits /mailman3/lists/arch-commits@lists.archlinux.org/;
 /listinfo/arch-dev /mailman3/lists/arch-dev@lists.archlinux.org/;
 /listinfo/arch-dev-public /mailman3/lists/arch-dev-public@lists.archlinux.org/;
 /listinfo/arch-devops /mailman3/lists/arch-devops@lists.archlinux.org/;
@@ -11,7 +12,11 @@
 /listinfo/arch-proaudio /mailman3/lists/arch-proaudio@lists.archlinux.org/;
 /listinfo/arch-projects /mailman3/lists/arch-projects@lists.archlinux.org/;
 /listinfo/arch-releng /mailman3/lists/arch-releng@lists.archlinux.org/;
+/listinfo/arch-security /mailman3/lists/arch-security@lists.archlinux.org/;
 /listinfo/arch-tu /mailman3/lists/arch-tu@lists.archlinux.org/;
 /listinfo/arch-wiki-admins /mailman3/lists/arch-wiki-admins@lists.archlinux.org/;
 /listinfo/arch-women /mailman3/lists/arch-women@lists.archlinux.org/;
+/listinfo/aur-dev /mailman3/lists/aur-dev@lists.archlinux.org/;
+/listinfo/pacman-contrib /mailman3/lists/pacman-contrib@lists.archlinux.org/;
+/listinfo/pacman-dev /mailman3/lists/pacman-dev@lists.archlinux.org/;
 /listinfo/staff /mailman3/lists/staff@lists.archlinux.org/;

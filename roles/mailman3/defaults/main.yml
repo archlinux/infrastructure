@@ -8,6 +8,16 @@ lists:
     description: This mailing list is for official announcements for the Arch Linux distribution.
     display_name: Arch-announce
     moderator_password: "{{ vault_archweb_mailman_password }}"
+  arch-commits:
+    allow_list_posts: false
+    accept_these_nonmembers:
+      - ^.+@(.+\.)?archlinux\.org
+    archive_policy: never
+    default_member_action: reject
+    default_nonmember_action: reject
+    description: Arch Linux packaging commits
+    info: This list contains all commits to the package repositories, including diffs for newest changes.
+    display_name: Arch-commits
   arch-dev:
     advertised: false
     archive_policy: private
@@ -56,6 +66,10 @@ lists:
   arch-releng:
     description: Arch Linux Release Engineering
     display_name: Arch-releng
+  arch-security:
+    description: Announcements about security issues in Arch Linux and its packages
+    info: Discussion about announcements should happen on arch-general.
+    display_name: Arch-security
   arch-tu:
     advertised: false
     archive_policy: private
@@ -72,6 +86,18 @@ lists:
     description: Mailing list for the Arch Women project
     display_name: Arch-women
     info: "<a href=\"https://archwomen.org/\">Arch Women</a> is an all inclusive organization of Arch Linux enthusiasts with a focus on helping more women become involved in the Arch Linux community and FOSS.\r\n\r\nMailing list graciously hosted by the Arch Linux™ project."
+  aur-dev:
+    description: Arch User Repository (AUR) Development
+    info: This list is intended for discussion of AUR and community based code and development.
+    display_name: Aur-dev
+  pacman-contrib:
+    description: Discussion list for pacman-contrib development
+    info: This list is used by pacman-contrib developers to coordinate, share patches, etc.
+    display_name: Pacman-contrib
+  pacman-dev:
+    description: Discussion list for pacman development
+    info: This list is used by pacman developers and contributors to coordinate, fix problems, share patches, etc.
+    display_name: Pacman-dev
   staff:
     advertised: false
     archive_policy: private
