@@ -1,6 +1,5 @@
 filesystem: btrfs
 ipv4_address: 168.119.240.111
 ipv6_address: 2a01:4f8:c010:74d4::1
-zram_fraction: 1.0
 wireguard_address: 10.0.0.35
 wireguard_public_key: Wp9ruR2+pCj0TsATuJZiUxk9x6BwcUhXs/yZlmGYjRE=

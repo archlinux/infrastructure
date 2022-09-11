@@ -1,2 +1,3 @@
 configure_network: false
 enable_zram_swap: false
+zram_fraction: 1.0
