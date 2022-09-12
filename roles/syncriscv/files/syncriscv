@@ -1,0 +1,31 @@
+#!/bin/bash
+
+target="/srv/riscv"
+lock="/var/lock/syncriscv.lck"
+source_url='rsync://archriscv.felixc.at/archriscv'
+lastupdate_url='https://archriscv.felixc.at/.status/lastupdate.txt'
+
+[ ! -d "${target}" ] && mkdir -p "${target}"
+
+exec 9>"${lock}"
+flock -n 9 || exit
+
+rsync_cmd() {
+	local -a cmd=(rsync -rlptH --safe-links --delete-delay --delay-updates
+		"--timeout=600" "--contimeout=60" --no-motd)
+
+	if stty &>/dev/null; then
+		cmd+=(-h -v --progress)
+	else
+		cmd+=("--info=name1")
+	fi
+
+	"${cmd[@]}" "$@"
+}
+
+# if we are called without a tty (cronjob) only run when there are changes
+if ! tty -s && [[ -f "$target/.status/lastupdate.txt" ]] && diff -b <(curl -Ls "$lastupdate_url") "$target/.status/lastupdate.txt" >/dev/null; then
+	exit 0
+fi
+
+rsync_cmd "${source_url}" "${target}"

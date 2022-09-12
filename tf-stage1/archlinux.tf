@@ -409,6 +409,10 @@ locals {
       name = "geo.mirror"
       zone = hetznerdns_zone.pkgbuild.id
     }
+    "riscv.mirror.pkgbuild.com" = {
+      name = "riscv.mirror"
+      zone = hetznerdns_zone.pkgbuild.id
+    }
   }
 }
 
