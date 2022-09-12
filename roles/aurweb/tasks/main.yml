@@ -177,6 +177,8 @@
     chdir: "{{ aurweb_dir }}"
   environment:
     POETRY_VIRTUALENVS_IN_PROJECT: "true"
+    # https://github.com/python-poetry/poetry/issues/1917
+    PYTHON_KEYRING_BACKEND: "keyring.backends.null.Keyring"
   become: true
   become_user: "{{ aurweb_user }}"
   when: release.changed or aurweb_installed.rc != 0
