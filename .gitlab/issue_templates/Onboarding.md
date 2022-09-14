@@ -34,6 +34,7 @@ https://www.gnupg.org/gph/en/manual/x135.html
 - [ ] Add new user email as per [`docs/email.md`](docs/email.md).
 - [ ] Create a new user in [archweb](https://www.archlinux.org/devel/newuser/). Select the appropriate group membership and allowed repos (if applicable).
 - [ ] Subscribe **communication e-mail address** to internal [staff mailing list](https://lists.archlinux.org/mailman3/lists/staff.lists.archlinux.org/mass_subscribe/).
+- [ ] Allow sending from **communication e-mail address** on [arch-dev-public](https://lists.archlinux.org/mailman3/lists/arch-dev-public.lists.archlinux.org/members/member/) (subscribe and/or find address and remove moderation).
 - [ ] Give the user access to `#archlinux-staff` on Libera Chat.
 - [ ] Give the user a link to our [staff services page](https://wiki.archlinux.org/title/DeveloperWiki:Staff_Services).
 - [ ] Replace the **Team member username** with the @-prefixed username on Gitlab.
@@ -63,7 +64,6 @@ https://www.gnupg.org/gph/en/manual/x135.html
 - [ ] Assign the user to the `Developers` groups on Keycloak.
 - [ ] Assign the user to the `Developers` group on [archlinux.org](https://archlinux.org/admin/auth/user/).
 - [ ] Subscribe **communication e-mail address** to internal [arch-dev](https://lists.archlinux.org/mailman3/lists/arch-dev.lists.archlinux.org/mass_subscribe/) mailing list.
-- [ ] Allow sending from **communication e-mail address** on [arch-dev-public](https://lists.archlinux.org/mailman3/lists/arch-dev-public.lists.archlinux.org/members/member/) (subscribe and/or find address and remove moderation).
 
 ## TU onboarding checklist
 
@@ -73,7 +73,6 @@ https://www.gnupg.org/gph/en/manual/x135.html
 - [ ] Assign the user to the `Trusted Users` groups on Keycloak.
 - [ ] Assign the user to the `Trusted Users` group on [archlinux.org](https://archlinux.org/admin/auth/user/).
 - [ ] Subscribe **communication e-mail address** to internal [arch-tu](https://lists.archlinux.org/mailman3/lists/arch-tu.lists.archlinux.org/mass_subscribe/) mailing list.
-- [ ] Allow sending from **communication e-mail address** on [arch-dev-public](https://lists.archlinux.org/mailman3/lists/arch-dev-public.lists.archlinux.org/members/member/) (subscribe and/or find address and remove moderation).
 
 ## DevOps onboarding checklist
 

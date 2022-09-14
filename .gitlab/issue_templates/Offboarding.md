@@ -21,6 +21,7 @@ This template should be used for offboarding Arch Linux team members.
       - The forwarding can be extended if there are good reasons for doing so.
 - [ ] Set user to inactive in archweb: https://www.archlinux.org/admin/auth/user/
 - [ ] Remove member from [staff mailing list](https://lists.archlinux.org/mailman3/lists/staff.lists.archlinux.org/members/member/)
+- [ ] Moderate email address on [arch-dev-public](https://lists.archlinux.org/mailman3/lists/arch-dev-public.lists.archlinux.org/members/member/) (find member and moderate)
 - [ ] Ask the user to leave `#archlinux-staff` on Libera Chat and forget the password
 - [ ] Remove staff cloak on Libera Chat ([Group contacts](https://wiki.archlinux.org/title/Arch_IRC_channels#Libera_Chat_group_contacts))
 
@@ -30,7 +31,6 @@ This template should be used for offboarding Arch Linux team members.
 - [ ] Remove SSH pubkey from `pubkeys/<username>.pub`.
 - [ ] Run `ansible-playbook -t archusers  $(git grep -l archusers playbooks/ | grep -v phrik)`.
 - [ ] Remove the user from the `Trusted Users`/`Developers` groups on Keycloak.
-- [ ] Moderate email address on [arch-dev-public](https://lists.archlinux.org/mailman3/lists/arch-dev-public.lists.archlinux.org/members/member/) (find member and moderate)
 - [ ] Remove member from [arch-tu](https://lists.archlinux.org/mailman3/lists/arch-tu.lists.archlinux.org/members/member/) and/or [arch-dev](https://lists.archlinux.org/mailman3/lists/arch-dev.lists.archlinux.org/members/member/) mailing lists
 - [ ] Create [issue in archlinux-keyring](https://gitlab.archlinux.org/archlinux/archlinux-keyring/-/issues/new) (choose *"Remove Packager Key"* and/or *"Remove Main Key"* template)
 
