@@ -14,11 +14,11 @@ This template should be used for offboarding Arch Linux team members.
 ## All roles checklist
 
 - [ ] Remove user email by reverting instructions from `docs/email.md`.
-  - [ ] Setup forwarding if desired (please add the current date as a comment above the mail address in Postfix's `users` file).
-  - [ ] Inform the user of the conditions for forwarding.
-    - In most cases we only offer forwarding for 6 months.
-    - We will inform the user prior to disabling the forwarding.
-    - The forwarding can be extended if there are good reasons for doing so.
+  - [ ] Setup forwarding if requested (please add the current date as a comment above the mail address in Postfix's `users` file).
+    - [ ] Inform the user of the conditions for forwarding.
+      - In most cases we only offer forwarding for 6 months.
+      - We will inform the user prior to disabling the forwarding.
+      - The forwarding can be extended if there are good reasons for doing so.
 - [ ] Set user to inactive in archweb: https://www.archlinux.org/admin/auth/user/
 - [ ] Remove member from [staff mailing list](https://lists.archlinux.org/mailman3/lists/staff.lists.archlinux.org/members/member/)
 - [ ] Ask the user to leave `#archlinux-staff` on Libera Chat and forget the password
