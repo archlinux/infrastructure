@@ -16,8 +16,8 @@ lists:
     default_member_action: reject
     default_nonmember_action: reject
     description: Arch Linux packaging commits
-    info: This list contains all commits to the package repositories, including diffs for newest changes.
     display_name: Arch-commits
+    info: This list contains all commits to the package repositories, including diffs for newest changes.
     max_message_size: 200
   arch-dev:
     advertised: false
@@ -73,8 +73,8 @@ lists:
     display_name: Arch-releng
   arch-security:
     description: Announcements about security issues in Arch Linux and its packages
-    info: Discussion about announcements should happen on arch-general.
     display_name: Arch-security
+    info: Discussion about announcements should happen on arch-general.
   arch-tu:
     advertised: false
     archive_policy: private
@@ -93,8 +93,8 @@ lists:
     info: "<a href=\"https://archwomen.org/\">Arch Women</a> is an all inclusive organization of Arch Linux enthusiasts with a focus on helping more women become involved in the Arch Linux community and FOSS.\r\n\r\nMailing list graciously hosted by the Arch Linux™ project."
   aur-dev:
     description: Arch User Repository (AUR) Development
-    info: This list is intended for discussion of AUR and community based code and development.
     display_name: Aur-dev
+    info: This list is intended for discussion of AUR and community based code and development.
   aur-general:
     description: Discussion about the Arch User Repository (AUR)
     display_name: Aur-general
@@ -106,12 +106,12 @@ lists:
     display_name: Aur-requests
   pacman-contrib:
     description: Discussion list for pacman-contrib development
-    info: This list is used by pacman-contrib developers to coordinate, share patches, etc.
     display_name: Pacman-contrib
+    info: This list is used by pacman-contrib developers to coordinate, share patches, etc.
   pacman-dev:
     description: Discussion list for pacman development
-    info: This list is used by pacman developers and contributors to coordinate, fix problems, share patches, etc.
     display_name: Pacman-dev
+    info: This list is used by pacman developers and contributors to coordinate, fix problems, share patches, etc.
   staff:
     advertised: false
     archive_policy: private
