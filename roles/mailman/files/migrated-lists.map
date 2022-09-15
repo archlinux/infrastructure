@@ -5,6 +5,7 @@
 /listinfo/arch-devops /mailman3/lists/arch-devops@lists.archlinux.org/;
 /listinfo/arch-devops-private /mailman3/lists/arch-devops-private@lists.archlinux.org/;
 /listinfo/arch-events /mailman3/lists/arch-events@lists.archlinux.org/;
+/listinfo/arch-general /mailman3/lists/arch-general@lists.archlinux.org/;
 /listinfo/arch-mirrors /mailman3/lists/arch-mirrors@lists.archlinux.org/;
 /listinfo/arch-mirrors-announce /mailman3/lists/arch-mirrors-announce@lists.archlinux.org/;
 /listinfo/arch-multilib /mailman3/lists/arch-multilib@lists.archlinux.org/;
@@ -17,6 +18,8 @@
 /listinfo/arch-wiki-admins /mailman3/lists/arch-wiki-admins@lists.archlinux.org/;
 /listinfo/arch-women /mailman3/lists/arch-women@lists.archlinux.org/;
 /listinfo/aur-dev /mailman3/lists/aur-dev@lists.archlinux.org/;
+/listinfo/aur-general /mailman3/lists/aur-general@lists.archlinux.org/;
+/listinfo/aur-requests /mailman3/lists/aur-requests@lists.archlinux.org/;
 /listinfo/pacman-contrib /mailman3/lists/pacman-contrib@lists.archlinux.org/;
 /listinfo/pacman-dev /mailman3/lists/pacman-dev@lists.archlinux.org/;
 /listinfo/staff /mailman3/lists/staff@lists.archlinux.org/;

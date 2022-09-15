@@ -42,6 +42,10 @@ lists:
   arch-events:
     description: Arch Linux Events
     display_name: Arch-events
+  arch-general:
+    description: General Discussion about Arch Linux
+    display_name: Arch-general
+    info: "This mailing list hosts general discusson about the Arch Linux distribution.  Questions, problems, and new development ideas can be posted here.\n\nYou must be subscribed to the list in order to post to it."
   arch-mirrors-announce:
     description: List for mirror admins to send announcements (like downtime notifications) to our users
     display_name: Arch-mirrors-announce
@@ -91,6 +95,15 @@ lists:
     description: Arch User Repository (AUR) Development
     info: This list is intended for discussion of AUR and community based code and development.
     display_name: Aur-dev
+  aur-general:
+    description: Discussion about the Arch User Repository (AUR)
+    display_name: Aur-general
+    info: This list is for Trusted Users, Arch Linux developers, and the general public to discuss issues surrounding the Trusted User structure and the Arch User Repository (AUR).
+  aur-requests:
+    accept_these_nonmembers:
+      - notify@aur.archlinux.org
+    description: Public mailing list for AUR package deletion/merge/orphan requests
+    display_name: Aur-requests
   pacman-contrib:
     description: Discussion list for pacman-contrib development
     info: This list is used by pacman-contrib developers to coordinate, share patches, etc.
