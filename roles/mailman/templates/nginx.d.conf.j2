@@ -36,6 +36,10 @@ server {
         return 302 $migrated_uri;
     }
 
+    location = / {
+        return 302 /mailman3/lists/;
+    }
+
     # redirect old urls
     location /mailman/ {
         rewrite ^/mailman/(.*) /$1 permanent;
