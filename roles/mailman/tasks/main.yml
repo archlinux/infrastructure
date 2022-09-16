@@ -4,12 +4,19 @@
   vars:
     domains: ["{{ lists_domain }}"]
 
-- name: Install mailman, uwsgi-plugin-cgi and postfx
-  pacman: name=mailman,uwsgi-plugin-cgi,postfix,postfix-pcre state=present
+- name: Install mailman3 and related packages
+  pacman: name=mailman3,mailman3-hyperkitty,python-psycopg2,mailman-web,python-xapian-haystack,uwsgi-plugin-python,postfix,postfix-pcre state=present
+  register: install
 
-- name: Install mailman configuration
-  template: src=mm_cfg.py.j2 dest=/etc/mailman/mm_cfg.py follow=yes owner=root group=root mode=0644
-  notify: Reload mailman
+- name: Install {mailman,mailman-web} configuration
+  template: src={{ item.src }} dest={{ item.dest }} owner=root group={{ item.group }} mode=0640
+  loop:
+    - {src: mailman.cfg.j2, dest: /etc/mailman.cfg, group: mailman}
+    - {src: mailman-hyperkitty.cfg.j2, dest: /etc/mailman-hyperkitty.cfg, group: mailman}
+    - {src: settings.py.j2, dest: /etc/webapps/mailman-web/settings.py, group: mailman-web}
+  notify:
+    - Reload mailman
+    - Restart mailman-web
 
 - name: Install postfix configuration
   template: src=main.cf.j2 dest=/etc/postfix/main.cf owner=root group=root mode=0644
@@ -22,59 +29,66 @@
     - milter_header_checks
   notify: Run postmap
 
-- name: Install postfix templated maps
-  template: src={{ item }}.j2 dest=/etc/postfix/{{ item }} owner=root group=root mode=0644
-  loop:
-    - transport
-  notify: Run postmap
-
 - name: Open firewall holes for postfix
-  ansible.posix.firewalld: service=smtp zone={{ item }} permanent=true state=enabled immediate=yes
-  loop:
-    -
-    - wireguard
-  when: configure_firewall
+  ansible.posix.firewalld: service=smtp permanent=true state=enabled immediate=yes
   tags:
     - firewall
-
-- name: Create mailman list
-  command: /usr/lib/mailman/bin/newlist -a mailman root@{{ lists_domain }} meG0n5Wq6dEWCA6s
-  args:
-    creates: /var/lib/mailman/lists/mailman
-
-- name: Configure mailman uwsgi service
-  copy: src=mailman.ini dest=/etc/uwsgi/vassals/ owner=mailman group=http mode=0644
 
 - name: Make nginx log dir
   file: path=/var/log/nginx/{{ lists_domain }} state=directory owner=root group=root mode=0755
 
-- name: Install nginx mailman2->mailman3 redirect map
-  copy: src=migrated-lists.map dest=/etc/nginx/maps/ owner=root group=root mode=0644
-  notify: Reload nginx
-
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest="/etc/nginx/nginx.d/mailman.conf" owner=root group=root mode=644
   notify: Reload nginx
-  tags: ['nginx']
+
+- name: Create postgres {mailman,mailman-web} user
+  postgresql_user: name={{ item.username }} password={{ item.password }}
+  loop:
+    - {username: "{{ vault_mailman_db_user }}", password: "{{ vault_mailman_db_password }}"}
+    - {username: "{{ vault_mailman_web_db_user }}", password: "{{ vault_mailman_web_db_password }}"}
+  become: true
+  become_user: postgres
+  become_method: su
+  no_log: true
+
+- name: Create {mailman,mailman-web} db
+  postgresql_db: name={{ item.db }} owner={{ item.owner }}
+  loop:
+    - {db: mailman, owner: "{{ vault_mailman_db_user }}"}
+    - {db: mailman-web, owner: "{{ vault_mailman_web_db_user }}"}
+  become: true
+  become_user: postgres
+  become_method: su
+
+- name: Run Django management tasks
+  command: django-admin {{ item }} --pythonpath /etc/webapps/mailman-web --settings settings
+  loop:
+    - migrate
+    - loaddata
+    - collectstatic
+    - compress
+  become: true
+  become_user: mailman-web
+  when: false
 
 - name: Start and enable postfix
   systemd: name=postfix.service enabled=yes daemon_reload=yes state=started
 
-- name: Create drop-in directory for mailman.service
-  file: path=/etc/systemd/system/mailman.service.d state=directory owner=root group=root mode=0755
-
-- name: Install drop-in for mailman.service
-  copy: src=override.conf dest=/etc/systemd/system/mailman.service.d/ owner=root group=root mode=0644
-  notify: Restart mailman
-
 - name: Start and enable mailman{.service,-*.timer}
   systemd: name={{ item }} enabled=yes daemon_reload=yes state=started
   loop:
-    - mailman.service
-    - mailman-senddigests.timer
-    - mailman-nightlygzip.timer
-    - mailman-mailpasswds.timer
-    - mailman-gatenews.timer
-    - mailman-disabled.timer
-    - mailman-cullbadshunt.timer
-    - mailman-checkdbs.timer
+    - mailman3.service
+    - mailman3-digests.timer
+    - mailman3-notify.timer
+    - uwsgi@mailman\x2dweb.service
+
+- name: Update list configurations
+  uri:
+    url: http://localhost:8001/3.1/lists/{{ item }}.lists.archlinux.org/config
+    user: "{{ vault_mailman_admin_user }}"
+    password: "{{ vault_mailman_admin_pass }}"
+    method: PUT
+    body_format: json
+    status_code: 204
+    body: "{{ lookup('file', 'list_base_configuration.json') | from_json | combine(lists[item]) | to_json }}"
+  loop: "{{ lists.keys() }}"

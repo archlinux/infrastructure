@@ -22,7 +22,6 @@ mynetworks =
     127.0.0.0/8
     [::1]/128
     [fe80::]/64
-    {{ hostvars['mailman3.archlinux.org']['wireguard_address'] }}
 
 # fatal: configuration error: mailbox_size_limit is smaller than message_size_limit
 message_size_limit = 104857600
@@ -46,10 +45,10 @@ smtpd_reject_footer = For assistance contact <postmaster@archlinux.org>. Please 
 smtpd_milters = inet:localhost:11332
 non_smtpd_milters = $smtpd_milters
 
-alias_maps = hash:/etc/postfix/aliases hash:/var/lib/mailman/data/aliases
-local_recipient_maps = hash:/etc/postfix/transport $alias_maps
+alias_maps = hash:/etc/postfix/aliases
+local_recipient_maps = hash:/var/lib/mailman/data/postfix_lmtp $alias_maps
 alias_database = $alias_maps
-transport_maps = hash:/etc/postfix/transport
+transport_maps = hash:/var/lib/mailman/data/postfix_lmtp
 
 milter_header_checks = pcre:/etc/postfix/milter_header_checks
 

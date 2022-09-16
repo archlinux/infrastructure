@@ -8,7 +8,7 @@
     - { role: sshd }
     - { role: root_ssh }
     - { role: hardening }
-    - { role: borg_client, tags: ["borg"], when: "'borg_clients' in group_names" }
+    - { role: borg_client, tags: ["borg"] }
     - { role: prometheus_exporters }
     - { role: promtail }
     - { role: certbot }
@@ -17,4 +17,5 @@
     - { role: rspamd, rspamd_dkim_domain: lists.archlinux.org, rspamd_dkim_use_esld: false, tags: ["mail"] }
     - { role: unbound, unbound_port: 5353, tags: ["mail"] }
     - { role: uwsgi }
+    - { role: postgres }
     - { role: mailman }

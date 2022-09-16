@@ -93,16 +93,12 @@ locals {
       domain      = "homedir"
     }
     "lists.archlinux.org" = {
-      server_type = "cpx11"
+      server_type = "cx21"
       domain      = "lists"
     }
     "mail.archlinux.org" = {
       server_type = "cx11"
       domain      = "mail"
-    }
-    "mailman3.archlinux.org" = {
-      server_type = "cx21"
-      domain      = "mailman3"
     }
     "man.archlinux.org" = {
       server_type = "cx11"

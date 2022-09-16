@@ -38,14 +38,14 @@ MAILMAN_ARCHIVER_KEY = '{{ vault_mailman_archiver_key }}'
 
 #: https://docs.djangoproject.com/en/3.2/topics/email/#smtp-backend
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = '{{ hostvars['lists.archlinux.org']['wireguard_address'] }}'
+EMAIL_HOST = '127.0.0.1'
 EMAIL_PORT = 25
 
 #: Sender in Emails sent out by Postorius.
 DEFAULT_FROM_EMAIL = 'postorius@{{ lists_domain }}'
 SERVER_EMAIL = 'root@{{ lists_domain }}'
 
-POSTORIUS_TEMPLATE_BASE_URL = 'http://localhost'
+POSTORIUS_TEMPLATE_BASE_URL = 'http://localhost:8000'
 HYPERKITTY_ALLOW_WEB_POSTING = False
 HYPERKITTY_ENABLE_GRAVATAR = False
 

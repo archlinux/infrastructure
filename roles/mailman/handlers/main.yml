@@ -1,8 +1,8 @@
-- name: Restart mailman
-  service: name=mailman daemon_reload=yes state=restarted
-
 - name: Reload mailman
-  service: name=mailman state=reloaded
+  service: name=mailman3 state=reloaded
+
+- name: Restart mailman-web
+  service: name=uwsgi@mailman\\x2dweb.service state=restarted
 
 - name: Reload postfix
   service: name=postfix state=reloaded
@@ -11,4 +11,3 @@
   command: postmap /etc/postfix/{{ item }}
   loop:
     - aliases
-    - transport

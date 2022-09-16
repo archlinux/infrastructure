@@ -1,3 +1,17 @@
+# This is for POSTORIUS_TEMPLATE_BASE_URL and mailman_hyperkitty.Archiver's base_url.
+server {
+    listen       8000;
+    listen       [::]:8000;
+    server_name  localhost;
+
+    access_log off;
+
+    location / {
+      include /etc/nginx/uwsgi_params;
+      uwsgi_pass unix:/run/mailman-web/mailman-web.sock;
+    }
+}
+
 server {
     listen       80;
     listen       [::]:80;
@@ -15,10 +29,6 @@ server {
     }
 }
 
-map $uri $migrated_uri {
-    include maps/migrated-lists.map;
-}
-
 server {
     listen       443 ssl http2;
     listen       [::]:443 ssl http2;
@@ -32,41 +42,16 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ lists_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ lists_domain }}/chain.pem;
 
-    if ($migrated_uri) {
-        return 302 $migrated_uri;
+    location /static/ {
+      alias /var/lib/mailman-web/static/;
     }
 
-    location = / {
-        return 302 /mailman3/lists/;
-    }
-
-    # redirect old urls
-    location /mailman/ {
-        rewrite ^/mailman/(.*) /$1 permanent;
-    }
-
-    location /icons/ {
-        alias /usr/lib/mailman/icons/;
-    }
-
-    location ~ ^/pipermail(?:/(.*))?$ {
-        alias /var/lib/mailman/archives/public/$1;
-        add_header Cache-Control "public, no-cache";
-        autoindex on;
+    location /pipermail/ {
+        alias /var/lib/mailman2/archives/public/;
     }
 
     location / {
-        root            /usr/lib/mailman/cgi-bin/;
-        index           listinfo;
-        include         uwsgi_params;
-        uwsgi_modifier1 9;
-        uwsgi_pass      unix:/run/uwsgi/mailman.sock;
-    }
-
-    location ~ ^/(static|mailman3|archives|user-profile|accounts|admin3)($|/) {
-        proxy_pass http://{{ hostvars['mailman3.archlinux.org']['wireguard_address'] }};
-        proxy_set_header Host {{ lists_domain }};
-        proxy_set_header X-Forwarded-For $remote_addr;
-        proxy_set_header X-Forwarded-Proto $scheme;
+      include /etc/nginx/uwsgi_params;
+      uwsgi_pass unix:/run/mailman-web/mailman-web.sock;
     }
 }
