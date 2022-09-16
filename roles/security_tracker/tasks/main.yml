@@ -68,7 +68,7 @@
   become_user: security
   register: release
   notify:
-    - post security-tracker deploy
+    - Post security-tracker deploy
 
 - name: Run initial setup
   become: true

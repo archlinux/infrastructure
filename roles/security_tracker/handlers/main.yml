@@ -2,4 +2,4 @@
   become: true
   become_user: security
   command: /usr/bin/make db-upgrade chdir="{{ security_tracker_dir }}"
-  listen: post security-tracker deploy
+  listen: Post security-tracker deploy

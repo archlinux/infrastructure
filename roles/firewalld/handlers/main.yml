@@ -5,7 +5,7 @@
 #   service: name=firewalld state=restarted
 - name: Stop firewalld
   service: name=firewalld state=stopped
-  listen: restart firewalld
+  listen: Restart firewalld
 - name: Start firewalld
   service: name=firewalld state=started
-  listen: restart firewalld
+  listen: Restart firewalld
