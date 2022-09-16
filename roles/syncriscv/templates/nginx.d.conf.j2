@@ -1,0 +1,22 @@
+server {
+    listen       80;
+    listen       [::]:80;
+    listen       443 ssl http2;
+    listen       [::]:443 ssl http2;
+    server_name  {{ riscv_mirror_domain }};
+    root         /srv/riscv;
+
+    access_log   /var/log/nginx/{{ riscv_mirror_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ riscv_mirror_domain }}/access.log.json json_reduced;
+    error_log    /var/log/nginx/{{ riscv_mirror_domain }}/error.log;
+
+    include snippets/letsencrypt.conf;
+
+    ssl_certificate      /etc/letsencrypt/live/{{ riscv_mirror_domain }}/fullchain.pem;
+    ssl_certificate_key  /etc/letsencrypt/live/{{ riscv_mirror_domain }}/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/{{ riscv_mirror_domain }}/chain.pem;
+
+    add_header X-Served-By "{{ inventory_hostname }}";
+
+    autoindex on;
+}

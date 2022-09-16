@@ -16,6 +16,9 @@ blackbox_targets:
     - targets: "{{ groups['geo_mirrors'] }}"
       hostname: geo.mirror.pkgbuild.com
       secure: true
+    - targets: "{{ groups['geo_mirrors'] }}"
+      hostname: riscv.mirror.pkgbuild.com
+      secure: true
     - http://{{ hostvars['monitoring.archlinux.org']['wireguard_address'] }}
 
     # regenerate the list below with: ./misc/find-arch-on-crt.sh targets
@@ -83,6 +86,8 @@ blackbox_targets:
     - lists.archlinux.org:25
   geo_dns_geo.mirror.pkgbuild.com_a: "{{ groups['geo_mirrors'] }}"
   geo_dns_geo.mirror.pkgbuild.com_aaaa: "{{ groups['geo_mirrors'] }}"
+  geo_dns_riscv.mirror.pkgbuild.com_a: "{{ groups['geo_mirrors'] }}"
+  geo_dns_riscv.mirror.pkgbuild.com_aaaa: "{{ groups['geo_mirrors'] }}"
 matrix_metrics_endpoints:
   - homeserver
   - appservice
