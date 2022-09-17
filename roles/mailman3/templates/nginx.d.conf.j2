@@ -10,8 +10,8 @@ server {
     access_log   /var/log/nginx/{{ lists_domain }}/access.log.json json_main;
     error_log    /var/log/nginx/{{ lists_domain }}/error.log;
 
-    location /static {
-      alias /var/lib/mailman-web/static;
+    location /static/ {
+      alias /var/lib/mailman-web/static/;
     }
 
     # include uwsgi_params
