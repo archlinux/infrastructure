@@ -1,5 +1,5 @@
 - name: Install mailman3 and related packages
-  pacman: name=mailman3,mailman3-hyperkitty,python-psycopg2,mailman-web,uwsgi-plugin-python state=present
+  pacman: name=mailman3,mailman3-hyperkitty,python-psycopg2,mailman-web,python-xapian-haystack,uwsgi-plugin-python state=present
   register: install
 
 - name: Install {mailman,mailman-web} configuration

@@ -51,7 +51,7 @@ HYPERKITTY_ENABLE_GRAVATAR = False
 
 HAYSTACK_CONNECTIONS = {
     'default': {
-        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-        'PATH': '/var/lib/mailman-web/fulltext_index'
+        'ENGINE': 'xapian_backend.XapianEngine',
+        'PATH': '/var/lib/mailman-web/xapian_index'
     }
 }
