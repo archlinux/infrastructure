@@ -62,8 +62,8 @@ rspamadm dkim_keygen -s dkim-rsa -b 4096 -d archlinux.org -t rsa -k archlinux.or
 the ouput gives you the DNS entries to add to the terraform files.
 The keys generated need to go to the vault:
 ```
-roles/rspamd/files/archlinux.org.dkim-rsa.key
-roles/rspamd/files/archlinux.org.dkim-ed25519.key
+roles/rspamd/files/archlinux.org.dkim-rsa.key.vault
+roles/rspamd/files/archlinux.org.dkim-ed25519.key.vault
 ```
 
 # Gitlab servicedesk

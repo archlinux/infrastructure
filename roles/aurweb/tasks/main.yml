@@ -33,7 +33,7 @@
   file: path={{ aur_user.home }}/.ssh state=directory owner={{ aur_user.name }} group={{ aur_user.name }} mode=0700
 
 - name: Install SSH key for mirroring to GitHub
-  copy: src=id_ed25519 dest={{ aur_user.home }}/.ssh/ owner={{ aur_user.name }} group={{ aur_user.name }} mode=0600
+  copy: src=id_ed25519.vault dest={{ aur_user.home }}/.ssh/id_ed25519 owner={{ aur_user.name }} group={{ aur_user.name }} mode=0600
 
 - name: Fetch host keys for github.com
   command: ssh-keyscan github.com

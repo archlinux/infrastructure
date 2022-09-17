@@ -22,11 +22,11 @@
 #
 # the ouput gives you the DNS entries to add to the terraform files.
 # The keys generated need to go to the vault:
-# roles/rspamd/files/archlinux.org.dkim-rsa.key
-# roles/rspamd/files/archlinux.org.dkim-ed25519.key
+# roles/rspamd/files/archlinux.org.dkim-rsa.key.vault
+# roles/rspamd/files/archlinux.org.dkim-ed25519.key.vault
 #
 - name: Install DKIM keys
-  copy: src={{ item }} dest=/var/lib/rspamd/dkim/ owner=rspamd group=rspamd mode=0600
+  copy: src={{ item }}.vault dest=/var/lib/rspamd/dkim/{{ item }} owner=rspamd group=rspamd mode=0600
   loop:
     - "{{ rspamd_dkim_domain }}.dkim-ed25519.key"
     - "{{ rspamd_dkim_domain }}.dkim-rsa.key"
