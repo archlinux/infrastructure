@@ -31,7 +31,7 @@
   register: tempfile
 
 - name: Fill tempfile
-  copy: content="{{ lookup('template', 'authorized_keys.j2') }}" dest="{{ tempfile.path }}" mode=preserve
+  template: src=authorized_keys.j2 dest={{ tempfile.path }} mode=preserve
   no_log: true
 
 - name: Upload authorized_keys for Arch DevOps

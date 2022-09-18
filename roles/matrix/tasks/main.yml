@@ -229,7 +229,7 @@
   notify:
     - Restart synapse
 
-- name: Install signing key
+- name: Install signing key  # noqa template-instead-of-copy
   copy:
     content: '{{ vault_matrix_secrets.signing_key }}'
     dest: /etc/synapse/{{ matrix_server_name }}.signing.key
@@ -237,7 +237,7 @@
     group: synapse
     mode: 0640
 
-- name: Install ircpass key
+- name: Install ircpass key  # noqa template-instead-of-copy
   copy:
     content: '{{ vault_matrix_secrets.ircpass_key }}'
     dest: /etc/synapse/{{ matrix_server_name }}.ircpass.key
