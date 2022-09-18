@@ -6,7 +6,7 @@
 
 - name: Create the service http root dir
   file: path={{ maintenance_http_dir }}/{{ service_domain }} state=directory owner=root group=root mode=0755
-  when: maintenance is defined and maintenance|bool
+  when: maintenance is defined and maintenance | bool
 
 - name: Set up nginx maintenance mode
   template:
@@ -16,7 +16,7 @@
     group: root
     mode: 0644
   notify: Reload nginx
-  when: service_nginx_template is not defined and maintenance is defined and maintenance|bool
+  when: service_nginx_template is not defined and maintenance is defined and maintenance | bool
 
 - name: Set up custom nginx maintenance mode
   template:
@@ -26,7 +26,7 @@
     group: root
     mode: 0644
   notify: Reload nginx
-  when: service_nginx_template is defined and maintenance is defined and maintenance|bool
+  when: service_nginx_template is defined and maintenance is defined and maintenance | bool
 
 - name: Create the 503 html file
   template:
@@ -35,7 +35,7 @@
     owner: root
     group: root
     mode: 0644
-  when: maintenance is defined and maintenance|bool
+  when: maintenance is defined and maintenance | bool
 
 - name: Force reload nginx
   meta: flush_handlers

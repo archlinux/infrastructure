@@ -31,7 +31,7 @@
   register: tempfile
 
 - name: Fill tempfile
-  copy: content="{{ lookup('template', 'authorized_keys.j2') }}" dest="{{ tempfile.path }}" mode=preserve
+  template: src=authorized_keys.j2 dest={{ tempfile.path }} mode=preserve
   no_log: true
 
 - name: Upload authorized_keys for Arch DevOps
@@ -83,7 +83,7 @@
 
 - name: Update list of sub-accounts
   set_fact:
-    subaccounts: "{{ subaccounts + [item.json.subaccount | combine({'comment':item.invocation.module_args.body.comment})] }}"
+    subaccounts: "{{ subaccounts + [item.json.subaccount | combine({'comment': item.invocation.module_args.body.comment})] }}"
   loop: "{{ new_subaccounts_raw.results }}"
   loop_control:
     label: "{{ item.invocation.module_args.body.comment }}"

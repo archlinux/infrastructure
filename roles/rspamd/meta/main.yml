@@ -1,2 +1,6 @@
+galaxy_info:
+  description: rspamd role
+  standalone: false
+
 dependencies:
   - role: redis

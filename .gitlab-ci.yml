@@ -2,7 +2,7 @@ image: "archlinux:latest"
 
 ansible-lint:
   before_script:
-    - pacman -Syu --needed --noconfirm ansible-lint ansible
+    - pacman -Syu --needed --noconfirm ansible-lint ansible python-jmespath
   script:
     # Fix weird ansible bug: https://github.com/trailofbits/algo/issues/1637
     # This probably happens due to gitlab-runner mounting the git repo into the container

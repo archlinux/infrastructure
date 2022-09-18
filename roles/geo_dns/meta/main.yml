@@ -1,3 +1,7 @@
+galaxy_info:
+  description: geo_dns role
+  standalone: false
+
 dependencies:
   - role: geoipupdate
     vars:

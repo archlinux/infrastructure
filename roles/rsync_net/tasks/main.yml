@@ -18,7 +18,7 @@
   register: tempfile
 
 - name: Fill tempfile  # noqa risky-file-permissions
-  copy: content="{{ lookup('template', 'authorized_keys.j2') }}" dest="{{ tempfile.path }}" mode=0644
+  template: src=authorized_keys.j2 dest={{ tempfile.path }} mode=0644
 
 - name: Upload authorized_keys file
   expect:

@@ -39,7 +39,7 @@
     - nginx
 
 - name: Create Arch Linux-specific users
-  user:
+  ansible.builtin.user:
     name: "{{ item.key }}"
     group: users
     groups: "{{ item.value.groups | join(',') }}"

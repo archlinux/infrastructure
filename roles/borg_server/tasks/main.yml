@@ -2,7 +2,7 @@
   pacman: name=borg state=present
 
 - name: Create borg user
-  user:
+  ansible.builtin.user:
     name: borg
     home: "{{ backup_dir }}"
 

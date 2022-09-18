@@ -12,8 +12,8 @@
       copy: src=dns.conf dest={{ chroot_path }}/etc/systemd/network/10-static-ethernet.network.d/dns.conf owner=root group=root mode=0644
       notify:
         - Restart networkd
-      when: static_dns|default(true)
-  when: not dhcp|default(false)
+      when: static_dns | default(true)
+  when: not dhcp | default(false)
 
 - name: Configure network (dhcp)
   block:
@@ -29,8 +29,8 @@
       copy: src=dns.conf dest={{ chroot_path }}/etc/systemd/network/10-dhcp-ethernet.network.d/dns.conf owner=root group=root mode=0644
       notify:
         - Restart networkd
-      when: static_dns|default(false)
-  when: dhcp|default(false)
+      when: static_dns | default(false)
+  when: dhcp | default(false)
 
 - name: Create symlink to resolv.conf
   file: src=/run/systemd/resolve/stub-resolv.conf dest={{ chroot_path }}/etc/resolv.conf state=link force=yes follow=no owner=root group=root
