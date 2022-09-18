@@ -1,3 +1,7 @@
+galaxy_info:
+  description: postfix_null role
+  standalone: false
+
 dependencies:
   - role: postfwd
     delegate_to: mail.archlinux.org
