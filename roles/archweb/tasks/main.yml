@@ -20,28 +20,28 @@
 
 - name: Set archweb groups
   user: name=archweb groups=uwsgi
-  when: archweb_site|bool
+  when: archweb_site | bool
 
 - name: Create ssl cert
   include_role:
     name: certificate
   vars:
     domains: "{{ [archweb_domain] + archweb_alternate_domains }}"
-  when: archweb_site|bool and maintenance is not defined
+  when: archweb_site | bool and maintenance is not defined
 
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest="{{ archweb_nginx_conf }}" owner=root group=root mode=644
   notify: Reload nginx
-  when: archweb_site|bool and maintenance is not defined
+  when: archweb_site | bool and maintenance is not defined
   tags: ['nginx']
 
 - name: Make nginx log dir
   file: path=/var/log/nginx/{{ archweb_domain }} state=directory owner=root group=root mode=0755
-  when: archweb_site|bool
+  when: archweb_site | bool
 
 - name: Make rsync iso dir
   file: path={{ archweb_rsync_iso_dir }} state=directory owner=archweb group=archweb mode=0755
-  when: archweb_site|bool
+  when: archweb_site | bool
 
 - name: Clone archweb repo
   git: >
@@ -67,7 +67,7 @@
 
 - name: Create media dir
   file: state=directory owner=archweb group=archweb mode=0755 path="{{ archweb_dir }}/media"
-  when: archweb_site|bool
+  when: archweb_site | bool
 
 - name: Fix home permissions
   file: state=directory owner=archweb group=archweb mode=0755 path="{{ archweb_dir }}"
@@ -211,7 +211,7 @@
   template: src="archweb-memcached.service.j2" dest="/etc/systemd/system/archweb-memcached.service" owner=root group=root mode=0644
   notify:
     - Daemon reload
-  when: archweb_site|bool
+  when: archweb_site | bool
 
 - name: Install archweb rsync iso service and timer
   template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
@@ -220,11 +220,11 @@
     - archweb-rsync_iso.timer
   notify:
     - Daemon reload
-  when: archweb_site|bool
+  when: archweb_site | bool
 
 - name: Deploy archweb
   template: src=archweb.ini.j2 dest=/etc/uwsgi/vassals/archweb.ini owner=archweb group=http mode=0640
-  when: archweb_site|bool
+  when: archweb_site | bool
 
 - name: Deploy new release
   file: path=/etc/uwsgi/vassals/archweb.ini state=touch owner=archweb group=http mode=0640
@@ -240,7 +240,7 @@
   with_items:
     - archweb-memcached.service
     - archweb-rsync_iso.timer
-  when: archweb_site|bool
+  when: archweb_site | bool
 
 - name: Start and enable archweb reporead service
   service: name="archweb-reporead.service" enabled=yes state=started
@@ -288,7 +288,7 @@
 
 - name: Create retro dir
   file: state=directory owner=archweb group=archweb mode=0755 path="{{ archweb_retro_dir }}"
-  when: archweb_site|bool
+  when: archweb_site | bool
 
 - name: Clone archweb-retro repo
   git:
@@ -297,4 +297,4 @@
     version: "{{ archweb_retro_commit_hash }}"
   become: true
   become_user: archweb
-  when: archweb_site|bool
+  when: archweb_site | bool
