@@ -49,28 +49,19 @@ https://www.gnupg.org/gph/en/manual/x135.html
   the description history and make the issue non-confidential.
 - [ ] Request staff cloak on Libera Chat ([Group contacts](https://wiki.archlinux.org/title/Arch_IRC_channels#Libera_Chat_group_contacts))
 
-## Packager onboarding checklist
-
-<!-- The ticket should be created by a sponsor of the new packager -->
-- [ ] Create [issue in archlinux-keyring using the *"New Packager Key"* template](https://gitlab.archlinux.org/archlinux/archlinux-keyring/-/issues/new?issuable_template=New%20Packager%20Key).
-
 ## Main key onboarding checklist
 
 - [ ] Add new user email for the `master-key.archlinux.org` subdomain as per [`docs/email.md`](docs/email.md).
   <!-- The ticket should be created by the developer becoming a new main key holder -->
 - [ ] Create [issue in archlinux-keyring using the *"New Main Key"* template](https://gitlab.archlinux.org/archlinux/archlinux-keyring/-/issues/new?issuable_template=New%20Main%20Key).
 
-## Developer onboarding checklist
+## TU/Developer onboarding checklist
 
-- [ ] Assign the user to the `Developers` groups on Keycloak.
-- [ ] Assign the user to the `Developers` group on [archlinux.org](https://archlinux.org/admin/auth/user/).
-- [ ] Subscribe **communication e-mail address** to internal [arch-dev](https://lists.archlinux.org/mailman3/lists/arch-dev.lists.archlinux.org/mass_subscribe/) mailing list.
-
-## TU onboarding checklist
-
-- [ ] Assign the user to the `Trusted Users` groups on Keycloak.
-- [ ] Assign the user to the `Trusted Users` group on [archlinux.org](https://archlinux.org/admin/auth/user/).
-- [ ] Subscribe **communication e-mail address** to internal [arch-tu](https://lists.archlinux.org/mailman3/lists/arch-tu.lists.archlinux.org/mass_subscribe/) mailing list.
+<!-- The ticket should be created by a sponsor of the new packager -->
+- [ ] Create [issue in archlinux-keyring using the *"New Packager Key"* template](https://gitlab.archlinux.org/archlinux/archlinux-keyring/-/issues/new?issuable_template=New%20Packager%20Key).
+- [ ] Assign the user to the `Trusted Users` or `Developers` group on Keycloak.
+- [ ] Assign the user to the `Trusted Users` or `Developers` group on [archlinux.org](https://archlinux.org/admin/auth/user/).
+- [ ] Subscribe **communication e-mail address** to internal [arch-tu](https://lists.archlinux.org/mailman3/lists/arch-tu.lists.archlinux.org/mass_subscribe/) or [arch-dev](https://lists.archlinux.org/mailman3/lists/arch-dev.lists.archlinux.org/mass_subscribe/) mailing list.
 
 ## Support staff checklist
 
