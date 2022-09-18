@@ -6,4 +6,4 @@ Type=oneshot
 ExecStart=/usr/local/bin/arch-boxes-sync.sh
 ProtectSystem=strict
 PrivateTmp=true
-ReadWritePaths=/srv/ftp/images
+ReadWritePaths=/srv/ftp/lastupdate /srv/ftp/images
