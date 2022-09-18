@@ -11,7 +11,7 @@
 
 - name: Create user account on mail to relay with
   delegate_to: mail.archlinux.org
-  user:
+  ansible.builtin.user:
     name: "{{ inventory_hostname_short }}"
     comment: "SMTP Relay Account for {{ inventory_hostname }}"
     group: nobody
