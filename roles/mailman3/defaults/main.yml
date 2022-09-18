@@ -85,6 +85,7 @@ lists:
   arch-wiki-admins:
     advertised: false
     archive_policy: private
+    default_nonmember_action: defer
     display_name: Arch-wiki-admins
     subscription_policy: confirm_then_moderate
   arch-women:
