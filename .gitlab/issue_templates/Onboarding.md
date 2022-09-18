@@ -57,7 +57,7 @@ https://www.gnupg.org/gph/en/manual/x135.html
 ## Main key onboarding checklist
 
 - [ ] Add new user email for the `master-key.archlinux.org` subdomain as per [`docs/email.md`](docs/email.md).
-<!-- The ticket should be created by the developer becoming a new main key holder -->
+  <!-- The ticket should be created by the developer becoming a new main key holder -->
 - [ ] Create [issue in archlinux-keyring using the *"New Main Key"* template](https://gitlab.archlinux.org/archlinux/archlinux-keyring/-/issues/new?issuable_template=New%20Main%20Key).
 
 ## Developer onboarding checklist
