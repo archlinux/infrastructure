@@ -13,50 +13,17 @@
   meta: end_host
   when: pacman_upgrade is not changed
 
-- name: Check for running builds
-  block:
-    - name: List build-related processes
-      command: pgrep -x 'mkarchroot|makechrootpkg|systemd-nspawn'
-      register: pgrep
-      ignore_errors: true
-
-    - name: Abort reboot with running builds
-      meta: end_host
-      when: pgrep is succeeded
-  when: "'buildservers' in group_names"
-
-
-- name: Check for active borg backup jobs
-  block:
-    - name: Check if /backup exists
-      stat: path=/backup
-      register: backup_mountdir
-
-    - name: Abort reboot when borg backup is running
-      meta: end_host
-      when: backup_mountdir.stat.exists
+- name: Run borg client post-upgrade tasks
+  include_tasks: include/post-upgrade/borg-clients.yml
   when: "'borg_clients' in group_names"
 
-- name: Gemini pre-reboot checks
-  block:
-    - name: List logged on users
-      command: who
-      register: who
+- name: Check for host-specific post-upgrade tasks
+  local_action: stat path=include/post-upgrade/{{ inventory_hostname }}.yml
+  register: post_upgrade_tasks
 
-    - name: Abort reboot with logged on users
-      meta: end_host
-      when:
-        - who is changed
-        - who.stdout_lines|length > 1
-
-    - name: Stop arch-svntogit.timer
-      service: name=arch-svntogit.timer state=stopped
-
-    - name: Wait for svntogit to finish
-      wait_for:
-        path: /srv/svntogit/update-repos.sh.lock
-        state: absent
-  when: inventory_hostname == "gemini.archlinux.org"
+- name: Run host-specific post-upgrade tasks
+  include_tasks: "{{ post_upgrade_tasks.stat.path }}"
+  when: post_upgrade_tasks.stat.exists
 
 - name: Reboot
   reboot:

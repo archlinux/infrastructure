@@ -1,0 +1,8 @@
+- name: List build-related processes
+  command: pgrep -x 'mkarchroot|makechrootpkg|systemd-nspawn'
+  register: pgrep
+  ignore_errors: true
+
+- name: Abort reboot with running builds
+  meta: end_host
+  when: pgrep is succeeded

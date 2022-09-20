@@ -1,0 +1,7 @@
+- name: Check if /backup exists
+  stat: path=/backup
+  register: backup_mountdir
+
+- name: Abort reboot when borg backup is running
+  meta: end_host
+  when: backup_mountdir.stat.exists
