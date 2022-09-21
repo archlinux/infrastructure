@@ -478,6 +478,9 @@ hide_version = true
 ;allowed_domains =
 ;team_ids =
 ;allowed_organizations =
+;role_attribute_path =
+;role_attribute_strict = false
+;allow_assign_grafana_admin = false
 
 #################################### GitLab Auth #########################
 [auth.gitlab]
@@ -491,6 +494,9 @@ hide_version = true
 ;api_url = https://gitlab.com/api/v4
 ;allowed_domains =
 ;allowed_groups =
+;role_attribute_path =
+;role_attribute_strict = false
+;allow_assign_grafana_admin = false
 
 #################################### Google Auth ##########################
 [auth.google]
@@ -527,6 +533,7 @@ hide_version = true
 ;allowed_domains =
 ;allowed_groups =
 ;role_attribute_strict = false
+;allow_assign_grafana_admin = false
 
 #################################### Okta OAuth #######################
 [auth.okta]
@@ -543,6 +550,7 @@ hide_version = true
 ;allowed_groups =
 ;role_attribute_path =
 ;role_attribute_strict = false
+;allow_assign_grafana_admin = false
 
 {% if not grafana_anonymous_access %}
 #################################### Generic OAuth ##########################
@@ -576,6 +584,7 @@ role_attribute_strict = true
 ;tls_client_ca =
 ;use_pkce = false
 ;auth_style =
+;allow_assign_grafana_admin = false
 {% endif %}
 
 #################################### Basic Auth ##########################
