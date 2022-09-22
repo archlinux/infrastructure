@@ -13,6 +13,14 @@
   notify:
     - Reload dovecot
 
+- name: Install shared-mailboxes{,-acl}
+  copy: src={{ item }} dest=/etc/dovecot/ owner=root group=root mode=0644
+  loop:
+    - shared-mailboxes
+    - shared-mailboxes-acl
+  notify:
+    - Reload dovecot
+
 - name: Add vmail group
   group: name=vmail gid=5000
 
