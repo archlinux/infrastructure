@@ -1,4 +1,5 @@
 - name: Configure network (static)
+  when: not dhcp | default(false)
   block:
     - name: Install 10-static-ethernet.network
       template: src=10-static-ethernet.network.j2 dest={{ chroot_path }}/etc/systemd/network/10-static-ethernet.network owner=root group=root mode=0644
@@ -13,9 +14,9 @@
       notify:
         - Restart networkd
       when: static_dns | default(true)
-  when: not dhcp | default(false)
 
 - name: Configure network (dhcp)
+  when: dhcp | default(false)
   block:
     - name: Install 10-dhcp-ethernet.network
       template: src=10-dhcp-ethernet.network.j2 dest={{ chroot_path }}/etc/systemd/network/10-dhcp-ethernet.network owner=root group=root mode=0644
@@ -30,7 +31,6 @@
       notify:
         - Restart networkd
       when: static_dns | default(false)
-  when: dhcp | default(false)
 
 - name: Create symlink to resolv.conf
   file: src=/run/systemd/resolve/stub-resolv.conf dest={{ chroot_path }}/etc/resolv.conf state=link force=yes follow=no owner=root group=root

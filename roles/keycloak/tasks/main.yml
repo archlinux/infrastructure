@@ -27,6 +27,7 @@
   service_facts:
 
 - name: Create an admin user when first starting keycloak
+  when: ansible_facts.services["keycloak.service"]["state"] != "running"
   block:
     - name: Install admin creation drop-in for keycloak.service
       copy: src=create-keycloak-admin.conf dest=/etc/systemd/system/keycloak.service.d/ owner=root group=root mode=0644
@@ -48,7 +49,6 @@
       file: path=/etc/systemd/system/keycloak.service.d/create-keycloak-admin.conf state=absent
       notify:
         - Daemon reload
-  when: ansible_facts.services["keycloak.service"]["state"] != "running"
 
 - name: Open firewall hole
   ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes
