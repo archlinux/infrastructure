@@ -61,6 +61,7 @@
   systemd: name=gitlab-runner state=started enabled=yes daemon_reload=yes
 
 - name: Setup libvirt-executor
+  when: "'gitlab_vm_runners' in group_names"
   block:
     - name: Install libvirt-executor-update-base-image dependencies
       pacman: name=arch-install-scripts,sequoia-sq state=present
@@ -92,4 +93,3 @@
 
     - name: Enable and start libvirt-executor-update-base-image.timer
       systemd: name=libvirt-executor-update-base-image.timer state=started enabled=yes daemon_reload=yes
-  when: "'gitlab_vm_runners' in group_names"

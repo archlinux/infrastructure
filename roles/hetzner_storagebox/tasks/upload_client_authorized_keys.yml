@@ -2,7 +2,7 @@
   template: src=authorized_keys_client.j2 dest={{ tempfile.path }} mode=preserve
   no_log: true
 
-- name: Upload authorized_keys file to {{ backup_dir }}/{{ item.item }}
+- name: Upload authorized_keys file for {{ item.item }}
   expect:
     command: |
       bash -c 'sftp {{ storagebox_username }}@{{ storagebox_hostname }} <<EOF

@@ -82,6 +82,9 @@
   changed_when: "chroot_pacman_key_populate.rc == 0"
 
 - name: Install ucode update
+  when:
+    - "'hcloud' not in group_names"
+    - inventory_hostname != 'packer-base-image'
   block:
     - name: Install ucode update for Intel
       set_fact: ucode="intel-ucode"
@@ -90,9 +93,6 @@
     - name: Install ucode update for AMD
       set_fact: ucode="amd-ucode"
       when: "'AuthenticAMD' in ansible_facts['processor']"
-  when:
-    - "'hcloud' not in group_names"
-    - inventory_hostname != 'packer-base-image'
 
 - name: Install arch base from bootstrap chroot
   command: chroot /tmp/root.x86_64 pacstrap /mnt base linux btrfs-progs grub openssh python-requests python-yaml inetutils {{ ucode | default('') }}
