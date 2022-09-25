@@ -1,0 +1,26 @@
+mirrorsync_mirrors:
+  archive:
+    hosts: "{{ groups['archive_mirrors'] }}"
+    source: rsync://rsync.archlinux.org/archive
+    target: /srv/archive
+    last_update_url: https://archive.archlinux.org/repos/last/lastupdate
+    last_update_dst: lastupdate
+    delay_updates: false
+  debug:
+    hosts: "{{ groups['geo_mirrors'] + ['debuginfod.archlinux.org'] }}"
+    source: rsync://rsync.archlinux.org/debug_packages
+    target: /srv/ftp
+    last_update_url: https://rsync.archlinux.org/lastupdate
+    last_update_dst: lastupdate
+    rsync_options:
+      - --include="*-debug/***"
+      - --include="pool/"
+      - --include="pool/*-debug/***"
+      - --exclude="*"
+  riscv:
+    hosts: "{{ groups['geo_mirrors'] }}"
+    mirror_domain: riscv.mirror.pkgbuild.com
+    source: rsync://archriscv.felixc.at/archriscv
+    target: /srv/riscv
+    last_update_url: https://archriscv.felixc.at/.status/lastupdate.txt
+    last_update_dst: .status/lastupdate.txt

@@ -1,5 +1,4 @@
 mirror_domain: mirror.pkgbuild.com
-mirror_debug_packages: false
 archweb_mirrorcheck_locations: [20, 21]
 filesystem: btrfs
 

@@ -11,6 +11,6 @@
     - { role: certbot }
     - { role: nginx }
     - { role: debuginfod }
-    - { role: syncdebug }
+    - { role: mirrorsync }
     - { role: prometheus_exporters }
     - { role: promtail }
