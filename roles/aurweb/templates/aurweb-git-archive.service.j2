@@ -1,0 +1,40 @@
+[Unit]
+Description=Generate and update Git Archive repositories
+Requires=mysqld.service
+After=mysqld.service
+
+[Service]
+Type=oneshot
+User={{ aurweb_user }}
+WorkingDirectory={{ aurweb_dir }}
+ExecStart=/usr/bin/poetry run aurweb-git-archive --spec metadata
+ExecStart=/usr/bin/poetry run aurweb-git-archive --spec users
+ExecStart=/usr/bin/poetry run aurweb-git-archive --spec pkgbases
+ExecStart=/usr/bin/poetry run aurweb-git-archive --spec pkgnames
+
+NoNewPrivileges=true
+LockPersonality=true
+CapabilityBoundingSet=
+ReadWritePaths={{ aurweb_dir }}
+
+PrivateDevices=true
+PrivateTmp=true
+ProtectSystem=strict
+
+MemoryDenyWriteExecute=true
+RemoveIPC=true
+RestrictRealtime=true
+RestrictNamespaces=true
+RestrictSUIDSGID=true
+
+RestrictAddressFamilies=AF_UNIX
+
+ProtectHostname=true
+ProtectControlGroups=true
+ProtectKernelLogs=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectClock=true
+ProtectProc=noaccess
+
+SystemCallArchitectures=native

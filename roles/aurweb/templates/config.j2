@@ -51,6 +51,16 @@ packagesmetaextfile = {{ aurweb_dir }}/web/html/packages-meta-ext-v1.json.gz
 pkgbasefile = {{ aurweb_dir }}/web/html/pkgbase.gz
 userfile = {{ aurweb_dir }}/web/html/users.gz
 
+[git-archive]
+; One week in seconds
+popularity-interval = 604800
+
+; Git Archive repository locations
+metadata-repo = {{ aurweb_dir }}/metadata.git
+users-repo = {{ aurweb_dir }}/users.git
+pkgbases-repo = {{ aurweb_dir }}/pkgbases.git
+pkgnames-repo = {{ aurweb_dir }}/pkgnames.git
+
 [notifications]
 notify-cmd = aurweb-notify
 {# Gitlab project and token used for traceback reports. #}
