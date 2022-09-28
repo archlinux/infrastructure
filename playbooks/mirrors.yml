@@ -10,8 +10,7 @@
     - { role: certbot }
     - { role: nginx }
     - { role: syncrepo, tags: ['nginx'] }
-    - { role: syncdebug, when: mirror_debug_packages is not defined or mirror_debug_packages }
-    - { role: syncriscv, when: riscv_mirror_domain is defined }
+    - { role: mirrorsync }
     - { role: archweb, when: archweb_mirrorcheck_locations is defined, archweb_site: false, archweb_services: false, archweb_mirrorcheck: true }
     - { role: prometheus_exporters }
     - { role: promtail }

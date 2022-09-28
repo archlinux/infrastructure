@@ -1,12 +1,12 @@
 [Unit]
-Description=Synchronize RISC-V mirror
-RequiresMountsFor=/srv/riscv
+Description=Synchronize {{ item.key }} mirror
+RequiresMountsFor={{ item.value.target }}
 Wants=network-online.target
 After=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/local/bin/syncriscv
+ExecStart=/usr/local/bin/sync{{ item.key }}
 Nice=19
 IOSchedulingClass=best-effort
 IOSchedulingPriority=7

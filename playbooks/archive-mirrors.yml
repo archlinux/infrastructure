@@ -10,7 +10,7 @@
     - { role: root_ssh }
     - { role: certbot }
     - { role: nginx }
-    - { role: syncarchive }
+    - { role: mirrorsync }
     - { role: archive_web }
     - { role: prometheus_exporters }
     - { role: promtail }

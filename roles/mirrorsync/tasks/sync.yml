@@ -1,0 +1,11 @@
+- name: Install sync script for {{ item.key }}
+  template: src=mirrorsync.j2 dest=/usr/local/bin/sync{{ item.key }} owner=root group=root mode=0755
+
+- name: Install systemd service for {{ item.key }}
+  template: src=mirrorsync.service.j2 dest=/etc/systemd/system/sync{{ item.key }}.service owner=root group=root mode=0644
+
+- name: Install systemd timer for {{ item.key }}
+  template: src=mirrorsync.timer.j2 dest=/etc/systemd/system/sync{{ item.key }}.timer owner=root group=root mode=0644
+
+- name: Start and enable timer for {{ item.key }}
+  systemd: name=sync{{ item.key }}.timer enabled=yes state=started daemon_reload=yes

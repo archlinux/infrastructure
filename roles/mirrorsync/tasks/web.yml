@@ -1,0 +1,14 @@
+- name: Create ssl cert for {{ item.value.mirror_domain }}
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ item.value.mirror_domain }}"]
+    challenge: "DNS-01"
+
+- name: Configure nginx for {{ item.value.mirror_domain }}
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/{{ item.key }}.conf owner=root group=root mode=0644
+  notify: Reload nginx
+  tags: ['nginx']
+
+- name: Make nginx log dir for {{ item.value.mirror_domain }}
+  file: path=/var/log/nginx/{{ item.value.mirror_domain }} state=directory owner=root group=root mode=0755
