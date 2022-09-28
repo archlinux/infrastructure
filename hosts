@@ -51,7 +51,6 @@ security.archlinux.org
 md.archlinux.org
 lists.archlinux.org
 gluebuddy.archlinux.org
-mailman3.archlinux.org
 
 [public_html]
 homedir.archlinux.org
@@ -138,7 +137,6 @@ gluebuddy.archlinux.org
 homedir.archlinux.org
 lists.archlinux.org
 mail.archlinux.org
-mailman3.archlinux.org
 man.archlinux.org
 matrix.archlinux.org
 md.archlinux.org
