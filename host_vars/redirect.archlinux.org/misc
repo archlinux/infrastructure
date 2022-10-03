@@ -4,3 +4,6 @@ wireguard_public_key: n11Ps2sc0Cxsi1sLaYFq7dkhlDtTnOZCGovRYbzDGR8=
 
 ipv4_address: "95.216.195.133"
 ipv6_address: "2a01:4f9:c010:2636::1"
+
+# The default limit of 65536 is too small to handle ping.archlinux.org traffic
+nf_conntrack_max: 262144

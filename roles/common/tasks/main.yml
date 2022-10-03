@@ -76,6 +76,14 @@
     sysctl_file: /etc/sysctl.d/net.conf
   when: tcp_wmem is defined
 
+- name: Configure size of connection tracking table
+  sysctl:
+    name: net.netfilter.nf_conntrack_max
+    value: "{{ nf_conntrack_max }}"
+    sysctl_set: true
+    sysctl_file: /etc/sysctl.d/net.conf
+  when: nf_conntrack_max is defined
+
 - name: Create drop-in directories for systemd configuration
   file: path=/etc/systemd/{{ item }}.d state=directory owner=root group=root mode=0755
   loop:
