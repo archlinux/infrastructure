@@ -1,6 +1,10 @@
 - name: Install essential tools
   pacman: name=vim,nano,tmux,htop,ncdu,bash-completion,rsync,vnstat state=present
 
+- name: Install compsize for use with btrfs
+  pacman: name=compsize state=present
+  when: filesystem == "btrfs"
+
 - name: Start and enable vnstatd
   service: name=vnstat enabled=yes state=started
 
