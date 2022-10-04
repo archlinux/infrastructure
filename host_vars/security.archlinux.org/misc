@@ -1,9 +1,3 @@
 filesystem: btrfs
-
-fail2ban_jails:
-  sshd: true
-  postfix: false
-  dovecot: false
-  nginx_limit_req: false
 wireguard_address: 10.0.0.24
 wireguard_public_key: CENgItOHJI/lLUNcUNpC+1oZJBvX/G+nemAKZYfCSCw=

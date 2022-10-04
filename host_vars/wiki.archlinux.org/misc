@@ -1,10 +1,4 @@
 filesystem: btrfs
 memcached_socket: "/run/memcached/archwiki.sock"
-
-fail2ban_jails:
-  sshd: true
-  postfix: false
-  dovecot: false
-  nginx_limit_req: false
 wireguard_address: 10.0.0.22
 wireguard_public_key: bZeNWMLtyNDaFR7jjWr06nNZt/vV/OKNleV7XZZs+lc=

@@ -1,7 +1,7 @@
-# by default all jails are disabled
-# override this variable in a host/group file to define which jails to enable
+# by default only the sshd jail is enabled
+# override this variable in a host/group file to enable additional jails
 fail2ban_jails:
-  sshd: false
+  sshd: true
   postfix: false
   dovecot: false
   nginx_limit_req: false
