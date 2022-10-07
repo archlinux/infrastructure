@@ -14,5 +14,5 @@ skip_list:
   - meta-no-info
   # Allow package versions to be specified as 'latest'
   - package-latest
-  # Don't require FQCN for builtin actions
-  - fqcn-builtins
+  # Don't require fully-qualified collection names
+  - fqcn
