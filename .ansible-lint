@@ -16,3 +16,5 @@ skip_list:
   - package-latest
   # Don't require fully-qualified collection names
   - fqcn
+  # Allow free-form module calling syntax
+  - no-free-form
