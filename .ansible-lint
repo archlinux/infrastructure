@@ -9,10 +9,10 @@ skip_list:
   # yaml: too many spaces inside braces (yaml[braces])
   - yaml[braces]
   # Do not recommend running tasks as handlers
-  - 'no-handler'
+  - no-handler
   # Do not force galaxy info in meta/main.yml
-  - 'meta-no-info'
+  - meta-no-info
   # Allow package versions to be specified as 'latest'
-  - 'package-latest'
+  - package-latest
   # Don't require FQCN for builtin actions
-  - 'fqcn-builtins'
+  - fqcn-builtins
