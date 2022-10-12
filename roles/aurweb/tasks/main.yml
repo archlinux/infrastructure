@@ -74,6 +74,8 @@
   with_items:
     - aurweb-git.service
     - aurweb-git.timer
+    - aurweb-git-archive.service
+    - aurweb-git-archive.timer
     - aurweb-aurblup.service
     - aurweb-aurblup.timer
     - aurweb-mkpkglists.service
@@ -95,6 +97,7 @@
   service: name={{ item }} enabled=yes state=stopped
   with_items:
     - aurweb-git.timer
+    - aurweb-git-archive.timer
     - aurweb-aurblup.timer
     - aurweb-mkpkglists.timer
     - aurweb-pkgmaint.timer
@@ -305,8 +308,10 @@
   service: name={{ item }} enabled=yes state=started daemon_reload=yes
   with_items:
     - aurweb-git.timer
+    - aurweb-git-archive.timer
     - aurweb-aurblup.timer
     - aurweb-mkpkglists.timer
+    - aurweb-git-archive.timer
     - aurweb-pkgmaint.timer
     - aurweb-popupdate.timer
     - aurweb-tuvotereminder.timer

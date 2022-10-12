@@ -1,0 +1,13 @@
+[Unit]
+Description=Generate and update Git Archive repositories
+
+[Timer]
+# This is set to 10m intervals as of 09/26/2022. We'll be keeping
+# aurweb-mkpkglists around for two months after v6.1.5 deployment.
+# At that time (two months after deploy), this should be changed
+# to 5m intervals and aurweb-mkpkglists should be removed from use.
+OnStartupSec=10m
+OnUnitActiveSec=10m
+
+[Install]
+WantedBy=timers.target

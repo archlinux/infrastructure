@@ -51,6 +51,32 @@ server {
 	    return 301 https://tu-bylaws.aur.archlinux.org;
     }
 
+    #
+    # smartgit location for Git Archive repositories
+    # Should be shallow-cloned:
+    # `git clone --depth=1 https://aur_location/archives/metadata.git`
+    #
+    # Routes:
+    # - /archives/metadata.git
+    # - /archives/users.git
+    # - /archives/pkgbases.git
+    # - /archives/pkgnames.git
+    #
+    location ~ "^/archives/(metadata|users|pkgbases|pkgnames)(\.git)/(git-(receive|upload)-pack|HEAD|info/refs|objects/(info/(http-)?alternates|packs)|[0-9a-f]{2}/[0-9a-f]{38}|pack/pack-[0-9a-f]{40}\.(pack|idx))" {
+        include      uwsgi_params;
+        uwsgi_pass   smartgit;
+        uwsgi_modifier1 9;
+        uwsgi_param  SCRIPT_FILENAME /usr/lib/git-core/git-http-backend;
+        uwsgi_param  PATH_INFO /$1.git/$3;
+        uwsgi_param  GIT_HTTP_EXPORT_ALL "";
+        uwsgi_param  GIT_PROJECT_ROOT {{ aurweb_dir }};
+    }
+
+    #
+    # smartgit location for AUR package git repository
+    # Clone packages:
+    # `git clone https://aur_location/pkgname.git`
+    #
     location ~ "^/([a-z0-9][a-z0-9.+_-]*?)(\.git)?/(git-(receive|upload)-pack|HEAD|info/refs|objects/(info/(http-)?alternates|packs)|[0-9a-f]{2}/[0-9a-f]{38}|pack/pack-[0-9a-f]{40}\.(pack|idx))$" {
 	limit_req zone=aurwebgitlimit burst=900 nodelay;
         include      uwsgi_params;
