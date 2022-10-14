@@ -3,7 +3,7 @@
   remote_user: root
   roles:
     - { role: common }
-    - { role: sshd, sshd_enable_includes: true }
+    - { role: sshd }
     - { role: root_ssh }
     - { role: prometheus_exporters }
     - { role: promtail }

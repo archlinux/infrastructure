@@ -1,4 +1,5 @@
 filesystem: btrfs
 memcached_socket: "/run/memcached/aurweb.sock"
+sshd_enable_includes: true
 wireguard_address: 10.0.0.2
 wireguard_public_key: TPLeGQ7qU6ZNtcgDbEV0SSYScvK+XS5igcPdGSXo6UA=
