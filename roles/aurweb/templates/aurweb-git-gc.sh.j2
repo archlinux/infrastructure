@@ -1,0 +1,3 @@
+#!/bin/bash
+
+find {{ aurweb_dir }} -maxdepth 1 -type d -name "*.git" -execdir sh -c 'cd {} && git gc' \;

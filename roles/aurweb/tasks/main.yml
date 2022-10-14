@@ -205,6 +205,10 @@
     state: link
   when: release.changed
 
+- name: Install aurweb-git-gc script
+  template: src=aurweb-git-gc.sh.j2 dest=/usr/local/bin/aurweb-git-gc.sh owner=root group=root mode=0755
+  when: release.changed
+
 - name: Generate HTML documentation
   make:
     chdir: "{{ aurweb_dir }}/doc"

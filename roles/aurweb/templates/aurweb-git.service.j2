@@ -4,6 +4,6 @@ Description=Git gc AUR
 [Service]
 Type=oneshot
 User={{ aurweb_user }}
-WorkingDirectory={{ aurweb_git_dir }}
-ExecStart=/usr/bin/git gc
+WorkingDirectory={{ aurweb_dir }}
+ExecStart=/usr/local/bin/aurweb-git-gc.sh
 Nice=5
