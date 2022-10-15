@@ -10,6 +10,7 @@
       - python-poetry
       - gcc
       - pkg-config
+      - goaurrpc
 
 - name: Install the cgit package
   pacman:
@@ -131,6 +132,9 @@
 
 - name: Copy aurweb configuration file
   copy: src={{ aurweb_dir }}/conf/config.defaults dest={{ aurweb_conf_dir }}/config.defaults remote_src=yes owner=root group=root mode=0644
+
+- name: Install goaurrpc configuration
+  template: src=goaurrpc.conf.j2 dest=/etc/goaurrpc.conf owner=root group=root mode=0644
 
 # Note: initdb needs the config
 - name: Install custom aurweb configuration
@@ -321,5 +325,6 @@
     - aurweb-tuvotereminder.timer
     - aurweb-usermaint.timer
     - aurweb.service
+    - goaurrpc.service
     - aurweb-github-mirror.timer
   when: release.changed
