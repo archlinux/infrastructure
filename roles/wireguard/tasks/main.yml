@@ -21,4 +21,4 @@
   ansible.posix.firewalld: zone=wireguard interface=wg0 permanent=yes immediate=yes state=enabled
 
 - name: Open firewall holes
-  ansible.posix.firewalld: port=51820/udp permanent=yes immediate=yes state=enabled
+  ansible.posix.firewalld: service=wireguard permanent=yes immediate=yes state=enabled
