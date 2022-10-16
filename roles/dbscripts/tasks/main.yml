@@ -310,8 +310,8 @@
 - name: Start and enable svnserve
   service: name=svnserve enabled=yes state=started
 
-- name: Open firewall holes for svnserve
-  ansible.posix.firewalld: port=3690/tcp permanent=true state=enabled immediate=yes
+- name: Open firewall hole for svnserve
+  ansible.posix.firewalld: service=svn permanent=true state=enabled immediate=yes
   when: configure_firewall
   tags:
     - firewall
