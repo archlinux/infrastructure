@@ -50,15 +50,6 @@
       notify:
         - Daemon reload
 
-- name: Open firewall hole
-  ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes
-  when: configure_firewall
-  with_items:
-    - 80/tcp
-    - 443/tcp
-  tags:
-    - firewall
-
 - name: Create htpasswd for nginx prometheus endpoint
   htpasswd:
     path: "{{ keycloak_nginx_htpasswd }}"
