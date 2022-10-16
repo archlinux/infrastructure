@@ -53,7 +53,7 @@ scrape_configs:
   - job_name: 'node_exporter'
     static_configs:
       {% for host in groups['all'] %}
-      - targets: ['{{ host }}:{{ prometheus_exporter_port }}']
+      - targets: ['{{ hostvars[host]['wireguard_address'] }}:{{ prometheus_exporter_port }}']
         labels:
           instance: "{{ host }}"
       {% endfor %}
@@ -83,7 +83,7 @@ scrape_configs:
   - job_name: 'gitlab_runner_exporter'
     static_configs:
       {% for host in groups['gitlab_runners'] %}
-      - targets: ['{{ host }}:{{ gitlab_runner_exporter_port }}']
+      - targets: ['{{ hostvars[host]['wireguard_address'] }}:{{ gitlab_runner_exporter_port }}']
         labels:
           instance: "{{ host }}"
       {% endfor %}
@@ -112,7 +112,7 @@ scrape_configs:
   - job_name: 'mysqld_exporter'
     static_configs:
       {% for host in groups['mysql_servers'] %}
-      - targets: ['{{ host }}:{{ prometheus_mysqld_exporter_port }}']
+      - targets: ['{{ hostvars[host]['wireguard_address'] }}:{{ prometheus_mysqld_exporter_port }}']
         labels:
           instance: "{{ host }}"
       {% endfor %}
@@ -120,7 +120,7 @@ scrape_configs:
   - job_name: 'memcached_exporter'
     static_configs:
       {% for host in groups['memcached'] %}
-      - targets: ['{{ host }}:{{ prometheus_memcached_exporter_port }}']
+      - targets: ['{{ hostvars[host]['wireguard_address'] }}:{{ prometheus_memcached_exporter_port }}']
         labels:
           instance: "{{ host }}"
       {% endfor %}
