@@ -90,7 +90,7 @@
 - name: Install pantalaimon
   pip:
     name:
-      - 'pantalaimon==0.10.4'
+      - 'pantalaimon==0.10.5'
     state: latest
     extra_args: '--upgrade-strategy=eager'
     virtualenv: /var/lib/synapse/venv-pantalaimon
