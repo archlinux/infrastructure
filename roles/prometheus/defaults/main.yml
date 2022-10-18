@@ -8,6 +8,8 @@ prometheus_remote_write_relabel_configs:
     regex: debuginfod
   - label: job
     regex: aurweb
+  - label: job
+    regex: goaurrpc
   - label: __name__
     regex: "archive_directory_size_bytes|archive_total_packages|rebuilderd_results|rebuilderd_workers|rebuilderd_queue_length|repository_directory_size_bytes|aur_.+"
 
