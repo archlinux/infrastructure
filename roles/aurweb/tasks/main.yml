@@ -233,7 +233,7 @@
     domains: ["{{ aurweb_domain }}"]
 
 - name: Set up nginx
-  template: src=nginx.d.conf.j2 dest={{ aurweb_nginx_conf }} owner=root group=root mode=644
+  template: src=nginx.d.conf.j2 dest={{ aurweb_nginx_conf }} owner=root group=http mode=640
   notify: Reload nginx
   tags: ['nginx']
 

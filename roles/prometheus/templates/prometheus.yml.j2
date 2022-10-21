@@ -137,6 +137,14 @@ scrape_configs:
     static_configs:
       - targets: ['aur.archlinux.org:443']
 
+  - job_name: goaurrpc
+    metrics_path: /rpc/metrics
+    scheme: https
+    authorization:
+      credentials: {{ vault_goaurrpc_metrics_token }}
+    static_configs:
+      - targets: ['aur.archlinux.org:443']
+
   - job_name: grafana
     scheme: https
     authorization:
