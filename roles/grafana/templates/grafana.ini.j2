@@ -352,7 +352,7 @@ strict_transport_security_max_age_seconds = 86400
 
 # Path to the default home dashboard. If this value is empty, then Grafana uses StaticRootPath + "dashboards/home.json"
 {% if grafana_anonymous_access %}
-default_home_dashboard_path = /var/lib/grafana/public-dashboards/home.json
+default_home_dashboard_path = /var/lib/grafana/public-dashboards/archive.json
 {% else %}
 ;default_home_dashboard_path =
 {% endif %}
