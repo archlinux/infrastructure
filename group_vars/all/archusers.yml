@@ -341,13 +341,6 @@ arch_users:
       - dev
       - multilib
       - tu
-  kevr:
-    name: "Kevin Morris"
-    ssh_key: kevr.pub
-    hosts:
-      - mail.archlinux.org
-    groups:
-      - support-staff
   kewl:
     name: "Kewl FFT"
     ssh_key: kewl.pub
