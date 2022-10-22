@@ -57,7 +57,7 @@
     mode: 0644
   loop:
     - https://geo.mirror.pkgbuild.com/iso/{{ bootstrap_version }}/archlinux-bootstrap-x86_64.tar.gz
-    - https://geo.mirror.pkgbuild.com/iso/{{ bootstrap_version }}/archlinux-bootstrap-x86_64.tar.gz.sig
+    - https://archlinux.org/iso/{{ bootstrap_version }}/archlinux-bootstrap-x86_64.tar.gz.sig
 
 - name: Get pierre's key
   command: gpg --locate-keys pierre@archlinux.de
