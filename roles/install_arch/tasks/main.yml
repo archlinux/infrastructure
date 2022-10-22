@@ -127,14 +127,6 @@
 - name: Mount /dev to new chroot  # noqa command-instead-of-module
   command: mount --rbind /dev /mnt/dev creates=/mnt/dev/zero
 
-- name: Configure locale.gen
-  lineinfile: dest=/mnt/etc/locale.gen line="en_US.UTF-8 UTF-8" owner=root group=root mode=0644
-
-- name: Run locale-gen inside chroot
-  command: chroot /mnt locale-gen
-  register: chroot_locale_gen
-  changed_when: "chroot_locale_gen.rc == 0"
-
 - name: Run systemd-firstboot
   command: chroot /mnt systemd-firstboot --locale=C.UTF-8 --timezone=UTC --hostname={{ hostname }}
   register: chroot_systemd_firstboot

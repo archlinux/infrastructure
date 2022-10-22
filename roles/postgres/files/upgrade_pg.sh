@@ -46,7 +46,7 @@ chown postgres: /var/lib/postgres/data
 chattr -f +C /var/lib/postgres/data || :
 
 # initialize the new cluster
-su - postgres -c 'initdb --locale en_US.UTF-8 -E UTF8 -D /var/lib/postgres/data'
+su - postgres -c 'initdb --locale C.UTF-8 -E UTF8 -D /var/lib/postgres/data'
 
 # copy existing configuration and SSL certs from the old cluster
 for f in pg_hba.conf postgresql.conf {fullchain,chain,privkey}.pem; do
