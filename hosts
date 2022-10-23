@@ -105,13 +105,6 @@ europe.mirror.pkgbuild.com
 repro2.pkgbuild.com
 runner1.archlinux.org
 
-[dedicated_servers]
-build.archlinux.org
-gemini.archlinux.org
-runner1.archlinux.org
-runner2.archlinux.org
-secure-runner1.archlinux.org
-
 [hcloud]
 accounts.archlinux.org
 archlinux.org
