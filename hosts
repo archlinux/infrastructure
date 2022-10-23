@@ -72,16 +72,6 @@ patchwork.archlinux.org
 quassel.archlinux.org
 state.archlinux.org
 
-[nginx]
-archlinux.org
-aur.archlinux.org
-bbs.archlinux.org
-bugs.archlinux.org
-man.archlinux.org
-patchwork.archlinux.org
-security.archlinux.org
-wiki.archlinux.org
-
 [buildservers]
 build.archlinux.org
 
