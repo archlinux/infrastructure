@@ -7,7 +7,7 @@
 
 - name: Install smartmontools for dedicated servers
   pacman: name=smartmontools state=present
-  when: "'dedicated_servers' in group_names"
+  when: ansible_virtualization_role == "host"
 
 - name: Install prometheus-memcached-exporter
   pacman: name=prometheus-memcached-exporter state=present
@@ -90,15 +90,15 @@
 
 - name: Install smart textcollector service
   template: src=prometheus-smart-textcollector.service.j2 dest=/etc/systemd/system/prometheus-smart-textcollector.service owner=root group=root mode=644
-  when: "'dedicated_servers' in group_names"
+  when: ansible_virtualization_role == "host"
 
 - name: Install smart textcollector timer
   template: src=prometheus-smart-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-smart-textcollector.timer owner=root group=root mode=644
-  when: "'dedicated_servers' in group_names"
+  when: ansible_virtualization_role == "host"
 
 - name: Enable and start prometheus smart textcollector timer
   systemd: name=prometheus-smart-textcollector.timer enabled=yes daemon_reload=yes state=started
-  when: "'dedicated_servers' in group_names"
+  when: ansible_virtualization_role == "host"
 
 - name: Install hetzner textcollector service
   template: src=prometheus-hetzner-textcollector.service.j2 dest=/etc/systemd/system/prometheus-hetzner-textcollector.service owner=root group=root mode=644
