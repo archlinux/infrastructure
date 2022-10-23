@@ -84,9 +84,6 @@ secure-runner1.archlinux.org
 runner1.archlinux.org
 secure-runner1.archlinux.org
 
-[reproduciblebuilds]
-repro1.pkgbuild.com
-
 [rebuilderd]
 reproducible.archlinux.org
 
