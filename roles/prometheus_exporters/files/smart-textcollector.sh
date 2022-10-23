@@ -35,7 +35,11 @@ devices_total="$(echo $devices | jq '.devices | length')"
 for ((i=0; i < $devices_total; i++)); do
 	disk=$(echo $devices | jq -r ".devices[${i}].name")
 	type=$(echo $devices | jq -r ".devices[${i}].type")
-	info=$(smartctl -a --json $disk)
+
+	# The smartctl call may exit with code 64 if "the device error log contains
+	# records of errors" but we don't want to exit due to errexit, so ignore it.
+	ret=0; info=$(smartctl -a --json $disk) || ret=$?
+	(( ret == 0 )) || (( ret == 64 )) || exit $ret
 
 	status=$(echo $info | jq '.smart_status.passed')
 	if [[ "$status" == "true" ]]; then
