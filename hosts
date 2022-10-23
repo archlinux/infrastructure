@@ -1,11 +1,11 @@
 [hetzner]
-secure-runner1.archlinux.org
-gemini.archlinux.org
 build.archlinux.org
+gemini.archlinux.org
+secure-runner1.archlinux.org
 
 [equinix_metal]
-runner2.archlinux.org
 repro1.pkgbuild.com
+runner2.archlinux.org
 seoul.mirror.pkgbuild.com
 sydney.mirror.pkgbuild.com
 
@@ -30,56 +30,56 @@ asia.mirror.pkgbuild.com
 europe.mirror.pkgbuild.com
 
 [borg_clients]
-archlinux.org
-state.archlinux.org
-matrix.archlinux.org
-quassel.archlinux.org
-phrik.archlinux.org
-bbs.archlinux.org
-homedir.archlinux.org
-bugs.archlinux.org
-aur.archlinux.org
-gitlab.archlinux.org
 accounts.archlinux.org
+archlinux.org
+aur.archlinux.org
+bbs.archlinux.org
+bugs.archlinux.org
 gemini.archlinux.org
-monitoring.archlinux.org
-reproducible.archlinux.org
-mail.archlinux.org
-wiki.archlinux.org
-patchwork.archlinux.org
-security.archlinux.org
-md.archlinux.org
-lists.archlinux.org
+gitlab.archlinux.org
 gluebuddy.archlinux.org
+homedir.archlinux.org
+lists.archlinux.org
+mail.archlinux.org
+matrix.archlinux.org
+md.archlinux.org
+monitoring.archlinux.org
+patchwork.archlinux.org
+phrik.archlinux.org
+quassel.archlinux.org
+reproducible.archlinux.org
+security.archlinux.org
+state.archlinux.org
+wiki.archlinux.org
 
 [public_html]
 homedir.archlinux.org
 
 [mysql_servers]
+aur.archlinux.org
 bbs.archlinux.org
 bugs.archlinux.org
-aur.archlinux.org
 wiki.archlinux.org
 
 [postgresql_servers]
 accounts.archlinux.org
 archlinux.org
-md.archlinux.org
-matrix.archlinux.org
 man.archlinux.org
+matrix.archlinux.org
+md.archlinux.org
 patchwork.archlinux.org
 quassel.archlinux.org
 state.archlinux.org
 
 [nginx]
 archlinux.org
+aur.archlinux.org
 bbs.archlinux.org
 bugs.archlinux.org
-aur.archlinux.org
-wiki.archlinux.org
+man.archlinux.org
 patchwork.archlinux.org
 security.archlinux.org
-man.archlinux.org
+wiki.archlinux.org
 
 [buildservers]
 build.archlinux.org
@@ -104,8 +104,8 @@ repro1.pkgbuild.com
 repro2.pkgbuild.com
 
 [memcached]
-wiki.archlinux.org
 patchwork.archlinux.org
+wiki.archlinux.org
 
 [prometheus]
 monitoring.archlinux.org
@@ -118,8 +118,8 @@ repro2.pkgbuild.com
 runner1.archlinux.org
 
 [dedicated_servers]
-gemini.archlinux.org
 build.archlinux.org
+gemini.archlinux.org
 runner1.archlinux.org
 runner2.archlinux.org
 secure-runner1.archlinux.org
