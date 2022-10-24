@@ -103,9 +103,7 @@
   changed_when: "chroot_pacman_key_populate.rc == 0"
 
 - name: Install ucode update
-  when:
-    - "'hcloud' not in group_names"
-    - inventory_hostname != 'packer-base-image'
+  when: ansible_virtualization_role == "host"
   block:
     - name: Install ucode update for Intel
       set_fact: ucode="intel-ucode"
