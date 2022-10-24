@@ -460,7 +460,7 @@ oauth_auto_login = true
 #################################### Anonymous Auth ######################
 [auth.anonymous]
 # enable anonymous access
-enabled = {% if grafana_anonymous_access %}true{% else %}false{% endif %}
+enabled = {{ 'true' if grafana_anonymous_access else 'false' }}
 
 # specify organization name that should be used for unauthenticated users
 ;org_name = Main Org.
