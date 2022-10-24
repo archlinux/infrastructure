@@ -61,7 +61,7 @@ root_url = https://{{grafana_domain}}
 ;static_root_path = public
 
 # enable gzip
-enable_gzip = true
+;enable_gzip = false
 
 # https certs & key file
 ;cert_file =
@@ -249,7 +249,7 @@ check_for_updates = false
 disable_initial_admin_creation = true
 
 # default admin user, created on startup
-admin_user = admin
+;admin_user = admin
 
 # default admin password, can be changed before first start of grafana,  or in profile settings
 ;admin_password = admin
@@ -286,10 +286,10 @@ cookie_samesite = strict
 
 # Set to true if you want to enable http strict transport security (HSTS) response header.
 # HSTS tells browsers that the site should only be accessed using HTTPS.
-strict_transport_security = true
+;strict_transport_security = false
 
 # Sets how long a browser should cache HSTS. Only applied if strict_transport_security is enabled.
-strict_transport_security_max_age_seconds = 86400
+;strict_transport_security_max_age_seconds = 86400
 
 # Set to true if to enable HSTS preloading option. Only applied if strict_transport_security is enabled.
 ;strict_transport_security_preload = false
