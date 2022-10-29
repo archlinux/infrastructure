@@ -57,6 +57,10 @@ provider "keycloak" {
   username  = data.external.vault_keycloak.result.vault_keycloak_admin_user
   password  = data.external.vault_keycloak.result.vault_keycloak_admin_password
   url       = "https://accounts.archlinux.org"
+
+  # TODO: remove this once our Keycloak instance is no longer served under /auth
+  # https://github.com/mrparkers/terraform-provider-keycloak/blob/master/CHANGELOG.md#v400-october-10-2022
+  base_path = "/auth"
 }
 
 variable "gitlab_instance" {
