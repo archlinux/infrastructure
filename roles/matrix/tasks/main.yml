@@ -147,7 +147,7 @@
   git:
     repo: https://github.com/matrix-org/matrix-appservice-irc
     dest: /var/lib/synapse/matrix-appservice-irc
-    version: 0.35.1
+    version: 0.36.0
     force: true
   become: true
   become_user: synapse
