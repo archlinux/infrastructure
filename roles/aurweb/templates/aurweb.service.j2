@@ -8,7 +8,7 @@ User={{ aurweb_user }}
 WorkingDirectory={{ aurweb_dir }}
 LimitNOFILE=2048
 ExecStart=/usr/bin/poetry run gunicorn \
-    --log-config {{ aurweb_dir }}/logging.conf \
+    --log-config {{ aurweb_dir }}/logging.prod.conf \
     --bind {{ aurweb_asgi_bind }} \
     --workers {{ aurweb_workers }} \
     -k uvicorn.workers.UvicornWorker \

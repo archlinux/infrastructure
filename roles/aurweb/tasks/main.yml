@@ -277,7 +277,7 @@
   become_user: "{{ aurweb_user }}"
 
 - name: Save hideRefs setting on var  # noqa command-instead-of-module no-changed-when
-  command: git config --local --get-all transfer.hideRefs
+  command: git config --file config --get-all transfer.hideRefs
   register: git_config
   args:
     chdir: "{{ aurweb_git_dir }}"
