@@ -21,7 +21,7 @@
   become: true
   become_user: postgres
   become_method: su
-  command: initdb --locale en_US.UTF-8 -E UTF8 -D '/var/lib/postgres/data'
+  command: initdb --locale C.UTF-8 -E UTF8 -D '/var/lib/postgres/data'
   args:
     chdir: /var/lib/postgres
     creates: /var/lib/postgres/data/postgresql.conf

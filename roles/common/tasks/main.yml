@@ -48,11 +48,6 @@
     - item.fstype == 'btrfs'
     - not 'backup' in item.mount
 
-- name: Generate locales
-  locale_gen: name={{ item }} state=present
-  with_items:
-    - en_US.UTF-8
-
 - name: Configure locales
   template: src=locale.conf.j2 dest=/etc/locale.conf owner=root group=root mode=0644
 
