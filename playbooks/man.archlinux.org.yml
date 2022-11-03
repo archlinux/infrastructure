@@ -15,4 +15,4 @@
     - { role: promtail }
     - { role: postgres }
     - { role: uwsgi }
-    - { role: archmanweb, archmanweb_version: 'v1.4' }
+    - { role: archmanweb, archmanweb_version: 'v1.5' }
