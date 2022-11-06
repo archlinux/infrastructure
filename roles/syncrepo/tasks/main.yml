@@ -38,16 +38,6 @@
     - syncrepo.timer
     - rsyncd.socket
 
-- name: Set local mirror as cachedir
-  lineinfile:
-    dest: /etc/pacman.conf
-    insertafter: '^#CacheDir'
-    regexp: '^CacheDir'
-    line: 'CacheDir     = /var/cache/pacman/pkg/ /srv/ftp/pool/packages/ /srv/ftp/pool/community/'
-    mode: 0644
-    owner: root
-    group: root
-
 - name: Make nginx log dirs
   file: path=/var/log/nginx/{{ item }} state=directory owner=root group=root mode=0755
   loop: "{{ [mirror_domain, geo_mirror_domain] if 'geo_mirrors' in group_names else [mirror_domain] }}"
