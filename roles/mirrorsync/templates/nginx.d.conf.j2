@@ -4,7 +4,7 @@ server {
     listen       443 ssl http2;
     listen       [::]:443 ssl http2;
     server_name  {{ item.value.mirror_domain }};
-    root         /srv/riscv;
+    root         {{ item.value.target }};
 
     access_log   /var/log/nginx/{{ item.value.mirror_domain }}/access.log reduced;
     access_log   /var/log/nginx/{{ item.value.mirror_domain }}/access.log.json json_reduced;
