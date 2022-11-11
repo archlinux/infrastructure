@@ -4,7 +4,7 @@ layout: fhs
 
 [database]
 class: mailman.database.postgresql.PostgreSQLDatabase
-url: postgres://{{ vault_mailman_db_user }}:{{ vault_mailman_db_password }}@/mailman
+url: postgresql://{{ vault_mailman_db_user }}:{{ vault_mailman_db_password }}@/mailman
 
 [webservice]
 admin_user: {{ vault_mailman_admin_user }}
