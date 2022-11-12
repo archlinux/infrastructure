@@ -8,7 +8,7 @@
     - { role: root_ssh }
     - { role: archusers }
     - { role: sudo, tags: ['archusers'] }
-    - { role: syncrepo }
+    - { role: mirrorsync }
     - { role: archbuild }
     - { role: fail2ban }
     - { role: prometheus_exporters }

@@ -16,27 +16,11 @@
 - name: Install rsync
   pacman: name=rsync state=present
 
-- name: Install syncrepo script
-  copy: src=syncrepo dest=/usr/local/bin/syncrepo owner=root group=root mode=0755
-
-- name: Install syncrepo units
-  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
-  with_items:
-    - syncrepo.timer
-    - syncrepo.service
-
 - name: Install rsyncd config
   copy: src=rsyncd.conf dest=/etc/rsyncd.conf owner=root group=root mode=0644
 
-- name: Start and enable syncrepo units
-  systemd:
-    name: "{{ item }}"
-    enabled: true
-    state: started
-    daemon_reload: true
-  with_items:
-    - syncrepo.timer
-    - rsyncd.socket
+- name: Start and enable rsyncd.socket
+  service: name=rsyncd.socket enabled=yes state=started
 
 - name: Make nginx log dirs
   file: path=/var/log/nginx/{{ item }} state=directory owner=root group=root mode=0755
