@@ -148,6 +148,7 @@ oidc_providers:
     client_secret: "{{ vault_matrix_openid_client_secret }}"
     scopes: ["openid", "profile", "email", "roles"]
     allow_existing_users: false
+    backchannel_logout_enabled: true
     user_mapping_provider:
       config:
         localpart_template: "{{ '{{ user.preferred_username }}' }}"

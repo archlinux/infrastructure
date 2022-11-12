@@ -839,6 +839,9 @@ resource "keycloak_openid_client" "matrix_openid_client" {
   valid_redirect_uris = [
     "https://matrix.archlinux.org/_synapse/client/oidc/callback"
   ]
+
+  backchannel_logout_url              = "https://matrix.archlinux.org/_synapse/client/oidc/backchannel_logout"
+  backchannel_logout_session_required = true
 }
 
 resource "keycloak_openid_user_realm_role_protocol_mapper" "matrix_user_realm_role_mapper" {
