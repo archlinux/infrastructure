@@ -14,7 +14,7 @@
 kcadm "$@" \
     -r archlinux \
     --no-config \
-    --server https://accounts.archlinux.org/auth \
+    --server https://accounts.archlinux.org \
     --realm master \
     --user $(misc/get_key.py group_vars/all/vault_keycloak.yml vault_keycloak_admin_user) \
     --password $(misc/get_key.py group_vars/all/vault_keycloak.yml vault_keycloak_admin_password)

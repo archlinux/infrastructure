@@ -57,10 +57,6 @@ provider "keycloak" {
   username  = data.external.vault_keycloak.result.vault_keycloak_admin_user
   password  = data.external.vault_keycloak.result.vault_keycloak_admin_password
   url       = "https://accounts.archlinux.org"
-
-  # TODO: remove this once our Keycloak instance is no longer served under /auth
-  # https://github.com/mrparkers/terraform-provider-keycloak/blob/master/CHANGELOG.md#v400-october-10-2022
-  base_path = "/auth"
 }
 
 variable "gitlab_instance" {
@@ -213,7 +209,7 @@ resource "keycloak_oidc_identity_provider" "realm_identity_provider" {
   realm                        = "archlinux"
   alias                        = "github"
   provider_id                  = "github"
-  authorization_url            = "https://accounts.archlinux.org/auth/realms/archlinux/broker/github/endpoint"
+  authorization_url            = "https://accounts.archlinux.org/realms/archlinux/broker/github/endpoint"
   client_id                    = data.external.vault_github.result.vault_github_oauth_app_client_id
   client_secret                = data.external.vault_github.result.vault_github_oauth_app_client_secret
   token_url                    = ""
@@ -765,7 +761,7 @@ output "gitlab_saml_configuration" {
     issuer                          = keycloak_saml_client.saml_gitlab.client_id
     assertion_consumer_service_url  = var.gitlab_instance.saml_redirect_url
     admin_groups                    = [keycloak_role.devops.name]
-    idp_sso_target_url              = "https://accounts.archlinux.org/auth/realms/archlinux/protocol/saml/clients/${keycloak_saml_client.saml_gitlab.client_id}"
+    idp_sso_target_url              = "https://accounts.archlinux.org/realms/archlinux/protocol/saml/clients/${keycloak_saml_client.saml_gitlab.client_id}"
     signing_certificate_fingerprint = keycloak_saml_client.saml_gitlab.signing_certificate
   }
 }
