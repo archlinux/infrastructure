@@ -6,7 +6,7 @@
   notify: Reload prometheus
 
 - name: Install prometheus cli configuration
-  template: src=prometheus.conf.j2 dest=/etc/conf.d/prometheus owner=root group=root mode=600
+  template: src=prometheus.conf.j2 dest=/etc/conf.d/prometheus owner=root group=root mode=644
   notify: Reload prometheus
 
 - name: Install prometheus web-config configuration
