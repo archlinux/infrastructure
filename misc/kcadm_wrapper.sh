@@ -11,7 +11,7 @@
 # See for general kcadm usage:
 # https://github.com/keycloak/keycloak-documentation/blob/master/server_admin/topics/admin-cli.adoc
 
-kcadm "$@" \
+kcadm.sh "$@" \
     -r archlinux \
     --no-config \
     --server https://accounts.archlinux.org \
