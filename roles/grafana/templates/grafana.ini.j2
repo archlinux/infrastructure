@@ -433,7 +433,7 @@ disable_login_form = true
 ;disable_signout_menu = false
 
 # URL to redirect the user to after sign out
-signout_redirect_url = https://accounts.archlinux.org/auth/realms/archlinux/protocol/openid-connect/logout?redirect_uri=https://{{ grafana_domain }}
+signout_redirect_url = https://accounts.archlinux.org/realms/archlinux/protocol/openid-connect/logout?redirect_uri=https://{{ grafana_domain }}
 
 # Set to true to attempt login with OAuth automatically, skipping the login screen.
 # This setting is ignored if multiple OAuth providers are configured.
@@ -573,9 +573,9 @@ email_attribute_path = email
 ;login_attribute_path =
 ;name_attribute_path =
 ;id_token_attribute_name =
-auth_url = https://accounts.archlinux.org/auth/realms/archlinux/protocol/openid-connect/auth
-token_url = https://accounts.archlinux.org/auth/realms/archlinux/protocol/openid-connect/token
-api_url = https://accounts.archlinux.org/auth/realms/archlinux/protocol/openid-connect/userinfo
+auth_url = https://accounts.archlinux.org/realms/archlinux/protocol/openid-connect/auth
+token_url = https://accounts.archlinux.org/realms/archlinux/protocol/openid-connect/token
+api_url = https://accounts.archlinux.org/realms/archlinux/protocol/openid-connect/userinfo
 ;teams_url =
 ;allowed_domains =
 ;team_ids =
