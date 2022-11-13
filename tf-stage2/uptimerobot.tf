@@ -29,6 +29,7 @@ locals {
     "Bugtracker"       = "https://bugs.archlinux.org"
     "AUR"              = "https://aur.archlinux.org"
     "Man"              = "https://man.archlinux.org"
+    "Accounts"         = "https://accounts.archlinux.org"
   }
 }
 
