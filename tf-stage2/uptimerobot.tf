@@ -21,15 +21,15 @@ data "uptimerobot_alert_contact" "default_alert_contact" {
 
 locals {
   archlinux_org_monitor = {
-    "Wiki"             = "https://wiki.archlinux.org"
-    "Website"          = "https://archlinux.org"
-    "Security Tracker" = "https://security.archlinux.org"
-    "Gitlab"           = "https://gitlab.archlinux.org"
-    "Forum"            = "https://bbs.archlinux.org"
-    "Bugtracker"       = "https://bugs.archlinux.org"
-    "AUR"              = "https://aur.archlinux.org"
-    "Man"              = "https://man.archlinux.org"
     "Accounts"         = "https://accounts.archlinux.org"
+    "AUR"              = "https://aur.archlinux.org"
+    "Bugtracker"       = "https://bugs.archlinux.org"
+    "Forum"            = "https://bbs.archlinux.org"
+    "Gitlab"           = "https://gitlab.archlinux.org"
+    "Man"              = "https://man.archlinux.org"
+    "Security Tracker" = "https://security.archlinux.org"
+    "Website"          = "https://archlinux.org"
+    "Wiki"             = "https://wiki.archlinux.org"
   }
 }
 
