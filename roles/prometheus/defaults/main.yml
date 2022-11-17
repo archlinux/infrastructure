@@ -66,6 +66,7 @@ blackbox_targets:
     - https://repod.archlinux.page
     - https://repos.archlinux.org/lastupdate
     - https://reproducible.archlinux.org
+    - https://rfc.archlinux.page
     - https://security.archlinux.org
     - https://seoul.mirror.pkgbuild.com
     - https://sources.archlinux.org
