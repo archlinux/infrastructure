@@ -4,7 +4,6 @@ lists:
     allow_list_posts: false
     bounce_info_stale_after: 60d
     default_member_action: reject
-    default_nonmember_action: reject
     description: This mailing list is for official announcements for the Arch Linux distribution.
     display_name: Arch-announce
     moderator_password: "{{ vault_archweb_mailman_password }}"
@@ -14,7 +13,6 @@ lists:
       - ^.+@(.+\.)?archlinux\.org
     archive_policy: never
     default_member_action: reject
-    default_nonmember_action: reject
     description: Arch Linux packaging commits
     display_name: Arch-commits
     info: This list contains all commits to the package repositories, including diffs for newest changes.
@@ -50,6 +48,7 @@ lists:
 
       You must be subscribed to the list in order to post to it.
   arch-mirrors-announce:
+    default_nonmember_action: hold
     description: List for mirror admins to send announcements (like downtime notifications) to our users
     display_name: Arch-mirrors-announce
     info: |
@@ -117,6 +116,7 @@ lists:
   aur-requests:
     accept_these_nonmembers:
       - notify@aur.archlinux.org
+    default_nonmember_action: hold
     description: Public mailing list for AUR package deletion/merge/orphan requests
     display_name: Aur-requests
   pacman-contrib:
