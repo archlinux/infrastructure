@@ -76,6 +76,7 @@ ALLOWED_HOSTS = [{% for host in archweb_allowed_hosts %}'{{ host }}', {% endfor 
 PGP_SERVER = 'keyserver.ubuntu.com'
 
 TIER0_MIRROR_DOMAIN = 'repos.archlinux.org'
-#TIER0_MIRROR_SECRET = '{{ vault_archweb_x_sent_from_secret }}'
+
+MASTODON_LINK = 'https://fosstodon.org/@archlinux'
 
 # vim: set ts=4 sw=4 et:
