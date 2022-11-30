@@ -532,6 +532,11 @@ arch_users:
       - mail.archlinux.org
     groups:
       - support-staff
+  tpkessler:
+    name: "Torsten Keßler"
+    ssh_key: tpkessler.pub
+    groups:
+      - tu
   tpowa:
     name: "Tobias Powalowski"
     ssh_key: tpowa.pub
