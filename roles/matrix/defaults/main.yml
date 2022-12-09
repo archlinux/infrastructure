@@ -22,6 +22,7 @@ matrix_nginx_config:
       - "~ ^/_matrix/federation/(v1|v2)/send_leave/"
       - "~ ^/_matrix/federation/(v1|v2)/invite/"
       - "~ ^/_matrix/federation/v1/event_auth/"
+      - "~ ^/_matrix/federation/v1/timestamp_to_event/"
       - "~ ^/_matrix/federation/v1/exchange_third_party_invite/"
       - "~ ^/_matrix/federation/v1/user/devices/"
       - "~ ^/_matrix/key/v2/query"
