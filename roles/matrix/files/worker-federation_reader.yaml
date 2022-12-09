@@ -12,4 +12,4 @@ worker_listeners:
     type: metrics
     bind_addresses: ['127.0.0.1']
 
-# vim:ft=yaml sw=2 et:
+# vim:set sw=2 sts=-1 et:

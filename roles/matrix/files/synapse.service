@@ -22,4 +22,4 @@ Environment=LD_PRELOAD=/usr/lib/libjemalloc.so
 [Install]
 WantedBy=multi-user.target
 
-# vim:set ft=systemd:
+# vim:set ft=systemd sw=2 sts=-1 et:
