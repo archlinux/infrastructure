@@ -6,6 +6,9 @@
   become: true
   become_user: "{{ archwiki_user }}"
 
+- name: Restart archwiki-runjobs-wait
+  service: name=archwiki-runjobs-wait state=restarted
+
 # The nginx proxy/fastcgi cache can be cleared by simply deleting all files in
 # the cache directory. It is important to keep the directory tree intact,
 # otherwise nginx will spit errors into the log until it is restarted (even

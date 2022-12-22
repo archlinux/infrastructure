@@ -56,6 +56,9 @@
   become_user: "{{ archwiki_user }}"
   notify:
     - Run wiki updatescript
+    # archwiki updates often break magic words in mails, leaving them
+    # unexpanded until the archwiki-runjobs-wait service is restarted
+    - Restart archwiki-runjobs-wait
     # purge the nginx cache and MediaWiki file cache to make sure clients get updated assets
     # as well as freshly rendered pages using the new assets
     - Purge nginx cache
