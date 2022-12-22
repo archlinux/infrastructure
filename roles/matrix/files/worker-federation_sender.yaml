@@ -1,5 +1,5 @@
 worker_name: federation_sender
-worker_app: synapse.app.federation_sender
+worker_app: synapse.app.generic_worker
 worker_listeners:
   - port: 8022
     type: metrics
