@@ -26,7 +26,7 @@
   "collapse_alternatives": true,
   "convert_html_to_plaintext": false,
   "default_member_action": "defer",
-  "default_nonmember_action": "hold",
+  "default_nonmember_action": "reject",
   "description": "",
   "digest_send_periodic": true,
   "digest_size_threshold": 30,
