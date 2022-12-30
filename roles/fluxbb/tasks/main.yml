@@ -1,3 +1,6 @@
+- name: Install git
+  pacman: name=git state=present
+
 - name: Create user
   user: >
     name=fluxbb home="{{ fluxbb_dir }}"
