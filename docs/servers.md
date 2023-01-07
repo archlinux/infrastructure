@@ -131,11 +131,6 @@ Prometheus, and Grafana server which receives selected performance/metrics from 
   - [Grafana](https://dashboards.archlinux.org) and [docs/grafana.md](./docs/grafana.md)
   - Prometheus
 
-## patchwork.archlinux.org
-
-### Services
-  - patchwork
-
 ## redirect.archlinux.org
 
 ### Services

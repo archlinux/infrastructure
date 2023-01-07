@@ -121,10 +121,6 @@ locals {
       server_type = "cx31"
       domain      = "monitoring"
     }
-    "patchwork.archlinux.org" = {
-      server_type = "cx11"
-      domain      = "patchwork"
-    }
     "phrik.archlinux.org" = {
       server_type = "cx11"
       domain      = "phrik"
@@ -174,6 +170,7 @@ locals {
     "tu-bylaws.aur"         = "bbafd3ed82f336e0c52d3eb9774b2432"
     "reproducible-notes"    = "8c657f2f2720db1c3db63be89605cf0d"
     "terms"                 = "0b62a71af2aa85fb491295b543b4c3d2"
+    "patchwork"             = "37eeadf24d5cd6614e8edb1f12868a5e"
   }
 
   archlinux_page_gitlab_pages = {

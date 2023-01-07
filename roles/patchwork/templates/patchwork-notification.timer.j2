@@ -1,9 +1,0 @@
-[Unit]
-Description=Patchwork notification timer
-
-[Timer]
-OnUnitActiveSec={{ patchwork_notification_frequency }}
-OnBootSec={{ patchwork_notification_frequency }}
-
-[Install]
-WantedBy=timers.target

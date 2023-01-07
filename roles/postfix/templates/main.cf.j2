@@ -167,17 +167,10 @@ local_recipient_maps =
 relocated_maps = ${indexed}/relocated
 
 relay_domains =
-{%if postfix_patchwork_enabled %}
-  archlinux.org
-{% endif %}
 
 transport_maps =
   ${indexed}/transport
   pcre:${config_directory}/transport.pcre
-
-{% if postfix_patchwork_enabled %}
-patchwork_destination_recipient_limit = 1
-{% endif %}
 
 wiki_bouncehandler_destination_recipient_limit = 1
 
