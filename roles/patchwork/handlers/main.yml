@@ -1,6 +1,0 @@
-- name: Daemon reload
-  systemd:
-    daemon-reload: true
-
-- name: Restart patchwork memcached
-  service: name=patchwork-memcached state=restarted
