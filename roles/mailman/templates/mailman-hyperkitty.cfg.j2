@@ -17,6 +17,6 @@
 # to match your SSL certificate (e.g. https://lists.example.com/hyperkitty).
 base_url: http://localhost:8000/archives/
 
-# Shared API key, must be the identical to the value in HyperKitty's
-# settings.
+# The shared api_key, must be identical except for quoting to the value of
+# MAILMAN_ARCHIVER_KEY in HyperKitty's settings.
 api_key: {{ vault_mailman_archiver_key }}
