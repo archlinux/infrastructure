@@ -137,6 +137,10 @@ locals {
       server_type = "cpx11"
       domain      = "repos-git"
     }
+    "repos.sandbox.archlinux.org" = {
+      server_type = "cpx21"
+      domain      = "repos.sandbox"
+    }
     "reproducible.archlinux.org" = {
       server_type = "cx11"
       domain      = "reproducible"
@@ -284,22 +288,23 @@ locals {
   # Example:
   # dev                      = { value = "www", ttl = 3600 }
   archlinux_org_cname = {
-    archive       = { value = "gemini" }
-    dev           = { value = "www" }
-    g2kjxsblac7x  = { value = "gv-i5y6mnrelvpfiu.dv.googlehosted.com." }
-    ipxe          = { value = "www" }
-    mailman       = { value = "redirect" }
-    packages      = { value = "www" }
-    ping          = { value = "redirect" }
-    planet        = { value = "www" }
-    repos         = { value = "gemini" }
-    rsync         = { value = "gemini" }
-    sources       = { value = "gemini" }
-    "static.conf" = { value = "redirect" }
-    status        = { value = "stats.uptimerobot.com." }
-    svn           = { value = "gemini" }
-    coc           = { value = "redirect" }
-    git           = { value = "redirect" }
+    archive         = { value = "gemini" }
+    dev             = { value = "www" }
+    g2kjxsblac7x    = { value = "gv-i5y6mnrelvpfiu.dv.googlehosted.com." }
+    ipxe            = { value = "www" }
+    mailman         = { value = "redirect" }
+    packages        = { value = "www" }
+    ping            = { value = "redirect" }
+    planet          = { value = "www" }
+    repos           = { value = "gemini" }
+    rsync           = { value = "gemini" }
+    "rsync.sandbox" = { value = "repos.sandbox" }
+    sources         = { value = "gemini" }
+    "static.conf"   = { value = "redirect" }
+    status          = { value = "stats.uptimerobot.com." }
+    svn             = { value = "gemini" }
+    coc             = { value = "redirect" }
+    git             = { value = "redirect" }
 
     # MTA-STS
     mta-sts               = { value = "mail" }
@@ -626,5 +631,12 @@ resource "hcloud_volume" "repos-git" {
   name              = "repos-git"
   size              = 100
   server_id         = hcloud_server.machine["repos-git.archlinux.org"].id
+  delete_protection = true
+}
+
+resource "hcloud_volume" "repos_sandbox" {
+  name              = "repos.sandbox"
+  size              = 500
+  server_id         = hcloud_server.machine["repos.sandbox.archlinux.org"].id
   delete_protection = true
 }
