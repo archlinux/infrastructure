@@ -60,7 +60,7 @@
     - https://archlinux.org/iso/{{ bootstrap_version }}/archlinux-bootstrap-x86_64.tar.gz.sig
 
 - name: Get pierre's key
-  command: gpg --locate-keys pierre@archlinux.de
+  command: gpg --locate-keys pierre@archlinux.org
   changed_when: false
 
 - name: Verify bootstrap image signature
