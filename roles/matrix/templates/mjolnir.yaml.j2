@@ -92,7 +92,6 @@ fasterMembershipChecks: false
 # Note: Keep in mind that glob is NOT regex!
 automaticallyRedactForReasons:
   - "spam"
-  - "advertising"
   - "redact:*"
 
 # A list of rooms to protect. Mjolnir will add this to the list it knows from its account data.
@@ -206,6 +205,20 @@ health:
     # The HTTP status code which reports that the bot is not healthy/ready.
     # Defaults to 418.
     unhealthyStatus: 418
+
+  # Sentry options. Sentry is a tool used to receive/collate/triage runtime
+  # errors and performance issues. Skip this section if you do not wish to use
+  # Sentry.
+  sentry:
+    # The key used to upload Sentry data to the server.
+    # dsn: "https://XXXXXXXXX@example.com/YYY
+
+    # Frequency of performance monitoring.
+    # A number in [0.0, 1.0], where 0.0 means "don't bother with tracing"
+    # and 1.0 means "trace performance at every opportunity".
+    # tracesSampleRate: 0.5
+
+
 
 # Options for exposing web APIs.
 web:
