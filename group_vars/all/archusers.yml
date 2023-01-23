@@ -513,11 +513,6 @@ arch_users:
     ssh_key: segaja.pub
     groups:
       - tu
-  sudoforge:
-    name: "Benjamin Denhartog"
-    ssh_key: sudoforge.pub
-    groups:
-      - tu
   svenstaro:
     name: "Sven-Hendrik Haase"
     ssh_key: svenstaro.pub
