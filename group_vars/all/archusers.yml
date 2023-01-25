@@ -86,6 +86,11 @@ arch_users:
     groups:
       - dev
       - tu
+  antiz:
+    name: "Robin Candau"
+    ssh_key: antiz.pub
+    groups:
+      - tu
   archange:
     name: "Bruno Pagani"
     ssh_key: archange.pub
