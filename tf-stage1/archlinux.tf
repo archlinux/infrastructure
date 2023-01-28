@@ -77,7 +77,7 @@ locals {
       domain      = "dashboards"
     }
     "debuginfod.archlinux.org" = {
-      server_type = "cx11"
+      server_type = "cpx11"
       domain      = "debuginfod"
     }
     "gitlab.archlinux.org" = {
