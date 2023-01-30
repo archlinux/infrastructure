@@ -9,6 +9,7 @@ sudo_users:
   - svenstaro
   - anthraxx
   - klausenbusk
+  - artafinde
 
 # deploy tag 'root_ssh' when this changes
 root_ssh_keys:
@@ -21,12 +22,6 @@ root_ssh_keys:
   - key: anthraxx.pub
   - key: klausenbusk.pub
   - key: artafinde.pub
-    hosts:
-      - aur.archlinux.org
-      - dashboards.archlinux.org
-      - gitlab.archlinux.org
-      - lists.archlinux.org
-      - monitoring.archlinux.org
 
 # - run 'playbooks/tasks/reencrypt-vault-{super,default}-key.yml' when this
 #   changes; before doing so, make sure to 'gpg --lsign-key' all listed keys
@@ -42,6 +37,7 @@ vault_super_pgpkeys: &vault_super_pgpkeys
   - 8FC15A064950A99DD1BD14DD39E4B877E62EB915  # svenstaro
   - E240B57E2C4630BA768E2F26FC1B547C8D8172C8  # anthraxx
   - DB650286BD9EAE39890D3FE6FE3DC1668CB24956  # klausenbusk
+  - B4B759625D4633430B74877059E43E106B247368  # artafinde
 
 # - run 'playbooks/tasks/reencrypt-vault-default-key.yml' when this changes
 # - before running it, make sure to 'gpg --lsign-key' all keys listed below
@@ -49,4 +45,3 @@ vault_super_pgpkeys: &vault_super_pgpkeys
 #   is working by running `ansible-vault view misc/vaults/vault_hcloud.yml`
 vault_default_pgpkeys:
   - *vault_super_pgpkeys
-  - B4B759625D4633430B74877059E43E106B247368  # artafinde
