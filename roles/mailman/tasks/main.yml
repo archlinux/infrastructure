@@ -4,6 +4,15 @@
   vars:
     domains: ["{{ lists_domain }}"]
 
+- name: Make pacman hooks directory
+  file: path=/etc/pacman.d/hooks state=directory owner=root group=root mode=0755
+
+- name: Install pacman hook
+  copy: src=patch-mailman.hook dest=/etc/pacman.d/hooks/ owner=root group=root mode=0644
+
+- name: Install mailman patch
+  copy: src=mailman.patch dest=/usr/local/share/ owner=root group=root mode=0644
+
 - name: Install mailman3 and related packages
   pacman: name=mailman3,mailman3-hyperkitty,python-psycopg2,mailman-web,python-xapian-haystack,uwsgi-plugin-python,postfix,postfix-pcre state=present
   register: install

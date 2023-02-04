@@ -1,0 +1,10 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = mailman3
+
+[Action]
+Description = Patch mailman to not modify the CC header
+When = PostTransaction
+Exec = /usr/bin/bash -c "patch /usr/lib/python*/site-packages/mailman/handlers/avoid_duplicates.py /usr/local/share/mailman.patch"
