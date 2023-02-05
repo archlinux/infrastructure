@@ -1,0 +1,10 @@
+--- a/usr/lib/python3.10/site-packages/mailman/handlers/avoid_duplicates.py
++++ b/usr/lib/python3.10/site-packages/mailman/handlers/avoid_duplicates.py
+@@ -113,7 +113,3 @@
+                 newrecips.add(r)
+         # Set the new list of recipients.  XXX recips should always be a set.
+         msgdata['recipients'] = list(newrecips)
+-        # RFC 2822 specifies zero or one CC header
+-        del msg['cc']
+-        if cc_addresses:
+-            msg['CC'] = COMMASPACE.join(cc_addresses.values())
