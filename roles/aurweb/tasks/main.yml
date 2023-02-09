@@ -307,6 +307,13 @@
   become_user: "{{ aurweb_user }}"
   when: git_config.stdout.find('!HEAD') == -1
 
+- name: Set git-receive-pack to explicitly check all received objects  # noqa command-instead-of-module no-changed-when
+  command: git config --local receive.fsckobjects true
+  args:
+    chdir: "{{ aurweb_git_dir }}"
+  become: true
+  become_user: "{{ aurweb_user }}"
+
 - name: Configure sshd
   template: src=aurweb_config.j2 dest={{ sshd_includes_dir }}/aurweb_config owner=root group=root mode=0600 validate='/usr/sbin/sshd -t -f %s'
   notify:
