@@ -1,0 +1,22 @@
+hostname: "repro3.pkgbuild.com"
+
+ipv4_address: "147.75.84.133"
+ipv4_netmask: "/31"
+ipv6_address: "2604:1380:4601:7d00::1"
+ipv6_netmask: "/127"
+ipv4_gateway: "147.75.84.132"
+ipv6_gateway: "2604:1380:4601:7d00::"
+filesystem: "btrfs"
+network_interface: "enp1s0f0np0"
+system_disks:
+  - /dev/sda
+configure_network: true
+
+# there is a big swap partition; avoid zram and rely on zswap instead
+enable_zram_swap: false
+
+rebuilderd_workers:
+ - repro31
+ - repro32
+wireguard_address: 10.0.0.40
+wireguard_public_key: wG9TkWIw+g0WvOWChIqllpIh3+DjIDKy0XYh+pM+CS4=

@@ -364,13 +364,13 @@ locals {
       ipv4_address = "147.75.48.159"
       ipv6_address = "2604:1380:40f1:6a00::1"
     }
-    repro1 = {
-      ipv4_address = "147.75.81.79"
-      ipv6_address = "2604:1380:2001:4500::1"
-    }
     repro2 = {
       ipv4_address = "212.102.38.209"
       ipv6_address = "2a02:6ea0:c238::2"
+    }
+    repro3 = {
+      ipv4_address = "147.75.84.133"
+      ipv6_address = "2604:1380:4601:7d00::1"
     }
     www = {
       ipv4_address = hcloud_server.machine["homedir.archlinux.org"].ipv4_address

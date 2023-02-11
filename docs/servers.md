@@ -93,8 +93,8 @@ So to set up this server from scratch, run:
 ### Services
   - Runs a master [rebuilderd](https://reproducible.archlinux.org) instance
     with two workers:
-    - repro1.pkgbuild.com (Equinix Metal box with a Xeon E-2278G and 32G RAM)
     - repro2.pkgbuild.com (Kape server with an EPYC 7702P and 256G RAM)
+    - repro3.pkgbuild.com (Equinix Metal box with a Xeon E-2278G and 64G RAM)
 
 ## runner1.archlinux.org
 
