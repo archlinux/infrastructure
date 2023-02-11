@@ -100,7 +100,7 @@ So to set up this server from scratch, run:
 
 Medium-fast-ish Kape Arch Linux box.
 
-## runner2.archlinux.org
+## runner3.archlinux.org
 
 Medium-fast-ish Equinix Metal Arch Linux box.
 
