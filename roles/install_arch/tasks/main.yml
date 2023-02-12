@@ -5,7 +5,10 @@
 
 - name: Check whether we're running in Hetzner or Equinix Metal rescue environment
   fail: msg="Not running in rescue system!"
-  when: "'Hetzner Rescue' not in motd_contents.stdout and 'Rescue environment based on Alpine Linux' not in motd_contents.stdout"
+  when:
+    - "'Hetzner Rescue' not in motd_contents.stdout"
+    - "'Rescue environment based on Alpine Linux' not in motd_contents.stdout"
+    - "'OS Rescue Environment' not in motd_contents.stdout"
 
 - name: Prepare Equinix Metal rescue system
   when: ansible_facts['os_family'] == "Alpine"
@@ -154,7 +157,7 @@
   when: filesystem == "btrfs"
 
 - name: Install grub
-  command: chroot /mnt grub-install --recheck {{ item }}
+  command: chroot /mnt grub-install --target=i386-pc --recheck {{ item }}
   with_items:
     - "{{ system_disks }}"
   register: chroot_grub_install

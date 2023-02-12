@@ -9,6 +9,9 @@
 - name: Start docker
   systemd: name=docker enabled=yes state=started daemon_reload=yes
 
+- name: Create /etc/docker directory
+  file: state=directory owner=root group=root mode=0755 path=/etc/docker
+
 - name: Configure Docker daemon for IPv6
   copy: src=daemon.json dest=/etc/docker/daemon.json owner=root group=root mode=0644
   notify: Restart docker

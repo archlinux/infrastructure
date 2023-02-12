@@ -4,8 +4,8 @@ gemini.archlinux.org
 secure-runner1.archlinux.org
 
 [equinix_metal]
-repro1.pkgbuild.com
-runner2.archlinux.org
+repro3.pkgbuild.com
+runner3.archlinux.org
 seoul.mirror.pkgbuild.com
 sydney.mirror.pkgbuild.com
 
@@ -75,7 +75,7 @@ build.archlinux.org
 
 [gitlab_runners]
 runner1.archlinux.org
-runner2.archlinux.org
+runner3.archlinux.org
 secure-runner1.archlinux.org
 
 [gitlab_vm_runners]
@@ -86,8 +86,8 @@ secure-runner1.archlinux.org
 reproducible.archlinux.org
 
 [rebuilderd_workers]
-repro1.pkgbuild.com
 repro2.pkgbuild.com
+repro3.pkgbuild.com
 
 [memcached]
 wiki.archlinux.org

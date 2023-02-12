@@ -1,0 +1,16 @@
+hostname: "runner3.archlinux.org"
+
+ipv4_address: "86.109.5.205"
+ipv4_netmask: "/31"
+ipv6_address: "2604:1380:4091:8800::1"
+ipv6_netmask: "/127"
+ipv4_gateway: "86.109.5.204"
+ipv6_gateway: "2604:1380:4091:8800::"
+filesystem: "btrfs"
+network_interface: "enp2s0f0np0"
+system_disks:
+  - /dev/sda
+  - /dev/sdb
+configure_network: true
+wireguard_address: 10.0.0.41
+wireguard_public_key: V2GA/YWnz0toKZ8GR3w3uzMwgHr5vqMzXVL5d3e1Y0s=

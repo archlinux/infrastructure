@@ -266,9 +266,9 @@ locals {
       ipv4_address = "138.199.19.15"
       ipv6_address = "2a02:6ea0:c72e::2"
     }
-    runner2 = {
-      ipv4_address = "147.75.80.217"
-      ipv6_address = "2604:1380:2001:4500::3"
+    runner3 = {
+      ipv4_address = "86.109.5.205"
+      ipv6_address = "2604:1380:4091:8800::1"
     }
     secure-runner1 = {
       ipv4_address = "116.202.134.150"
@@ -364,13 +364,13 @@ locals {
       ipv4_address = "147.75.48.159"
       ipv6_address = "2604:1380:40f1:6a00::1"
     }
-    repro1 = {
-      ipv4_address = "147.75.81.79"
-      ipv6_address = "2604:1380:2001:4500::1"
-    }
     repro2 = {
       ipv4_address = "212.102.38.209"
       ipv6_address = "2a02:6ea0:c238::2"
+    }
+    repro3 = {
+      ipv4_address = "147.75.84.133"
+      ipv6_address = "2604:1380:4601:7d00::1"
     }
     www = {
       ipv4_address = hcloud_server.machine["homedir.archlinux.org"].ipv4_address
