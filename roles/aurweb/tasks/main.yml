@@ -63,8 +63,8 @@
     repo={{ aurweb_repository }}
     dest="{{ aurweb_dir }}"
     version={{ aurweb_version }}
-    verify_commit: true
-    gpg_whitelist: '{{ aurweb_pgp_keys }}'
+    verify_commit=true
+    gpg_whitelist='{{ aurweb_pgp_keys }}'
   become: true
   become_user: "{{ aurweb_user }}"
   register: release
@@ -114,8 +114,8 @@
     repo={{ aurweb_repository }}
     dest="{{ aurweb_dir }}"
     version={{ aurweb_version }}
-    verify_commit: true
-    gpg_whitelist: '{{ aurweb_pgp_keys }}'
+    verify_commit=true
+    gpg_whitelist='{{ aurweb_pgp_keys }}'
   become: true
   become_user: "{{ aurweb_user }}"
   when: release.changed
