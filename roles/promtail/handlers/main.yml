@@ -1,2 +1,2 @@
 - name: Restart promtail
-  service: name=promtail daemon_reload=yes state=restarted
+  systemd: name=promtail daemon_reload=yes state=restarted

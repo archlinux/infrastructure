@@ -320,7 +320,7 @@
     - Restart sshd
 
 - name: Start and enable AUR systemd services and timers
-  service: name={{ item }} enabled=yes state=started daemon_reload=yes
+  systemd: name={{ item }} enabled=yes state=started daemon_reload=yes
   with_items:
     - aurweb-git.timer
     - aurweb-git-archive.timer

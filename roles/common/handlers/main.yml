@@ -9,4 +9,4 @@
     daemon_reload: true
 
 - name: Restart systemd-zram-setup@zram0
-  service: name=systemd-zram-setup@zram0 state=restarted daemon_reload=yes
+  systemd: name=systemd-zram-setup@zram0 state=restarted daemon_reload=yes
