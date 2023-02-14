@@ -63,8 +63,8 @@
     repo={{ aurweb_repository }}
     dest="{{ aurweb_dir }}"
     version={{ aurweb_version }}
-    verify_commit: true
-    gpg_whitelist: '{{ aurweb_pgp_keys }}'
+    verify_commit=true
+    gpg_whitelist='{{ aurweb_pgp_keys }}'
   become: true
   become_user: "{{ aurweb_user }}"
   register: release
@@ -114,8 +114,8 @@
     repo={{ aurweb_repository }}
     dest="{{ aurweb_dir }}"
     version={{ aurweb_version }}
-    verify_commit: true
-    gpg_whitelist: '{{ aurweb_pgp_keys }}'
+    verify_commit=true
+    gpg_whitelist='{{ aurweb_pgp_keys }}'
   become: true
   become_user: "{{ aurweb_user }}"
   when: release.changed
@@ -320,7 +320,7 @@
     - Restart sshd
 
 - name: Start and enable AUR systemd services and timers
-  service: name={{ item }} enabled=yes state=started daemon_reload=yes
+  systemd: name={{ item }} enabled=yes state=started daemon_reload=yes
   with_items:
     - aurweb-git.timer
     - aurweb-git-archive.timer

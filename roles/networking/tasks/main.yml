@@ -52,7 +52,7 @@
     - "'hcloud' in group_names or inventory_hostname == 'packer-base-image'"
 
 - name: Start and enable hcloud-init
-  service: name=hcloud-init daemon_reload=yes state=started enabled=yes
+  systemd: name=hcloud-init daemon_reload=yes state=started enabled=yes
   when:
     - chroot_path | length == 0
     - "'hcloud' in group_names or inventory_hostname == 'packer-base-image'"

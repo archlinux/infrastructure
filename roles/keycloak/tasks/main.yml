@@ -37,7 +37,7 @@
       no_log: true
 
     - name: Start and enable keycloak
-      service: name=keycloak enabled=yes daemon_reload=yes state=started
+      systemd: name=keycloak enabled=yes daemon_reload=yes state=started
 
     - name: Wait for keycloak to initialize
       wait_for: port={{ keycloak_port }}
