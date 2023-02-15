@@ -11,6 +11,12 @@ handlers:
         SYSLOG_IDENTIFIER: synapse
 
 loggers:
+    synapse.federation.sender.per_destination_queue:
+        level: ERROR
+    synapse.handlers.device:
+        level: ERROR
+    synapse.http.matrixfederationclient:
+        level: ERROR
     synapse.logging.context:
         level: ERROR
 
