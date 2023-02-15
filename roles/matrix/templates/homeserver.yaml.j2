@@ -60,21 +60,8 @@ caches:
 
 # Retention
 delete_stale_devices_after: 1y
-retention:
-  enabled: true
-  default_policy:
-    min_lifetime: 1d
-    max_lifetime: 1y
-  allowed_lifetime_min: 1d
-  allowed_lifetime_max: 1y
-  purge_jobs:
-    - longest_max_lifetime: 3d
-      interval: 12h
-    - shortest_max_lifetime: 3d
-      interval: 1d
 media_retention:
-  local_media_lifetime: 1y
-  remote_media_lifetime: 28d
+  remote_media_lifetime: 14d
 
 # Media repository
 media_store_path: "/var/lib/synapse/media_store"
