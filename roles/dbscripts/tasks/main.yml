@@ -207,7 +207,7 @@
   register: rsyncdtmpfiles
 
 - name: Use tmpfiles.d/rsyncd.conf
-  command: systemd-tmpfiles --create
+  command: systemd-tmpfiles --create creates=/run/rsyncd
   when: rsyncdtmpfiles.changed
 
 - name: Create rsyncd-conf-genscripts

@@ -38,11 +38,11 @@
   register: sgdisk
   changed_when: "sgdisk.rc == 0"
 
-- name: Partition and format the disks (btrfs RAID)
+- name: Partition and format the disks (btrfs RAID)  # noqa no-changed-when
   command: mkfs.btrfs -f -L root -d {{ raid_level | default('raid1') }} -m {{ raid_level | default('raid1') }} -O no-holes {{ system_disks | map('regex_replace', '^(.*)$', '\g<1>p2' if 'nvme' in system_disks[0] else '\g<1>2') | join(' ') }}
   when: filesystem == "btrfs" and system_disks | length >= 2
 
-- name: Partition and format the disks (btrfs single)
+- name: Partition and format the disks (btrfs single)  # noqa no-changed-when
   command: mkfs.btrfs -f -L root -d single -m single -O no-holes {{ system_disks[0] }}{{ 'p2' if 'nvme' in system_disks[0] else '2' }}
   when: filesystem == "btrfs" and system_disks | length == 1
 

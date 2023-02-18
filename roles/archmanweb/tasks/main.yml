@@ -51,7 +51,7 @@
   become_user: archmanweb
   register: release
 
-- name: Build archlinux-common-style
+- name: Build archlinux-common-style  # noqa no-changed-when
   command:
     cmd: make SASS=sassc
     chdir: "{{ archmanweb_dir }}/repo/archlinux-common-style"

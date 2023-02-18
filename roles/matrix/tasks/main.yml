@@ -123,7 +123,7 @@
   become_method: sudo
   when: mjolnir_git.changed
 
-- name: Build mjolnir
+- name: Build mjolnir  # noqa no-changed-when
   command: yarn build
   args:
     chdir: /var/lib/synapse/mjolnir

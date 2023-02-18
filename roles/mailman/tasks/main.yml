@@ -69,7 +69,7 @@
   become_user: postgres
   become_method: su
 
-- name: Run Django management tasks
+- name: Run Django management tasks  # noqa no-changed-when
   command: django-admin {{ item }} --pythonpath /etc/webapps/mailman-web --settings settings
   loop:
     - migrate

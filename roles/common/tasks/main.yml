@@ -114,7 +114,7 @@
   register: zramtmpfiles
   when: enable_zram_swap
 
-- name: Use tmpfiles.d/zram.conf
+- name: Use tmpfiles.d/zram.conf  # noqa no-changed-when
   command: systemd-tmpfiles --create
   when: zramtmpfiles.changed
 

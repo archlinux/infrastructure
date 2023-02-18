@@ -151,7 +151,7 @@
               priv="{{ aurweb_db }}.*:ALL"
   no_log: true
 
-- name: Initialize the database
+- name: Initialize the database  # noqa no-changed-when
   command: poetry run python -m aurweb.initdb
   args:
     chdir: "{{ aurweb_dir }}"
@@ -159,7 +159,7 @@
   become_user: "{{ aurweb_user }}"
   when: db_created.changed
 
-- name: Run migrations
+- name: Run migrations  # noqa no-changed-when
   command: poetry run alembic upgrade head
   args:
     chdir: "{{ aurweb_dir }}"
@@ -178,7 +178,7 @@
   ignore_errors: true
   register: aurweb_installed
 
-- name: Install python module
+- name: Install python module  # noqa no-changed-when
   command: poetry install
   args:
     chdir: "{{ aurweb_dir }}"
@@ -283,7 +283,7 @@
     chdir: "{{ aurweb_git_dir }}"
   failed_when: git_config.rc == 2  # FIXME: does not work.
 
-- name: Configure git tranfser.hideRefs  # noqa command-instead-of-module
+- name: Configure git tranfser.hideRefs  # noqa command-instead-of-module no-changed-when
   command: git config --local transfer.hideRefs '^refs/'
   args:
     chdir: "{{ aurweb_git_dir }}"
@@ -291,7 +291,7 @@
   become_user: "{{ aurweb_user }}"
   when: git_config.stdout.find('^refs/') == -1
 
-- name: Configure git transfer.hideRefs second  # noqa command-instead-of-module
+- name: Configure git transfer.hideRefs second  # noqa command-instead-of-module no-changed-when
   command: git config --local --add transfer.hideRefs '!refs/'
   args:
     chdir: "{{ aurweb_git_dir }}"
@@ -299,7 +299,7 @@
   become_user: "{{ aurweb_user }}"
   when: git_config.stdout.find('!refs/') == -1
 
-- name: Configure git transfer.hideRefs third  # noqa command-instead-of-module
+- name: Configure git transfer.hideRefs third  # noqa command-instead-of-module no-changed-when
   command: git config --local --add transfer.hideRefs '!HEAD'
   args:
     chdir: "{{ aurweb_git_dir }}"

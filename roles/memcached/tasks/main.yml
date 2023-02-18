@@ -6,5 +6,5 @@
   register: memcachedtmpfiles
 
 - name: Use tmpfiles.d/memcached.conf
-  command: systemd-tmpfiles --create
+  command: systemd-tmpfiles --create creates=/run/memcached
   when: memcachedtmpfiles.changed
