@@ -14,7 +14,7 @@
     dest: "{{ service_nginx_conf }}"
     owner: root
     group: root
-    mode: 0644
+    mode: '0644'
   notify: Reload nginx
   when: service_nginx_template is not defined and maintenance is defined and maintenance | bool
 
@@ -24,7 +24,7 @@
     dest: "{{ service_nginx_conf }}"
     owner: root
     group: root
-    mode: 0644
+    mode: '0644'
   notify: Reload nginx
   when: service_nginx_template is defined and maintenance is defined and maintenance | bool
 
@@ -34,7 +34,7 @@
     dest: "{{ maintenance_http_dir }}/{{ service_domain }}/503.html"
     owner: root
     group: root
-    mode: 0644
+    mode: '0644'
   when: maintenance is defined and maintenance | bool
 
 - name: Force reload nginx

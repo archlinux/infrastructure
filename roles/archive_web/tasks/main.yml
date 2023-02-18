@@ -10,7 +10,7 @@
     dest: /etc/nginx/nginx.d/archive.conf
     owner: root
     group: root
-    mode: 0644
+    mode: '0644'
   notify:
     - Reload nginx
   tags: ['nginx']
@@ -21,4 +21,4 @@
     state: directory
     owner: root
     group: root
-    mode: 0755
+    mode: '0755'

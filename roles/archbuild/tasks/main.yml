@@ -79,7 +79,7 @@
     path: '/var/lib/{{ "/".join(item) }}'
     owner: root
     group: root
-    mode: 0777
+    mode: '0777'
   with_nested:
     - [archbuilddest]
     - [srcdest]

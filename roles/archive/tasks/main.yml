@@ -7,7 +7,7 @@
     state: directory
     owner: archive
     group: archive
-    mode: 0755
+    mode: '0755'
 
 - name: Setup archive configuration
   template:
@@ -15,7 +15,7 @@
     dest: /etc/archive.conf
     owner: root
     group: root
-    mode: 0644
+    mode: '0644'
 
 - name: Setup archive timer
   systemd: name=archive.timer enabled=yes state=started

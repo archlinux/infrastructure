@@ -263,7 +263,7 @@
     state: touch
     owner: "{{ aurweb_user }}"
     group: http
-    mode: 0644
+    mode: '0644'
   when: git.changed
 
 - name: Create git repo dir

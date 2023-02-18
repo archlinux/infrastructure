@@ -11,7 +11,7 @@
     state: "directory"
     owner: "root"
     group: "root"
-    mode: 0755
+    mode: '0755'
 
 - name: Install systemd unit override file
   template:
@@ -19,7 +19,7 @@
     dest: "/etc/systemd/system/fail2ban.service.d/override.conf"
     owner: "root"
     group: "root"
-    mode: 0644
+    mode: '0644'
 
 - name: Install local config files
   template:
@@ -27,7 +27,7 @@
     dest: "/etc/fail2ban/{{ item }}"
     owner: "root"
     group: "root"
-    mode: 0644
+    mode: '0644'
   with_items:
     - "fail2ban.local"
     - "jail.local"
@@ -40,7 +40,7 @@
     dest: "/etc/fail2ban/action.d/firewallcmd-allports.local"
     owner: "root"
     group: "root"
-    mode: 0644
+    mode: '0644'
   notify:
     - Restart fail2ban
 
@@ -51,7 +51,7 @@
     dest: "/etc/fail2ban/jail.d/sshd.local"
     owner: "root"
     group: "root"
-    mode: 0644
+    mode: '0644'
   notify:
     - Reload fail2ban jails
 
@@ -62,7 +62,7 @@
     dest: "/etc/fail2ban/jail.d/postfix.local"
     owner: "root"
     group: "root"
-    mode: 0644
+    mode: '0644'
   notify:
     - Reload fail2ban jails
 
@@ -73,7 +73,7 @@
     dest: "/etc/fail2ban/jail.d/dovecot.local"
     owner: "root"
     group: "root"
-    mode: 0644
+    mode: '0644'
   notify:
     - Reload fail2ban jails
 
@@ -84,7 +84,7 @@
     dest: "/etc/fail2ban/jail.d/nginx-limit-req.local"
     owner: "root"
     group: "root"
-    mode: 0644
+    mode: '0644'
   notify:
     - Reload fail2ban jails
 

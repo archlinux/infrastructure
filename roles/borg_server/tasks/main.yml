@@ -12,7 +12,7 @@
     state: directory
     owner: borg
     group: borg
-    mode: 0700
+    mode: '0700'
 
 - name: Create the root backup directory at {{ backup_dir }}
   file:
@@ -20,7 +20,7 @@
     state: directory
     owner: borg
     group: borg
-    mode: 0700
+    mode: '0700'
   with_items: "{{ backup_clients }}"
 
 - name: Fetch ssh keys from each borg client machine

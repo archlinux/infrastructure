@@ -57,7 +57,7 @@
   get_url:
     url: "{{ item }}"
     dest: /tmp/
-    mode: 0644
+    mode: '0644'
   loop:
     - https://geo.mirror.pkgbuild.com/iso/{{ bootstrap_version }}/archlinux-bootstrap-x86_64.tar.gz
     - https://archlinux.org/iso/{{ bootstrap_version }}/archlinux-bootstrap-x86_64.tar.gz.sig
@@ -151,7 +151,7 @@
     path: /mnt/etc/default/grub
     owner: root
     group: root
-    mode: 0644
+    mode: '0644'
     regexp: "^GRUB_CMDLINE_LINUX_DEFAULT="
     line: "GRUB_CMDLINE_LINUX_DEFAULT=\"rootflags=compress-force=zstd\""
   when: filesystem == "btrfs"

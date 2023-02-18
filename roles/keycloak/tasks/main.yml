@@ -57,7 +57,7 @@
     password: "{{ vault_keycloak_nginx_passwd }}"
     owner: root
     group: http
-    mode: 0640
+    mode: '0640'
 
 - name: Create ssl cert
   include_role:

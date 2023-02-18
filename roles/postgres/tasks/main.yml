@@ -14,7 +14,7 @@
     group: postgres
     attributes: "+C"
     path: /var/lib/postgres/data
-    mode: 0700
+    mode: '0700'
   when: filesystem == "btrfs"
 
 - name: Initialize postgres

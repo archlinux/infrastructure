@@ -20,7 +20,7 @@
     insertafter: '^# %wheel ALL=\(ALL\) ALL'
     line: '%wheel ALL=(ALL) ALL'
     validate: 'visudo -cf %s'
-    mode: 0440
+    mode: '0440'
     owner: root
     group: root
 
@@ -32,6 +32,6 @@
     insertafter: '^# Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"'
     line: 'Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/bin"'
     validate: 'visudo -cf %s'
-    mode: 0440
+    mode: '0440'
     owner: root
     group: root

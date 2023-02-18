@@ -238,7 +238,7 @@
     dest: /etc/synapse/{{ matrix_server_name }}.signing.key
     owner: root
     group: synapse
-    mode: 0640
+    mode: '0640'
 
 - name: Install ircpass key  # noqa template-instead-of-copy
   copy:
@@ -246,7 +246,7 @@
     dest: /etc/synapse/{{ matrix_server_name }}.ircpass.key
     owner: root
     group: synapse
-    mode: 0640
+    mode: '0640'
 
 - name: Make nginx log dir
   file: path=/var/log/nginx/{{ matrix_domain }} state=directory owner=root group=root mode=0755

@@ -99,7 +99,7 @@
   blockinfile:
     path: /root/.ssh/config
     create: true
-    mode: 0600
+    mode: '0600'
     block: |
       Host {{ storagebox_hostname }}
         User {{ backup_client_usernames[item] }}
