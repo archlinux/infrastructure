@@ -437,6 +437,13 @@ arch_users:
       - dev
       - multilib
       - tu
+  pitastrudl:
+    name: "Arun Bahl"
+    ssh_key: pitastrudl.pub
+    hosts:
+      - mail.archlinux.org
+    groups:
+      - support-staff
   polyzen:
     name: "Daniel M. Capella"
     ssh_key: polyzen.pub
