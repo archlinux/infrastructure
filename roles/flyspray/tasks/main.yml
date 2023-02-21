@@ -91,3 +91,6 @@
 
 - name: Start and enable systemd socket
   service: name=php-fpm7@flyspray.socket state=started enabled=true
+
+- name: Copy removed package bugs script
+  copy: src=removed-packages-bugs.py dest=/usr/local/bin/removed-packages-bugs.py mode=0755 owner=root group=root
