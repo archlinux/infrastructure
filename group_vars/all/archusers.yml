@@ -39,10 +39,10 @@ arch_users:
   allan:
     name: "Allan McRae"
     ssh_key: allan.pub
+    hosts:
+      - mail.archlinux.org
     groups:
-      - dev
-      - multilib
-      - tu
+      - support-staff
   alucryd:
     name: "Maxime Gauduin"
     ssh_key: alucryd.pub
