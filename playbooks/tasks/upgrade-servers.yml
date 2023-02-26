@@ -1,5 +1,22 @@
+- name: Upgrade, reboot and health-check accounts.archlinux.org
+  hosts: accounts.archlinux.org
+  max_fail_percentage: 0
+  gather_facts: false
+
+  tasks:
+    - name: Upgrade and reboot
+      include_tasks: include/upgrade-server.yml
+
+    - name: Wait for Keycloak to become available
+      uri: url=https://{{ inventory_hostname }}/metrics
+      register: result
+      until: result.status == 200
+      # retry for 5 minutes after boot
+      retries: 30
+      delay: 10
+
 - name: Upgrade and reboot all hetzner servers
-  hosts: all,!kape_servers,!equinix_metal
+  hosts: all,!accounts.archlinux.org,!kape_servers,!equinix_metal
   max_fail_percentage: 0
   serial: 20%
   gather_facts: false
