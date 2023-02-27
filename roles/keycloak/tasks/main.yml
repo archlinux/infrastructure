@@ -23,6 +23,12 @@
 - name: Create drop-in directory for keycloak.service
   file: path=/etc/systemd/system/keycloak.service.d state=directory owner=root group=root mode=0755
 
+- name: Increase start-up timeout on single-core systems
+  copy: src=increase-start-timeout.conf dest=/etc/systemd/system/keycloak.service.d/ owner=root group=root mode=0644
+  when: ansible_processor_vcpus == 1
+  notify:
+    - Daemon reload
+
 - name: Get service facts
   service_facts:
 
