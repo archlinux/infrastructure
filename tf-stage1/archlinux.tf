@@ -601,7 +601,7 @@ variable "gitlab_pages_ipv6" {
 
 resource "hcloud_volume" "mirror" {
   name              = "mirror"
-  size              = 100
+  size              = 125
   server_id         = hcloud_server.machine["mirror.pkgbuild.com"].id
   delete_protection = true
 }
