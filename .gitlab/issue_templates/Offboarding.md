@@ -39,6 +39,7 @@ This template should be used for offboarding Arch Linux team members.
 - [ ] Remove member from [arch-tu](https://lists.archlinux.org/mailman3/lists/arch-tu.lists.archlinux.org/members/member/) and/or [arch-dev](https://lists.archlinux.org/mailman3/lists/arch-dev.lists.archlinux.org/members/member/) mailing lists.
 - [ ] Ask the user to leave `#archlinux-tu` and/or `#archlinux-dev` on Libera Chat and forget the password(s).
 - [ ] Create an issue in [archlinux-keyring](https://gitlab.archlinux.org/archlinux/archlinux-keyring) using the [*"Remove Packager Key"*](https://gitlab.archlinux.org/archlinux/archlinux-keyring/-/issues/new?issuable_template=Remove%20Packager%20Key) template.
+- [ ] Remove the user from the public list on archweb ([TUs](https://archlinux.org/people/trusted-users/)/[devs](https://archlinux.org/people/developers/)) and add them as fellow ([fellow TUs](https://archlinux.org/people/trusted-user-fellows/)/[fellow devs](https://archlinux.org/people/developer-fellows/))
 
 ## DevOps offboarding checklist
 
