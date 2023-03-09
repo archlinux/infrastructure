@@ -21,8 +21,7 @@ provider "registry.terraform.io/hashicorp/external" {
 }
 
 provider "registry.terraform.io/louy/uptimerobot" {
-  version     = "0.5.1"
-  constraints = "0.5.1"
+  version = "0.5.1"
   hashes = [
     "h1:Oc5L04pt+5NJ8n47K7tVHbqFmuobW/x5zaF5sPGCQwE=",
     "zh:0cab4092125cf524a2e5caf74a4e90f230734b20bbceb20e51ffb82f2fcc90fc",
@@ -60,5 +59,16 @@ provider "registry.terraform.io/mrparkers/keycloak" {
     "zh:c6b97dd6162934155454f3f891c4f32185af9e48ceb5e2d71dd7dce74f95efcf",
     "zh:c924c9dabaa64b8dcef39bda9b67af27a714eb87ee1e01bd404b5823dc604b18",
     "zh:db3b4d02fef69217055ac1536902bb694f3800c5d9929c7032ab31a3bd7147e1",
+  ]
+}
+
+provider "registry.terraform.io/vexxhost/uptimerobot" {
+  version = "0.8.2"
+  hashes = [
+    "h1:TiAJg4VrgNreABRH7uTFg8HOp0KY53iVw/M+MVO0D9Y=",
+    "zh:348b22a27496b3f88103f6a08791d51531b0b20c35a7cf32c7dcf6a9a5b58d26",
+    "zh:77cdae6f3c852c677a70be4bc335372aba7ceef9556d4b4427bbc683030d5f7d",
+    "zh:7ef18e4bae4d9e92bdda3e4b5c633f1b7e614a9f8613df01d88334a4d86b1f99",
+    "zh:aa46d603a3dce7651ebb84e6b2b0419010594efbc8ab2d57c9f4906590f2c43f",
   ]
 }

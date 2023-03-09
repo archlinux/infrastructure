@@ -15,10 +15,6 @@ provider "uptimerobot" {
 
 data "uptimerobot_account" "account" {}
 
-data "uptimerobot_alert_contact" "default_alert_contact" {
-  friendly_name = data.external.vault_uptimerobot.result.vault_uptimerobot_alert_contact
-}
-
 locals {
   archlinux_org_monitor = {
     "Accounts"         = "https://accounts.archlinux.org"
@@ -40,8 +36,4 @@ resource "uptimerobot_monitor" "uptimerobot_monitor_archlinux" {
   type          = "http"
   url           = each.value
   interval      = 60
-
-  alert_contact {
-    id = data.uptimerobot_alert_contact.default_alert_contact.id
-  }
 }
