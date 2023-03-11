@@ -565,6 +565,7 @@ arch_users:
     name: "Chih-Hsuan Yen"
     ssh_key: yan12125.pub
     groups:
+      - multilib
       - tu
 
 # utility accounts to protect from the "disable ssh keys of disabled users" task
