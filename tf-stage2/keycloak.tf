@@ -201,7 +201,7 @@ resource "keycloak_realm_events" "realm_events" {
   ]
 
   events_listeners = [
-    "jboss-logging",    # keycloak enables the 'jboss-logging' event listener by default.
+    "jboss-logging", # keycloak enables the 'jboss-logging' event listener by default.
   ]
 }
 
