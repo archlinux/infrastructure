@@ -359,12 +359,6 @@ arch_users:
     groups:
       - dev
       - tu
-  kkeen:
-    name: "Kyle Keen"
-    ssh_key: kkeen.pub
-    groups:
-      - tu
-      - multilib
   klausenbusk:
     name: "Kristian Klausen"
     ssh_key: klausenbusk.pub
