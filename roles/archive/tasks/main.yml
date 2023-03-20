@@ -29,7 +29,7 @@
   user: name={{ archive_user_name }} shell=/bin/false home="{{ archive_user_home }}" createhome=yes
 
 - name: Configure archive.org client
-  command: ia configure --username={{ vault_archive_username }} --password={{ vault_archive_password }} creates={{ archive_user_home }}/.config/ia.ini
+  command: ia configure --username={{ vault_archive_username }} --password={{ vault_archive_password }} creates={{ archive_user_home }}/.ia
   become: true
   become_user: "{{ archive_user_name }}"
 
