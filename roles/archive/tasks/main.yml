@@ -23,7 +23,7 @@
 - name: Setup archive-hardlink timer
   systemd: name=archive-hardlink.timer enabled=yes state=started
 - name: Install internet archive packages
-  pacman: name=python-internetarchive,python-xtarfile state=present
+  pacman: name=python-internetarchive,python-libarchive-c state=present
 
 - name: Create archive user
   user: name={{ archive_user_name }} shell=/bin/false home="{{ archive_user_home }}" createhome=yes
@@ -34,7 +34,7 @@
   become_user: "{{ archive_user_name }}"
 
 - name: Clone archive uploader code
-  git: repo=https://github.com/archlinux/arch-historical-archive.git dest="{{ archive_repo }}" version="{{ archive_uploader_version }}"
+  git: repo=https://gitlab.archlinux.org/archlinux/arch-historical-archive.git dest="{{ archive_repo }}" version="{{ archive_uploader_version }}"
   become: true
   become_user: "{{ archive_user_name }}"
 
