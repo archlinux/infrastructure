@@ -132,7 +132,7 @@ resource "keycloak_realm" "archlinux" {
 
 resource "keycloak_required_action" "custom-terms-and-conditions" {
   realm_id       = "archlinux"
-  alias          = "terms_and_conditions"
+  alias          = "TERMS_AND_CONDITIONS"
   default_action = true
   enabled        = true
   name           = "Terms and Conditions"
