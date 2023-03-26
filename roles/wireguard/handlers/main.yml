@@ -1,10 +1,10 @@
 # https://github.com/systemd/systemd/issues/9627
-- name: Delete wg0
+- name: Delete wg0  # noqa no-changed-when
   command: networkctl delete wg0
   register: result
   failed_when: result.rc not in [0, 1]
   listen: Reload wireguard
 
-- name: Reload .network and .netdev files
+- name: Reload .network and .netdev files  # noqa no-changed-when
   command: networkctl reload
   listen: Reload wireguard

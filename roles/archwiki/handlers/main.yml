@@ -1,7 +1,7 @@
 - name: Restart php-fpm@archwiki
   service: name=php-fpm@{{ archwiki_user }} state=restarted
 
-- name: Run wiki updatescript
+- name: Run wiki updatescript  # noqa no-changed-when
   command: php {{ archwiki_dir }}/public/maintenance/update.php --quick
   become: true
   become_user: "{{ archwiki_user }}"
@@ -14,7 +14,7 @@
 # otherwise nginx will spit errors into the log until it is restarted (even
 # reload is not enough).
 # reference: https://stackoverflow.com/a/6896903
-- name: Purge nginx cache
+- name: Purge nginx cache  # noqa no-changed-when
   command: find /var/lib/nginx/cache -type f -delete
 
 # The MediaWiki file cache can be invalidated by deleting the files in the

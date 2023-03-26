@@ -3,10 +3,10 @@
     name: postfix
     state: restarted
 
-- name: Reload postfix
+- name: Reload postfix  # noqa no-changed-when
   command: postfix reload
 
-- name: Postmap additional files
+- name: Postmap additional files  # noqa no-changed-when
   command: postmap /etc/postfix/{{ item }}
   with_items:
     - access_client
@@ -19,5 +19,5 @@
     - domains
     - msa_header_checks
 
-- name: Update aliases db
+- name: Update aliases db  # noqa no-changed-when
   command: postalias /etc/postfix/aliases

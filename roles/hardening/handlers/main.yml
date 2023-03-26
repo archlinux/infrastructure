@@ -1,2 +1,2 @@
-- name: Apply sysctl settings
+- name: Apply sysctl settings  # noqa no-changed-when
   command: sysctl --system

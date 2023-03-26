@@ -7,7 +7,7 @@
 - name: Reload postfix
   service: name=postfix state=reloaded
 
-- name: Run postmap
+- name: Run postmap  # noqa no-changed-when
   command: postmap /etc/postfix/{{ item }}
   loop:
     - aliases

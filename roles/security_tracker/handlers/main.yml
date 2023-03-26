@@ -1,4 +1,4 @@
-- name: Upgrade database
+- name: Upgrade database  # noqa no-changed-when
   become: true
   become_user: security
   command: /usr/bin/make db-upgrade chdir="{{ security_tracker_dir }}"
