@@ -296,6 +296,7 @@ locals {
     packages        = { value = "www" }
     ping            = { value = "redirect" }
     planet          = { value = "www" }
+    registry        = { value = "gitlab" }
     repos           = { value = "gemini" }
     rsync           = { value = "gemini" }
     "rsync.sandbox" = { value = "repos.sandbox" }
