@@ -376,7 +376,7 @@ resource "keycloak_group" "staff_securityteam_groups" {
   name      = each.value
 }
 
-resource "keycloak_group" "staff_packagersteams_groups" {
+resource "keycloak_group" "staff_package_maintainer_groups" {
   for_each = toset(["Core Package Maintainers", "Junior Core Package Maintainers", "Package Maintainers", "Junior Package Maintainers"])
 
   realm_id  = "archlinux"
@@ -403,26 +403,6 @@ resource "keycloak_group" "staff_archweb_groups" {
 resource "keycloak_group" "externalcontributors" {
   realm_id = "archlinux"
   name     = "External Contributors"
-}
-
-resource "keycloak_group" "core_package_maintainers" {
-  realm_id = "archlinux"
-  name     = "Core Package Maintainers"
-}
-
-resource "keycloak_group" "junior_core_package_maintainers" {
-  realm_id = "archlinux"
-  name     = "Junior Core Package Maintainers"
-}
-
-resource "keycloak_group" "package_maintainers" {
-  realm_id = "archlinux"
-  name     = "Package Maintainers"
-}
-
-resource "keycloak_group" "junior_package_maintainers" {
-  realm_id = "archlinux"
-  name     = "Junior Package Maintainers"
 }
 
 resource "keycloak_group" "externalcontributors_groups" {
@@ -467,30 +447,6 @@ resource "keycloak_role" "externalcontributor" {
   description = "Role held by external contributors working on Arch Linux projects without further access"
 }
 
-resource "keycloak_role" "core_package_maintainer" {
-  realm_id    = "archlinux"
-  name        = "Core Package Maintainer"
-  description = "Role held by packagers of core repository"
-}
-
-resource "keycloak_role" "junior_core_package_maintainer" {
-  realm_id    = "archlinux"
-  name        = "Junior Core Package Maintainer"
-  description = "Junior Role held by packagers of core repository "
-}
-
-resource "keycloak_role" "package_maintainer" {
-  realm_id    = "archlinux"
-  name        = "Package Maintainer"
-  description = "Role held by packagers of extra repository"
-}
-
-resource "keycloak_role" "junior_package_maintainer" {
-  realm_id    = "archlinux"
-  name        = "Junior Package Maintainer"
-  description = "Junior Role held by packagers of extra repository "
-}
-
 resource "keycloak_group_roles" "devops" {
   realm_id = "archlinux"
   group_id = keycloak_group.staff_groups["DevOps"].id
@@ -512,38 +468,6 @@ resource "keycloak_group_roles" "externalcontributor" {
   group_id = keycloak_group.externalcontributors.id
   role_ids = [
     keycloak_role.externalcontributor.id
-  ]
-}
-
-resource "keycloak_group_roles" "core_package_maintainer" {
-  realm_id = "archlinux"
-  group_id = keycloak_group.core_package_maintainers.id
-  role_ids = [
-    keycloak_role.core_package_maintainer.id
-  ]
-}
-
-resource "keycloak_group_roles" "junior_core_package_maintainer" {
-  realm_id = "archlinux"
-  group_id = keycloak_group.junior_core_package_maintainers.id
-  role_ids = [
-    keycloak_role.junior_core_package_maintainer.id
-  ]
-}
-
-resource "keycloak_group_roles" "package_maintainer" {
-  realm_id = "archlinux"
-  group_id = keycloak_group.package_maintainers.id
-  role_ids = [
-    keycloak_role.package_maintainer.id
-  ]
-}
-
-resource "keycloak_group_roles" "junior_package_maintainer" {
-  realm_id = "archlinux"
-  group_id = keycloak_group.junior_package_maintainers.id
-  role_ids = [
-    keycloak_role.junior_package_maintainer.id
   ]
 }
 
