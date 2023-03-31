@@ -7,7 +7,7 @@ terraform {
       source = "mrparkers/keycloak"
     }
     uptimerobot = {
-      source = "louy/uptimerobot"
+      source = "vexxhost/uptimerobot"
     }
   }
   required_version = ">= 0.13"
