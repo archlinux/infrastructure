@@ -31,6 +31,7 @@
       # to be able to have a GitLab Page on purpose (for security and legal safety reasons).
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'https://{{ gitlab_domain }}'
+        registry_external_url 'https://registry.archlinux.org'
         nginx['client_max_body_size'] = '10g'
         nginx['listen_addresses'] = {{ gitlab_primary_addresses }}
         registry_nginx['listen_addresses'] = {{ gitlab_primary_addresses }}
@@ -113,7 +114,6 @@
     - "80/tcp"
     - "443/tcp"
     - "222/tcp"
-    - "5050/tcp"
   tags:
     - firewall
 
