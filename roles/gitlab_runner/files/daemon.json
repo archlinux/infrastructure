@@ -2,5 +2,12 @@
 	"ipv6": true,
 	"fixed-cidr-v6": "fd00::/80",
 	"cgroup-parent": "docker.slice",
-	"log-driver": "journald"
+	"log-driver": "journald",
+	"default-ulimits": {
+		"nofile": {
+			"Name": "nofile",
+			"Hard": 524288,
+			"Soft": 1024
+		}
+	}
 }
