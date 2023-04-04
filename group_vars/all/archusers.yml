@@ -54,6 +54,8 @@ arch_users:
     name: "Leonidas Spyropoulos"
     ssh_key: "artafinde.pub"
     groups:
+      - dev
+      - multilib
       - tu
   anatolik:
     name: "Anatol Pomozov"
