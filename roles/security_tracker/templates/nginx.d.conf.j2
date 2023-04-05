@@ -1,3 +1,6 @@
+# limit rss requests to 1 r/m
+limit_req_zone $binary_remote_addr zone=rsslimit:8m rate=1r/m;
+
 # limit general requests to 5 r/s to block DoS attempts with a burst of 10.
 limit_req_zone $binary_remote_addr zone=archseclimit:10m rate=5r/s;
 
@@ -44,6 +47,16 @@ server {
 
     location /static/ {
         alias {{ security_tracker_dir }}/tracker/static/;
+    }
+
+    # Rate limit all RSS feeds
+    location ~* .*(atom|json)$ {
+        access_log   /var/log/nginx/{{ security_tracker_domain }}/access.log main;
+        access_log   /var/log/nginx/{{ security_tracker_domain }}/access.log.json json_main;
+        include uwsgi_params;
+        uwsgi_pass security-tracker;
+
+        limit_req zone=rsslimit burst=5 nodelay;
     }
 
     location / {
