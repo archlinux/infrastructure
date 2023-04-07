@@ -529,10 +529,8 @@ arch_users:
   torxed:
     name: "Anton Hvornum"
     ssh_key: torxed.pub
-    hosts:
-      - mail.archlinux.org
     groups:
-      - support-staff
+      - tu
   tpkessler:
     name: "Torsten Keßler"
     ssh_key: tpkessler.pub
