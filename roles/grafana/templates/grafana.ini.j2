@@ -273,6 +273,9 @@ check_for_updates = false
 # Rudderstack Config url, optional, used by Rudderstack SDK to fetch source config
 ;rudderstack_config_url =
 
+# Intercom secret, optional, used to hash user_id before passing to Intercom via Rudderstack
+;intercom_secret =
+
 # Controls if the UI contains any links to user feedback forms
 ;feedback_links_enabled = true
 
@@ -421,7 +424,7 @@ allow_sign_up = false
 # Set this value to automatically add new users to the provided organization (if auto_assign_org above is set to true)
 ;auto_assign_org_id = 1
 
-# Default role new users will be automatically assigned (if disabled above is set to true)
+# Default role new users will be automatically assigned (if auto_assign_org above is set to true)
 ;auto_assign_org_role = Viewer
 
 # Require email validation before sign up completes
