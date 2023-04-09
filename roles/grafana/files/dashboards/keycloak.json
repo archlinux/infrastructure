@@ -359,7 +359,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (realm)(increase(keycloak_logins{instance=\"$instance\",job=\"keycloak\"}[1h]))",
+          "expr": "sum by (realm)(increase(keycloak_logins_total{instance=\"$instance\",job=\"keycloak\"}[1h]))",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -462,7 +462,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "increase(keycloak_failed_login_attempts{instance=\"$instance\",job=\"keycloak\",provider=\"keycloak\",realm=\"$realm\"}[1h])",
+          "expr": "increase(keycloak_failed_login_attempts_total{instance=\"$instance\",job=\"keycloak\",provider=\"keycloak\",realm=\"$realm\"}[1h])",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -564,7 +564,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "increase(keycloak_logins{instance=\"$instance\",job=\"keycloak\",realm=\"$realm\",provider=\"keycloak\"}[1h])",
+          "expr": "increase(keycloak_logins_total{instance=\"$instance\",job=\"keycloak\",realm=\"$realm\",provider=\"keycloak\"}[1h])",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -666,7 +666,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "increase(keycloak_failed_login_attempts{instance=\"$instance\",job=\"keycloak\",provider=\"keycloak\",realm=\"$realm\",client_id=\"$ClientId\"}[1h])",
+          "expr": "increase(keycloak_failed_login_attempts_total{instance=\"$instance\",job=\"keycloak\",provider=\"keycloak\",realm=\"$realm\",client_id=\"$ClientId\"}[1h])",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -767,7 +767,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "increase(keycloak_registrations{instance=\"$instance\",job=\"keycloak\",realm=\"$realm\",provider=\"keycloak\"}[1h])",
+          "expr": "increase(keycloak_registrations_total{instance=\"$instance\",job=\"keycloak\",realm=\"$realm\",provider=\"keycloak\"}[1h])",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -869,7 +869,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "increase(keycloak_registrations_errors{instance=\"$instance\",job=\"keycloak\",provider=\"keycloak\",realm=\"$realm\",client_id=\"$ClientId\"}[1h])",
+          "expr": "increase(keycloak_registrations_errors_total{instance=\"$instance\",job=\"keycloak\",provider=\"keycloak\",realm=\"$realm\",client_id=\"$ClientId\"}[1h])",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -943,7 +943,7 @@
         "multi": false,
         "name": "instance",
         "options": [],
-        "query": "label_values(keycloak_logins,instance)",
+        "query": "label_values(keycloak_logins_total,instance)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -970,7 +970,7 @@
         "multi": false,
         "name": "realm",
         "options": [],
-        "query": "label_values(keycloak_logins{instance=\"$instance\",job=\"keycloak\",provider=\"keycloak\"},realm)",
+        "query": "label_values(keycloak_logins_total{instance=\"$instance\",job=\"keycloak\",provider=\"keycloak\"},realm)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -990,14 +990,14 @@
           "value": ""
         },
         "datasource": "Prometheus",
-        "definition": "label_values(keycloak_logins{instance=\"$instance\",job=\"keycloak\",provider=\"keycloak\",realm=\"$realm\"},client_id)",
+        "definition": "label_values(keycloak_logins_total{instance=\"$instance\",job=\"keycloak\",provider=\"keycloak\",realm=\"$realm\"},client_id)",
         "hide": 0,
         "includeAll": false,
         "label": "ClientId",
         "multi": false,
         "name": "ClientId",
         "options": [],
-        "query": "label_values(keycloak_logins{instance=\"$instance\",job=\"keycloak\",provider=\"keycloak\",realm=\"$realm\"},client_id)",
+        "query": "label_values(keycloak_logins_total{instance=\"$instance\",job=\"keycloak\",provider=\"keycloak\",realm=\"$realm\"},client_id)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
