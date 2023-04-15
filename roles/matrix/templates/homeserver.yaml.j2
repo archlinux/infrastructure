@@ -135,6 +135,7 @@ oidc_providers:
     client_secret: "{{ vault_matrix_openid_client_secret }}"
     scopes: ["openid", "profile", "email", "roles"]
     allow_existing_users: false
+    enable_registration: true
     backchannel_logout_enabled: true
     user_mapping_provider:
       config:
