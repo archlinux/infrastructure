@@ -287,6 +287,11 @@ arch_users:
       - dev
       - multilib
       - tu
+  gromit:
+    name: "Christian Heusel"
+    ssh_key: gromit.pub
+    groups:
+      - tu
   hashworks:
     name: "Justin Kromlinger"
     ssh_key: hashworks.pub
