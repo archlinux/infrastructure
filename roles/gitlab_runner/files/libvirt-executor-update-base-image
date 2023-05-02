@@ -1,6 +1,8 @@
 #!/bin/bash
 set -o nounset -o errexit
 readonly libvirt_default_pool_path="/var/lib/libvirt/images"
+readonly arch_boxes_signing_key=/usr/local/lib/libvirt-executor/arch-boxes.asc
+readonly arch_boxes_fingerprint=1B9A16984A4E8CB448712D2AE0B78BF4326C6F8F
 
 cleanup() {
   set +o errexit
@@ -19,7 +21,9 @@ trap cleanup EXIT
 
 cd "${tmpdir}"
 curl -sSf --remote-name-all https://geo.mirror.pkgbuild.com/images/latest/Arch-Linux-x86_64-basic.qcow2{,.sig}
-sq verify --signer-cert /usr/local/lib/libvirt-executor/arch-boxes.asc --detached Arch-Linux-x86_64-basic.qcow2.sig Arch-Linux-x86_64-basic.qcow2
+sq import "${arch_boxes_signing_key}"
+sq link add --all "${arch_boxes_fingerprint}"
+sq verify --signer-cert "${arch_boxes_fingerprint}" --detached Arch-Linux-x86_64-basic.qcow2.sig Arch-Linux-x86_64-basic.qcow2
 
 image=Arch-Linux-x86_64-basic.img
 qemu-img convert -f qcow2 -O raw Arch-Linux-x86_64-basic.qcow2 Arch-Linux-x86_64-basic.img
