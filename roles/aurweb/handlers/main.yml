@@ -2,8 +2,5 @@
   systemd:
     daemon-reload: true
 
-- name: Restart php-fpm@{{ aurweb_user }}
-  service: name=php-fpm@{{ aurweb_user }} state=restarted
-
 - name: Restart sshd
   service: name=sshd state=restarted
