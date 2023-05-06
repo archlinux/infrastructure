@@ -163,3 +163,8 @@ The [Arch Linux Archive](https://archive.archlinux.org) is mirrored to three ded
   - https://america.archive.pkgbuild.com
   - https://asia.archive.pkgbuild.com
   - https://europe.archive.pkgbuild.com
+
+## gitlab.archlinux.org
+
+### Services
+- Gitlab

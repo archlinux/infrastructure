@@ -1,6 +1,7 @@
 [hetzner]
 build.archlinux.org
 gemini.archlinux.org
+gitlab.archlinux.org
 secure-runner1.archlinux.org
 
 [equinix_metal]
@@ -110,7 +111,6 @@ bbs.archlinux.org
 bugs.archlinux.org
 dashboards.archlinux.org
 debuginfod.archlinux.org
-gitlab.archlinux.org
 gluebuddy.archlinux.org
 homedir.archlinux.org
 lists.archlinux.org
