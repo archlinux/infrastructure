@@ -106,6 +106,7 @@
     - aurweb-tuvotereminder.timer
     - aurweb-usermaint.timer
     - aurweb.service
+    - goaurrpc.service
     - aurweb-github-mirror.timer
   when: release.changed
 
@@ -126,6 +127,7 @@
     - 'aurblup'
     - 'sessions'
     - 'uploads'
+    - 'archives'
 
 - name: Create aurweb conf dir
   file: path={{ aurweb_conf_dir }} state=directory owner=root group=root mode=0755
