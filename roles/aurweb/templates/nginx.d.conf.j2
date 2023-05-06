@@ -95,6 +95,7 @@ server {
     }
 
     location ~ \.gz$ {
+        root    {{ aurweb_dir }}/archives;
         default_type text/plain;
         add_header Content-Encoding gzip;
         expires 5m;
