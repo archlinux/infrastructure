@@ -4,6 +4,9 @@
 - name: Start docker
   service: name=docker enabled=yes state=started
 
+- name: Create directory for gitlab
+  file: path=/srv/gitlab state=directory owner=root group=root mode=0755
+
 - name: Copy sshd_config into place to change the port to 222
   copy: src=sshd_config dest=/srv/gitlab/sshd_config owner=root group=root mode=640
 

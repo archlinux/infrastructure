@@ -1,4 +1,15 @@
 filesystem: btrfs
-additional_addresses: ["116.203.6.156/32", "2a01:4f8:c2c:5d2d::2/64"]
+additional_addresses: ["213.133.111.6/32", "2a01:4f8:222:174c::2/64"]
 wireguard_address: 10.0.0.5
 wireguard_public_key: EbZisS0fwM6B8Nkugy1lyox+A8L13hniucVIPVCK5R0=
+hostname: "gitlab.archlinux.org"
+network_interface: "en*"
+ipv4_address: "213.133.111.15"
+ipv4_netmask: "/32"
+ipv6_address: "2a01:4f8:222:174c::1"
+ipv6_netmask: "/64"
+ipv4_gateway: "213.133.111.1"
+ipv6_gateway: "fe80::1"
+system_disks:
+  - /dev/nvme0n1
+  - /dev/nvme1n1

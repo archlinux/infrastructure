@@ -32,6 +32,12 @@
         - Restart networkd
       when: static_dns | default(false)
 
+- name: Configure additional network addresses
+  template: src=additional_addresses.conf.j2 dest={{ chroot_path }}/etc/systemd/network/10-{{ "dhcp" if dhcp | default(false) else "static" }}-ethernet.network.d/additional_addresses.conf owner=root group=root mode=0644
+  notify:
+    - Restart networkd
+  when: additional_addresses is defined
+
 - name: Create symlink to resolv.conf
   file: src=/run/systemd/resolve/stub-resolv.conf dest={{ chroot_path }}/etc/resolv.conf state=link force=yes follow=no owner=root group=root
 

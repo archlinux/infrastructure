@@ -131,15 +131,13 @@
 3072 MD5:20:2f:93:37:ae:33:e6:3e:9f:74:b6:57:c9:f3:58:9e root@gemini.archlinux.org (RSA)
 
 # gitlab.archlinux.org
-1024 SHA256:mbHLMb1i7JBTytqWxpu8bWz7suiSNXpuTdla6/l6yK8 root@archlinux-packer (DSA)
-256 SHA256:0OBfrHiu/X7HcECLaOQFY3XElaiH3qxcltK6kjH9PRI root@archlinux-packer (ECDSA)
-256 SHA256:quM6hxvBB2qgz+x3/mdU7hoqBwoOlJrAuiThe3ht0Cc root@archlinux-packer (ED25519)
-3072 SHA256:dEFgLw+tPon4TBEr6c1ofIWI7VZdVM8fuTXseTztrAw root@archlinux-packer (RSA)
+256 SHA256:ZHy7zbNNwKHukTEyFcAT2Ns+mT/wlc2vAjJULnlOroE root@gitlab.archlinux.org (ECDSA)
+256 SHA256:KD3Og7bPg9glmODrqUKN0r3Jl18pQ0OVp2MT7xv/bm8 root@gitlab.archlinux.org (ED25519)
+3072 SHA256:2R7QoVWeZ2DpKEsZBgVKUieM+9TQu6g9N62CIJCyVtc root@gitlab.archlinux.org (RSA)
 
-1024 MD5:d6:72:6e:bd:39:6b:1d:89:7e:8c:0b:01:99:90:69:f2 root@archlinux-packer (DSA)
-256 MD5:d1:f9:5b:21:41:0e:7e:1d:4c:01:c7:28:2e:45:98:bc root@archlinux-packer (ECDSA)
-256 MD5:3b:a2:48:8c:33:ac:8b:74:43:d4:4f:f1:fc:78:be:20 root@archlinux-packer (ED25519)
-3072 MD5:a3:ce:cf:2c:59:05:5d:eb:a0:1f:fb:30:81:cc:07:d8 root@archlinux-packer (RSA)
+256 MD5:a7:df:ab:0d:bc:7c:11:c7:26:b8:c2:59:63:06:95:10 root@gitlab.archlinux.org (ECDSA)
+256 MD5:2d:bb:6a:c6:7d:88:16:94:04:8c:67:59:22:d8:c9:c6 root@gitlab.archlinux.org (ED25519)
+3072 MD5:8b:84:e2:0e:a6:be:d6:aa:6c:2f:ec:89:4d:db:21:bf root@gitlab.archlinux.org (RSA)
 
 # gluebuddy.archlinux.org
 1024 SHA256:eKv7TBDRnYRCA/DtyNOAezBL1p/G2zbqCYsyUIRYAWw root@archlinux-packer (DSA)

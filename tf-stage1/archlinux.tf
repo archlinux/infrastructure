@@ -80,10 +80,6 @@ locals {
       server_type = "cx21"
       domain      = "debuginfod"
     }
-    "gitlab.archlinux.org" = {
-      server_type = "cpx41"
-      domain      = "gitlab"
-    }
     "gluebuddy.archlinux.org" = {
       server_type = "cx11"
       domain      = "gluebuddy"
@@ -254,13 +250,17 @@ locals {
       ipv4_address = "49.12.124.107"
       ipv6_address = "2a01:4f8:242:5614::2"
     }
+    gitlab = {
+      ipv4_address = "213.133.111.15"
+      ipv6_address = "2a01:4f8:222:174c::1"
+    }
     master-key = {
       ipv4_address = hcloud_server.machine["archlinux.org"].ipv4_address
       ipv6_address = hcloud_server.machine["archlinux.org"].ipv6_address
     }
     pages = {
-      ipv4_address = hcloud_floating_ip.gitlab_pages.ip_address
-      ipv6_address = var.gitlab_pages_ipv6
+      ipv4_address = "213.133.111.6"
+      ipv6_address = "2a01:4f8:222:174c::2"
     }
     runner1 = {
       ipv4_address = "138.199.19.15"
@@ -390,8 +390,8 @@ locals {
   #
   archlinux_page_a_aaaa = {
     "@" = {
-      ipv4_address = hcloud_floating_ip.gitlab_pages.ip_address
-      ipv6_address = var.gitlab_pages_ipv6
+      ipv4_address = "213.133.111.6"
+      ipv6_address = "2a01:4f8:222:174c::2"
     }
   }
 
@@ -588,17 +588,6 @@ resource "hetznerdns_record" "archlinux_org_origin_ns1" {
 #   value = "hydrogen.ns.hetzner.com. hetzner.archlinux.org. 2021070703 3600 1800 604800 3600"
 #   type = "SOA"
 # }
-
-resource "hcloud_floating_ip" "gitlab_pages" {
-  type              = "ipv4"
-  description       = "GitLab Pages"
-  server_id         = hcloud_server.machine["gitlab.archlinux.org"].id
-  delete_protection = true
-}
-
-variable "gitlab_pages_ipv6" {
-  default = "2a01:4f8:c2c:5d2d::2"
-}
 
 resource "hcloud_volume" "mirror" {
   name              = "mirror"
