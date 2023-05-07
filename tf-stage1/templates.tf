@@ -127,7 +127,9 @@ resource "hetznerdns_record" "archlinux_org_cname" {
 }
 
 resource "hcloud_rdns" "rdns_ipv4" {
-  for_each = local.machines
+  for_each = {
+    for name, machine in local.machines : name => machine if try(machine.ipv4_enabled, true)
+  }
 
   server_id  = hcloud_server.machine[each.key].id
   ip_address = hcloud_server.machine[each.key].ipv4_address
@@ -142,6 +144,36 @@ resource "hcloud_rdns" "rdns_ipv6" {
   dns_ptr    = each.key
 }
 
+resource "hcloud_primary_ip" "primary_ipv4" {
+  for_each = {
+    for name, machine in local.machines : name => machine if try(machine.ipv4_enabled, true)
+  }
+
+  name              = "ipv4-${each.key}"
+  datacenter        = "fsn1-dc14"
+  type              = "ipv4"
+  assignee_type     = "server"
+  auto_delete       = false
+  delete_protection = true
+  lifecycle {
+    ignore_changes = [datacenter]
+  }
+}
+
+resource "hcloud_primary_ip" "primary_ipv6" {
+  for_each = local.machines
+
+  name              = "ipv6-${each.key}"
+  datacenter        = "fsn1-dc14"
+  type              = "ipv6"
+  assignee_type     = "server"
+  auto_delete       = false
+  delete_protection = true
+  lifecycle {
+    ignore_changes = [datacenter]
+  }
+}
+
 resource "hcloud_server" "machine" {
   for_each = local.machines
 
@@ -150,17 +182,24 @@ resource "hcloud_server" "machine" {
   server_type        = each.value.server_type
   backups            = lookup(local.machines[each.key], "backups", false)
   keep_disk          = true
-  location           = "fsn1"
+  datacenter         = "fsn1-dc14"
   delete_protection  = true
   rebuild_protection = true
   lifecycle {
-    ignore_changes = [image, location]
+    ignore_changes = [image, datacenter]
+  }
+  public_net {
+    ipv4_enabled = try(each.value.ipv4_enabled, true)
+    ipv6_enabled = true
+
+    ipv4 = try(each.value.ipv4_enabled, true) ? hcloud_primary_ip.primary_ipv4[each.key].id : null
+    ipv6 = hcloud_primary_ip.primary_ipv6[each.key].id
   }
 }
 
 resource "hetznerdns_record" "machine_a" {
   for_each = {
-    for name, machine in local.machines : name => machine if can(machine.domain)
+    for name, machine in local.machines : name => machine if can(machine.domain) && try(machine.ipv4_enabled, true)
   }
 
   zone_id = lookup(local.machines[each.key], "zone", hetznerdns_zone.archlinux.id)
