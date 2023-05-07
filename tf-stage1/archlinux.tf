@@ -39,6 +39,7 @@ locals {
   #   - domain (optional, creates dns entry <domain>.archlinux.org pointing to the machine)
   #   - ttl (optional, applies to the dns entries)
   #   - zone (optional, required for pkgbuild.com machines)
+  #   - ipv4_enabled (optional, set to false to create an IPv6-only server)
   #
   # Example:
   # "archlinux.org" = {
