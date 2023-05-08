@@ -9,7 +9,6 @@ StandardOutput=journal+console
 EnvironmentFile=-/etc/conf.d/gitlab-exporter
 User=node_exporter
 ExecStart=/usr/bin/gitlab-exporter -o {{ prometheus_textfile_dir }}/gitlab-exporter.prom cli
-Restart=on-failure
 
 NoNewPrivileges=true
 LockPersonality=true
