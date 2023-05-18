@@ -7,6 +7,15 @@
 - name: Install binutils for createlinks script
   pacman: name=binutils state=present
 
+- name: Install fcgiwrap for the Git repo
+  pacman: name=fcgiwrap state=present
+
+- name: Install fcgiwrap for the Git repo
+  systemd: name=fcgiwrap.socket enabled=yes state=started
+
+- name: Allow state repo to be exported
+  file: path="/srv/repos/state/.git/git-daemon-export-ok" state=touch owner=git-packages group=users mode=0644
+
 - name: Create dbscripts users
   user: name="{{ item }}" shell=/bin/bash
   with_items:
