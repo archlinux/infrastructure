@@ -37,7 +37,7 @@ links=($LINKS)
 
 for i in "${links[@]}"
 do
-  curl -O "$i"
+  curl --silent --show-error --fail --location --remote-name "$i"
 done
 
 for uid in "${TRUSTED_UIDs[@]}"; do
