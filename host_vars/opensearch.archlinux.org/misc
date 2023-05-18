@@ -1,0 +1,3 @@
+filesystem: btrfs
+wireguard_address: 10.0.0.42
+wireguard_public_key: 2f19yTsYkrv5xp7V4kREsuisbFc7Wew3gxd7sS/LyXc=

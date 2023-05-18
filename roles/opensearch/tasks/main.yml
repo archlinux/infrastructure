@@ -1,0 +1,29 @@
+- name: Install opensearch
+  pacman: name=opensearch state=present
+
+- name: Create opensearch keystore
+  command: opensearch-keystore create
+  args:
+    creates: /etc/opensearch/opensearch.keystore
+
+- name: Listen on 0.0.0.0
+  lineinfile:
+    path: /etc/opensearch/opensearch.yml
+    regexp: '^#?network\.host: .*$'
+    line: 'network.host: 0.0.0.0'
+  notify: Restart opensearch
+
+- name: Run in single-node mode
+  lineinfile:
+    path: /etc/opensearch/opensearch.yml
+    line: 'discovery.type: single-node'
+  notify: Restart opensearch
+
+- name: Open opensearch ipv4 port for gitlab.archlinux.org
+  ansible.posix.firewalld: zone=wireguard state=enabled permanent=true immediate=yes
+    rich_rule="rule family=ipv4 source address={{ hostvars['gitlab.archlinux.org']['wireguard_address'] }} port protocol=tcp port=9200 accept"
+  tags:
+    - firewall
+
+- name: Start and enable opensearch
+  systemd: name=opensearch.service enabled=yes state=started

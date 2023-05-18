@@ -118,6 +118,10 @@ locals {
       server_type = "cx31"
       domain      = "monitoring"
     }
+    "opensearch.archlinux.org" = {
+      server_type = "cx11"
+      domain      = "opensearch"
+    }
     "phrik.archlinux.org" = {
       server_type = "cx11"
       domain      = "phrik"
