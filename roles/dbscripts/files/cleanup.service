@@ -4,8 +4,7 @@ Description=Cleanup
 [Service]
 Type=oneshot
 User=cleanup
-ExecStart=/srv/repos/svn-community/dbscripts/cron-jobs/ftpdir-cleanup
-ExecStart=/srv/repos/svn-packages/dbscripts/cron-jobs/ftpdir-cleanup
+ExecStart=/srv/repos/git-packages/dbscripts/cron-jobs/ftpdir-cleanup
 
 CapabilityBoundingSet=
 PrivateDevices=true
@@ -14,4 +13,4 @@ NoNewPrivileges=true
 ProtectSystem=strict
 ProtectHome=true
 PrivateTmp=true
-ReadWritePaths=/srv/ftp/ /srv/repos/svn-community /srv/repos/svn-packages
+ReadWritePaths=/srv/ftp/ /srv/repos/git-packages

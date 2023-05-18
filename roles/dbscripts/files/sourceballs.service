@@ -4,5 +4,4 @@ Description=Sourceballs
 [Service]
 Type=oneshot
 User=sourceballs
-ExecStart=/srv/repos/svn-community/dbscripts/cron-jobs/sourceballs
-ExecStart=/srv/repos/svn-packages/dbscripts/cron-jobs/sourceballs
+ExecStart=/srv/repos/git-packages/dbscripts/cron-jobs/sourceballs

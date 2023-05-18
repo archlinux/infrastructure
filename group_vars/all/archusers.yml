@@ -22,6 +22,7 @@ arch_users:
     groups:
       - tu
       - packager
+      - junior-packager
   alad:
     name: "Alad Wenter"
     email: "alad@archlinux.org"
@@ -38,6 +39,7 @@ arch_users:
     groups:
       - tu
       - packager
+      - junior-packager
   alex19ep:
     name: "Alexander Epaneshnikov"
     email: "alex19ep@archlinux.org"
@@ -46,6 +48,7 @@ arch_users:
       - tu
       - multilib
       - packager
+      - junior-packager
   allan:
     name: "Allan McRae"
     email: "allan@archlinux.org"
@@ -60,34 +63,42 @@ arch_users:
     ssh_key: alucryd.pub
     groups:
       - dev
+      - junior-dev
       - tu
       - multilib
       - packager
+      - junior-packager
   artafinde:
     name: "Leonidas Spyropoulos"
     email: "artafinde@archlinux.org"
     ssh_key: "artafinde.pub"
     groups:
       - dev
+      - junior-dev
       - multilib
       - tu
       - packager
+      - junior-packager
   anatolik:
     name: "Anatol Pomozov"
     email: "anatolik@archlinux.org"
     ssh_key: anatolik.pub
     groups:
       - dev
+      - junior-dev
       - tu
       - multilib
       - packager
+      - junior-packager
   andrew:
     name: "Andrew Gregory"
     email: "andrew@archlinux.org"
     ssh_key: andrew.pub
     groups:
       - dev
+      - junior-dev
       - packager
+      - junior-packager
   andrewsc:
     name: "Andrew Crerar"
     email: "crerar@archlinux.org"
@@ -95,6 +106,7 @@ arch_users:
     groups:
       - tu
       - packager
+      - junior-packager
   anthraxx:
     name: "Levente Polyak"
     email: "anthraxx@archlinux.org"
@@ -102,17 +114,21 @@ arch_users:
     shell: /bin/zsh
     groups:
       - dev
+      - junior-dev
       - tu
       - multilib
       - packager
+      - junior-packager
   andyrtr:
     name: "Andreas Radke"
     email: "andyrtr@archlinux.org"
     ssh_key: andyrtr.pub
     groups:
       - dev
+      - junior-dev
       - tu
       - packager
+      - junior-packager
   antiz:
     name: "Robin Candau"
     email: "antiz@archlinux.org"
@@ -120,6 +136,7 @@ arch_users:
     groups:
       - tu
       - packager
+      - junior-packager
   archange:
     name: "Bruno Pagani"
     email: "archange@archlinux.org"
@@ -129,6 +146,7 @@ arch_users:
       - tu
       - multilib
       - packager
+      - junior-packager
   arodseth:
     name: "Alexander Rødseth"
     email: "xyproto@archlinux.org"
@@ -137,12 +155,16 @@ arch_users:
       - tu
       - multilib
       - packager
+      - junior-packager
   arojas:
     name: "Antonio Rojas"
     email: "arojas@archlinux.org"
     ssh_key: arojas.pub
     groups:
+      - packager
+      - junior-packager
       - dev
+      - junior-dev
       - tu
       - multilib
   aur-notify:
@@ -154,6 +176,7 @@ arch_users:
     ssh_key: bastelfreak.pub
     groups:
       - packager
+      - junior-packager
       - tu
   bgyorgy:
     name: "Balló György"
@@ -161,6 +184,7 @@ arch_users:
     ssh_key: bgyorgy.pub
     groups:
       - packager
+      - junior-packager
       - tu
   blakkheim:
     name: "T.J. Townsend"
@@ -168,6 +192,7 @@ arch_users:
     ssh_key: blakkheim.pub
     groups:
       - packager
+      - junior-packager
       - tu
   bluewind:
     name: "Florian Pritz"
@@ -176,7 +201,9 @@ arch_users:
     shell: /bin/zsh
     groups:
       - packager
+      - junior-packager
       - dev
+      - junior-dev
       - tu
       - multilib
   braindamage:
@@ -192,6 +219,7 @@ arch_users:
     ssh_key: cbehan.pub
     groups:
       - packager
+      - junior-packager
       - tu
   coderobe:
     name: "Robin Broda"
@@ -199,6 +227,7 @@ arch_users:
     ssh_key: coderobe.pub
     groups:
       - packager
+      - junior-packager
       - tu
   daurnimator:
     name: "Daurnimator"
@@ -206,6 +235,7 @@ arch_users:
     ssh_key: daurnimator.pub
     groups:
       - packager
+      - junior-packager
       - tu
   dbermond:
     name: "Daniel Bermond"
@@ -213,6 +243,7 @@ arch_users:
     ssh_key: dbermond.pub
     groups:
       - packager
+      - junior-packager
       - tu
   demize:
     name: "Johannes Löthberg"
@@ -221,7 +252,9 @@ arch_users:
     shell: /bin/zsh
     groups:
       - packager
+      - junior-packager
       - dev
+      - junior-dev
       - tu
       - multilib
   denisse:
@@ -244,7 +277,9 @@ arch_users:
     ssh_key: diabonas.pub
     groups:
       - packager
+      - junior-packager
       - dev
+      - junior-dev
       - tu
   donate:
     name: ""
@@ -255,7 +290,9 @@ arch_users:
     ssh_key: dvzrv.pub
     groups:
       - packager
+      - junior-packager
       - dev
+      - junior-dev
       - multilib
       - tu
   edh:
@@ -271,6 +308,7 @@ arch_users:
     ssh_key: escondida.pub
     groups:
       - packager
+      - junior-packager
       - tu
   eworm:
     name: "Christian Hesse"
@@ -279,7 +317,9 @@ arch_users:
     shell: /bin/zsh
     groups:
       - packager
+      - junior-packager
       - dev
+      - junior-dev
       - tu
       - multilib
   farseerfc:
@@ -288,6 +328,7 @@ arch_users:
     ssh_key: farseerfc.pub
     groups:
       - packager
+      - junior-packager
       - tu
   felixonmars:
     name: "Felix Yan"
@@ -295,7 +336,9 @@ arch_users:
     ssh_key: felixonmars.pub
     groups:
       - packager
+      - junior-packager
       - dev
+      - junior-dev
       - tu
       - multilib
   ffy00:
@@ -305,6 +348,7 @@ arch_users:
     shell: /bin/bash
     groups:
       - packager
+      - junior-packager
       - tu
   flyingpig:
     name: "Sibo Dong"
@@ -323,7 +367,9 @@ arch_users:
           - build.archlinux.org
     groups:
       - packager
+      - junior-packager
       - dev
+      - junior-dev
       - tu
       - multilib
   foxboron:
@@ -332,7 +378,9 @@ arch_users:
     ssh_key: foxboron.pub
     groups:
       - packager
+      - junior-packager
       - dev
+      - junior-dev
       - tu
   foxxx0:
     name: "Thore Bödecker"
@@ -341,6 +389,7 @@ arch_users:
     shell: /bin/zsh
     groups:
       - packager
+      - junior-packager
       - tu
   gitlab:
     name: ""
@@ -351,6 +400,7 @@ arch_users:
     ssh_key: grawlinson.pub
     groups:
       - packager
+      - junior-packager
       - tu
   grazzolini:
     name: "Giancarlo Razzolini"
@@ -358,7 +408,9 @@ arch_users:
     ssh_key: grazzolini.pub
     groups:
       - packager
+      - junior-packager
       - dev
+      - junior-dev
       - multilib
       - tu
   gromit:
@@ -367,6 +419,7 @@ arch_users:
     ssh_key: gromit.pub
     groups:
       - packager
+      - junior-packager
       - tu
   hashworks:
     name: "Justin Kromlinger"
@@ -375,6 +428,7 @@ arch_users:
     shell: /bin/zsh
     groups:
       - packager
+      - junior-packager
       - tu
     additional_ssh_keys:
       - name: hashworks_yubikey_5_nfc.pub
@@ -390,7 +444,9 @@ arch_users:
           - homedir.archlinux.org
     groups:
       - packager
+      - junior-packager
       - dev
+      - junior-dev
       - tu
       - multilib
   idevolder:
@@ -399,6 +455,7 @@ arch_users:
     ssh_key: idevolder.pub
     groups:
       - packager
+      - junior-packager
       - tu
   jelle:
     name: "Jelle van der Waa"
@@ -406,7 +463,9 @@ arch_users:
     ssh_key: jelle.pub
     groups:
       - packager
+      - junior-packager
       - dev
+      - junior-dev
       - tu
       - multilib
   jleclanche:
@@ -416,6 +475,7 @@ arch_users:
     shell: /bin/zsh
     groups:
       - packager
+      - junior-packager
       - tu
   jlichtblau:
     name: "Jaroslav Lichtblau"
@@ -423,6 +483,7 @@ arch_users:
     ssh_key: jlichtblau.pub
     groups:
       - packager
+      - junior-packager
       - tu
   jouke:
     name: "Jouke Witteveen"
@@ -435,6 +496,7 @@ arch_users:
     ssh_key: jsteel.pub
     groups:
       - packager
+      - junior-packager
       - tu
   juergen:
     name: "Jürgen Hötzel"
@@ -442,7 +504,9 @@ arch_users:
     ssh_key: juergen.pub
     groups:
       - packager
+      - junior-packager
       - dev
+      - junior-dev
       - multilib
       - tu
   kewl:
@@ -458,7 +522,9 @@ arch_users:
     ssh_key: kgizdov.pub
     groups:
       - packager
+      - junior-packager
       - dev
+      - junior-dev
       - tu
   klausenbusk:
     name: "Kristian Klausen"
@@ -480,7 +546,9 @@ arch_users:
     ssh_key: lcarlier.pub
     groups:
       - packager
+      - junior-packager
       - dev
+      - junior-dev
       - tu
       - multilib
   lfleischer:
@@ -490,7 +558,9 @@ arch_users:
     shell: /bin/zsh
     groups:
       - packager
+      - junior-packager
       - dev
+      - junior-dev
       - tu
       - multilib
   maximbaz:
@@ -503,6 +573,7 @@ arch_users:
           - homedir.archlinux.org
     groups:
       - packager
+      - junior-packager
       - tu
   mtorromeo:
     name: "Massimiliano Torromeo"
@@ -510,6 +581,7 @@ arch_users:
     ssh_key: mtorromeo.pub
     groups:
       - packager
+      - junior-packager
       - tu
   muflone:
     name: "Fabio Castelli"
@@ -517,6 +589,7 @@ arch_users:
     ssh_key: muflone.pub
     groups:
       - packager
+      - junior-packager
       - tu
   neitsab:
     name: "Bastien Traverse"
@@ -531,6 +604,7 @@ arch_users:
     ssh_key: nicohood.pub
     groups:
       - packager
+      - junior-packager
       - tu
   orhun:
     name: "Orhun Parmaksiz"
@@ -538,6 +612,7 @@ arch_users:
     ssh_key: orhun.pub
     groups:
       - packager
+      - junior-packager
       - tu
   pierre:
     name: "Pierre Schmitz"
@@ -545,7 +620,9 @@ arch_users:
     ssh_key: pierre.pub
     groups:
       - packager
+      - junior-packager
       - dev
+      - junior-dev
       - multilib
       - tu
   pitastrudl:
@@ -561,6 +638,7 @@ arch_users:
     ssh_key: polyzen.pub
     groups:
       - packager
+      - junior-packager
       - tu
   remy:
     name: "Rémy Oudompheng"
@@ -568,7 +646,9 @@ arch_users:
     ssh_key: remy.pub
     groups:
       - packager
+      - junior-packager
       - dev
+      - junior-dev
       - tu
   sangy:
     name: "Santiago Torres-Arias"
@@ -576,6 +656,7 @@ arch_users:
     ssh_key: sangy.pub
     groups:
       - packager
+      - junior-packager
       - tu
   morganamilo:
     name: "Morgan Adamiec"
@@ -583,6 +664,7 @@ arch_users:
     ssh_key: morganamilo.pub
     groups:
       - packager
+      - junior-packager
       - tu
   freswa:
     name: "Frederik Schwan"
@@ -590,7 +672,9 @@ arch_users:
     ssh_key: freswa.pub
     groups:
       - packager
+      - junior-packager
       - dev
+      - junior-dev
       - tu
       - multilib
   seblu:
@@ -600,7 +684,9 @@ arch_users:
     shell: /bin/zsh
     groups:
       - packager
+      - junior-packager
       - dev
+      - junior-dev
       - tu
       - multilib
   serebit:
@@ -609,6 +695,7 @@ arch_users:
     ssh_key: serebit.pub
     groups:
       - packager
+      - junior-packager
       - tu
   shibumi:
     name: "Christian Rebischke"
@@ -617,6 +704,7 @@ arch_users:
     shell: /bin/zsh
     groups:
       - packager
+      - junior-packager
       - tu
   skydiver:
     name: "Xiao Guo"
@@ -631,6 +719,7 @@ arch_users:
     ssh_key: kpcyrd.pub
     groups:
       - packager
+      - junior-packager
       - tu
       - multilib
   raster:
@@ -639,6 +728,7 @@ arch_users:
     ssh_key: raster.pub
     groups:
       - packager
+      - junior-packager
       - tu
   rgacogne:
     name: "Remi Rgacogne"
@@ -646,6 +736,7 @@ arch_users:
     ssh_key: rgacogne.pub
     groups:
       - packager
+      - junior-packager
       - tu
   spupykin:
     name: "Sergej Pupykin"
@@ -653,6 +744,7 @@ arch_users:
     ssh_key: spupykin.pub
     groups:
       - packager
+      - junior-packager
       - tu
       - multilib
   segaja:
@@ -661,6 +753,7 @@ arch_users:
     ssh_key: segaja.pub
     groups:
       - packager
+      - junior-packager
       - tu
   svenstaro:
     name: "Sven-Hendrik Haase"
@@ -668,7 +761,9 @@ arch_users:
     ssh_key: svenstaro.pub
     groups:
       - packager
+      - junior-packager
       - dev
+      - junior-dev
       - tu
       - multilib
   torxed:
@@ -677,6 +772,7 @@ arch_users:
     ssh_key: torxed.pub
     groups:
       - packager
+      - junior-packager
       - tu
   tpkessler:
     name: "Torsten Keßler"
@@ -684,6 +780,7 @@ arch_users:
     ssh_key: tpkessler.pub
     groups:
       - packager
+      - junior-packager
       - tu
   tpowa:
     name: "Tobias Powalowski"
@@ -691,7 +788,9 @@ arch_users:
     ssh_key: tpowa.pub
     groups:
       - packager
+      - junior-packager
       - dev
+      - junior-dev
       - multilib
       - tu
   wild:
@@ -700,6 +799,7 @@ arch_users:
     ssh_key: wild.pub
     groups:
       - packager
+      - junior-packager
       - tu
   xyne:
     name: "Xyne"
@@ -707,6 +807,7 @@ arch_users:
     ssh_key: xyne.pub
     groups:
       - packager
+      - junior-packager
       - tu
   yan12125:
     name: "Chih-Hsuan Yen"
@@ -714,6 +815,7 @@ arch_users:
     ssh_key: yan12125.pub
     groups:
       - packager
+      - junior-packager
       - multilib
       - tu
 

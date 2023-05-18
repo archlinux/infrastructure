@@ -4,4 +4,4 @@ Description=Integrity Check
 [Service]
 Type=oneshot
 User=svn-packages
-ExecStart=/srv/repos/svn-packages/dbscripts/cron-jobs/integrity-check arch-notifications@archlinux.org,arch-dev-public@archlinux.org
+ExecStart=/srv/repos/git-packages/dbscripts/cron-jobs/integrity-check arch-notifications@archlinux.org,arch-dev-public@archlinux.org

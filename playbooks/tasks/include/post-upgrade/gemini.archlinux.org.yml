@@ -7,11 +7,3 @@
   when:
     - who is changed
     - who.stdout_lines|length > 1
-
-- name: Stop arch-svntogit.timer
-  service: name=arch-svntogit.timer state=stopped
-
-- name: Wait for svntogit to finish
-  wait_for:
-    path: /srv/svntogit/update-repos.sh.lock
-    state: absent
