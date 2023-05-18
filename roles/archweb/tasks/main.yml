@@ -10,7 +10,7 @@
   when: maintenance is defined and archweb_site
 
 - name: Install required packages
-  pacman: name=git,python-setuptools,python-psycopg2,llvm-libs,uwsgi-plugin-python state=present
+  pacman: name=git,python-setuptools,python-psycopg2,gcc,llvm-libs,uwsgi-plugin-python state=present
 
 - name: Make archweb user
   user: name=archweb shell=/bin/false home="{{ archweb_dir }}" createhome=no
