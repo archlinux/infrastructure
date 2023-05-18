@@ -1,0 +1,13 @@
+#jinja2: lstrip_blocks: True
+{% set ns = namespace(packager=false) %}
+{% for user in arch_users | sort %}
+	{% set ns.packager = false %}
+    {% for group in packager_groups | sort %}
+        {% if group in arch_users[user].groups %}
+			{% set ns.packager = true %}
+        {% endif %}
+    {% endfor %}
+	{% if ns.packager is sameas true %}
+{{ arch_users[user].name }} <{{ arch_users[user].email }}> {{ user }}
+	{% endif %}
+{% endfor %}
