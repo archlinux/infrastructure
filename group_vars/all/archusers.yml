@@ -17,12 +17,14 @@ arch_users:
     groups: []
   ainola:
     name: "Brett Cornwall"
+    email: "ainola@archlinux.org"
     ssh_key: ainola.pub
     groups:
       - tu
       - packager
   alad:
     name: "Alad Wenter"
+    email: "alad@archlinux.org"
     ssh_key: alad.pub
     hosts:
       - mail.archlinux.org
@@ -31,12 +33,14 @@ arch_users:
       - support-staff
   alerque:
     name: "Caleb Maclennan"
+    email: "alerque@archlinux.org"
     ssh_key: alerque.pub
     groups:
       - tu
       - packager
   alex19ep:
     name: "Alexander Epaneshnikov"
+    email: "alex19ep@archlinux.org"
     ssh_key: alex19ep.pub
     groups:
       - tu
@@ -44,6 +48,7 @@ arch_users:
       - packager
   allan:
     name: "Allan McRae"
+    email: "allan@archlinux.org"
     ssh_key: allan.pub
     hosts:
       - mail.archlinux.org
@@ -51,6 +56,7 @@ arch_users:
       - support-staff
   alucryd:
     name: "Maxime Gauduin"
+    email: "alucryd@archlinux.org"
     ssh_key: alucryd.pub
     groups:
       - dev
@@ -59,6 +65,7 @@ arch_users:
       - packager
   artafinde:
     name: "Leonidas Spyropoulos"
+    email: "artafinde@archlinux.org"
     ssh_key: "artafinde.pub"
     groups:
       - dev
@@ -67,6 +74,7 @@ arch_users:
       - packager
   anatolik:
     name: "Anatol Pomozov"
+    email: "anatolik@archlinux.org"
     ssh_key: anatolik.pub
     groups:
       - dev
@@ -75,18 +83,21 @@ arch_users:
       - packager
   andrew:
     name: "Andrew Gregory"
+    email: "andrew@archlinux.org"
     ssh_key: andrew.pub
     groups:
       - dev
       - packager
   andrewsc:
     name: "Andrew Crerar"
+    email: "crerar@archlinux.org"
     ssh_key: andrewsc.pub
     groups:
       - tu
       - packager
   anthraxx:
     name: "Levente Polyak"
+    email: "anthraxx@archlinux.org"
     ssh_key: anthraxx.pub
     shell: /bin/zsh
     groups:
@@ -96,6 +107,7 @@ arch_users:
       - packager
   andyrtr:
     name: "Andreas Radke"
+    email: "andyrtr@archlinux.org"
     ssh_key: andyrtr.pub
     groups:
       - dev
@@ -103,12 +115,14 @@ arch_users:
       - packager
   antiz:
     name: "Robin Candau"
+    email: "antiz@archlinux.org"
     ssh_key: antiz.pub
     groups:
       - tu
       - packager
   archange:
     name: "Bruno Pagani"
+    email: "archange@archlinux.org"
     ssh_key: archange.pub
     shell: /bin/zsh
     groups:
@@ -117,6 +131,7 @@ arch_users:
       - packager
   arodseth:
     name: "Alexander Rødseth"
+    email: "xyproto@archlinux.org"
     ssh_key: arodseth.pub
     groups:
       - tu
@@ -124,6 +139,7 @@ arch_users:
       - packager
   arojas:
     name: "Antonio Rojas"
+    email: "arojas@archlinux.org"
     ssh_key: arojas.pub
     groups:
       - dev
@@ -134,24 +150,28 @@ arch_users:
     groups: []
   bastelfreak:
     name: "Tim Meusel"
+    email: "bastelfreak@archlinux.org"
     ssh_key: bastelfreak.pub
     groups:
       - packager
       - tu
   bgyorgy:
     name: "Balló György"
+    email: "bgyorgy@archlinux.org"
     ssh_key: bgyorgy.pub
     groups:
       - packager
       - tu
   blakkheim:
     name: "T.J. Townsend"
+    email: "blakkheim@archlinux.org"
     ssh_key: blakkheim.pub
     groups:
       - packager
       - tu
   bluewind:
     name: "Florian Pritz"
+    email: "bluewind@archlinux.org"
     ssh_key: bluewind.pub
     shell: /bin/zsh
     groups:
@@ -168,30 +188,35 @@ arch_users:
       - support-staff
   cbehan:
     name: "Connor Behan"
+    email: "cbehan@archlinux.org"
     ssh_key: cbehan.pub
     groups:
       - packager
       - tu
   coderobe:
     name: "Robin Broda"
+    email: "coderobe@archlinux.org"
     ssh_key: coderobe.pub
     groups:
       - packager
       - tu
   daurnimator:
     name: "Daurnimator"
+    email: "daurnimator@archlinux.org"
     ssh_key: daurnimator.pub
     groups:
       - packager
       - tu
   dbermond:
     name: "Daniel Bermond"
+    email: "dbermond@archlinux.org"
     ssh_key: dbermond.pub
     groups:
       - packager
       - tu
   demize:
     name: "Johannes Löthberg"
+    email: "demize@archlinux.org"
     ssh_key: demize.pub
     shell: /bin/zsh
     groups:
@@ -215,6 +240,7 @@ arch_users:
       - support-staff
   diabonas:
     name: "Jonas Witschel"
+    email: "diabonas@archlinux.org"
     ssh_key: diabonas.pub
     groups:
       - packager
@@ -225,6 +251,7 @@ arch_users:
     groups: []
   dvzrv:
     name: "David Runge"
+    email: "dvzrv@archlinux.org"
     ssh_key: dvzrv.pub
     groups:
       - packager
@@ -240,12 +267,14 @@ arch_users:
       - support-staff
   escondida:
     name: "Ivy Foster"
+    email: "iff@archlinux.org"
     ssh_key: escondida.pub
     groups:
       - packager
       - tu
   eworm:
     name: "Christian Hesse"
+    email: "eworm@archlinux.org"
     ssh_key: eworm.pub
     shell: /bin/zsh
     groups:
@@ -255,12 +284,14 @@ arch_users:
       - multilib
   farseerfc:
     name: "Jiachen Yang"
+    email: "farseerfc@archlinux.org"
     ssh_key: farseerfc.pub
     groups:
       - packager
       - tu
   felixonmars:
     name: "Felix Yan"
+    email: "felixonmars@archlinux.org"
     ssh_key: felixonmars.pub
     groups:
       - packager
@@ -269,6 +300,7 @@ arch_users:
       - multilib
   ffy00:
     name: "Filipe Laíns"
+    email: "lains@archlinux.org"
     ssh_key: ffy00.pub
     shell: /bin/bash
     groups:
@@ -283,6 +315,7 @@ arch_users:
       - support-staff
   foutrelis:
     name: "Evangelos Foutras"
+    email: "foutrelis@archlinux.org"
     ssh_key: foutrelis.pub
     additional_ssh_keys:
       - name: foutrelis_buildhost.pub
@@ -295,6 +328,7 @@ arch_users:
       - multilib
   foxboron:
     name: "Morten Linderud"
+    email: "foxboron@archlinux.org"
     ssh_key: foxboron.pub
     groups:
       - packager
@@ -302,6 +336,7 @@ arch_users:
       - tu
   foxxx0:
     name: "Thore Bödecker"
+    email: "foxxx0@archlinux.org"
     ssh_key: foxxx0.pub
     shell: /bin/zsh
     groups:
@@ -312,12 +347,14 @@ arch_users:
     groups: []
   grawlinson:
     name: "George Rawlinson"
+    email: "grawlinson@archlinux.org"
     ssh_key: grawlinson.pub
     groups:
       - packager
       - tu
   grazzolini:
     name: "Giancarlo Razzolini"
+    email: "grazzolini@archlinux.org"
     ssh_key: grazzolini.pub
     groups:
       - packager
@@ -326,12 +363,14 @@ arch_users:
       - tu
   gromit:
     name: "Christian Heusel"
+    email: "gromit@archlinux.org"
     ssh_key: gromit.pub
     groups:
       - packager
       - tu
   hashworks:
     name: "Justin Kromlinger"
+    email: "hashworks@archlinux.org"
     ssh_key: hashworks.pub
     shell: /bin/zsh
     groups:
@@ -343,6 +382,7 @@ arch_users:
           - all
   heftig:
     name: "Jan Steffens"
+    email: "heftig@archlinux.org"
     ssh_key: heftig.pub
     additional_ssh_keys:
       - name: heftig_dragon.pub
@@ -355,12 +395,14 @@ arch_users:
       - multilib
   idevolder:
     name: "Ike Devolder"
+    email: "ike.devolder@archlinux.org"
     ssh_key: idevolder.pub
     groups:
       - packager
       - tu
   jelle:
     name: "Jelle van der Waa"
+    email: "jelle@archlinux.org"
     ssh_key: jelle.pub
     groups:
       - packager
@@ -369,6 +411,7 @@ arch_users:
       - multilib
   jleclanche:
     name: "Jerome Leclanche"
+    email: "jleclanche@archlinux.org"
     ssh_key: jleclanche.pub
     shell: /bin/zsh
     groups:
@@ -376,6 +419,7 @@ arch_users:
       - tu
   jlichtblau:
     name: "Jaroslav Lichtblau"
+    email: "svetlemodry@archlinux.org"
     ssh_key: jlichtblau.pub
     groups:
       - packager
@@ -387,12 +431,14 @@ arch_users:
       - ""
   jsteel:
     name: "Jonathan Steel"
+    email: "jsteel@archlinux.org"
     ssh_key: jsteel.pub
     groups:
       - packager
       - tu
   juergen:
     name: "Jürgen Hötzel"
+    email: "juergen@archlinux.org"
     ssh_key: juergen.pub
     groups:
       - packager
@@ -408,6 +454,7 @@ arch_users:
       - support-staff
   kgizdov:
     name: "Konstantin Gizdov"
+    email: "kgizdov@archlinux.org"
     ssh_key: kgizdov.pub
     groups:
       - packager
@@ -429,6 +476,7 @@ arch_users:
       - support-staff
   lcarlier:
     name: "Laurent Carlier"
+    email: "lordheavym@archlinux.org"
     ssh_key: lcarlier.pub
     groups:
       - packager
@@ -437,6 +485,7 @@ arch_users:
       - multilib
   lfleischer:
     name: "Lukas Fleischer"
+    email: "lfleischer@archlinux.org"
     ssh_key: lfleischer.pub
     shell: /bin/zsh
     groups:
@@ -446,6 +495,7 @@ arch_users:
       - multilib
   maximbaz:
     name: "Maxim Baz"
+    email: "maximbaz@archlinux.org"
     ssh_key: maximbaz.pub
     additional_ssh_keys:
       - name: maximbaz_buildhost.pub
@@ -456,12 +506,14 @@ arch_users:
       - tu
   mtorromeo:
     name: "Massimiliano Torromeo"
+    email: "mtorromeo@archlinux.org"
     ssh_key: mtorromeo.pub
     groups:
       - packager
       - tu
   muflone:
     name: "Fabio Castelli"
+    email: "muflone@archlinux.org"
     ssh_key: muflone.pub
     groups:
       - packager
@@ -475,18 +527,21 @@ arch_users:
       - support-staff
   nicohood:
     name: "NicoHood"
+    email: "nicohood@archlinux.org"
     ssh_key: nicohood.pub
     groups:
       - packager
       - tu
   orhun:
     name: "Orhun Parmaksiz"
+    email: "orhun@archlinux.org"
     ssh_key: orhun.pub
     groups:
       - packager
       - tu
   pierre:
     name: "Pierre Schmitz"
+    email: "pierre@archlinux.org"
     ssh_key: pierre.pub
     groups:
       - packager
@@ -502,12 +557,14 @@ arch_users:
       - support-staff
   polyzen:
     name: "Daniel M. Capella"
+    email: "polyzen@archlinux.org"
     ssh_key: polyzen.pub
     groups:
       - packager
       - tu
   remy:
     name: "Rémy Oudompheng"
+    email: "remy@archlinux.org"
     ssh_key: remy.pub
     groups:
       - packager
@@ -515,18 +572,21 @@ arch_users:
       - tu
   sangy:
     name: "Santiago Torres-Arias"
+    email: "santiago@archlinux.org"
     ssh_key: sangy.pub
     groups:
       - packager
       - tu
   morganamilo:
     name: "Morgan Adamiec"
+    email: "morganamilo@archlinux.org"
     ssh_key: morganamilo.pub
     groups:
       - packager
       - tu
   freswa:
     name: "Frederik Schwan"
+    email: "freswa@archlinux.org"
     ssh_key: freswa.pub
     groups:
       - packager
@@ -535,6 +595,7 @@ arch_users:
       - multilib
   seblu:
     name: "Sébastien Luttringer"
+    email: "seblu@archlinux.org"
     ssh_key: seblu.pub
     shell: /bin/zsh
     groups:
@@ -544,12 +605,14 @@ arch_users:
       - multilib
   serebit:
     name: "Campbell Jones"
+    email: "serebit@archlinux.org"
     ssh_key: serebit.pub
     groups:
       - packager
       - tu
   shibumi:
     name: "Christian Rebischke"
+    email: "chris.rebischke@archlinux.org"
     ssh_key: shibumi.pub
     shell: /bin/zsh
     groups:
@@ -564,6 +627,7 @@ arch_users:
       - support-staff
   kpcyrd:
     name: "Kpcyrd"
+    email: "kpcyrd@archlinux.org"
     ssh_key: kpcyrd.pub
     groups:
       - packager
@@ -571,18 +635,21 @@ arch_users:
       - multilib
   raster:
     name: "Carsten Haitzler"
+    email: "raster@archlinux.org"
     ssh_key: raster.pub
     groups:
       - packager
       - tu
   rgacogne:
     name: "Remi Rgacogne"
+    email: "rgacogne@archlinux.org"
     ssh_key: rgacogne.pub
     groups:
       - packager
       - tu
   spupykin:
     name: "Sergej Pupykin"
+    email: "spupykin@archlinux.org"
     ssh_key: spupykin.pub
     groups:
       - packager
@@ -590,12 +657,14 @@ arch_users:
       - multilib
   segaja:
     name: "Andreas Schleifer"
+    email: "segaja@archlinux.org"
     ssh_key: segaja.pub
     groups:
       - packager
       - tu
   svenstaro:
     name: "Sven-Hendrik Haase"
+    email: "svenstaro@archlinux.org"
     ssh_key: svenstaro.pub
     groups:
       - packager
@@ -604,18 +673,21 @@ arch_users:
       - multilib
   torxed:
     name: "Anton Hvornum"
+    email: "torxed@archlinux.org"
     ssh_key: torxed.pub
     groups:
       - packager
       - tu
   tpkessler:
     name: "Torsten Keßler"
+    email: "tpkessler@archlinux.org"
     ssh_key: tpkessler.pub
     groups:
       - packager
       - tu
   tpowa:
     name: "Tobias Powalowski"
+    email: "tpowa@archlinux.org"
     ssh_key: tpowa.pub
     groups:
       - packager
@@ -624,18 +696,21 @@ arch_users:
       - tu
   wild:
     name: "Dan Printzell"
+    email: "wild@archlinux.org"
     ssh_key: wild.pub
     groups:
       - packager
       - tu
   xyne:
     name: "Xyne"
+    email: "xyne@archlinux.org"
     ssh_key: xyne.pub
     groups:
       - packager
       - tu
   yan12125:
     name: "Chih-Hsuan Yen"
+    email: "yan12125@archlinux.org"
     ssh_key: yan12125.pub
     groups:
       - packager

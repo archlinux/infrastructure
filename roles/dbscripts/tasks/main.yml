@@ -65,6 +65,15 @@
     pubkey_groups: ['tu']
   tags: ['archusers']
 
+- name: Create /etc/dbscripts directory
+  file: path=/etc/dbscripts state=directory owner=root group=root mode=0755
+
+- name: Generate dbscripts authors mapping
+  template: src=authors.conf.j2 dest=/etc/dbscripts/authors.conf owner=root group=root mode=644
+  vars:
+    packager_groups: ['packager', 'junior-packager', 'dev', 'junior-dev']
+  tags: ['archusers']
+
 - name: Create staging directories in user homes
   dbscripts_mkdirs:
     pathtmpl: '/home/{user}/staging/{dirname}'
