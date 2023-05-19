@@ -7,9 +7,6 @@
 - name: Create directory for gitlab
   file: path=/srv/gitlab state=directory owner=root group=root mode=0755
 
-- name: Copy sshd_config into place to change the port to 222
-  copy: src=sshd_config dest=/srv/gitlab/sshd_config owner=root group=root mode=640
-
 - name: Start docker gitlab image
   docker_container:
     name: gitlab
@@ -49,7 +46,6 @@
         letsencrypt['enable'] = true
         letsencrypt['contact_emails'] = ['webmaster@archlinux.org']
         gitlab_rails['lfs_enabled'] = true
-        gitlab_rails['gitlab_shell_ssh_port'] = 222
         gitlab_rails['gitlab_default_can_create_group'] = false
         gitlab_rails['gitlab_username_changing_enabled'] = false
         gitlab_rails['initial_root_password'] = "{{ vault_gitlab_root_password }}"
@@ -104,11 +100,16 @@
       - "/srv/gitlab/config:/etc/gitlab"
       - "/srv/gitlab/logs:/var/log/gitlab"
       - "/srv/gitlab/data:/var/opt/gitlab"
-      - "/srv/gitlab/sshd_config:/assets/sshd_config"
 
 - name: Prune unused docker images
   docker_prune:
     images: true
+
+- name: Setup 222 -> 22 port redirect
+  ansible.posix.firewalld: state=enabled permanent=true immediate=yes
+    rich_rule="rule family=ipv4 forward-port port=222 protocol=tcp to-port=22"
+  tags:
+    - firewall
 
 - name: Open firewall holes
   ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes
@@ -116,6 +117,7 @@
   with_items:
     - "80/tcp"
     - "443/tcp"
+    - "22/tcp"
     - "222/tcp"
   tags:
     - firewall

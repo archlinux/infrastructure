@@ -17,7 +17,7 @@
   service: name=sshd enabled=yes state=started
 
 - name: Open firewall holes
-  ansible.posix.firewalld: service=ssh permanent=true state=enabled immediate=yes
+  ansible.posix.firewalld: service={{ 'ssh' if ansible_port is not defined else omit }} port={{ "%d/tcp" | format(ansible_port) if ansible_port is defined else omit }} permanent=true state=enabled immediate=yes
   when: configure_firewall is defined and configure_firewall
   tags:
     - firewall
