@@ -1,3 +1,4 @@
+ansible_port: 2222
 filesystem: btrfs
 additional_addresses: ["213.133.111.6/32", "2a01:4f8:222:174c::2/64"]
 wireguard_address: 10.0.0.5
