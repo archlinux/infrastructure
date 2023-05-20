@@ -1,3 +1,0 @@
-session required pam_lastlog.so
-auth    required pam_unix.so
-account required pam_unix.so

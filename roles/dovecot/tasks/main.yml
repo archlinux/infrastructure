@@ -27,9 +27,6 @@
 - name: Add vmail user
   user: name=vmail uid=5000 shell=/usr/bin/nologin group=vmail
 
-- name: Install PAM config
-  copy: src=pam.d.dovecot dest=/etc/pam.d/dovecot mode=0644 owner=root group=root
-
 - name: Create dovecot sieve dir
   file: path=/etc/dovecot/sieve state=directory owner=root group=root mode=0755
 
