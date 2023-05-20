@@ -4,7 +4,7 @@ target="/srv/ftp"
 repos=('core' 'core-testing' 'core-staging' 'extra' 'extra-testing' 'extra-staging' 'multilib' 'multilib-testing' 'multilib-staging' 'gnome-unstable' 'kde-unstable')
 arches=('x86_64')
 lock='/tmp/links.lck'
-tmp="$(mktemp -d)"
+tmp="$(mktemp --directory --tmpdir="/var/tmp")"
 
 [ -f "${lock}" ] && exit 1
 touch "${lock}"
