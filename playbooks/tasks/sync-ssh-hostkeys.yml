@@ -16,8 +16,8 @@
     - name: Fetch known_hosts
       shell: |
         set -eo pipefail
-        ssh-keyscan 127.0.0.1 2>/dev/null \
-        | sed 's#^127.0.0.1#{{ inventory_hostname }}#' \
+        ssh-keyscan -p {{ ansible_port | default(22) }} 127.0.0.1 2>/dev/null \
+        | sed -E 's/^(\[?)127\.0\.0\.1/\1{{ inventory_hostname }}/' \
         | sort
       environment:
         LC_COLLATE: C.UTF-8  # to ensure reproducible ordering
