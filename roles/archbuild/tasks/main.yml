@@ -20,8 +20,6 @@
   copy: src={{ item }} dest=/usr/local/bin/{{ item }} owner=root group=root mode=0755
   with_items:
     - mkpkg
-    - diffpkg
-    - diffrepo
     - pkgdiffrepo
     - clean-chroots
     - clean-dests
