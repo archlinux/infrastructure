@@ -4,7 +4,6 @@ rebuilder_website_loc: /usr/share/webapps/rebuilderd-website
 
 suites:
   - core
+  - core-testing
   - extra
-  - testing
-  - community
-  - community-testing
+  - extra-testing
