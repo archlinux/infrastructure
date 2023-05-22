@@ -1,5 +1,5 @@
-- name: Install svn, git, rsync and some perl stuff
-  pacman: name=git,subversion,rsync,perl-dbd-pg,perl-timedate,diffstat state=present
+- name: Install git, rsync and some perl stuff
+  pacman: name=git,rsync,perl-dbd-pg,perl-timedate,diffstat state=present
 
 - name: Install sourceballs requirements (makepkg download dependencies)
   pacman: name=git,subversion,mercurial,breezy state=present
@@ -7,14 +7,22 @@
 - name: Install binutils for createlinks script
   pacman: name=binutils state=present
 
+- name: Install fcgiwrap for the Git repo
+  pacman: name=fcgiwrap state=present
+
+- name: Install fcgiwrap for the Git repo
+  systemd: name=fcgiwrap.socket enabled=yes state=started
+
+- name: Allow state repo to be exported
+  file: path="/srv/repos/state/.git/git-daemon-export-ok" state=touch owner=git-packages group=junior-packager mode=0644
+
 - name: Create dbscripts users
   user: name="{{ item }}" shell=/bin/bash
   with_items:
-    - svn-packages
-    - svn-community
+    - git-packages
 
 - name: Add cleanup user
-  user: name=cleanup groups=tu,dev,multilib shell=/sbin/nologin
+  user: name=cleanup groups=junior-dev,dev,junior-packager,packager,multilib shell=/sbin/nologin
 
 - name: Add sourceballs user
   user: name=sourceballs shell=/sbin/nologin
@@ -47,24 +55,6 @@
     state: present
   with_dict: "{{ arch_users }}"
 
-- name: Create .ssh directory
-  file: path=/home/svn-packages/.ssh state=directory owner=svn-packages group=svn-packages mode=0700
-
-- name: Configure ssh keys for devs
-  template: src=authorized_keys-group.j2 dest=/home/svn-packages/.ssh/authorized_keys owner=svn-packages group=svn-packages mode=600
-  vars:
-    pubkey_groups: ['dev']
-  tags: ['archusers']
-
-- name: Create .ssh directory
-  file: path=/home/svn-community/.ssh state=directory owner=svn-community group=svn-community mode=0700
-
-- name: Configure ssh keys for TUs
-  template: src=authorized_keys-group.j2 dest=/home/svn-community/.ssh/authorized_keys owner=svn-community group=svn-community mode=600
-  vars:
-    pubkey_groups: ['tu']
-  tags: ['archusers']
-
 - name: Create /etc/dbscripts directory
   file: path=/etc/dbscripts state=directory owner=root group=root mode=0755
 
@@ -78,7 +68,7 @@
   dbscripts_mkdirs:
     pathtmpl: '/home/{user}/staging/{dirname}'
     permissions: '755'
-    directories: ['', 'core', 'extra', 'testing', 'staging', 'community', 'community-staging', 'community-testing', 'multilib', 'multilib-staging', 'multilib-testing']
+    directories: ['', 'core', 'extra', 'multilib', 'multilib-staging', 'multilib-testing', 'core-testing', 'core-staging', 'extra-testing', 'extra-staging']
     users: "{{ arch_users.keys() | list }}"
     group: users
   tags: ["archusers"]
@@ -86,77 +76,64 @@
 - name: Create dbscripts paths
   file: path="{{ item }}" state=directory owner=root group=root mode=0755
   with_items:
-    - /srv/repos/svn-community
-    - /srv/repos/svn-packages
+    - /srv/repos/git-packages
 
-- name: Create svn-community/package-cleanup directory
-  file: path="/srv/repos/svn-community/package-cleanup" state=directory owner=svn-community group=tu mode=0775
-- name: Add acl user:cleanup:rwx to /srv/repos/svn-community/package-cleanup
-  acl: name=/srv/repos/svn-community/package-cleanup entry="user:cleanup:rwx" state=present
-- name: Add acl default:user::rwx to /srv/repos/svn-community/package-cleanup
-  acl: name=/srv/repos/svn-community/package-cleanup entry="default:user::rwx" state=present
-- name: Add acl default:user:cleanup:rwx to /srv/repos/svn-community/package-cleanup
-  acl: name=/srv/repos/svn-community/package-cleanup entry="default:user:cleanup:rwx" state=present
-- name: Add acl default:group::rwx to /srv/repos/svn-community/package-cleanup
-  acl: name=/srv/repos/svn-community/package-cleanup entry="default:group::rwx" state=present
-- name: Add acl default:other::r-x to /srv/repos/svn-community/package-cleanup
-  acl: name=/srv/repos/svn-community/package-cleanup entry="default:other::r-x" state=present
+- name: Create git-packages/package-cleanup directory
+  file: path="/srv/repos/git-packages/package-cleanup" state=directory owner=git-packages group=junior-packager mode=0775
+- name: Add acl user:cleanup:rwx to /srv/repos/git-packages/package-cleanup
+  acl: name=/srv/repos/git-packages/package-cleanup entry="user:cleanup:rwx" state=present
+- name: Add acl default:user::rwx to /srv/repos/git-packages/package-cleanup
+  acl: name=/srv/repos/git-packages/package-cleanup entry="default:user::rwx" state=present
+- name: Add acl default:user:cleanup:rwx to /srv/repos/git-packages/package-cleanup
+  acl: name=/srv/repos/git-packages/package-cleanup entry="default:user:cleanup:rwx" state=present
+- name: Add acl default:group::rwx to /srv/repos/git-packages/package-cleanup
+  acl: name=/srv/repos/git-packages/package-cleanup entry="default:group::rwx" state=present
+- name: Add acl default:other::r-x to /srv/repos/git-packages/package-cleanup
+  acl: name=/srv/repos/git-packages/package-cleanup entry="default:other::r-x" state=present
 
-- name: Create svn-packages/package-cleanup directory
-  file: path="/srv/repos/svn-packages/package-cleanup" state=directory owner=svn-packages group=dev mode=0775
-- name: Add acl user:cleanup:rwx to /srv/repos/svn-packages/package-cleanup
-  acl: name=/srv/repos/svn-packages/package-cleanup entry="user:cleanup:rwx" state=present
-- name: Add acl default:user::rwx to /srv/repos/svn-packages/package-cleanup
-  acl: name=/srv/repos/svn-packages/package-cleanup entry="default:user::rwx" state=present
-- name: Add acl default:user:cleanup:rwx to /srv/repos/svn-packages/package-cleanup
-  acl: name=/srv/repos/svn-packages/package-cleanup entry="default:user:cleanup:rwx" state=present
-- name: Add acl default:group::rwx to /srv/repos/svn-packages/package-cleanup
-  acl: name=/srv/repos/svn-packages/package-cleanup entry="default:group::rwx" state=present
-- name: Add acl default:other::r-x to /srv/repos/svn-packages/package-cleanup
-  acl: name=/srv/repos/svn-packages/package-cleanup entry="default:other::r-x" state=present
+- name: Create git-packages/source-cleanup directory
+  file: path="/srv/repos/git-packages/source-cleanup" state=directory owner=sourceballs group=git-packages mode=0755
 
-- name: Create svn-community/source-cleanup directory
-  file: path="/srv/repos/svn-community/source-cleanup" state=directory owner=sourceballs group=svn-community mode=0755
-- name: Create svn-packages/source-cleanup directory
-  file: path="/srv/repos/svn-packages/source-cleanup" state=directory owner=sourceballs group=svn-packages mode=0755
+- name: Add acl default:junior-packager::rwx to /srv/repos/state
+  acl: name=/srv/repos/git-packages/package-cleanup entry="default:group:junior-packager:rwx" state=present
 
-- name: Create svn-community/svn directory
-  file: path="/srv/repos/svn-community/svn" state=directory owner=svn-community group=svn-community mode=0755
-- name: Add acl default:user::rwx to /srv/repos/svn-community/svn
-  acl: name=/srv/repos/svn-community/svn entry="default:user::rwx" state=present
-- name: Add acl default:group::r-x to /srv/repos/svn-community/svn
-  acl: name=/srv/repos/svn-community/svn entry="default:group::r-x" state=present
-- name: Add acl default:other::r-x to /srv/repos/svn-community/svn
-  acl: name=/srv/repos/svn-community/svn entry="default:other::r-x" state=present
+- name: Create pkg cache directory
+  file: path="{{ git_pkg_cache }}" state=directory owner=git-packages group=junior-packager mode=0775
 
-- name: Create svn-packages/svn directory
-  file: path="/srv/repos/svn-packages/svn" state=directory owner=svn-packages group=svn-packages mode=0755
-- name: Add acl default:user::rwx to /srv/repos/svn-packages/svn
-  acl: name=/srv/repos/svn-packages/svn entry="default:user::rwx" state=present
-- name: Add acl default:group::r-x to /srv/repos/svn-packages/svn
-  acl: name=/srv/repos/svn-packages/svn entry="default:group::r-x" state=present
-- name: Add acl default:other::r-x to /srv/repos/svn-packages/svn
-  acl: name=/srv/repos/svn-packages/svn entry="default:other::r-x" state=present
+- name: Create state directory
+  file: path="{{ git_state_repo }}" state=directory owner=git-packages group=junior-packager mode=0775
 
-- name: Create svn-community/tmp directory
-  file: path="/srv/repos/svn-community/tmp" state=directory owner=svn-community group=tu mode=1775
-- name: Add acl user:sourceballs:rwx to /srv/repos/svn-community/tmp
-  acl: name=/srv/repos/svn-community/tmp entry="user:sourceballs:rwx" state=present
+- name: Set permissions for state directory
+  file: path="{{ git_state_repo }}" state=directory owner=git-packages group=junior-packager mode=0775
+- name: Add acl default:group:junior-packager:rw- to git_state_repo
+  acl: name="{{ git_state_repo }}" entry="default:group:junior-packager:rw-" state=present
 
-- name: Create svn-packages/tmp directory
-  file: path="/srv/repos/svn-packages/tmp" state=directory owner=svn-packages group=dev mode=1775
-- name: Add acl user:sourceballs:rwx to /srv/repos/svn-packages/tmp
-  acl: name=/srv/repos/svn-packages/tmp entry="user:sourceballs:rwx" state=present
+- name: Git init repository  # noqa command-instead-of-module
+  command: /usr/bin/git init --shared=group "{{ git_state_repo }}"
+  args:
+    creates: "{{ git_state_repo }}/.git/config"
+
+- name: Create git-packages/tmp directory
+  file: path="/srv/repos/git-packages/tmp" state=directory owner=git-packages group=junior-packager mode=1775
+- name: Add acl user:sourceballs:rwx to /srv/repos/git-packages/tmp
+  acl: name=/srv/repos/git-packages/tmp entry="user:sourceballs:rwx" state=present
+- name: Add acl user:cleanup:rwx to /srv/repos/git-packages/tmp
+  acl: name=/srv/repos/git-packages/tmp entry="user:cleanup:rwx" state=present
 
 - name: Touch /srv/ftp/lastsync file
   file: path="/srv/ftp/lastsync" state=touch owner=ftp group=ftp mode=0644
 
 - name: Touch /srv/ftp/lastupdate file
   file: path="/srv/ftp/lastupdate" state=touch owner=ftp group=ftp mode=0644
-- name: Add acl group:tu:rw- to /srv/ftp/lastupdate
-  acl: name=/srv/ftp/lastupdate entry="group:tu:rw-" state=present
+
+- name: Add acl group:dev:rw- to /srv/ftp/lastupdate
+  acl: name=/srv/ftp/lastupdate entry="group:packager:rw-" state=present
+- name: Add acl group:dev:rw- to /srv/ftp/lastupdate
+  acl: name=/srv/ftp/lastupdate entry="group:junior-packager:rw-" state=present
 - name: Add acl group:dev:rw- to /srv/ftp/lastupdate
   acl: name=/srv/ftp/lastupdate entry="group:dev:rw-" state=present
+- name: Add acl group:dev:rw- to /srv/ftp/lastupdate
+  acl: name=/srv/ftp/lastupdate entry="group:junior-dev:rw-" state=present
 
 - name: Fetch dbscripts PGP key
   command: /usr/bin/gpg --keyserver keys.openpgp.org --auto-key-locate wkd,keyserver --locate-keys {{ item }}
@@ -166,50 +143,83 @@
 
 - name: Clone dbscripts git repo
   git: >
-    dest=/srv/repos/{{ item }}/dbscripts
+    dest=/srv/repos/git-packages/dbscripts
     repo=https://gitlab.archlinux.org/archlinux/dbscripts.git
     version={{ dbscripts_commit }} update={{ dbscripts_update }}
     verify_commit=yes
+
+- name: Symlink config file
+  file: path=/srv/repos/git-packages/dbscripts/config.local src=config.local.git state=link owner=root group=root mode=0644
+
+- name: Symlink /packages to /srv/repos/git-packages/dbscripts
+  file: path=/packages src=/srv/repos/git-packages/dbscripts state=link owner=root group=root mode=0755
+
+- name: Symlink dbscript binaries to /usr/local/bin
+  file: path=/usr/local/bin/{{ item }} src=/packages/{{ item }} state=link owner=root group=root mode=0755
   with_items:
-    - svn-community
-    - svn-packages
+    - db-move
+    - db-update
+    - db-remove
+    - db-repo-add
+    - db-repo-remove
+    - testing2x
 
-- name: Make /srv/svn
-  file: path=/srv/svn state=directory owner=root group=root mode=0755
-
-- name: Symlink /srv/svn/community to /srv/repos/svn-community/svn
-  file: path=/srv/svn/community src=/srv/repos/svn-community/svn state=link owner=root group=root mode=0755
-
-- name: Symlink /srv/svn/packages to /srv/repos/svn-packages/svn
-  file: path=/srv/svn/packages src=/srv/repos/svn-packages/svn state=link owner=root group=root mode=0755
-
-- name: Symlink /community to /srv/repos/svn-community/dbscripts
-  file: path=/community src=/srv/repos/svn-community/dbscripts state=link owner=root group=root mode=0755
-
-- name: Symlink /packages to /srv/repos/svn-packages/dbscripts
-  file: path=/packages src=/srv/repos/svn-packages/dbscripts state=link owner=root group=root mode=0755
+- name: Make debug packages pool
+  file: path=/srv/ftp/pool/packages state=directory owner=root group=junior-packager mode=0775
 
 - name: Make debug packages-debug pool
-  file: path=/srv/ftp/pool/packages-debug state=directory owner=root group=dev mode=0775
+  file: path=/srv/ftp/pool/packages-debug state=directory owner=root group=junior-packager mode=0775
 
-- name: Make debug community-debug pool
-  file: path=/srv/ftp/pool/community-debug state=directory owner=root group=tu mode=2775
-
-- name: Make package root debug repos
+- name: Make junior developer root repos
   file: path=/srv/ftp/{{ item }}/os state=directory owner=root group=root mode=0755
-  with_items: '{{ package_repos }}'
+  with_items: '{{ junior_developer_repos }}'
 
-- name: Make community root debug repos
-  file: path=/srv/ftp/{{ item }}/os state=directory owner=root group=root mode=00755
-  with_items: '{{ community_repos }}'
+- name: Make junior developer repos
+  file: path=/srv/ftp/{{ item }}/os/x86_64 state=directory owner=root group=junior-dev mode=0775
+  with_items: '{{ junior_developer_repos }}'
 
-- name: Make package debug repos
+- name: Make developer root repos
+  file: path=/srv/ftp/{{ item }}/os state=directory owner=root group=root mode=0755
+  with_items: '{{ developer_repos }}'
+
+- name: Make developer repos
   file: path=/srv/ftp/{{ item }}/os/x86_64 state=directory owner=root group=dev mode=0775
-  with_items: '{{ package_repos }}'
+  with_items: '{{ developer_repos }}'
 
-- name: Make community debug repos
-  file: path=/srv/ftp/{{ item }}/os/x86_64 state=directory owner=root group=tu mode=0775
-  with_items: '{{ community_repos }}'
+- name: Make junior packager root repos
+  file: path=/srv/ftp/{{ item }}/os state=directory owner=root group=root mode=0755
+  with_items: '{{ junior_packager_repos }}'
+
+- name: Make junior packager repos
+  file: path=/srv/ftp/{{ item }}/os/x86_64 state=directory owner=root group=junior-packager mode=0775
+  with_items: '{{ junior_packager_repos }}'
+
+- name: Make packager root repos
+  file: path=/srv/ftp/{{ item }}/os state=directory owner=root group=root mode=0755
+  with_items: '{{ packager_repos }}'
+
+- name: Make packager repos
+  file: path=/srv/ftp/{{ item }}/os/x86_64 state=directory owner=root group=packager mode=0775
+  with_items: '{{ packager_repos }}'
+
+- name: Make junior multilib root repos
+  file: path=/srv/ftp/{{ item }}/os state=directory owner=root group=root mode=0755
+  with_items: '{{ junior_multilib_repos }}'
+
+- name: Make junior multilib repos
+  file: path=/srv/ftp/{{ item }}/os/x86_64 state=directory owner=root group=junior-packager mode=0775
+  with_items: '{{ junior_multilib_repos }}'
+
+- name: Make multilib root repos
+  file: path=/srv/ftp/{{ item }}/os state=directory owner=root group=root mode=0755
+  with_items: '{{ multilib_repos }}'
+
+- name: Make multilib repos
+  file: path=/srv/ftp/{{ item }}/os/x86_64 state=directory owner=root group=packager mode=0775
+  with_items: '{{ multilib_repos }}'
+
+- name: Make /srv/ftp/other/packages available
+  file: path=/srv/ftp/other/packages state=directory owner=root group=junior-dev mode=0775
 
 - name: Put rsyncd.conf into tmpfiles
   copy: src=rsyncd-tmpfiles.d dest=/etc/tmpfiles.d/rsyncd.conf owner=root group=root mode=0644
@@ -234,73 +244,6 @@
   register: gen_rsyncd
   changed_when: "gen_rsyncd.rc == 0"
 
-- name: Install svnlog
-  copy: src=svnlog dest=/usr/local/bin/svnlog owner=root group=root mode=0755
-
-- name: Add arch-svntogit user
-  user: name=svntogit shell=/sbin/nologin home=/srv/svntogit generate_ssh_key=yes ssh_key_bits=4096
-
-- name: Configure svntogit git user name  # noqa command-instead-of-module
-  command: git config --global user.name svntogit
-  become: true
-  become_user: svntogit
-  register: git_config_username
-  changed_when: "git_config_username.rc == 0"
-
-- name: Configure svntogit git user email  # noqa command-instead-of-module
-  command: git config --global user.email svntogit@repos.archlinux.org
-  become: true
-  become_user: svntogit
-  register: git_config_email
-  changed_when: "git_config_email.rc == 0"
-
-- name: Template arch-svntogit
-  copy: src=update-repos.sh dest=/srv/svntogit/update-repos.sh owner=root group=root mode=0755
-
-- name: Create svntogit repos subdir
-  file: path="/srv/svntogit/repos" state=directory owner=svntogit group=svntogit mode=0775
-
-- name: Clone git-svn repos  # noqa command-instead-of-module
-  command: git svn clone file:///srv/repos/svn-{{ item }}/svn /srv/svntogit/repos/{{ item }} creates=/srv/svntogit/repos/{{ item }}
-  with_items:
-    - community
-    - packages
-  become: true
-  become_user: svntogit
-
-- name: Add svntogit public remotes  # noqa command-instead-of-module
-  command: git remote add public git@github.com:archlinux/svntogit-{{ item }}.git chdir=/srv/svntogit/repos/{{ item }}
-  with_items:
-    - community
-    - packages
-  become: true
-  become_user: svntogit
-  ignore_errors: true
-  register: git_public_remote
-  changed_when: "git_public_remote.rc == 0"
-
-# The following command also serves as a way to get the data the first time the repo is set up
-- name: Configure svntogit pull upstream branch  # noqa command-instead-of-module
-  command: git pull --set-upstream public master chdir=/srv/svntogit/repos/{{ item }}
-  environment:
-    SHELL: /bin/bash
-  with_items:
-    - community
-    - packages
-  become: true
-  become_user: svntogit
-  register: git_pull_upstream
-  changed_when: "git_pull_upstream.rc == 0"
-
-- name: Fix svntogit home permissions
-  file: path="/srv/svntogit" state=directory owner=svntogit group=svntogit mode=0775
-
-- name: Install repo helpers
-  copy: src={{ item }} dest=/usr/local/bin/{{ item }} owner=root group=root mode=0755
-  with_items:
-    - lsrepo
-    - checklib32
-
 - name: Install createlinks script
   copy: src=createlinks dest=/usr/local/bin/createlinks owner=root group=root mode=0755
 
@@ -309,18 +252,6 @@
 
 - name: Open firewall holes for rsync
   ansible.posix.firewalld: service=rsyncd permanent=true state=enabled immediate=yes
-  when: configure_firewall
-  tags:
-    - firewall
-
-- name: Configure svnserve
-  copy: dest=/etc/conf.d/svnserve owner=root group=root mode=0644 content="SVNSERVE_ARGS=-R -r /srv/svn\n"
-
-- name: Start and enable svnserve
-  service: name=svnserve enabled=yes state=started
-
-- name: Open firewall hole for svnserve
-  ansible.posix.firewalld: service=svn permanent=true state=enabled immediate=yes
   when: configure_firewall
   tags:
     - firewall
@@ -336,12 +267,8 @@
     - lastsync.service
     - gen_rsyncd.timer
     - gen_rsyncd.service
-    - arch-svntogit.timer
-    - arch-svntogit.service
     - createlinks.timer
     - createlinks.service
-  notify:
-    - Daemon reload
 
 - name: Activate systemd timers
   service: name={{ item }} enabled=yes state=started
@@ -350,5 +277,9 @@
     - sourceballs.timer
     - lastsync.timer
     - gen_rsyncd.timer
-    - arch-svntogit.timer
     - createlinks.timer
+
+# Allow different maintainers (unix users) to touch the git state repositories
+# https://git-scm.com/docs/git-config/2.35.2#Documentation/git-config.txt-safedirectory
+- name: Install gitconfig
+  copy: src=gitconfig dest=/etc/gitconfig owner=root group=root mode=0644

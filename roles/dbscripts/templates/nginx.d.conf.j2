@@ -21,6 +21,14 @@ server {
         allow all;
     }
 
+    location ~ /git(/.*) {
+        fastcgi_pass  unix:/run/fcgiwrap.sock;
+        include       fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME     /usr/lib/git-core/git-http-backend;
+        fastcgi_param GIT_PROJECT_ROOT    /srv/repos;
+        fastcgi_param PATH_INFO           $1;
+    }
+
     location / {
         satisfy any;
         auth_request /devel/mirrorauth/;

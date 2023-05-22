@@ -12,7 +12,7 @@
 #RootDir     = /
 #DBPath      = /var/lib/pacman/
 {% if 'mirrors' in group_names or inventory_hostname in ['gemini.archlinux.org', 'build.archlinux.org'] %}
-CacheDir     = /var/cache/pacman/pkg/ /srv/ftp/pool/packages/ /srv/ftp/pool/community/
+CacheDir     = /var/cache/pacman/pkg/ /srv/ftp/pool/packages/
 {% else %}
 #CacheDir    = /var/cache/pacman/pkg/
 {% endif %}
@@ -72,7 +72,7 @@ LocalFileSigLevel = Optional
 # repo name header and Include lines. You can add preferred servers immediately
 # after the header, and they will be used before the default mirrors.
 
-[testing]
+[core-testing]
 Usage=Search Sync
 Include = /etc/pacman.d/mirrorlist
 
@@ -82,11 +82,8 @@ Include = /etc/pacman.d/mirrorlist
 [extra]
 Include = /etc/pacman.d/mirrorlist
 
-[community-testing]
+[extra-testing]
 Usage=Search Sync
-Include = /etc/pacman.d/mirrorlist
-
-[community]
 Include = /etc/pacman.d/mirrorlist
 
 # If you want to run 32 bit applications on your x86_64 system,
