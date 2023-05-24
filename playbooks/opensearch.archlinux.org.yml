@@ -1,0 +1,13 @@
+- name: Setup opensearch.archlinux.org
+  hosts: opensearch.archlinux.org
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: firewalld }
+    - { role: wireguard }
+    - { role: hardening }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: prometheus_exporters }
+    - { role: promtail }
+    - { role: opensearch }
