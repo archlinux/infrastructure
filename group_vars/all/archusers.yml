@@ -697,6 +697,7 @@ arch_users:
       - packager
       - junior-packager
       - tu
+      - multilib
   shibumi:
     name: "Christian Rebischke"
     email: "chris.rebischke@archlinux.org"
