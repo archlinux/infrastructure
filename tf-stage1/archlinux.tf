@@ -285,23 +285,23 @@ locals {
   # Example:
   # dev                      = { value = "www", ttl = 3600 }
   archlinux_org_cname = {
-    archive         = { value = "gemini" }
-    dev             = { value = "www" }
-    g2kjxsblac7x    = { value = "gv-i5y6mnrelvpfiu.dv.googlehosted.com." }
-    ipxe            = { value = "www" }
-    mailman         = { value = "redirect" }
-    packages        = { value = "www" }
-    ping            = { value = "redirect" }
-    planet          = { value = "www" }
-    registry        = { value = "gitlab" }
-    repos           = { value = "gemini" }
-    rsync           = { value = "gemini" }
-    sources         = { value = "gemini" }
-    "static.conf"   = { value = "redirect" }
-    status          = { value = "stats.uptimerobot.com." }
-    svn             = { value = "gemini" }
-    coc             = { value = "redirect" }
-    git             = { value = "redirect" }
+    archive       = { value = "gemini" }
+    dev           = { value = "www" }
+    g2kjxsblac7x  = { value = "gv-i5y6mnrelvpfiu.dv.googlehosted.com." }
+    ipxe          = { value = "www" }
+    mailman       = { value = "redirect" }
+    packages      = { value = "www" }
+    ping          = { value = "redirect" }
+    planet        = { value = "www" }
+    registry      = { value = "gitlab" }
+    repos         = { value = "gemini" }
+    rsync         = { value = "gemini" }
+    sources       = { value = "gemini" }
+    "static.conf" = { value = "redirect" }
+    status        = { value = "stats.uptimerobot.com." }
+    svn           = { value = "gemini" }
+    coc           = { value = "redirect" }
+    git           = { value = "redirect" }
 
     # MTA-STS
     mta-sts               = { value = "mail" }
