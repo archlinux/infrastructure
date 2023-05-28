@@ -134,14 +134,6 @@ locals {
       server_type = "cx11"
       domain      = "redirect"
     }
-    "repos-git.archlinux.org" = {
-      server_type = "cpx11"
-      domain      = "repos-git"
-    }
-    "repos.sandbox.archlinux.org" = {
-      server_type = "cpx21"
-      domain      = "repos.sandbox"
-    }
     "reproducible.archlinux.org" = {
       server_type = "cx11"
       domain      = "reproducible"
@@ -304,7 +296,6 @@ locals {
     registry        = { value = "gitlab" }
     repos           = { value = "gemini" }
     rsync           = { value = "gemini" }
-    "rsync.sandbox" = { value = "repos.sandbox" }
     sources         = { value = "gemini" }
     "static.conf"   = { value = "redirect" }
     status          = { value = "stats.uptimerobot.com." }
@@ -619,19 +610,5 @@ resource "hcloud_volume" "debuginfod" {
   name              = "debuginfod"
   size              = 100
   server_id         = hcloud_server.machine["debuginfod.archlinux.org"].id
-  delete_protection = true
-}
-
-resource "hcloud_volume" "repos-git" {
-  name              = "repos-git"
-  size              = 100
-  server_id         = hcloud_server.machine["repos-git.archlinux.org"].id
-  delete_protection = true
-}
-
-resource "hcloud_volume" "repos_sandbox" {
-  name              = "repos.sandbox"
-  size              = 500
-  server_id         = hcloud_server.machine["repos.sandbox.archlinux.org"].id
   delete_protection = true
 }
