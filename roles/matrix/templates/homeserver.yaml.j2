@@ -163,8 +163,6 @@ suppress_key_server_warning: true
 
 # Worker config
 worker_app: synapse.app.homeserver
-worker_replication_host: 127.0.0.1
-worker_replication_http_port: 9093
 enable_media_repo: false
 notify_appservices_from_worker: appservice
 federation_sender_instances:
@@ -173,5 +171,9 @@ worker_replication_secret: "{{ vault_matrix_secrets.worker_replication_secret }}
 worker_log_config: "/etc/synapse/log_config.yaml"
 redis:
   enabled: true
+instance_map:
+  main:
+    host: 127.0.0.1
+    port: 9093
 
 # vim:set sw=2 sts=-1 et:
