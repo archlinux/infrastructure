@@ -3,7 +3,6 @@ arch_groups:
   - junior-dev
   - tu
   - fellows
-  - multilib
   - support-staff
   - packager
   - junior-packager
@@ -46,7 +45,6 @@ arch_users:
     ssh_key: alex19ep.pub
     groups:
       - tu
-      - multilib
       - packager
       - junior-packager
   allan:
@@ -65,7 +63,6 @@ arch_users:
       - dev
       - junior-dev
       - tu
-      - multilib
       - packager
       - junior-packager
   artafinde:
@@ -75,7 +72,6 @@ arch_users:
     groups:
       - dev
       - junior-dev
-      - multilib
       - tu
       - packager
       - junior-packager
@@ -87,7 +83,6 @@ arch_users:
       - dev
       - junior-dev
       - tu
-      - multilib
       - packager
       - junior-packager
   andrew:
@@ -116,7 +111,6 @@ arch_users:
       - dev
       - junior-dev
       - tu
-      - multilib
       - packager
       - junior-packager
   andyrtr:
@@ -144,7 +138,6 @@ arch_users:
     shell: /bin/zsh
     groups:
       - tu
-      - multilib
       - packager
       - junior-packager
   arodseth:
@@ -153,7 +146,6 @@ arch_users:
     ssh_key: arodseth.pub
     groups:
       - tu
-      - multilib
       - packager
       - junior-packager
   arojas:
@@ -166,7 +158,6 @@ arch_users:
       - dev
       - junior-dev
       - tu
-      - multilib
   aur-notify:
     name: ""
     groups: []
@@ -205,7 +196,6 @@ arch_users:
       - dev
       - junior-dev
       - tu
-      - multilib
   braindamage:
     name: "BrainDamage"
     ssh_key: braindamage.pub
@@ -256,7 +246,6 @@ arch_users:
       - dev
       - junior-dev
       - tu
-      - multilib
   denisse:
     name: "Andrea Denisse Gómez-Martínez"
     ssh_key: denisse.pub
@@ -293,7 +282,6 @@ arch_users:
       - junior-packager
       - dev
       - junior-dev
-      - multilib
       - tu
   edh:
     name: "Gordian Edenhofer"
@@ -321,7 +309,6 @@ arch_users:
       - dev
       - junior-dev
       - tu
-      - multilib
   farseerfc:
     name: "Jiachen Yang"
     email: "farseerfc@archlinux.org"
@@ -340,7 +327,6 @@ arch_users:
       - dev
       - junior-dev
       - tu
-      - multilib
   ffy00:
     name: "Filipe Laíns"
     email: "lains@archlinux.org"
@@ -371,7 +357,6 @@ arch_users:
       - dev
       - junior-dev
       - tu
-      - multilib
   foxboron:
     name: "Morten Linderud"
     email: "foxboron@archlinux.org"
@@ -411,7 +396,6 @@ arch_users:
       - junior-packager
       - dev
       - junior-dev
-      - multilib
       - tu
   gromit:
     name: "Christian Heusel"
@@ -448,7 +432,6 @@ arch_users:
       - dev
       - junior-dev
       - tu
-      - multilib
   idevolder:
     name: "Ike Devolder"
     email: "ike.devolder@archlinux.org"
@@ -467,7 +450,6 @@ arch_users:
       - dev
       - junior-dev
       - tu
-      - multilib
   jleclanche:
     name: "Jerome Leclanche"
     email: "jleclanche@archlinux.org"
@@ -507,7 +489,6 @@ arch_users:
       - junior-packager
       - dev
       - junior-dev
-      - multilib
       - tu
   kewl:
     name: "Kewl FFT"
@@ -550,7 +531,6 @@ arch_users:
       - dev
       - junior-dev
       - tu
-      - multilib
   lfleischer:
     name: "Lukas Fleischer"
     email: "lfleischer@archlinux.org"
@@ -562,7 +542,6 @@ arch_users:
       - dev
       - junior-dev
       - tu
-      - multilib
   maximbaz:
     name: "Maxim Baz"
     email: "maximbaz@archlinux.org"
@@ -631,7 +610,6 @@ arch_users:
       - junior-packager
       - dev
       - junior-dev
-      - multilib
       - tu
   pitastrudl:
     name: "Arun Bahl"
@@ -684,7 +662,6 @@ arch_users:
       - dev
       - junior-dev
       - tu
-      - multilib
   seblu:
     name: "Sébastien Luttringer"
     email: "seblu@archlinux.org"
@@ -696,7 +673,6 @@ arch_users:
       - dev
       - junior-dev
       - tu
-      - multilib
   serebit:
     name: "Campbell Jones"
     email: "serebit@archlinux.org"
@@ -705,7 +681,6 @@ arch_users:
       - packager
       - junior-packager
       - tu
-      - multilib
   shibumi:
     name: "Christian Rebischke"
     email: "chris.rebischke@archlinux.org"
@@ -730,7 +705,6 @@ arch_users:
       - packager
       - junior-packager
       - tu
-      - multilib
   raster:
     name: "Carsten Haitzler"
     email: "raster@archlinux.org"
@@ -755,7 +729,6 @@ arch_users:
       - packager
       - junior-packager
       - tu
-      - multilib
   segaja:
     name: "Andreas Schleifer"
     email: "segaja@archlinux.org"
@@ -774,7 +747,6 @@ arch_users:
       - dev
       - junior-dev
       - tu
-      - multilib
   torxed:
     name: "Anton Hvornum"
     email: "torxed@archlinux.org"
@@ -800,7 +772,6 @@ arch_users:
       - junior-packager
       - dev
       - junior-dev
-      - multilib
       - tu
   wild:
     name: "Dan Printzell"
@@ -825,7 +796,6 @@ arch_users:
     groups:
       - packager
       - junior-packager
-      - multilib
       - tu
 
 # utility accounts to protect from the "disable ssh keys of disabled users" task

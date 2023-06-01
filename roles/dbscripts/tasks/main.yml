@@ -22,7 +22,7 @@
     - git-packages
 
 - name: Add cleanup user
-  user: name=cleanup groups=junior-dev,dev,junior-packager,packager,multilib shell=/sbin/nologin
+  user: name=cleanup groups=junior-dev,dev,junior-packager,packager shell=/sbin/nologin
 
 - name: Add sourceballs user
   user: name=sourceballs shell=/sbin/nologin
@@ -201,22 +201,6 @@
 - name: Make packager repos
   file: path=/srv/ftp/{{ item }}/os/x86_64 state=directory owner=root group=packager mode=0775
   with_items: '{{ packager_repos }}'
-
-- name: Make junior multilib root repos
-  file: path=/srv/ftp/{{ item }}/os state=directory owner=root group=root mode=0755
-  with_items: '{{ junior_multilib_repos }}'
-
-- name: Make junior multilib repos
-  file: path=/srv/ftp/{{ item }}/os/x86_64 state=directory owner=root group=junior-packager mode=0775
-  with_items: '{{ junior_multilib_repos }}'
-
-- name: Make multilib root repos
-  file: path=/srv/ftp/{{ item }}/os state=directory owner=root group=root mode=0755
-  with_items: '{{ multilib_repos }}'
-
-- name: Make multilib repos
-  file: path=/srv/ftp/{{ item }}/os/x86_64 state=directory owner=root group=packager mode=0775
-  with_items: '{{ multilib_repos }}'
 
 - name: Make /srv/ftp/other/packages available
   file: path=/srv/ftp/other/packages state=directory owner=root group=junior-dev mode=0775
