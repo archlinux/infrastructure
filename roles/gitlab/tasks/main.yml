@@ -34,6 +34,7 @@
         registry_external_url 'https://registry.archlinux.org'
         nginx['client_max_body_size'] = '10g'
         nginx['listen_addresses'] = {{ gitlab_primary_addresses }}
+        nginx['custom_gitlab_server_config'] = "set $bypass 0;\nif ($remote_addr = \"{{ hostvars['gemini.archlinux.org']['ipv4_address'] }}\") {\nset $bypass 1;\n}\nif ($remote_addr = \"{{hostvars['gemini.archlinux.org']['ipv6_address']}}\") {\nset $bypass 1;\n}\nproxy_set_header Gitlab-Bypass-Rate-Limiting $bypass;\n"
         registry_nginx['listen_addresses'] = {{ gitlab_primary_addresses }}
         gitlab_pages['inplace_chroot'] = true
         pages_external_url "http://{{ gitlab_domain }}"
@@ -45,6 +46,7 @@
         gitlab_pages['env'] = {'FF_ENFORCE_IP_RATE_LIMITS' => 'true'}
         letsencrypt['enable'] = true
         letsencrypt['contact_emails'] = ['webmaster@archlinux.org']
+        gitlab_rails['env'] = {'GITLAB_THROTTLE_BYPASS_HEADER' => 'Gitlab-Bypass-Rate-Limiting'}
         gitlab_rails['lfs_enabled'] = true
         gitlab_rails['gitlab_username_changing_enabled'] = false
         gitlab_rails['initial_root_password'] = "{{ vault_gitlab_root_password }}"
