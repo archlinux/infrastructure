@@ -1,0 +1,10 @@
+[Unit]
+Description=Prometheus Flyspray Exporter TextCollector Timer
+
+[Timer]
+OnUnitActiveSec=5m
+OnBootSec=2min
+RandomizedDelaySec=1min
+
+[Install]
+WantedBy=timers.target

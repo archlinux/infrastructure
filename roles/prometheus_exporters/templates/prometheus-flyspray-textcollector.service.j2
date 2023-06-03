@@ -1,0 +1,34 @@
+[Unit]
+Description=Prometheus Flyspray Exporter
+After=mysqld.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/flyspray-textcollector.py {{ prometheus_textfile_dir }}
+
+NoNewPrivileges=true
+LockPersonality=true
+
+PrivateDevices=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths={{ prometheus_textfile_dir }}
+
+MemoryDenyWriteExecute=true
+RemoveIPC=true
+RestrictRealtime=true
+RestrictNamespaces=true
+RestrictSUIDSGID=true
+
+RestrictAddressFamilies=~AF_NETLINK
+RestrictAddressFamilies=~AF_PACKET
+
+ProtectHostname=true
+ProtectControlGroups=true
+ProtectKernelLogs=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectClock=true
+
+SystemCallArchitectures=native
