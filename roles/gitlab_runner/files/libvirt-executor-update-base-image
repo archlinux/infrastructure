@@ -29,7 +29,7 @@ image=Arch-Linux-x86_64-basic.img
 qemu-img convert -f qcow2 -O raw Arch-Linux-x86_64-basic.qcow2 Arch-Linux-x86_64-basic.img
 
 loopdev="$(losetup --find --partscan --show "${image}")"
-mount --mkdir "${loopdev}p2" mnt
+mount --mkdir "${loopdev}p3" mnt
 
 arch-chroot mnt pacman-key --init
 arch-chroot mnt pacman-key --populate
