@@ -109,7 +109,7 @@ federation_metrics_domains:
 # Auto-join new users to rooms
 auto_join_rooms:
 {% for room in vault_matrix_secrets.auto_join_rooms %}
-  - {{ room | quote }}
+  - {{ room | to_json }}
 {% endfor %}
 autocreate_auto_join_rooms: false
 auto_join_mxid_localpart: mjolnir

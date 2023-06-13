@@ -164,7 +164,7 @@ protections:
     #  - https://regexone.com/
     words:
 {% for word in vault_matrix_secrets.mjolnir_badwords %}
-      - {{ word | quote }}
+      - {{ word | to_json }}
 {% endfor %}
 
     # For how long (in minutes) the user is "new" to the WordList plugin.
