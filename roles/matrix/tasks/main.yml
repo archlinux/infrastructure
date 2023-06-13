@@ -149,7 +149,7 @@
   git:
     repo: https://github.com/matrix-org/matrix-appservice-irc
     dest: /var/lib/synapse/matrix-appservice-irc
-    version: 0.38.0
+    version: 1.0.0
     force: true
   become: true
   become_user: synapse
@@ -159,9 +159,17 @@
     - Restart matrix-appservice-irc
 
 - name: Install matrix-appservice-irc
-  community.general.npm:
+  community.general.yarn:
     path: /var/lib/synapse/matrix-appservice-irc
-    ci: true
+  become: true
+  become_user: synapse
+  become_method: sudo
+  when: irc_git.changed
+
+- name: Build matrix-appservice-irc
+  command: yarn build
+  args:
+    chdir: /var/lib/synapse/matrix-appservice-irc
   become: true
   become_user: synapse
   become_method: sudo
