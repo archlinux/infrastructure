@@ -166,7 +166,7 @@
   become_method: sudo
   when: irc_git.changed
 
-- name: Build matrix-appservice-irc
+- name: Build matrix-appservice-irc  # noqa no-changed-when
   command: yarn build
   args:
     chdir: /var/lib/synapse/matrix-appservice-irc
