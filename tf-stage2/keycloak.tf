@@ -128,6 +128,129 @@ resource "keycloak_realm" "archlinux" {
       failure_reset_time_seconds       = 43200
     }
   }
+
+  attributes = {
+    userProfileEnabled = true
+  }
+}
+
+resource "keycloak_realm_user_profile" "archlinux" {
+  realm_id = keycloak_realm.archlinux.id
+
+  attribute {
+    name         = "username"
+    display_name = "$${username}"
+
+    permissions {
+      view = ["admin", "user"]
+      edit = ["admin", "user"]
+    }
+
+    validator {
+      name = "length"
+      config = {
+        min = 3
+        max = 255
+      }
+    }
+
+    validator {
+      name = "username-prohibited-characters"
+    }
+
+    validator {
+      name = "up-username-not-idn-homograph"
+    }
+  }
+
+  attribute {
+    name         = "email"
+    display_name = "$${email}"
+
+    required_for_roles = ["user"]
+
+    permissions {
+      view = ["admin", "user"]
+      edit = ["admin", "user"]
+    }
+
+    validator {
+      name = "email"
+    }
+
+    validator {
+      name = "length"
+      config = {
+        max = 255
+      }
+    }
+  }
+
+  attribute {
+    name         = "firstName"
+    display_name = "$${firstName}"
+
+    required_for_roles = ["user"]
+
+    permissions {
+      view = ["admin", "user"]
+      edit = ["admin", "user"]
+    }
+
+    validator {
+      name = "length"
+      config = {
+        max = 255
+      }
+    }
+
+    validator {
+      name = "person-name-prohibited-characters"
+    }
+  }
+
+  attribute {
+    name         = "lastName"
+    display_name = "$${lastName}"
+
+    required_for_roles = ["user"]
+
+    permissions {
+      view = ["admin", "user"]
+      edit = ["admin", "user"]
+    }
+
+    validator {
+      name = "length"
+      config = {
+        max = 255
+      }
+    }
+
+    validator {
+      name = "person-name-prohibited-characters"
+    }
+  }
+
+  attribute {
+    name         = "archQuestion"
+    display_name = "What is the output of: LC_ALL=C pacman -V|tail -n3|base32|head -1 ?"
+
+    required_for_roles = ["user"]
+
+    permissions {
+      view = ["admin", "user"]
+      edit = ["admin", "user"]
+    }
+
+    validator {
+      name = "pattern"
+      config = {
+        pattern       = "^EAQCAIBAEAQCAIBAEAQCAIBAEAQCAIBAEAQCAVDINFZSA4DSN5TXEYLNEBWWC6JAMJSSAZTSMVSW$"
+        error-message = "Nope"
+      }
+    }
+  }
 }
 
 resource "keycloak_required_action" "custom-terms-and-conditions" {
@@ -185,6 +308,15 @@ resource "keycloak_required_action" "webauthn_register" {
   enabled  = true
   name     = "Webauthn Register"
   priority = 60
+}
+
+resource "keycloak_required_action" "verify_profile" {
+  realm_id       = "archlinux"
+  alias          = "VERIFY_PROFILE"
+  default_action = true
+  enabled        = true
+  name           = "Verify Profile"
+  priority       = 70
 }
 
 resource "keycloak_realm_events" "realm_events" {

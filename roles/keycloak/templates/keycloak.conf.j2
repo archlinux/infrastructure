@@ -15,3 +15,5 @@ db-url=jdbc:postgresql://localhost/{{ keycloak_db_name }}
 # temporarily re-enable calling the logout endpoint with a 'redirect_uri' param
 # https://www.keycloak.org/2022/04/keycloak-1800-released#_openid_connect_logout
 spi-login-protocol-openid-connect-legacy-logout-redirect-uri=true
+
+features=declarative-user-profile
