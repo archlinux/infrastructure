@@ -1,5 +1,5 @@
 - name: Install keycloak
-  pacman: name=jre11-openjdk,keycloak,keycloak-archlinux-theme,keycloak-metrics-spi,python-passlib state=present
+  pacman: name=jre11-openjdk,keycloak,keycloak-archlinux-theme,keycloak-metrics-spi,keycloak-hcaptcha,python-passlib state=present
 
 - name: Create postgres keycloak user
   postgresql_user: name="{{ vault_keycloak_db_user }}" password="{{ vault_keycloak_db_password }}"

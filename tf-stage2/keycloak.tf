@@ -14,10 +14,10 @@ data "external" "vault_keycloak" {
   "--format", "json"]
 }
 
-data "external" "vault_google" {
-  program = ["${path.module}/../misc/get_key.py", "${path.module}/../group_vars/all/vault_google.yml",
-    "vault_google_recaptcha_site_key",
-    "vault_google_recaptcha_secret_key",
+data "external" "vault_hcaptcha" {
+  program = ["${path.module}/../misc/get_key.py", "${path.module}/../misc/vaults/vault_hcaptcha.yml",
+    "vault_hcaptcha_accounts_archlinux_org_sitekey",
+    "vault_hcaptcha_secret_key",
   "--format", "json"]
 }
 
@@ -110,8 +110,8 @@ resource "keycloak_realm" "archlinux" {
 
   security_defenses {
     headers {
-      x_frame_options                     = "ALLOW-FROM https://www.google.com"
-      content_security_policy             = "frame-src 'self' https://www.google.com; frame-ancestors 'self'; object-src 'none';"
+      x_frame_options                     = "ALLOW-FROM https://www.google.com https://newassets.hcaptcha.com"
+      content_security_policy             = "frame-src 'self' https://www.google.com https://newassets.hcaptcha.com; frame-ancestors 'self'; object-src 'none';"
       content_security_policy_report_only = ""
       x_content_type_options              = "nosniff"
       x_robots_tag                        = "none"
@@ -472,11 +472,11 @@ resource "keycloak_group_roles" "externalcontributor" {
   ]
 }
 
-// Add new custom registration flow with reCAPTCHA
+// Add new custom registration flow with hCaptcha
 resource "keycloak_authentication_flow" "arch_registration_flow" {
   realm_id    = "archlinux"
   alias       = "Arch Registration"
-  description = "Customized Registration flow that forces enables ReCAPTCHA."
+  description = "Customized Registration flow that forces enables hCaptcha."
 }
 
 resource "keycloak_authentication_subflow" "registration_form" {
@@ -511,22 +511,21 @@ resource "keycloak_authentication_execution" "registration_password_action" {
   depends_on        = [keycloak_authentication_execution.registration_profile_action]
 }
 
-resource "keycloak_authentication_execution" "registration_recaptcha_action" {
+resource "keycloak_authentication_execution" "registration_hcaptcha_action" {
   realm_id          = "archlinux"
   parent_flow_alias = keycloak_authentication_subflow.registration_form.alias
-  authenticator     = "registration-recaptcha-action"
+  authenticator     = "registration-hcaptcha-action"
   requirement       = "REQUIRED"
   depends_on        = [keycloak_authentication_execution.registration_password_action]
 }
 
-resource "keycloak_authentication_execution_config" "registration_recaptcha_action_config" {
+resource "keycloak_authentication_execution_config" "registration_hcaptcha_action_config" {
   realm_id     = "archlinux"
-  alias        = "reCAPTCHA config"
-  execution_id = keycloak_authentication_execution.registration_recaptcha_action.id
+  alias        = "hCaptcha config"
+  execution_id = keycloak_authentication_execution.registration_hcaptcha_action.id
   config = {
-    "useRecaptchaNet" = "false",
-    "site.key"        = data.external.vault_google.result.vault_google_recaptcha_site_key
-    "secret"          = data.external.vault_google.result.vault_google_recaptcha_secret_key
+    "site.key" = data.external.vault_hcaptcha.result.vault_hcaptcha_accounts_archlinux_org_sitekey
+    "secret"   = data.external.vault_hcaptcha.result.vault_hcaptcha_secret_key
   }
 }
 
