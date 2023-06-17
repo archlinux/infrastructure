@@ -213,8 +213,6 @@ resource "keycloak_realm_user_profile" "archlinux" {
     name         = "lastName"
     display_name = "$${lastName}"
 
-    required_for_roles = ["user"]
-
     permissions {
       view = ["admin", "user"]
       edit = ["admin", "user"]
