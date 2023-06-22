@@ -353,6 +353,10 @@ locals {
       ipv4_address = "89.187.191.12"
       ipv6_address = "2a02:6ea0:c237::2"
     }
+    "london.mirror" = {
+      ipv4_address = "185.73.44.89"
+      ipv6_address = "2001:ba8:0:4030::2"
+    }
     "seoul.mirror" = {
       ipv4_address = "145.40.87.75"
       ipv6_address = "2604:1380:11:2600::1"

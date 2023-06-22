@@ -1,0 +1,17 @@
+hostname: "london.mirror.pkgbuild.com"
+mirror_domain: "london.mirror.pkgbuild.com"
+archweb_mirrorcheck_locations: [22, 23]
+ipv4_address: "185.73.44.89"
+ipv4_netmask: "/22"
+ipv4_gateway: "185.73.44.1"
+ipv6_address: "2001:ba8:0:4030::2"
+ipv6_netmask: "/64"
+ipv6_gateway: "fe80::fcff:ffff:feff:ffff"
+filesystem: "btrfs"
+network_interface: "enX0"
+system_disks:
+  - /dev/xvda1
+extra_disks:
+  - /dev/xvdb
+wireguard_address: 10.0.0.43
+wireguard_public_key: FuhMj8Vrk0HUR10O2dmgeXtw+bMAuhNesYD+h0lKgSc=
