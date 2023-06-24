@@ -1,2 +1,4 @@
 #!/bin/bash
-exec "{{ aurweb_dir }}/.venv/bin/aurweb-git-auth" "$@"
+cd "{{ aurweb_dir }}"
+source .venv/bin/activate
+exec aurweb-git-auth "$@"
