@@ -1,4 +1,4 @@
-matrix_max_upload_size: 50M
+matrix_max_upload_size: 100M
 matrix_nginx_config:
   - name: mjolnir
     port: 8010
