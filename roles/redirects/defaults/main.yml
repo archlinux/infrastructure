@@ -21,3 +21,7 @@ redirects:
     to: https://gitlab.archlinux.org
     type: 301
     map: maps/cgit-migrated-repos.map
+  - status:
+    domain: status.archlinux.org
+    to: https://stats.uptimerobot.com/vmM5ruWEAB
+    type: 302
