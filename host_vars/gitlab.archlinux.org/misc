@@ -1,5 +1,6 @@
 ansible_port: 2222
 filesystem: btrfs
+enable_zram_swap: true
 additional_addresses: ["213.133.111.6/32", "2a01:4f8:222:174c::2/64"]
 wireguard_address: 10.0.0.5
 wireguard_public_key: EbZisS0fwM6B8Nkugy1lyox+A8L13hniucVIPVCK5R0=
