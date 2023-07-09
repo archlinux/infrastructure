@@ -823,5 +823,4 @@ arch_users:
 # utility accounts to protect from the "disable ssh keys of disabled users" task
 utility_users:
   gemini.archlinux.org:
-    - svn-packages
-    - svn-community
+    - git-packages
