@@ -174,6 +174,7 @@ locals {
     "repod"           = "f2d1ad84f7e9f22cd881d3bef58263e0"
     "rfc"             = "b457db2ce4ac4e162d2f4435f1fe1f39"
     "monthly-reports" = "a2d60657e960b480cdb229df7cc7edf3"
+    "alpm-types"      = "610659aa8df9c0d8e4b1b7bb905ea2e3"
   }
 
   # This creates archlinux.org TXT DNS entries
