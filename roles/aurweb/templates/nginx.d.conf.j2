@@ -9,6 +9,10 @@ upstream smartgit {
 # limit Git requests to block Git DoS attempts.
 # # grep aurwebgitlimit /var/log/nginx/aur.archlinux.org/error.log | awk '{ print $14 }' | sort | uniq | sort
 limit_req_zone $binary_remote_addr zone=aurwebgitlimit:10m rate=30r/m;
+
+# limit general requests to 20 r/s to block DoS attempts.
+limit_req_zone $binary_remote_addr zone=aurweblimit:10m rate=20r/s;
+
 limit_req_status 429;
 
 server {
@@ -131,5 +135,7 @@ server {
         proxy_set_header X-Forwarded-For $remote_addr;
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header X-Forwarded-Ssl on;
+
+        limit_req zone=aurweblimit burst=10 nodelay;
     }
 }

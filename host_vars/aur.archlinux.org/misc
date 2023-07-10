@@ -1,4 +1,9 @@
 filesystem: btrfs
+fail2ban_jails:
+  sshd: true
+  postfix: false
+  dovecot: false
+  nginx_limit_req: true
 memcached_socket: "/run/memcached/aurweb.sock"
 sshd_enable_includes: true
 wireguard_address: 10.0.0.2
