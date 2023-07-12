@@ -1,4 +1,4 @@
-dbscripts_commit: 16a748c71c3799b12981f64fedf014881160527f
+dbscripts_commit: 81e7607107d2eab10fede5e1f122e8119771be1b
 dbscripts_update: true
 dbscripts_pgp_emails: ['jelle@archlinux.org', 'anthraxx@archlinux.org']
 
