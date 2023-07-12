@@ -575,6 +575,14 @@ arch_users:
       - packager
       - junior-packager
       - tu
+  moson:
+    name: "Mario Oenning"
+    email: "moson@archlinux.org"
+    ssh_key: moson.pub
+    hosts:
+      - mail.archlinux.org
+    groups:
+      - support-staff
   mtorromeo:
     name: "Massimiliano Torromeo"
     email: "mtorromeo@archlinux.org"
