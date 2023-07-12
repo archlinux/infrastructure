@@ -1,19 +1,9 @@
-dbscripts_commit: 16a748c71c3799b12981f64fedf014881160527f
+dbscripts_commit: 81e7607107d2eab10fede5e1f122e8119771be1b
 dbscripts_update: true
 dbscripts_pgp_emails: ['jelle@archlinux.org', 'anthraxx@archlinux.org']
 
 git_state_repo: /srv/repos/state
 git_pkg_cache: /srv/repos/pkg-cache
-
-junior_multilib_repos:
-  - multilib-staging
-  - multilib-testing
-  - multilib-staging-debug
-  - multilib-testing-debug
-
-multilib_repos:
-  - multilib
-  - multilib-debug
 
 junior_developer_repos:
   - core-testing
@@ -30,9 +20,15 @@ junior_packager_repos:
   - extra-staging
   - extra-testing-debug
   - extra-staging-debug
+  - multilib-staging
+  - multilib-testing
+  - multilib-staging-debug
+  - multilib-testing-debug
 
 packager_repos:
   - extra
   - extra-debug
   - kde-unstable-debug
   - gnome-unstable-debug
+  - multilib
+  - multilib-debug
