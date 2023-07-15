@@ -25,7 +25,7 @@ blackbox_targets:
 
     # regenerate the list below with: ./misc/find-arch-on-crt.sh targets
     - https://accounts.archlinux.org
-    - https://alpm-types.archlinux.page
+    - https://alpm-types.archlinux.page/alpm_types/
     - https://america.archive.pkgbuild.com
     - https://america.mirror.pkgbuild.com
     - https://archive.archlinux.org
