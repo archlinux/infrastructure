@@ -16,9 +16,9 @@
   lineinfile:
     dest: /etc/sudoers
     state: present
-    regexp: '^%wheel ALL=\(ALL\) ALL'
-    insertafter: '^# %wheel ALL=\(ALL\) ALL'
-    line: '%wheel ALL=(ALL) ALL'
+    regexp: '^%wheel ALL=\(ALL:ALL\) ALL'
+    insertafter: '^# %wheel ALL=\(ALL:ALL\) ALL'
+    line: '%wheel ALL=(ALL:ALL) ALL'
     validate: 'visudo -cf %s'
     mode: '0440'
     owner: root
