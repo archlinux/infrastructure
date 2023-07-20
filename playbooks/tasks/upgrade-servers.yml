@@ -16,7 +16,7 @@
       delay: 10
 
 - name: Upgrade and reboot all hetzner servers
-  hosts: all,!accounts.archlinux.org,!kape_servers,!equinix_metal
+  hosts: all,!accounts.archlinux.org,!bugs.archlinux.org,!kape_servers,!equinix_metal
   max_fail_percentage: 0
   serial: 20%
   gather_facts: false
