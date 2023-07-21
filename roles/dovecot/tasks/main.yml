@@ -47,6 +47,15 @@
 - name: Start and enable dovecot
   service: name=dovecot enabled=yes state=started
 
+  # faillock's default behavior allows third-parties to lock a user out of
+  # their mailbox by doing 3 failed auth attempts; turn it off and rely on
+  # fail2ban instead
+- name: Disable pam_faillock lockout mechanism
+  lineinfile:
+    path: /etc/security/faillock.conf
+    regexp: deny =
+    line: deny = 0
+
 - name: Open firewall holes
   ansible.posix.firewalld: service={{ item }} permanent=true state=enabled immediate=yes
   with_items:
