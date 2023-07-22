@@ -64,6 +64,10 @@ locals {
       server_type = "cx21"
       domain      = "bbs"
     }
+    "bugbuddy.archlinux.org" = {
+      server_type = "cx11"
+      domain      = "bugbuddy"
+    }
     "bugs.archlinux.org" = {
       server_type = "cx11"
       domain      = "bugs"

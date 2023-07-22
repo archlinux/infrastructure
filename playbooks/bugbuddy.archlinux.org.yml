@@ -1,0 +1,12 @@
+- name: Setup bugbuddy.archlinux.org
+  hosts: bugbuddy.archlinux.org
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: firewalld }
+    - { role: wireguard }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: prometheus_exporters }
+    - { role: promtail }
+    - { role: fail2ban }
