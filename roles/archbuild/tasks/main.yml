@@ -58,8 +58,21 @@
     - mkpkg@.timer
     - mkpkg@.service
 
-- name: Install user-.slice snippet
-  copy: src=user-.slice.d dest=/etc/systemd/system owner=root group=root mode=0644
+- name: Create drop-in directories for devtools
+  file: path=/etc/systemd/system/{{ item }}.d state=directory owner=root group=root mode=0755
+  with_items:
+    - arch-nspawn-.scope
+    - devtools.slice
+    - user-.slice
+
+- name: Install drop-in snippets for devtools
+  copy: src=devtools-override_{{ item }}.conf dest=/etc/systemd/system/{{ item }}.d/override.conf owner=root group=root mode=0644
+  with_items:
+    - arch-nspawn-.scope
+    - devtools.slice
+    - user-.slice
+  notify:
+    - Daemon reload
 
 - name: Start and enable archbuild mounts
   service: name={{ item }} enabled={{ "yes" if archbuild_fs == 'tmpfs' else "no" }} state={{ "started" if archbuild_fs == 'tmpfs' else "stopped" }}
