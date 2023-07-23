@@ -202,7 +202,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "rate(search_requests_total{job=\"aurweb\"}[5m])",
+          "expr": "rate(aur_search_requests_total{job=\"aurweb\"}[5m])",
           "interval": "",
           "legendFormat": "cache-{{ cache }}",
           "range": true,
@@ -214,7 +214,7 @@
             "uid": "Prometheus"
           },
           "editorMode": "builder",
-          "expr": "sum(rate(search_requests_total{job=\"aurweb\"}[5m]))",
+          "expr": "sum(rate(aur_search_requests_total{job=\"aurweb\"}[5m]))",
           "hide": false,
           "instant": false,
           "legendFormat": "total",
