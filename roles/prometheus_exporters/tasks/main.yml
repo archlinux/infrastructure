@@ -62,7 +62,6 @@
     - archive-textcollector.sh
     - repository-textcollector.sh
     - btrfs-textcollector.sh
-    - aur-textcollector.sh
     - fail2ban-textcollector.sh
     - smart-textcollector.sh
 
@@ -209,18 +208,6 @@
 - name: Enable and start prometheus btrfs textcollector timer
   systemd: name=prometheus-btrfs-textcollector.timer enabled=yes daemon_reload=yes state=started
   when: filesystem == "btrfs"
-
-- name: Install aur textcollector service
-  template: src=prometheus-aur-textcollector.service.j2 dest=/etc/systemd/system/prometheus-aur-textcollector.service owner=root group=root mode=644
-  when: "'prometheus' in group_names"
-
-- name: Install aur textcollector timer
-  template: src=prometheus-aur-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-aur-textcollector.timer owner=root group=root mode=644
-  when: "'prometheus' in group_names"
-
-- name: Enable and start prometheus aur textcollector timer
-  systemd: name=prometheus-aur-textcollector.timer enabled=yes daemon_reload=yes state=started
-  when: "'prometheus' in group_names"
 
 - name: Enable prometheus-node-exporter service
   systemd: name=prometheus-node-exporter enabled=yes daemon_reload=yes state=started
