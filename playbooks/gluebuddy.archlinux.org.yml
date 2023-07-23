@@ -8,7 +8,6 @@
     - { role: sshd }
     - { role: root_ssh }
     - { role: gluebuddy }
-    - { role: borg_client, tags: ["borg"] }
     - { role: prometheus_exporters }
     - { role: promtail }
     - { role: fail2ban }
