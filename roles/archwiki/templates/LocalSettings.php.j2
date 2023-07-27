@@ -444,6 +444,20 @@ wfLoadExtension( 'DarkMode' );
 wfLoadExtension( 'Echo' );
 wfLoadExtension( 'Thanks' );
 
+# Discussion Tools
+$wgVisualEditorAvailableNamespaces = [
+    NS_MAIN => false,
+    "Talk" => false,
+    "User" => false,
+    "File" => false,
+    "Category" => false,
+    NS_DEVELOPERWIKI => false,
+];
+
+wfLoadExtension( 'VisualEditor' );
+wfLoadExtension( 'Linter' );
+wfLoadExtension( 'DiscussionTools' );
+
 ##
 ## Temporary settings for maintenance
 ##
