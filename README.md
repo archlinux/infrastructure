@@ -49,6 +49,10 @@ In order to use this, you need to install packer and then run
 
 This will take some time after which a new snapshot will have been created on the primary hcloud archlinux project.
 
+For the sandbox project please run
+
+    packer build -var $(misc/get_key.py misc/vaults/vault_hetzner.yml hetzner_cloud_sandbox_infrastructure_api_key --format env | sed 's/_sandbox_infrastructure//') packer/archlinux.pkr.hcl
+
 #### Note about terraform
 
 We use terraform in two ways:
