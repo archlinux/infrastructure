@@ -51,7 +51,7 @@ This will take some time after which a new snapshot will have been created on th
 
 For the sandbox project please run
 
-    packer build -var $(misc/get_key.py misc/vaults/vault_hetzner.yml hetzner_cloud_sandbox_infrastructure_api_key --format env | sed 's/_sandbox_infrastructure//') packer/archlinux.pkr.hcl
+    packer build -var $(misc/get_key.py misc/vaults/vault_hetzner.yml hetzner_cloud_sandbox_infrastructure_api_key --format env | sed 's/_sandbox_infrastructure//') -var install_ec2_public_keys_service=true packer/archlinux.pkr.hcl
 
 #### Note about terraform
 

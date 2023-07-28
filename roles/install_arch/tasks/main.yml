@@ -171,6 +171,13 @@
 - name: Setup pacman-init.service on first boot
   copy: src=pacman-init.service dest=/mnt/etc/systemd/system/ owner=root group=root mode=0644
 
+- name: Setup ec2-public-keys on first boot
+  copy: src={{ item.src }} dest=/mnt/{{ item.dest }} owner=root group=root mode={{ item.mode }}
+  loop:
+    - {src: ec2-public-keys, dest: /usr/local/bin/, mode: 755}
+    - {src: ec2-public-keys.service, dest: /etc/systemd/system/, mode: 644}
+  when: install_ec2_public_keys_service | default(false)
+
 - name: Remove generated keyring in the installation process
   file: path=/mnt/etc/pacman.d/gnupg state=absent
 
@@ -178,7 +185,7 @@
   file: path=/mnt/etc/machine-id state=absent
 
 - name: Enable services inside chroot
-  command: chroot /mnt systemctl enable sshd systemd-networkd systemd-resolved fstrim.timer pacman-init
+  command: chroot /mnt systemctl enable sshd systemd-networkd systemd-resolved fstrim.timer pacman-init {{ 'ec2-public-keys' if install_ec2_public_keys_service | default(false) }}
   register: chroot_systemd_services
   changed_when: "chroot_systemd_services.rc == 0"
 
@@ -187,6 +194,7 @@
     name: root_ssh
   vars:
     root_ssh_directory: /tmp/root.x86_64/mnt/root/.ssh
+  when: not install_ec2_public_keys_service | default(false)
 
 - name: Configure sshd
   template: src=sshd_config.j2 dest=/mnt/etc/ssh/sshd_config owner=root group=root mode=0644

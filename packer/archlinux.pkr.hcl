@@ -18,6 +18,11 @@ variable "hetzner_cloud_api_key" {
   sensitive = true
 }
 
+variable "install_ec2_public_keys_service" {
+  type    = bool
+  default = false
+}
+
 # https://www.packer.io/docs/templates/hcl_templates/blocks/source
 source "hcloud" "rescue" {
   image       = "ubuntu-22.04"
@@ -40,6 +45,11 @@ build {
     host_alias          = "packer-base-image"
     inventory_directory = "."
     playbook_file       = "playbooks/tasks/install_arch.yml"
-    use_proxy           = false
+    extra_arguments = [
+      "--extra-vars", jsonencode({
+        install_ec2_public_keys_service : var.install_ec2_public_keys_service
+      })
+    ]
+    use_proxy = false
   }
 }
