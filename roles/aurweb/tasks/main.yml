@@ -153,6 +153,17 @@
               priv="{{ aurweb_db }}.*:ALL"
   no_log: true
 
+- name: Install python modules # noqa no-changed-when
+  command: poetry install
+  args:
+    chdir: "{{ aurweb_dir }}"
+  environment:
+    POETRY_VIRTUALENVS_IN_PROJECT: "true"
+    # https://github.com/python-poetry/poetry/issues/1917
+    PYTHON_KEYRING_BACKEND: "keyring.backends.null.Keyring"
+  become: true
+  become_user: "{{ aurweb_user }}"
+
 - name: Initialize the database  # noqa no-changed-when
   command: poetry run python -m aurweb.initdb
   args:
@@ -171,27 +182,6 @@
   become_user: "{{ aurweb_user }}"
   when: release.changed or db_created.changed
 
-- name: Check python module availability  # noqa no-changed-when
-  command: poetry run python3 -c 'import aurweb'
-  args:
-    chdir: "{{ aurweb_dir }}"
-  become: true
-  become_user: "{{ aurweb_user }}"
-  ignore_errors: true
-  register: aurweb_installed
-
-- name: Install python module  # noqa no-changed-when
-  command: poetry install
-  args:
-    chdir: "{{ aurweb_dir }}"
-  environment:
-    POETRY_VIRTUALENVS_IN_PROJECT: "true"
-    # https://github.com/python-poetry/poetry/issues/1917
-    PYTHON_KEYRING_BACKEND: "keyring.backends.null.Keyring"
-  become: true
-  become_user: "{{ aurweb_user }}"
-  when: release.changed or aurweb_installed.rc != 0
-
 - name: Install custom aurweb-git-auth wrapper script
   template: src=aurweb-git-auth.sh.j2 dest=/usr/local/bin/aurweb-git-auth.sh owner=root group=root mode=0755
   when: release.changed
@@ -202,13 +192,6 @@
 
 - name: Install custom aurweb-git-update wrapper script
   template: src=aurweb-git-update.sh.j2 dest=/usr/local/bin/aurweb-git-update.sh owner=root group=root mode=0755
-  when: release.changed
-
-- name: Link custom aurweb-git-update wrapper to hooks/update
-  file:
-    src: /usr/local/bin/aurweb-git-update.sh
-    dest: "{{ aurweb_dir }}/aur.git/hooks/update"
-    state: link
   when: release.changed
 
 - name: Install aurweb-git-gc script
@@ -251,7 +234,7 @@
 - name: Deploy new cgit release
   become: true
   become_user: "{{ aurweb_user }}"
-  file: path=/etc/uwsgi/vassals/cgit.ini state=touch owner=root group=root mode=0644
+  file: path=/etc/uwsgi/vassals/cgit.ini state=touch owner={{ aurweb_user }} group=http mode=0644
   when: cgit.changed
 
 - name: Configure smartgit uwsgi service
@@ -316,6 +299,13 @@
   become: true
   become_user: "{{ aurweb_user }}"
 
+- name: Link custom aurweb-git-update wrapper to hooks/update
+  file:
+    src: /usr/local/bin/aurweb-git-update.sh
+    dest: "{{ aurweb_dir }}/aur.git/hooks/update"
+    state: link
+  when: release.changed
+
 - name: Configure sshd
   template: src=aurweb_config.j2 dest=/etc/ssh/sshd_config.d/aurweb.conf owner=root group=root mode=0600 validate='/usr/sbin/sshd -t -f %s'
   notify:
@@ -328,7 +318,6 @@
     - aurweb-git-archive.timer
     - aurweb-aurblup.timer
     - aurweb-mkpkglists.timer
-    - aurweb-git-archive.timer
     - aurweb-pkgmaint.timer
     - aurweb-popupdate.timer
     - aurweb-tuvotereminder.timer
