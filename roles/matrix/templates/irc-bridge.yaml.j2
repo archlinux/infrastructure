@@ -305,7 +305,9 @@ ircService:
 {% for mapping in network.mappings %}
         "{{ mapping.channel }}":
           roomIds: ["{{ mapping.room }}"]
+{% if 'key' in mapping %}
           key: "{{ mapping.key }}"
+{% endif %}
 {% endfor %}
 
       # Configuration for virtual matrix users. The following variables are
