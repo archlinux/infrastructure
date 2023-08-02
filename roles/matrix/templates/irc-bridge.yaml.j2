@@ -349,7 +349,7 @@ ircService:
         # reached, the client that spoke the longest time ago will be
         # disconnected and replaced.
         # Optional. Default: 30.
-        maxClients: 50
+        maxClients: 90
         # IPv6 configuration.
         ipv6:
           # Optional. Set to true to force IPv6 for outgoing connections.
@@ -375,7 +375,7 @@ ircService:
         # without sending another message before being disconnected. Use 0 to
         # not apply an idle timeout. This value is ignored if this IRC server is
         # mirroring matrix membership lists to IRC. Default: 172800 (48 hours)
-        idleTimeout: 10800
+        idleTimeout: 0
         # The number of millseconds to wait between consecutive reconnections if a
         # client gets disconnected. Setting to 0 will cause the scheduling to be
         # disabled, i.e. it will be scheduled immediately (with jitter.
@@ -383,7 +383,7 @@ ircService:
         # reconnect for this server will be handled every reconnectIntervalMs ms using
         # a FIFO queue.
         # Default: 5000 (5 seconds)
-        reconnectIntervalMs: 5000
+        reconnectIntervalMs: 2000
         # The number of concurrent reconnects if a user has been disconnected unexpectedly
         # (e.g. a netsplit). You should set this to a reasonably high number so that
         # bridges are not waiting an eternity to reconnect all its clients if
