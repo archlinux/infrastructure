@@ -288,7 +288,6 @@ locals {
   archlinux_org_cname = {
     archive       = { value = "gemini" }
     dev           = { value = "www" }
-    g2kjxsblac7x  = { value = "gv-i5y6mnrelvpfiu.dv.googlehosted.com." }
     ipxe          = { value = "www" }
     mailman       = { value = "redirect" }
     packages      = { value = "www" }
