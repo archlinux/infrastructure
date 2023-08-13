@@ -8,4 +8,3 @@
     - install_arch
   vars:
     - bootstrap_version: "latest"
-    - sshd_enable_includes: false
