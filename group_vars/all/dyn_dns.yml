@@ -1,0 +1,8 @@
+dyn_dns_server: "{{ hostvars['redirect.archlinux.org']['ipv4_address'] }}"
+dyn_dns_zones:
+  _acme-challenge.geo.mirror.pkgbuild.com: &acme_challenge
+    key: certbot
+    allowed_ipv4: "{{ groups['geo_mirrors'] | map('extract', hostvars, ['ipv4_address']) }}"
+    allowed_ipv6: "{{ groups['geo_mirrors'] | map('extract', hostvars, ['ipv6_address']) }}"
+    valid_qtypes: [TXT]
+  _acme-challenge.riscv.mirror.pkgbuild.com: *acme_challenge

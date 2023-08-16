@@ -1,0 +1,86 @@
+#jinja2: lstrip_blocks: True
+-- Based on https://github.com/PowerDNS/pdns/wiki/Lua-Examples-(Authoritative)#updatepolicy-access-control-for-rfc2136-dynamic-updates
+function updatepolicy(input)
+  local zones = {
+{% for zone, prop in dyn_dns_zones.items() %}
+    ["{{ zone }}."] = {
+      ["key"] = "{{ prop.key }}.",
+      ["allowed_networks"] = {
+        {% for ipv4 in prop.allowed_ipv4 %}
+        '{{ ipv4 }}{{ '' if '/' in ipv4 else '/32' }}',
+        {% endfor %}
+        {% for ipv6 in prop.allowed_ipv6 %}
+        '{{ ipv6 }}{{ '' if '/' in ipv6 else '/128' }}',
+        {% endfor %}
+      },
+      ["valid_qtypes"] = {
+        {% for qtype in prop.valid_qtypes %}
+        [pdns.{{ qtype }}] = true,
+        {% endfor %}
+      },
+      ["subdomains"] = "{{ prop.subdomains | default('no') }}",
+    },
+{% endfor %}
+  }
+
+  local zone_name = input:getZoneName():toString()
+  local zone = zones[zone_name]
+
+  -- reject unknown zones
+  if not zone
+  then
+    pdnslog("updatepolicy: unknown zone " .. zone_name, pdns.loglevels.Info)
+    return false
+  end
+
+  local allowed_networks = newNMG(zone["allowed_networks"])
+
+  -- reject unauthorized networks
+  if not allowed_networks:match(input:getRemote())
+  then
+    pdnslog("updatepolicy: network check failed from " .. input:getRemote():toString(), pdns.loglevels.Info)
+    return false
+  end
+
+  input_qname = input:getQName():toString()
+
+  -- reject subdomain records when subdomains == "no"
+  if zone["subdomains"] == "no" and input_qname ~= zone_name
+  then
+    pdnslog("updatepolicy: subdomain records not allowed in zone " .. zone_name, pdns.loglevels.Info)
+    return false
+  end
+
+  -- reject apex records when subdomains == "only"
+  if zone["subdomains"] == "only" and input_qname == zone_name
+  then
+    pdnslog("updatepolicy: apex records not allowed in zone " .. zone_name, pdns.loglevels.Info)
+    return false
+  end
+
+  -- reject non-TSIG requests
+  if input:getTsigName():countLabels() == 0
+  then
+    pdnslog("updatepolicy: missing TSIG", pdns.loglevels.Info)
+    return false
+  end
+
+  input_tsig_name = input:getTsigName():toString()
+
+  -- reject unauthorized TSIG key names
+  if zone["key"] ~= input_tsig_name
+  then
+    pdnslog("updatepolicy: wrong TSIG " .. input_tsig_name .. " for zone " .. zone_name, pdns.loglevels.Info)
+    return false
+  end
+
+  -- reject disallowed record types
+  if not zone["valid_qtypes"][input:getQType()]
+  then
+    pdnslog("updatepolicy: disallowed record type " .. input:getQType(), pdns.loglevels.Info)
+    return false
+  end
+
+  pdnslog("updatepolicy: query checks successful", pdns.loglevels.Info)
+  return true
+end

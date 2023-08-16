@@ -20,7 +20,7 @@ The continent mirrors america, asia and europe contain the archive mirrors as we
 - Host with Arch Linux installed
 - root access provided
 - Enough storage to host repos / debugrepos (at least)
-- Bandwidth (depends on location)   
+- Bandwidth (depends on location)
 
 ## Adding a new mirror box
 - Add new entries in `hosts` file under `mirrors` and `geo_mirrors` sections
@@ -38,7 +38,7 @@ The continent mirrors america, asia and europe contain the archive mirrors as we
 | ----------- | ----------- | ----------- | ----------- |  ----------- |
 | install_arch | All | Install Arch | | Optional if you can |
 | mirrors.yml | All | Setup mirror | `<fqdn>` | |
-| redirect.archlinux.org.yml | acme_dns_challenge | Make TXT records | | |
+| redirect.archlinux.org.yml | dyn_dns | Make TXT records | | |
 | gemini.archlinux.org.yml | dbscripts | Allow debug repo syncing | | |
 | mirrors.yml | geo_dns | Add new domain to DNS | All other mirrors from geo.mirror | |
 | monitoring.archlinux.org.yml | wireguard,prometheus | Allow loki and prometheus to fetch data | | |
