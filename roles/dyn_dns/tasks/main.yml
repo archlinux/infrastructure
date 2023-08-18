@@ -8,27 +8,30 @@
     - {src: dnsupdate-policy.lua.j2, dest: dnsupdate-policy.lua}
   notify: Restart powerdns
 
-- name: Create directory for sqlite3 dbs
+- name: Create directory for sqlite3 database
   file: path=/var/lib/powerdns state=directory owner=powerdns group=powerdns mode=0755
 
-- name: Initialize sqlite3 database for _acme-challenge zones
+- name: Initialize sqlite3 database
   command: sqlite3 -init /usr/share/doc/powerdns/schema.sqlite3.sql /var/lib/powerdns/pdns.sqlite3 ""
   become: true
   become_user: powerdns
   args:
     creates: /var/lib/powerdns/pdns.sqlite3
 
-- name: Create _acme-challenge zones
+- name: Create zones
   shell: |
-    pdnsutil create-zone _acme-challenge.{{ item }} {{ inventory_hostname }}
-    pdnsutil replace-rrset _acme-challenge.{{ item }} @ SOA "{{ inventory_hostname }}. root.archlinux.org. 0 10800 3600 604800 3600"
-  loop: "{{ geo_domains }}"
-  become: true
-  become_user: powerdns
+    pdnsutil create-zone {{ item.zone }} {{ inventory_hostname }}
+    pdnsutil replace-rrset {{ item.zone }} @ SOA "{{ inventory_hostname }}. root.archlinux.org. 0 10800 3600 604800 3600"
+  loop: "{{ dyn_dns_zones | dict2items(key_name='zone') }}"
+  loop_control:
+    label: "{{ item.zone }}"
   changed_when: false
 
-- name: Import TSIG key (for certbot)
-  command: pdnsutil import-tsig-key {{ certbot_rfc2136_key }} {{ certbot_rfc2136_algorithm }} {{ certbot_rfc2136_secret }}
+- name: Import TSIG keys
+  command: pdnsutil import-tsig-key {{ item.key }} {{ item.value.algorithm }} {{ item.value.secret }}
+  loop: "{{ dyn_dns_keys | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"
   changed_when: false
 
 - name: Open powerdns ipv4 port for monitoring.archlinux.org

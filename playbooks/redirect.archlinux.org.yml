@@ -14,4 +14,4 @@
     - { role: promtail }
     - { role: hardening }
     - { role: ping }
-    - { role: acme_dns_challenge }
+    - { role: dyn_dns }
