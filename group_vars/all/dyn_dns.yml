@@ -6,3 +6,9 @@ dyn_dns_zones:
     allowed_ipv6: "{{ groups['geo_mirrors'] | map('extract', hostvars, ['ipv6_address']) }}"
     valid_qtypes: [TXT]
   _acme-challenge.riscv.mirror.pkgbuild.com: *acme_challenge
+  sandbox.archlinux.page:
+    key: sandbox
+    allowed_ipv4: "{{ groups['gitlab_runners'] | map('extract', hostvars, ['ipv4_address']) }}"
+    allowed_ipv6: "{{ groups['gitlab_runners'] | map('extract', hostvars, ['ipv6_address']) }}"
+    valid_qtypes: [A, AAAA]
+    subdomains: only

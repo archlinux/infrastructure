@@ -473,6 +473,14 @@ resource "hetznerdns_record" "archlinux_page_origin_ns1" {
   ttl     = 86400
 }
 
+resource "hetznerdns_record" "archlinux_page_sandbox_ns1" {
+  zone_id = hetznerdns_zone.archlinux_page.id
+  name    = "sandbox"
+  value   = "redirect.archlinux.org."
+  type    = "NS"
+  ttl     = 86400
+}
+
 # TODO: Commented currently as we have no idea how to handle SOA stuff with Terraform:
 # https://github.com/timohirt/terraform-provider-hetznerdns/issues/20
 # https://gitlab.archlinux.org/archlinux/infrastructure/-/merge_requests/62#note_4040
