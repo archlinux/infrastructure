@@ -196,8 +196,8 @@
     root_ssh_directory: /tmp/root.x86_64/mnt/root/.ssh
   when: not install_ec2_public_keys_service | default(false)
 
-- name: Configure sshd
-  template: src=sshd_config.j2 dest=/mnt/etc/ssh/sshd_config owner=root group=root mode=0644
+- name: Configure sshd via drop-in
+  template: src=sshd_config.j2 dest=/mnt/etc/ssh/sshd_config.d/override.conf owner=root group=root mode=0644
 
 - name: Clean pacman cache  # noqa risky-shell-pipe ("Illegal option -o pipefail" in Hetzner's recovery environment (dash?))
   shell: yes | chroot /mnt pacman -Scc
