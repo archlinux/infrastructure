@@ -45,9 +45,13 @@ tasks.
 We use packer to build snapshots on hcloud to use as server base images.
 In order to use this, you need to install packer and then run
 
-    packer build -var $(misc/get_key.py misc/vaults/vault_hetzner.yml hetzner_cloud_api_key --format env) packer/archlinux.json
+    packer build -var $(misc/get_key.py misc/vaults/vault_hetzner.yml hetzner_cloud_api_key --format env) packer/archlinux.pkr.hcl
 
 This will take some time after which a new snapshot will have been created on the primary hcloud archlinux project.
+
+For the sandbox project please run
+
+    packer build -var $(misc/get_key.py misc/vaults/vault_hetzner.yml hetzner_cloud_sandbox_infrastructure_api_key --format env | sed 's/_sandbox_infrastructure//') -var install_ec2_public_keys_service=true packer/archlinux.pkr.hcl
 
 #### Note about terraform
 

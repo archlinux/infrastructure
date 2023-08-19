@@ -1,0 +1,13 @@
+[Unit]
+Description=Fetch SSH public keys from the metadata service
+Before=sshd.service
+After=systemd-networkd-wait-online.service
+ConditionFirstBoot=yes
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/ec2-public-keys
+
+[Install]
+WantedBy=multi-user.target
