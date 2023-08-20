@@ -1,0 +1,14 @@
+- name: Run borg client post-upgrade tasks
+  include_tasks: include/post-upgrade/borg-clients.yml
+  when: "'borg_clients' in group_names"
+
+- name: Check for host-specific post-upgrade tasks
+  local_action: stat path=include/post-upgrade/{{ inventory_hostname }}.yml
+  register: post_upgrade_tasks
+
+- name: Run host-specific post-upgrade tasks
+  include_tasks: "{{ post_upgrade_tasks.stat.path }}"
+  when: post_upgrade_tasks.stat.exists
+
+- name: Reboot
+  reboot:
