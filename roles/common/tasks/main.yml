@@ -1,5 +1,5 @@
 - name: Install essential tools
-  pacman: name=vim,nano,tmux,htop,ncdu,bash-completion,rsync,vnstat state=present
+  pacman: name=less,vim,nano,tmux,htop,ncdu,bash-completion,rsync,vnstat state=present
 
 - name: Install compsize for use with btrfs
   pacman: name=compsize state=present
