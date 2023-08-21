@@ -1,0 +1,20 @@
+- name: Setup aur development host
+  hosts: '{{ aurdev_fqdn|default("none") }}'
+  remote_user: root
+  roles:
+    - { role: common, enable_zram_swap: true }
+    - { role: firewalld }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: certbot }
+    - { role: nginx }
+    - { role: mariadb, mariadb_innodb_buffer_pool_size: '1G' }
+    - { role: sudo }
+    - { role: redis }
+    - { role: uwsgi }
+    - { role: aurweb, aurweb_domain: "{{ aurdev_fqdn }}", aurweb_environment_type: 'dev' }
+    - { role: fail2ban }
+
+  pre_tasks:
+    - name: Upgrade and reboot
+      include_tasks: tasks/include/upgrade-server.yml

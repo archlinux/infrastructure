@@ -30,22 +30,22 @@
   user: name="{{ aurweb_user }}" shell=/bin/bash createhome=yes
   register: aur_user
 
-- name: Create .ssh for the aur user
-  file: path={{ aur_user.home }}/.ssh state=directory owner={{ aur_user.name }} group={{ aur_user.name }} mode=0700
+- name: Github SSH configuration tasks
+  when: aurweb_environment_type == "prod"
+  block:
+    - name: Install SSH key for mirroring to GitHub
+      copy: src=id_ed25519.vault dest={{ aur_user.home }}/.ssh/id_ed25519 owner={{ aur_user.name }} group={{ aur_user.name }} mode=0600
 
-- name: Install SSH key for mirroring to GitHub
-  copy: src=id_ed25519.vault dest={{ aur_user.home }}/.ssh/id_ed25519 owner={{ aur_user.name }} group={{ aur_user.name }} mode=0600
+    - name: Fetch host keys for github.com
+      command: ssh-keyscan github.com
+      args:
+        creates: "{{ aur_user.home }}/.ssh/known_hosts"
+      register: github_host_keys
 
-- name: Fetch host keys for github.com
-  command: ssh-keyscan github.com
-  args:
-    creates: "{{ aur_user.home }}/.ssh/known_hosts"
-  register: github_host_keys
-
-- name: Write github.com host keys to the aur user's known_hosts
-  lineinfile: name={{ aur_user.home }}/.ssh/known_hosts create=yes line={{ item }} owner={{ aur_user.name }} group={{ aur_user.name }} mode=0644
-  loop: "{{ github_host_keys.stdout_lines }}"
-  when: github_host_keys.changed
+    - name: Write github.com host keys to the aur user's known_hosts
+      lineinfile: name={{ aur_user.home }}/.ssh/known_hosts create=yes line={{ item }} owner={{ aur_user.name }} group={{ aur_user.name }} mode=0644
+      loop: "{{ github_host_keys.stdout_lines }}"
+      when: github_host_keys.changed
 
 - name: Create directory
   file: path={{ aurweb_dir }} state=directory owner={{ aurweb_user }} group=http mode=0775
@@ -71,44 +71,18 @@
   check_mode: true
 
 - name: Install AUR systemd service and timers
-  template: src={{ item }}.j2 dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  template: src={{ item.name }}.j2 dest=/etc/systemd/system/{{ item.name }} owner=root group=root mode=0644
   with_items:
-    - aurweb-git.service
-    - aurweb-git.timer
-    - aurweb-git-archive.service
-    - aurweb-git-archive.timer
-    - aurweb-aurblup.service
-    - aurweb-aurblup.timer
-    - aurweb-mkpkglists.service
-    - aurweb-mkpkglists.timer
-    - aurweb-pkgmaint.service
-    - aurweb-pkgmaint.timer
-    - aurweb-popupdate.service
-    - aurweb-popupdate.timer
-    - aurweb-tuvotereminder.service
-    - aurweb-tuvotereminder.timer
-    - aurweb-usermaint.service
-    - aurweb-usermaint.timer
-    - aurweb.service
-    - aurweb-github-mirror.service
-    - aurweb-github-mirror.timer
-  when: release.changed
+    - "{{ aurweb_services }}"
+    - "{{ aurweb_timers }}"
+  when: release.changed and (item.install is not defined or item.install)
 
 - name: Stop AUR systemd services and timers
-  service: name={{ item }} enabled=yes state=stopped
+  service: name={{ item.name }} enabled=yes state=stopped
   with_items:
-    - aurweb-git.timer
-    - aurweb-git-archive.timer
-    - aurweb-aurblup.timer
-    - aurweb-mkpkglists.timer
-    - aurweb-pkgmaint.timer
-    - aurweb-popupdate.timer
-    - aurweb-tuvotereminder.timer
-    - aurweb-usermaint.timer
-    - aurweb.service
-    - goaurrpc.service
-    - aurweb-github-mirror.timer
-  when: release.changed
+    - "{{ aurweb_services }}"
+    - "{{ aurweb_timers }}"
+  when: release.changed and (item.restart is not defined or item.restart)
 
 - name: Clone aurweb repo
   git: >
@@ -153,6 +127,17 @@
               priv="{{ aurweb_db }}.*:ALL"
   no_log: true
 
+- name: Install python modules # noqa no-changed-when
+  command: poetry install
+  args:
+    chdir: "{{ aurweb_dir }}"
+  environment:
+    POETRY_VIRTUALENVS_IN_PROJECT: "true"
+    # https://github.com/python-poetry/poetry/issues/1917
+    PYTHON_KEYRING_BACKEND: "keyring.backends.null.Keyring"
+  become: true
+  become_user: "{{ aurweb_user }}"
+
 - name: Initialize the database  # noqa no-changed-when
   command: poetry run python -m aurweb.initdb
   args:
@@ -171,27 +156,6 @@
   become_user: "{{ aurweb_user }}"
   when: release.changed or db_created.changed
 
-- name: Check python module availability  # noqa no-changed-when
-  command: poetry run python3 -c 'import aurweb'
-  args:
-    chdir: "{{ aurweb_dir }}"
-  become: true
-  become_user: "{{ aurweb_user }}"
-  ignore_errors: true
-  register: aurweb_installed
-
-- name: Install python module  # noqa no-changed-when
-  command: poetry install
-  args:
-    chdir: "{{ aurweb_dir }}"
-  environment:
-    POETRY_VIRTUALENVS_IN_PROJECT: "true"
-    # https://github.com/python-poetry/poetry/issues/1917
-    PYTHON_KEYRING_BACKEND: "keyring.backends.null.Keyring"
-  become: true
-  become_user: "{{ aurweb_user }}"
-  when: release.changed or aurweb_installed.rc != 0
-
 - name: Install custom aurweb-git-auth wrapper script
   template: src=aurweb-git-auth.sh.j2 dest=/usr/local/bin/aurweb-git-auth.sh owner=root group=root mode=0755
   when: release.changed
@@ -202,13 +166,6 @@
 
 - name: Install custom aurweb-git-update wrapper script
   template: src=aurweb-git-update.sh.j2 dest=/usr/local/bin/aurweb-git-update.sh owner=root group=root mode=0755
-  when: release.changed
-
-- name: Link custom aurweb-git-update wrapper to hooks/update
-  file:
-    src: /usr/local/bin/aurweb-git-update.sh
-    dest: "{{ aurweb_dir }}/aur.git/hooks/update"
-    state: link
   when: release.changed
 
 - name: Install aurweb-git-gc script
@@ -251,7 +208,7 @@
 - name: Deploy new cgit release
   become: true
   become_user: "{{ aurweb_user }}"
-  file: path=/etc/uwsgi/vassals/cgit.ini state=touch owner=root group=root mode=0644
+  file: path=/etc/uwsgi/vassals/cgit.ini state=touch owner={{ aurweb_user }} group=http mode=0644
   when: cgit.changed
 
 - name: Configure smartgit uwsgi service
@@ -316,24 +273,57 @@
   become: true
   become_user: "{{ aurweb_user }}"
 
+- name: Link custom aurweb-git-update wrapper to hooks/update
+  file:
+    src: /usr/local/bin/aurweb-git-update.sh
+    dest: "{{ aurweb_dir }}/aur.git/hooks/update"
+    state: link
+  when: release.changed
+
 - name: Configure sshd
   template: src=aurweb_config.j2 dest=/etc/ssh/sshd_config.d/aurweb.conf owner=root group=root mode=0600 validate='/usr/sbin/sshd -t -f %s'
   notify:
     - Restart sshd
 
 - name: Start and enable AUR systemd services and timers
-  systemd: name={{ item }} enabled=yes state=started daemon_reload=yes
+  systemd: name={{ item.name }} enabled=yes state=started daemon_reload=yes
   with_items:
-    - aurweb-git.timer
-    - aurweb-git-archive.timer
-    - aurweb-aurblup.timer
-    - aurweb-mkpkglists.timer
-    - aurweb-git-archive.timer
-    - aurweb-pkgmaint.timer
-    - aurweb-popupdate.timer
-    - aurweb-tuvotereminder.timer
-    - aurweb-usermaint.timer
-    - aurweb.service
-    - goaurrpc.service
-    - aurweb-github-mirror.timer
-  when: release.changed
+    - "{{ aurweb_services }}"
+    - "{{ aurweb_timers }}"
+  when: release.changed and (item.restart is not defined or item.restart)
+
+- name: Generate and import dummy data
+  when: aurweb_environment_type == "dev"
+  block:
+    - name: Install packages for dummy data generation
+      pacman:
+        state: present
+        name:
+          - words
+          - fortune-mod
+
+    - name: Create data dir
+      file:
+        path: "{{ aurweb_dir }}/data"
+        state: directory
+        mode: "0755"
+      become: true
+      become_user: "{{ aurweb_user }}"
+
+    - name: Generate dummy data
+      command: poetry run schema/gendummydata.py data/dummy.sql
+      register: generated_data
+      args:
+        chdir: "{{ aurweb_dir }}"
+        creates: "{{ aurweb_dir }}/data/dummy.sql"
+      become: true
+      become_user: "{{ aurweb_user }}"
+
+    - name: Import dummy data
+      mysql_db:
+        name: "{{ aurweb_db }}"
+        login_host: "{{ aurweb_db_host }}"
+        login_password: "{{ vault_mariadb_users.root }}"
+        state: import
+        target: "{{ aurweb_dir }}/data/dummy.sql"
+      when: generated_data.changed

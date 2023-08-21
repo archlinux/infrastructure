@@ -9,3 +9,8 @@
 		{% endif %}
 	{% endif %}
 {% endfor %}
+{% if root_additional_keys is defined %}
+	{% for pubkey in root_additional_keys -%}
+		{{ lookup('file', role_path + '/../../pubkeys/' + pubkey ) }}
+	{% endfor %}
+{% endif %}

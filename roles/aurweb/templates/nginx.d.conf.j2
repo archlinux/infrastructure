@@ -15,6 +15,9 @@ limit_req_zone $binary_remote_addr zone=aurweblimit:10m rate=20r/s;
 
 limit_req_status 429;
 
+# needed for long server names (dev box)
+server_names_hash_bucket_size 128;
+
 server {
     listen       80;
     listen       [::]:80;
