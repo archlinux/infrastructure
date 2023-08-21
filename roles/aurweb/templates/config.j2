@@ -63,6 +63,9 @@ pkgnames-repo = {{ aurweb_dir }}/pkgnames.git
 
 [notifications]
 notify-cmd = aurweb-notify
+{% if aurweb_environment_type == "dev" %}
+sendmail = {{ aurweb_dir }}/util/sendmail
+{% endif %}
 {# Gitlab project and token used for traceback reports. #}
 gitlab-instance = {{ vault_aurweb_gitlab_instance }}
 error-project = {{ vault_aurweb_error_project }}
