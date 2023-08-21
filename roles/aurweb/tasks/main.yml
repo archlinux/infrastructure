@@ -71,44 +71,18 @@
   check_mode: true
 
 - name: Install AUR systemd service and timers
-  template: src={{ item }}.j2 dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  template: src={{ item.name }}.j2 dest=/etc/systemd/system/{{ item.name }} owner=root group=root mode=0644
   with_items:
-    - aurweb-git.service
-    - aurweb-git.timer
-    - aurweb-git-archive.service
-    - aurweb-git-archive.timer
-    - aurweb-aurblup.service
-    - aurweb-aurblup.timer
-    - aurweb-mkpkglists.service
-    - aurweb-mkpkglists.timer
-    - aurweb-pkgmaint.service
-    - aurweb-pkgmaint.timer
-    - aurweb-popupdate.service
-    - aurweb-popupdate.timer
-    - aurweb-tuvotereminder.service
-    - aurweb-tuvotereminder.timer
-    - aurweb-usermaint.service
-    - aurweb-usermaint.timer
-    - aurweb.service
-    - aurweb-github-mirror.service
-    - aurweb-github-mirror.timer
-  when: release.changed
+    - "{{ aurweb_services }}"
+    - "{{ aurweb_timers }}"
+  when: release.changed and (item.install is not defined or item.install)
 
 - name: Stop AUR systemd services and timers
-  service: name={{ item }} enabled=yes state=stopped
+  service: name={{ item.name }} enabled=yes state=stopped
   with_items:
-    - aurweb-git.timer
-    - aurweb-git-archive.timer
-    - aurweb-aurblup.timer
-    - aurweb-mkpkglists.timer
-    - aurweb-pkgmaint.timer
-    - aurweb-popupdate.timer
-    - aurweb-tuvotereminder.timer
-    - aurweb-usermaint.timer
-    - aurweb.service
-    - goaurrpc.service
-    - aurweb-github-mirror.timer
-  when: release.changed
+    - "{{ aurweb_services }}"
+    - "{{ aurweb_timers }}"
+  when: release.changed and (item.restart is not defined or item.restart)
 
 - name: Clone aurweb repo
   git: >
@@ -312,17 +286,8 @@
     - Restart sshd
 
 - name: Start and enable AUR systemd services and timers
-  systemd: name={{ item }} enabled=yes state=started daemon_reload=yes
+  systemd: name={{ item.name }} enabled=yes state=started daemon_reload=yes
   with_items:
-    - aurweb-git.timer
-    - aurweb-git-archive.timer
-    - aurweb-aurblup.timer
-    - aurweb-mkpkglists.timer
-    - aurweb-pkgmaint.timer
-    - aurweb-popupdate.timer
-    - aurweb-tuvotereminder.timer
-    - aurweb-usermaint.timer
-    - aurweb.service
-    - goaurrpc.service
-    - aurweb-github-mirror.timer
-  when: release.changed
+    - "{{ aurweb_services }}"
+    - "{{ aurweb_timers }}"
+  when: release.changed and (item.restart is not defined or item.restart)

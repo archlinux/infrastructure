@@ -26,3 +26,27 @@ aurweb_window_length: '86400'
 aurweb_memcached_memory: 2048
 
 aurweb_workers: 4
+
+# aurweb timers and services are installed and restarted by default,
+# unless .install and .restart are explicitly set to "false"
+aurweb_timers:
+  - { name: "aurweb-git.timer" }
+  - { name: "aurweb-aurblup.timer" }
+  - { name: "aurweb-mkpkglists.timer" }
+  - { name: "aurweb-pkgmaint.timer" }
+  - { name: "aurweb-popupdate.timer" }
+  - { name: "aurweb-tuvotereminder.timer" }
+  - { name: "aurweb-usermaint.timer" }
+  - { name: "aurweb-github-mirror.timer" }
+
+aurweb_services:
+  - { name: "aurweb-git.service", restart: false }
+  - { name: "aurweb-aurblup.service", restart: false }
+  - { name: "aurweb-mkpkglists.service", restart: false }
+  - { name: "aurweb-pkgmaint.service", restart: false }
+  - { name: "aurweb-popupdate.service", restart: false }
+  - { name: "aurweb-tuvotereminder.service", restart: false }
+  - { name: "aurweb-usermaint.service", restart: false }
+  - { name: "aurweb-github-mirror.service", restart: false }
+  - { name: "aurweb.service" }
+  - { name: "goaurrpc.service", install: false }
