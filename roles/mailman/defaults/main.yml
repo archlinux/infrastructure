@@ -82,6 +82,9 @@ lists:
     description: Arch Linux Release Engineering
     display_name: Arch-releng
   arch-security:
+    allow_list_posts: false
+    bounce_info_stale_after: 60d
+    default_member_action: reject
     description: Announcements about security issues in Arch Linux and its packages
     display_name: Arch-security
     info: Discussion about announcements should happen on arch-general.
