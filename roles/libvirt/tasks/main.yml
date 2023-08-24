@@ -3,7 +3,15 @@
   pacman: name=iptables force=yes state=absent
 
 - name: Install libvirt and needed optional dependencies
-  pacman: name=libvirt,qemu-base,dnsmasq,iptables-nft state=present
+  pacman:
+    state: present
+    name:
+      - dnsmasq
+      - iptables-nft
+      - libvirt
+      - qemu-base
+      - qemu-hw-display-virtio-gpu
+      - qemu-hw-display-virtio-vga
   register: result
 
 - name: Reload firewalld
