@@ -5,6 +5,5 @@ bugbot_version: '20200818'
 bugbot_pgp_keys: ['92D9C6CDE99A2024D690A76EE742683BA08CB2FF']
 bugbot_pgp_emails: ['foxboron@archlinux.org']
 bugbot_admins:
-  - keenerd
-  - falconindy
   - Foxboron
+  - jelle
