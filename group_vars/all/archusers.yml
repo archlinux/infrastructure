@@ -309,6 +309,12 @@ arch_users:
       - dev
       - junior-dev
       - tu
+  fabiscafe:
+    name: "Fabian Bornschein"
+    email: "fabiscafe@archlinux.org"
+    ssh_key: fabiscafe.pub
+    groups:
+      - junior-packager
   farseerfc:
     name: "Jiachen Yang"
     email: "farseerfc@archlinux.org"
