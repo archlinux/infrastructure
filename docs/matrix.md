@@ -11,37 +11,47 @@ For the initial sign-in you need to use a client that supports OpenID Single-Sig
 [Element Web](https://app.element.io/). Enter `@username:archlinux.org` as the username and Element
 should offer to sign into our homeserver.
 
-You will be automatically invited to several rooms:
-  - `#archlinux:archlinux.org`: A public room for Arch Linux users.
-  - `#internal:archlinux.org`: A staff-only room with end-to-end encryption.
+You will be automatically invited to several spaces and rooms:
+  - `#public-space:archlinux.org`: A public space for Arch Linux users.
+    - `#archlinux:archlinux.org`: A public room for Arch Linux users.
+  - `#staff-space:archlinux.org`: A staff-only space for Arch Linux staff.
+    - `#internal:archlinux.org`: A staff-only room with end-to-end encryption.
 
 Password login is currently disabled, which might exclude some clients. It can be re-enabled should
 demand exist.
 
 If you need to provide your client with a homeserver address, use `https://matrix.archlinux.org`.
 
-## IRC bridges
+## Our rooms bridged to IRC
 
-### Our bridge
+We bridge several of our private IRC channels on Libera.Chat to Matrix.
 
-We bridge several of our private IRC channels on Libera Chat to Matrix, which you need to be invited
-into:
+These rooms are open to all staff-space members:
+  - `#packaging:archlinux.org`: Bridged with `#archlinux-packaging`.
+  - `#staff:archlinux.org`: Bridged with `#archlinux-staff`.
+
+The following rooms are not open to all staff, so you need to be invited:
   - `#developers:archlinux.org`: Bridged with `#archlinux-dev`.
   - `#trusted-users:archlinux.org`: Bridged with `#archlinux-tu`.
-  - `#staff:archlinux.org`: Bridged with `#archlinux-staff`.
 
 Please request an invitation in `#internal:archlinux.org` for the rooms you need to be in.
 
-### Matrix.org bridge
+These rooms are bridged to public channels, for which you should log into Libera.Chat via SASL:
+  - `#aurweb:archlinux.org`: Bridged with `#archlinux-aurweb`.
+  - `#bugs:archlinux.org`: Bridged with `#archlinux-bugs`.
+  - `#devops:archlinux.org`: Bridged with `#archlinux-devops`.
+  - `#pacman:archlinux.org`: Bridged with `#archlinux-pacman`.
+  - `#projects:archlinux.org`: Bridged with `#archlinux-projects`.
+  - `#reproducible:archlinux.org`: Bridged with `#archlinux-reproducible`.
+  - `#security:archlinux.org`: Bridged with `#archlinux-security`.
+  - `#testing:archlinux.org`: Bridged with `#archlinux-testing`.
+  - `#wiki:archlinux.org`: Bridged with `#archlinux-wiki`.
 
-Channels without keys are available via the official Libera Chat bridge. For example:
-  - `#archlinux-devops:libera.chat`: Bridged with `#archlinux-devops`.
-  - `#archlinux-projects:libera.chat`: Bridged with `#archlinux-projects`.
+If you fail to do so, your bridged IRC user cannot join the channels, meaning your messages won't be
+bridged. See [Libera.Chat's guide](https://libera.chat/guides/registration) on how to register a
+nickname. Afterwards, contact `@irc-bridge:archlinux.org` and send it the folllowing commands:
+  - `!username <username>`, with the primary nickname you registered with, then
+  - `!storepass <password>`, with your password for NickServ, and then
+  - `!reconnect` to reconnect and attempt the SASL login.
 
-**Please avoid joining large bridged rooms (such as `#archlinux:libera.chat`), as these slow down
-the server immensely.**
-
-Libera Chat may require you to have a registered nick to join certain channels. Once
-`@appservice:libera.chat` contacts you, tell it `!username <username>`, then `!storepass <password>`
-with the username and the password of your Libera Chat NickServ account. Then `!reconnect` and it
-will reconnect you as registered.
+If this worked, `@liberachat_SaslServ:archlinux.org` should contact you after the reconnect.
