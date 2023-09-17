@@ -1,3 +1,8 @@
+# limit general requests to 2 r/s to block DoS attempts.
+limit_req_zone $binary_remote_addr zone=mailmanlimit:10m rate=2r/s;
+
+limit_req_status 429;
+
 # This is for POSTORIUS_TEMPLATE_BASE_URL and mailman_hyperkitty.Archiver's base_url.
 server {
     listen       8000;
@@ -51,6 +56,7 @@ server {
     }
 
     location / {
+      limit_req zone=mailmanlimit burst=5 nodelay;
       include /etc/nginx/uwsgi_params;
       uwsgi_pass unix:/run/mailman-web/mailman-web.sock;
     }
