@@ -18,3 +18,5 @@ skip_list:
   - fqcn
   # Allow free-form module calling syntax
   - no-free-form
+  # Allow role includes with unprefixed role variables
+  - var-naming[no-role-prefix]
