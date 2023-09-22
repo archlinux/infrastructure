@@ -11,13 +11,13 @@
   postgresql_db: db=hedgedoc
   become: true
   become_user: postgres
-  become_method: su
+  become_method: ansible.builtin.su
 
 - name: Add hedgedoc postgres user
   postgresql_user: db=hedgedoc name=hedgedoc password={{ vault_postgres_users.hedgedoc }} encrypted=true
   become: true
   become_user: postgres
-  become_method: su
+  become_method: ansible.builtin.su
 
 - name: Make nginx log dir
   file: path=/var/log/nginx/{{ hedgedoc_domain }} state=directory owner=root group=root mode=0755

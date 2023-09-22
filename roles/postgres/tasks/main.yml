@@ -20,7 +20,7 @@
 - name: Initialize postgres
   become: true
   become_user: postgres
-  become_method: su
+  become_method: ansible.builtin.su
   command: initdb --locale C.UTF-8 -E UTF8 -D '/var/lib/postgres/data'
   args:
     chdir: /var/lib/postgres
@@ -58,7 +58,7 @@
   postgresql_user: name=postgres password={{ vault_postgres_users.postgres }} encrypted=yes
   become: true
   become_user: postgres
-  become_method: su
+  become_method: ansible.builtin.su
 
 - name: Install postgres cert renewal hook
   template: src=letsencrypt.hook.d.j2 dest=/etc/letsencrypt/hook.d/postgres owner=root group=root mode=0755

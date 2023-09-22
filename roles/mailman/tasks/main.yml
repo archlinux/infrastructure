@@ -57,7 +57,7 @@
     - {username: "{{ vault_mailman_web_db_user }}", password: "{{ vault_mailman_web_db_password }}"}
   become: true
   become_user: postgres
-  become_method: su
+  become_method: ansible.builtin.su
   no_log: true
 
 - name: Create {mailman,mailman-web} db
@@ -67,7 +67,7 @@
     - {db: mailman-web, owner: "{{ vault_mailman_web_db_user }}"}
   become: true
   become_user: postgres
-  become_method: su
+  become_method: ansible.builtin.su
 
 - name: Run Django management tasks  # noqa no-changed-when
   command: django-admin {{ item }} --pythonpath /etc/webapps/mailman-web --settings settings

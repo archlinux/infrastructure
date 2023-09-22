@@ -5,14 +5,14 @@
   postgresql_user: name="{{ vault_keycloak_db_user }}" password="{{ vault_keycloak_db_password }}"
   become: true
   become_user: postgres
-  become_method: su
+  become_method: ansible.builtin.su
   no_log: true
 
 - name: Create keycloak db
   postgresql_db: name="{{ keycloak_db_name }}" owner="{{ vault_keycloak_db_user }}"
   become: true
   become_user: postgres
-  become_method: su
+  become_method: ansible.builtin.su
 
 - name: Template keycloak config
   template: src=keycloak.conf.j2 dest=/etc/keycloak/keycloak.conf owner=root group=keycloak mode=640

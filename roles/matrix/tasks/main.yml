@@ -55,7 +55,7 @@
     creates: '{{ item }}/bin/python'
   become: true
   become_user: synapse
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   with_items:
     - /var/lib/synapse/venv
     - /var/lib/synapse/venv-pantalaimon
@@ -70,7 +70,7 @@
     virtualenv: '{{ item }}'
   become: true
   become_user: synapse
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   with_items:
     - /var/lib/synapse/venv
     - /var/lib/synapse/venv-pantalaimon
@@ -84,7 +84,7 @@
     virtualenv: /var/lib/synapse/venv
   become: true
   become_user: synapse
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   register: synapse_pip
   notify:
     - Restart synapse
@@ -98,7 +98,7 @@
     virtualenv: /var/lib/synapse/venv-pantalaimon
   become: true
   become_user: synapse
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   notify:
     - Restart pantalaimon
 
@@ -110,7 +110,7 @@
     force: true
   become: true
   become_user: synapse
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   register: mjolnir_git
   notify:
     - Restart mjolnir
@@ -120,7 +120,7 @@
     path: /var/lib/synapse/mjolnir
   become: true
   become_user: synapse
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   when: mjolnir_git.changed
 
 - name: Build mjolnir  # noqa no-changed-when
@@ -129,7 +129,7 @@
     chdir: /var/lib/synapse/mjolnir
   become: true
   become_user: synapse
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   when: mjolnir_git.changed
 
 - name: Install mjolnir antispam module
@@ -140,7 +140,7 @@
     virtualenv: /var/lib/synapse/venv
   become: true
   become_user: synapse
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   when: synapse_pip.changed or mjolnir_git.changed
   notify:
     - Restart synapse
@@ -153,7 +153,7 @@
     force: true
   become: true
   become_user: synapse
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   register: irc_git
   notify:
     - Restart matrix-appservice-irc
@@ -163,7 +163,7 @@
     path: /var/lib/synapse/matrix-appservice-irc
   become: true
   become_user: synapse
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   when: irc_git.changed
 
 - name: Build matrix-appservice-irc  # noqa no-changed-when
@@ -172,7 +172,7 @@
     chdir: /var/lib/synapse/matrix-appservice-irc
   become: true
   become_user: synapse
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   when: irc_git.changed
 
 - name: Install pg_hba.conf
@@ -184,19 +184,19 @@
   postgresql_db: db=synapse lc_collate=C lc_ctype=C template=template0
   become: true
   become_user: postgres
-  become_method: su
+  become_method: ansible.builtin.su
 
 - name: Add synapse postgres user
   postgresql_user: db=synapse user=synapse password={{ vault_postgres_users.synapse }}
   become: true
   become_user: postgres
-  become_method: su
+  become_method: ansible.builtin.su
 
 - name: Add irc postgres db
   postgresql_db: db=irc
   become: true
   become_user: postgres
-  become_method: su
+  become_method: ansible.builtin.su
 
 - name: Create synapse config dir
   file: path={{ item }} state=directory owner=root group=synapse mode=0750

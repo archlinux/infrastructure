@@ -5,18 +5,18 @@
   postgresql_db: db=quassel
   become: true
   become_user: postgres
-  become_method: su
+  become_method: ansible.builtin.su
 
 - name: Add quassel postgres user
   postgresql_user: db=quassel name=quassel password={{ vault_postgres_users.quassel }} encrypted=true
   become: true
   become_user: postgres
-  become_method: su
+  become_method: ansible.builtin.su
 
 - name: Initialize quassel
   become: true
   become_user: quassel
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   expect:
     command: quasselcore --configdir=/var/lib/quassel --select-backend=PostgreSQL
     responses:

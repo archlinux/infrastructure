@@ -2,7 +2,7 @@
   postgresql_db: db="{{ terraform_db }}"
   become: true
   become_user: postgres
-  become_method: su
+  become_method: ansible.builtin.su
 
 - name: Create terraform state db user
   postgresql_user:
@@ -13,4 +13,4 @@
     priv: "ALL"
   become: true
   become_user: postgres
-  become_method: su
+  become_method: ansible.builtin.su
