@@ -99,7 +99,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "10240*2^30",
+          "expr": "2^40 * ceil(hetzner_storage_box_size_bytes{instance=\"monitoring.archlinux.org\"} / 2^40)",
           "interval": "",
           "legendFormat": "Quota",
           "queryType": "randomWalk",
@@ -115,7 +115,7 @@
         },
         {
           "exemplar": true,
-          "expr": "10240*2^30 - hetzner_storage_box_size_bytes{instance=\"monitoring.archlinux.org\"}",
+          "expr": "2^40 * ceil(hetzner_storage_box_size_bytes{instance=\"monitoring.archlinux.org\"} / 2^40) - hetzner_storage_box_size_bytes{instance=\"monitoring.archlinux.org\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "Snapshots",
@@ -123,7 +123,7 @@
         },
         {
           "exemplar": true,
-          "expr": "10240*2^30 - hetzner_storage_box_free_bytes{instance=\"monitoring.archlinux.org\"}",
+          "expr": "2^40 * ceil(hetzner_storage_box_size_bytes{instance=\"monitoring.archlinux.org\"} / 2^40) - hetzner_storage_box_free_bytes{instance=\"monitoring.archlinux.org\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "Total Used",
@@ -141,7 +141,7 @@
             "mode": "thresholds"
           },
           "mappings": [],
-          "max": 10737418240000,
+          "max": 21990232555520,
           "min": 0,
           "thresholds": {
             "mode": "percentage",
