@@ -185,7 +185,7 @@
   file: path=/mnt/etc/machine-id state=absent
 
 - name: Enable services inside chroot
-  command: chroot /mnt systemctl enable sshd systemd-networkd systemd-resolved fstrim.timer pacman-init {{ 'ec2-public-keys' if install_ec2_public_keys_service | default(false) }}
+  command: chroot /mnt systemctl enable sshd systemd-networkd systemd-resolved pacman-init {{ 'ec2-public-keys' if install_ec2_public_keys_service | default(false) }}
   register: chroot_systemd_services
   changed_when: "chroot_systemd_services.rc == 0"
 
