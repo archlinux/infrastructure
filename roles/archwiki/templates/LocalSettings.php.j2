@@ -211,7 +211,16 @@ $wgArchNavBar = array(
 			'Download' => 'https://archlinux.org/download/'
 		);
 $wgArchNavBarSelectedDefault = 'Wiki';
-$wgFooterIcons = ['copyright' => ['copyright' => '']];
+$wgFooterIcons = [
+	"copyright" => [
+		"copyright" => [],
+	],
+	"poweredby" => [
+		"mediawiki" => [
+			"src" => null,
+		],
+	],
+];
 
 ##
 ## User roles
@@ -359,6 +368,7 @@ $wgGroupPermissions['sysop']['abusefilter-log-private'] = true;
 $wgGroupPermissions['sysop']['abusefilter-hide-log'] = true;
 $wgGroupPermissions['sysop']['abusefilter-hidden-log'] = true;
 $wgGroupPermissions['sysop']['abusefilter-privatedetails-log'] = true;
+$wgGroupPermissions['sysop']['renameuser'] = true;
 
 # filter groups
 $wgAbuseFilterValidGroups = array( 'default', 'proofed' );
@@ -416,10 +426,6 @@ $wgCaptchaQuestions = [
 #$wgSpecialPageLockdown['Log'] = [ 'user' ];
 #$wgSpecialPageLockdown['Diff'] = [ 'user' ];
 #$wgActionLockdown['history'] = ['user'];
-
-# Renameuser extension
-wfLoadExtension( 'Renameuser' );
-$wgGroupPermissions['sysop']['renameuser'] = true;
 
 # UserMerge extension
 wfLoadExtension( 'UserMerge' );

@@ -5,7 +5,7 @@ Description=Archwiki Prune Cache Service
 Type=oneshot
 User={{ archwiki_user }}
 WorkingDirectory={{ archwiki_dir }}
-ExecStart=/usr/bin/php {{ archwiki_dir }}/public/maintenance/pruneFileCache.php -q --agedays 1
+ExecStart=/usr/bin/php {{ archwiki_dir }}/public/maintenance/run.php pruneFileCache -q --agedays 1
 
 NoNewPrivileges=yes
 PrivateTmp=yes

@@ -2,7 +2,7 @@
   service: name=php-fpm@{{ archwiki_user }} state=restarted
 
 - name: Run wiki updatescript  # noqa no-changed-when
-  command: php {{ archwiki_dir }}/public/maintenance/update.php --quick
+  command: php {{ archwiki_dir }}/public/maintenance/run.php update --quick
   become: true
   become_user: "{{ archwiki_user }}"
 
