@@ -753,6 +753,12 @@ arch_users:
       - dev
       - junior-dev
       - tu
+  tcanabrava:
+    name: "Tomaz Canabrava"
+    email: "tcanabrava@archlinux.org"
+    ssh_key: tcanabrava.pub
+    groups:
+      - junior-packager
   torxed:
     name: "Anton Hvornum"
     email: "torxed@archlinux.org"
