@@ -44,6 +44,8 @@ for repo in ${repos[@]}; do
 				echo "$repo/$arch: $pkgname"
 				mkdir -p ${tmppkgdir}/pkg
 				bsdtar -xof $pkg -C ${tmppkgdir}/pkg --include={opt,{,usr/}{lib{,32},{s,}bin}}'/*' 2>/dev/null
+				# Also unpack files symlinked from the above paths
+				find -L pkg -xtype l -exec readlink -m {} + | sed "s;${tmppkgdir}/pkg/;;" | xargs -i bsdtar -xof "$pkg" -C "${tmppkgdir}/pkg" "{}"
 				find "${tmppkgdir}/pkg" -type f -exec readelf -d {} + 2>/dev/null | sed -nr 's/.*Shared library: \[(.*)\].*/\1/p' | sort -u > "${tmppkgdir}/links"
 				rm -rf ${tmppkgdir}/pkg
  			fi
