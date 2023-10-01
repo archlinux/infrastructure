@@ -632,16 +632,6 @@ arch_users:
       - packager
       - junior-packager
       - tu
-  remy:
-    name: "Rémy Oudompheng"
-    email: "remy@archlinux.org"
-    ssh_key: remy.pub
-    groups:
-      - packager
-      - junior-packager
-      - dev
-      - junior-dev
-      - tu
   sangy:
     name: "Santiago Torres-Arias"
     email: "santiago@archlinux.org"
