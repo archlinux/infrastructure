@@ -118,6 +118,12 @@ server {
         add_header Pragma public;
         add_header Cache-Control "public, must-revalidate, proxy-revalidate";
     }
+
+    location /images/ {
+        # Add the nosniff header to the images folder (required for mw 1.40+)
+        add_header X-Content-Type-Options nosniff;
+    }
+
     location /images/deleted {
         # Deny access to deleted images folder
         deny all;
