@@ -1,5 +1,5 @@
 [Unit]
-Description=Send aurweb TU vote reminder emails
+Description=Send aurweb vote reminder emails
 Requires=mysqld.service
 After=mysqld.service
 
@@ -7,7 +7,7 @@ After=mysqld.service
 Type=oneshot
 User={{ aurweb_user }}
 WorkingDirectory={{ aurweb_dir }}
-ExecStart=/usr/bin/poetry run aurweb-tuvotereminder
+ExecStart=/usr/bin/poetry run aurweb-votereminder
 
 NoNewPrivileges=true
 LockPersonality=true
