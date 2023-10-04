@@ -1,0 +1,25 @@
+- name: Install sequoia
+  pacman: name=sequoia-sq state=present
+
+- name: Install systemd service
+  copy: src=bugbuddy.service dest="/etc/systemd/system/bugbuddy.service" owner=root group=root mode=0644
+  notify:
+    - Daemon reload
+
+- name: Install conf file
+  template: src=bugbuddy.conf.j2 dest=/etc/conf.d/bugbuddy owner=root group=root mode=0600
+
+- name: Install download script
+  copy: src=bugbuddy-download.sh dest=/usr/local/bin/bugbuddy-download owner=root group=root mode=0755
+
+- name: Download latest bugbuddy  # noqa no-changed-when
+  command: /usr/local/bin/bugbuddy-download --restart
+
+- name: Start and enable daemon service
+  systemd: name=bugbuddy.service enabled=yes state=started
+
+- name: Open firewall holes
+  ansible.posix.firewalld: port=3000/tcp permanent=true state=enabled immediate=yes
+  when: configure_firewall
+  tags:
+    - firewall

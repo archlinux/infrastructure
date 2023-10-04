@@ -1,0 +1,3 @@
+- name: Daemon reload
+  systemd:
+    daemon-reload: true
