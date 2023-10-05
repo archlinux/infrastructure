@@ -9,9 +9,6 @@
   notify:
     - Daemon reload
 
-- name: Enable timer
-  systemd: name=gluebuddy.timer enabled=yes state=started
-
 - name: Install conf file
   template: src=gluebuddy.conf.j2 dest=/etc/conf.d/gluebuddy owner=root group=root mode=0600
 
@@ -20,3 +17,6 @@
 
 - name: Download latest gluebuddy  # noqa no-changed-when
   command: /usr/local/bin/gluebuddy_download.sh
+
+- name: Enable timer
+  systemd: name=gluebuddy.timer enabled=yes state=started
