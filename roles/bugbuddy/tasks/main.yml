@@ -18,8 +18,9 @@
 - name: Start and enable daemon service
   systemd: name=bugbuddy.service enabled=yes state=started
 
-- name: Open firewall holes
-  ansible.posix.firewalld: port=3000/tcp permanent=true state=enabled immediate=yes
+- name: Open bugbuddy ipv4 port for gitlab.archlinux.org
+  ansible.posix.firewalld: zone=wireguard state=enabled permanent=true immediate=yes
+    rich_rule="rule family=ipv4 source address={{ hostvars['gitlab.archlinux.org']['wireguard_address'] }} port protocol=tcp port=8080 accept"
   when: configure_firewall
   tags:
     - firewall
