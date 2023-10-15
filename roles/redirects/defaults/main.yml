@@ -25,3 +25,7 @@ redirects:
     domain: status.archlinux.org
     to: https://stats.uptimerobot.com/vmM5ruWEAB
     type: 302
+  - status:
+    domain: tu-bylaws.aur.archlinux.org
+    to: https://package-maintainer-bylaws.aur.archlinux.org
+    type: 301
