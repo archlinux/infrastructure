@@ -8,7 +8,7 @@ aurweb_conf_dir: '/etc/aurweb'
 aurweb_git_dir: "{{ aurweb_dir }}/aur.git"
 aurweb_git_hook: '/usr/local/bin/aurweb-git-update'
 aurweb_nginx_conf: '/etc/nginx/nginx.d/aurweb.conf'
-aurweb_version: 'v6.2.7'
+aurweb_version: 'v6.2.8'
 aurweb_pgp_keys: ['B4B759625D4633430B74877059E43E106B247368', 'DB650286BD9EAE39890D3FE6FE3DC1668CB24956', 'D5AD89388A7C6C9C22E790994A4760AB4EE15296']
 
 aurweb_db: 'aur'
@@ -36,7 +36,7 @@ aurweb_timers:
   - { name: "aurweb-mkpkglists.timer" }
   - { name: "aurweb-pkgmaint.timer" }
   - { name: "aurweb-popupdate.timer" }
-  - { name: "aurweb-tuvotereminder.timer" }
+  - { name: "aurweb-votereminder.timer" }
   - { name: "aurweb-usermaint.timer" }
   - { name: "aurweb-github-mirror.timer", install: "{{ aurweb_environment_type == 'prod' }}", restart: "{{ aurweb_environment_type == 'prod' }}" }
 
@@ -46,7 +46,7 @@ aurweb_services:
   - { name: "aurweb-mkpkglists.service", restart: false }
   - { name: "aurweb-pkgmaint.service", restart: false }
   - { name: "aurweb-popupdate.service", restart: false }
-  - { name: "aurweb-tuvotereminder.service", restart: false }
+  - { name: "aurweb-votereminder.service", restart: false }
   - { name: "aurweb-usermaint.service", restart: false }
   - { name: "aurweb-github-mirror.service", install: "{{ aurweb_environment_type == 'prod' }}", restart: false }
   - { name: "aurweb.service" }

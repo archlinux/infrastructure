@@ -50,8 +50,9 @@ server {
     root    {{ aurweb_dir }}/static;
     index   index.php;
 
-    location = /trusted-user/TUbylaws.html {
-	    return 301 https://tu-bylaws.aur.archlinux.org;
+    # redirect /tu to /package-maintainer for external links
+    location ~ ^/tu(.*) {
+        return 301 https://aur.archlinux.org/package-maintainer$1;
     }
 
     #
