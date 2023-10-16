@@ -5,7 +5,6 @@ After=network-online.target
 
 [Service]
 Type=oneshot
-StandardOutput=journal+console
 EnvironmentFile=-/etc/conf.d/gitlab-exporter
 User=node_exporter
 ExecStart=/usr/bin/gitlab-exporter -o {{ prometheus_textfile_dir }}/gitlab-exporter.prom cli
