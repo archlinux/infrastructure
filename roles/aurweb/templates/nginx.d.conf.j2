@@ -51,7 +51,7 @@ server {
     index   index.php;
 
     # redirect /tu to /package-maintainer for external links
-    location ~ ^/tu(.*) {
+    location ~ ^/tu($|/.*) {
         return 301 https://aur.archlinux.org/package-maintainer$1;
     }
 
