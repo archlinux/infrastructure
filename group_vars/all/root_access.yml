@@ -22,6 +22,10 @@ root_ssh_keys:
   - key: anthraxx.pub
   - key: klausenbusk.pub
   - key: artafinde.pub
+  - key: gromit.pub
+    hosts:
+      - bugs.archlinux.org
+      - wiki.archlinux.org
 
 # - run 'playbooks/tasks/reencrypt-vault-{super,default}-key.yml' when this
 #   changes; before doing so, make sure to 'gpg --lsign-key' all listed keys
@@ -45,3 +49,4 @@ vault_super_pgpkeys: &vault_super_pgpkeys
 #   is working by running `ansible-vault view misc/vaults/vault_hcloud.yml`
 vault_default_pgpkeys:
   - *vault_super_pgpkeys
+  - F00B96D15228013FFC9C9D0393B11DAA4C197E3D  # gromit
