@@ -18,6 +18,10 @@ aur_location = https://{{ aurweb_domain }}
 git_clone_uri_anon = https://{{ aurweb_domain }}/%s.git
 git_clone_uri_priv = ssh://{{ aurweb_user }}@{{ aurweb_domain }}/%s.git
 redis_address = redis://localhost
+{% if aurweb_environment_type == "dev" %}
+; Toggles traceback display in templates/errors/500.html.
+traceback = 1
+{% endif %}
 
 [ratelimit]
 request_limit = {{ aurweb_request_limt }}
