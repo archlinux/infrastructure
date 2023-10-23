@@ -190,14 +190,13 @@ server {
     }
 
     # Temporary redirects
-    location /people/trusted-users/ {
-        return 301 /people/package-maintainers/;
-    }
-
-    location /people/trusted-users-fellows/ {
+    location /people/trusted-user-fellows/ {
         return 301 /people/package-maintainer-fellows/;
     }
 
+    location /people/trusted-users/ {
+        return 301 /people/package-maintainers/;
+    }
 
     location / {
         access_log   /var/log/nginx/{{ archweb_domain }}/access.log main;
