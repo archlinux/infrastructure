@@ -189,6 +189,16 @@ server {
         limit_req zone=rsslimit burst=10 nodelay;
     }
 
+    # Temporary redirects
+    location /people/trusted-users/ {
+        return 301 /people/package-maintainers/;
+    }
+
+    location /people/trusted-users-fellows/ {
+        return 301 /people/package-maintainer-fellows/;
+    }
+
+
     location / {
         access_log   /var/log/nginx/{{ archweb_domain }}/access.log main;
         access_log   /var/log/nginx/{{ archweb_domain }}/access.log.json json_main;
