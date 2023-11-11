@@ -16,7 +16,7 @@ lists:
     description: Arch Linux packaging commits
     display_name: Arch-commits
     info: This list contains all commits to the package repositories, including diffs for newest changes.
-    max_message_size: 200
+    max_message_size: 1000
   arch-dev:
     advertised: false
     archive_policy: private
