@@ -1,9 +1,10 @@
-dbscripts_commit: f757bcea40481c1adf154fcf7e58a0e68e09bb1e
+dbscripts_commit: c268f0140a86f390657b3bcfc36c6bd9aaa5ba4f
 dbscripts_update: true
 dbscripts_pgp_emails: ['jelle@archlinux.org', 'anthraxx@archlinux.org']
 
 git_state_repo: /srv/repos/state
 git_pkg_cache: /srv/repos/pkg-cache
+lock_dir: /srv/repos/lock
 
 junior_developer_repos:
   - core-staging

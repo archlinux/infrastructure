@@ -103,6 +103,11 @@
 - name: Create state directory
   file: path="{{ git_state_repo }}" state=directory owner=git-packages group=junior-packager mode=0775
 
+- name: Create lock directory
+  file: path="{{ lock_dir }}" state=directory owner=git-packages group=junior-packager mode=0775
+- name: Add acl default:group:junior-packager:rw- to lock_dir
+  acl: name="{{ lock_dir }}" entry="default:group:junior-packager:rw-" state=present
+
 - name: Set permissions for state directory
   file: path="{{ git_state_repo }}" state=directory owner=git-packages group=junior-packager mode=0775
 - name: Add acl default:group:junior-packager:rw- to git_state_repo
