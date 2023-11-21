@@ -106,7 +106,7 @@
   git:
     repo: https://github.com/matrix-org/mjolnir
     dest: /var/lib/synapse/mjolnir
-    version: v1.6.4
+    version: v1.6.5
     force: true
   become: true
   become_user: synapse
