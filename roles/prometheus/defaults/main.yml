@@ -28,6 +28,7 @@ blackbox_targets:
     - https://alpm-types.archlinux.page/alpm_types/
     - https://america.archive.pkgbuild.com
     - https://america.mirror.pkgbuild.com
+    - https://archinstall.archlinux.page
     - https://archive.archlinux.org
     - https://archlinux.org
     - https://archlinux.page

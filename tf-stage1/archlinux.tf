@@ -450,6 +450,13 @@ resource "hetznerdns_record" "archlinux_page_origin_mx" {
   type    = "MX"
 }
 
+resource "hetznerdns_record" "archlinux_page_archinstall_cname" {
+  zone_id = hetznerdns_zone.archlinux_page.id
+  name    = "archinstall"
+  value   = "archlinux.github.io."
+  type    = "CNAME"
+}
+
 resource "hetznerdns_record" "archlinux_page_origin_ns3" {
   zone_id = hetznerdns_zone.archlinux_page.id
   name    = "@"
