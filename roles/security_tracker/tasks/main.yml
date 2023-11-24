@@ -56,9 +56,10 @@
 - name: Receive valid signing keys
   become: true
   become_user: security
-  command: /usr/bin/gpg --keyserver keys.openpgp.org --recv "{{ item }}"
+  command: /usr/bin/gpg --keyserver keys.openpgp.org --auto-key-locate wkd,keyserver --locate-keys {{ item }}
   with_items:
-    - E240B57E2C4630BA768E2F26FC1B547C8D8172C8
+    - anthraxx@archlinux.org
+    - jelle@archlinux.org
   register: gpg
   changed_when: "gpg.rc == 0"
 
