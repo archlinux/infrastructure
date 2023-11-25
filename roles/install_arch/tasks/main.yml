@@ -10,6 +10,11 @@
     - "'Rescue environment based on Alpine Linux' not in motd_contents.stdout"
     - "'OS Rescue Environment' not in motd_contents.stdout"
 
+# It sources some files which sets TMPDIR=/tmp/hwc which breaks mkinitcpio
+- name: Remove problematic ~/.bashrc
+  file: path=/root/.bashrc state=absent
+  when: "'Hetzner Rescue' in motd_contents.stdout"
+
 - name: Prepare Equinix Metal rescue system
   when: ansible_facts['os_family'] == "Alpine"
   block:
