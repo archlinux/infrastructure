@@ -1,5 +1,6 @@
 gitlab_bots:
   - renovate
+  - bugbuddy
   - project_10185_bot2
   - project_19591_bot
   - project_19796_bot
