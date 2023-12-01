@@ -314,6 +314,7 @@ arch_users:
     email: "fabiscafe@archlinux.org"
     ssh_key: fabiscafe.pub
     groups:
+      - packager
       - junior-packager
   farseerfc:
     name: "Jiachen Yang"
