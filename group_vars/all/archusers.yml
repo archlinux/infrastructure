@@ -260,16 +260,6 @@ arch_users:
       - mail.archlinux.org
     groups:
       - support-staff
-  diabonas:
-    name: "Jonas Witschel"
-    email: "diabonas@archlinux.org"
-    ssh_key: diabonas.pub
-    groups:
-      - packager
-      - junior-packager
-      - dev
-      - junior-dev
-      - tu
   donate:
     name: ""
     groups: []
