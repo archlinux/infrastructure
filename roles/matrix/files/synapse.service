@@ -10,6 +10,7 @@ Type=notify
 NotifyAccess=main
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=on-abort
+TimeoutStartSec=5min
 
 User=synapse
 
