@@ -29,6 +29,7 @@ This template should be used for offboarding Arch Linux team members.
 - [ ] Remove staff cloak on Libera Chat ([Group contacts](https://wiki.archlinux.org/title/Arch_IRC_channels#Libera_Chat_group_contacts)).
 - [ ] Remove the user from relevant staff groups on Keycloak.
 - [ ] Move the user from the public list of their usergroup on archweb ([support staff](https://archlinux.org/people/support-staff/) / [TUs](https://archlinux.org/people/trusted-users/) / [devs](https://archlinux.org/people/developers/)) to the respective fellow site ([fellow support staff](https://archlinux.org/people/support-staff-fellows/) / [fellow TUs](https://archlinux.org/people/trusted-user-fellows/) / [fellow devs](https://archlinux.org/people/developer-fellows/))
+- [ ] Remove the user from the Arch Linux github organisation
 
 ## Main key offboarding checklist
 
