@@ -13,4 +13,4 @@ NoNewPrivileges=true
 ProtectSystem=strict
 ProtectHome=true
 PrivateTmp=true
-ReadWritePaths=/srv/ftp/ /srv/repos/git-packages
+ReadWritePaths=/srv/ftp/ /srv/repos/git-packages /srv/repos/lock
