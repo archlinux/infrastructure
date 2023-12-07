@@ -1,7 +1,8 @@
 [Unit]
 Description=Matrix IRC Bridge
+Requires=postgresql.service
 Wants=synapse.service
-After=network.target synapse.service
+After=network.target postgresql.service synapse.service
 
 [Service]
 User=synapse
