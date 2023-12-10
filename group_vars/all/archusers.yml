@@ -513,11 +513,11 @@ arch_users:
       - support-staff
   lahwaacz:
     name: "Jakub Klinkovský"
+    email: "lahwaacz@archlinux.org"
     ssh_key: lahwaacz.pub
-    hosts:
-      - mail.archlinux.org
     groups:
       - support-staff
+      - junior-packager
   lcarlier:
     name: "Laurent Carlier"
     email: "lordheavym@archlinux.org"
