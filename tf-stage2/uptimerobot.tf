@@ -35,5 +35,5 @@ resource "uptimerobot_monitor" "uptimerobot_monitor_archlinux" {
   friendly_name = each.key
   type          = "http"
   url           = each.value
-  interval      = 60
+  interval      = 300
 }
