@@ -42,6 +42,7 @@ This template should be used for offboarding Arch Linux team members.
 - [ ] Ask the user to leave `#archlinux-tu` and/or `#archlinux-dev` on Libera Chat and forget the password(s).
 - [ ] Create an issue in [archlinux-keyring](https://gitlab.archlinux.org/archlinux/archlinux-keyring) using the [*"Remove Packager Key"*](https://gitlab.archlinux.org/archlinux/archlinux-keyring/-/issues/new?issuable_template=Remove%20Packager%20Key) template.
 - [ ] Remove [stale package relations](https://archlinux.org/packages/stale_relations/) for the now inactive user.
+- [ ] Remove their extended permissions on AURweb
 
 ## DevOps offboarding checklist
 
