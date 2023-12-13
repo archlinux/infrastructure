@@ -27,6 +27,7 @@ root_ssh_keys:
       - bugs.archlinux.org
       - wiki.archlinux.org
       - man.archlinux.org
+      - gitlab.archlinux.org
 
 # - run 'playbooks/tasks/reencrypt-vault-{super,default}-key.yml' when this
 #   changes; before doing so, make sure to 'gpg --lsign-key' all listed keys
