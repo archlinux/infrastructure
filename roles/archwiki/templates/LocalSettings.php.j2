@@ -185,6 +185,10 @@ $wgUseInstantCommons  = false;
 ## this, if it's not already uncommented:
 #$wgHashedUploadDirectory = false;
 
+## Enable native SVG rendering
+$wgFileExtensions[] = 'svg';
+$wgSVGNativeRendering = true;
+
 
 ##
 ## Skin settings
@@ -463,9 +467,6 @@ $wgVisualEditorAvailableNamespaces = [
 wfLoadExtension( 'VisualEditor' );
 wfLoadExtension( 'Linter' );
 wfLoadExtension( 'DiscussionTools' );
-
-wfLoadExtension( 'NativeSvgHandler' );
-$wgFileExtensions[] = 'svg';
 
 ##
 ## Temporary settings for maintenance
