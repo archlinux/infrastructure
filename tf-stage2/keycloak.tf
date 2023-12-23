@@ -625,20 +625,12 @@ resource "keycloak_authentication_execution" "registration_user_creation" {
   requirement       = "REQUIRED"
 }
 
-resource "keycloak_authentication_execution" "registration_profile_action" {
-  realm_id          = "archlinux"
-  parent_flow_alias = keycloak_authentication_subflow.registration_form.alias
-  authenticator     = "registration-profile-action"
-  requirement       = "REQUIRED"
-  depends_on        = [keycloak_authentication_execution.registration_user_creation]
-}
-
 resource "keycloak_authentication_execution" "registration_password_action" {
   realm_id          = "archlinux"
   parent_flow_alias = keycloak_authentication_subflow.registration_form.alias
   authenticator     = "registration-password-action"
   requirement       = "REQUIRED"
-  depends_on        = [keycloak_authentication_execution.registration_profile_action]
+  depends_on        = [keycloak_authentication_execution.registration_user_creation]
 }
 
 resource "keycloak_authentication_execution" "registration_hcaptcha_action" {
