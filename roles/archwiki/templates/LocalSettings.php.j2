@@ -398,6 +398,8 @@ wfLoadExtension( 'Interwiki' );
 $wgGroupPermissions['sysop']['interwiki'] = true;
 
 # TitleKey extension
+# Suppress deprecation warning, see https://phabricator.wikimedia.org/T353985
+$wgDeprecationReleaseLimit = "1.0";
 wfLoadExtension( 'TitleKey' );
 
 # BounceHandler extension
