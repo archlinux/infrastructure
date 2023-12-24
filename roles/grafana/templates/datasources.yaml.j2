@@ -7,6 +7,8 @@ datasources:
   access: proxy
   basicAuth: true
   basicAuthUser: {{ vault_prometheus_user }}
+  jsonData:
+    timeInterval: 1m
   secureJsonData:
     basicAuthPassword: {{ vault_prometheus_passwd }}
   url: http://{{ prometheus_domain }}:9090
@@ -15,6 +17,8 @@ datasources:
   type: prometheus
   access: proxy
   url: http://localhost:9090
+  jsonData:
+    timeInterval: 1m
 - name: Loki
   type: loki
   access: proxy
