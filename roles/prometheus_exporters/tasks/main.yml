@@ -25,7 +25,7 @@
   mysql_user:
     name: '{{ prometheus_mysqld_user }}'
     password: '{{ vault_monitoring_mysql_password }}'
-    priv: "*.*:PROCESS,REPLICATION CLIENT"
+    priv: "*.*:PROCESS,REPLICATION CLIENT,SLAVE MONITOR"
     state: present
     resource_limits:
       MAX_USER_CONNECTIONS: 3
