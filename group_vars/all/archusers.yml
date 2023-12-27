@@ -418,9 +418,13 @@ arch_users:
   heftig:
     name: "Jan Steffens"
     email: "heftig@archlinux.org"
-    ssh_key: heftig.pub
+    ssh_key: heftig_nitrokey.pub
     additional_ssh_keys:
-      - name: heftig_dragon.pub
+      - name: heftig_yubikey.pub
+        hosts:
+          - all
+      # Used to publish nightly packages
+      - name: heftig_build.pub
         hosts:
           - homedir.archlinux.org
     groups:
