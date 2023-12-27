@@ -29,10 +29,11 @@ root_ssh_keys:
       - man.archlinux.org
       - gitlab.archlinux.org
 
-# - run 'playbooks/tasks/reencrypt-vault-{super,default}-key.yml' when this
-#   changes; before doing so, make sure to 'gpg --lsign-key' all listed keys
-# - before committing the re-encrypted password file, test if both vaults are
-#   working using `ansible-vault view misc/vaults/vault_{hetzner,hcloud}.yml`
+# run 'playbooks/tasks/reencrypt-vault-{super,default}-key.yml' when this
+# changes; before doing so, make sure to 'gpg --lsign-key' all keys from both
+# sets (or if you use TOFU, `gpg --tofu-policy good`) before committing the
+# re-encrypted password file, then test that both vaults are working using
+# `ansible-vault view misc/vaults/vault_{hetzner,hcloud}.yml`
 # NOTE: adding a key to this list gives access to both default and super vaults
 vault_super_pgpkeys: &vault_super_pgpkeys
   - 86CFFCA918CF3AF47147588051E8B148A9999C34  # foutrelis
@@ -45,10 +46,11 @@ vault_super_pgpkeys: &vault_super_pgpkeys
   - DB650286BD9EAE39890D3FE6FE3DC1668CB24956  # klausenbusk
   - B4B759625D4633430B74877059E43E106B247368  # artafinde
 
-# - run 'playbooks/tasks/reencrypt-vault-default-key.yml' when this changes
-# - before running it, make sure to 'gpg --lsign-key' all keys listed below
-# - before committing the re-encrypted password file, test that the vault
-#   is working by running `ansible-vault view misc/vaults/vault_hcloud.yml`
+# run 'playbooks/tasks/reencrypt-vault-default-key.yml' when this changes;
+# before doing so, make sure to 'gpg --lsign-key' all keys below (or if you use
+# TOFU, `gpg --tofu-policy good`) before committing the re-encrypted password
+# file, then test that the vault is working by running `ansible-vault view
+# misc/vaults/vault_hcloud.yml`
 vault_default_pgpkeys:
   - *vault_super_pgpkeys
   - F00B96D15228013FFC9C9D0393B11DAA4C197E3D  # gromit

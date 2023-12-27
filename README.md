@@ -36,9 +36,9 @@ secrets like Hetzner credentials; access to the `super` vault is controlled by
 the `vault_super_pgpkeys` variable.
 
 All the keys should be on the local user gpg keyring and at **minimum** be
-locally signed with `--lsign-key`. This is necessary for running any of the
-`reencrypt-vault-default-key`, `reencrypt-vault-super-key `or `fetch-borg-keys`
-tasks.
+locally signed with `--lsign-key` (or if you use TOFU, have `--tofu-policy
+good`). This is necessary for running any of the `reencrypt-vault-default-key`,
+`reencrypt-vault-super-key `or `fetch-borg-keys` tasks.
 
 #### Note about packer
 
