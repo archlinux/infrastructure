@@ -16,7 +16,7 @@ root_ssh_keys:
   - key: foutrelis.pub
   - key: freswa.pub
   - key: grazzolini.pub
-  - key: heftig.pub
+  - key: heftig_nitrokey.pub
   - key: jelle.pub
   - key: svenstaro.pub
   - key: anthraxx.pub
