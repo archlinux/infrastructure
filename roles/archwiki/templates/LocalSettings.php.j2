@@ -185,6 +185,10 @@ $wgUseInstantCommons  = false;
 ## this, if it's not already uncommented:
 #$wgHashedUploadDirectory = false;
 
+## Enable native SVG rendering
+$wgFileExtensions[] = 'svg';
+$wgSVGNativeRendering = true;
+
 
 ##
 ## Skin settings
@@ -394,6 +398,8 @@ wfLoadExtension( 'Interwiki' );
 $wgGroupPermissions['sysop']['interwiki'] = true;
 
 # TitleKey extension
+# Suppress deprecation warning, see https://phabricator.wikimedia.org/T353985
+$wgDeprecationReleaseLimit = "1.0";
 wfLoadExtension( 'TitleKey' );
 
 # BounceHandler extension
@@ -463,9 +469,6 @@ $wgVisualEditorAvailableNamespaces = [
 wfLoadExtension( 'VisualEditor' );
 wfLoadExtension( 'Linter' );
 wfLoadExtension( 'DiscussionTools' );
-
-wfLoadExtension( 'NativeSvgHandler' );
-$wgFileExtensions[] = 'svg';
 
 ##
 ## Temporary settings for maintenance
