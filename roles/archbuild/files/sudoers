@@ -6,5 +6,7 @@ Cmnd_Alias ARCHBUILD = /usr/sbin/makechrootpkg, /usr/sbin/mkarchroot, \
 
 Defaults!ARCHBUILD     env_keep+=SOURCE_DATE_EPOCH
 
-%dev ALL = NOPASSWD: ARCHBUILD
-%tu  ALL = NOPASSWD: ARCHBUILD
+%dev              ALL = NOPASSWD: ARCHBUILD
+%junior-dev       ALL = NOPASSWD: ARCHBUILD
+%packager         ALL = NOPASSWD: ARCHBUILD
+%junior-packager  ALL = NOPASSWD: ARCHBUILD
