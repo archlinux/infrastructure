@@ -24,7 +24,6 @@ root_ssh_keys:
   - key: artafinde.pub
   - key: gromit.pub
     hosts:
-      - bugs.archlinux.org
       - wiki.archlinux.org
       - man.archlinux.org
       - gitlab.archlinux.org

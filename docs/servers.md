@@ -26,11 +26,6 @@
 ### Services
   - aurweb
 
-## bugs.archlinux.org
-
-### Services
-  - flyspray
-
 ## bbs.archlinux.org
 
 ### Services

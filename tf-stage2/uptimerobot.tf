@@ -19,7 +19,6 @@ locals {
   archlinux_org_monitor = {
     "Accounts"         = "https://accounts.archlinux.org"
     "AUR"              = "https://aur.archlinux.org"
-    "Bugtracker"       = "https://bugs.archlinux.org"
     "Forum"            = "https://bbs.archlinux.org"
     "Gitlab"           = "https://gitlab.archlinux.org"
     "Man"              = "https://man.archlinux.org"

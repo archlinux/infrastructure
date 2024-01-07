@@ -37,7 +37,6 @@ accounts.archlinux.org
 archlinux.org
 aur.archlinux.org
 bbs.archlinux.org
-bugs.archlinux.org
 gemini.archlinux.org
 gitlab.archlinux.org
 homedir.archlinux.org
@@ -59,7 +58,6 @@ homedir.archlinux.org
 [mysql_servers]
 aur.archlinux.org
 bbs.archlinux.org
-bugs.archlinux.org
 wiki.archlinux.org
 
 [postgresql_servers]
@@ -110,7 +108,6 @@ archlinux.org
 aur.archlinux.org
 bbs.archlinux.org
 bugbuddy.archlinux.org
-bugs.archlinux.org
 dashboards.archlinux.org
 debuginfod.archlinux.org
 gluebuddy.archlinux.org
