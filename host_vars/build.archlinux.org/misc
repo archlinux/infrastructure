@@ -1,10 +1,10 @@
 hostname: "build.archlinux.org"
-network_interface: "enp195s0"
-ipv4_address: "135.181.138.48"
+network_interface: "eno8303"
+ipv4_address: "65.21.37.204"
 ipv4_netmask: "/32"
-ipv6_address: "2a01:4f9:3a:120f::2"
-ipv6_netmask: "/128"
-ipv4_gateway: "135.181.138.1"
+ipv6_address: "2a01:4f9:3a:458a::2"
+ipv6_netmask: "/64"
+ipv4_gateway: "65.21.37.193"
 ipv6_gateway: "fe80::1"
 filesystem: btrfs
 system_disks:
