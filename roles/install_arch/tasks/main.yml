@@ -36,24 +36,40 @@
   register: sgdisk
   changed_when: "sgdisk.rc == 0"
 
-- name: Create root partitions
-  command: sgdisk -n 2:0:0 {{ item }} -c 2:root
+- name: Create EFI partitions
+  command: sgdisk -g -n 2:0:+512M {{ item }} -c 2:efi -t 2:ef00
   with_items:
     - "{{ system_disks }}"
   register: sgdisk
   changed_when: "sgdisk.rc == 0"
 
+- name: Create root partitions
+  command: sgdisk -n 3:0:0 {{ item }} -c 3:root
+  with_items:
+    - "{{ system_disks }}"
+  register: sgdisk
+  changed_when: "sgdisk.rc == 0"
+
+- name: Format the efi disk  # noqa no-changed-when
+  command: mkfs.fat -F 32 -S 4096 -n efi {{ system_disks[0] }}{{ 'p2' if 'nvme' in system_disks[0] else '2' }}
+
 - name: Partition and format the disks (btrfs RAID)  # noqa no-changed-when
-  command: mkfs.btrfs -f -L root -d {{ raid_level | default('raid1') }} -m {{ raid_level | default('raid1') }} -O no-holes {{ system_disks | map('regex_replace', '^(.*)$', '\g<1>p2' if 'nvme' in system_disks[0] else '\g<1>2') | join(' ') }}
+  command: mkfs.btrfs -f -L root -d {{ raid_level | default('raid1') }} -m {{ raid_level | default('raid1') }} -O no-holes {{ system_disks | map('regex_replace', '^(.*)$', '\g<1>p3' if 'nvme' in system_disks[0] else '\g<1>3') | join(' ') }}
   when: filesystem == "btrfs" and system_disks | length >= 2
 
 - name: Partition and format the disks (btrfs single)  # noqa no-changed-when
-  command: mkfs.btrfs -f -L root -d single -m single -O no-holes {{ system_disks[0] }}{{ 'p2' if 'nvme' in system_disks[0] else '2' }}
+  command: mkfs.btrfs -f -L root -d single -m single -O no-holes {{ system_disks[0] }}{{ 'p3' if 'nvme' in system_disks[0] else '3' }}
   when: filesystem == "btrfs" and system_disks | length == 1
 
 - name: Mount the filesystem (btrfs)
-  mount: src="{{ system_disks[0] }}{{ 'p2' if 'nvme' in system_disks[0] else '2' }}" path=/mnt state=mounted fstype=btrfs opts="compress-force=zstd,space_cache=v2"
+  mount: src="{{ system_disks[0] }}{{ 'p3' if 'nvme' in system_disks[0] else '3' }}" path=/mnt state=mounted fstype=btrfs opts="compress-force=zstd,space_cache=v2"
   when: filesystem == "btrfs"
+
+- name: Create the efi mountpoint
+  file: path=/mnt/efi state=directory mode='0755'
+
+- name: Mount the efi filesystem
+  mount: src="{{ system_disks[0] }}{{ 'p2' if 'nvme' in system_disks[0] else '2' }}" path=/mnt/efi state=mounted fstype=vfat
 
 - name: Touch LOCK file on mountpoint
   file: path=/mnt/LOCK state=touch owner=root group=root mode=0644
@@ -161,12 +177,19 @@
     line: "GRUB_CMDLINE_LINUX_DEFAULT=\"rootflags=compress-force=zstd\""
   when: filesystem == "btrfs"
 
-- name: Install grub
+- name: Install grub (legacy mode)
   command: chroot /mnt grub-install --target=i386-pc --recheck {{ item }}
   with_items:
     - "{{ system_disks }}"
-  register: chroot_grub_install
-  changed_when: "chroot_grub_install.rc == 0"
+  register: chroot_grub_install_legacy
+  changed_when: "chroot_grub_install_legacy.rc == 0"
+
+- name: Install grub (uefi mode)
+  command: chroot /mnt grub-install --target=x86_64-efi --efi-directory=/efi --removable --recheck {{ item }}
+  with_items:
+    - "{{ system_disks }}"
+  register: chroot_grub_install_uefi
+  changed_when: "chroot_grub_install_uefi.rc == 0"
 
 - name: Configure grub
   command: chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
