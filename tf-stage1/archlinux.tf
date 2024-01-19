@@ -155,6 +155,16 @@ locals {
       server_type = "cpx21"
       domain      = "wiki"
     }
+    "worker1.buildbot.pkgbuild.com" = {
+      server_type = "cx11"
+      domain      = "worker1.buildbot"
+      zone        = hetznerdns_zone.pkgbuild.id
+    }
+    "worker2.buildbot.pkgbuild.com" = {
+      server_type = "cx11"
+      domain      = "worker2.buildbot"
+      zone        = hetznerdns_zone.pkgbuild.id
+    }
   }
 
   # This creates gitlab pages verification entries.
