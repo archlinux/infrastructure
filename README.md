@@ -16,7 +16,7 @@ Install these packages:
 ### Instructions
 
 All systems are set up the same way. For the first time setup in the Hetzner rescue system,
-run the provisioning script: `ansible-playbook playbooks/tasks/install-arch.yml -l $host`.
+run the provisioning script: `ansible-playbook playbooks/tasks/install_arch.yml -l $host`.
 The provisioning script configures a sane basic systemd with sshd. By design, it is NOT idempotent.
 After the provisioning script has run, it is safe to reboot.
 

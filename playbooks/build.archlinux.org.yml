@@ -4,6 +4,7 @@
   roles:
     - { role: common }
     - { role: tools, extra_utils: ['setconf', 'mlocate'] }
+    - { role: firewalld }
     - { role: sshd }
     - { role: root_ssh }
     - { role: archusers }
@@ -11,6 +12,6 @@
     - { role: mirrorsync }
     - { role: archbuild }
     - { role: fail2ban }
+    - { role: wireguard }
     - { role: prometheus_exporters }
     - { role: promtail }
-    - { role: wireguard }

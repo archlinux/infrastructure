@@ -255,8 +255,8 @@ locals {
   # }
   archlinux_org_a_aaaa = {
     build = {
-      ipv4_address = "135.181.138.48"
-      ipv6_address = "2a01:4f9:3a:120f::2"
+      ipv4_address = "65.21.37.204"
+      ipv6_address = "2a01:4f9:3a:458a::2"
     }
     gemini = {
       ipv4_address = "49.12.124.107"
