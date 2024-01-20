@@ -739,7 +739,7 @@ api_url = https://accounts.archlinux.org/realms/archlinux/protocol/openid-connec
 ;allowed_domains =
 ;team_ids =
 ;allowed_organizations =
-role_attribute_path: contains(roles[*], 'DevOps') && 'Admin'
+role_attribute_path = contains(roles[*], 'DevOps') && 'Admin'
 role_attribute_strict = true
 ;groups_attribute_path =
 ;team_ids_attribute_path =
