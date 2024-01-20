@@ -80,3 +80,18 @@ ReloadPolicy=INPUT:DROP,FORWARD:DROP,OUTPUT:DROP
 # internet.
 # Defaults to "yes".
 RFC3964_IPv4=yes
+
+# NftablesFlowtable
+# This may improve forwarded traffic throughput by enabling nftables flowtable.
+# It is a software fastpath and avoids calling nftables rule evaluation for
+# data packets. This only works for TCP and UDP traffic.
+# The value is a space separated list of interfaces.
+# Example value "eth0 eth1".
+# Defaults to "off".
+NftablesFlowtable=off
+
+# NftablesCounters
+# If set to yes, add a counter to every nftables rule. This is useful for
+# debugging and comes with a small performance cost.
+# Defaults to "no".
+NftablesCounters=no
