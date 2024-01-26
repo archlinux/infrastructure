@@ -308,7 +308,7 @@
   notify:
     - Restart turnserver
 
-- name: Enable synapse units
+- name: Enable units
   service: name={{ item }} enabled=yes
   with_items:
     - synapse.service
@@ -316,36 +316,10 @@
     - synapse-worker@federation_reader.service
     - synapse-worker@federation_sender.service
     - synapse-worker@media_repository.service
-  notify:
-    - Restart synapse
-
-- name: Enable pantalaimon units
-  service: name={{ item }} enabled=yes
-  with_items:
     - pantalaimon.service
-  notify:
-    - Restart pantalaimon
-
-- name: Enable mjolnir units
-  service: name={{ item }} enabled=yes
-  with_items:
     - mjolnir.service
-  notify:
-    - Restart mjolnir
-
-- name: Enable matrix-appservice-irc units
-  service: name={{ item }} enabled=yes
-  with_items:
     - matrix-appservice-irc.service
-  notify:
-    - Restart matrix-appservice-irc
-
-- name: Enable turnserver units
-  service: name={{ item }} enabled=yes
-  with_items:
     - turnserver.service
-  notify:
-    - Restart turnserver
 
 - name: Open firewall holes
   ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes
