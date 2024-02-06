@@ -869,6 +869,10 @@ role_attribute_strict = true
 # By default is the same as used in AAD authentication or can be set to another application (for OBO flow)
 ;user_identity_client_secret =
 
+# Set the plugins that will receive Azure settings for each request (via plugin context)
+# By default this will include all Grafana Labs owned Azure plugins, or those that make use of Azure settings (Azure Monitor, Azure Data Explorer, Prometheus, MSSQL).
+;forward_settings_to_plugins = grafana-azure-monitor-datasource, prometheus, grafana-azure-data-explorer-datasource, mssql
+
 #################################### Role-based Access Control ###########
 [rbac]
 ;permission_cache = true
@@ -896,6 +900,11 @@ role_attribute_strict = true
 ;ehlo_identity = dashboard.example.com
 # SMTP startTLS policy (defaults to 'OpportunisticStartTLS')
 ;startTLS_policy = NoStartTLS
+
+[smtp.static_headers]
+# Include custom static headers in all outgoing emails
+;Foo-Header = bar
+;Foo = bar
 
 [emails]
 ;welcome_email_on_sign_up = false
@@ -1601,6 +1610,7 @@ mode = syslog
 # The address of the socks5 proxy datasources should connect to
 ; proxy_address =
 ; show_ui = true
+; allow_insecure = false
 
 ################################## Feature Management ##############################################
 [feature_management]
@@ -1615,3 +1625,9 @@ mode = syslog
 ;hidden_toggles =
 # Disable updating specific feature toggles in the feature management page
 ;read_only_toggles =
+
+#################################### Public Dashboards #####################################
+[public_dashboards]
+# Set to false to disable public dashboards
+;enabled = true
+
