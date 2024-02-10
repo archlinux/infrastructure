@@ -770,6 +770,13 @@ arch_users:
       - dev
       - junior-dev
       - tu
+  wahrwolf:
+    name: "Vincent Dahmen"
+    ssh_key: wahrwolf.pub
+    hosts:
+      - mail.archlinux.org
+    groups:
+      - support-staff
   wild:
     name: "Dan Printzell"
     email: "wild@archlinux.org"
