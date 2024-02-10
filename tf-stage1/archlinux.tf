@@ -68,10 +68,6 @@ locals {
       server_type = "cx11"
       domain      = "bugbuddy"
     }
-    "bugs.archlinux.org" = {
-      server_type = "cx11"
-      domain      = "bugs"
-    }
     "buildbot.pkgbuild.com" = {
       server_type = "cx21"
       domain      = "buildbot"
@@ -177,7 +173,7 @@ locals {
     "whatcanidofor"                 = "d9e45851002a623e10f6954ff9a85d21"
     "openpgpkey"                    = "d20c137368e26dcc3db56d45a368e729"
     "openpgpkey.master-key"         = "3eea8f39a9b473a5dc7c188366f84072"
-    "bugs-old"                      = "1f3308c8d5763eecb4f9013291aeeac4"
+    "bugs"                          = "e41ef82b1a2d063ae958a4d5a3b2f870"
     "package-maintainer-bylaws.aur" = "680c89d189c8f342cc00bcb624d813a3"
     "reproducible-notes"            = "8c657f2f2720db1c3db63be89605cf0d"
     "terms"                         = "0b62a71af2aa85fb491295b543b4c3d2"

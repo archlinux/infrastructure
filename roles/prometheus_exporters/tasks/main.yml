@@ -181,18 +181,6 @@
   systemd: name=prometheus-repository-textcollector.timer enabled=yes daemon_reload=yes state=started
   when: "inventory_hostname == 'gemini.archlinux.org'"
 
-- name: Install flyspray textcollector service
-  template: src=prometheus-flyspray-textcollector.service.j2 dest=/etc/systemd/system/prometheus-flyspray-textcollector.service owner=root group=root mode=644
-  when: "inventory_hostname == 'bugs.archlinux.org'"
-
-- name: Install flyspray textcollector timer
-  template: src=prometheus-flyspray-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-flyspray-textcollector.timer owner=root group=root mode=644
-  when: "inventory_hostname == 'bugs.archlinux.org'"
-
-- name: Enable and start prometheus flyspray textcollector timer
-  systemd: name=prometheus-flyspray-textcollector.timer enabled=yes daemon_reload=yes state=started
-  when: "inventory_hostname == 'bugs.archlinux.org'"
-
 - name: Install sudoers for btrfs
   copy: src=sudoers dest=/etc/sudoers.d/node_exporter owner=root group=root mode=0440
   when: filesystem == "btrfs"
