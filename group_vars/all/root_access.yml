@@ -3,7 +3,6 @@ sudo_users:
   - root
   - foutrelis
   - freswa
-  - grazzolini
   - heftig
   - jelle
   - svenstaro
@@ -15,7 +14,6 @@ sudo_users:
 root_ssh_keys:
   - key: foutrelis.pub
   - key: freswa.pub
-  - key: grazzolini.pub
   - key: heftig_nitrokey.pub
   - key: jelle.pub
   - key: svenstaro.pub
@@ -38,7 +36,6 @@ root_ssh_keys:
 vault_super_pgpkeys: &vault_super_pgpkeys
   - 86CFFCA918CF3AF47147588051E8B148A9999C34  # foutrelis
   - 05C7775A9E8B977407FE08E69D4C5AA15426DA0A  # freswa
-  - ECCAC84C1BA08A6CC8E63FBBF22FB1D78A77AEAB  # grazzolini
   - 83BC8889351B5DEBBB68416EB8AC08600F108CDF  # heftig
   - E499C79F53C96A54E572FEE1C06086337C50773E  # jelle
   - 8FC15A064950A99DD1BD14DD39E4B877E62EB915  # svenstaro
