@@ -521,6 +521,7 @@ arch_users:
     ssh_key: lahwaacz.pub
     groups:
       - support-staff
+      - packager
       - junior-packager
   lcarlier:
     name: "Laurent Carlier"
