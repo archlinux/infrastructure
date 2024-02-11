@@ -9,6 +9,7 @@ sudo_users:
   - anthraxx
   - klausenbusk
   - artafinde
+  - gromit
 
 # deploy tag 'root_ssh' when this changes
 root_ssh_keys:
@@ -21,11 +22,6 @@ root_ssh_keys:
   - key: klausenbusk.pub
   - key: artafinde.pub
   - key: gromit.pub
-    hosts:
-      - wiki.archlinux.org
-      - man.archlinux.org
-      - gitlab.archlinux.org
-      - build.archlinux.org
 
 # run 'playbooks/tasks/reencrypt-vault-{super,default}-key.yml' when this
 # changes; before doing so, make sure to 'gpg --lsign-key' all keys from both
@@ -42,6 +38,7 @@ vault_super_pgpkeys: &vault_super_pgpkeys
   - E240B57E2C4630BA768E2F26FC1B547C8D8172C8  # anthraxx
   - DB650286BD9EAE39890D3FE6FE3DC1668CB24956  # klausenbusk
   - B4B759625D4633430B74877059E43E106B247368  # artafinde
+  - F00B96D15228013FFC9C9D0393B11DAA4C197E3D  # gromit
 
 # run 'playbooks/tasks/reencrypt-vault-default-key.yml' when this changes;
 # before doing so, make sure to 'gpg --lsign-key' all keys below (or if you use
@@ -50,4 +47,3 @@ vault_super_pgpkeys: &vault_super_pgpkeys
 # misc/vaults/vault_hcloud.yml`
 vault_default_pgpkeys:
   - *vault_super_pgpkeys
-  - F00B96D15228013FFC9C9D0393B11DAA4C197E3D  # gromit
