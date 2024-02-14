@@ -64,7 +64,7 @@ for uid in "${TRUSTED_UIDs[@]}"; do
 done
 
 for fp in "${TRUSTED_KEYS[@]}"; do
-	sq --force link add --all "${fp}"
+	sq --force pki link add --all "${fp}"
 done
 
 verified=0
