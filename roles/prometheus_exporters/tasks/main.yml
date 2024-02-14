@@ -58,7 +58,6 @@
     - hetzner-textcollector.sh
     - rebuilderd-textcollector.sh
     - rebuilderd-status-textcollector.py
-    - flyspray-textcollector.py
     - archive-textcollector.sh
     - repository-textcollector.sh
     - btrfs-textcollector.sh
