@@ -45,7 +45,7 @@ for uid in "${TRUSTED_UIDs[@]}"; do
 done
 
 for fp in "${TRUSTED_KEYS[@]}"; do
-	sq link add --all "${fp}"
+	sq pki link add --all "${fp}"
 done
 
 sq verify --signer-cert "${TRUSTED_KEYS[0]}" --detached ${NAME}.sig ${NAME} || \
