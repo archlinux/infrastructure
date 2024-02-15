@@ -1,6 +1,6 @@
 <domain type='kvm'>
   <name>$vm_name</name>
-  <memory unit='MiB'>1024</memory>
+  <memory unit='MiB'>2048</memory>
   <vcpu>4</vcpu>
   <os>
     <type arch='x86_64' machine='q35'>hvm</type>
