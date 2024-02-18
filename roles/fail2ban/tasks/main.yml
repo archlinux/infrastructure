@@ -36,8 +36,8 @@
 
 - name: Install firewallcmd-allports.local
   template:
-    src: "firewallcmd-allports.local.j2"
-    dest: "/etc/fail2ban/action.d/firewallcmd-allports.local"
+    src: "firewallcmd-ipset-allports.conf.j2"
+    dest: "/etc/fail2ban/action.d/firewallcmd-ipset-allports.conf"
     owner: "root"
     group: "root"
     mode: '0644'
@@ -87,6 +87,17 @@
     mode: '0644'
   notify:
     - Reload fail2ban jails
+
+- name: Install fail2ban ipset for firewalld
+  copy: src=fail2ban.xml dest=/etc/firewalld/ipsets/ owner=root group=root mode=0644
+  register: result
+
+- name: Restart firewalld
+  systemd: name=firewalld state=restarted
+  when: result.changed
+
+- name: Add fail2ban ipset to the firewalld drop zone
+  ansible.posix.firewalld: source=ipset:fail2ban zone=drop permanent=true immediate=true state=enabled
 
 - name: Start and enable service
   systemd:
