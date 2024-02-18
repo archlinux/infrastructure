@@ -1,0 +1,8 @@
+#
+# {{ansible_managed}}
+#
+
+[Definition]
+
+actionban = firewall-cmd --ipset=fail2ban --add-entry=<ip>
+actionunban = firewall-cmd --ipset=fail2ban --remove-entry=<ip>

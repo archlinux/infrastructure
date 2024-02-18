@@ -27,7 +27,7 @@ sender = fail2ban@{{ansible_fqdn}}
 #   fail2ban-client set unban <IP>
 #   fail2ban-client set unban --all
 # see `fail2ban-client help` for full list of runtime commands
-banaction = firewallcmd-allports
+banaction = firewallcmd-ipset-allports
 
 # "ignoreip" can be a list of IP addresses, CIDR masks or DNS hosts. Fail2ban
 # will not ban a host which matches an address in this list. Several addresses
