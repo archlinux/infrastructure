@@ -34,7 +34,7 @@
   template: src=hedgedoc.service.d.j2 dest=/etc/systemd/system/hedgedoc.service.d/local.conf owner=root group=root mode=0644
 
 - name: Install hedgedoc config file
-  template: src=config.json.j2 dest=/etc/webapps/hedgedoc/config.json owner=root group=root mode=0644
+  template: src=config.json.j2 dest=/etc/webapps/hedgedoc/config.json owner=root group=hedgedoc mode=0640
 
 - name: Start and enable hedgedoc
   service: name=hedgedoc.service enabled=yes state=started
