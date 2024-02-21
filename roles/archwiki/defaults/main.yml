@@ -3,7 +3,7 @@ archwiki_domain: 'wiki.archlinux.org'
 archwiki_nginx_conf: '/etc/nginx/nginx.d/archwiki.conf'
 archwiki_user: 'archwiki'
 archwiki_repository: 'https://gitlab.archlinux.org/archlinux/archwiki.git'
-archwiki_version: '1.41.0-2'
+archwiki_version: '1.41.0-3'
 archwiki_question_answer_file: '/srv/http/archwiki/registration-question-answer.txt'
 
 archwiki_socket: '/run/php-fpm/archwiki.socket'
