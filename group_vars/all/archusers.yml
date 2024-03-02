@@ -219,6 +219,14 @@ arch_users:
       - packager
       - junior-packager
       - tu
+  codingkoopa:
+    name: "CodingKoopa"
+    email: "koopa@archlinux.org"
+    ssh_key: codingkoopa.pub
+    hosts:
+      - mail.archlinux.org
+    groups:
+      - support-staff
   daurnimator:
     name: "Daurnimator"
     email: "daurnimator@archlinux.org"
