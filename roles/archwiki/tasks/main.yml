@@ -107,6 +107,7 @@
     - archwiki-prune-cache.service
     - archwiki-prune-cache.timer
     - archwiki-question-updater.service
+    - archwiki-question-updater.timer
 
 - name: Start and enable archwiki timers and services
   systemd:
@@ -118,6 +119,7 @@
     - archwiki-runjobs.timer
     - archwiki-prune-cache.timer
     - archwiki-runjobs-wait.service
+    - archwiki-question-updater.timer
 
 - name: Create question answer file
   systemd:
@@ -127,9 +129,3 @@
 
 - name: Ensure question answer file exists and set permissions
   file: state=file path="{{ archwiki_question_answer_file }}" owner=root group=root mode=0644
-
-- name: Create pacman.d hooks dir
-  file: state=directory owner=root group=root mode=0755 path=/etc/pacman.d/hooks
-
-- name: Install archwiki question updater hook
-  template: src=archwiki-question-updater.hook.j2 dest=/etc/pacman.d/hooks/archwiki-question-updater.hook owner=root group=root mode=0644
