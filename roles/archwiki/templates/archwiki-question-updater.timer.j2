@@ -1,0 +1,9 @@
+[Unit]
+Description=Monthly Timer to update the Archwiki pacman question
+
+[Timer]
+OnCalendar=*-*-1 00:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

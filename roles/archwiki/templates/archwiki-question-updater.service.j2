@@ -3,4 +3,5 @@ Description=Update Archwiki pacman question answer
 
 [Service]
 Type=oneshot
-ExecStart=/bin/bash -c 'pacman -V|base32|head -1 > "{{archwiki_question_answer_file}}"'
+# %% is needed here to escape systemd's own templating
+ExecStart=/bin/bash -c 'LC_ALL=C pacman -V|sed -r "s#[0-9]+#$(date -u +%%m)#g"|base32|head -1 > "{{archwiki_question_answer_file}}"'

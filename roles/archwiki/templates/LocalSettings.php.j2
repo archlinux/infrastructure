@@ -421,7 +421,7 @@ $wgCaptchaTriggers['addurl'] = false;
 $wgCaptchaTriggers['createaccount'] = true;
 $wgCaptchaTriggers['badlogin'] = true;
 $wgCaptchaQuestions = [
-    'What is the output of: <code>pacman -V|base32|head -1</code>' => trim(file_get_contents("{{ archwiki_question_answer_file }}"))
+    'What is the output of: <code>LC_ALL=C pacman -V|sed -r "s#[0-9]+#$(date -u +%m)#g"|base32|head -1</code>' => trim(file_get_contents("{{ archwiki_question_answer_file }}"))
 ];
 
 # Restrict expensive actions to logged in users
