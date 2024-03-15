@@ -500,3 +500,15 @@ groups:
         annotations:
           summary: "Rebuilderd workers offline {{ $labels.instance }})"
           description: "Not all rebuilder-workers are online, currently {{ $value }} workers are online"
+
+  - name: fastly
+    interval: 60m
+    rules:
+      - alert: FastlyCostNotZero
+        expr: max_over_time(fastly_mtd_estimate_dollars_total[2h]) > 0
+        labels:
+          severity: warning
+          service: fastly
+        annotations:
+          summary: "Fastly is consuming real money"
+          description: "Fastly month-to-date billing estimate is now: {{ $value }}"
