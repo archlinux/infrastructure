@@ -122,8 +122,14 @@
     - clean-dests.timer
     - clean-offload-build.timer
 
-- name: Install makepkg.conf
-  template: src=makepkg.conf.j2 dest=/etc/makepkg.conf owner=root group=root mode=0644
+- name: Override makepkg.conf variables
+  lineinfile:
+    path: /etc/makepkg.conf
+    regexp: '^#?{{ item.name }}='
+    line: '{{ item.name }}={{ item.value }}'
+  loop:
+    - { name: MAKEFLAGS, value: '"-j$(nproc)"' }
+    - { name: SRCDEST, value: /var/lib/archbuilddest/srcdest }
 
 - name: Install archbuild sudoers config
   copy: src=sudoers dest=/etc/sudoers.d/archbuild owner=root group=root mode=0440
