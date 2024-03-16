@@ -18,7 +18,7 @@ remote_write:
   {% for relabel_config in prometheus_remote_write_relabel_configs %}
   - url: http://{{ prometheus_domain }}:9090/api/v1/write
     write_relabel_configs:
-      - source_labels: [{{ relabel_config.label }}]
+      - source_labels: [{{ relabel_config.label | join(',') }}]
         regex: "{{ relabel_config.regex }}"
         action: keep
     basic_auth:
