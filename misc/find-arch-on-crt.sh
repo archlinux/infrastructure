@@ -26,7 +26,7 @@ prometheus_targets() {
   | sed '/openpgpkey/ s|openpgpkey\.\(.*\)|&/.well-known/openpgpkey/\1/policy|' \
   | sed '/repos\.arch/ s|$|/lastupdate|' \
   | sed '/static\.conf/ s|$|/README.md|' \
-  | sed -r '/(geo|riscv)\.mirror|(bugs-old|coc|git|status)\.arch/d' \
+  | sed -r '/(geo|riscv)\.mirror|(coc|git|status)\.arch/d' \
   | xargs -P8 -I{} sh -c 'curl -m 10 -sf -o /dev/null {} && echo "    "- {}' \
   | sort
 }
