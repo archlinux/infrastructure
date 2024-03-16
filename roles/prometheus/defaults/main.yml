@@ -11,7 +11,7 @@ prometheus_remote_write_relabel_configs:
   - label: [job]
     regex: goaurrpc
   - label: [__name__]
-    regex: "archive_directory_size_bytes|archive_total_packages|rebuilderd_results|rebuilderd_workers|rebuilderd_queue_length|repository_directory_size_bytes|aur_.+|flyspray_issues"
+    regex: "archive_directory_size_bytes|archive_total_packages|rebuilderd_results|rebuilderd_workers|rebuilderd_queue_length|repository_directory_size_bytes|aur_.+"
   - label: [__name__, device, instance]
     regex: "node_network_transmit_bytes_total;en.*;.*\\\\.mirror\\\\.pkgbuild\\\\.com"
   - label: [__name__, instance]
