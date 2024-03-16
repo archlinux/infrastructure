@@ -11,7 +11,7 @@ readonly DOMAINS=(
   archlinux.page
 )
 readonly LOOKUP_URLS=(
-  "${DOMAINS[@]/#/https://crt.sh/?exclude=expired&deduplicate=Y&output=json&q=}"
+  "${DOMAINS[@]/#/https://crt.sh/?exclude=expired\&deduplicate=Y\&output=json\&q=}"
 )
 
 names() {
