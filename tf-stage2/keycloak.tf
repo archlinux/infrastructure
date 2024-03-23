@@ -73,7 +73,7 @@ resource "keycloak_realm" "archlinux" {
   display_name      = "Arch Linux"
   display_name_html = "<div class=\"kc-logo-text\"><span>Arch Linux</span></div>"
 
-  registration_allowed     = true
+  registration_allowed     = false
   reset_password_allowed   = true
   verify_email             = true
   login_with_email_allowed = true
