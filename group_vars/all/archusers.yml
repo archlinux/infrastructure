@@ -203,6 +203,12 @@ arch_users:
       - mail.archlinux.org
     groups:
       - support-staff
+  carsme:
+    name: "Carl Smedstad"
+    email: "carsme@archlinux.org"
+    ssh_key: carsme.pub
+    groups:
+      - junior-packager
   cbehan:
     name: "Connor Behan"
     email: "cbehan@archlinux.org"
