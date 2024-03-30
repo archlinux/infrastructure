@@ -40,9 +40,11 @@ cleanup() {
 trap cleanup EXIT
 
 # Dump databases to /root/backup-{postgres,mysql} before taking a btrfs snapshot
-systemctl is-active postgresql && /usr/local/bin/backup-postgres.sh || true
-if systemctl is-active mysqld || systemctl is-active mariadb; then
-    /usr/local/bin/backup-mysql.sh || true
+if systemctl is-active postgresql; then
+    /usr/local/bin/backup-postgres.sh
+fi
+if systemctl is-active mariadb; then
+    /usr/local/bin/backup-mysql.sh
 fi
 
 if is_btrfs "$src"; then

@@ -3,7 +3,8 @@
 # Script to backup all postgres databases individually
 #
 # Requires local login with `postgres` user and either trusted or peer auth.
-#
+
+set -e
 
 DBLIST=($(sudo -u postgres psql -d postgres -qt -c 'SELECT datname from pg_database'))
 for db in "${DBLIST[@]}"; do
