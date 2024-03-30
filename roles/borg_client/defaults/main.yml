@@ -7,3 +7,7 @@ backup_hosts:
     dir: "~/backup/{{ inventory_hostname }}"
     suffix: "-offsite"
     borg_cmd: "/usr/bin/borg --remote-path=borg1"
+
+backup_postgres_dir: /root/backup-postgres
+backup_mysql_dir: /root/backup-mysql
+backup_mysql_defaults: /root/.backup-my.cnf

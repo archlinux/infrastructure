@@ -27,31 +27,26 @@
   template: src=borg-backup.sh.j2 dest=/usr/local/bin/borg-backup{{ item['suffix'] }}.sh owner=root group=root mode=0755
   loop: "{{ backup_hosts }}"
 
-- name: Install postgres backup script
-  template: src=backup-postgres.sh.j2 dest=/usr/local/bin/backup-postgres.sh owner=root group=root mode=0755
-  when: postgres_backup_dir is defined
+- name: Set up backup helpers for PostgreSQL databases
+  when: "'postgresql_servers' in group_names"
+  block:
+    - name: Install postgres backup script
+      template: src=backup-postgres.sh.j2 dest=/usr/local/bin/backup-postgres.sh owner=root group=root mode=0755
 
-- name: Check whether postgres user exists
-  command: getent passwd postgres
-  register: check_postgres_user
-  ignore_errors: true
-  changed_when: check_postgres_user.stdout | length > 0
+    - name: Make postgres backup directory
+      file: path={{ backup_postgres_dir }} owner=root group=root mode=0755 state=directory
 
-- name: Make postgres backup directory
-  file: path={{ postgres_backup_dir }} owner=root group=root mode=0755 state=directory
-  when: check_postgres_user is succeeded and postgres_backup_dir is defined
+- name: Set up backup helpers for MariaDB databases
+  when: "'mysql_servers' in group_names"
+  block:
+    - name: Install mysql backup script
+      template: src=backup-mysql.sh.j2 dest=/usr/local/bin/backup-mysql.sh owner=root group=root mode=0755
 
-- name: Install mysql backup script
-  template: src=backup-mysql.sh.j2 dest=/usr/local/bin/backup-mysql.sh owner=root group=root mode=0755
-  when: mysql_backup_dir is defined
+    - name: Install mysql backup config
+      template: src=backup-my.cnf.j2 dest={{ backup_mysql_defaults }} owner=root group=root mode=0644
 
-- name: Install mysql backup config
-  template: src=backup-my.cnf.j2 dest={{ mysql_backup_defaults }} owner=root group=root mode=0644
-  when: mysql_backup_defaults is defined
-
-- name: Create mysql backup directory
-  file: path={{ mysql_backup_dir }} state=directory owner=root group=root mode=0755
-  when: mysql_backup_dir is defined
+    - name: Create mysql backup directory
+      file: path={{ backup_mysql_dir }} state=directory owner=root group=root mode=0755
 
 - name: Install systemd services for backup
   template: src={{ item }}.j2 dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644

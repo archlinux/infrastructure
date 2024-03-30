@@ -76,12 +76,13 @@ or just a sub-directory:
 
 ### Mariadb
 
-For Mariadb backups are made using mariabackup to `mysql_backup_dir`.Backups can are made and
-restored using the `mariabackup` tool. See also [official MariaDB docs](https://mariadb.com/kb/en/full-backup-and-restore-with-mariabackup/).
+For Mariadb backups are made using mariabackup to `backup_mysql_dir`. Backups
+are made and can be restored using the `mariadb-backup` tool. See also
+[official MariaDB docs](https://mariadb.com/kb/en/full-backup-and-restore-with-mariabackup/).
 
 ### PostgreSQL
 
-For PostgreSQL backups are made using pg_dump to `postgres_backup_dir`.
+For PostgreSQL backups are made using pg_dump to `backup_postgres_dir`.
 
 Restoring backups can be done with `pg_restore`. See also [official PostgreSQL docs](https://www.postgresql.org/docs/current/app-pgrestore.html).
 

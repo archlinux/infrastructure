@@ -2,8 +2,8 @@
 
 set -e
 
-mysql_opts="--defaults-file={{mysql_backup_defaults}}"
-backupdir="{{mysql_backup_dir}}"
+mysql_opts="--defaults-file={{ backup_mysql_defaults }}"
+backupdir="{{ backup_mysql_dir }}"
 
 [[ ! -d "$backupdir" ]] && mkdir -p "$backupdir"
 rm -rf "${backupdir:?}"/*
