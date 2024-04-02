@@ -25,7 +25,7 @@
   user: name=cleanup groups=junior-dev,dev,junior-packager,packager shell=/sbin/nologin
 
 - name: Add sourceballs user
-  user: name=sourceballs shell=/sbin/nologin
+  user: name=sourceballs groups=junior-dev,dev,junior-packager,packager shell=/sbin/nologin
 
 - name: Set up sudoers.d for special users
   copy: src=sudoers.d dest=/etc/sudoers.d/dbscripts owner=root group=root mode=0600 validate='visudo -cf %s'
