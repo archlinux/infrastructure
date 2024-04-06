@@ -73,18 +73,11 @@
 256 MD5:02:38:35:e8:5c:62:dc:56:29:be:fb:1c:96:2c:17:4c root@archlinux-packer (ED25519)
 3072 MD5:0a:a1:a1:44:4e:65:8b:10:f3:54:83:eb:17:41:f1:0c root@archlinux-packer (RSA)
 
-1024 MD5:cf:10:49:2f:d2:35:99:35:59:8f:e2:54:b3:05:cb:a7 root@archlinux-packer (DSA)
-256 MD5:d1:94:76:51:bb:7b:88:41:03:6d:12:63:a5:03:5f:58 root@archlinux-packer (ECDSA)
-256 MD5:d6:d3:a9:2e:c1:7d:69:c1:9a:21:c9:6f:30:53:e6:74 root@archlinux-packer (ED25519)
-3072 MD5:06:6d:1f:87:6b:fb:60:b3:a8:c7:64:37:15:b5:b5:6c root@archlinux-packer (RSA)
-
 # build.archlinux.org
-1024 SHA256:yJv47oZbEr7trxi3Md2RskrKDq3YSz66q5Z6eg5b6v0 root@build.archlinux.org (DSA)
 256 SHA256:h/9vac9LT+cI3VvXbO+BeN4s75GkEeqLDw1ucK61VpQ root@build.archlinux.org (ECDSA)
 256 SHA256:OyJ47eAF9V3nQU70BFpCkrSjSXNApNdTdy5DrEbly2I root@build.archlinux.org (ED25519)
 3072 SHA256:tKHdMeKtQuX42AoRhfvkECjaVhcVYKlL1Rvdo+upd4E root@build.archlinux.org (RSA)
 
-1024 MD5:75:d3:44:04:85:14:17:19:99:a9:fe:09:b1:fd:2b:d7 root@build.archlinux.org (DSA)
 256 MD5:a4:b9:26:2d:49:de:a1:d5:47:83:47:5a:a8:10:f9:62 root@build.archlinux.org (ECDSA)
 256 MD5:7b:38:67:01:59:c8:a7:b3:66:ec:78:df:ec:dd:30:72 root@build.archlinux.org (ED25519)
 3072 MD5:f2:6a:ba:b0:53:9b:d4:73:83:21:d6:76:0f:70:71:72 root@build.archlinux.org (RSA)
@@ -291,6 +284,15 @@
 256 MD5:b1:f5:78:51:c5:50:5e:25:73:68:fc:80:53:25:94:ba root@archlinux-packer (ECDSA)
 256 MD5:5a:49:d5:f3:00:ca:49:17:d8:cc:3e:84:1d:60:be:06 root@archlinux-packer (ED25519)
 3072 MD5:1e:52:48:56:d3:13:20:e5:02:4f:10:1b:af:27:e5:c7 root@archlinux-packer (RSA)
+
+# repos.archlinux.org
+256 SHA256:uR8mRzpo828jM6U1jmdBxXvHEiDbuNSwpLur5odBrRA root@repos.archlinux.org (ECDSA)
+256 SHA256:JApvSFU4OvaafW5ebe3ktmlp41WSsOffCkOBvtdNeDU root@repos.archlinux.org (ED25519)
+3072 SHA256:wlSAfyb4o94izuemzbOILFeVPgDZd0Y9n890gq1pyxY root@repos.archlinux.org (RSA)
+
+256 MD5:55:ee:72:27:c3:9d:f0:c3:89:b4:24:ff:75:dd:60:bf root@repos.archlinux.org (ECDSA)
+256 MD5:90:98:6c:ee:72:b5:a6:dc:bf:ae:12:39:2e:99:b2:c4 root@repos.archlinux.org (ED25519)
+3072 MD5:48:53:1e:51:81:7f:40:fd:ee:7c:dc:06:7c:98:a3:9e root@repos.archlinux.org (RSA)
 
 # repro2.pkgbuild.com
 1024 SHA256:sppthtBQD60z8f0bDUnoMUesg55M7/ez4qGXVUUDtRQ root@repro2.pkgbuild.com (DSA)
