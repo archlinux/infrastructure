@@ -1,0 +1,16 @@
+- name: Setup repos.archlinux.org
+  hosts: repos.archlinux.org
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: tools }
+    - { role: firewalld }
+    - { role: wireguard }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: borg_client, tags: ['borg'] }
+    - { role: sudo, tags: ['archusers'] }
+    - { role: fail2ban }
+    - { role: mirrorsync }
+    - { role: prometheus_exporters }
+    - { role: promtail }

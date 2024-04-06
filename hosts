@@ -3,6 +3,8 @@ build.archlinux.org
 gemini.archlinux.org
 gitlab.archlinux.org
 secure-runner1.archlinux.org
+#TODO(gromit): remove ansible host once the DNS record is set
+repos.archlinux.org ansible_host=168.119.141.106
 
 [equinix_metal]
 repro3.pkgbuild.com
@@ -18,6 +20,8 @@ london.mirror.pkgbuild.com
 mirror.pkgbuild.com
 seoul.mirror.pkgbuild.com
 sydney.mirror.pkgbuild.com
+#TODO(gromit): remove ansible host once the DNS record is set
+repos.archlinux.org ansible_host=168.119.141.106
 
 [geo_mirrors]
 america.mirror.pkgbuild.com
@@ -51,6 +55,8 @@ reproducible.archlinux.org
 security.archlinux.org
 state.archlinux.org
 wiki.archlinux.org
+#TODO(gromit): remove ansible host once the DNS record is set
+repos.archlinux.org ansible_host=168.119.141.106
 
 [public_html]
 homedir.archlinux.org
