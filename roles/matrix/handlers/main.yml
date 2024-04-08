@@ -12,9 +12,9 @@
     enabled: true
     daemon_reload: true
 
-- name: Restart mjolnir
+- name: Restart draupnir
   systemd:
-    name: mjolnir
+    name: draupnir
     state: restarted
     enabled: true
     daemon_reload: true

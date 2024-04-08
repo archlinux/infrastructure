@@ -46,7 +46,7 @@
   with_items:
     - /var/lib/synapse
     - /var/lib/synapse/media_store
-    - /var/lib/synapse/mjolnir-data
+    - /var/lib/synapse/draupnir-data
     - /var/lib/synapse/pantalaimon-data
 
 - name: Make virtualenvs
@@ -102,46 +102,46 @@
   notify:
     - Restart pantalaimon
 
-- name: Download mjolnir
+- name: Download draupnir
   git:
-    repo: https://github.com/matrix-org/mjolnir
-    dest: /var/lib/synapse/mjolnir
-    version: v1.6.5
+    repo: https://github.com/the-draupnir-project/Draupnir
+    dest: /var/lib/synapse/draupnir
+    version: v1.87.0
     force: true
   become: true
   become_user: synapse
   become_method: ansible.builtin.sudo
-  register: mjolnir_git
+  register: draupnir_git
   notify:
-    - Restart mjolnir
+    - Restart draupnir
 
-- name: Install mjolnir
+- name: Install draupnir
   community.general.yarn:
-    path: /var/lib/synapse/mjolnir
+    path: /var/lib/synapse/draupnir
   become: true
   become_user: synapse
   become_method: ansible.builtin.sudo
-  when: mjolnir_git.changed
+  when: draupnir_git.changed
 
-- name: Build mjolnir  # noqa no-changed-when
+- name: Build draupnir  # noqa no-changed-when
   command: yarn build
   args:
-    chdir: /var/lib/synapse/mjolnir
+    chdir: /var/lib/synapse/draupnir
   become: true
   become_user: synapse
   become_method: ansible.builtin.sudo
-  when: mjolnir_git.changed
+  when: draupnir_git.changed
 
-- name: Install mjolnir antispam module
+- name: Install draupnir antispam module
   pip:
     name:
-      - /var/lib/synapse/mjolnir/synapse_antispam
+      - /var/lib/synapse/draupnir/synapse_antispam
     state: latest
     virtualenv: /var/lib/synapse/venv
   become: true
   become_user: synapse
   become_method: ansible.builtin.sudo
-  when: synapse_pip.changed or mjolnir_git.changed
+  when: synapse_pip.changed or draupnir_git.changed
   notify:
     - Restart synapse
 
@@ -202,7 +202,6 @@
   file: path={{ item }} state=directory owner=root group=synapse mode=0750
   with_items:
     - /etc/synapse
-    - /etc/synapse/mjolnir
 
 - name: Install homeserver config
   template: src=homeserver.yaml.j2 dest=/etc/synapse/homeserver.yaml owner=root group=synapse mode=0640
@@ -225,10 +224,10 @@
   notify:
     - Restart pantalaimon
 
-- name: Install mjolnir config
-  template: src=mjolnir.yaml.j2 dest=/etc/synapse/mjolnir/production.yaml owner=root group=synapse mode=0640
+- name: Install draupnir config
+  template: src=draupnir.yaml.j2 dest=/etc/synapse/draupnir.yaml owner=root group=synapse mode=0640
   notify:
-    - Restart mjolnir
+    - Restart draupnir
 
 - name: Install irc-bridge config
   template: src=irc-bridge.yaml.j2 dest=/etc/synapse/irc-bridge.yaml owner=root group=synapse mode=0640
@@ -289,12 +288,12 @@
   notify:
     - Restart pantalaimon
 
-- name: Install mjolnir units
+- name: Install draupnir units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   with_items:
-    - mjolnir.service
+    - draupnir.service
   notify:
-    - Restart mjolnir
+    - Restart draupnir
 
 - name: Install matrix-appservice-irc units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
@@ -317,7 +316,7 @@
     - synapse-worker@federation_sender.service
     - synapse-worker@media_repository.service
     - pantalaimon.service
-    - mjolnir.service
+    - draupnir.service
     - matrix-appservice-irc.service
     - turnserver.service
 

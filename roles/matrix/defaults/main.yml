@@ -1,6 +1,6 @@
 matrix_max_upload_size: 100M
 matrix_nginx_config:
-  - name: mjolnir
+  - name: draupnir
     port: 8010
     locations:
       - path: "~ ^/_matrix/client/r0/rooms/([^/]*)/report/(.*)$"
