@@ -1,0 +1,17 @@
+hostname: "repos.archlinux.org"
+
+ipv4_address: "168.119.141.106"
+ipv4_netmask: "/32"
+ipv6_address: "2a01:4f8:251:598::"
+ipv6_netmask: "/64"
+ipv4_gateway: "168.119.141.65"
+ipv6_gateway: "fe80::1"
+filesystem: "btrfs"
+system_disks:
+- /dev/nvme0n1
+- /dev/nvme1n1
+- /dev/nvme2n1
+raid_level: "raid1"
+
+wireguard_address: 10.0.0.45
+wireguard_public_key: MDt3DqmYppnV81CFHLII1O80BWFGYeGGNrDWlQcX5H8=
