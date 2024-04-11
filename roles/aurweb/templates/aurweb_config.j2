@@ -3,3 +3,5 @@ Match User {{ aurweb_user }}
         AuthorizedKeysCommand /usr/local/bin/aurweb-git-auth.sh "%t" "%k"
         AuthorizedKeysCommandUser {{ aurweb_user }}
         AcceptEnv AUR_OVERWRITE
+        AllowTcpForwarding No
+        AllowAgentForwarding No
