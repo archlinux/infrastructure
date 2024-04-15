@@ -743,6 +743,14 @@ arch_users:
       - packager
       - junior-packager
       - tu
+  svartkanin:
+    name: "Daniel Girtler"
+    email: "svartkanin@archlinux.org"
+    ssh_key: svartkanin.pub
+    hosts:
+      - mail.archlinux.org
+    groups:
+      - support-staff
   svenstaro:
     name: "Sven-Hendrik Haase"
     email: "svenstaro@archlinux.org"
