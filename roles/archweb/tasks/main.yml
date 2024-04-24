@@ -283,7 +283,7 @@
   when: archweb_site
 
 - name: Install sudoer rights for fetchmail to call archweb django scripts
-  template: src=sudoers-fetchmail-archweb.j2 dest=/etc/sudoers.d/fetchmail-archweb owner=root group=root mode=0440
+  template: src=sudoers-fetchmail-archweb.j2 dest=/etc/sudoers.d/fetchmail-archweb owner=root group=root mode=0440 validate='visudo -cf %s'
   when: archweb_site
 
 - name: Create retro dir

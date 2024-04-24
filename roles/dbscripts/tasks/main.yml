@@ -28,7 +28,7 @@
   user: name=sourceballs shell=/sbin/nologin
 
 - name: Set up sudoers.d for special users
-  copy: src=sudoers.d dest=/etc/sudoers.d/dbscripts owner=root group=root mode=0600
+  copy: src=sudoers.d dest=/etc/sudoers.d/dbscripts owner=root group=root mode=0600 validate='visudo -cf %s'
 
 - name: Create ssl cert
   include_role:

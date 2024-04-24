@@ -132,7 +132,7 @@
     - { name: SRCDEST, value: /var/lib/archbuilddest/srcdest }
 
 - name: Install archbuild sudoers config
-  copy: src=sudoers dest=/etc/sudoers.d/archbuild owner=root group=root mode=0440
+  copy: src=sudoers dest=/etc/sudoers.d/archbuild owner=root group=root mode=0440 validate='visudo -cf %s'
 
 - name: Install gitconfig
   copy: src=gitconfig dest=/etc/gitconfig owner=root group=root mode=0644

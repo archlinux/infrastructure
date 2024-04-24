@@ -181,7 +181,7 @@
   when: "inventory_hostname == 'gemini.archlinux.org'"
 
 - name: Install sudoers for btrfs
-  copy: src=sudoers dest=/etc/sudoers.d/node_exporter owner=root group=root mode=0440
+  copy: src=sudoers dest=/etc/sudoers.d/node_exporter owner=root group=root mode=0440 validate='visudo -cf %s'
   when: filesystem == "btrfs"
 
 - name: Install btrfs textcollector service
