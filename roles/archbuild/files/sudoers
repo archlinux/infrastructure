@@ -4,7 +4,7 @@ Cmnd_Alias ARCHBUILD = /usr/sbin/makechrootpkg, /usr/sbin/mkarchroot, \
                        /usr/bin/multilib-testing-build,    /usr/bin/multilib-staging-build, \
                        /usr/bin/makerepropkg
 
-Defaults!ARCHBUILD     env_keep+=SOURCE_DATE_EPOCH
+Defaults!ARCHBUILD     env_keep += "SOURCE_DATE_EPOCH LOGDEST"
 
 %dev              ALL = NOPASSWD: ARCHBUILD
 %junior-dev       ALL = NOPASSWD: ARCHBUILD
