@@ -12,7 +12,7 @@ archweb_domains_templates:
 archweb_allowed_hosts: ["{{ archweb_domain }}", 'ipxe.archlinux.org']
 archweb_nginx_conf: '/etc/nginx/nginx.d/archweb.conf'
 archweb_repository: 'https://github.com/archlinux/archweb.git'
-archweb_version: 'release_2024-04-28'
+archweb_version: 'release_2024-05-02'
 archweb_pgp_key: ['E499C79F53C96A54E572FEE1C06086337C50773E']
 archweb_site: true
 archweb_mirrorcheck: false
