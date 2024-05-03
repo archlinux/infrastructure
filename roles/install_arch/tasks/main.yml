@@ -80,20 +80,20 @@
     dest: /tmp/
     mode: '0644'
   loop:
-    - https://geo.mirror.pkgbuild.com/iso/{{ bootstrap_version }}/archlinux-bootstrap-x86_64.tar.gz
-    - https://archlinux.org/iso/{{ bootstrap_version }}/archlinux-bootstrap-x86_64.tar.gz.sig
+    - https://geo.mirror.pkgbuild.com/iso/{{ bootstrap_version }}/archlinux-bootstrap-x86_64.tar.zst
+    - https://archlinux.org/iso/{{ bootstrap_version }}/archlinux-bootstrap-x86_64.tar.zst.sig
 
 - name: Get pierre's key
   command: gpg --locate-keys pierre@archlinux.org
   changed_when: false
 
 - name: Verify bootstrap image signature
-  command: gpg --verify /tmp/archlinux-bootstrap-x86_64.tar.gz.sig
+  command: gpg --verify /tmp/archlinux-bootstrap-x86_64.tar.zst.sig
   changed_when: false
 
 - name: Extract boostrap image  # noqa risky-file-permissions
   unarchive:
-    src: /tmp/archlinux-bootstrap-x86_64.tar.gz
+    src: /tmp/archlinux-bootstrap-x86_64.tar.zst
     dest: /tmp
     remote_src: true
     creates: /tmp/root.x86_64
