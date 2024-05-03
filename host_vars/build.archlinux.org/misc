@@ -1,14 +1,16 @@
 hostname: "build.archlinux.org"
-network_interface: "eno8303"
-ipv4_address: "65.21.37.204"
+network_interface: "enp193s0f0np0"
+ipv4_address: "162.55.28.166"
 ipv4_netmask: "/32"
-ipv6_address: "2a01:4f9:3a:458a::2"
+ipv6_address: "2a01:4f8:2190:20e0::2"
 ipv6_netmask: "/64"
-ipv4_gateway: "65.21.37.193"
+ipv4_gateway: "162.55.28.129"
 ipv6_gateway: "fe80::1"
 filesystem: btrfs
 system_disks:
   - /dev/nvme0n1
+  - /dev/nvme1n1
+raid_level: "raid1"
 
 archbuild_fs: 'btrfs'
 wireguard_address: 10.0.0.18
