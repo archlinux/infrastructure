@@ -1,3 +1,8 @@
-#!/bin/bash -e
+#!/bin/bash
 
-find /home/*/.cache/offload-build/ -mtime +15 -name '*.pkg.tar*' -delete
+set -eu
+shopt -s nullglob
+
+for offload_build_cache in /home/*/.cache/offload-build; do
+  find "$offload_build_cache" -mindepth 1 -maxdepth 1 -type d -mtime +15 -exec rm -rf {} +
+done
