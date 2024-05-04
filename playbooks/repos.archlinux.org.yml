@@ -1,6 +1,8 @@
 - name: Setup repos.archlinux.org
   hosts: repos.archlinux.org
   remote_user: root
+  vars:
+    archweb_db_host: "{{ hostvars['archlinux.org']['wireguard_address'] }}"
   roles:
     - { role: common }
     - { role: tools }
@@ -10,7 +12,10 @@
     - { role: root_ssh }
     - { role: borg_client, tags: ['borg'] }
     - { role: sudo, tags: ['archusers'] }
+    # - { role: certbot }
+    - { role: nginx }
     - { role: fail2ban }
     - { role: mirrorsync }
     - { role: prometheus_exporters }
     - { role: promtail }
+    - { role: repo_archive_split_temp, repos_rsync_domain: "rsync.archlinux.org" }
