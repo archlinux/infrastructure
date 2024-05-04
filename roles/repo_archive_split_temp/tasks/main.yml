@@ -1,0 +1,55 @@
+- name: Install rsync and some perl stuff
+  pacman: name=rsync,perl-dbd-pg,perl-timedate state=present
+
+- name: Create ssl cert
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ repos_rsync_domain }}"]
+
+- name: Make nginx log dir
+  file: path=/var/log/nginx/{{ repos_rsync_domain }} state=directory owner=root group=root mode=0755
+
+- name: Set up nginx
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/dbscripts.conf owner=root group=root mode=0644
+  notify:
+    - Reload nginx
+  tags:
+    - nginx
+
+- name: Create rsyncd-conf-genscripts
+  file: path=/etc/rsyncd-conf-genscripts state=directory owner=root group=root mode=0700
+
+- name: Install rsync.conf.proto
+  template: src=rsyncd.conf.proto.j2 dest=/etc/rsyncd-conf-genscripts/rsyncd.conf.proto owner=root group=root mode=0644
+  tags:
+    - rsynd-conf-proto
+
+- name: Configure gen_rsyncd.conf.pl
+  template: src=gen_rsyncd.conf.pl dest=/etc/rsyncd-conf-genscripts/gen_rsyncd.conf.pl owner=root group=root mode=0700
+  no_log: true
+
+- name: Generate mirror config
+  command: /etc/rsyncd-conf-genscripts/gen_rsyncd.conf.pl
+  register: gen_rsyncd
+  changed_when: "gen_rsyncd.rc == 0"
+
+- name: Start and enable rsync
+  service: name=rsyncd.socket enabled=yes state=started
+
+- name: Open firewall holes for rsync
+  ansible.posix.firewalld: service=rsyncd permanent=true state=enabled immediate=yes
+  when: configure_firewall
+  tags:
+    - firewall
+
+- name: Install systemd timers
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - gen_rsyncd.timer
+    - gen_rsyncd.service
+
+- name: Activate systemd timers
+  service: name={{ item }} enabled=yes state=started
+  with_items:
+    - gen_rsyncd.timer

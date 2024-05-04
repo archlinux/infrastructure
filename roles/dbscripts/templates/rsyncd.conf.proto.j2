@@ -80,7 +80,7 @@ hosts deny = *
 [kitchensink_tier1]
 	path = /srv/ftp
 	comment = ftp area (everything, including very old versions)
-	hosts allow = @@ALLOWHOSTS_TIER1@@ {{ hostvars['gemini.archlinux.org']['ipv4_address'] }} {{ hostvars['gemini.archlinux.org']['ipv6_address'] }}
+	hosts allow = @@ALLOWHOSTS_TIER1@@ {{ hostvars['gemini.archlinux.org']['ipv4_address'] }} {{ hostvars['gemini.archlinux.org']['ipv6_address'] }} {{ hostvars['repos.archlinux.org']['ipv4_address'] }} {{ hostvars['repos.archlinux.org']['ipv6_address'] }}
 	max connections = 0
 
 [kitchensink_auth]

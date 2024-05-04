@@ -18,7 +18,7 @@ mirrorsync_mirrors:
       - --include="pool/*-debug/***"
       - --exclude="*"
   repo:
-    hosts: "{{ groups['mirrors'] + ['build.archlinux.org'] }}"
+    hosts: "{{ (groups['mirrors'] + ['build.archlinux.org']) | difference(['repos.archlinux.org']) }}"
     source: rsync://rsync.archlinux.org/ftp_tier1
     target: /srv/ftp
     last_update_url: https://rsync.archlinux.org/lastupdate
@@ -28,6 +28,13 @@ mirrorsync_mirrors:
       - --exclude="/other"
       - --exclude="/sources"
       - --exclude="*-debug/"
+  kitchensink:
+    hosts: "repos.archlinux.org"
+    source: rsync://repos.archlinux.org/kitchensink_tier1
+    target: /srv/ftp
+    last_update_url: https://repos.archlinux.org/lastupdate
+    last_update_dst: lastupdate
+    save_lastsync: true
   riscv:
     hosts: "{{ groups['geo_mirrors'] }}"
     mirror_domain: riscv.mirror.pkgbuild.com
