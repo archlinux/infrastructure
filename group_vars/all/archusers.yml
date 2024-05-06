@@ -601,14 +601,6 @@ arch_users:
       - mail.archlinux.org
     groups:
       - support-staff
-  nicohood:
-    name: "NicoHood"
-    email: "nicohood@archlinux.org"
-    ssh_key: nicohood.pub
-    groups:
-      - packager
-      - junior-packager
-      - tu
   orhun:
     name: "Orhun Parmaksiz"
     email: "orhun@archlinux.org"
