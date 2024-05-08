@@ -17,6 +17,14 @@
   tags:
     - nginx
 
+- name: Put rsyncd.conf into tmpfiles
+  copy: src=rsyncd-tmpfiles.d dest=/etc/tmpfiles.d/rsyncd.conf owner=root group=root mode=0644
+  register: rsyncdtmpfiles
+
+- name: Use tmpfiles.d/rsyncd.conf
+  command: systemd-tmpfiles --create creates=/run/rsyncd
+  when: rsyncdtmpfiles.changed
+
 - name: Create rsyncd-conf-genscripts
   file: path=/etc/rsyncd-conf-genscripts state=directory owner=root group=root mode=0700
 

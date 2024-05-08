@@ -1,7 +1,7 @@
 mirrorsync_mirrors:
   archive:
     hosts: "{{ groups['archive_mirrors'] }}"
-    source: rsync://rsync.archlinux.org/archive
+    source: rsync://archive.archlinux.org/archive
     target: /srv/archive
     last_update_url: https://archive.archlinux.org/repos/last/lastupdate
     last_update_dst: lastupdate
