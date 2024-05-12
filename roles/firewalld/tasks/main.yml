@@ -19,4 +19,5 @@
     service: dhcpv6-client
     state: disabled
     immediate: true
+    permanent: true
   when: configure_firewall
