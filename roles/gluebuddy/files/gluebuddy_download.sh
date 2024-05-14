@@ -41,7 +41,7 @@ do
 done
 
 for uid in "${TRUSTED_UIDs[@]}"; do
-	sq wkd get "${uid}"
+	sq network wkd fetch "${uid}"
 done
 
 for fp in "${TRUSTED_KEYS[@]}"; do
