@@ -153,8 +153,8 @@
     - zshrc
     - dircolors
 
-- name: Install pacman-contrib,archlinux-contrib
-  pacman: name=pacman-contrib,archlinux-contrib state=installed
+- name: Install pacman-contrib and archlinux-contrib
+  pacman: name=pacman-contrib,fakeroot,archlinux-contrib state=installed
 
 - name: Install custom paccache.service
   copy: src=paccache.service dest=/etc/systemd/system/paccache.service owner=root group=root mode=0644
