@@ -30,21 +30,21 @@
       lineinfile: name=/root/.gnupg/dirmngr.conf create=yes line=no-use-tor owner=root group=root mode=0644
 
 - name: Create GRUB embed partitions
-  command: sgdisk -g --clear -n 1:0:+1M {{ item }} -c 1:boot -t 1:ef02
+  command: sgdisk -g -I --clear -n 1:0:+1M {{ item }} -c 1:'BIOS boot partition' -t 1:ef02
   with_items:
     - "{{ system_disks }}"
   register: sgdisk
   changed_when: "sgdisk.rc == 0"
 
-- name: Create EFI partitions
-  command: sgdisk -g -n 2:0:+512M {{ item }} -c 2:efi -t 2:ef00
+- name: Create EFI system partitions
+  command: sgdisk -g -I -n 2:0:+512M {{ item }} -c 2:'EFI system partition' -t 2:ef00
   with_items:
     - "{{ system_disks }}"
   register: sgdisk
   changed_when: "sgdisk.rc == 0"
 
 - name: Create root partitions
-  command: sgdisk -n 3:0:0 {{ item }} -c 3:root
+  command: sgdisk -I -n 3:0:0 {{ item }} -c 3:root -t 3:8304
   with_items:
     - "{{ system_disks }}"
   register: sgdisk
