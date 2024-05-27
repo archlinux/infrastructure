@@ -169,6 +169,15 @@ arch_users:
       - packager
       - junior-packager
       - tu
+  bertptrs:
+    name: "Bert Peters"
+    email: "bertptrs@archlinux.org"
+    ssh_key: bertptrs_ganymede.pub
+    groups:
+      - packager
+    additional_ssh_keys:
+      - name: bertptrs_rhea.pub
+        hosts: all
   bgyorgy:
     name: "Balló György"
     email: "bgyorgy@archlinux.org"
