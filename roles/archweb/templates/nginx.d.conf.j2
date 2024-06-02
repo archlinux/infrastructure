@@ -1,8 +1,8 @@
 # limit rss requests to 1 r/m
 limit_req_zone $binary_remote_addr zone=rsslimit:8m rate=1r/m;
 
-# limit general requests to 20 r/s to block DoS attempts.
-limit_req_zone $binary_remote_addr zone=archweblimit:10m rate=20r/s;
+# limit general requests to 10 r/s to block DoS attempts.
+limit_req_zone $binary_remote_addr zone=archweblimit:10m rate=10r/s;
 
 limit_req_status 429;
 
