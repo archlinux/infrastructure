@@ -7,6 +7,13 @@ findtime = {{fail2ban_findtime}}
 bantime  = {{fail2ban_bantime}}
 maxretry = {{fail2ban_maxretry}}
 
+# ban time multiplier
+bantime.increment = true
+# default factor (causes increment - 1h -> 1d 2d 4d 8d 16d 32d ...):
+bantime.factor = 24
+# max banning time = 5 week:
+bantime.maxtime = 5w
+
 # don't trust dns
 usedns = no
 
