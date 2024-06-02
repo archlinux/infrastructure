@@ -19,8 +19,9 @@ server {
 }
 
 server {
-    listen       443 ssl http2;
-    listen       [::]:443 ssl http2;
+    listen       443 ssl;
+    listen       [::]:443 ssl;
+    http2        on;
     server_name  {{ domain }};
 
     access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log reduced;
@@ -60,8 +61,9 @@ server {
 }
 
 server {
-    listen       443 ssl http2;
-    listen       [::]:443 ssl http2;
+    listen       443 ssl;
+    listen       [::]:443 ssl;
+    http2        on;
     server_name  {{ service_domain }};
 
     access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log reduced;
