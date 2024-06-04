@@ -23,8 +23,9 @@ limit_req_zone $binary_remote_addr zone=bbslimit:10m rate=10r/s;
 limit_req_status 429;
 
 server {
-    listen 443 ssl http2;
-    listen [::]:443 ssl http2;
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2  on;
     server_name {{ fluxbb_domain }};
     root {{ fluxbb_dir }};
     index index.php;

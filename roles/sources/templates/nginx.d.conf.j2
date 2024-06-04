@@ -16,8 +16,9 @@ server {
 }
 
 server {
-    listen       443 ssl http2;
-    listen       [::]:443 ssl http2;
+    listen       443 ssl;
+    listen       [::]:443 ssl;
+    http2        on;
     server_name  {{ sources_domain }};
 
     access_log   /var/log/nginx/{{ sources_domain }}/access.log reduced;

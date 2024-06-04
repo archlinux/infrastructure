@@ -9,8 +9,9 @@ map $uri ${{ redirect.map | hash('md5') }} {
 server {
     listen       80;
     listen       [::]:80;
-    listen       443 ssl http2;
-    listen       [::]:443 ssl http2;
+    listen       443 ssl;
+    listen       [::]:443 ssl;
+    http2        on;
     server_name  {{ redirect.domain }};
 
     access_log   /var/log/nginx/{{ redirect.domain }}/access.log reduced;
