@@ -303,14 +303,6 @@ arch_users:
       - mail.archlinux.org
     groups:
       - support-staff
-  escondida:
-    name: "Ivy Foster"
-    email: "iff@archlinux.org"
-    ssh_key: escondida.pub
-    groups:
-      - packager
-      - junior-packager
-      - tu
   eworm:
     name: "Christian Hesse"
     email: "eworm@archlinux.org"
