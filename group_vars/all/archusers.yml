@@ -567,18 +567,6 @@ arch_users:
       - dev
       - junior-dev
       - tu
-  maximbaz:
-    name: "Maxim Baz"
-    email: "maximbaz@archlinux.org"
-    ssh_key: maximbaz.pub
-    additional_ssh_keys:
-      - name: maximbaz_buildhost.pub
-        hosts:
-          - homedir.archlinux.org
-    groups:
-      - packager
-      - junior-packager
-      - tu
   moson:
     name: "Mario Oenning"
     email: "moson@archlinux.org"
