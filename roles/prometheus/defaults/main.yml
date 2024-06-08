@@ -68,6 +68,7 @@ blackbox_targets:
     - https://patchwork.archlinux.org
     - https://ping.archlinux.org
     - https://pkgbuild.com
+    - https://pacman.archlinux.page
     - https://planet.archlinux.org
     - https://registry.archlinux.org
     - https://repod.archlinux.page
