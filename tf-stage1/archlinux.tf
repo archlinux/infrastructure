@@ -81,6 +81,10 @@ locals {
       server_type = "cx21"
       domain      = "debuginfod"
     }
+    "discourse.sandbox.archlinux.org" = {
+      server_type = "cpx21"
+      domain      = "discourse.sandbox"
+    }
     "gluebuddy.archlinux.org" = {
       server_type = "cx11"
       domain      = "gluebuddy"
