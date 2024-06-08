@@ -144,8 +144,8 @@ server {
         alias {{ archweb_dir }}/collected_static/favicon.ico;
     }
 
-    location /pacman/ {
-        alias {{ archweb_dir }}/archlinux.org/pacman/;
+    location ~ ^/pacman/(.*)$ {
+        return 301 https://pacman.archlinux.page/$1;
     }
 
     location /netcfg/ {
