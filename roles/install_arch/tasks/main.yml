@@ -29,29 +29,22 @@
     - name: Set the no-use-tor option in dirmngr.conf
       lineinfile: name=/root/.gnupg/dirmngr.conf create=yes line=no-use-tor owner=root group=root mode=0644
 
-- name: Create GRUB embed partitions
-  command: sgdisk -g --clear -n 1:0:+1M {{ item }} -c 1:boot -t 1:ef02
+- name: Create partitions
+  command: >
+    sgdisk
+      --align-end
+      --clear
+      --new=0:0:+1M --change-name=0:'BIOS boot partition' --typecode=0:ef02
+      --new=0:0:+512M --change-name=0:'EFI system partition' --typecode=0:ef00
+      --new=0:0:0 --change-name=0:root --typecode=0:8304
+      {{ item }}
   with_items:
     - "{{ system_disks }}"
   register: sgdisk
   changed_when: "sgdisk.rc == 0"
 
-- name: Create EFI partitions
-  command: sgdisk -g -n 2:0:+512M {{ item }} -c 2:efi -t 2:ef00
-  with_items:
-    - "{{ system_disks }}"
-  register: sgdisk
-  changed_when: "sgdisk.rc == 0"
-
-- name: Create root partitions
-  command: sgdisk -n 3:0:0 {{ item }} -c 3:root
-  with_items:
-    - "{{ system_disks }}"
-  register: sgdisk
-  changed_when: "sgdisk.rc == 0"
-
-- name: Format the efi disk  # noqa no-changed-when
-  command: mkfs.fat -F 32 -S 4096 -n efi {{ system_disks[0] }}{{ 'p2' if 'nvme' in system_disks[0] else '2' }}
+- name: Format the EFI system partition  # noqa no-changed-when
+  command: mkfs.fat -F 32 -S 4096 -n ESP {{ system_disks[0] }}{{ 'p2' if 'nvme' in system_disks[0] else '2' }}
 
 - name: Partition and format the disks (btrfs RAID)  # noqa no-changed-when
   command: mkfs.btrfs -f -L root -d {{ raid_level | default('raid1') }} -m {{ raid_level | default('raid1') }} -O no-holes {{ system_disks | map('regex_replace', '^(.*)$', '\g<1>p3' if 'nvme' in system_disks[0] else '\g<1>3') | join(' ') }}
