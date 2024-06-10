@@ -8,7 +8,7 @@ aurweb_conf_dir: '/etc/aurweb'
 aurweb_git_dir: "{{ aurweb_dir }}/aur.git"
 aurweb_git_hook: '/usr/local/bin/aurweb-git-update'
 aurweb_nginx_conf: '/etc/nginx/nginx.d/aurweb.conf'
-aurweb_version: 'v6.2.10'
+aurweb_version: 'v6.2.11'
 aurweb_pgp_keys: ['2191B89431BAC0A8B96DE93D244740D17C7FD0EC', 'DB650286BD9EAE39890D3FE6FE3DC1668CB24956', 'D5AD89388A7C6C9C22E790994A4760AB4EE15296']
 
 aurweb_db: 'aur'
