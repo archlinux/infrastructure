@@ -13,7 +13,7 @@
     dest: /srv/bugbot
     force: true
     verify_commit: true
-    gpg_whitelist: '{{ bugbot_pgp_keys }}'
+    gpg_allowlist: '{{ bugbot_pgp_keys }}'
     version: '{{ bugbot_version }}'
 
 - name: Install env file
