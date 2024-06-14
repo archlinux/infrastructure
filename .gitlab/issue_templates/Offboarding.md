@@ -7,7 +7,7 @@ This template should be used for offboarding Arch Linux team members.
 ## Details
 
 - **Team member username**:
-- **Currently held roles**: <!-- Add known roles here like TU, DevOps, etc -->
+- **Currently held roles**: <!-- Add known roles here like Package Maintainer, DevOps, etc -->
 - **Removal request**: <!-- Add link to relevant mailing list mail -->
   - **Voting result**: <!-- Add link to relevant mailing list mail -->
 
@@ -29,17 +29,17 @@ This template should be used for offboarding Arch Linux team members.
 - [ ] Remove staff cloak on Libera Chat ([Group contacts](https://wiki.archlinux.org/title/Arch_IRC_channels#Libera_Chat_group_contacts)).
 - [ ] Remove the user from relevant staff groups on Keycloak.
 - [ ] Move the user from the public list of their usergroup on archweb ([support staff](https://archlinux.org/people/support-staff/) / [TUs](https://archlinux.org/people/trusted-users/) / [devs](https://archlinux.org/people/developers/)) to the respective fellow site ([fellow support staff](https://archlinux.org/people/support-staff-fellows/) / [fellow TUs](https://archlinux.org/people/trusted-user-fellows/) / [fellow devs](https://archlinux.org/people/developer-fellows/))
-- [ ] Remove the user from the Arch Linux github organisation
+- [ ] Remove the user from the Arch Linux GitHub organisation
 
 ## Main key offboarding checklist
 
 - [ ] Remove user email for the `master-key.archlinux.org` subdomain by reverting instructions from [`docs/email.md`](docs/email.md).
 - [ ] Create an issue in [archlinux-keyring](https://gitlab.archlinux.org/archlinux/archlinux-keyring) using the [*"Remove Main Key"*](https://gitlab.archlinux.org/archlinux/archlinux-keyring/-/issues/new?issuable_template=Remove%20Main%20Key) template.
 
-## TU/Developer offboarding checklist
+## Package Maintainer/Developer offboarding checklist
 
 - [ ] Remove member from [arch-tu](https://lists.archlinux.org/mailman3/lists/arch-tu.lists.archlinux.org/members/member/) and/or [arch-dev](https://lists.archlinux.org/mailman3/lists/arch-dev.lists.archlinux.org/members/member/) mailing lists.
-- [ ] Ask the user to leave `#archlinux-tu` and/or `#archlinux-dev` on Libera Chat and forget the password(s).
+- [ ] Ask the user to leave `#archlinux-tu` and/or `#archlinux-dev` aswell as `#archlinux-packaging` on Libera Chat and forget the password(s).
 - [ ] Create an issue in [archlinux-keyring](https://gitlab.archlinux.org/archlinux/archlinux-keyring) using the [*"Remove Packager Key"*](https://gitlab.archlinux.org/archlinux/archlinux-keyring/-/issues/new?issuable_template=Remove%20Packager%20Key) template.
 - [ ] Remove [stale package relations](https://archlinux.org/packages/stale_relations/) for the now inactive user.
 - [ ] Remove their extended permissions on AURweb
