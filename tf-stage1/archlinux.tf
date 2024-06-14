@@ -275,6 +275,10 @@ locals {
       ipv4_address = "213.133.111.6"
       ipv6_address = "2a01:4f8:222:174c::2"
     }
+    rsync = {
+      ipv4_address = "168.119.141.106"
+      ipv6_address = "2a01:4f8:251:598::"
+    }
     runner1 = {
       ipv4_address = "138.199.19.15"
       ipv6_address = "2a02:6ea0:c72e::2"
@@ -310,7 +314,6 @@ locals {
     planet          = { value = "www" }
     registry        = { value = "gitlab" }
     repos           = { value = "gemini" }
-    rsync           = { value = "gemini" }
     sources         = { value = "gemini" }
     "static.conf"   = { value = "redirect" }
     status          = { value = "redirect" }
