@@ -466,15 +466,6 @@ arch_users:
       - dev
       - junior-dev
       - tu
-  jleclanche:
-    name: "Jerome Leclanche"
-    email: "jleclanche@archlinux.org"
-    ssh_key: jleclanche.pub
-    shell: /bin/zsh
-    groups:
-      - packager
-      - junior-packager
-      - tu
   jlichtblau:
     name: "Jaroslav Lichtblau"
     email: "svetlemodry@archlinux.org"
