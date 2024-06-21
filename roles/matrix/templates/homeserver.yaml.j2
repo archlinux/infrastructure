@@ -116,13 +116,12 @@ autocreate_auto_join_rooms: false
 auto_join_mxid_localpart: mjolnir
 auto_join_rooms_for_guests: false
 
-auto_accepT_invites:
+auto_accept_invites:
   enabled: true
   only_for_direct_messages: false
   only_from_local_users: true
 
 # Login and registration
-
 registration_shared_secret: "{{ vault_matrix_secrets.registration_shared_secret }}"
 macaroon_secret_key: "{{ vault_matrix_secrets.macaroon_secret_key }}"
 form_secret: "{{ vault_matrix_secrets.form_secret }}"
