@@ -102,6 +102,12 @@ arch_users:
       - tu
       - packager
       - junior-packager
+  anonfunc:
+    name: "Giovanni Harting"
+    email: "anonfunc@archlinux.org"
+    ssh_key: anonfunc.pub
+    groups:
+      - junior-packager
   anthraxx:
     name: "Levente Polyak"
     email: "anthraxx@archlinux.org"
