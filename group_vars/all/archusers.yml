@@ -180,7 +180,7 @@ arch_users:
     email: "bertptrs@archlinux.org"
     ssh_key: bertptrs_ganymede.pub
     groups:
-      - packager
+      - junior-packager
     additional_ssh_keys:
       - name: bertptrs_rhea.pub
         hosts: all
