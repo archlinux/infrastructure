@@ -20,9 +20,11 @@ readonly NAME=bugbuddy
 readonly PROJECT_ID="archlinux%2F${NAME}"
 readonly TRUSTED_UIDs=(
 	anthraxx@archlinux.org
+	gromit@archlinux.org
 )
 readonly TRUSTED_KEYS=(
 	E240B57E2C4630BA768E2F26FC1B547C8D8172C8
+	F00B96D15228013FFC9C9D0393B11DAA4C197E3D
 )
 
 readonly CURRENT_RELEASE="/root/${NAME}-current_release"
