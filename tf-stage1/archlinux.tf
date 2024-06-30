@@ -43,7 +43,7 @@ locals {
   #
   # Example:
   # "archlinux.org" = {
-  #   server_type = "cpx11"
+  #   server_type = "cx22"
   #   domain      = "@"
   #   ttl         = 3600
   # }
@@ -53,23 +53,23 @@ locals {
       domain      = "accounts"
     }
     "archlinux.org" = {
-      server_type = "cpx11"
+      server_type = "cx22"
       domain      = "@"
     }
     "aur.archlinux.org" = {
-      server_type = "cpx41"
+      server_type = "cx42"
       domain      = "aur"
     }
     "bbs.archlinux.org" = {
-      server_type = "cx21"
+      server_type = "cx22"
       domain      = "bbs"
     }
     "bugbuddy.archlinux.org" = {
-      server_type = "cx11"
+      server_type = "cx22"
       domain      = "bugbuddy"
     }
     "buildbot.pkgbuild.com" = {
-      server_type = "cx21"
+      server_type = "cx22"
       domain      = "buildbot"
       zone        = hetznerdns_zone.pkgbuild.id
     }
@@ -78,15 +78,15 @@ locals {
       domain      = "dashboards"
     }
     "debuginfod.archlinux.org" = {
-      server_type = "cx21"
+      server_type = "cx22"
       domain      = "debuginfod"
     }
     "discourse.sandbox.archlinux.org" = {
-      server_type = "cpx21"
+      server_type = "cx32"
       domain      = "discourse.sandbox"
     }
     "gluebuddy.archlinux.org" = {
-      server_type = "cx11"
+      server_type = "cx22"
       domain      = "gluebuddy"
     }
     "homedir.archlinux.org" = {
@@ -94,7 +94,7 @@ locals {
       domain      = "homedir"
     }
     "lists.archlinux.org" = {
-      server_type = "cx21"
+      server_type = "cx22"
       domain      = "lists"
     }
     "mail.archlinux.org" = {
@@ -102,7 +102,7 @@ locals {
       domain      = "mail"
     }
     "man.archlinux.org" = {
-      server_type = "cx11"
+      server_type = "cx22"
       domain      = "man"
     }
     "matrix.archlinux.org" = {
@@ -119,11 +119,11 @@ locals {
       zone        = hetznerdns_zone.pkgbuild.id
     }
     "monitoring.archlinux.org" = {
-      server_type = "cx31"
+      server_type = "cx32"
       domain      = "monitoring"
     }
     "opensearch.archlinux.org" = {
-      server_type = "cx11"
+      server_type = "cx22"
       domain      = "opensearch"
     }
     "phrik.archlinux.org" = {
@@ -152,16 +152,16 @@ locals {
       backups     = true
     }
     "wiki.archlinux.org" = {
-      server_type = "cpx21"
+      server_type = "cx32"
       domain      = "wiki"
     }
     "worker1.buildbot.pkgbuild.com" = {
-      server_type = "cx11"
+      server_type = "cx22"
       domain      = "worker1.buildbot"
       zone        = hetznerdns_zone.pkgbuild.id
     }
     "worker2.buildbot.pkgbuild.com" = {
-      server_type = "cx11"
+      server_type = "cx22"
       domain      = "worker2.buildbot"
       zone        = hetznerdns_zone.pkgbuild.id
     }
