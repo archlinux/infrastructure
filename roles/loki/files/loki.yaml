@@ -27,17 +27,17 @@ ingester:
 
 schema_config:
   configs:
-    - from: 2020-10-24
-      store: boltdb-shipper
-      object_store: filesystem
-      schema: v11
-      index:
-        prefix: index_
-        period: 24h
     - from: 2022-06-07
       store: boltdb-shipper
       object_store: filesystem
       schema: v12
+      index:
+        prefix: index_
+        period: 24h
+    - from: 2024-07-03
+      store: boltdb-shipper
+      object_store: filesystem
+      schema: v13
       index:
         prefix: index_
         period: 24h
