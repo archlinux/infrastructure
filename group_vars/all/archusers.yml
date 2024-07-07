@@ -223,6 +223,7 @@ arch_users:
     email: "carsme@archlinux.org"
     ssh_key: carsme.pub
     groups:
+      - packager
       - junior-packager
   cbehan:
     name: "Connor Behan"
