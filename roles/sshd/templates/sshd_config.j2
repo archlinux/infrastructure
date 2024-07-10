@@ -14,3 +14,10 @@ Match User root
 
 # unlink forwarded sockets; for gpg agent forwarding
 StreamLocalBindUnlink yes
+
+# accept environment variables for user's color, language/locale
+# and timezone settings
+AcceptEnv COLORFGBG
+AcceptEnv LANG
+AcceptEnv LC_*
+AcceptEnv TZ
