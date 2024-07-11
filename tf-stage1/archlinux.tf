@@ -49,7 +49,7 @@ locals {
   # }
   machines = {
     "accounts.archlinux.org" = {
-      server_type = "cx11"
+      server_type = "cx22"
       domain      = "accounts"
     }
     "archlinux.org" = {
@@ -74,7 +74,7 @@ locals {
       zone        = hetznerdns_zone.pkgbuild.id
     }
     "dashboards.archlinux.org" = {
-      server_type = "cx11"
+      server_type = "cx22"
       domain      = "dashboards"
     }
     "debuginfod.archlinux.org" = {
@@ -90,7 +90,7 @@ locals {
       domain      = "gluebuddy"
     }
     "homedir.archlinux.org" = {
-      server_type = "cx11"
+      server_type = "cx22"
       domain      = "homedir"
     }
     "lists.archlinux.org" = {
@@ -98,7 +98,7 @@ locals {
       domain      = "lists"
     }
     "mail.archlinux.org" = {
-      server_type = "cx11"
+      server_type = "cx22"
       domain      = "mail"
     }
     "man.archlinux.org" = {
@@ -110,11 +110,11 @@ locals {
       domain      = "matrix"
     }
     "md.archlinux.org" = {
-      server_type = "cx11"
+      server_type = "cx22"
       domain      = "md"
     }
     "mirror.pkgbuild.com" = {
-      server_type = "cx11"
+      server_type = "cx22"
       domain      = "mirror"
       zone        = hetznerdns_zone.pkgbuild.id
     }
@@ -127,27 +127,27 @@ locals {
       domain      = "opensearch"
     }
     "phrik.archlinux.org" = {
-      server_type = "cx11"
+      server_type = "cx22"
       domain      = "phrik"
     }
     "quassel.archlinux.org" = {
-      server_type = "cx11"
+      server_type = "cx22"
       domain      = "quassel"
     }
     "redirect.archlinux.org" = {
-      server_type = "cx11"
+      server_type = "cx22"
       domain      = "redirect"
     }
     "reproducible.archlinux.org" = {
-      server_type = "cx11"
+      server_type = "cx22"
       domain      = "reproducible"
     }
     "security.archlinux.org" = {
-      server_type = "cx11"
+      server_type = "cx22"
       domain      = "security"
     }
     "state.archlinux.org" = {
-      server_type = "cx11"
+      server_type = "cx22"
       domain      = "state"
       backups     = true
     }
