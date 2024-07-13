@@ -41,7 +41,7 @@ aurweb_timers:
   - { name: "aurweb-github-mirror.timer", install: "{{ aurweb_environment_type == 'prod' }}", restart: "{{ aurweb_environment_type == 'prod' }}" }
 
 aurweb_services:
-  - { name: "aurweb-git.service", restart: false }
+  # - { name: "aurweb-git.service", restart: false }
   - { name: "aurweb-aurblup.service", restart: false }
   - { name: "aurweb-mkpkglists.service", restart: false }
   - { name: "aurweb-pkgmaint.service", restart: false }
