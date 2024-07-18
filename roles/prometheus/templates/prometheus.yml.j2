@@ -155,7 +155,7 @@ scrape_configs:
 
   - job_name: 'blackbox_{{ module }}'
     metrics_path: /probe
-    scrape_interval: 15s
+    scrape_interval: 60s
     params:
       module: [{{ module }}]
     static_configs:
