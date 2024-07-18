@@ -4,8 +4,8 @@ limit_req_zone $binary_remote_addr zone=rsslimit:8m rate=1r/m;
 # limit mirrors/status/json requests to 1 r/m
 limit_req_zone $binary_remote_addr zone=mirrorstatuslimit:8m rate=1r/m;
 
-# limit general requests to 10 r/s to block DoS attempts.
-limit_req_zone $binary_remote_addr zone=archweblimit:10m rate=10r/s;
+# limit general requests to 5 r/s to block DoS attempts.
+limit_req_zone $binary_remote_addr zone=archweblimit:10m rate=5r/s;
 
 limit_req_status 429;
 
