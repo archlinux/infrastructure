@@ -14,10 +14,10 @@ support@libera.chat.
 
 ## Migration quassel
 
-Stop the quassel service:
+Stop the quassel service, then:
 
 `sudo -u postgres pg_dump -F c quassel >quassel.dump`
 
 Restore the data:
 
-`sudo -u postgres pg_restore -d quassel --clean --exit-on-error <quassel.dump`
+`sudo -u postgres pg_restore -d quassel --clean --if-exists --exit-on-error <quassel.dump`
