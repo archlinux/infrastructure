@@ -62,8 +62,9 @@ server {
         proxy_cache_key         $scheme$proxy_host$uri$http_authorization;
 
         # Minimize the number of requests to archweb
-        proxy_cache_lock        on;
-        proxy_cache_use_stale   updating;
+        proxy_cache_lock              on;
+        proxy_cache_use_stale         updating;
+        proxy_cache_background_update on;
 
         # Authentication to archweb
         proxy_pass https://archlinux.org;
