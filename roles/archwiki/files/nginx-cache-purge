@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+import hashlib
+import http.server
+import pathlib
+import socketserver
+import urllib.parse
+
+socketserver.ThreadingTCPServer.allow_reuse_address = True
+
+
+class Handler(http.server.BaseHTTPRequestHandler):
+    def do_PURGE(self):
+        self.send_response(http.HTTPStatus.OK)
+        self.end_headers()
+        o = urllib.parse.urlparse(self.path)
+        for method in ["GET", "HEAD"]:
+            # Please keep in sync with "fastcgi_cache_key" in nginx.d.conf.j2
+            if o.query:
+                cache_key = f"https{method}{o.netloc}{o.path}?{o.query}"
+            else:
+                cache_key = f"https{method}{o.netloc}{o.path}"
+            hash = hashlib.md5(cache_key.encode("utf-8")).hexdigest()
+            # Please keep in sync with "fastcgi_cache_path" in nginx.d.conf.j2
+            pathlib.Path(
+                f"/var/lib/nginx/cache/{hash[-1]}/{hash[-3:-1]}/{hash}"
+            ).unlink(missing_ok=True)
+
+
+httpd = http.server.ThreadingHTTPServer(("127.0.0.1", 1080), Handler)
+httpd.serve_forever()

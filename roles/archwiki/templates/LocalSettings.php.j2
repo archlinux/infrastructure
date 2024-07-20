@@ -147,9 +147,9 @@ $wgMemCachedServers = [ "unix://{{ archwiki_memcached_socket }}" ];
 ## be publicly accessible from the web.
 $wgCacheDirectory = "$IP/../cache/data";
 $wgEnableSidebarCache = true;
-$wgUseFileCache = true;
-$wgFileCacheDirectory = "$IP/../cache/html";
-$wgUseGzip = true;
+$wgUseCdn = true;
+$wgCdnServers = [ '127.0.0.1' ];
+$wgInternalServer = 'http://wiki.archlinux.org';
 
 # CSS-based preferences supposedly cause about 20 times slower page loads
 # https://phabricator.wikimedia.org/rSVN63707

@@ -1,0 +1,11 @@
+[Unit]
+Description=nginx cache PURGE service
+
+[Service]
+User=http
+ProtectSystem=strict
+ReadWritePaths=/var/lib/nginx/cache
+ExecStart=/usr/local/bin/nginx-cache-purge
+
+[Install]
+WantedBy=multi-user.target

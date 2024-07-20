@@ -1,4 +1,6 @@
-fastcgi_cache_path /var/lib/nginx/cache levels=1:2 keys_zone=wiki:100m inactive=60m;
+# Please keep "path" and "levels" in sync with nginx-cache-purge
+fastcgi_cache_path /var/lib/nginx/cache levels=1:2 keys_zone=wiki:100m inactive=720m;
+# Please keep in sync with "cache_key" in nginx-cache-purge
 fastcgi_cache_key "$scheme$request_method$host$request_uri";
 
 # rate limit API endpoint
@@ -110,10 +112,18 @@ server {
         fastcgi_index  index.php;
         include        fastcgi.conf;
 
+{% block wiki_cache %}
         fastcgi_cache wiki;
-        fastcgi_cache_valid 200 10m;
+        # This improves the cache hit ratio[1] and ensures that there is
+        # only a single cache file. Without this, nginx will use the
+        # Vary header as an secondary cache key[2], which breaks the
+        # cache purge servce.
+        # [1] https://www.fastly.com/blog/best-practices-using-vary-header/
+        # [2] https://github.com/nginx/nginx/commit/1332e76b20a6a1e871904525d42b17dcaed81eec
+        fastcgi_ignore_headers Vary;
 
         add_header X-Cache $upstream_cache_status;
+{% endblock %}
     }
 
     # mediawiki API endpoint
@@ -140,6 +150,11 @@ server {
         fastcgi_pass   archwiki;
         fastcgi_index  index.php;
         include        fastcgi.conf;
+
+{{ self.wiki_cache() }}
+        # https://www.mediawiki.org/w/index.php?title=Manual:Varnish_caching&oldid=6230975#Configuring_Varnish
+        fastcgi_cache_bypass $http_authorization $cookie_archwiki_session $cookie_archwikiToken;
+        fastcgi_no_cache $http_authorization $cookie_archwiki_session $cookie_archwikiToken;
 
         limit_req zone=archwikilimit burst=10 nodelay;
     }
