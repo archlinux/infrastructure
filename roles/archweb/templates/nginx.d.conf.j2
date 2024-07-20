@@ -113,6 +113,17 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ archweb_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ archweb_domain }}/chain.pem;
 
+    # Deny folks using archlinux.org as uptime detector
+    if ($http_user_agent ~ "Uptime-Kuma") {
+        return 403;
+    }
+
+    # Deny folks using archlinux.org with their own blackbox export, our exporter
+    # user-agent is different so does not match.
+    if ($http_user_agent ~ "Blackbox Exporter") {
+        return 403;
+    }
+
     location = /.well-known/matrix/server {
         default_type application/json;
         return 200 '{"m.server": "{{ matrix_domain }}:443"}';
