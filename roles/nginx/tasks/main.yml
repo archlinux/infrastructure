@@ -1,6 +1,9 @@
 - name: Install nginx
   pacman: name=nginx,nginx-mod-brotli state=present
 
+- name: Install extra nginx modules
+  pacman: name={{ nginx_extra_modules | map(attribute='name') | map('regex_replace', '^', 'nginx-mod-') }} state=present
+
 - name: Install nginx.service snippet
   copy: src=nginx.service.d dest=/etc/systemd/system owner=root group=root mode=0644
 

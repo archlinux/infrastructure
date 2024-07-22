@@ -2,6 +2,13 @@ worker_processes  auto;
 
 load_module /usr/lib/nginx/modules/ngx_http_brotli_filter_module.so;
 load_module /usr/lib/nginx/modules/ngx_http_brotli_static_module.so;
+{% for module in nginx_extra_modules %}
+{% if module.so_name is not defined %}
+load_module /usr/lib/nginx/modules/ngx_http_{{ module.name }}_module.so;
+{% else %}
+load_module /usr/lib/nginx/modules/{{ module.so_name | replace('-', '_') }};
+{% endif %}
+{% endfor %}
 include toplevel-snippets/*.conf;
 
 events {
