@@ -1,6 +1,7 @@
 archwiki_dir: '/srv/http/archwiki'
 archwiki_domain: 'wiki.archlinux.org'
 archwiki_nginx_conf: '/etc/nginx/nginx.d/archwiki.conf'
+archwiki_nginx_challenge_value: '41ce6c6'
 archwiki_user: 'archwiki'
 archwiki_repository: 'https://gitlab.archlinux.org/archlinux/archwiki.git'
 archwiki_version: '1.42.1-2'
