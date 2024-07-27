@@ -5,13 +5,13 @@
     # So use Python built-in http.server for the initial certificate issuance
     python -m http.server --directory {{ letsencrypt_validation_dir }} 80 &
     trap "jobs -p | xargs --no-run-if-empty kill" EXIT
-    certbot certonly --email {{ certificate_contact_email }} --agree-tos --key-type ecdsa --renew-by-default --webroot -w {{ letsencrypt_validation_dir }} -d {{ domains | join(' -d ') }} --cert-name {{ cert_name | default(domains | first) }}
+    certbot certonly --email {{ certificate_contact_email }} --agree-tos --key-type {{ 'ecdsa' if not (legacy | default(false)) else 'rsa --rsa-key-size 4096' }} --renew-by-default --webroot -w {{ letsencrypt_validation_dir }} -d {{ domains | join(' -d ') }} --cert-name {{ cert_name | default(domains | first) }}
   args:
     creates: '/etc/letsencrypt/live/{{ cert_name | default(domains | first) }}/fullchain.pem'
   when: challenge | default(certificate_challenge) == "HTTP-01"
 
 - name: Create ssl cert (DNS-01) named {{ cert_name | default(domains | first) }}
-  command: certbot certonly --email {{ certificate_contact_email }} --agree-tos --key-type ecdsa --renew-by-default --dns-rfc2136 --dns-rfc2136-credentials /etc/letsencrypt/rfc2136.ini -d {{ domains | join(' -d ') }} --cert-name {{ cert_name | default(domains | first) }}
+  command: certbot certonly --email {{ certificate_contact_email }} --agree-tos --key-type {{ 'ecdsa' if not (legacy | default(false)) else 'rsa --rsa-key-size 4096' }} --renew-by-default --dns-rfc2136 --dns-rfc2136-credentials /etc/letsencrypt/rfc2136.ini -d {{ domains | join(' -d ') }} --cert-name {{ cert_name | default(domains | first) }}
   args:
     creates: '/etc/letsencrypt/live/{{ cert_name | default(domains | first) }}/fullchain.pem'
   when: challenge | default(certificate_challenge) == "DNS-01"
