@@ -41,6 +41,45 @@ server {
 }
 
 {% endfor %}
+{% for domain in service_legacy_domains | default([]) %}
+server {
+    listen       80;
+    listen       [::]:80;
+    server_name  {{ domain }};
+
+    access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log reduced;
+    access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log.json json_reduced;
+    error_log    {{ maintenance_logs_dir }}/{{ service_domain }}-error.log;
+
+    include snippets/letsencrypt.conf;
+
+    location / {
+        access_log off;
+        return 302 https://$server_name$request_uri;
+    }
+}
+
+server {
+    listen       443 ssl;
+    listen       [::]:443 ssl;
+    http2        on;
+    server_name  {{ domain }};
+
+    access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log reduced;
+    access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log.json json_reduced;
+    error_log    {{ maintenance_logs_dir }}/{{ service_domain }}-error.log;
+
+    ssl_certificate      /etc/letsencrypt/live/{{ service_domain }}_legacy/fullchain.pem;
+    ssl_certificate_key  /etc/letsencrypt/live/{{ service_domain }}_legacy/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/{{ service_domain }}_legacy/chain.pem;
+
+    location / {
+        access_log off;
+        return 302 https://{{ service_domain }};
+    }
+}
+
+{% endfor %}
 server {
     listen       80;
     listen       [::]:80;

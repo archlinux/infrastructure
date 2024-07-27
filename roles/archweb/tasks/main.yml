@@ -5,6 +5,7 @@
     service_name: "site"
     service_domain: "{{ archweb_domain }}"
     service_alternate_domains: "{{ archweb_alternate_domains }}"
+    service_legacy_domains: "{{ archweb_legacy_domains }}"
     service_nginx_conf: "{{ archweb_nginx_conf }}"
     service_nginx_template: "maintenance-nginx.d.conf.j2"
   when: maintenance is defined and archweb_site
@@ -27,6 +28,15 @@
     name: certificate
   vars:
     domains: "{{ [archweb_domain] + archweb_alternate_domains }}"
+  when: archweb_site | bool and maintenance is not defined
+
+- name: Create legacy ssl cert
+  include_role:
+    name: certificate
+  vars:
+    cert_name: "{{ archweb_domain }}_legacy"
+    domains: "{{ archweb_legacy_domains }}"
+    legacy: true
   when: archweb_site | bool and maintenance is not defined
 
 - name: Set up nginx
