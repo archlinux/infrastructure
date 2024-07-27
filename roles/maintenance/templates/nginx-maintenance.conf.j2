@@ -1,6 +1,4 @@
-{% if service_alternate_domains %}
-{% for domain in service_alternate_domains %}
-
+{% for domain in service_alternate_domains | default([]) %}
 server {
     listen       80;
     listen       [::]:80;
@@ -37,13 +35,9 @@ server {
         return 301 https://{{ service_domain }};
     }
 }
+
 {% endfor %}
-
 server {
-{% else %}
-
-server {
-{% endif %}
     listen       80;
     listen       [::]:80;
     server_name  {{ service_domain }};
