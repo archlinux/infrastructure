@@ -6,5 +6,4 @@ Before=borg-backup-offsite.service
 
 [Service]
 Type=oneshot
-{% include 'borg-backup-cpu-quota.j2' %}
 ExecStart=/usr/local/bin/borg-backup.sh
