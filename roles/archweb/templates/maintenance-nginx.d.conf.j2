@@ -16,7 +16,7 @@ server {
 
     location / {
         access_log off;
-        return 301 https://$server_name$request_uri;
+        return 302 https://$server_name$request_uri;
     }
 }
 
@@ -36,7 +36,7 @@ server {
 
     location / {
         access_log off;
-        return 301 https://{{ service_domain }};
+        return 302 https://{{ service_domain }};
     }
 }
 
@@ -54,7 +54,7 @@ server {
 
     location / {
         access_log off;
-        return 301 https://$server_name$request_uri;
+        return 302 https://$server_name$request_uri;
     }
 }
 
