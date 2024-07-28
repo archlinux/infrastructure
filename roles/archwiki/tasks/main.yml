@@ -4,7 +4,6 @@
   vars:
     service_name: "wiki"
     service_domain: "{{ archwiki_domain }}"
-    service_alternate_domains: []
     service_nginx_conf: "{{ archwiki_nginx_conf }}"
   when: maintenance is defined
 

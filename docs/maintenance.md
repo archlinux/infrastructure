@@ -27,6 +27,7 @@ The basic configuration looks like this:
     service_name: "<service name>"
     service_domain: "{{ service_domain }}"
     service_alternate_domains: []
+    service_legacy_domains: []
     service_nginx_conf: "{{ service_nginx_conf }}"
   when: maintenance is defined
 ```

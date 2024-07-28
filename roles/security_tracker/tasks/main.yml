@@ -4,7 +4,6 @@
   vars:
     service_name: "security tracker"
     service_domain: "{{ security_tracker_domain }}"
-    service_alternate_domains: []
     service_nginx_conf: "{{ security_tracker_nginx_conf }}"
   when: maintenance is defined
 

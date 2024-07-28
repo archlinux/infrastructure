@@ -3,7 +3,7 @@ Description=Let's Encrypt renewal
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/certbot renew --key-type ecdsa \
+ExecStart=/usr/bin/certbot renew                  \
     --no-random-sleep-on-renew                    \
     --pre-hook   "/etc/letsencrypt/hook.sh pre"   \
     --post-hook  "/etc/letsencrypt/hook.sh post"  \
