@@ -216,6 +216,16 @@ server {
         return 301 /people/package-maintainers/;
     }
 
+    location = /metrics {
+        if ($http_authorization != "Bearer {{ vault_archweb_metrics_token }}") {
+            return 403;
+        }
+
+        include uwsgi_params;
+        uwsgi_pass archweb;
+    }
+
+
     location / {
         access_log   /var/log/nginx/{{ archweb_domain }}/access.log main;
         access_log   /var/log/nginx/{{ archweb_domain }}/access.log.json json_main;
