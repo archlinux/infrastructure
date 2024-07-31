@@ -1,0 +1,3 @@
+dependencies:
+  - role: geoipupdate
+    when: "'geoip2' in (nginx_extra_modules | map(attribute='name') )"

@@ -2,3 +2,5 @@ filesystem: btrfs
 memcached_socket: "/run/memcached/archwiki.sock"
 wireguard_address: 10.0.0.22
 wireguard_public_key: bZeNWMLtyNDaFR7jjWr06nNZt/vV/OKNleV7XZZs+lc=
+nginx_extra_modules:
+  - name: geoip2

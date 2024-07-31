@@ -13,6 +13,32 @@ upstream archwiki {
     server unix://{{ archwiki_socket }};
 }
 
+# Challenge the client if the cookie "challenge" is not set to
+# the value of "archwiki_nginx_challenge_value".
+map $cookie_challenge $challenge_required2 {
+    default 1;
+    {{ archwiki_nginx_challenge_value }} 0;
+}
+
+# Challenge the client if it is requesting an "action view" and
+# $challenge_required2 is true.
+map $request_uri $challenge_required {
+    default         0;
+    ~^/index\.php\? $challenge_required2;
+}
+
+geoip2 /var/lib/GeoIP/GeoLite2-Country.mmdb {
+    auto_reload 60m;
+    $geoip2_data_country_iso_code country iso_code;
+}
+
+# Challenge the client if it is from China and $challenge_required is
+# true. This is enough to "throw off" some bots/crawlers from China.
+map $geoip2_data_country_iso_code $challenge {
+    default 0;
+    CN      $challenge_required;
+}
+
 server {
     listen       80;
     listen       [::]:80;
@@ -103,6 +129,11 @@ server {
 
     # normal PHP FastCGI handler
     location ~ ^/[^/]+\.php$ {
+        if ($challenge) {
+            add_header Set-Cookie "challenge={{ archwiki_nginx_challenge_value }}; SameSite=Strict";
+            return 303 $scheme://$server_name/$request_uri;
+        }
+
         try_files $uri =404;
         access_log   /var/log/nginx/{{ archwiki_domain }}/access.log main;
         access_log   /var/log/nginx/{{ archwiki_domain }}/access.log.json json_main;
