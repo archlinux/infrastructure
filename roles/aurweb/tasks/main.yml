@@ -109,6 +109,9 @@
 - name: Copy aurweb configuration file
   copy: src={{ aurweb_dir }}/conf/config.defaults dest={{ aurweb_conf_dir }}/config.defaults remote_src=yes owner=root group=root mode=0644
 
+- name: Configure robots.txt
+  copy: src=robots.txt dest="{{ aurweb_dir }}/robots.txt" owner=root group=root mode=0644
+
 - name: Install goaurrpc configuration
   template: src=goaurrpc.conf.j2 dest=/etc/goaurrpc.conf owner=root group=root mode=0644
 
