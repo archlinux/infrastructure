@@ -1,0 +1,12 @@
+User-agent: *
+# block the search page from indexing, as the search is done via URL parameters
+Disallow: /packages?*
+# block all interactive things from being indexed, such as posting requests
+Disallow: /pkgbase/*
+# block all account pages from being indexed, as they require login anyways
+Disallow: /account/*
+# block the cgit interface except for the useful things
+Disallow: /cgit/aur.git/*
+Allow: /cgit/aur.git/tree
+Allow: /cgit/aur.git/log
+Crawl-delay: 2
