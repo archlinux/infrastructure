@@ -14,6 +14,7 @@
     - { role: prometheus_exporters }
     - { role: loki }
     - { role: promtail }
+    - { role: tempo }
     - { role: certbot }
     - { role: nginx }
     - { role: grafana, grafana_domain: 'monitoring.archlinux.org' }

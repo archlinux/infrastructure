@@ -1,0 +1,16 @@
+- name: Install tempo
+  pacman: name=tempo state=present
+
+- name: Open promtail ipv4 port for monitoring.archlinux.org
+  ansible.posix.firewalld: zone=wireguard state=enabled permanent=true immediate=yes
+    rich_rule="rule family=ipv4 source address={{ hostvars['monitoring.archlinux.org']['wireguard_address'] }} port protocol=tcp port=4318 accept"
+  tags:
+    - firewall
+
+- name: Configure tempo
+  template: src=config.yml.j2 dest=/etc/tempo/config.yml owner=tempo group=tempo mode=0644
+  notify:
+    - Restart tempo
+
+- name: Enable tempo server service
+  systemd: name=tempo enabled=yes daemon_reload=yes state=started

@@ -1,0 +1,2 @@
+- name: Restart tempo
+  service: name=tempo state=restarted
