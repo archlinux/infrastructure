@@ -23,15 +23,3 @@
     mode: '0440'
     owner: root
     group: root
-
-- name: Secure path to protect against attacks
-  lineinfile:
-    dest: /etc/sudoers
-    state: present
-    regexp: '^Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/bin"'
-    insertafter: '^# Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"'
-    line: 'Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/bin"'
-    validate: 'visudo -cf %s'
-    mode: '0440'
-    owner: root
-    group: root
