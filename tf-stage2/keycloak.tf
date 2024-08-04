@@ -128,10 +128,6 @@ resource "keycloak_realm" "archlinux" {
       failure_reset_time_seconds       = 43200
     }
   }
-
-  attributes = {
-    userProfileEnabled = true
-  }
 }
 
 resource "keycloak_realm_user_profile" "archlinux" {
