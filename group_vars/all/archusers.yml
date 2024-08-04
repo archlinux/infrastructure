@@ -200,17 +200,6 @@ arch_users:
       - packager
       - junior-packager
       - tu
-  bluewind:
-    name: "Florian Pritz"
-    email: "bluewind@archlinux.org"
-    ssh_key: bluewind.pub
-    shell: /bin/zsh
-    groups:
-      - packager
-      - junior-packager
-      - dev
-      - junior-dev
-      - tu
   braindamage:
     name: "BrainDamage"
     ssh_key: braindamage.pub
