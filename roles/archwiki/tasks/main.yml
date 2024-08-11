@@ -97,16 +97,18 @@
 - name: Start and enable memcached service
   systemd: name=memcached@archwiki.service state=started enabled=true daemon_reload=true
 
+- name: Install nginx-cache-purge script
+  copy: src=nginx-cache-purge dest=/usr/local/bin/nginx-cache-purge owner=root group=root mode=0755
+
 - name: Install systemd services/timers
   template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
   loop:
     - archwiki-runjobs.service
     - archwiki-runjobs-wait.service
     - archwiki-runjobs.timer
-    - archwiki-prune-cache.service
-    - archwiki-prune-cache.timer
     - archwiki-question-updater.service
     - archwiki-question-updater.timer
+    - nginx-cache-purge.service
 
 - name: Start and enable archwiki timers and services
   systemd:
@@ -116,9 +118,9 @@
     daemon_reload: true
   with_items:
     - archwiki-runjobs.timer
-    - archwiki-prune-cache.timer
     - archwiki-runjobs-wait.service
     - archwiki-question-updater.timer
+    - nginx-cache-purge.service
 
 - name: Create question answer file
   systemd:
