@@ -1,0 +1,15 @@
+- name: Install chrony
+  pacman: name=chrony state=present
+
+- name: Create sysconfig directory for chronyd environment file
+  file: path=/etc/sysconfig state=directory owner=root group=root mode=755
+
+- name: Install chrony configuration
+  copy: src={{ item.src }} dest={{ item.dest }} owner=root group=root mode=0644
+  loop:
+   - { src: chronyd, dest: /etc/sysconfig/chronyd }
+   - { src: chrony.conf, dest: /etc/chrony.conf }
+  notify: Restart chronyd
+
+- name: Start and enable chronyd
+  service: name=chronyd enabled=yes state=started

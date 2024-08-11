@@ -26,9 +26,6 @@
 - name: Start and enable auditd
   service: name=auditd enabled=yes state=started
 
-- name: Start and enable systemd-timesyncd
-  service: name=systemd-timesyncd enabled=yes state=started
-
 - name: Install smart
   pacman: name=smartmontools state=present
   when: ansible_virtualization_role == "host"
