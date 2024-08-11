@@ -42,6 +42,7 @@ server {
     include snippets/letsencrypt.conf;
 
     location /.well-known/ {
+        include snippets/headers.conf;
         add_header Access-Control-Allow-Origin *;
         return 301 https://$server_name$request_uri;
     }
@@ -67,6 +68,7 @@ server {
     ssl_trusted_certificate /etc/letsencrypt/live/{{ archweb_domain }}/chain.pem;
 
     location /.well-known/ {
+        include snippets/headers.conf;
         add_header Access-Control-Allow-Origin *;
         return 301 https://{{ archweb_domain }}{{ domain['redirect']|default('$request_uri') }};
     }
@@ -120,6 +122,7 @@ server {
 
     location = /.well-known/matrix/client {
         default_type application/json;
+        include snippets/headers.conf;
         add_header Access-Control-Allow-Origin *;
         return 200 '{"m.homeserver": {"base_url": "https://{{ matrix_domain }}"}, "m.identity_server": {"base_url": "https://matrix.org"} }';
     }
@@ -169,6 +172,7 @@ server {
     # Cache django's css, js and png files.
     location /static/ {
         expires 30d;
+        include snippets/headers.conf;
         add_header Pragma public;
         add_header Cache-Control "public";
         alias {{ archweb_dir }}/collected_static/;
@@ -189,6 +193,7 @@ server {
 
         uwsgi_cache archwebcache;
         uwsgi_cache_revalidate on;
+        include snippets/headers.conf;
         add_header X-Cache-Status $upstream_cache_status;
 
         limit_req zone=rsslimit burst=10 nodelay;
@@ -202,6 +207,7 @@ server {
         uwsgi_cache archwebcache;
         uwsgi_cache_revalidate on;
         uwsgi_cache_key $cache_key;
+        include snippets/headers.conf;
         add_header X-Cache-Status $upstream_cache_status;
 
         limit_req zone=mirrorstatuslimit burst=10 nodelay;
@@ -235,10 +241,8 @@ server {
         uwsgi_cache archwebcache;
         uwsgi_cache_revalidate on;
         uwsgi_cache_key $cache_key;
+        include snippets/headers.conf;
         add_header X-Cache-Status $upstream_cache_status;
-
-        # re-add HSTS (inheritance from sslsettings.conf broken by above header)
-        add_header Strict-Transport-Security $hsts_header always;
 
         limit_req zone=archweblimit burst=10 nodelay;
     }

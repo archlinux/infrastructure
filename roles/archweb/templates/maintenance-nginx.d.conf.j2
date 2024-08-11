@@ -120,6 +120,7 @@ server {
 
     location = /.well-known/matrix/client {
         default_type application/json;
+        include snippets/headers.conf;
         add_header Access-Control-Allow-Origin *;
         return 200 '{"m.homeserver": {"base_url": "https://{{ matrix_domain }}"}, "m.identity_server": {"base_url": "https://matrix.org"} }';
     }
@@ -167,6 +168,7 @@ server {
     # Cache django's css, js and png files.
     location /static/ {
         expires 30d;
+        include snippets/headers.conf;
         add_header Pragma public;
         add_header Cache-Control "public";
         alias {{ archweb_dir }}/collected_static/;

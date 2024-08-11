@@ -76,12 +76,14 @@ server {
 
     location ^~ /style/ {
         expires 7d;
+        include snippets/headers.conf;
         add_header Pragma public;
         add_header Cache-Control "public, must-revalidate, proxy-revalidate";
     }
 
     location ^~ /img/ {
         expires 7d;
+        include snippets/headers.conf;
         add_header Pragma public;
         add_header Cache-Control "public, must-revalidate, proxy-revalidate";
     }

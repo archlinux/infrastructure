@@ -110,6 +110,7 @@ server {
     location ~ \.gz$ {
         root    {{ aurweb_dir }}/archives;
         default_type text/plain;
+        include snippets/headers.conf;
         add_header Content-Encoding gzip;
         expires 5m;
     }
@@ -118,6 +119,7 @@ server {
         rewrite ^/static(/.*)$ $1 break;
 
         expires 7d;
+        include snippets/headers.conf;
         add_header Pragma public;
         add_header Cache-Control "public, must-revalidate, proxy-revalidate";
     }

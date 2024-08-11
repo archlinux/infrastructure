@@ -30,6 +30,7 @@ server {
     ssl_trusted_certificate /etc/letsencrypt/live/{{ rebuilderd_domain }}/chain.pem;
 
     # Security headers
+    include snippets/headers.conf;
     add_header X-Frame-Options "SAMEORIGIN" always;
     add_header X-Xss-Protection "1; mode=block" always;
     add_header Referrer-Policy "same-origin";
@@ -37,13 +38,11 @@ server {
     add_header Content-Security-Policy "default-src 'self';";
     add_header X-Content-Type-Options "nosniff" always;
 
-    # Apply HSTS header again, since adding a header removes previous headers
-    add_header Strict-Transport-Security $hsts_header;
-
     root {{ rebuilder_website_loc }};
 
     location ~* (css|js|svg)$ {
         expires 30d;
+        include snippets/headers.conf;
         add_header Pragma public;
         add_header Cache-Control "public, must-revalidate, proxy-revalidate";
     }

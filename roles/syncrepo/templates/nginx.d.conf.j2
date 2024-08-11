@@ -19,6 +19,7 @@ server {
     ssl_trusted_certificate /etc/letsencrypt/live/{{ domain }}/chain.pem;
 
 {% if 'geo_mirrors' in group_names and domain == geo_mirror_domain %}
+    include snippets/headers.conf;
     add_header X-Served-By "{{ inventory_hostname }}";
 {% endif %}
 

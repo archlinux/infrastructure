@@ -49,6 +49,7 @@ server {
     # Client-cache for Django's static assets
     location /static/ {
         expires 30d;
+        include snippets/headers.conf;
         add_header Pragma public;
         add_header Cache-Control "public";
         alias {{ archmanweb_dir }}/repo/collected_static/;

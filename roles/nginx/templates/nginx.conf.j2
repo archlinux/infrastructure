@@ -90,6 +90,7 @@ http {
     access_log syslog:server=unix:/dev/log,nohostname,tag=nginx_http main;
 
     include snippets/sslsettings.conf;
+    include snippets/headers.conf;
 
     include nginx.d/*.conf;
 }

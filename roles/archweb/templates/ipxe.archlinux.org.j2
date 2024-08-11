@@ -41,6 +41,7 @@ server {
     # Cache django's css, js and png files.
     location /static/ {
         expires 30d;
+        include snippets/headers.conf;
         add_header Pragma public;
         add_header Cache-Control "public";
         alias /srv/http/archweb/collected_static/;

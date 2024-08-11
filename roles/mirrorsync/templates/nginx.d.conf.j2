@@ -17,6 +17,7 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ item.value.mirror_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ item.value.mirror_domain }}/chain.pem;
 
+    include snippets/headers.conf;
     add_header X-Served-By "{{ inventory_hostname }}";
 
     autoindex on;
