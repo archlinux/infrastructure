@@ -6,7 +6,7 @@ worker_listeners:
     x_forwarded: true
     bind_addresses: ['::1', '127.0.0.1']
     resources:
-      - names: [media]
+      - names: [media, client, federation]
         compress: false
   - port: 8023
     type: metrics
