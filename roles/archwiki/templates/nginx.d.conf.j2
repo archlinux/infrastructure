@@ -117,7 +117,7 @@ server {
         # This improves the cache hit ratio[1] and ensures that there is
         # only a single cache file. Without this, nginx will use the
         # Vary header as an secondary cache key[2], which breaks the
-        # cache purge servce.
+        # cache purge service.
         # [1] https://www.fastly.com/blog/best-practices-using-vary-header/
         # [2] https://github.com/nginx/nginx/commit/1332e76b20a6a1e871904525d42b17dcaed81eec
         fastcgi_ignore_headers Vary;
