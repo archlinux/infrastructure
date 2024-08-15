@@ -735,6 +735,7 @@ arch_users:
     ssh_key: tcanabrava.pub
     groups:
       - junior-packager
+      - packager
   torxed:
     name: "Anton Hvornum"
     email: "torxed@archlinux.org"
