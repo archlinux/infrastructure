@@ -77,3 +77,6 @@ error-token = {{ vault_aurweb_error_token }}
 
 [fastapi]
 session_secret = {{ vault_aurweb_secret }}
+
+[tracing]
+otlp_endpoint = http://{{ hostvars['monitoring.archlinux.org']['wireguard_address'] }}:4318
