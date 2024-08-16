@@ -11,7 +11,7 @@
     - { role: nginx }
     - { role: mariadb, mariadb_innodb_buffer_pool_size: '1G' }
     - { role: sudo }
-    - { role: redis }
+    - { role: valkey }
     - { role: uwsgi }
     - { role: borg_client, tags: ["borg"] }
     - { role: postfix_null }
