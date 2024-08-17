@@ -125,6 +125,7 @@ server {
         fastcgi_cache_use_stale updating;
         fastcgi_cache_lock on;
 
+        include snippets/headers.conf;
         add_header X-Cache $upstream_cache_status;
 {% endblock %}
     }
@@ -143,6 +144,7 @@ server {
     # normal PHP FastCGI handler
     location ~ ^/[^/]+\.php$ {
         if ($challenge) {
+            include snippets/headers.conf;
             add_header Set-Cookie "challenge={{ archwiki_nginx_challenge_value }}; SameSite=Strict";
             return 303 $scheme://$server_name/$request_uri;
         }
@@ -165,12 +167,14 @@ server {
     # MediaWiki assets
     location ~ ^/(?:images|resources/(?:assets|lib|src)|(?:skins|extensions)/.+\.(?:css|js|gif|jpg|jpeg|png|svg|wasm)$) {
         expires 30d;
+        include snippets/headers.conf;
         add_header Pragma public;
         add_header Cache-Control "public, must-revalidate, proxy-revalidate";
     }
 
     location /images/ {
         # Add the nosniff header to the images folder (required for mw 1.40+)
+        include snippets/headers.conf;
         add_header X-Content-Type-Options nosniff;
     }
 
