@@ -140,7 +140,7 @@ server {
     location / {
         # Proxy over to aurweb's ASGI application.
         proxy_pass http://{{ aurweb_asgi_bind }};
-        proxy_set_header Host $http_host;
+        proxy_set_header Host $host;
         proxy_set_header X-Forwarded-For $remote_addr;
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header X-Forwarded-Ssl on;
