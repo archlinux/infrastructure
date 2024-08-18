@@ -134,6 +134,8 @@ scrape_configs:
 
   - job_name: aurweb
     scheme: https
+    authorization:
+      credentials: {{ vault_aurweb_metrics_token }}
     static_configs:
       - targets: ['aur.archlinux.org:443']
 
