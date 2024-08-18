@@ -28,7 +28,7 @@ scrape_configs:
         - localhost
         labels:
           job: nginx
-          instance: {{ ansible_fqdn }}
+          instance: {{ inventory_hostname }}
           __path__: /var/log/nginx/*/*.json
     pipeline_stages:
     - match:
@@ -46,7 +46,7 @@ scrape_configs:
         - localhost
         labels:
           job: pacman
-          instance: {{ ansible_fqdn }}
+          instance: {{ inventory_hostname }}
           __path__: /var/log/pacman.log
     pipeline_stages:
     - match:

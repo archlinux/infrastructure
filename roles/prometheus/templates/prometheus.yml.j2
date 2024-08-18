@@ -31,7 +31,7 @@ scrape_configs:
     static_configs:
       - targets: ['127.0.0.1:9090']
         labels:
-          instance: "{{ ansible_fqdn }}"
+          instance: "{{ inventory_hostname }}"
 
   - job_name: prometheus-domain
     scheme: http
@@ -48,7 +48,7 @@ scrape_configs:
     static_configs:
       - targets: ['127.0.0.1:3100']
         labels:
-          instance: "{{ ansible_fqdn }}"
+          instance: "{{ inventory_hostname }}"
 
   - job_name: 'node_exporter'
     static_configs:

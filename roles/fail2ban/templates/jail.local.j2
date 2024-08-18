@@ -13,7 +13,7 @@ usedns = no
 # if f2b ever needs to send emails, send them to root and make sure the sender
 # address clearly identifies the host the message originated from
 destemail = root
-sender = fail2ban@{{ansible_fqdn}}
+sender = fail2ban@{{inventory_hostname}}
 
 # use firewalld to manage bans - if we don't specify this, then fail2ban will
 # default to use iptables, which we don't want as our systems are running
