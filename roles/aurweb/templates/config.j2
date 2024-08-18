@@ -79,4 +79,4 @@ error-token = {{ vault_aurweb_error_token }}
 session_secret = {{ vault_aurweb_secret }}
 
 [tracing]
-otlp_endpoint = http://{{ hostvars['monitoring.archlinux.org']['wireguard_address'] }}:4318
+otlp_endpoint = http://{{ hostvars['monitoring.archlinux.org']['wireguard_address'] }}:4318/v1/traces
