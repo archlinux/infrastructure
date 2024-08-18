@@ -128,7 +128,7 @@ server {
         proxy_set_header X-Forwarded-For $remote_addr;
     }
 
-    location /rpc/metrics {
+    location = /rpc/metrics {
         if ($http_authorization != "Bearer {{ vault_goaurrpc_metrics_token }}") {
             return 403;
         }
