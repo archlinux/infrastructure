@@ -27,12 +27,13 @@ http {
     log_format main
         '$remote_addr $host $remote_user [$time_local] "$request" '
         '$status $body_bytes_sent "$http_referer" '
-        '"$http_user_agent" "$http_x_forwarded_for" $request_time';
+        '"$http_user_agent" "$http_x_forwarded_for" $request_time'
+        '$server_protocol';
 
     log_format reduced
         '$host [$time_local] "$request" '
         '$status $body_bytes_sent "$http_referer" '
-        '"$http_user_agent"';
+        '"$http_user_agent" $server_protocol';
 
     log_format json_main escape=json
         '{'
@@ -48,6 +49,7 @@ http {
         '"http_user_agent":"$http_user_agent",'
         '"http_x_forwarded_for":"$http_x_forwarded_for",'
         '"request_time":"$request_time",'
+        '"server_protocol":"$server_protocol",'
         # This was added to keep every log line unique as Loki drops
         # log line with the same timestamp and log text:
         # https://grafana.com/docs/loki/latest/overview/#timestamp-ordering
@@ -65,6 +67,7 @@ http {
         '"body_bytes_sent":"$body_bytes_sent",'
         '"http_referrer":"$http_referer",'
         '"http_user_agent":"$http_user_agent",'
+        '"server_protocol":"$server_protocol",'
         # This was added to keep every log line unique as Loki drops
         # log line with the same timestamp and log text:
         # https://grafana.com/docs/loki/latest/overview/#timestamp-ordering

@@ -17,9 +17,7 @@ server {
 }
 
 server {
-    listen       443 ssl;
-    listen       [::]:443 ssl;
-    http2        on;
+    include      snippets/listen-443.conf;
     server_name  {{ domain }};
 
     access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log reduced;
@@ -56,9 +54,7 @@ server {
 }
 
 server {
-    listen       443 ssl;
-    listen       [::]:443 ssl;
-    http2        on;
+    include      snippets/listen-443.conf;
     server_name  {{ domain }};
 
     access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log reduced;
@@ -94,9 +90,7 @@ server {
 }
 
 server {
-    listen       443 ssl;
-    listen       [::]:443 ssl;
-    http2        on;
+    include      snippets/listen-443.conf;
     server_name  {{ service_domain }};
 
     access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log reduced;

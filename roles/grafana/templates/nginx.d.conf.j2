@@ -25,9 +25,7 @@ server {
 }
 
 server {
-    listen       443 ssl;
-    listen       [::]:443 ssl;
-    http2        on;
+    include      snippets/listen-443.conf;
     server_name  {{ grafana_domain }};
 
     access_log   /var/log/nginx/{{ grafana_domain }}/access.log main;
