@@ -57,7 +57,7 @@ locals {
       domain      = "@"
     }
     "aur.archlinux.org" = {
-      server_type = "cpx51"
+      server_type = "cx52"
       domain      = "aur"
     }
     "bbs.archlinux.org" = {
