@@ -34,7 +34,7 @@
   notify:
     - Restart fail2ban
 
-- name: Install firewallcmd-allports.local
+- name: Install firewallcmd-ipset-allports.conf
   template:
     src: "firewallcmd-ipset-allports.conf.j2"
     dest: "/etc/fail2ban/action.d/firewallcmd-ipset-allports.conf"
