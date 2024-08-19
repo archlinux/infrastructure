@@ -3,4 +3,4 @@ galaxy_info:
   standalone: false
 
 dependencies:
-  - role: redis
+  - role: valkey

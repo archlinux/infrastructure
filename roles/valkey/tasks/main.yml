@@ -1,0 +1,5 @@
+- name: Install valkey
+  pacman: name=valkey state=present
+
+- name: Start and enable valkey
+  service: name=valkey enabled=yes state=started

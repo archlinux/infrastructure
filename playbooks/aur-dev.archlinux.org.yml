@@ -10,7 +10,7 @@
     - { role: nginx }
     - { role: mariadb, mariadb_innodb_buffer_pool_size: '1G' }
     - { role: sudo }
-    - { role: redis }
+    - { role: valkey }
     - { role: uwsgi }
     - { role: aurweb, aurweb_domain: "{{ aurdev_fqdn }}", aurweb_environment_type: 'dev' }
     - { role: fail2ban }
