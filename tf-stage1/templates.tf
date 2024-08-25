@@ -76,6 +76,18 @@ resource "hetznerdns_record" "pkgbuild_com_aaaa" {
   type    = "AAAA"
 }
 
+resource "hetznerdns_record" "pkgbuild_org_https" {
+  for_each = {
+    for k, v in local.pkgbuild_com_a_aaaa : k => v if try(v.http3, false)
+  }
+
+  zone_id = hetznerdns_zone.pkgbuild.id
+  name    = each.key
+  ttl     = lookup(local.pkgbuild_com_a_aaaa[each.key], "ttl", null)
+  value   = "1 . alpn=h2,h3 ipv4hint=${each.value.ipv4_address} ipv6hint=${each.value.ipv6_address}"
+  type    = "HTTPS"
+}
+
 resource "hetznerdns_record" "archlinux_org_txt" {
   for_each = local.archlinux_org_txt
 
@@ -114,6 +126,18 @@ resource "hetznerdns_record" "archlinux_org_aaaa" {
   ttl     = lookup(local.archlinux_org_a_aaaa[each.key], "ttl", null)
   value   = each.value.ipv6_address
   type    = "AAAA"
+}
+
+resource "hetznerdns_record" "archlinux_org_https" {
+  for_each = {
+    for k, v in local.archlinux_org_a_aaaa : k => v if try(v.http3, false)
+  }
+
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = each.key
+  ttl     = lookup(local.archlinux_org_a_aaaa[each.key], "ttl", null)
+  value   = "1 . alpn=h2,h3 ipv4hint=${each.value.ipv4_address} ipv6hint=${each.value.ipv6_address}"
+  type    = "HTTPS"
 }
 
 resource "hetznerdns_record" "archlinux_org_cname" {
@@ -219,6 +243,21 @@ resource "hetznerdns_record" "machine_aaaa" {
   ttl     = lookup(local.machines[each.key], "ttl", null)
   value   = hcloud_server.machine[each.key].ipv6_address
   type    = "AAAA"
+}
+
+resource "hetznerdns_record" "machine_https" {
+  for_each = {
+    for name, machine in local.machines : name => machine if can(machine.domain) && try(machine.http3, false)
+  }
+
+  zone_id = lookup(local.machines[each.key], "zone", hetznerdns_zone.archlinux.id)
+  name    = each.value.domain
+  ttl     = lookup(local.machines[each.key], "ttl", null)
+  value = (try(local.machines[each.key].ipv4_enabled, true) ?
+    "1 . alpn=h2,h3 ipv4hint=${hcloud_server.machine[each.key].ipv4_address} ipv6hint=${hcloud_server.machine[each.key].ipv6_address}" :
+    "1 . alpn=h2,h3 ipv6hint=${hcloud_server.machine[each.key].ipv6_address}"
+  )
+  type = "HTTPS"
 }
 
 resource "hetznerdns_record" "geo_ns1" {
