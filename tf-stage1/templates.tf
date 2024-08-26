@@ -56,7 +56,7 @@ resource "hetznerdns_record" "archlinux_page_aaaa" {
   type    = "AAAA"
 }
 
-resource "hetznerdns_record" "pkgbuild_org_a" {
+resource "hetznerdns_record" "pkgbuild_com_a" {
   for_each = local.pkgbuild_com_a_aaaa
 
   zone_id = hetznerdns_zone.pkgbuild.id
@@ -66,7 +66,7 @@ resource "hetznerdns_record" "pkgbuild_org_a" {
   type    = "A"
 }
 
-resource "hetznerdns_record" "pkgbuild_org_aaaa" {
+resource "hetznerdns_record" "pkgbuild_com_aaaa" {
   for_each = local.pkgbuild_com_a_aaaa
 
   zone_id = hetznerdns_zone.pkgbuild.id
