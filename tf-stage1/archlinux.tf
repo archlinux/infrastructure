@@ -55,10 +55,12 @@ locals {
     "archlinux.org" = {
       server_type = "cx22"
       domain      = "@"
+      http3       = true
     }
     "aur.archlinux.org" = {
       server_type = "cx52"
       domain      = "aur"
+      http3       = true
     }
     "bbs.archlinux.org" = {
       server_type = "cx22"
@@ -154,6 +156,7 @@ locals {
     "wiki.archlinux.org" = {
       server_type = "cx32"
       domain      = "wiki"
+      http3       = true
     }
     "worker1.buildbot.pkgbuild.com" = {
       server_type = "cx22"
@@ -294,6 +297,7 @@ locals {
     www = {
       ipv4_address = hcloud_server.machine["archlinux.org"].ipv4_address
       ipv6_address = hcloud_server.machine["archlinux.org"].ipv6_address
+      http3        = true
     }
   }
 
