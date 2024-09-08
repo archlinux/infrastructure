@@ -107,6 +107,7 @@ arch_users:
     email: "anonfunc@archlinux.org"
     ssh_key: anonfunc.pub
     groups:
+      - packager
       - junior-packager
   anthraxx:
     name: "Levente Polyak"
