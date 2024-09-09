@@ -47,6 +47,11 @@ matrix_nginx_config:
     locations:
       - "/_matrix"
       - "/_synapse"
+  - name: ircmedia
+    port: 8014
+    locations:
+      - path: "/ircmedia/"
+        pass: "/"
 
 matrix_metrics_endpoints:
   - name: synapse.homeserver
@@ -60,5 +65,5 @@ matrix_metrics_endpoints:
   - name: synapse.media_repository
     port: 8023
   - name: irc-bridge
-    port: 8499
+    port: 8024
     path: metrics

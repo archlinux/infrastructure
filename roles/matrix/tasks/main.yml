@@ -195,7 +195,7 @@
   git:
     repo: https://github.com/matrix-org/matrix-appservice-irc
     dest: /var/lib/synapse/matrix-appservice-irc
-    version: 2.0.1
+    version: 3.0.1
     force: true
   become: true
   become_user: synapse
@@ -297,6 +297,14 @@
   copy:
     content: '{{ vault_matrix_secrets.ircpass_key }}'
     dest: /etc/synapse/{{ matrix_server_name }}.ircpass.key
+    owner: root
+    group: synapse
+    mode: '0640'
+
+- name: Install ircmedia key  # noqa template-instead-of-copy
+  copy:
+    content: '{{ vault_matrix_secrets.ircmedia_key }}'
+    dest: /etc/synapse/{{ matrix_server_name }}.ircmedia.key
     owner: root
     group: synapse
     mode: '0640'
