@@ -258,6 +258,7 @@
   copy: src={{ item }} dest=/etc/synapse/{{ item }} owner=root group=root mode=0644
   with_items:
     - log_config.yaml
+    - oembed-providers.json
     - worker-appservice.yaml
     - worker-federation_reader.yaml
     - worker-federation_sender.yaml
