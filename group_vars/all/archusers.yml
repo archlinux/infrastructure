@@ -586,6 +586,12 @@ arch_users:
       - packager
       - junior-packager
       - tu
+  ptr1337:
+    name: "Peter Jung"
+    email: "ptr1337@archlinux.org"
+    ssh_key: ptr1337.pub
+    groups:
+      - junior-packager
   pierre:
     name: "Pierre Schmitz"
     email: "pierre@archlinux.org"
