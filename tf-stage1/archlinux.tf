@@ -119,6 +119,7 @@ locals {
       server_type = "cx22"
       domain      = "mirror"
       zone        = hetznerdns_zone.pkgbuild.id
+      http3       = true
     }
     "monitoring.archlinux.org" = {
       server_type = "cx32"
@@ -281,6 +282,7 @@ locals {
     rsync = {
       ipv4_address = "168.119.141.106"
       ipv6_address = "2a01:4f8:251:598::"
+      http3        = true
     }
     runner1 = {
       ipv4_address = "138.199.19.15"
@@ -355,38 +357,47 @@ locals {
     "america.mirror" = {
       ipv4_address = "143.244.34.62"
       ipv6_address = "2a02:6ea0:cc0e::2"
+      http3        = true
     }
     "america.archive" = {
       ipv4_address = "143.244.34.62"
       ipv6_address = "2a02:6ea0:cc0e::2"
+      http3        = true
     }
     "asia.mirror" = {
       ipv4_address = "84.17.57.98"
       ipv6_address = "2a02:6ea0:d605::2"
+      http3        = true
     }
     "asia.archive" = {
       ipv4_address = "84.17.57.98"
       ipv6_address = "2a02:6ea0:d605::2"
+      http3        = true
     }
     "europe.mirror" = {
       ipv4_address = "89.187.191.12"
       ipv6_address = "2a02:6ea0:c237::2"
+      http3        = true
     }
     "europe.archive" = {
       ipv4_address = "89.187.191.12"
       ipv6_address = "2a02:6ea0:c237::2"
+      http3        = true
     }
     "london.mirror" = {
       ipv4_address = "185.73.44.89"
       ipv6_address = "2001:ba8:0:4030::2"
+      http3        = true
     }
     "seoul.mirror" = {
       ipv4_address = "145.40.87.75"
       ipv6_address = "2604:1380:11:2600::1"
+      http3        = true
     }
     "sydney.mirror" = {
       ipv4_address = "147.75.48.159"
       ipv6_address = "2604:1380:40f1:6a00::1"
+      http3        = true
     }
     repro2 = {
       ipv4_address = "212.102.38.209"

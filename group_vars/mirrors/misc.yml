@@ -3,3 +3,5 @@ archweb_db_host: "{{ hostvars['archlinux.org']['wireguard_address'] }}"
 # raise tcp window limits to 32MiB
 tcp_rmem: "10240 87380 33554432"
 tcp_wmem: "10240 87380 33554432"
+
+nginx_enable_http3: true

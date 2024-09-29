@@ -24,6 +24,17 @@ domains:
               AAAA "ifurlup('https://{{ domain }}{{ geo_options[domain]['health_check_path'] | default('/') }}',
               {'{{ hosts | map('extract', hostvars, ['ipv6_address']) | join("', '") }}'},
               {selector='pickclosest', useragent='pdns on {{ inventory_hostname }}'})"
+        - lua:
+            ttl: 300
+            content: >
+              HTTPS "'1 . alpn=h2,h3 ipv4hint=' ..
+              ifurlup('https://{{ domain }}{{ geo_options[domain]['health_check_path'] | default('/') }}',
+              {'{{ hosts | map('extract', hostvars, ['ipv4_address']) | join("', '") }}'},
+              {selector='pickclosest', useragent='pdns on {{ inventory_hostname }}'})[1] ..
+              ' ipv6hint=' ..
+              ifurlup('https://{{ domain }}{{ geo_options[domain]['health_check_path'] | default('/') }}',
+              {'{{ hosts | map('extract', hostvars, ['ipv6_address']) | join("', '") }}'},
+              {selector='pickclosest', useragent='pdns on {{ inventory_hostname }}'})[1]"
       _acme-challenge.{{ domain }}:
         - ns: {{ geo_acme_dns_challenge_ns }}
   {% endfor %}
