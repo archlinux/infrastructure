@@ -47,4 +47,13 @@ modules:
       validate_answer_rrs:
         fail_if_not_matches_regexp:
           - {{ domain | replace('.', '\.') }}\.\t.*\tIN\tAAAA\t({{ hosts | map('extract', hostvars, ['ipv6_address']) | join('|') }})
+  geo_dns_{{ domain }}_https:
+    prober: dns
+    timeout: 5s
+    dns:
+      query_name: {{ domain }}
+      query_type: HTTPS
+      validate_answer_rrs:
+        fail_if_not_matches_regexp:
+          - {{ domain | replace('.', '\.') }}\.\t.*\tIN\tHTTPS\t1 \. alpn="h2,h3" ipv4hint="({{ hosts | map('extract', hostvars, ['ipv4_address']) | join('|') | replace('.', '\.') }})" ipv6hint="({{ hosts | map('extract', hostvars, ['ipv6_address']) | join('|') }})"
   {% endfor %}
