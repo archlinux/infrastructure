@@ -97,8 +97,10 @@ blackbox_targets:
     - lists.archlinux.org:25
   geo_dns_geo.mirror.pkgbuild.com_a: "{{ groups['geo_mirrors'] }}"
   geo_dns_geo.mirror.pkgbuild.com_aaaa: "{{ groups['geo_mirrors'] }}"
+  geo_dns_geo.mirror.pkgbuild.com_https: "{{ groups['geo_mirrors'] }}"
   geo_dns_riscv.mirror.pkgbuild.com_a: "{{ groups['geo_mirrors'] }}"
   geo_dns_riscv.mirror.pkgbuild.com_aaaa: "{{ groups['geo_mirrors'] }}"
+  geo_dns_riscv.mirror.pkgbuild.com_https: "{{ groups['geo_mirrors'] }}"
 matrix_metrics_endpoints:
   - homeserver
   - appservice
