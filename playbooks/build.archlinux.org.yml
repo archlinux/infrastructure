@@ -3,7 +3,7 @@
   remote_user: root
   roles:
     - { role: common }
-    - { role: tools, extra_utils: ['setconf', 'mlocate'] }
+    - { role: tools, extra_utils: ['setconf', 'plocate'] }
     - { role: firewalld }
     - { role: sshd }
     - { role: root_ssh }
