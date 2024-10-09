@@ -28,13 +28,13 @@ If you want to add a new official project, here are some guidelines to follow:
        to a protected branch of the project.
 1. [ ] If a secure runner is used, create an MR to make sure the project's `.gitlab-ci.yml` specifies
        `tags: secure`.
-1. [ ] Make sure that the *Push Rules* in https://gitlab.archlinux.org/archlinux/arch-boxes/-/settings/repository
+1. [ ] Make sure that the *Push Rules* in https://gitlab.archlinux.org/archlinux/my-example/-/settings/repository
        reflect these values:
-   - `Committer restriction`: `on`
+   - `Reject unverified users`: `on`
    - `Reject unsigned commits`: `on`
    - `Do not allow users to remove tags with git push`: `on`
-   - `Check whether author is a gitlab user`: `on`
-   - `Prevent committing secrets to git`: `on`
+   - `Check whether author is a GitLab user`: `on`
+   - `Prevent pushing secret files`: `on`
    - All of these should be activated by default as per group rules but it's good to check.
 1. [ ] The *Protected Branches* in https://gitlab.archlinux.org/archlinux/my-example/-/settings/repository should specify
        `Allowed to merge` and `Allowed to push` as `Developers + Maintainers.`
