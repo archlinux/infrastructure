@@ -19,6 +19,7 @@ ExecStart=/var/lib/synapse/venv/bin/python -m synapse.app.homeserver --config-pa
 SyslogIdentifier=synapse
 
 Environment=LD_PRELOAD=/usr/lib/libjemalloc.so
+Environment=PYTHONMALLOC=malloc
 
 [Install]
 WantedBy=multi-user.target

@@ -18,6 +18,7 @@ ExecStart=/var/lib/synapse/venv/bin/python -m synapse.app.generic_worker --confi
 SyslogIdentifier=synapse
 
 Environment=LD_PRELOAD=/usr/lib/libjemalloc.so
+Environment=PYTHONMALLOC=malloc
 
 [Install]
 RequiredBy=synapse.service
