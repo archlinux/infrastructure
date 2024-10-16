@@ -224,14 +224,19 @@ arch_users:
       - packager
       - junior-packager
       - tu
+  # login disabled due to the almost expired key
+  # https://gitlab.archlinux.org/archlinux/archlinux-keyring/-/issues/271
   coderobe:
     name: "Robin Broda"
     email: "coderobe@archlinux.org"
     ssh_key: coderobe.pub
     groups:
-      - packager
-      - junior-packager
-      - tu
+      - support-staff
+      # - packager
+      # - junior-packager
+      # - tu
+    hosts:
+      - mail.archlinux.org
   codingkoopa:
     name: "CodingKoopa"
     email: "koopa@archlinux.org"
