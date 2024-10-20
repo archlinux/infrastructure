@@ -64,7 +64,7 @@
     - Invalidate MediaWiki file cache
 
 - name: Configure archwiki
-  template: src=LocalSettings.php.j2 dest="{{ archwiki_dir }}/public/LocalSettings.php" owner="{{ archwiki_user }}" group="{{ archwiki_user }}" mode=0640
+  template: src=LocalSettings.php.j2 dest="{{ archwiki_dir }}/public/LocalSettings.php" owner="{{ archwiki_user }}" group="{{ archwiki_user }}" mode=0640 validate="/usr/bin/php --syntax-check %"
   register: config
   no_log: true
 
