@@ -788,6 +788,14 @@ arch_users:
       - mail.archlinux.org
     groups:
       - support-staff
+  wiktor:
+    name: "Wiktor Kwapisiewicz"
+    email: "wiktor@archlinux.org"
+    ssh_key: wiktor.pub
+    hosts:
+      - mail.archlinux.org
+    groups:
+      - support-staff
   wild:
     name: "Dan Printzell"
     email: "wild@archlinux.org"
