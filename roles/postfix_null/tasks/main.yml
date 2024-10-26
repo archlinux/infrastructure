@@ -15,7 +15,7 @@
     name: "{{ inventory_hostname_short }}"
     comment: "SMTP Relay Account for {{ inventory_hostname }}"
     group: nobody
-    password: "{{ postfix_relay_password | password_hash('sha512') }}"
+    password: "{{ postfix_relay_password | password_hash('sha512', rounds=5000) }}"
     shell: /sbin/nologin
     update_password: always
     home: /home/"{{ inventory_hostname }}"  # Set home directory so shadow.service does not fail
