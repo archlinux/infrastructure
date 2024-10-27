@@ -89,7 +89,7 @@ run() {
 cleanup() {
   rm /run/libvirt-executor/id_ed25519_$(vm_name){,.pub}
   virsh destroy "$(vm_name)" || true
-  virsh undefine --remove-all-storage "$(vm_name)"
+  virsh undefine --nvram --remove-all-storage "$(vm_name)"
 }
 
 case "${1:-}" in
