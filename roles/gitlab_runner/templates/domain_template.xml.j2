@@ -2,8 +2,14 @@
   <name>$vm_name</name>
   <memory unit='MiB'>{{ gitlab_runner_libvirt_vm_memory }}</memory>
   <vcpu>4</vcpu>
+  <sysinfo type='smbios'>
+    <oemStrings>
+      <entry>io.systemd.credential:system.hostname=$vm_name</entry>
+    </oemStrings>
+  </sysinfo>
   <os>
     <type arch='x86_64' machine='q35'>hvm</type>
+    <smbios mode='sysinfo'/>
   </os>
   <features>
     <acpi/>

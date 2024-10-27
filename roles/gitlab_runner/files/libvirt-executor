@@ -69,7 +69,13 @@ prepare() {
 run() {
   local ip
   ip="$(vm_ip "$(vm_name)")"
-  ssh "${ip}" bash < "${1}" || exit "${BUILD_FAILURE_EXIT_CODE:-1}"
+  if [[ ${2} == prepare_script ]]; then
+    # TODO: Get this fixed upstream or perhaps we should just install inetutils?
+    # https://gitlab.com/gitlab-org/gitlab-runner/-/blob/v17.5.2/shells/bash.go?ref_type=tags#L452-L456
+    ssh "${ip}" bash < <(sed 's/$(hostname)/$(hostnamectl hostname)/' "${1}") || exit "${BUILD_FAILURE_EXIT_CODE:-1}"
+  else
+    ssh "${ip}" bash < "${1}" || exit "${BUILD_FAILURE_EXIT_CODE:-1}"
+  fi
 }
 
 # https://docs.gitlab.com/runner/executors/custom.html#cleanup
