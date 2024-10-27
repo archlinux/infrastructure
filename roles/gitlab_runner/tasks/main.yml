@@ -69,11 +69,8 @@
     - name: Install libvirt-executor-update-base-image dependencies
       pacman: name=arch-install-scripts,rsop state=present
 
-    - name: Create libvirt-executor configuration and data directories
-      file: path={{ item }} state=directory owner=root group=root mode=0755
-      loop:
-        - /etc/libvirt-executor
-        - /usr/local/lib/libvirt-executor
+    - name: Create libvirt-executor data directory
+      file: path=/usr/local/lib/libvirt-executor state=directory owner=root group=root mode=0755
 
     - name: Install libvirt-executor
       copy: src={{ item.src }} dest={{ item.dest }} owner=root group=root mode={{ item.mode }}
@@ -84,11 +81,6 @@
 
     - name: Install libvirt-executor domain template
       template: src=domain_template.xml.j2 dest=/usr/local/lib/libvirt-executor/domain_template.xml owner=root group=root mode=0644
-
-    - name: Create SSH keys for libvirt-executor
-      command: ssh-keygen -N "" -f /etc/libvirt-executor/id_ed25519 -t ed25519
-      args:
-        creates: /etc/libvirt-executor/id_ed25519
 
     - name: Install libvirt-executor-update-base-image.{service,timer}
       copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644

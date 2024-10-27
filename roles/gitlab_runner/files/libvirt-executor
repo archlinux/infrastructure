@@ -4,7 +4,7 @@ readonly libvirt_pool="images"
 
 ssh() {
   command ssh \
-    -i "/etc/libvirt-executor/id_ed25519" \
+    -i "/run/libvirt-executor/id_ed25519_$(vm_name)" \
     -F /dev/null \
     -o ServerAliveCountMax=2 \
     -o ServerAliveInterval=15 \
@@ -58,8 +58,15 @@ prepare() {
   local backing_volume
   backing_volume="$(</usr/local/lib/libvirt-executor/backing-vol-name)"
 
+  mkdir -p /run/libvirt-executor
+  chmod 700 /run/libvirt-executor
+  ssh-keygen -q -N "" -f /run/libvirt-executor/id_ed25519_$(vm_name) -t ed25519
+
+  local ssh_authorized_keys_root
+  ssh_authorized_keys_root="$(base64 -w 0 /run/libvirt-executor/id_ed25519_$(vm_name).pub)"
+
   virsh vol-create-as "${libvirt_pool}" "$(vm_name).qcow2" 0 --format qcow2 --backing-vol "${backing_volume}" --backing-vol-format qcow2
-  virsh define <(sed "s/\$vm_name/$(vm_name)/" /usr/local/lib/libvirt-executor/domain_template.xml)
+  virsh define <(sed -e "s/\$vm_name/$(vm_name)/" -e "s/\$ssh_authorized_keys_root/${ssh_authorized_keys_root}/" /usr/local/lib/libvirt-executor/domain_template.xml)
   virsh start "$(vm_name)"
 
   wait_for_ssh "$(vm_name)"
@@ -80,6 +87,7 @@ run() {
 
 # https://docs.gitlab.com/runner/executors/custom.html#cleanup
 cleanup() {
+  rm /run/libvirt-executor/id_ed25519_$(vm_name){,.pub}
   virsh destroy "$(vm_name)" || true
   virsh undefine --remove-all-storage "$(vm_name)"
 }

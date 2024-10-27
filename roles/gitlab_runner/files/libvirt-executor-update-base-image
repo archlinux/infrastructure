@@ -41,8 +41,6 @@ sed -E 's/^#(IgnorePkg *=)/\1 linux/' -i mnt/etc/pacman.conf
 arch-chroot mnt userdel -r arch
 sed 's/^\(GRUB_CMDLINE_LINUX=".*\)"$/\1 lockdown=confidentiality"/' -i mnt/etc/default/grub
 arch-chroot mnt /usr/bin/grub-mkconfig -o /boot/grub/grub.cfg
-install -d -m0700 mnt/root/.ssh
-install -m0600 /etc/libvirt-executor/id_ed25519.pub mnt/root/.ssh/authorized_keys
 # We want to use the transient hostname
 # https://github.com/systemd/systemd/pull/30814
 rm -f mnt/etc/machine-id mnt/etc/hostname
