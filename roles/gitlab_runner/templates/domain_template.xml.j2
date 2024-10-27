@@ -37,6 +37,7 @@
       <model type='virtio'/>
       <filterref filter='clean-traffic'/>
     </interface>
+    <memballoon model='virtio' freePageReporting='on'/>
     <rng model='virtio'>
       <backend model='random'>/dev/urandom</backend>
     </rng>
