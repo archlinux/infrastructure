@@ -1,6 +1,6 @@
 #!/bin/bash
 set -o nounset -o errexit
-readonly libvirt_default_pool_path="/var/lib/libvirt/images"
+readonly libvirt_pool="images"
 readonly arch_boxes_signing_key=/usr/local/lib/libvirt-executor/arch-boxes.asc
 readonly arch_boxes_fingerprint=1B9A16984A4E8CB448712D2AE0B78BF4326C6F8F
 
@@ -56,9 +56,12 @@ losetup -d "${loopdev}"
 loopdev=""
 
 qemu-img convert -f raw -O qcow2 Arch-Linux-x86_64-basic.img Arch-Linux-x86_64-basic.qcow2
-printf -v image_path '%s/runner-base-%(%s)T.qcow2' "${libvirt_default_pool_path}"
-cp Arch-Linux-x86_64-basic.qcow2 "${image_path}.tmp"
-mv "${image_path}"{.tmp,}
+printf -v vol_name 'runner-base-%(%s)T.qcow2'
+virsh vol-create-as "${libvirt_pool}" "${vol_name}" 0 --format qcow2
+virsh vol-upload "${vol_name}" Arch-Linux-x86_64-basic.qcow2 "${libvirt_pool}"
+
+echo "${vol_name}" > /usr/local/lib/libvirt-executor/backing-vol-name.tmp
+mv /usr/local/lib/libvirt-executor/backing-vol-name{.tmp,}
 
 # Keep one week of base images
-compgen -G "${libvirt_default_pool_path}/runner-base-*.qcow2" | sort -n -t - -k3,3 | head -n -7 | xargs --no-run-if-empty rm -vf
+virsh vol-list "${libvirt_pool}" | awk '$1~"runner-base-[0-9]*\\.qcow2" {print $1}' | sort -n -t - -k3,3 | head -n -7 | xargs -I{} --no-run-if-empty virsh vol-delete {} "${libvirt_pool}"

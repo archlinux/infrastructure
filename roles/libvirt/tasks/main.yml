@@ -12,6 +12,8 @@
       - qemu-base
       - qemu-hw-display-virtio-gpu
       - qemu-hw-display-virtio-vga
+      - libvirt-python
+      - python-lxml
   register: result
 
 - name: Reload firewalld
@@ -23,3 +25,19 @@
 
 - name: Start and enable libvirtd
   systemd: name=libvirtd enabled=yes state=started daemon_reload=yes
+
+- name: Define the images storage pool
+  community.libvirt.virt_pool:
+    command: define
+    name: images
+    xml: "{{ lookup('file', 'images.xml') }}"
+
+- name: Start the image storage pool
+  community.libvirt.virt_pool:
+    state: active
+    name: images
+
+- name: Start the image storage pool at boot
+  community.libvirt.virt_pool:
+    autostart: true
+    name: images
