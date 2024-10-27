@@ -1,0 +1,34 @@
+#!/bin/bash
+set -o nounset -o errexit -o pipefail
+readonly libvirt_pool="images"
+readonly arch_boxes_signing_key=/usr/local/lib/libvirt-executor/arch-boxes.asc
+readonly arch_boxes_fingerprint=1B9A16984A4E8CB448712D2AE0B78BF4326C6F8F
+
+cleanup() {
+  rm -r "${tmpdir}"
+}
+
+tmpdir="$(mktemp --directory --tmpdir="/var/tmp")"
+trap cleanup EXIT
+
+cd "${tmpdir}"
+
+version="$(curl -sSfL 'https://gitlab.archlinux.org/archlinux/arch-boxes/-/jobs/artifacts/master/raw/build.env?job=build:secure' | awk -F= '$1=="BUILD_VERSION" {print $2}')"
+image_name="Arch-Linux-x86_64-libvirt-executor-${version}.qcow2"
+
+if cmp --quiet <(echo "${image_name}") /usr/local/lib/libvirt-executor/backing-vol-name; then
+  echo "Nothing to do"
+  exit
+fi
+
+curl -sSfL --remote-name-all https://gitlab.archlinux.org/archlinux/arch-boxes/-/jobs/artifacts/master/raw/output/${image_name}{,.sig}?job=build:secure
+rsop verify "${image_name}.sig" "${arch_boxes_signing_key}" < "${image_name}"
+
+virsh vol-create-as "${libvirt_pool}" "${image_name}" 0 --format qcow2
+virsh vol-upload "${image_name}" "${image_name}" "${libvirt_pool}"
+
+echo "${image_name}" > /usr/local/lib/libvirt-executor/backing-vol-name.tmp
+mv /usr/local/lib/libvirt-executor/backing-vol-name{.tmp,}
+
+# Keep one week of images
+virsh vol-list "${libvirt_pool}" | awk '$1~"Arch-Linux-x86_64-libvirt-executor-[0-9]*\\.[0-9]*\\.qcow2" {print $1}' | sort -n -t - -k6,6 | head -n -7 | xargs -I{} --no-run-if-empty virsh vol-delete {} "${libvirt_pool}"
