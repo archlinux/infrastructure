@@ -1,6 +1,6 @@
 <domain type='kvm'>
   <name>$vm_name</name>
-  <memory unit='MiB'>2048</memory>
+  <memory unit='MiB'>{{ gitlab_runner_libvirt_vm_memory }}</memory>
   <vcpu>4</vcpu>
   <os>
     <type arch='x86_64' machine='q35'>hvm</type>

@@ -79,9 +79,11 @@
       copy: src={{ item.src }} dest={{ item.dest }} owner=root group=root mode={{ item.mode }}
       loop:
         - {src: arch-boxes.asc, dest: /usr/local/lib/libvirt-executor/, mode: 644}
-        - {src: domain_template.xml, dest: /usr/local/lib/libvirt-executor/, mode: 644}
         - {src: libvirt-executor, dest: /usr/local/bin/, mode: 755}
         - {src: libvirt-executor-update-base-image, dest: /usr/local/bin/, mode: 755}
+
+    - name: Install libvirt-executor domain template
+      template: src=domain_template.xml.j2 dest=/usr/local/lib/libvirt-executor/domain_template.xml owner=root group=root mode=0644
 
     - name: Create SSH keys for libvirt-executor
       command: ssh-keygen -N "" -f /etc/libvirt-executor/id_ed25519 -t ed25519
