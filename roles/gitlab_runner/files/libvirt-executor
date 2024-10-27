@@ -10,6 +10,7 @@ ssh() {
     -o ServerAliveInterval=15 \
     -o UserKnownHostsFile=/dev/null \
     -o StrictHostKeyChecking=off \
+    -o LogLevel=error \
     "root@${1}" "${@:2}"
 }
 
@@ -39,7 +40,6 @@ wait_for_ssh() {
       sleep 1
       continue
     fi
-    printf "%s" "${ip}"
     return 0
   done
   echo 'Waited 30 seconds for VM to start, exiting...'
@@ -68,7 +68,7 @@ prepare() {
 # https://docs.gitlab.com/runner/executors/custom.html#run
 run() {
   local ip
-  ip="$(wait_for_ssh "$(vm_name)")"
+  ip="$(vm_ip "$(vm_name)")"
   ssh "${ip}" bash < "${1}" || exit "${BUILD_FAILURE_EXIT_CODE:-1}"
 }
 
