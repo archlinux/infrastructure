@@ -79,7 +79,7 @@
       copy: src={{ item.src }} dest={{ item.dest }} owner=root group=root mode={{ item.mode }}
       loop:
         - {src: arch-boxes.asc, dest: /usr/local/lib/libvirt-executor/, mode: 644}
-        - {src: domain_template.xml, dest: /usr/local/lib/libvirt-executor/, mode: 755}
+        - {src: domain_template.xml, dest: /usr/local/lib/libvirt-executor/, mode: 644}
         - {src: libvirt-executor, dest: /usr/local/bin/, mode: 755}
         - {src: libvirt-executor-update-base-image, dest: /usr/local/bin/, mode: 755}
 
