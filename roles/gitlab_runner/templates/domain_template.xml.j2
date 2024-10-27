@@ -25,7 +25,7 @@
   </clock>
   <devices>
     <disk type='file' device='disk'>
-      <driver name='qemu' type='qcow2'/>
+      <driver name='qemu' type='qcow2' discard='unmap'/>
       <source file='/var/lib/libvirt/images/$vm_name.qcow2'/>
       <target dev='sdb' bus='scsi'/>
     </disk>
