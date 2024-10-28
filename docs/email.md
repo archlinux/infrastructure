@@ -66,12 +66,12 @@ roles/rspamd/files/archlinux.org.dkim-rsa.key.vault
 roles/rspamd/files/archlinux.org.dkim-ed25519.key.vault
 ```
 
-# Gitlab servicedesk
+# GitLab Service Desk
 
-Gitlab has a [servicedesk
+GitLab has a [Service Desk
 feature](https://docs.gitlab.com/ee/user/project/service_desk.html) which
-creates issues for incomding emails and allows multiple people to reply via
-Gitlab on those issues and assign issues. Gitlab generates a default email
+creates issues for incoming emails and allows multiple people to reply via
+GitLab on those issues and assign issues. GitLab generates a default email
 address with the following logic:
 
 ```
@@ -80,7 +80,7 @@ gitlab+<group>-<project>-<project-id>-issue-@archlinux.org
 
 As we prefer to use user friendly addresses such as `privacy@archlinux.org` for communication a postfix alias is configured in `/etc/postix/aliases`.
 
-For a new Gitlab service desk project, add a new alias to `/etc/postfix/aliases` as:
+For a new GitLab Service Desk project, add a new alias to `/etc/postfix/aliases` as:
 
 ```
 foobar: gitlab+<group>-<project>-<project-id>-issue-@archlinux.org
