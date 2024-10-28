@@ -706,6 +706,14 @@ arch_users:
       - packager
       - junior-packager
       - tu
+  raffomania:
+    name: "Rafael Epplée"
+    email: "raffomania@archlinux.org"
+    ssh_key: raffomania.pub
+    hosts:
+      - mail.archlinux.org
+    groups:
+      - support-staff
   rgacogne:
     name: "Remi Rgacogne"
     email: "rgacogne@archlinux.org"
