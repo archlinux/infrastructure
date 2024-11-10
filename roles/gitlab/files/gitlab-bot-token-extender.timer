@@ -1,0 +1,10 @@
+[Unit]
+Description=GitLab Bot Token Extender
+
+[Timer]
+OnCalendar=weekly
+Persistent=true
+RandomizedDelaySec=24h
+
+[Install]
+WantedBy=timers.target

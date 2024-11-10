@@ -1,0 +1,7 @@
+bots = [{{ gitlab_bots | map("to_json") | join(', ') }}]
+
+bots.each do |username|
+  puts "Bot user: #{username}"
+  user = User.find_by_username(username)
+  user.personal_access_tokens.update_all(expires_at: 12.months.from_now)
+end

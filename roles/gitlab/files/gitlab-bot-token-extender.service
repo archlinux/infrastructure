@@ -1,0 +1,6 @@
+[Unit]
+Description=GitLab Bot Token Extender
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/docker exec -t gitlab gitlab-rails runner /opt/gitlab-scripts/gitlab-bot-token-extender.rb
