@@ -205,6 +205,15 @@
 256 MD5:fe:a1:ab:4d:f6:5d:76:f9:a3:99:be:fd:51:ee:77:ed root@archlinux-packer (ED25519)
 3072 MD5:ad:ee:a6:6d:b7:9b:f0:f7:78:9f:df:b4:53:2e:5f:9f root@archlinux-packer (RSA)
 
+# mumble.archlinux.org
+256 SHA256:+Kb9ZYX3TBuzq0zsenFFxCkP4V72a6sn6GNt6iPZaoo root@archlinux-packer (ECDSA)
+256 SHA256:emrNzCZ+aasNz8C6kcDl/jPYWgqDq4Yl4Epzvw3KPc4 root@archlinux-packer (ED25519)
+3072 SHA256:VCqfjI+1rtVXQNkEK2Tk3Sj6iIHlB0jfFGKXt0T+kUA root@archlinux-packer (RSA)
+
+256 MD5:7a:96:1c:78:49:5d:e6:79:89:e8:c3:41:cc:cb:86:04 root@archlinux-packer (ECDSA)
+256 MD5:a7:3c:5a:11:e8:35:7c:6d:7e:4f:1c:69:2f:27:02:6f root@archlinux-packer (ED25519)
+3072 MD5:36:0e:0b:00:ca:ea:e9:70:f8:00:96:0c:63:e1:0c:19 root@archlinux-packer (RSA)
+
 # opensearch.archlinux.org
 256 SHA256:Fq62NmjmKfqHPvXk4t983pikezNWbGUokYoGljjTRlo root@archlinux-packer (ECDSA)
 256 SHA256:9BrCmtZiltz907mhTMA/5UVxy1Uwjmb+eN5yjbcVt2c root@archlinux-packer (ED25519)

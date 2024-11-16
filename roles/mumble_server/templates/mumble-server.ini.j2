@@ -1,0 +1,110 @@
+; See https://github.com/mumble-voip/mumble/blob/master/auxiliary_files/mumble-server.ini
+; for all values and explanations.
+
+; Path to database. If blank, will search for
+; mumble-server.sqlite in default locations or create it if not found.
+database=/var/lib/mumble-server/mumble-server.sqlite
+
+; Specifies the file the server should log to. By default the server
+; logs to the file 'mumble-server.log'. If you leave this field blank
+; on Unix-like systems, the server will force itself into foreground
+; mode which logs to the console.
+logfile=
+
+; Welcome message sent to clients when they connect.
+; If the welcome message is set to an empty string,
+; no welcome message will be sent to clients.
+welcometext="<br />Welcome to <b>Arch Linux</b>.<br />Enjoy your stay!<br />"
+
+; Port to bind TCP and UDP sockets to.
+port=64738
+
+; Specific IP or hostname to bind to.
+; If this is left blank (default), the server will bind to all available addresses.
+;host=
+
+; Password to join server.
+serverpassword="{{ vault_mumble_server_password }}"
+
+; Maximum bandwidth (in bits per second) clients are allowed
+; to send speech at.
+bandwidth=558000
+
+; Maximum number of concurrent clients allowed.
+users=100
+
+; These two settings allow to configure the per-user rate limiter for some
+; command messages sent from the client to the server. The messageburst setting
+; specifies an amount of messages which are allowed in short bursts. The
+; messagelimit setting specifies the number of messages per second allowed over
+; a longer period. If a user hits the rate limit, his packages are then ignored
+; for some time. Both of these settings have a minimum of 1 as setting either to
+; 0 could render the server unusable.
+messageburst=5
+messagelimit=1
+
+; Respond to UDP ping packets.
+;
+; Setting to true exposes the current user count, the maximum user count, and
+; the server's maximum bandwidth per client to unauthenticated users. In the
+; Mumble client, this information is shown in the Connect dialog.
+allowping=true
+
+; You can set this setting to a channel ID, and the user will automatically be
+; moved into that channel instead. Note that this is the numeric ID of the
+; channel, which can be a little tricky to get (you'll either need to use an
+; RPC mechanism, watch the console of a debug client, or root around through
+; the server database to get it).
+;
+defaultchannel=5
+
+; When a user connects to a server they've already been on, by default the
+; server will remember the last channel they were in and move them to it
+; automatically. Toggling this setting to false will disable that feature.
+;
+;rememberchannel=true
+
+; How many seconds should the server remember the last channel of a user.
+; Set to 0 (default) to remember forever. This option has no effect if
+; rememberchannel is set to false.
+;rememberchannelduration=0
+
+; Maximum length of text messages in characters. 0 for no limit.
+;textmessagelength=5000
+
+; Maximum length of text messages in characters, with image data. 0 for no limit.
+imagemessagelength=512000
+
+; Allow clients to use HTML in messages, user comments and channel descriptions?
+allowhtml=true
+
+; If you have a proper SSL certificate, you can provide the filenames here.
+; Otherwise, the server will create its own certificate automatically.
+sslCert=/var/lib/mumble-server/cert.pem
+sslKey=/var/lib/mumble-server/privkey.pem
+sslCA=/var/lib/mumble-server/fullchain.pem
+
+; By default, in log files and in the user status window for privileged users,
+; Mumble will show IP addresses - in some situations you may find this unwanted
+; behavior. If obfuscate is set to true, the server will randomize the IP addresses
+; of connecting users.
+;
+; The obfuscate function only affects the log file and DOES NOT effect the user
+; information section in the client window.
+obfuscate=true
+
+; A flag dictating whether clients may use the built-in recording function. Newer
+; clients will respect this option in the UI (e.g. disable the recording feature
+; in the UI). Additionally any client that tries to start a recording is kicked
+; from the server with a corresponding message, if recording is disabled.
+; Default is true. This option was introduced with Mumble server 1.5.0.
+;
+; allowRecording=true
+
+; You can configure any of the configuration options for Ice here. We recommend
+; leave the defaults as they are.
+; Please note that this section has to be last in the configuration file.
+;
+[Ice]
+Ice.Warn.UnknownProperties=1
+Ice.MessageSizeMax=65536

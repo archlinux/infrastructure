@@ -1,0 +1,35 @@
+- name: Install mumble-server
+  pacman: name=mumble-server state=present
+
+- name: Open firewall holes
+  ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes
+  when: configure_firewall
+  with_items:
+    - "64738/tcp"
+    - "64738/udp"
+  tags:
+    - firewall
+
+- name: Configure mumble-server
+  template: src=mumble-server.ini.j2 dest=/etc/mumble/mumble-server.ini owner=root group=root mode=0644
+  notify:
+    - Restart mumble-server
+
+- name: Add certbot hook
+  copy: src=restart-mumble-server.sh dest=/etc/letsencrypt/hook.d/restart-mumble-server.sh owner=root group=root mode=0755
+
+- name: Create ssl cert for mumble-server
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ inventory_hostname }}"]
+    challenge: "DNS-01"
+  register: result
+
+- name: Install the certificate by running the certbot hook
+  command: /etc/letsencrypt/hook.d/restart-mumble-server.sh post
+  args:
+    creates: /var/lib/mumble-server/fullchain.pem
+
+- name: Enable and start mumble-server.service
+  service: name=mumble-server enabled=yes state=started
