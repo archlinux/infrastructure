@@ -290,16 +290,6 @@ resource "hetznerdns_record" "geo_ns3" {
   ttl     = lookup(local.geo_domains[each.key], "ttl", 86400)
 }
 
-resource "hetznerdns_record" "geo_ns4" {
-  for_each = local.geo_domains
-
-  zone_id = lookup(each.value, "zone", hetznerdns_zone.archlinux.id)
-  name    = each.value.name
-  value   = "seoul.mirror.pkgbuild.com."
-  type    = "NS"
-  ttl     = lookup(local.geo_domains[each.key], "ttl", 86400)
-}
-
 resource "hetznerdns_record" "geo_ns5" {
   for_each = local.geo_domains
 

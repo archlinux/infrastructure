@@ -389,11 +389,6 @@ locals {
       ipv6_address = "2001:ba8:0:4030::2"
       http3        = true
     }
-    "seoul.mirror" = {
-      ipv4_address = "145.40.87.75"
-      ipv6_address = "2604:1380:11:2600::1"
-      http3        = true
-    }
     "sydney.mirror" = {
       ipv4_address = "147.75.48.159"
       ipv6_address = "2604:1380:40f1:6a00::1"

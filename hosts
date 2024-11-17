@@ -9,7 +9,6 @@ repos.archlinux.org ansible_host=168.119.141.106
 [equinix_metal]
 repro3.pkgbuild.com
 runner3.archlinux.org
-seoul.mirror.pkgbuild.com
 sydney.mirror.pkgbuild.com
 
 [mirrors]
@@ -18,7 +17,6 @@ asia.mirror.pkgbuild.com
 europe.mirror.pkgbuild.com
 london.mirror.pkgbuild.com
 mirror.pkgbuild.com
-seoul.mirror.pkgbuild.com
 sydney.mirror.pkgbuild.com
 #TODO(gromit): remove ansible host once the DNS record is set
 repos.archlinux.org ansible_host=168.119.141.106
@@ -28,7 +26,6 @@ america.mirror.pkgbuild.com
 asia.mirror.pkgbuild.com
 europe.mirror.pkgbuild.com
 london.mirror.pkgbuild.com
-seoul.mirror.pkgbuild.com
 sydney.mirror.pkgbuild.com
 
 [archive_mirrors]

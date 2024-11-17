@@ -76,7 +76,6 @@ blackbox_targets:
     - https://reproducible.archlinux.org
     - https://rfc.archlinux.page
     - https://security.archlinux.org
-    - https://seoul.mirror.pkgbuild.com
     - https://sources.archlinux.org
     - https://static.conf.archlinux.org/README.md
     - https://sydney.mirror.pkgbuild.com

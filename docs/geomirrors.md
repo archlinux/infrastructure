@@ -9,7 +9,6 @@ DevOps team maintain a geo mirror across the world. The Geo mirror is public fac
 | https://sydney.mirror.pkgbuild.com/ | Australia |
 | https://europe.mirror.pkgbuild.com/ | Czechia |
 | https://asia.mirror.pkgbuild.com/ | Hong Kong |
-| https://seoul.mirror.pkgbuild.com/ | South Korea |
 | https://london.mirror.pkgbuild.com/ | United Kingdom |
 | https://america.mirror.pkgbuild.com/ | United States |
 
