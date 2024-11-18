@@ -1,5 +1,5 @@
 - name: Install dependencies
-  pacman: name=docker,python-docker,python-gitlab,gitlab-runner state=latest update_cache=yes
+  pacman: name=docker,python-docker,python-gitlab,gitlab-runner state=present
   notify: Restart gitlab-runner
 
 - name: Install docker.slice
