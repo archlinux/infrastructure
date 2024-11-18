@@ -1,5 +1,5 @@
 [Unit]
-Description=Run libvirt-executor-vm-template.service daily
+Description=Run libvirt-executor-update-base-image.service daily
 
 [Timer]
 OnCalendar=daily
