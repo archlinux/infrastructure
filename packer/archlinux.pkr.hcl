@@ -3,11 +3,11 @@ packer {
   required_plugins {
     ansible = {
       source  = "github.com/hashicorp/ansible"
-      version = ">= 1.1.0"
+      version = ">= 1.1.2"
     }
     hcloud = {
       source  = "github.com/hashicorp/hcloud"
-      version = ">= 1.0.0"
+      version = ">= 1.6.0"
     }
   }
 }
@@ -25,7 +25,7 @@ variable "install_ec2_public_keys_service" {
 
 # https://www.packer.io/docs/templates/hcl_templates/blocks/source
 source "hcloud" "rescue" {
-  image       = "ubuntu-22.04"
+  image       = "ubuntu-24.04"
   location    = "fsn1"
   rescue      = "linux64"
   server_type = "cx22"
