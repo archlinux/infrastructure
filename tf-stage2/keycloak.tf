@@ -94,6 +94,9 @@ resource "keycloak_realm" "archlinux" {
   registration_flow      = "Arch Registration"
   reset_credentials_flow = "Arch Reset Credentials"
 
+  // set one hour validity for password reset mails etc
+  action_token_generated_by_user_lifespan = "60m0s"
+
   smtp_server {
     host              = "mail.archlinux.org"
     from              = "accounts@archlinux.org"
