@@ -7,4 +7,4 @@
   roles:
     - install_arch
   vars:
-    - bootstrap_version: "latest"
+    bootstrap_version: "latest"
