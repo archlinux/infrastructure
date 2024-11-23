@@ -20,13 +20,15 @@ names() {
 
 prometheus_targets() {
   names \
-  | sed 's|^|https://|' \
+  | sed '/\.sandbox\.archlinux\.org/d' \
+  | sed '/^alpm\.archlinux\.page$/ s|$|/alpm_buildinfo/|' \
   | sed '/monitoring\|dashboards/ s|$|/healthz|' \
   | sed '/mta-sts/ s|$|/.well-known/mta-sts.txt|' \
   | sed '/openpgpkey/ s|openpgpkey\.\(.*\)|&/.well-known/openpgpkey/\1/policy|' \
   | sed '/repos\.arch/ s|$|/lastupdate|' \
   | sed '/static\.conf/ s|$|/README.md|' \
   | sed -r '/(geo|riscv)\.mirror|(coc|git|status)\.arch/d' \
+  | sed 's|^|https://|' \
   | xargs -P8 -I{} sh -c 'curl -m 10 -sf -o /dev/null {} && echo "    "- {}' \
   | sort
 }

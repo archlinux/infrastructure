@@ -50,6 +50,7 @@ blackbox_targets:
     - https://gitlab.archlinux.org
     - https://ipxe.archlinux.org
     - https://lists.archlinux.org
+    - https://london.mirror.pkgbuild.com
     - https://mailman.archlinux.org
     - https://man.archlinux.org
     - https://master-key.archlinux.org
@@ -64,11 +65,12 @@ blackbox_targets:
     - https://mta-sts.master-key.archlinux.org/.well-known/mta-sts.txt
     - https://openpgpkey.archlinux.org/.well-known/openpgpkey/archlinux.org/policy
     - https://openpgpkey.master-key.archlinux.org/.well-known/openpgpkey/master-key.archlinux.org/policy
+    - https://package-maintainer-bylaws.aur.archlinux.org
     - https://packages.archlinux.org
+    - https://pacman.archlinux.page
     - https://patchwork.archlinux.org
     - https://ping.archlinux.org
     - https://pkgbuild.com
-    - https://pacman.archlinux.page
     - https://planet.archlinux.org
     - https://registry.archlinux.org
     - https://repod.archlinux.page
