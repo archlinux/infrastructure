@@ -183,7 +183,6 @@ locals {
     "openpgpkey.master-key"         = "3eea8f39a9b473a5dc7c188366f84072"
     "bugs"                          = "e41ef82b1a2d063ae958a4d5a3b2f870"
     "package-maintainer-bylaws.aur" = "680c89d189c8f342cc00bcb624d813a3"
-    "reproducible-notes"            = "8c657f2f2720db1c3db63be89605cf0d"
     "terms"                         = "0b62a71af2aa85fb491295b543b4c3d2"
     "patchwork"                     = "37eeadf24d5cd6614e8edb1f12868a5e"
   }
