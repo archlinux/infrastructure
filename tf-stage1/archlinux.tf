@@ -125,6 +125,10 @@ locals {
       server_type = "cx32"
       domain      = "monitoring"
     }
+    "mumble.archlinux.org" = {
+      server_type = "cx22"
+      domain      = "mumble"
+    }
     "opensearch.archlinux.org" = {
       server_type = "cx22"
       domain      = "opensearch"
@@ -618,6 +622,14 @@ resource "hetznerdns_record" "archlinux_org_origin_ns1" {
   zone_id = hetznerdns_zone.archlinux.id
   name    = "@"
   value   = "hydrogen.ns.hetzner.com."
+  type    = "NS"
+  ttl     = 86400
+}
+
+resource "hetznerdns_record" "archlinux_org_acme_challenge_mumble_ns1" {
+  zone_id = hetznerdns_zone.archlinux.id
+  name    = "_acme-challenge.mumble"
+  value   = "redirect.archlinux.org."
   type    = "NS"
   ttl     = 86400
 }

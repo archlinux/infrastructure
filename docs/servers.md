@@ -118,6 +118,11 @@ Medium-fast-ish Equinix Metal Arch Linux box.
   - [Grafana](https://monitoring.archlinux.org) and [docs/grafana.md](./docs/grafana.md)
   - Prometheus
 
+## mumble.archlinux.org
+
+### Services
+  - Mumble
+
 ## dashboards.archlinux.org
 
 Prometheus, and Grafana server which receives selected performance/metrics from monitoring.archlinux.org and make them public accessible.
@@ -162,4 +167,4 @@ The [Arch Linux Archive](https://archive.archlinux.org) is mirrored to three ded
 ## gitlab.archlinux.org
 
 ### Services
-- Gitlab
+  - GitLab

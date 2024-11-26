@@ -90,6 +90,7 @@ blackbox_targets:
   tls_connect:
     - mail.archlinux.org:465
     - mail.archlinux.org:993
+    - mumble.archlinux.org:64738
     - coc.archlinux.org:443
     - git.archlinux.org:443
     - rsync.archlinux.org:443

@@ -1,4 +1,4 @@
 dns_rfc2136_server = {{ dyn_dns_server }}
-dns_rfc2136_name = certbot
-dns_rfc2136_secret = {{ dyn_dns_keys['certbot'].secret }}
-dns_rfc2136_algorithm = {{ dyn_dns_keys['certbot'].algorithm | upper }}
+dns_rfc2136_name = {{ certbot_tsig_name }}
+dns_rfc2136_secret = {{ dyn_dns_keys[certbot_tsig_name].secret }}
+dns_rfc2136_algorithm = {{ dyn_dns_keys[certbot_tsig_name].algorithm | upper }}

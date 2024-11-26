@@ -1,0 +1,14 @@
+filesystem: btrfs
+
+ipv4_address: "188.245.228.0"
+ipv4_netmask: "/32"
+ipv6_address: "2a01:4f8:c012:d0ce::1"
+fail2ban_jails:
+  sshd: true
+  postfix: false
+  dovecot: false
+  nginx_limit_req: false
+wireguard_address: 10.0.0.46
+wireguard_public_key: jiA9adrFKJuZsxS1DMHi+gkb4iWj3w0CNGWY/elxpzk=
+certbot_dns_support: true
+certbot_tsig_name: mumble
