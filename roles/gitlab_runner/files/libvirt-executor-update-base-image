@@ -23,9 +23,7 @@ trap cleanup EXIT
 
 cd "${tmpdir}"
 curl -sSf --remote-name-all https://geo.mirror.pkgbuild.com/images/latest/Arch-Linux-x86_64-basic.qcow2{,.sig}
-sq cert import "${arch_boxes_signing_key}"
-sq pki link add --all "${arch_boxes_fingerprint}"
-sq verify --signer-cert "${arch_boxes_fingerprint}" --detached Arch-Linux-x86_64-basic.qcow2.sig Arch-Linux-x86_64-basic.qcow2
+rsop verify Arch-Linux-x86_64-basic.qcow2.sig "${arch_boxes_signing_key}" < Arch-Linux-x86_64-basic.qcow2
 
 image=Arch-Linux-x86_64-basic.img
 qemu-img convert -f qcow2 -O raw Arch-Linux-x86_64-basic.qcow2 Arch-Linux-x86_64-basic.img

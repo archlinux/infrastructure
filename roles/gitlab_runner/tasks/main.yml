@@ -67,7 +67,7 @@
   when: "'gitlab_vm_runners' in group_names"
   block:
     - name: Install libvirt-executor-update-base-image dependencies
-      pacman: name=arch-install-scripts,sequoia-sq state=present
+      pacman: name=arch-install-scripts,rsop state=present
 
     - name: Create libvirt-executor configuration and data directories
       file: path={{ item }} state=directory owner=root group=root mode=0755
