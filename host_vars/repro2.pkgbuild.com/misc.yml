@@ -16,9 +16,9 @@ system_disks:
 raid_level: "raid1"
 
 rebuilderd_workers:
- - repro21
- - repro22
- - repro23
- - repro24
+  - repro21
+  - repro22
+  - repro23
+  - repro24
 wireguard_address: 10.0.0.29
 wireguard_public_key: PQDUQxGH6n3PY/dqlDk6DsSV5XBYQvJWJbVJldEuYic=

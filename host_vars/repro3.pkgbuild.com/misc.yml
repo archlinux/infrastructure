@@ -16,7 +16,7 @@ configure_network: true
 enable_zram_swap: false
 
 rebuilderd_workers:
- - repro31
- - repro32
+  - repro31
+  - repro32
 wireguard_address: 10.0.0.40
 wireguard_public_key: wG9TkWIw+g0WvOWChIqllpIh3+DjIDKy0XYh+pM+CS4=

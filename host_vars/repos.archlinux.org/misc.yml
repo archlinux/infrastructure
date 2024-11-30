@@ -8,9 +8,9 @@ ipv4_gateway: "168.119.141.65"
 ipv6_gateway: "fe80::1"
 filesystem: "btrfs"
 system_disks:
-- /dev/nvme0n1
-- /dev/nvme1n1
-- /dev/nvme2n1
+  - /dev/nvme0n1
+  - /dev/nvme1n1
+  - /dev/nvme2n1
 raid_level: "raid1"
 
 wireguard_address: 10.0.0.45
