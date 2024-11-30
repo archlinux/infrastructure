@@ -16,4 +16,4 @@ raid_level: "raid1"
 
 configure_network: true
 wireguard_address: 10.0.0.30
-wireguard_public_key: VghPKlYaYYcdt4peH2n9X95ebTamz2MeOI8NvMTmomI=
+wireguard_public_key: HNs19dDeutg4yA2twh9Qw26bfVA1J9Z5rrBYSye0q2k=

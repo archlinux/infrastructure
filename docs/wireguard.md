@@ -9,7 +9,7 @@ Many of our servers communicate through wireguard VPN with each others. If you n
     wireguard_public_key: <wg-pubkey>
     ```
 
-1. Save the private key in a encypted vault in  `host_vars/<fqdn>/vault_wireguard.yml`
+1. Generate the private key on the server with `wg genkey | systemd-creds encrypt - /etc/credstore.encrypted/network.wireguard.private.wg0` and restart systemd-networkd with `systemctl restart systemd-networkd`
 
     Tips: 
     - Pick next available IP for Wireguard from `grep -r wireguard_address host_vars/ | cut -f3 -d: | sort -h`

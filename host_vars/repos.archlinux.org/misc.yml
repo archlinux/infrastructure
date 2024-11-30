@@ -14,4 +14,4 @@ system_disks:
 raid_level: "raid1"
 
 wireguard_address: 10.0.0.45
-wireguard_public_key: MDt3DqmYppnV81CFHLII1O80BWFGYeGGNrDWlQcX5H8=
+wireguard_public_key: ZE7fr78hG6eB3Qjhys0n7DxplMBbcWzBGI7DhMvCeDc=

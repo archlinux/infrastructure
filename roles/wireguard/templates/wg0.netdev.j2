@@ -4,7 +4,7 @@ Kind=wireguard
 
 [WireGuard]
 ListenPort=51820
-PrivateKey={{ vault_wireguard_private_key }}
+PrivateKey=@network.wireguard.private.wg0
 
 {% for host in groups['all'] if host != inventory_hostname %}
 [WireGuardPeer]

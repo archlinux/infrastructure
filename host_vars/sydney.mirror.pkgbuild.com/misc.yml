@@ -13,4 +13,4 @@ system_disks:
   - /dev/sdb
 configure_network: true
 wireguard_address: 10.0.0.39
-wireguard_public_key: nBu1/pofjzyD31D32VHIs8ajNc5thkzweOWsW28WSFU=
+wireguard_public_key: LxsZN7J4OrPUZgGldHQ0tLzFmXuS65IsCGyEPfCrMWo=

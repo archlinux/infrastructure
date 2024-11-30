@@ -16,4 +16,4 @@ system_disks:
   - /dev/sdc
 raid_level: "raid5"
 wireguard_address: 10.0.0.27
-wireguard_public_key: aC544PuXq63LgIeOvVD5dw++9XJE47YKUqeRw3ol0Qo=
+wireguard_public_key: 5oI+dah4LlkUPBs/JI5lJAgDxBQa/+ofu0hLfxAkcio=

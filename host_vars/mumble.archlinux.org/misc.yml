@@ -9,6 +9,6 @@ fail2ban_jails:
   dovecot: false
   nginx_limit_req: false
 wireguard_address: 10.0.0.46
-wireguard_public_key: jiA9adrFKJuZsxS1DMHi+gkb4iWj3w0CNGWY/elxpzk=
+wireguard_public_key: BD2cbLkESFRPLy4luZlwEPc45yBFmd1Ti2nSFd1hVBQ=
 certbot_dns_support: true
 certbot_tsig_name: mumble

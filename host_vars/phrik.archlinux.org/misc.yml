@@ -7,4 +7,4 @@ arch_users:
       - tu
 arch_groups: []
 wireguard_address: 10.0.0.9
-wireguard_public_key: ETzZyW9HAwDmJffZOiLH+DF+wl7bR37NYDEtn/zm+hk=
+wireguard_public_key: ZDCc0Flid5Fv0fezfioduAyLJzFiPenQTjXFtoFadiM=

@@ -1,6 +1,6 @@
 filesystem: btrfs
 wireguard_address: 10.0.0.24
-wireguard_public_key: CENgItOHJI/lLUNcUNpC+1oZJBvX/G+nemAKZYfCSCw=
+wireguard_public_key: 5TMXSk3wbltxbfaBaMcrRmEZ4hfyhDRttlZbfb58U3s=
 
 fail2ban_jails:
   sshd: true
