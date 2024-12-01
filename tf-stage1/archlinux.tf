@@ -70,11 +70,6 @@ locals {
       server_type = "cx22"
       domain      = "bugbuddy"
     }
-    "buildbot.pkgbuild.com" = {
-      server_type = "cx22"
-      domain      = "buildbot"
-      zone        = hetznerdns_zone.pkgbuild.id
-    }
     "dashboards.archlinux.org" = {
       server_type = "cx22"
       domain      = "dashboards"
