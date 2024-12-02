@@ -182,6 +182,7 @@ locals {
     "monthly-reports" = "a2d60657e960b480cdb229df7cc7edf3"
     "pacman"          = "3c5fb9413c1d66dac516a08277575662"
     "alpm"            = "363d06e0957fbfd22403e4dd992afc48"
+    "signstar"        = "5c348888c16d81166379017879a29fe3"
   }
 
   # This creates archlinux.org TXT DNS entries
