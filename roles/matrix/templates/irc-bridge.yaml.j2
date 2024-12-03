@@ -599,7 +599,7 @@ ircService:
     # $ node src/generate-signing-key.js > signingkey.jwk
     signingKeyPath: "/etc/synapse/{{ matrix_server_name }}.ircmedia.key"
     # How long should the generated URLs be valid for
-    ttlSeconds: 86400
+    ttlSeconds: {{ 14 * 24 * 60 * 60 }}
     # The port for the media proxy to listen on
     bindPort: 8014
     # The publically accessible URL to the media proxy
