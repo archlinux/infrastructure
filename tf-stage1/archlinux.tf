@@ -75,7 +75,7 @@ locals {
       domain      = "dashboards"
     }
     "debuginfod.archlinux.org" = {
-      server_type = "cx22"
+      server_type = "cx32"
       domain      = "debuginfod"
     }
     "discourse.sandbox.archlinux.org" = {
