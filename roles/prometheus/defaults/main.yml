@@ -78,7 +78,7 @@ blackbox_targets:
     - https://reproducible.archlinux.org
     - https://rfc.archlinux.page
     - https://security.archlinux.org
-    - https://signstar.archlinux.archlinux.page/nethsm/
+    - https://signstar.archlinux.page/
     - https://sources.archlinux.org
     - https://static.conf.archlinux.org/README.md
     - https://sydney.mirror.pkgbuild.com
