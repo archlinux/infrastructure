@@ -34,7 +34,7 @@ server {
     ssl_certificate_key  /etc/letsencrypt/live/{{ archmanweb_domain }}/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/{{ archmanweb_domain }}/chain.pem;
 
-    limit_req zone=archmanweb_limit burst=10 delay=8;
+    limit_req zone=archmanweb_limit burst=20 delay=10;
 
     location = /favicon.ico {
         alias {{ archmanweb_dir }}/repo/collected_static/archlinux-common/favicon.ico;
