@@ -812,14 +812,6 @@ arch_users:
       - packager
       - junior-packager
       - tu
-  xyne:
-    name: "Xyne"
-    email: "xyne@archlinux.org"
-    ssh_key: xyne.pub
-    groups:
-      - packager
-      - junior-packager
-      - tu
   yan12125:
     name: "Chih-Hsuan Yen"
     email: "yan12125@archlinux.org"
