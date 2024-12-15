@@ -1,9 +1,16 @@
 <domain type='kvm'>
   <name>$vm_name</name>
-  <memory unit='MiB'>2048</memory>
+  <memory unit='MiB'>{{ gitlab_runner_libvirt_vm_memory }}</memory>
   <vcpu>4</vcpu>
-  <os>
+  <sysinfo type='smbios'>
+    <oemStrings>
+      <entry>io.systemd.credential:system.hostname=$vm_name</entry>
+      <entry>io.systemd.credential.binary:ssh.authorized_keys.root=$ssh_authorized_keys_root</entry>
+    </oemStrings>
+  </sysinfo>
+  <os firmware='efi'>
     <type arch='x86_64' machine='q35'>hvm</type>
+    <smbios mode='sysinfo'/>
   </os>
   <features>
     <acpi/>
@@ -18,7 +25,7 @@
   </clock>
   <devices>
     <disk type='file' device='disk'>
-      <driver name='qemu' type='qcow2'/>
+      <driver name='qemu' type='qcow2' discard='unmap'/>
       <source file='/var/lib/libvirt/images/$vm_name.qcow2'/>
       <target dev='sdb' bus='scsi'/>
     </disk>
@@ -30,6 +37,7 @@
       <model type='virtio'/>
       <filterref filter='clean-traffic'/>
     </interface>
+    <memballoon model='virtio' freePageReporting='on'/>
     <rng model='virtio'>
       <backend model='random'>/dev/urandom</backend>
     </rng>

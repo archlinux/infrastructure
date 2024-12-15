@@ -1,0 +1,12 @@
+[Unit]
+Description=Run libvirt-executor-fetch-image.service daily
+
+[Timer]
+# One hour after the "Nightly build" pipeline
+# https://gitlab.archlinux.org/archlinux/arch-boxes/-/pipeline_schedules
+OnCalendar=06:00 UTC
+Persistent=true
+RandomizedDelaySec=1h
+
+[Install]
+WantedBy=timers.target

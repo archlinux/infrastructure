@@ -66,33 +66,27 @@
 - name: Setup libvirt-executor
   when: "'gitlab_vm_runners' in group_names"
   block:
-    - name: Install libvirt-executor-update-base-image dependencies
-      pacman: name=arch-install-scripts,rsop state=present
+    - name: Install libvirt-executor-fetch-image dependencies
+      pacman: name=rsop state=present
 
-    - name: Create libvirt-executor configuration and data directories
-      file: path={{ item }} state=directory owner=root group=root mode=0755
-      loop:
-        - /etc/libvirt-executor
-        - /usr/local/lib/libvirt-executor
+    - name: Create libvirt-executor data directory
+      file: path=/usr/local/lib/libvirt-executor state=directory owner=root group=root mode=0755
 
     - name: Install libvirt-executor
       copy: src={{ item.src }} dest={{ item.dest }} owner=root group=root mode={{ item.mode }}
       loop:
         - {src: arch-boxes.asc, dest: /usr/local/lib/libvirt-executor/, mode: 644}
-        - {src: domain_template.xml, dest: /usr/local/lib/libvirt-executor/, mode: 755}
         - {src: libvirt-executor, dest: /usr/local/bin/, mode: 755}
-        - {src: libvirt-executor-update-base-image, dest: /usr/local/bin/, mode: 755}
+        - {src: libvirt-executor-fetch-image, dest: /usr/local/bin/, mode: 755}
 
-    - name: Create SSH keys for libvirt-executor
-      command: ssh-keygen -N "" -f /etc/libvirt-executor/id_ed25519 -t ed25519
-      args:
-        creates: /etc/libvirt-executor/id_ed25519
+    - name: Install libvirt-executor domain template
+      template: src=domain_template.xml.j2 dest=/usr/local/lib/libvirt-executor/domain_template.xml owner=root group=root mode=0644
 
-    - name: Install libvirt-executor-update-base-image.{service,timer}
+    - name: Install libvirt-executor-fetch-image.{service,timer}
       copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
       loop:
-        - libvirt-executor-update-base-image.service
-        - libvirt-executor-update-base-image.timer
+        - libvirt-executor-fetch-image.service
+        - libvirt-executor-fetch-image.timer
 
-    - name: Enable and start libvirt-executor-update-base-image.timer
-      systemd: name=libvirt-executor-update-base-image.timer state=started enabled=yes daemon_reload=yes
+    - name: Enable and start libvirt-executor-fetch-image.timer
+      systemd: name=libvirt-executor-fetch-image.timer state=started enabled=yes daemon_reload=yes
