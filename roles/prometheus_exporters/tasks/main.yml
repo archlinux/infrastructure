@@ -180,6 +180,21 @@
   systemd: name=prometheus-repository-textcollector.timer enabled=yes daemon_reload=yes state=started
   when: "inventory_hostname == 'gemini.archlinux.org'"
 
+- name: Install fastly textcollector script
+  template: src=fastly-textcollector.sh.j2 dest=/usr/local/bin/fastly-textcollector.sh owner=root group=node_exporter mode=0750
+  when: "inventory_hostname == 'monitoring.archlinux.org'"
+
+- name: Install fastly textcollector service and timer
+  template: src={{ item }} dest=/etc/systemd/system/{{ item | regex_replace('\\.j2$', '') }} owner=root group=root mode=644
+  loop:
+    - prometheus-fastly-textcollector.service.j2
+    - prometheus-fastly-textcollector.timer.j2
+  when: "inventory_hostname == 'monitoring.archlinux.org'"
+
+- name: Enable and start prometheus fastly textcollector timer
+  systemd: name=prometheus-fastly-textcollector.timer enabled=yes daemon_reload=yes state=started
+  when: "inventory_hostname == 'monitoring.archlinux.org'"
+
 - name: Install sudoers for btrfs
   copy: src=sudoers dest=/etc/sudoers.d/node_exporter owner=root group=root mode=0440 validate='visudo -cf %s'
   when: filesystem == "btrfs"

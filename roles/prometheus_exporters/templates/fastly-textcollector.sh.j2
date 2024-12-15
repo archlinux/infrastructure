@@ -1,0 +1,30 @@
+#!/bin/bash
+set -o errexit -o nounset -o pipefail
+fastly_token="{{ vault_fastly_billing_token }}"
+fastly_customer_id="{{ vault_fastly_customer_id }}"
+
+if (( $# != 1 )); then
+  echo "Missing textcollector directory argument"
+  exit 1
+fi
+
+TEXTFILE_COLLECTOR_DIR=${1}
+PROM_FILE=$TEXTFILE_COLLECTOR_DIR/fastly.prom
+
+TMP_FILE=$PROM_FILE.$$
+[ -e $TMP_FILE ] && rm -f $TMP_FILE
+
+trap "rm -f $TMP_FILE" EXIT
+
+MTD="$(curl --silent \
+            --show-error \
+            --fail \
+            --header @<(echo Fastly-Key: ${fastly_token}) \
+            --header "Accept: application/json" \
+            "https://api.fastly.com/billing/v2/account_customers/${fastly_customer_id}/mtd_invoice" | jq .total.cost)"
+
+echo "# HELP fastly_mtd_estimate_dollars_total month-to-date billing estimate" >> $TMP_FILE
+echo "# TYPE fastly_mtd_estimate_dollars_total gauge" >> $TMP_FILE
+echo "fastly_mtd_estimate_dollars_total $MTD" >> $TMP_FILE
+
+mv -f $TMP_FILE $PROM_FILE
