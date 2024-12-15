@@ -11,4 +11,4 @@ fail2ban_jails:
 ipv4_address: "95.216.189.61"
 ipv6_address: "2a01:4f9:c010:3052::1"
 wireguard_address: 10.0.0.14
-wireguard_public_key: +RJ/ZNRmw2uCHxSjJZHftk7lWUl5nJ6VSZww8GPwhEI=
+wireguard_public_key: zB4ALQPMOYu8yzGdiDL1AHgowmVZHc2OUJq1igy3Ixo=

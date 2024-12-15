@@ -7,4 +7,4 @@ ipv4_netmask: "/32"
 ipv6_address: "2a01:4f8:c2c:c62f::1"
 ipv6_netmask: "/64"
 wireguard_address: 10.0.0.12
-wireguard_public_key: auE2J1+MYo59uZIwADncjCfSX7/Q0YdvmG+CVIgvtgo=
+wireguard_public_key: T15w8Cgri7djo6an/uG/8yr8f5KAsnnKyTgIw4dkr2I=

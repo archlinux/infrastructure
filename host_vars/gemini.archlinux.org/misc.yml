@@ -16,4 +16,4 @@ raid_level: "raid10"
 
 archive_domain: archive.archlinux.org
 wireguard_address: 10.0.0.20
-wireguard_public_key: 6foPuhPBEUi+tPP7PjFT1nKpEksyyqT8zAX+yOjWDVo=
+wireguard_public_key: GiMqMcJ7aEuW6rRwXsj27S+w7orx7Etnjq+dE6RhoSc=

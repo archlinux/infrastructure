@@ -5,4 +5,4 @@ fail2ban_jails:
   dovecot: false
   nginx_limit_req: true
 wireguard_address: 10.0.0.32
-wireguard_public_key: PkAuiYdsDs4eI9JytK8MUCK1umDblQHg1SH+Z80zs30=
+wireguard_public_key: CuhJyhmHsi0ccdeXgXRacqnFVfYrjVDHxfPPOLehkhw=

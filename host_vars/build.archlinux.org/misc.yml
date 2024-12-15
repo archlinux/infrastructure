@@ -14,4 +14,4 @@ raid_level: "raid1"
 
 archbuild_fs: 'btrfs'
 wireguard_address: 10.0.0.18
-wireguard_public_key: /P8QGSFgvRETkYdsvAtNQWWT3pE7FpouCz+x1N4yIm4=
+wireguard_public_key: 9Lii487Uuzu5ihJwHx6RBpCiUWRHl9VGwC+Oz5wzejk=

@@ -21,4 +21,4 @@ rebuilderd_workers:
   - repro23
   - repro24
 wireguard_address: 10.0.0.29
-wireguard_public_key: PQDUQxGH6n3PY/dqlDk6DsSV5XBYQvJWJbVJldEuYic=
+wireguard_public_key: L47UZExXfMnoPAtcM3hRxkdsPEdvl+hfAJYtUx64lwc=

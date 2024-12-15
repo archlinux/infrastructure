@@ -6,5 +6,5 @@ fail2ban_jails:
   nginx_limit_req: true
 memcached_socket: "/run/memcached/aurweb.sock"
 wireguard_address: 10.0.0.2
-wireguard_public_key: TPLeGQ7qU6ZNtcgDbEV0SSYScvK+XS5igcPdGSXo6UA=
+wireguard_public_key: 51KGJWs3ZlI4tEdOpYFENhf22aETQEn9ApbmVyiF4zQ=
 nginx_enable_http3: true
