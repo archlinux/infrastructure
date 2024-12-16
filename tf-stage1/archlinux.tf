@@ -632,7 +632,7 @@ resource "hetznerdns_record" "archlinux_org_acme_challenge_mumble_ns1" {
 
 resource "hcloud_volume" "mirror" {
   name              = "mirror"
-  size              = 125
+  size              = 150
   server_id         = hcloud_server.machine["mirror.pkgbuild.com"].id
   delete_protection = true
 }
