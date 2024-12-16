@@ -51,6 +51,11 @@ innodb_thread_concurrency = {{ mariadb_innodb_thread_concurrency }}
 innodb_file_per_table
 {% endif %}
 
+{% if mariadb_innodb_disable_snapshot_isolation is defined and mariadb_innodb_disable_snapshot_isolation %}
+# changed to default from OFF to ON with 11.6.2 https://mariadb.com/kb/en/mariadb-11-6-2-release-notes/
+innodb_snapshot_isolation = OFF
+
+{% endif %}
 [mysqldump]
 quick
 max_allowed_packet = 16M

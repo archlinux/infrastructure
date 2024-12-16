@@ -9,7 +9,7 @@
     - { role: promtail }
     - { role: certbot }
     - { role: nginx }
-    - { role: mariadb, mariadb_innodb_buffer_pool_size: '1G' }
+    - { role: mariadb, mariadb_innodb_buffer_pool_size: '1G', mariadb_innodb_disable_snapshot_isolation: true }
     - { role: sudo }
     - { role: valkey }
     - { role: uwsgi }
