@@ -57,10 +57,10 @@
   notify:
     - Restart gitlab-runner-docker-cleanup.timer
 
-- name: Enable and start gitlab-runner-docker-cleanup.timer
+- name: Start and enable gitlab-runner-docker-cleanup.timer
   systemd_service: name=gitlab-runner-docker-cleanup.timer state=started enabled=yes daemon_reload=yes
 
-- name: Enable and start gitlab runner service
+- name: Start and enable gitlab runner service
   systemd_service: name=gitlab-runner state=started enabled=yes daemon_reload=yes
 
 - name: Setup libvirt-executor
@@ -88,5 +88,5 @@
         - libvirt-executor-fetch-image.service
         - libvirt-executor-fetch-image.timer
 
-    - name: Enable and start libvirt-executor-fetch-image.timer
+    - name: Start and enable libvirt-executor-fetch-image.timer
       systemd_service: name=libvirt-executor-fetch-image.timer state=started enabled=yes daemon_reload=yes

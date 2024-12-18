@@ -31,5 +31,5 @@
   args:
     creates: /var/lib/mumble-server/fullchain.pem
 
-- name: Enable and start mumble-server.service
+- name: Start and enable mumble-server.service
   service: name=mumble-server enabled=yes state=started

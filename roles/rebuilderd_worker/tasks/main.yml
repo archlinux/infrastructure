@@ -10,7 +10,7 @@
 - name: Install archlinux-repro configuration
   copy: src=repro.conf dest=/etc/archlinux-repro/repro.conf owner=root group=root mode=0660
 
-- name: Enable and start rebuilderd-worker@{{ item }}
+- name: Start and enable rebuilderd-worker@{{ item }}
   systemd_service: name=rebuilderd-worker@{{ item }} enabled=yes state=started
   with_items: '{{ rebuilderd_workers }}'
 

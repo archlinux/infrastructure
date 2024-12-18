@@ -12,5 +12,5 @@
   notify:
     - Restart tempo
 
-- name: Enable tempo server service
+- name: Start and enable tempo server service
   systemd_service: name=tempo enabled=yes daemon_reload=yes state=started

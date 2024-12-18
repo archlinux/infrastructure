@@ -141,7 +141,7 @@
 - name: Configure logrotate
   template: src=logrotate.conf.j2 dest=/etc/logrotate.conf owner=root group=root mode=0644
 
-- name: Enable logrotate timer
+- name: Start and enable logrotate timer
   service: name=logrotate.timer state=started enabled=yes
 
 - name: Create zsh directory
@@ -159,5 +159,5 @@
 - name: Install custom paccache.service
   copy: src=paccache.service dest=/etc/systemd/system/paccache.service owner=root group=root mode=0644
 
-- name: Enable paccache timer
+- name: Start and enable paccache timer
   systemd_service: name=paccache.timer enabled=yes state=started daemon_reload=yes

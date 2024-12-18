@@ -19,7 +19,7 @@
   notify: Reload prometheus
   when: not prometheus_receive_only
 
-- name: Enable prometheus server service
+- name: Start and enable prometheus server service
   systemd_service: name=prometheus enabled=yes daemon_reload=yes state=started
 
 - name: Open prometheus port for monitoring.archlinux.org
