@@ -24,7 +24,7 @@
   file: src=/etc/libvirt/qemu/networks/default.xml dest=/etc/libvirt/qemu/networks/autostart/default.xml state=link owner=root group=root
 
 - name: Start and enable libvirtd
-  systemd: name=libvirtd enabled=yes state=started daemon_reload=yes
+  systemd_service: name=libvirtd enabled=yes state=started daemon_reload=yes
 
 - name: Define the images storage pool
   community.libvirt.virt_pool:

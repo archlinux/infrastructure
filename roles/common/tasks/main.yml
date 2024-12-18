@@ -160,4 +160,4 @@
   copy: src=paccache.service dest=/etc/systemd/system/paccache.service owner=root group=root mode=0644
 
 - name: Enable paccache timer
-  systemd: name=paccache.timer enabled=yes state=started daemon_reload=yes
+  systemd_service: name=paccache.timer enabled=yes state=started daemon_reload=yes

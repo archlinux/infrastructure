@@ -26,4 +26,4 @@
     - firewall
 
 - name: Start and enable opensearch
-  systemd: name=opensearch.service enabled=yes state=started
+  systemd_service: name=opensearch.service enabled=yes state=started

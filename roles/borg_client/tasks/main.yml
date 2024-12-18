@@ -56,4 +56,4 @@
     - borg-backup-offsite.service
 
 - name: Activate systemd timer for backup
-  systemd: name=borg-backup.timer enabled=yes state=started daemon-reload=yes
+  systemd_service: name=borg-backup.timer enabled=yes state=started daemon-reload=yes

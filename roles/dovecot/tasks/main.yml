@@ -72,7 +72,7 @@
     - dovecot-cleanup.service
 
 - name: Activate systemd timers
-  systemd:
+  systemd_service:
     name: "{{ item }}"
     state: started
     enabled: true

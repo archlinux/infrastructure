@@ -289,7 +289,7 @@
     - Restart sshd
 
 - name: Start and enable AUR systemd services and timers
-  systemd: name={{ item.name }} enabled=yes state=started daemon_reload=yes
+  systemd_service: name={{ item.name }} enabled=yes state=started daemon_reload=yes
   with_items:
     - "{{ aurweb_services }}"
     - "{{ aurweb_timers }}"

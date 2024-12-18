@@ -242,7 +242,7 @@
   notify: Restart archweb memcached
 
 - name: Start and enable archweb memcached service and archweb-rsync_iso timer
-  systemd:
+  systemd_service:
     name: "{{ item }}"
     enabled: true
     state: started

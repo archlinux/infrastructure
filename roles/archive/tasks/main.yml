@@ -18,10 +18,10 @@
     mode: '0644'
 
 - name: Setup archive timer
-  systemd: name=archive.timer enabled=yes state=started
+  systemd_service: name=archive.timer enabled=yes state=started
 
 - name: Setup archive-hardlink timer
-  systemd: name=archive-hardlink.timer enabled=yes state=started
+  systemd_service: name=archive-hardlink.timer enabled=yes state=started
 - name: Install internet archive packages
   pacman: name=python-internetarchive,python-libarchive-c state=present
 
@@ -45,7 +45,7 @@
     - archive-uploader.timer
 
 - name: Start uploader timer
-  systemd:
+  systemd_service:
     name: archive-uploader.timer
     enabled: true
     state: started

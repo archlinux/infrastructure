@@ -18,7 +18,7 @@
     - certbot-renewal.timer
 
 - name: Activate letsencrypt renewal service
-  systemd:
+  systemd_service:
     name: certbot-renewal.timer
     enabled: true
     state: started

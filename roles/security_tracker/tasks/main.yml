@@ -108,7 +108,7 @@
   when: release.changed
 
 - name: Start and enable security-tracker timer
-  systemd:
+  systemd_service:
     name: security-tracker-update.timer
     enabled: true
     state: started

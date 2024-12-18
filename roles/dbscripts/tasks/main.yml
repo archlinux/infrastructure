@@ -11,7 +11,7 @@
   pacman: name=fcgiwrap state=present
 
 - name: Install fcgiwrap for the Git repo
-  systemd: name=fcgiwrap.socket enabled=yes state=started
+  systemd_service: name=fcgiwrap.socket enabled=yes state=started
 
 - name: Allow state repo to be exported
   file: path="/srv/repos/state/.git/git-daemon-export-ok" state=touch owner=git-packages group=junior-packager mode=0644

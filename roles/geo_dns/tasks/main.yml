@@ -24,4 +24,4 @@
   ansible.posix.firewalld: service=dns permanent=true state=enabled immediate=yes
 
 - name: Start and enable powerdns
-  systemd: name=pdns.service enabled=yes daemon_reload=yes state=started
+  systemd_service: name=pdns.service enabled=yes daemon_reload=yes state=started

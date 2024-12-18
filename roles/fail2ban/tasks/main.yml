@@ -93,14 +93,14 @@
   register: result
 
 - name: Restart firewalld
-  systemd: name=firewalld state=restarted
+  systemd_service: name=firewalld state=restarted
   when: result.changed
 
 - name: Add fail2ban ipset to the firewalld drop zone
   ansible.posix.firewalld: source=ipset:fail2ban zone=drop permanent=true immediate=true state=enabled
 
 - name: Start and enable service
-  systemd:
+  systemd_service:
     name: "fail2ban.service"
     enabled: true
     state: started

@@ -16,7 +16,7 @@
   command: /usr/local/bin/bugbuddy-download --restart
 
 - name: Start and enable daemon service
-  systemd: name=bugbuddy.service enabled=yes state=started
+  systemd_service: name=bugbuddy.service enabled=yes state=started
 
 - name: Open bugbuddy ipv4 port for gitlab.archlinux.org
   ansible.posix.firewalld: zone=wireguard state=enabled permanent=true immediate=yes

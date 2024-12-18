@@ -1,5 +1,5 @@
 - name: Daemon reload
-  systemd:
+  systemd_service:
     daemon-reload: true
 
 - name: Restart sshd

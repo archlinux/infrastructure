@@ -103,4 +103,4 @@
     - archmanweb_update.timer
 
 - name: Start and enable archmanweb update timer
-  systemd: name="archmanweb_update.timer" enabled=yes state=started daemon_reload=yes
+  systemd_service: name="archmanweb_update.timer" enabled=yes state=started daemon_reload=yes

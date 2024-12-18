@@ -140,7 +140,7 @@
     - gitlab-bot-token-extender.service
 
 - name: Activate systemd timers for gitlab-cleanup
-  systemd: name={{ item }} enabled=yes state=started daemon-reload=yes
+  systemd_service: name={{ item }} enabled=yes state=started daemon-reload=yes
   loop:
     - gitlab-cleanup.timer
     - gitlab-bot-token-extender.timer

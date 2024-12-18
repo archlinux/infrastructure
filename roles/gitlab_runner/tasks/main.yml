@@ -7,7 +7,7 @@
   notify: Systemd daemon-reload
 
 - name: Start docker
-  systemd: name=docker enabled=yes state=started daemon_reload=yes
+  systemd_service: name=docker enabled=yes state=started daemon_reload=yes
 
 - name: Create /etc/docker directory
   file: state=directory owner=root group=root mode=0755 path=/etc/docker
@@ -58,10 +58,10 @@
     - Restart gitlab-runner-docker-cleanup.timer
 
 - name: Enable and start gitlab-runner-docker-cleanup.timer
-  systemd: name=gitlab-runner-docker-cleanup.timer state=started enabled=yes daemon_reload=yes
+  systemd_service: name=gitlab-runner-docker-cleanup.timer state=started enabled=yes daemon_reload=yes
 
 - name: Enable and start gitlab runner service
-  systemd: name=gitlab-runner state=started enabled=yes daemon_reload=yes
+  systemd_service: name=gitlab-runner state=started enabled=yes daemon_reload=yes
 
 - name: Setup libvirt-executor
   when: "'gitlab_vm_runners' in group_names"
@@ -89,4 +89,4 @@
         - libvirt-executor-fetch-image.timer
 
     - name: Enable and start libvirt-executor-fetch-image.timer
-      systemd: name=libvirt-executor-fetch-image.timer state=started enabled=yes daemon_reload=yes
+      systemd_service: name=libvirt-executor-fetch-image.timer state=started enabled=yes daemon_reload=yes

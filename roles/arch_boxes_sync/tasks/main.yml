@@ -13,4 +13,4 @@
     - Daemon reload
 
 - name: Start and enable arch-boxes-sync.timer
-  systemd: name=arch-boxes-sync.timer enabled=yes daemon_reload=yes state=started
+  systemd_service: name=arch-boxes-sync.timer enabled=yes daemon_reload=yes state=started

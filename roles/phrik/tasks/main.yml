@@ -29,7 +29,7 @@
   copy: src=phrik.service dest=/etc/systemd/system/phrik.service owner=root group=root mode=0644
 
 - name: Start and enable pkgfile and phrikservice
-  systemd:
+  systemd_service:
     name: "{{ item }}"
     enabled: true
     state: started

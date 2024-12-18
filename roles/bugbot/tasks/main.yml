@@ -23,4 +23,4 @@
   copy: src=bugbot.service dest=/etc/systemd/system/bugbot.service owner=root group=root mode=0644
 
 - name: Start and enable bugbot service
-  systemd: name=bugbot.service enabled=yes state=started daemon_reload=yes
+  systemd_service: name=bugbot.service enabled=yes state=started daemon_reload=yes

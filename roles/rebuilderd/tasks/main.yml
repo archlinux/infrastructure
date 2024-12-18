@@ -23,8 +23,8 @@
   tags: ['nginx']
 
 - name: Enable and start rebuilderd
-  systemd: name=rebuilderd enabled=yes state=started
+  systemd_service: name=rebuilderd enabled=yes state=started
 
 - name: Enable and start rebuilderd-sync timer for {{ item }}
-  systemd: name=rebuilderd-sync@archlinux-{{ item }}.timer enabled=yes state=started
+  systemd_service: name=rebuilderd-sync@archlinux-{{ item }}.timer enabled=yes state=started
   with_items: "{{ suites }}"

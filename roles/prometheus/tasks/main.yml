@@ -20,7 +20,7 @@
   when: not prometheus_receive_only
 
 - name: Enable prometheus server service
-  systemd: name=prometheus enabled=yes daemon_reload=yes state=started
+  systemd_service: name=prometheus enabled=yes daemon_reload=yes state=started
 
 - name: Open prometheus port for monitoring.archlinux.org
   ansible.posix.firewalld: zone=wireguard state=enabled permanent=true immediate=yes

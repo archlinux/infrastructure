@@ -13,4 +13,4 @@
     - Restart tempo
 
 - name: Enable tempo server service
-  systemd: name=tempo enabled=yes daemon_reload=yes state=started
+  systemd_service: name=tempo enabled=yes daemon_reload=yes state=started

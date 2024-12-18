@@ -19,4 +19,4 @@
   command: /usr/local/bin/gluebuddy_download.sh
 
 - name: Enable timer
-  systemd: name=gluebuddy.timer enabled=yes state=started
+  systemd_service: name=gluebuddy.timer enabled=yes state=started

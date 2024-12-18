@@ -1,5 +1,5 @@
 - name: Restart fail2ban
-  systemd:
+  systemd_service:
     name: fail2ban
     state: restarted
 

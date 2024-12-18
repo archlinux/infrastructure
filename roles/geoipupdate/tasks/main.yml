@@ -7,8 +7,8 @@
   register: configuration
 
 - name: Run geoipupdate after installation or configuration change
-  systemd: name=geoipupdate state=restarted
+  systemd_service: name=geoipupdate state=restarted
   when: installation is changed or configuration is changed
 
 - name: Start and enable geoipupdate.timer
-  systemd: name=geoipupdate.timer enabled=yes state=started
+  systemd_service: name=geoipupdate.timer enabled=yes state=started
