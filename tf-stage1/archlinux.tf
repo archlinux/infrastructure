@@ -652,7 +652,7 @@ resource "hcloud_volume" "monitoring" {
 
 resource "hcloud_volume" "debuginfod" {
   name              = "debuginfod"
-  size              = 100
+  size              = 125
   server_id         = hcloud_server.machine["debuginfod.archlinux.org"].id
   delete_protection = true
 }
