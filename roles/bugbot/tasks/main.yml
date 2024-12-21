@@ -3,7 +3,7 @@
 
 - name: Receive valid signing keys
   command: /usr/bin/gpg --keyserver keys.openpgp.org --auto-key-locate wkd,keyserver --locate-keys {{ item }}
-  with_items: '{{ bugbot_pgp_emails }}'
+  loop: '{{ bugbot_pgp_emails }}'
   register: gpg
   changed_when: "gpg.rc == 0"
 

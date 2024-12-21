@@ -3,7 +3,7 @@
 
 - name: Install template configs
   template: src={{ item.file }}.j2 dest=/etc/postfix/{{ item.file }} owner=root group={{ item.group }} mode={{ item.mode }}
-  with_items:
+  loop:
     - {file: main.cf, group: root, mode: 644}
     - {file: relay_passwords, group: postfix, mode: 640}
   notify:

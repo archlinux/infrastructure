@@ -18,7 +18,7 @@
 
 - name: Create dbscripts users
   user: name="{{ item }}" shell=/bin/bash
-  with_items:
+  loop:
     - git-packages
 
 - name: Add cleanup user
@@ -53,7 +53,7 @@
     groups: "{{ item.value.groups | join(',') }}"
     comment: "{{ item.value.name }}"
     state: present
-  with_dict: "{{ arch_users }}"
+  loop: "{{ arch_users | dict2items }}"
 
 - name: Create /etc/dbscripts directory
   file: path=/etc/dbscripts state=directory owner=root group=root mode=0755
@@ -75,7 +75,7 @@
 
 - name: Create dbscripts paths
   file: path="{{ item }}" state=directory owner=root group=root mode=0755
-  with_items:
+  loop:
     - /srv/repos/git-packages
 
 - name: Create git-packages/package-cleanup directory
@@ -142,7 +142,7 @@
 
 - name: Fetch dbscripts PGP key
   command: /usr/bin/gpg --keyserver keys.openpgp.org --auto-key-locate wkd,keyserver --locate-keys {{ item }}
-  with_items: '{{ dbscripts_pgp_emails }}'
+  loop: '{{ dbscripts_pgp_emails }}'
   register: gpg
   changed_when: "gpg.rc == 0"
 
@@ -161,7 +161,7 @@
 
 - name: Symlink dbscript binaries to /usr/local/bin
   file: path=/usr/local/bin/{{ item }} src=/packages/{{ item }} state=link owner=root group=root mode=0755
-  with_items:
+  loop:
     - db-move
     - db-update
     - db-remove
@@ -177,35 +177,35 @@
 
 - name: Make junior developer root repos
   file: path=/srv/ftp/{{ item }}/os state=directory owner=root group=root mode=0755
-  with_items: '{{ junior_developer_repos }}'
+  loop: '{{ junior_developer_repos }}'
 
 - name: Make junior developer repos
   file: path=/srv/ftp/{{ item }}/os/x86_64 state=directory owner=root group=junior-dev mode=0775
-  with_items: '{{ junior_developer_repos }}'
+  loop: '{{ junior_developer_repos }}'
 
 - name: Make developer root repos
   file: path=/srv/ftp/{{ item }}/os state=directory owner=root group=root mode=0755
-  with_items: '{{ developer_repos }}'
+  loop: '{{ developer_repos }}'
 
 - name: Make developer repos
   file: path=/srv/ftp/{{ item }}/os/x86_64 state=directory owner=root group=dev mode=0775
-  with_items: '{{ developer_repos }}'
+  loop: '{{ developer_repos }}'
 
 - name: Make junior packager root repos
   file: path=/srv/ftp/{{ item }}/os state=directory owner=root group=root mode=0755
-  with_items: '{{ junior_packager_repos }}'
+  loop: '{{ junior_packager_repos }}'
 
 - name: Make junior packager repos
   file: path=/srv/ftp/{{ item }}/os/x86_64 state=directory owner=root group=junior-packager mode=0775
-  with_items: '{{ junior_packager_repos }}'
+  loop: '{{ junior_packager_repos }}'
 
 - name: Make packager root repos
   file: path=/srv/ftp/{{ item }}/os state=directory owner=root group=root mode=0755
-  with_items: '{{ packager_repos }}'
+  loop: '{{ packager_repos }}'
 
 - name: Make packager repos
   file: path=/srv/ftp/{{ item }}/os/x86_64 state=directory owner=root group=packager mode=0775
-  with_items: '{{ packager_repos }}'
+  loop: '{{ packager_repos }}'
 
 - name: Make /srv/ftp/other/packages available
   file: path=/srv/ftp/other/packages state=directory owner=root group=junior-packager mode=0775
@@ -239,7 +239,7 @@
 
 - name: Install systemd timers
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
-  with_items:
+  loop:
     - cleanup.timer
     - cleanup.service
     - sourceballs.timer
@@ -253,7 +253,7 @@
 
 - name: Activate systemd timers
   service: name={{ item }} enabled=yes state=started
-  with_items:
+  loop:
     - cleanup.timer
     - sourceballs.timer
     - lastsync.timer

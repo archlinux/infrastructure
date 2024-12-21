@@ -12,7 +12,7 @@
 
 - name: Start and enable rebuilderd-worker@{{ item }}
   systemd_service: name=rebuilderd-worker@{{ item }} enabled=yes state=started
-  with_items: '{{ rebuilderd_workers }}'
+  loop: '{{ rebuilderd_workers }}'
 
 - name: Install cleanup script
   copy: src=clean-repro dest=/usr/local/bin/clean-repro owner=root group=root mode=0755

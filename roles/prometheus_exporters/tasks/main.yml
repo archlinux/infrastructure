@@ -51,7 +51,7 @@
 
 - name: Install node exporter textcollector scripts
   copy: src={{ item }} dest=/usr/local/bin/{{ item }} owner=root group=root mode=0755
-  with_items:
+  loop:
     - arch-textcollector.sh
     - borg-textcollector.sh
     - borg-offsite-textcollector.sh
@@ -117,7 +117,7 @@
 
 - name: Install gitlab-exporter service and configuration
   template: src="{{ item.src }}" dest="{{ item.dest }}" owner=root group=root mode="{{ item.mode }}"
-  with_items:
+  loop:
     - { src: 'gitlab-exporter.conf.j2', dest: '/etc/conf.d/gitlab-exporter', mode: '0600' }
     - { src: 'gitlab-exporter.service.j2', dest: '/etc/systemd/system/gitlab-exporter.service', mode: '0644' }
   when: "inventory_hostname == 'gitlab.archlinux.org'"

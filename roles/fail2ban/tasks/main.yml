@@ -28,7 +28,7 @@
     owner: "root"
     group: "root"
     mode: '0644'
-  with_items:
+  loop:
     - "fail2ban.local"
     - "jail.local"
   notify:

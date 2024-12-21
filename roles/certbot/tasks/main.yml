@@ -13,7 +13,7 @@
 
 - name: Install letsencrypt renewal service
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
-  with_items:
+  loop:
     - certbot-renewal.service
     - certbot-renewal.timer
 
@@ -26,7 +26,7 @@
 
 - name: Open firewall holes for certbot standalone authenticator
   ansible.posix.firewalld: service={{ item }} permanent=true state=enabled immediate=yes
-  with_items:
+  loop:
     - http
   when: configure_firewall
   tags:

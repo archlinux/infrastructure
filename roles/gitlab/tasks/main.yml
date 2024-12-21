@@ -120,7 +120,7 @@
 - name: Open firewall holes
   ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes
   when: configure_firewall
-  with_items:
+  loop:
     - "80/tcp"
     - "443/tcp"
     - "22/tcp"
@@ -133,7 +133,7 @@
 
 - name: Copy {gitlab-cleanup,gitlab-bot-token-extender} timer and service
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
-  with_items:
+  loop:
     - gitlab-cleanup.timer
     - gitlab-cleanup.service
     - gitlab-bot-token-extender.timer

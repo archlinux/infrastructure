@@ -42,7 +42,7 @@
 
 - name: Copy security-tracker units
   copy: src="{{ item }}" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
-  with_items:
+  loop:
     - security-tracker-update.timer
     - security-tracker-update.service
   notify:
@@ -56,7 +56,7 @@
   become: true
   become_user: security
   command: /usr/bin/gpg --keyserver keys.openpgp.org --auto-key-locate wkd,keyserver --locate-keys {{ item }}
-  with_items:
+  loop:
     - anthraxx@archlinux.org
     - jelle@archlinux.org
     - foutrelis@archlinux.org

@@ -116,7 +116,7 @@
     enabled: true
     state: started
     daemon_reload: true
-  with_items:
+  loop:
     - archwiki-runjobs.timer
     - archwiki-runjobs-wait.service
     - archwiki-question-updater.timer

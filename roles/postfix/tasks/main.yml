@@ -3,7 +3,7 @@
 
 - name: Install template configs
   template: src={{ item }}.j2 dest=/etc/postfix/{{ item }} owner=root group=root mode=0644
-  with_items:
+  loop:
     - main.cf
     - master.cf
     - transport
@@ -17,7 +17,7 @@
 
 - name: Install additional files
   copy: src={{ item }} dest=/etc/postfix/{{ item }} owner=root group=root mode=0644
-  with_items:
+  loop:
     - access_client
     - access_sender
     - access_sender-post-filter
@@ -62,13 +62,13 @@
 
 - name: Remove old files
   file: path={{ item }} state=absent
-  with_items:
+  loop:
     - compat_maps
     - compat_maps.db
 
 - name: Open firewall holes
   ansible.posix.firewalld: service={{ item }} permanent=true state=enabled immediate=yes
-  with_items:
+  loop:
     - smtp
     - smtps
   when: configure_firewall
