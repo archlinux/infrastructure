@@ -1,0 +1,8 @@
+groups:
+  - name: NginxRules
+    interval: 1m
+    rules:
+      - record: instance_http_version_tls_version_tls_cipher:requests:rate1m
+        expr: 'sum by (instance, http_version, tls_version, tls_cipher) (rate({job="nginx"}[1m] | json http_version="server_protocol", tls_version="ssl_protocol", tls_cipher="ssl_cipher"))'
+      - record: instance_cache_status:requests:rate1m
+        expr: 'sum by (instance, cache_status) (rate({job="nginx"}[1m] | json cache_status="upstream_cache_status"))'

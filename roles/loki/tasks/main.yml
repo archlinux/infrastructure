@@ -5,6 +5,16 @@
   copy: src=loki.yaml dest=/etc/loki/ owner=root group=root mode=0644
   notify: Restart loki
 
+- name: Create directories for loki recording rules
+  file: path={{ item }} state=directory owner=root group=root mode=0755
+  loop:
+    - /etc/loki/rules
+    - /etc/loki/rules/fake
+
+- name: Install loki recording rules
+  copy: src=rules.yaml dest=/etc/loki/rules/fake/ owner=root group=root mode=0644
+  notify: Restart loki
+
 - name: Make nginx log dir
   file: path=/var/log/nginx/loki state=directory owner=root group=root mode=0755
 

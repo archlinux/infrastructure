@@ -12,7 +12,7 @@ common:
   storage:
     filesystem:
       chunks_directory: /var/lib/loki/chunks
-      rules_directory: /var/lib/loki/rules
+      rules_directory: /etc/loki/rules
   replication_factor: 1
   instance_addr: 127.0.0.1
   ring:
@@ -24,6 +24,16 @@ ingester:
   wal:
     replay_memory_ceiling: 200MB
   chunk_encoding: zstd
+
+ruler:
+  rule_path: /var/lib/loki/rules-tmp
+  wal:
+    dir: /var/lib/loki/ruler-wal
+  remote_write:
+    enabled: true
+    clients:
+      local:
+        url: http://127.0.0.1:9090/api/v1/write
 
 schema_config:
   configs:
