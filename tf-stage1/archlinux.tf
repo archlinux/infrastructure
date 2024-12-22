@@ -312,7 +312,6 @@ locals {
     sources         = { value = "gemini" }
     "static.conf"   = { value = "redirect" }
     status          = { value = "redirect" }
-    svn             = { value = "gemini" }
     coc             = { value = "redirect" }
     git             = { value = "redirect" }
     "tu-bylaws.aur" = { value = "redirect" }
