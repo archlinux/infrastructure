@@ -1,12 +1,12 @@
 - name: Restart journald
-  systemd:
+  systemd_service:
     name: systemd-journald
     state: restarted
     daemon_reload: true
 
 - name: Systemd daemon-reload
-  systemd:
+  systemd_service:
     daemon_reload: true
 
 - name: Restart systemd-zram-setup@zram0
-  systemd: name=systemd-zram-setup@zram0 state=restarted daemon_reload=yes
+  systemd_service: name=systemd-zram-setup@zram0 state=restarted daemon_reload=yes

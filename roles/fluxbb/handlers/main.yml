@@ -1,2 +1,2 @@
 - name: Restart php-fpm@fluxbb
-  systemd: name=php-fpm@fluxbb.service state=restarted
+  systemd_service: name=php-fpm@fluxbb.service state=restarted

@@ -21,7 +21,7 @@
 
 - name: Create grafana provisioning directory
   file: path={{ item }} mode=0700 owner=grafana group=grafana state=directory
-  with_items:
+  loop:
     - /etc/grafana/provisioning
     - /etc/grafana/provisioning/datasources
     - /etc/grafana/provisioning/dashboards

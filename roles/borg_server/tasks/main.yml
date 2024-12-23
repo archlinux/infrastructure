@@ -21,13 +21,13 @@
     owner: borg
     group: borg
     mode: '0700'
-  with_items: "{{ backup_clients }}"
+  loop: "{{ backup_clients }}"
 
 - name: Fetch ssh keys from each borg client machine
   command: cat /root/.ssh/id_rsa.pub
   register: ssh_keys
   delegate_to: "{{ item }}"
-  with_items: "{{ backup_clients }}"
+  loop: "{{ backup_clients }}"
   changed_when: ssh_keys.stdout | length > 0
 
 - name: Allow certain clients to connect
@@ -36,4 +36,4 @@
     key: "{{ item.stdout }}"
     manage_dir: true
     key_options: "command=\"borg serve --restrict-to-path {{ backup_dir }}/{{ item['item'] }}\",restrict"
-  with_items: "{{ ssh_keys.results }}"
+  loop: "{{ ssh_keys.results }}"

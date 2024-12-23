@@ -81,7 +81,7 @@
 
 - name: Run Django management tasks
   django_manage: app_path="{{ archmanweb_dir }}/repo" command="{{ item }}"
-  with_items:
+  loop:
     - migrate
     - collectstatic
     - man_drop_cache
@@ -98,9 +98,9 @@
 
 - name: Install systemd units
   template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
-  with_items:
+  loop:
     - archmanweb_update.service
     - archmanweb_update.timer
 
 - name: Start and enable archmanweb update timer
-  systemd: name="archmanweb_update.timer" enabled=yes state=started daemon_reload=yes
+  systemd_service: name="archmanweb_update.timer" enabled=yes state=started daemon_reload=yes

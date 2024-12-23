@@ -18,7 +18,7 @@
 
 - name: Install archbuild scripts
   copy: src={{ item }} dest=/usr/local/bin/{{ item }} owner=root group=root mode=0755
-  with_items:
+  loop:
     - mkpkg
     - pkgdiffrepo
     - clean-chroots
@@ -28,12 +28,12 @@
 
 - name: Install archbuild config files
   copy: src={{ item }} dest=/usr/local/share/{{ item }} owner=root group=root mode=0644
-  with_items:
+  loop:
     - elinks-pkgdiffrepo.conf
 
 - name: Install archbuild units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
-  with_items:
+  loop:
     - clean-chroots.timer
     - clean-chroots.service
     - clean-dests.timer
@@ -47,27 +47,27 @@
 
 - name: Install archbuild unit
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
-  with_items:
+  loop:
     - var-lib-archbuild.mount
   notify:
     - Daemon reload
 
 - name: Install archbuild user units
   copy: src={{ item }} dest=/etc/systemd/user/{{ item }} owner=root group=root mode=0644
-  with_items:
+  loop:
     - mkpkg@.timer
     - mkpkg@.service
 
 - name: Create drop-in directories for devtools
   file: path=/etc/systemd/system/{{ item }}.d state=directory owner=root group=root mode=0755
-  with_items:
+  loop:
     - arch-nspawn-.scope
     - devtools.slice
     - user-.slice
 
 - name: Install drop-in snippets for devtools
   copy: src=devtools-override_{{ item }}.conf dest=/etc/systemd/system/{{ item }}.d/override.conf owner=root group=root mode=0644
-  with_items:
+  loop:
     - arch-nspawn-.scope
     - devtools.slice
     - user-.slice
@@ -76,12 +76,12 @@
 
 - name: Start and enable archbuild mounts
   service: name={{ item }} enabled={{ "yes" if archbuild_fs == 'tmpfs' else "no" }} state={{ "started" if archbuild_fs == 'tmpfs' else "stopped" }}
-  with_items:
+  loop:
     - var-lib-archbuild.mount
 
 - name: Start and enable archbuilddest mount
   service: name={{ item }} enabled=yes state=started
-  with_items:
+  loop:
     - var-lib-archbuilddest.mount
 
 - name: Create archbuilddest
@@ -91,33 +91,30 @@
     owner: root
     group: root
     mode: '0777'
-  with_nested:
-    - [archbuilddest]
-    - [srcdest]
+  loop: "{{ ['archbuilddest'] | product(['srcdest']) | list }}"
 
 - name: Set acl on archbuilddest
   acl:
     name: '/var/lib/archbuilddest/{{ item[0] }}'
     state: present
     entry: '{{ item[1] }}'
-  with_nested:
-    - [srcdest]
-    - ['user::rwx',
-       'group::rwx',
-       'group:junior-dev:rwx',
-       'group:junior-packager:rwx',
-       'other::rwx',
-       'mask::rwx',
-       'default:user::rwx',
-       'default:group::r-x',
-       'default:group:junior-dev:rwx',
-       'default:group:junior-packager:rwx',
-       'default:other::r-x',
-       'default:mask::rwx']
+  loop: "{{ ['srcdest'] |
+            product(['user::rwx',
+                     'group::rwx',
+                     'group:junior-dev:rwx',
+                     'group:junior-packager:rwx',
+                     'other::rwx',
+                     'mask::rwx',
+                     'default:user::rwx',
+                     'default:group::r-x',
+                     'default:group:junior-dev:rwx',
+                     'default:group:junior-packager:rwx',
+                     'default:other::r-x',
+                     'default:mask::rwx']) | list }}"
 
 - name: Start and enable archbuild units
   service: name={{ item }} enabled=yes state=started
-  with_items:
+  loop:
     - clean-chroots.timer
     - clean-dests.timer
     - clean-offload-build.timer

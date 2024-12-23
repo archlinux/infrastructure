@@ -19,8 +19,8 @@
   notify: Reload prometheus
   when: not prometheus_receive_only
 
-- name: Enable prometheus server service
-  systemd: name=prometheus enabled=yes daemon_reload=yes state=started
+- name: Start and enable prometheus server service
+  systemd_service: name=prometheus enabled=yes daemon_reload=yes state=started
 
 - name: Open prometheus port for monitoring.archlinux.org
   ansible.posix.firewalld: zone=wireguard state=enabled permanent=true immediate=yes

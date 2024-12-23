@@ -2,5 +2,5 @@
   service: name=keycloak state=restarted
 
 - name: Daemon reload
-  systemd:
+  systemd_service:
     daemon-reload: true

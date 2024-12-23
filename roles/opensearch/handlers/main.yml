@@ -1,2 +1,2 @@
 - name: Restart opensearch
-  systemd: name=opensearch state=restarted
+  systemd_service: name=opensearch state=restarted

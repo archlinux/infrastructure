@@ -4,7 +4,7 @@
 - name: Open firewall holes
   ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes
   when: configure_firewall
-  with_items:
+  loop:
     - "64738/tcp"
     - "64738/udp"
   tags:
@@ -31,5 +31,5 @@
   args:
     creates: /var/lib/mumble-server/fullchain.pem
 
-- name: Enable and start mumble-server.service
+- name: Start and enable mumble-server.service
   service: name=mumble-server enabled=yes state=started

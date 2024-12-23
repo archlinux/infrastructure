@@ -19,4 +19,4 @@
   notify: Restart promtail
 
 - name: Start and enable promtail
-  systemd: name=promtail.service enabled=yes daemon_reload=yes state=started
+  systemd_service: name=promtail.service enabled=yes daemon_reload=yes state=started

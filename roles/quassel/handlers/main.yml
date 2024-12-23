@@ -1,2 +1,2 @@
 - name: Daemon reload
-  systemd: daemon_reload=yes
+  systemd_service: daemon_reload=yes

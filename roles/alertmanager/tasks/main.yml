@@ -5,5 +5,5 @@
   template: src=alertmanager.yml.j2 dest=/etc/alertmanager/alertmanager.yml owner=root group=alertmanager mode=640
   notify: Reload alertmanager
 
-- name: Enable alertmanager server service
-  systemd: name=alertmanager enabled=yes daemon_reload=yes state=started
+- name: Start and enable alertmanager server service
+  systemd_service: name=alertmanager enabled=yes daemon_reload=yes state=started

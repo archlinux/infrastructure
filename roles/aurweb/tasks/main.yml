@@ -72,14 +72,14 @@
 
 - name: Install AUR systemd service and timers
   template: src={{ item.name }}.j2 dest=/etc/systemd/system/{{ item.name }} owner=root group=root mode=0644
-  with_items:
+  loop:
     - "{{ aurweb_services }}"
     - "{{ aurweb_timers }}"
   when: release.changed and (item.install is not defined or item.install)
 
 - name: Stop AUR systemd services and timers
   service: name={{ item.name }} enabled=yes state=stopped
-  with_items:
+  loop:
     - "{{ aurweb_services }}"
     - "{{ aurweb_timers }}"
   when: release.changed and (item.restart is not defined or item.restart)
@@ -97,7 +97,7 @@
 
 - name: Create necessary directories
   file: path={{ aurweb_dir }}/{{ item }} state=directory owner={{ aurweb_user }} group={{ aurweb_user }} mode=0755
-  with_items:
+  loop:
     - 'aurblup'
     - 'sessions'
     - 'uploads'
@@ -289,8 +289,8 @@
     - Restart sshd
 
 - name: Start and enable AUR systemd services and timers
-  systemd: name={{ item.name }} enabled=yes state=started daemon_reload=yes
-  with_items:
+  systemd_service: name={{ item.name }} enabled=yes state=started daemon_reload=yes
+  loop:
     - "{{ aurweb_services }}"
     - "{{ aurweb_timers }}"
   when: release.changed and (item.restart is not defined or item.restart)

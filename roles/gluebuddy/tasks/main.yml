@@ -3,7 +3,7 @@
 
 - name: Install systemd service/timer
   copy: src={{ item }} dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
-  with_items:
+  loop:
     - gluebuddy.service
     - gluebuddy.timer
   notify:
@@ -18,5 +18,5 @@
 - name: Download latest gluebuddy  # noqa no-changed-when
   command: /usr/local/bin/gluebuddy_download.sh
 
-- name: Enable timer
-  systemd: name=gluebuddy.timer enabled=yes state=started
+- name: Start and enable timer
+  systemd_service: name=gluebuddy.timer enabled=yes state=started

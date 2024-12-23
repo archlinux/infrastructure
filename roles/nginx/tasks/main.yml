@@ -14,13 +14,13 @@
 
 - name: Snippets directories
   file: state=directory path=/etc/nginx/{{ item }} owner=root group=root mode=0755
-  with_items:
+  loop:
     - toplevel-snippets
     - snippets
 
 - name: Copy snippets
   template: src={{ item }} dest=/etc/nginx/snippets/{{ item | regex_replace('\\.j2$', '') }} owner=root group=root mode=0644
-  with_items:
+  loop:
     - letsencrypt.conf
     - sslsettings.conf
     - headers.conf
@@ -64,7 +64,7 @@
 
 - name: Open firewall holes
   ansible.posix.firewalld: service={{ item }} zone={{ nginx_firewall_zone }} permanent=true state=enabled immediate=yes
-  with_items:
+  loop:
     - http
     - https
     - "{{ 'http3' if nginx_enable_http3 else omit }}"

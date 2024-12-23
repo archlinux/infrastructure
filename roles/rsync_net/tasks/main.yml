@@ -10,7 +10,7 @@
   command: cat /root/.ssh/id_rsa.pub
   register: client_ssh_keys
   delegate_to: "{{ item }}"
-  with_items: "{{ backup_clients }}"
+  loop: "{{ backup_clients }}"
   changed_when: client_ssh_keys.changed
 
 - name: Create tempfile

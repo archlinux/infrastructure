@@ -45,11 +45,11 @@
 
 - name: Install systemd timers
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
-  with_items:
+  loop:
     - gen_rsyncd.timer
     - gen_rsyncd.service
 
 - name: Activate systemd timers
   service: name={{ item }} enabled=yes state=started
-  with_items:
+  loop:
     - gen_rsyncd.timer

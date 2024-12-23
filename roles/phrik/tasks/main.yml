@@ -9,13 +9,13 @@
 
 - name: Adding users to phrik group
   user: groups=phrik name="{{ item }}" append=yes
-  with_items:
+  loop:
     - demize
   tags: ['archusers']
 
 - name: Adding users to systemd-journal group for monitoring
   user: groups=systemd-journal name="{{ item }}" append=yes
-  with_items:
+  loop:
     - demize
   tags: ['archusers']
 
@@ -29,11 +29,11 @@
   copy: src=phrik.service dest=/etc/systemd/system/phrik.service owner=root group=root mode=0644
 
 - name: Start and enable pkgfile and phrikservice
-  systemd:
+  systemd_service:
     name: "{{ item }}"
     enabled: true
     state: started
     daemon_reload: true
-  with_items:
+  loop:
     - pkgfile-update.timer
     - phrik.service

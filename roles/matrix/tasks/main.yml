@@ -43,7 +43,7 @@
 
 - name: Create synapse home
   file: path={{ item }} state=directory owner=synapse group=synapse mode=0700
-  with_items:
+  loop:
     - /var/lib/synapse
     - /var/lib/synapse/media_store
     - /var/lib/synapse/draupnir-data
@@ -56,7 +56,7 @@
   become: true
   become_user: synapse
   become_method: ansible.builtin.sudo
-  with_items:
+  loop:
     - /var/lib/synapse/venv
     - /var/lib/synapse/venv-pantalaimon
 
@@ -71,7 +71,7 @@
   become: true
   become_user: synapse
   become_method: ansible.builtin.sudo
-  with_items:
+  loop:
     - /var/lib/synapse/venv
     - /var/lib/synapse/venv-pantalaimon
 
@@ -245,7 +245,7 @@
 
 - name: Create synapse config dir
   file: path={{ item }} state=directory owner=root group=synapse mode=0750
-  with_items:
+  loop:
     - /etc/synapse
 
 - name: Install homeserver config
@@ -255,7 +255,7 @@
 
 - name: Install static config
   copy: src={{ item }} dest=/etc/synapse/{{ item }} owner=root group=root mode=0644
-  with_items:
+  loop:
     - log_config.yaml
     - oembed-providers.json
     - worker-appservice.yaml
@@ -329,7 +329,7 @@
 
 - name: Install synapse units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
-  with_items:
+  loop:
     - synapse.service
     - synapse-worker@.service
   notify:
@@ -337,21 +337,21 @@
 
 - name: Install pantalaimon units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
-  with_items:
+  loop:
     - pantalaimon.service
   notify:
     - Restart pantalaimon
 
 - name: Install draupnir units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
-  with_items:
+  loop:
     - draupnir.service
   notify:
     - Restart draupnir
 
 - name: Install matrix-appservice-irc units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
-  with_items:
+  loop:
     - matrix-appservice-irc.service
   notify:
     - Restart matrix-appservice-irc
@@ -363,7 +363,7 @@
 
 - name: Enable units
   service: name={{ item }} enabled=yes
-  with_items:
+  loop:
     - synapse.service
     - synapse-worker@appservice.service
     - synapse-worker@federation_reader.service
@@ -376,7 +376,7 @@
 
 - name: Open firewall holes
   ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes
-  with_items:
+  loop:
     # synapse's identd
     - 113/tcp
     # turnserver

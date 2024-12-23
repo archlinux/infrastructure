@@ -1,33 +1,33 @@
 - name: Restart synapse
-  systemd:
+  systemd_service:
     name: synapse
     state: restarted
     enabled: true
     daemon_reload: true
 
 - name: Restart pantalaimon
-  systemd:
+  systemd_service:
     name: pantalaimon
     state: restarted
     enabled: true
     daemon_reload: true
 
 - name: Restart draupnir
-  systemd:
+  systemd_service:
     name: draupnir
     state: restarted
     enabled: true
     daemon_reload: true
 
 - name: Restart matrix-appservice-irc
-  systemd:
+  systemd_service:
     name: matrix-appservice-irc
     state: restarted
     enabled: true
     daemon_reload: true
 
 - name: Restart turnserver
-  systemd:
+  systemd_service:
     name: turnserver
     state: restarted
     enabled: true

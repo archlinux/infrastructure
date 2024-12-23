@@ -58,7 +58,7 @@
 
 - name: Open firewall holes
   ansible.posix.firewalld: service={{ item }} permanent=true state=enabled immediate=yes
-  with_items:
+  loop:
     - imaps
     - managesieve
   when: configure_firewall
@@ -67,15 +67,15 @@
 
 - name: Install systemd timers
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
-  with_items:
+  loop:
     - dovecot-cleanup.timer
     - dovecot-cleanup.service
 
 - name: Activate systemd timers
-  systemd:
+  systemd_service:
     name: "{{ item }}"
     state: started
     enabled: true
     daemon_reload: true
-  with_items:
+  loop:
     - dovecot-cleanup.timer

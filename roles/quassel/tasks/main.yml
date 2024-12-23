@@ -42,7 +42,7 @@
 
 - name: Install quassel units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
-  with_items:
+  loop:
     - clean-quassel.timer
     - clean-quassel.service
   notify:
@@ -56,13 +56,13 @@
 
 - name: Start and enable quassel
   service: name={{ item }} enabled=yes state=started
-  with_items:
+  loop:
     - quassel.service
     - clean-quassel.timer
 
 - name: Open firewall holes
   ansible.posix.firewalld: service={{ item }} permanent=true state=enabled immediate=yes
-  with_items:
+  loop:
     - quassel
     - ident
   when: configure_firewall
