@@ -45,12 +45,6 @@
 - name: Start and enable postfix
   service: name=postfix enabled=yes state=started
 
-- name: Remove old files
-  file: path={{ item }} state=absent
-  loop:
-    - compat_maps
-    - compat_maps.db
-
 - name: Open firewall holes
   ansible.posix.firewalld: service={{ item }} permanent=true state=enabled immediate=yes
   loop:
