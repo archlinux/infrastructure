@@ -6,10 +6,8 @@
   loop:
     - main.cf
     - master.cf
-    - transport
     - transport.pcre
     - aliases
-    - users.pcre
   notify:
     - Restart postfix
     - Postmap additional files
@@ -18,23 +16,10 @@
 - name: Install additional files
   copy: src={{ item }} dest=/etc/postfix/{{ item }} owner=root group=root mode=0644
   loop:
-    - access_client
-    - access_sender
-    - access_sender-post-filter
-    - access_helo
-    - access_recipient
-    - body_checks
-    - header_checks
-    - relocated
     - domains
     - msa_header_checks
   notify:
     - Postmap additional files
-
-- name: Create dhparam 2048
-  command: openssl dhparam -out /etc/postfix/dh2048.pem 2048 creates=/etc/postfix/dh2048.pem
-  notify:
-    - Reload postfix
 
 - name: Create ssl cert
   include_role:
@@ -59,12 +44,6 @@
 
 - name: Start and enable postfix
   service: name=postfix enabled=yes state=started
-
-- name: Remove old files
-  file: path={{ item }} state=absent
-  loop:
-    - compat_maps
-    - compat_maps.db
 
 - name: Open firewall holes
   ansible.posix.firewalld: service={{ item }} permanent=true state=enabled immediate=yes
