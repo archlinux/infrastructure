@@ -213,6 +213,7 @@ arch_users:
     name: "Carl Smedstad"
     email: "carsme@archlinux.org"
     ssh_key: carsme.pub
+    shell: /bin/fish
     groups:
       - packager
       - junior-packager
@@ -751,6 +752,7 @@ arch_users:
     name: "Sven-Hendrik Haase"
     email: "svenstaro@archlinux.org"
     ssh_key: svenstaro.pub
+    shell: /bin/fish
     groups:
       - packager
       - junior-packager
