@@ -268,7 +268,7 @@ locals {
       ipv4_address = "213.133.111.6"
       ipv6_address = "2a01:4f8:222:174c::2"
     }
-    rsync = {
+    repos = {
       ipv4_address = "168.119.141.106"
       ipv6_address = "2a01:4f8:251:598::"
       http3        = true
@@ -307,8 +307,8 @@ locals {
     ping            = { value = "redirect" }
     planet          = { value = "www" }
     registry        = { value = "gitlab" }
-    repos           = { value = "gemini" }
-    sources         = { value = "gemini" }
+    rsync           = { value = "repos" }
+    sources         = { value = "repos" }
     "static.conf"   = { value = "redirect" }
     status          = { value = "redirect" }
     coc             = { value = "redirect" }

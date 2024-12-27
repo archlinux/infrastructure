@@ -27,6 +27,12 @@
 - name: Add sourceballs user
   user: name=sourceballs groups=junior-dev,dev,junior-packager,packager shell=/sbin/nologin
 
+- name: Add archive user
+  user: name=archive shell=/sbin/nologin
+
+- name: Make archive dir
+  file: path=/srv/archive state=directory owner=archive group=archive mode=0755
+
 - name: Set up sudoers.d for special users
   copy: src=sudoers.d dest=/etc/sudoers.d/dbscripts owner=root group=root mode=0600 validate='visudo -cf %s'
 

@@ -165,7 +165,7 @@
     - archweb-mirrorcheck.timer
   notify:
     - Daemon reload
-  when: archweb_services or archweb_mirrorcheck
+  when: (archweb_services or archweb_mirrorcheck) and archweb_mirrorcheck_locations is defined
 
 - name: Install mirrorresolv service and timer
   template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
@@ -270,7 +270,7 @@
 
 - name: Start and enable archweb mirrorcheck timer
   service: name="archweb-mirrorcheck.timer" enabled=yes state=started
-  when: archweb_services or archweb_mirrorcheck
+  when: (archweb_services or archweb_mirrorcheck) and archweb_mirrorcheck_locations is defined
 
 - name: Start and enable archweb mirrorresolv timer
   service: name="archweb-mirrorresolv.timer" enabled=yes state=started

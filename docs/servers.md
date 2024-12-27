@@ -6,8 +6,6 @@
 ## gemini
 
 ### Services
-  - repos/sync (repos.archlinux.org)
-  - sources (sources.archlinux.org)
   - archive (archive.archlinux.org)
 
 ## lists.archlinux.org
@@ -137,6 +135,12 @@ Prometheus, and Grafana server which receives selected performance/metrics from 
   - Redirects (nginx redirects)
   - Authoritative DNS server (PowerDNS) for ACME DNS challenges
   - ping
+
+## repos.archlinux.org
+
+### Services
+  - repos/sync (repos.archlinux.org)
+  - sources (sources.archlinux.org)
 
 ## security.archlinux.org
 
