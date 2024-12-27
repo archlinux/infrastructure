@@ -13,13 +13,13 @@
 - name: Install fcgiwrap for the Git repo
   systemd_service: name=fcgiwrap.socket enabled=yes state=started
 
-- name: Allow state repo to be exported
-  file: path="/srv/repos/state/.git/git-daemon-export-ok" state=touch owner=git-packages group=junior-packager mode=0644
-
 - name: Create dbscripts users
   user: name="{{ item }}" shell=/bin/bash
   loop:
     - git-packages
+
+- name: Allow state repo to be exported
+  file: path="/srv/repos/state/.git/git-daemon-export-ok" state=touch owner=git-packages group=junior-packager mode=0644
 
 - name: Add cleanup user
   user: name=cleanup groups=junior-dev,dev,junior-packager,packager shell=/sbin/nologin
