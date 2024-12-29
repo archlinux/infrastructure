@@ -124,6 +124,11 @@ locals {
       server_type = "cx22"
       domain      = "mumble"
     }
+    "nvchecker-poc.pkgbuild.com" = {
+      server_type = "cx22"
+      domain      = "nvchecker-poc"
+      zone        = hetznerdns_zone.pkgbuild.id
+    }
     "opensearch.archlinux.org" = {
       server_type = "cx22"
       domain      = "opensearch"

@@ -1,0 +1,17 @@
+- name: Add host to the in-memory inventory
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Add nvchecker-poc.pkgbuild.com to the in-memory inventory
+      add_host:
+        name: nvchecker-poc.pkgbuild.com
+        groups: hcloud
+      tags: always
+- name: Setup nvchecker-poc server
+  hosts: nvchecker-poc.pkgbuild.com
+  remote_user: root
+  roles:
+    - { role: firewalld }
+    - { role: common }
+    - { role: sshd }
+    - { role: root_ssh }
