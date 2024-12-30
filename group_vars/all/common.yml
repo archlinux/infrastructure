@@ -1,10 +1,6 @@
 filesystem: btrfs
 configure_firewall: true
 
-# this is needed to make ansible find the firewalld python
-# module when deploying firewalld tasks
-ansible_python_interpreter: /usr/bin/python3
-
 # this is used by the maintenance role to get the ip address
 # of the machine running the playbook
 maintenance_remote_machine: "{{ hostvars[inventory_hostname]['ansible_env'].SSH_CLIENT.split(' ')[0] }}"
