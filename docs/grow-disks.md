@@ -1,6 +1,6 @@
 # Growing (partitioned) Disks
 
-Our VPS are provisioned with 20G as CX22 by default. When one is resized the disk size usually changes.
+Our VPS are provisioned with 40G as CX22 by default. When one is resized the disk size usually changes.
 To use the additional space, one needs to grow the partition and the filesystem.
 
 ## Resizing partition
