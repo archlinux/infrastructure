@@ -1,5 +1,3 @@
-hostname: "repro2.pkgbuild.com"
-
 ipv4_address: "212.102.38.209"
 ipv4_netmask: "/24"
 ipv4_gateway: "212.102.38.222"

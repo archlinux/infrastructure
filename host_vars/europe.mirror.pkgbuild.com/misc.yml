@@ -1,4 +1,3 @@
-hostname: "europe.mirror.pkgbuild.com"
 archive_domain: "europe.archive.pkgbuild.com"
 mirror_domain: "europe.mirror.pkgbuild.com"
 archweb_mirrorcheck_locations: [18, 19]

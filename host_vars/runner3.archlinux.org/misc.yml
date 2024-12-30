@@ -1,5 +1,3 @@
-hostname: "runner3.archlinux.org"
-
 ipv4_address: "86.109.5.205"
 ipv4_netmask: "/31"
 ipv6_address: "2604:1380:4091:8800::1"

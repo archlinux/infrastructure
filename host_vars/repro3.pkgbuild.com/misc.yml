@@ -1,5 +1,3 @@
-hostname: "repro3.pkgbuild.com"
-
 ipv4_address: "147.75.84.133"
 ipv4_netmask: "/31"
 ipv6_address: "2604:1380:4601:7d00::1"

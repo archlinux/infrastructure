@@ -153,7 +153,7 @@
   command: mount --rbind /dev /mnt/dev creates=/mnt/dev/zero
 
 - name: Run systemd-firstboot
-  command: chroot /mnt systemd-firstboot --locale=C.UTF-8 --timezone=UTC --hostname={{ hostname }}
+  command: chroot /mnt systemd-firstboot --locale=C.UTF-8 --timezone=UTC --hostname={{ inventory_hostname }}
   register: chroot_systemd_firstboot
   changed_when: "chroot_systemd_firstboot.rc == 0"
 

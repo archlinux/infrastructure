@@ -1,4 +1,3 @@
-hostname: "sydney.mirror.pkgbuild.com"
 mirror_domain: "sydney.mirror.pkgbuild.com"
 ipv4_address: "147.75.48.159"
 ipv4_netmask: "/31"

@@ -1,5 +1,3 @@
-hostname: "runner1.archlinux.org"
-
 ipv4_address: "138.199.19.15"
 ipv4_netmask: "/25"
 ipv4_gateway: "138.199.19.126"

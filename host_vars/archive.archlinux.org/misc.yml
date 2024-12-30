@@ -1,5 +1,3 @@
-hostname: "archive.archlinux.org"
-
 ipv4_address: "49.12.124.107"
 ipv4_netmask: "/32"
 ipv6_address: "2a01:4f8:242:5614::2"

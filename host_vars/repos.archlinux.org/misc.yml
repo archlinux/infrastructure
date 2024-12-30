@@ -1,5 +1,3 @@
-hostname: "repos.archlinux.org"
-
 ipv4_address: "168.119.141.106"
 ipv4_netmask: "/32"
 ipv6_address: "2a01:4f8:251:598::"
