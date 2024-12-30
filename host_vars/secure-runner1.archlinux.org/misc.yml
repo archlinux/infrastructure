@@ -4,7 +4,6 @@ ipv6_address: "2a01:4f8:231:4e1e::2"
 ipv6_netmask: "/128"
 ipv4_gateway: "116.202.134.129"
 ipv6_gateway: "fe80::1"
-filesystem: "btrfs"
 system_disks:
   - /dev/nvme0n1
   - /dev/nvme1n1

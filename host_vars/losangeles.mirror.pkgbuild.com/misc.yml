@@ -6,7 +6,6 @@ ipv6_address: 2a0e:6901:110:95:26a3:f0ff:fe48:999e
 ipv6_netmask: /64
 ipv6_gateway: fe80::1
 ipv6_ignore_ra: true
-filesystem: btrfs
 network_interface: enp3s0
 system_disks:
   - /dev/vda

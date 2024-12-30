@@ -6,7 +6,6 @@ ipv4_gateway: "185.73.44.1"
 ipv6_address: "2001:ba8:0:4030::2"
 ipv6_netmask: "/64"
 ipv6_gateway: "fe80::fcff:ffff:feff:ffff"
-filesystem: "btrfs"
 network_interface: "enX0"
 system_disks:
   - /dev/xvda1

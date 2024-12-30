@@ -5,7 +5,6 @@ ipv6_address: "2a02:6ea0:c72e::2"
 ipv6_netmask: "/64"
 ipv6_gateway: "2a02:6ea0:c72e::1337"
 ipv6_ignore_ra: true
-filesystem: "btrfs"
 network_interface: "enp1s0f0"
 system_disks:
   - /dev/sda

@@ -1,3 +1,4 @@
+filesystem: btrfs
 configure_firewall: true
 
 # this is needed to make ansible find the firewalld python
