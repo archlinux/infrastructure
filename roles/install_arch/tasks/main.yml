@@ -139,7 +139,7 @@
       when: "'AuthenticAMD' in ansible_facts['processor']"
 
 - name: Install arch base from bootstrap chroot
-  command: chroot /tmp/root.x86_64 pacstrap /mnt base linux btrfs-progs grub openssh python-requests python-yaml inetutils {{ ucode | default('') }}
+  command: chroot /tmp/root.x86_64 pacstrap /mnt base linux btrfs-progs grub openssh python-requests python-yaml {{ ucode | default('') }}
   args:
     creates: /tmp/root.x86_64/mnt/bin
 

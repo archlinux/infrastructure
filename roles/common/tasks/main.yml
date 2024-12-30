@@ -8,9 +8,6 @@
 - name: Start and enable vnstatd
   service: name=vnstat enabled=yes state=started
 
-- name: Install inetutils for hostname
-  pacman: name=inetutils state=present
-
 - name: Set hostname
   hostname: name="{{ inventory_hostname }}"
 
