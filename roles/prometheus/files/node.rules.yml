@@ -21,7 +21,7 @@ groups:
           description: "Swap is filling up (>80%)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
       - alert: HostOutOfMemory
-        expr: node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 < 10
+        expr: node_memory_MemAvailable_bytes{instance!~"build.archlinux.org",instance!~"repro3.pkgbuild.com",instance!~"repro2.pkgbuild.com"} / node_memory_MemTotal_bytes * 100 < 10
         for: 5m
         labels:
           severity: warning
