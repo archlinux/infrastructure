@@ -1,5 +1,5 @@
-- name: Install archivetools package
-  pacman: name=archivetools state=present
+- name: Install archivetools and rsync
+  pacman: name=archivetools,rsync state=present
 
 - name: Make archive dir
   file:
@@ -37,6 +37,19 @@
   git: repo=https://gitlab.archlinux.org/archlinux/arch-historical-archive.git dest="{{ archive_repo }}" version="{{ archive_uploader_version }}"
   become: true
   become_user: "{{ archive_user_name }}"
+
+- name: Install rsyncd config
+  template: src=rsyncd.conf.j2 dest=/etc/rsyncd.conf owner=root group=root mode=0644
+
+- name: Start and enable rsyncd.socket
+  service: name=rsyncd.socket enabled=yes state=started
+
+- name: Open rsyncd ipv4 port for the archive mirrors
+  ansible.posix.firewalld: zone=wireguard state=enabled permanent=true immediate=yes
+    rich_rule="rule family=ipv4 source address={{ hostvars[item]['wireguard_address'] }} port protocol=tcp port=873 accept"
+  loop: "{{ groups['archive_mirrors'] }}"
+  tags:
+    - firewall
 
 - name: Install system service
   template: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
