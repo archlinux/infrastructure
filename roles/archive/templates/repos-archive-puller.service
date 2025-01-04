@@ -1,0 +1,7 @@
+[Service]
+User={{ archive_user_name }}
+Type=oneshot
+ExecStart=rsync --recursive --times --ignore-existing --omit-dir-times --timeout=60 --contimeout=60 --no-motd --info=name1 rsync://repos.archlinux.org/archive/packages/ {{ archive_dir }}/packages
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths={{ archive_dir }}/packages

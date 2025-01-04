@@ -19,6 +19,11 @@ hosts allow = 127.0.0.1
 # DENY THE REST
 hosts deny = *
 
+[archive]
+	path = /srv/archive
+	comment = archive
+	hosts allow = {{ hostvars['gemini.archlinux.org']['ipv4_address'] }} {{ hostvars['gemini.archlinux.org']['ipv6_address'] }}
+
 # Just the release/stable iso/packages (for most mirrors)
 [ftp]
 	path = /srv/ftp

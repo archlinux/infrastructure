@@ -256,6 +256,8 @@
     - gen_rsyncd.service
     - createlinks.timer
     - createlinks.service
+    - archive-cleanup.service
+    - archive-cleanup.timer
 
 - name: Activate systemd timers
   service: name={{ item }} enabled=yes state=started
@@ -265,6 +267,7 @@
     - lastsync.timer
     - gen_rsyncd.timer
     - createlinks.timer
+    - archive-cleanup.timer
 
 # Allow different maintainers (unix users) to touch the git state repositories
 # https://git-scm.com/docs/git-config/2.35.2#Documentation/git-config.txt-safedirectory

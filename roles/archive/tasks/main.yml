@@ -43,10 +43,11 @@
   loop:
     - archive-uploader.service
     - archive-uploader.timer
+    - repos-archive-puller.service
+    - repos-archive-puller.timer
 
-- name: Start uploader timer
-  systemd_service:
-    name: archive-uploader.timer
-    enabled: true
-    state: started
-    daemon_reload: true
+- name: Start archive-uploader and repos-archive-puller timer
+  systemd_service: name={{ item }} enabled=yes state=started daemon_reload=yes
+  loop:
+    - archive-uploader.timer
+    - repos-archive-puller.timer

@@ -1,0 +1,15 @@
+[Unit]
+# Fail-safe in case this is accidentally deployed on an archive server
+ConditionPathExists=!/srv/archive/repos
+
+[Service]
+User=archive
+Type=oneshot
+# Delete packages older than 3 days
+# https://unix.stackexchange.com/questions/92346/why-does-find-mtime-1-only-return-files-older-than-2-days
+# We cannot delete the directories as that would cause a race condition with db-archive
+# https://gitlab.archlinux.org/archlinux/dbscripts/-/blob/ea98599ca6e1ce3bacfe4dea0aab02530cad9134/db-archive#L18-L21
+ExecStart=find /srv/archive/packages/ -type f -mtime +2 -delete -print
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/srv/archive/packages
