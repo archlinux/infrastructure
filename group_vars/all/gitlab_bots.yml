@@ -6,9 +6,9 @@ gitlab_bots:
   - project_19796_bot
   - project_10185_bot_6f3a8a11922b9008fcb92024361b10b6
   - project_19709_bot_ab88a35474b62399f347877ec82018ac
-  - group_11323_bot_c1f9e22ef6391b32e45f7e4a135ecc91
   - project_16_bot_32e6f4728202b8f9259313830e9e5a18
   - project_32147_bot_17ab98ea29bb8d2f93c685af009e3376
   - project_84858_bot_e982c0734ca839275298899e49ed1f51
   - project_10177_bot_5b2d333786a259642a61351696877bae
   - project_10177_bot_a8dd89a4bf249d4b5d3ec1c3d46e8caf
+  - nvchecker
