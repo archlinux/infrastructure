@@ -8,6 +8,7 @@ Environment=TMPDIR=/var/tmp
 ExecStart=/usr/bin/debuginfod -d {{debuginfod_database}} -p {{debuginfod_port}} -F -Z .tar.zst=zstdcat {{debuginfod_package_path}}
 Restart=on-failure
 DynamicUser=yes
+PrivateTmp=yes
 PrivateDevices=true
 PrivateUsers=true
 ProtectKernelTunables=true
