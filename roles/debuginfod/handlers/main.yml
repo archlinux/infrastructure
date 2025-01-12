@@ -1,2 +1,4 @@
-- name: Reload debuginfod
-  service: name=debuginfod state=reloaded
+- name: Daemon reload
+  systemd_service:
+    daemon-reload: true
+

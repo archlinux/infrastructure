@@ -13,7 +13,7 @@
   vars:
     debuginfod_package_path: "{{ debuginfod_package_paths | join(' ') }}"
   notify:
-    - Reload debuginfod
+    - Daemon reload
 
 - name: Create http directory for debuginfod website files
   file: path=/srv/http/debuginfod state=directory owner=root group=root mode=0755
