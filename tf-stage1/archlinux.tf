@@ -301,7 +301,6 @@ locals {
   # dev                      = { value = "www", ttl = 3600 }
   archlinux_org_cname = {
     archive         = { value = "gemini" }
-    dev             = { value = "www" }
     ipxe            = { value = "www" }
     mailman         = { value = "redirect" }
     packages        = { value = "www" }

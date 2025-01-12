@@ -44,7 +44,6 @@ blackbox_targets:
     - https://conf.archlinux.org
     - https://dashboards.archlinux.org/healthz
     - https://debuginfod.archlinux.org
-    - https://dev.archlinux.org
     - https://europe.archive.pkgbuild.com
     - https://europe.mirror.pkgbuild.com
     - https://gitlab.archlinux.org
