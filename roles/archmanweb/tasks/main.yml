@@ -46,7 +46,7 @@
     version={{ archmanweb_version }}
 # TODO
 #    verify_commit=true
-#    gpg_whitelist={{ archmanweb_pgp_key }}
+#    gpg_allowlist={{ archmanweb_pgp_key }}
   become: true
   become_user: archmanweb
   register: release
