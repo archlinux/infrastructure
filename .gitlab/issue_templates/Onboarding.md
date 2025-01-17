@@ -47,7 +47,7 @@ https://www.gnupg.org/gph/en/manual/x135.html
 - [ ] Remove personal information (such as **Full Name** and **Personal e-mail
   address**, as well as the clearsigned representation of this data), remove
   the description history and make the issue non-confidential.
-- [ ] Request staff cloak on Libera Chat ([Group contacts](https://wiki.archlinux.org/title/Arch_IRC_channels#Libera_Chat_group_contacts))
+- [ ] Request staff cloak on Libera Chat ([Group contacts](https://wiki.archlinux.org/title/Arch_IRC_channels#Libera_Chat_group_contacts)) cc @archlinux/teams/irc/group-contacts
 
 ## Main key onboarding checklist
 
