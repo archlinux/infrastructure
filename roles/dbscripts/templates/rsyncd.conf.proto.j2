@@ -19,12 +19,11 @@ hosts allow = 127.0.0.1
 # DENY THE REST
 hosts deny = *
 
-{% if 'archive_mirrors' in groups %}
 [archive]
 	path = /srv/archive
 	comment = archive
-	hosts allow = {{ groups['archive_mirrors'] | map('extract', hostvars, ['ipv4_address']) | join(' ') }} {{ groups['archive_mirrors'] | map('extract', hostvars, ['ipv6_address']) | join(' ') }}
-{% endif %}
+	exclude = .*
+	hosts allow = {{ hostvars['gemini.archlinux.org']['ipv4_address'] }} {{ hostvars['gemini.archlinux.org']['ipv6_address'] }}
 
 # Just the release/stable iso/packages (for most mirrors)
 [ftp]
@@ -81,7 +80,7 @@ hosts deny = *
 	path = /srv/ftp
 	comment = ftp area (everything, including very old versions)
 	exclude = /lastsync.tmp
-	hosts allow = @@ALLOWHOSTS_TIER1@@ {{ hostvars['gemini.archlinux.org']['ipv4_address'] }} {{ hostvars['gemini.archlinux.org']['ipv6_address'] }} {{ hostvars['repos.archlinux.org']['ipv4_address'] }} {{ hostvars['repos.archlinux.org']['ipv6_address'] }}
+	hosts allow = @@ALLOWHOSTS_TIER1@@ {{ hostvars['gemini.archlinux.org']['ipv4_address'] }} {{ hostvars['gemini.archlinux.org']['ipv6_address'] }}
 	max connections = 0
 
 [kitchensink_auth]

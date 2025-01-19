@@ -1,1 +1,0 @@
-../../dbscripts/templates/gen_rsyncd.conf.pl

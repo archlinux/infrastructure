@@ -162,7 +162,7 @@
 
 - name: Install rebuilderd textcollector service
   template: src=prometheus-repository-textcollector.service.j2 dest=/etc/systemd/system/prometheus-repository-textcollector.service owner=root group=root mode=644
-  when: "inventory_hostname == 'gemini.archlinux.org'"
+  when: "inventory_hostname == 'repos.archlinux.org'"
 
 - name: Install rebuilderd textcollector timer
   template: src=prometheus-archive-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-archive-textcollector.timer owner=root group=root mode=644
@@ -174,11 +174,11 @@
 
 - name: Install rebuilderd textcollector timer
   template: src=prometheus-repository-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-repository-textcollector.timer owner=root group=root mode=644
-  when: "inventory_hostname == 'gemini.archlinux.org'"
+  when: "inventory_hostname == 'repos.archlinux.org'"
 
 - name: Start and enable prometheus repository textcollector timer
   systemd_service: name=prometheus-repository-textcollector.timer enabled=yes daemon_reload=yes state=started
-  when: "inventory_hostname == 'gemini.archlinux.org'"
+  when: "inventory_hostname == 'repos.archlinux.org'"
 
 - name: Install fastly textcollector script
   template: src=fastly-textcollector.sh.j2 dest=/usr/local/bin/fastly-textcollector.sh owner=root group=node_exporter mode=0750

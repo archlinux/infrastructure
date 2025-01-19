@@ -14,8 +14,11 @@
     - { role: sudo, tags: ['archusers'] }
     - { role: certbot }
     - { role: nginx }
+    - { role: archusers }
+    - { role: dbscripts, repos_domain: "repos.archlinux.org", repos_rsync_domain: "rsync.archlinux.org", tags: ['archusers'] }
+    - { role: arch_boxes_sync }
+    - { role: archweb, archweb_site: false, archweb_services: true }
+    - { role: sources, sources_domain: "sources.archlinux.org", sources_dir: "/srv/sources" }
     - { role: fail2ban }
-    - { role: mirrorsync }
     - { role: prometheus_exporters }
     - { role: promtail }
-    - { role: repo_archive_split_temp, repos_rsync_domain: "rsync.archlinux.org" }

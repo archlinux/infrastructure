@@ -38,7 +38,7 @@ The continent mirrors america, asia and europe contain the archive mirrors as we
 | install_arch | All | Install Arch | | Optional if you can |
 | mirrors.yml | All | Setup mirror | `<fqdn>` | |
 | redirect.archlinux.org.yml | dyn_dns | Make TXT records | | |
-| gemini.archlinux.org.yml | dbscripts | Allow debug repo syncing | | |
+| repos.archlinux.org.yml | dbscripts | Allow debug repo syncing | | |
 | mirrors.yml | geo_dns | Add new domain to DNS | All other mirrors from geo.mirror | |
 | monitoring.archlinux.org.yml | wireguard,prometheus | Allow loki and prometheus to fetch data | | |
 | archlinux.org.yml | postgres,wireguard | Allow wireguard IP to connect for Mirror check | | Optional see Check Location below |

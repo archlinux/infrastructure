@@ -1,0 +1,7 @@
+use chroot = no
+syslog facility = local5
+
+[archive]
+	path = /srv/archive
+	comment = archive
+	hosts allow = {{ groups['archive_mirrors'] | map('extract', hostvars, ['wireguard_address']) | join(' ') }}

@@ -1,0 +1,11 @@
+[Unit]
+# Fail-safe in case this is accidentally deployed on an archive server
+ConditionPathExists=!/srv/archive/repos
+
+[Service]
+User=archive
+Type=oneshot
+ExecStart=/srv/repos/git-packages/dbscripts/cron-jobs/archive-index
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/srv/archive
