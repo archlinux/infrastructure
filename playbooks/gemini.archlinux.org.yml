@@ -14,7 +14,6 @@
     - { role: nginx }
     - { role: archive }
     - { role: archive_web }
-    - { role: postfix_null }
     - { role: fail2ban }
     - { role: prometheus_exporters }
     - { role: promtail }
