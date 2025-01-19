@@ -22,6 +22,7 @@ hosts deny = *
 [archive]
 	path = /srv/archive
 	comment = archive
+	exclude = .*
 	hosts allow = {{ hostvars['gemini.archlinux.org']['ipv4_address'] }} {{ hostvars['gemini.archlinux.org']['ipv6_address'] }}
 
 # Just the release/stable iso/packages (for most mirrors)
