@@ -242,19 +242,19 @@ locals {
   #   - ttl (optional)
   #
   # Example:
-  # gemini = {
+  # archive = {
   #   ipv4_address = "49.12.124.107"
   #   ipv6_address = "2a01:4f8:242:5614::2"
   #   ttl          = 3600
   # }
   archlinux_org_a_aaaa = {
+    archive = {
+      ipv4_address = "49.12.124.107"
+      ipv6_address = "2a01:4f8:242:5614::2"
+    }
     build = {
       ipv4_address = "162.55.28.166"
       ipv6_address = "2a01:4f8:2190:20e0::2"
-    }
-    gemini = {
-      ipv4_address = "49.12.124.107"
-      ipv6_address = "2a01:4f8:242:5614::2"
     }
     gitlab = {
       ipv4_address = "213.133.111.15"
@@ -300,7 +300,6 @@ locals {
   # Example:
   # dev                      = { value = "www", ttl = 3600 }
   archlinux_org_cname = {
-    archive         = { value = "gemini" }
     ipxe            = { value = "www" }
     mailman         = { value = "redirect" }
     packages        = { value = "www" }

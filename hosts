@@ -1,9 +1,9 @@
 [hetzner]
+archive.archlinux.org
 build.archlinux.org
-gemini.archlinux.org
 gitlab.archlinux.org
-secure-runner1.archlinux.org
 repos.archlinux.org
+secure-runner1.archlinux.org
 
 [equinix_metal]
 repro3.pkgbuild.com
@@ -32,10 +32,10 @@ europe.mirror.pkgbuild.com
 
 [borg_clients]
 accounts.archlinux.org
+archive.archlinux.org
 archlinux.org
 aur.archlinux.org
 bbs.archlinux.org
-gemini.archlinux.org
 gitlab.archlinux.org
 homedir.archlinux.org
 lists.archlinux.org

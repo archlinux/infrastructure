@@ -23,7 +23,7 @@ hosts deny = *
 	path = /srv/archive
 	comment = archive
 	exclude = .*
-	hosts allow = {{ hostvars['gemini.archlinux.org']['ipv4_address'] }} {{ hostvars['gemini.archlinux.org']['ipv6_address'] }}
+	hosts allow = {{ hostvars['archive.archlinux.org']['ipv4_address'] }} {{ hostvars['archive.archlinux.org']['ipv6_address'] }}
 
 # Just the release/stable iso/packages (for most mirrors)
 [ftp]
@@ -80,7 +80,7 @@ hosts deny = *
 	path = /srv/ftp
 	comment = ftp area (everything, including very old versions)
 	exclude = /lastsync.tmp
-	hosts allow = @@ALLOWHOSTS_TIER1@@ {{ hostvars['gemini.archlinux.org']['ipv4_address'] }} {{ hostvars['gemini.archlinux.org']['ipv6_address'] }}
+	hosts allow = @@ALLOWHOSTS_TIER1@@ {{ hostvars['archive.archlinux.org']['ipv4_address'] }} {{ hostvars['archive.archlinux.org']['ipv6_address'] }}
 	max connections = 0
 
 [kitchensink_auth]

@@ -1,5 +1,5 @@
-- name: Setup gemini.archlinux.org
-  hosts: gemini.archlinux.org
+- name: Setup archive.archlinux.org
+  hosts: archive.archlinux.org
   remote_user: root
   vars_files:
     - ../misc/vaults/vault_archive.yml
