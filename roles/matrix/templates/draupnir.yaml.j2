@@ -90,12 +90,6 @@ noop: false
 # DO NOT change this to `true` unless you are very confident that you know what you are doing.
 disableServerACL: false
 
-# Whether Draupnir should check member lists quicker (by using a different endpoint),
-# keep in mind that enabling this will miss invited (but not joined) users.
-#
-# Turn on if your bot is in (very) large rooms, or in large amounts of rooms.
-fasterMembershipChecks: false
-
 # A case-insensitive list of ban reasons to have the bot also automatically redact the user's messages for.
 #
 # If the bot sees you ban a user with a reason that is an (exact case-insensitive) match to this list,
@@ -110,14 +104,6 @@ fasterMembershipChecks: false
 automaticallyRedactForReasons:
   - "spam"
   - "redact:*"
-
-# A list of rooms to protect. Draupnir will add this to the list it knows from its account data.
-#
-# It won't, however, add it to the account data.
-# Manually add the room via '!draupnir rooms add' to have it stay protected regardless if this config value changes.
-#
-# Note: These must be matrix.to URLs
-protectedRooms: []
 
 # Whether or not to add all joined rooms to the "protected rooms" list
 # (excluding the management room and watched policy list rooms, see below).
@@ -164,10 +150,6 @@ commands:
     - "draupnir"
     - "mjolnir"
 
-  # Whether or not commands with a wildcard (*) will require an additional `--force` argument
-  # in the command to be able to be submitted.
-  confirmWildcardBan: true
-
   # The default reasons to be prompted with if the reason is missing from a ban command.
   ban:
     defaultReasons:
@@ -186,10 +168,9 @@ protections:
     #
     # WordList will ban users who use these words when first joining a room, so take caution when selecting them.
     #
-    # For advanced usage, regex can also be used, see the following links for more information;
-    #  - https://www.digitalocean.com/community/tutorials/an-introduction-to-regular-expressions
-    #  - https://regexr.com/
-    #  - https://regexone.com/
+    # The word list protection does not support regular expressions at this time.
+    # The configuration in the past stated support for Regex erroneously.
+    #
     words:
 {% for word in vault_matrix_secrets.badwords %}
       - {{ word | to_json }}
@@ -202,6 +183,31 @@ protections:
     # Set to zero to disable the timeout and make users *always* appear "new".
     # (users will always be banned if they say a bad word)
     minutesBeforeTrusting: 2160
+
+# The room state backing store writes a copy of the room state for all protected
+# rooms to the data directory.
+# It is recommended to enable this option unless you deploy Draupnir close to the
+# homeserver and know that Draupnir is starting up quickly. If your homeserver can
+# respond quickly to Draupnir's requests for `/state` then you might not need this option.
+roomStateBackingStore:
+  enabled: true
+
+# Safe mode provides recovery options for some failure modes when Draupnir
+# fails to start. For example, if the bot fails to resolve a room alias in
+# a watched list, or if the server has parted from a protected room and can't
+# find a way back in. Safe mode will provide different options to recover from
+# these. Such as unprotecting the room or unwatching the policy list.
+# By default Draupnir will boot into safe mode only when the failure mode
+# is recoverable.
+# It may be desirable to prevent the bot from starting into safe mode if you have
+# a pager system when Draupnir is down, as Draupnir could prevent your monitoring
+# system from identifying a failure to start.
+#safeMode:
+#  # The option for entering safe mode when Draupnir fails to start up.
+#  # - "RecoveryOnly" will only start the bot in safe mode when there are recovery options available. This is the default.
+#  # - "Never" will never start the bot in safe mode when Draupnir fails to start normally.
+#  # - "Always" will always start the bot in safe mode when Draupnir fails to start normally.
+#  bootOption: RecoveryOnly
 
 # Options for advanced monitoring of the health of the bot.
 health:
