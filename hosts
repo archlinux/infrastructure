@@ -46,12 +46,11 @@ monitoring.archlinux.org
 mumble.archlinux.org
 phrik.archlinux.org
 quassel.archlinux.org
+repos.archlinux.org
 reproducible.archlinux.org
 security.archlinux.org
 state.archlinux.org
 wiki.archlinux.org
-#TODO(gromit): remove ansible host once the DNS record is set
-repos.archlinux.org ansible_host=168.119.141.106
 
 [public_html]
 homedir.archlinux.org
