@@ -468,6 +468,8 @@ arch_users:
   jouke:
     name: "Jouke Witteveen"
     ssh_key: jouke.pub
+    hosts:
+      - mail.archlinux.org
     groups:
       - ""
   jsteel:
