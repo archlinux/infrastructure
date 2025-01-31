@@ -40,16 +40,7 @@ do
   curl --silent --show-error --fail --location --remote-name "$i"
 done
 
-for uid in "${TRUSTED_UIDs[@]}"; do
-	sq network wkd fetch "${uid}"
-done
-
-for fp in "${TRUSTED_KEYS[@]}"; do
-	sq pki link add --all "${fp}"
-done
-
-sq verify --signer-cert "${TRUSTED_KEYS[0]}" --detached ${NAME}.sig ${NAME} || \
-	sq verify --signer-cert "${TRUSTED_KEYS[1]}" --detached ${NAME}.sig ${NAME}
+rsop verify "${NAME}.sig" <(pacman-key --export "${TRUSTED_KEYS[@]}") < "${NAME}"
 
 mv ${NAME} /usr/local/bin/${NAME}
 chmod +x /usr/local/bin/${NAME}
