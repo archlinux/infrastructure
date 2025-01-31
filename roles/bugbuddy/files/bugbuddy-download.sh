@@ -61,25 +61,7 @@ for link in "${LINKS[@]}"; do
 	curl --progress-bar --show-error --fail --location --remote-name "${link}"
 done
 
-for uid in "${TRUSTED_UIDs[@]}"; do
-	sq network wkd fetch "${uid}"
-done
-
-for fp in "${TRUSTED_KEYS[@]}"; do
-	sq --force pki link add --all "${fp}"
-done
-
-verified=0
-for key in "${TRUSTED_KEYS[@]}"; do
-	if sq verify --signer-cert "${key}" --detached ${NAME}.sig ${NAME}; then
-		verified=1
-		break
-	fi
-done
-if (( ! verified )); then
-	echo "failed to verify downloaded artifacts" >&2
-	exit 1
-fi
+rsop verify "${NAME}.sig" <(pacman-key --export "${TRUSTED_KEYS[@]}") < "${NAME}"
 
 chmod +x ${NAME}
 mv --verbose ${NAME} "${TARGET_DIR}/${NAME}"
