@@ -47,7 +47,6 @@
     - /var/lib/synapse
     - /var/lib/synapse/media_store
     - /var/lib/synapse/draupnir-data
-    - /var/lib/synapse/pantalaimon-data
 
 - name: Make virtualenvs
   command: 'python -m venv {{ item }}'
@@ -58,7 +57,6 @@
   become_method: ansible.builtin.sudo
   loop:
     - /var/lib/synapse/venv
-    - /var/lib/synapse/venv-pantalaimon
 
 - name: Update virtualenvs
   pip:
@@ -73,7 +71,6 @@
   become_method: ansible.builtin.sudo
   loop:
     - /var/lib/synapse/venv
-    - /var/lib/synapse/venv-pantalaimon
 
 - name: Install synapse
   pip:
@@ -88,64 +85,6 @@
   register: synapse_pip
   notify:
     - Restart synapse
-
-- name: Install pantalaimon
-  pip:
-    name:
-      - 'aiofiles==23.2.1'
-      - 'aiohappyeyeballs==2.4.4'
-      - 'aiohttp==3.11.10'
-      - 'aiohttp-socks==0.7.1'
-      - 'aiosignal==1.3.1'
-      - 'appdirs==1.4.4'
-      - 'atomicwrites==1.4.1'
-      - 'attrs==24.2.0'
-      - 'cachetools==4.2.4'
-      - 'cffi==1.17.1'
-      - 'click==8.1.7'
-      - 'cryptography==44.0.0'
-      - 'frozenlist==1.5.0'
-      - 'future==0.18.3'
-      - 'h11==0.14.0'
-      - 'h2==4.1.0'
-      - 'hpack==4.0.0'
-      - 'hyperframe==6.0.1'
-      - 'idna==3.10'
-      - 'janus==1.1.0'
-      - 'jaraco.classes==3.4.0'
-      - 'jaraco.context==6.0.1'
-      - 'jaraco.functools==4.1.0'
-      - 'jeepney==0.8.0'
-      - 'jsonschema==4.23.0'
-      - 'jsonschema-specifications==2024.10.1'
-      - 'keyring==25.5.0'
-      - 'Logbook==1.8.0'
-      - 'matrix-nio==0.22.0'
-      - 'more-itertools==10.5.0'
-      - 'multidict==6.1.0'
-      - 'pantalaimon==0.10.5'
-      - 'peewee==3.17.8'
-      - 'prompt_toolkit==3.0.48'
-      - 'propcache==0.2.1'
-      - 'pycparser==2.22'
-      - 'pycryptodome==3.21.0'
-      - 'python-olm==3.2.16'
-      - 'python-socks==2.5.3'
-      - 'referencing==0.35.1'
-      - 'rpds-py==0.22.3'
-      - 'SecretStorage==3.3.3'
-      - 'unpaddedbase64==2.1.0'
-      - 'wcwidth==0.2.13'
-      - 'wheel==0.45.1'
-      - 'yarl==1.18.3'
-    state: latest
-    extra_args: '--upgrade-strategy=eager --no-deps'
-    virtualenv: /var/lib/synapse/venv-pantalaimon
-  become: true
-  become_user: synapse
-  become_method: ansible.builtin.sudo
-  notify:
-    - Restart pantalaimon
 
 - name: Download draupnir
   git:
@@ -265,11 +204,6 @@
   notify:
     - Restart synapse
 
-- name: Install pantalaimon config
-  template: src=pantalaimon.conf.j2 dest=/etc/synapse/pantalaimon.conf owner=root group=synapse mode=0644
-  notify:
-    - Restart pantalaimon
-
 - name: Install draupnir config
   template: src=draupnir.yaml.j2 dest=/etc/synapse/draupnir.yaml owner=root group=synapse mode=0640
   notify:
@@ -335,13 +269,6 @@
   notify:
     - Restart synapse
 
-- name: Install pantalaimon units
-  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
-  loop:
-    - pantalaimon.service
-  notify:
-    - Restart pantalaimon
-
 - name: Install draupnir units
   copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
   loop:
@@ -369,7 +296,6 @@
     - synapse-worker@federation_reader.service
     - synapse-worker@federation_sender.service
     - synapse-worker@media_repository.service
-    - pantalaimon.service
     - draupnir.service
     - matrix-appservice-irc.service
     - turnserver.service

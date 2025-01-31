@@ -5,13 +5,6 @@
     enabled: true
     daemon_reload: true
 
-- name: Restart pantalaimon
-  systemd_service:
-    name: pantalaimon
-    state: restarted
-    enabled: true
-    daemon_reload: true
-
 - name: Restart draupnir
   systemd_service:
     name: draupnir

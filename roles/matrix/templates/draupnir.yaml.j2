@@ -1,15 +1,15 @@
 # Endpoint URL that Draupnir uses to interact with the matrix homeserver (client-server API),
 # set this to the pantalaimon URL if you're using that.
-homeserverUrl: "http://127.0.0.1:8009"
+homeserverUrl: "https://{{ matrix_domain }}"
 
 # Endpoint URL that Draupnir could use to fetch events related to reports (client-server API and /_synapse/),
 # only set this to the public-internet homeserver client API URL, do NOT set this to the pantalaimon URL.
-rawHomeserverUrl: "http://127.0.0.1:8008"
+rawHomeserverUrl: "https://{{ matrix_domain }}"
 
 # Matrix Access Token to use, Draupnir will only use this if pantalaimon.use is false.
 # This option can be loaded from a file by passing "--access-token-path <path>" at the command line,
 # which would allow using secret management systems such as systemd's service credentials.
-accessToken: ""
+accessToken: "{{ vault_matrix_secrets.mjolnir_access_token }}"
 
 # Options related to Pantalaimon (https://github.com/matrix-org/pantalaimon)
 pantalaimon:
@@ -20,17 +20,17 @@ pantalaimon:
   #
   # Draupnir will log in using the given username and password once,
   # then store the resulting access token in a file under dataPath.
-  use: true
+  use: false
 
   # The username to login with.
-  username: mjolnir
+  username: draupnir
 
   # The password Draupnir will login with.
   #
   # After successfully logging in once, this will be ignored, so this value can be blanked after first startup.
   # This option can be loaded from a file by passing "--pantalaimon-password-path <path>" at the command line,
   # which would allow using secret management systems such as systemd's service credentials.
-  password: "{{ vault_matrix_secrets.mjolnir_user_password }}"
+  password: your_password
 
 # Experimental usage of the matrix-bot-sdk rust crypto.
 # This can not be used with Pantalaimon.
@@ -60,7 +60,7 @@ recordIgnoredInvites: true
 #
 # Note: By default, Draupnir is fairly verbose - expect a lot of messages in this room.
 # (see verboseLogging to adjust this a bit.)
-managementRoom: "#mjolnir:{{ matrix_server_name }}"
+managementRoom: "#draupnir:{{ matrix_server_name }}"
 
 # Deprecated and will be removed in a future version.
 # Running with verboseLogging is unsupported.
