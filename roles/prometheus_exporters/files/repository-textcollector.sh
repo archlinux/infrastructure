@@ -30,4 +30,17 @@ for dir in $REPOS_DIR/*; do
   fi
 done
 
+echo "# HELP repository_directory_packages_total number of packages in repository" >> $TMP_FILE
+echo "# TYPE repository_directory_packages_total gauge" >> $TMP_FILE
+
+for dir in $REPOS_DIR/*; do
+  # All Arch repositories should have an os dir, this excludes the archive and other non repo dirs.
+  if [ -d "$dir/os" ]; then
+    reponame=$(basename $dir)
+    packages_total=$(find ${dir} -name '*.pkg.tar.zst' | wc -l)
+
+    echo "repository_directory_packages_total{name=\"${reponame}\"} $packages_total" >> $TMP_FILE
+  fi
+done
+
 mv -f $TMP_FILE $PROM_FILE
