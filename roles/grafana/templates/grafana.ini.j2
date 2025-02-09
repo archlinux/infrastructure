@@ -319,6 +319,9 @@ check_for_updates = false
 # Static context that is being added to analytics events
 ;reporting_static_context = grafanaInstance=12, os=linux
 
+# Logs interaction events to the browser javascript console, intended for development only
+;browser_console_reporter = false
+
 #################################### Security ####################################
 [security]
 # disable creation of admin user on first start of grafana
@@ -350,6 +353,9 @@ secret_key = {{ vault_grafana_secret_key }}
 
 # disable protection against brute force login attempts
 ;disable_brute_force_login_protection = false
+
+# max number of failed login attempts before user gets locked
+;brute_force_login_protection_max_attempts = 5
 
 # set to true if you host Grafana behind HTTPS. default is false.
 cookie_secure = true
@@ -412,8 +418,9 @@ cookie_samesite = strict
 # The CSRF check will be executed even if the request has no login cookie.
 ;csrf_always_check = false
 
-# Comma-separated list of plugins ids that won't be loaded inside the frontend sandbox
-;disable_frontend_sandbox_for_plugins =
+# Comma-separated list of plugins ids that will be loaded inside the frontend sandbox
+# Currently behind the feature flag pluginsFrontendSandbox
+;enable_frontend_sandbox_for_plugins =
 
 # Comma-separated list of paths for POST/PUT URL in actions. Empty will allow anything that is not on the same origin
 ;actions_allow_post_url =
@@ -466,6 +473,10 @@ default_home_dashboard_path = /var/lib/grafana/public-dashboards/archive.json
 # For now only Loki and InfluxDB (with influxql) are supporting concurrency behind the feature flags.
 # Check datasource documentations for enabling concurrency.
 ;concurrent_query_count = 10
+
+# Default behavior for the "Manage alerts via Alerting UI" toggle when configuring a data source.
+# It only works if the data source's `jsonData.manageAlerts` prop does not contain a previously configured value.
+;default_manage_alerts_ui_toggle = true
 
 ################################### SQL Data Sources #####################
 [sql_datasources]
@@ -759,8 +770,11 @@ hide_version = true
 ;enabled = false
 ;allow_sign_up = true
 ;auto_login = false
+;client_authentication =
 ;client_id = some_client_id
 ;client_secret = some_client_secret
+;managed_identity_client_id =
+;federated_credential_audience =
 ;scopes = openid email profile
 ;auth_url = https://login.microsoftonline.com/<tenant-id>/oauth2/v2.0/authorize
 ;token_url = https://login.microsoftonline.com/<tenant-id>/oauth2/v2.0/token
@@ -1127,6 +1141,9 @@ mode = syslog
 # Max requests accepted per short interval of time for Grafana backend log ingestion endpoint (/log).
 ;log_endpoint_burst_limit = 15
 
+# Enables all Faro default instrumentation by using `getWebInstrumentations`. Overrides other instrumentation flags.
+;instrumentations_all_enabled = false
+
 # Should error instrumentation be enabled, only affects Grafana Javascript Agent
 ;instrumentations_errors_enabled = true
 
@@ -1321,8 +1338,8 @@ mode = syslog
 # The timeout string is a possibly signed sequence of decimal numbers, followed by a unit suffix (ms, s, m, h, d), e.g. 30s or 1m.
 ;evaluation_timeout = 30s
 
-# Number of times we'll attempt to evaluate an alert rule before giving up on that evaluation. The default value is 1.
-;max_attempts = 1
+# Number of times we'll attempt to evaluate an alert rule before giving up on that evaluation. The default value is 3.
+;max_attempts = 3
 
 # Minimum interval to enforce between rule evaluations. Rules will be adjusted if they are less than this value  or if they are not multiple of the scheduler interval (10s). Higher values can help with resource management as we'll schedule fewer evaluations over time.
 # The interval string is a possibly signed sequence of decimal numbers, followed by a unit suffix (ms, s, m, h, d), e.g. 30s or 1m.
@@ -1336,6 +1353,9 @@ mode = syslog
 # If the feature flag 'alertingSaveStatePeriodic' is enabled, this is the interval that is used to persist the alerting instances to the database.
 # The interval string is a possibly signed sequence of decimal numbers, followed by a unit suffix (ms, s, m, h, d), e.g. 30s or 1m.
 ;state_periodic_save_interval = 5m
+
+# If the feature flag 'alertingSaveStatePeriodic' is enabled, this is the size of the batch that is saved to the database at once.
+;state_periodic_save_batch_size = 1
 
 # Disables the smoothing of alert evaluations across their evaluation window.
 # Rules will evaluate in sync.
@@ -1945,6 +1965,10 @@ timeout = 30s
 ;feedback_url = ""
 # How frequently should the frontend UI poll for changes while resources are migrating
 ;frontend_poll_interval = 2s
+# Controls how the Alert Rules are migrated. Available choices: "paused" and "unchanged". Default: "paused".
+# With "paused", all Alert Rules will be created in Paused state. This is helpful to avoid double notifications.
+# With "unchanged", all Alert Rules will be created with the pause state unchanged coming from the source instance.
+;alert_rules_state = "paused"
 
 ################################## Frontend development configuration ###################################
 # Warning! Any settings placed in this section will be available on `process.env.frontend_dev_{foo}` within frontend code
