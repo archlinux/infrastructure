@@ -123,19 +123,10 @@ Arch-audit can be used to find servers in need of updates for security issues.
 
     ansible all -a "arch-audit -u"
 
-#### Updating servers
+### Semi-automated server upgrades
 
-The following steps should be used to update our managed servers:
-
-  * pacman -Syu
-  * sync
-  * checkservices
-  * reboot
-
-##### Semi-automated server updates (experimental)
-
-For updating a lot of servers in a more unattended manner, the following
-playbook can be used:
+For updating all servers in a mostly unattented manner, the following playbook
+can be used:
 
     ansible-playbook playbooks/tasks/upgrade-servers.yml [-l SUBSET]
 
