@@ -21,3 +21,11 @@
     immediate: true
     permanent: true
   when: configure_firewall
+
+- name: Configure size of connection tracking table
+  sysctl:
+    name: net.netfilter.nf_conntrack_max
+    value: "{{ nf_conntrack_max }}"
+    sysctl_set: true
+    sysctl_file: /etc/sysctl.d/net.conf
+  when: nf_conntrack_max is defined
