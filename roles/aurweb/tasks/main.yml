@@ -63,7 +63,7 @@
     repo={{ aurweb_repository }}
     dest="{{ aurweb_dir }}"
     version={{ aurweb_version }}
-    verify_commit=true
+    verify_commit="{{ aurweb_environment_type == 'prod' }}"
     gpg_allowlist='{{ aurweb_pgp_keys }}'
   become: true
   become_user: "{{ aurweb_user }}"
@@ -85,7 +85,7 @@
     repo={{ aurweb_repository }}
     dest="{{ aurweb_dir }}"
     version={{ aurweb_version }}
-    verify_commit=true
+    verify_commit="{{ aurweb_environment_type == 'prod' }}"
     gpg_allowlist='{{ aurweb_pgp_keys }}'
   become: true
   become_user: "{{ aurweb_user }}"
