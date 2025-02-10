@@ -1,5 +1,5 @@
-- name: Install sequoia
-  pacman: name=sequoia-sq state=present
+- name: Install rsop
+  pacman: name=rsop state=present
 
 - name: Install systemd service/timer
   copy: src={{ item }} dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
