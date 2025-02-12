@@ -3,7 +3,7 @@
 ## Table of contents
 [[_TOC_]]
 
-## gemini
+## archive.archlinux.org
 
 ### Services
   - archive (archive.archlinux.org)

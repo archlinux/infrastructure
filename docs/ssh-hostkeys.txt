@@ -16,6 +16,15 @@
 256 MD5:4b:0b:1c:81:27:81:7a:22:b4:48:88:75:69:a5:b4:4e root@america.mirror.pkgbuild.com (ED25519)
 3072 MD5:a2:41:dc:97:5a:ae:89:7a:4f:69:f7:ec:a0:d4:67:b6 root@america.mirror.pkgbuild.com (RSA)
 
+# archive.archlinux.org
+256 SHA256:If51DkTftUpDAFz65totgDfTd/ddu/2w/RBZIHtY74U root@archive.archlinux.org (ECDSA)
+256 SHA256:wUrJYf9+zOpIEUQ3ndgarK0PjzPICa1frmu7mpL4e14 root@archive.archlinux.org (ED25519)
+3072 SHA256:Rltnuln3bjsHJwVbys/LnYCj7hO6srPoa15JP8QhmlQ root@archive.archlinux.org (RSA)
+
+256 MD5:aa:b6:75:97:e1:82:7f:25:16:3c:85:ca:2f:78:97:ee root@archive.archlinux.org (ECDSA)
+256 MD5:44:f5:60:54:d7:a7:b7:6d:fd:69:35:05:8f:4e:a5:0f root@archive.archlinux.org (ED25519)
+3072 MD5:20:2f:93:37:ae:33:e6:3e:9f:74:b6:57:c9:f3:58:9e root@archive.archlinux.org (RSA)
+
 # archlinux.org
 256 SHA256:9nc3jaxyh21w+HVT1Xo0/ujMx7/qWKguqcSiDX7jrA0 root@archlinux-packer (ECDSA)
 256 SHA256:nxDSSxkjiccOuzBmqSvsd07WIO/ySIlOMlBxQiTWFaE root@archlinux-packer (ED25519)
@@ -96,15 +105,6 @@
 256 MD5:44:ef:66:dc:e2:68:86:69:ad:74:22:a4:92:c6:5b:e1 root@europe.mirror.pkgbuild.com (ECDSA)
 256 MD5:bd:af:e2:cb:6b:fe:b6:60:73:b0:ba:7b:db:af:21:b7 root@europe.mirror.pkgbuild.com (ED25519)
 3072 MD5:57:a2:59:db:c7:07:4f:ac:91:9a:f8:db:7f:16:a7:d4 root@europe.mirror.pkgbuild.com (RSA)
-
-# gemini.archlinux.org
-256 SHA256:If51DkTftUpDAFz65totgDfTd/ddu/2w/RBZIHtY74U root@gemini.archlinux.org (ECDSA)
-256 SHA256:wUrJYf9+zOpIEUQ3ndgarK0PjzPICa1frmu7mpL4e14 root@gemini.archlinux.org (ED25519)
-3072 SHA256:Rltnuln3bjsHJwVbys/LnYCj7hO6srPoa15JP8QhmlQ root@gemini.archlinux.org (RSA)
-
-256 MD5:aa:b6:75:97:e1:82:7f:25:16:3c:85:ca:2f:78:97:ee root@gemini.archlinux.org (ECDSA)
-256 MD5:44:f5:60:54:d7:a7:b7:6d:fd:69:35:05:8f:4e:a5:0f root@gemini.archlinux.org (ED25519)
-3072 MD5:20:2f:93:37:ae:33:e6:3e:9f:74:b6:57:c9:f3:58:9e root@gemini.archlinux.org (RSA)
 
 # gitlab.archlinux.org
 256 SHA256:ZHy7zbNNwKHukTEyFcAT2Ns+mT/wlc2vAjJULnlOroE root@gitlab.archlinux.org (ECDSA)

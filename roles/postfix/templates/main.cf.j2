@@ -86,7 +86,7 @@ internal_mail_filter_classes = bounce
 indexed = ${default_database_type}:${config_directory}
 
 smtpd_sender_login_maps = unionmap:{
-  static:{aur bbs gemini gitlab matrix archlinux wiki security},
+  static:{aur bbs gitlab matrix archlinux wiki security},
   ${indexed}/smtp_sender_map,
   ${indexed}/users}
 smtpd_helo_required = yes

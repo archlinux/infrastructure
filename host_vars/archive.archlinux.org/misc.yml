@@ -1,4 +1,4 @@
-hostname: "gemini.archlinux.org"
+hostname: "archive.archlinux.org"
 
 ipv4_address: "49.12.124.107"
 ipv4_netmask: "/32"

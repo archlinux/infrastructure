@@ -158,7 +158,7 @@
 
 - name: Install rebuilderd textcollector service
   template: src=prometheus-archive-textcollector.service.j2 dest=/etc/systemd/system/prometheus-archive-textcollector.service owner=root group=root mode=644
-  when: "'archive_mirrors' in group_names or inventory_hostname == 'gemini.archlinux.org'"
+  when: "'archive_mirrors' in group_names or inventory_hostname == 'archive.archlinux.org'"
 
 - name: Install rebuilderd textcollector service
   template: src=prometheus-repository-textcollector.service.j2 dest=/etc/systemd/system/prometheus-repository-textcollector.service owner=root group=root mode=644
@@ -166,11 +166,11 @@
 
 - name: Install rebuilderd textcollector timer
   template: src=prometheus-archive-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-archive-textcollector.timer owner=root group=root mode=644
-  when: "'archive_mirrors' in group_names or inventory_hostname == 'gemini.archlinux.org'"
+  when: "'archive_mirrors' in group_names or inventory_hostname == 'archive.archlinux.org'"
 
 - name: Start and enable prometheus archive textcollector timer
   systemd_service: name=prometheus-archive-textcollector.timer enabled=yes daemon_reload=yes state=started
-  when: "'archive_mirrors' in group_names or inventory_hostname == 'gemini.archlinux.org'"
+  when: "'archive_mirrors' in group_names or inventory_hostname == 'archive.archlinux.org'"
 
 - name: Install rebuilderd textcollector timer
   template: src=prometheus-repository-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-repository-textcollector.timer owner=root group=root mode=644
