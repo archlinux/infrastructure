@@ -1,0 +1,28 @@
+# This host does not have a public IPv4 address, but only a public IPv6
+# address. We have a DNATed (port forwarded) SSH port for accessing the
+# server over IPv4 though, which is defined below.
+ansible_host: 141.255.217.9
+ansible_port: 8189
+
+ipv4_address: 10.113.2.189
+ipv4_netmask: /24
+ipv6_address: 2001:1470:fffd:3050::189:1
+ipv4_gateway: 10.113.2.1
+ipv6_interface: ens19
+ipv6_netmask: /112
+ipv6_gateway: 2001:1470:fffd:3050::1
+ipv6_ignore_ra: true
+network_interface: ens18
+# TFO is broken on this network likely due to some middlebox.
+# systemd-resolved uses TFO if possible, so this must be disabled for
+# DNS to work reliably.
+network_disable_ipv4_tcp_fast_open: true
+system_disks:
+  - /dev/sda
+configure_network: true
+
+rebuilderd_workers:
+  - repro41
+  - repro42
+wireguard_address: 10.0.0.47
+wireguard_public_key: MJrXDwK61CF7nT5r1HRxxp44DocZyrQslK5plCJFexY=

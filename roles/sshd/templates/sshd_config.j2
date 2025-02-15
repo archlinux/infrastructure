@@ -1,4 +1,4 @@
-Port {{ ansible_port | default(22) }}
+Port {{ sshd_port }}
 LogLevel VERBOSE
 PasswordAuthentication no
 ClientAliveInterval 30

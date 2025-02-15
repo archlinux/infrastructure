@@ -6,6 +6,14 @@
       notify:
         - Restart networkd
 
+    - name: Install 10-static6-ethernet.network
+      template: src=10-static6-ethernet.network.j2 dest={{ chroot_path }}/etc/systemd/network/10-static6-ethernet.network owner=root group=root mode=0644
+      vars:
+        network_interface: "{{ ipv6_interface }}"
+      notify:
+        - Restart networkd
+      when: ipv6_interface is defined
+
     - name: Create drop-in directory for 10-static-ethernet.network
       file: path={{ chroot_path }}/etc/systemd/network/10-static-ethernet.network.d state=directory owner=root group=root mode=0755
 
@@ -37,6 +45,12 @@
   notify:
     - Restart networkd
   when: additional_addresses is defined
+
+- name: Disable IPv4 TCP Fast Open
+  copy: src=50-tcp_fastopen.conf dest={{ chroot_path }}/etc/sysctl.d/50-tcp_fastopen.conf owner=root group=root mode=0644
+  notify:
+    - Restart systemd-sysctl
+  when: network_disable_ipv4_tcp_fast_open
 
 - name: Create symlink to resolv.conf
   file: src=/run/systemd/resolve/stub-resolv.conf dest={{ chroot_path }}/etc/resolv.conf state=link force=yes follow=no owner=root group=root

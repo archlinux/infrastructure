@@ -112,6 +112,7 @@ reproducible.archlinux.org
 [rebuilderd_workers]
 repro2.pkgbuild.com
 repro3.pkgbuild.com
+repro4.pkgbuild.com
 
 [memcached]
 wiki.archlinux.org

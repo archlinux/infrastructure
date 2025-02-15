@@ -3,7 +3,7 @@ Name={{ network_interface }}
 
 [Network]
 Gateway={{ ipv4_gateway }}
-{% if ipv6_gateway is defined %}
+{% if ipv6_gateway is defined and ipv6_interface is not defined %}
 Gateway={{ ipv6_gateway }}
 {% endif %}
 {% if ipv6_ignore_ra|default(false) is true %}
@@ -17,12 +17,12 @@ Address={{ ipv4_address }}{{ ipv4_netmask }}
 Peer={{ ipv4_gateway }}{{ ipv4_netmask}}
 {% endif %}
 
-{% if ipv6_address is defined %}
+{% if ipv6_address is defined and ipv6_interface is not defined %}
 [Address]
 Address={{ ipv6_address }}{{ ipv6_netmask }}
 {% endif %}
 
-{% if ipv6_gateway is defined and not ipv6_gateway.startswith("fe80") %}
+{% if ipv6_gateway is defined and not ipv6_gateway.startswith("fe80") and ipv6_interface is not defined %}
 [Route]
 Destination={{ ipv6_gateway }}
 {% endif %}

@@ -57,7 +57,9 @@ resource "hetznerdns_record" "archlinux_page_aaaa" {
 }
 
 resource "hetznerdns_record" "pkgbuild_com_a" {
-  for_each = local.pkgbuild_com_a_aaaa
+  for_each = {
+    for k, v in local.pkgbuild_com_a_aaaa : k => v if try(v.ipv4_address != "", false)
+  }
 
   zone_id = hetznerdns_zone.pkgbuild.id
   name    = each.key
