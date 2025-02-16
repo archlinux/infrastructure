@@ -12,10 +12,10 @@ ExecReload=/bin/kill -HUP $MAINPID
 Restart=on-abort
 
 User=synapse
-
+SyslogIdentifier=synapse-%i
 WorkingDirectory=~
+
 ExecStart=/var/lib/synapse/venv/bin/python -m synapse.app.generic_worker --config-path=/etc/synapse/homeserver.yaml --config-path=/etc/synapse/worker-%i.yaml
-SyslogIdentifier=synapse
 
 Environment=LD_PRELOAD=/usr/lib/libjemalloc.so
 Environment=PYTHONMALLOC=malloc

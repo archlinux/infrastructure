@@ -13,10 +13,11 @@ Restart=on-abort
 TimeoutStartSec=5min
 
 User=synapse
-
-WorkingDirectory=~
-ExecStart=/var/lib/synapse/venv/bin/python -m synapse.app.homeserver --config-path=/etc/synapse/homeserver.yaml
 SyslogIdentifier=synapse
+WorkingDirectory=~
+RuntimeDirectory=synapse
+
+ExecStart=/var/lib/synapse/venv/bin/python -m synapse.app.homeserver --config-path=/etc/synapse/homeserver.yaml
 
 Environment=LD_PRELOAD=/usr/lib/libjemalloc.so
 Environment=PYTHONMALLOC=malloc
