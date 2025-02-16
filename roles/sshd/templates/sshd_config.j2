@@ -1,6 +1,7 @@
 Port {{ ansible_port | default(22) }}
 LogLevel VERBOSE
 PasswordAuthentication no
+ClientAliveInterval 30
 
 {% if 'buildservers' not in group_names %}
 AllowAgentForwarding no
