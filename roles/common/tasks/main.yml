@@ -145,8 +145,11 @@
 - name: Install pacman-contrib for paccache/pacdiff and fakeroot for checkupdates
   pacman: name=pacman-contrib,fakeroot state=installed
 
-- name: Install custom paccache.service
-  copy: src=paccache.service dest=/etc/systemd/system/paccache.service owner=root group=root mode=0644
+- name: Add extra arguments in paccache.service environment file
+  lineinfile:
+    path: /etc/conf.d/pacman-contrib
+    regexp: '^PACCACHE_ARGS='
+    line: 'PACCACHE_ARGS=-c /var/cache/pacman/pkg'
 
 - name: Start and enable paccache timer
   systemd_service: name=paccache.timer enabled=yes state=started daemon_reload=yes
