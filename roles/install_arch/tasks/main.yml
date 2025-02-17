@@ -40,8 +40,7 @@
       {% endif %}
       --new=0:0:0 --change-name=0:root --typecode=0:8304
       {{ item }}
-  loop:
-    - "{{ system_disks }}"
+  loop: "{{ system_disks }}"
   register: sgdisk
   changed_when: "sgdisk.rc == 0"
 
@@ -181,15 +180,13 @@
 
 - name: Install grub (legacy mode)
   command: chroot /mnt grub-install --target=i386-pc --recheck {{ item }}
-  loop:
-    - "{{ system_disks }}"
+  loop: "{{ system_disks }}"
   register: chroot_grub_install_legacy
   changed_when: "chroot_grub_install_legacy.rc == 0"
 
 - name: Install grub (uefi mode)
   command: chroot /mnt grub-install --target=x86_64-efi --efi-directory=/efi --removable --recheck {{ item }}
-  loop:
-    - "{{ system_disks }}"
+  loop: "{{ system_disks }}"
   register: chroot_grub_install_uefi
   changed_when: "chroot_grub_install_uefi.rc == 0"
   when: ansible_virtualization_role == 'host'
