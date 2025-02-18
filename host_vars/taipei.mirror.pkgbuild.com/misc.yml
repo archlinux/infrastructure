@@ -1,0 +1,15 @@
+mirror_domain: taipei.mirror.pkgbuild.com
+ipv4_address: 45.150.242.222
+ipv4_netmask: /32
+ipv4_gateway: 100.100.0.0
+ipv6_address: 2407:b9c0:b001:c4:26a3:f0ff:fe46:b1dc
+ipv6_netmask: /64
+ipv6_gateway: fe80::1
+ipv6_ignore_ra: true
+filesystem: btrfs
+network_interface: enp3s0
+system_disks:
+  - /dev/vda
+
+wireguard_address: 10.0.0.52
+wireguard_public_key: 9R3ZurGRt5/DT+ElMXrV89XMEdmJnfKv67shDKY4cXc=

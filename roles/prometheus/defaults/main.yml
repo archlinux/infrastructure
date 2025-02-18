@@ -40,6 +40,7 @@ blackbox_targets:
     - https://asia.mirror.pkgbuild.com
     - https://aur.archlinux.org
     - https://bbs.archlinux.org
+    - https://berlin.mirror.pkgbuild.com
     - https://bugs.archlinux.org
     - https://conf.archlinux.org
     - https://dashboards.archlinux.org/healthz
@@ -48,8 +49,10 @@ blackbox_targets:
     - https://europe.mirror.pkgbuild.com
     - https://gitlab.archlinux.org
     - https://ipxe.archlinux.org
+    - https://johannesburg.mirror.pkgbuild.com
     - https://lists.archlinux.org
     - https://london.mirror.pkgbuild.com
+    - https://losangeles.mirror.pkgbuild.com
     - https://mailman.archlinux.org
     - https://man.archlinux.org
     - https://master-key.archlinux.org
@@ -78,9 +81,11 @@ blackbox_targets:
     - https://rfc.archlinux.page
     - https://security.archlinux.org
     - https://signstar.archlinux.page/
+    - https://singapore.mirror.pkgbuild.com
     - https://sources.archlinux.org
     - https://static.conf.archlinux.org/README.md
     - https://sydney.mirror.pkgbuild.com
+    - https://taipei.mirror.pkgbuild.com
     - https://terms.archlinux.org
     - https://tu-bylaws.aur.archlinux.org
     - https://whatcanidofor.archlinux.org
@@ -97,12 +102,12 @@ blackbox_targets:
   smtp_starttls:
     - mail.archlinux.org:25
     - lists.archlinux.org:25
-  geo_dns_geo.mirror.pkgbuild.com_a: "{{ groups['geo_mirrors'] }}"
-  geo_dns_geo.mirror.pkgbuild.com_aaaa: "{{ groups['geo_mirrors'] }}"
-  geo_dns_geo.mirror.pkgbuild.com_https: "{{ groups['geo_mirrors'] }}"
-  geo_dns_riscv.mirror.pkgbuild.com_a: "{{ groups['geo_mirrors'] }}"
-  geo_dns_riscv.mirror.pkgbuild.com_aaaa: "{{ groups['geo_mirrors'] }}"
-  geo_dns_riscv.mirror.pkgbuild.com_https: "{{ groups['geo_mirrors'] }}"
+  geo_dns_geo.mirror.pkgbuild.com_a: "{{ groups['geo_mirror_name_servers'] }}"
+  geo_dns_geo.mirror.pkgbuild.com_aaaa: "{{ groups['geo_mirror_name_servers'] }}"
+  geo_dns_geo.mirror.pkgbuild.com_https: "{{ groups['geo_mirror_name_servers'] }}"
+  geo_dns_riscv.mirror.pkgbuild.com_a: "{{ groups['geo_mirror_name_servers'] }}"
+  geo_dns_riscv.mirror.pkgbuild.com_aaaa: "{{ groups['geo_mirror_name_servers'] }}"
+  geo_dns_riscv.mirror.pkgbuild.com_https: "{{ groups['geo_mirror_name_servers'] }}"
 matrix_metrics_endpoints:
   - homeserver
   - appservice

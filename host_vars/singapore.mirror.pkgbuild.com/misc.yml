@@ -1,0 +1,15 @@
+mirror_domain: singapore.mirror.pkgbuild.com
+ipv4_address: 194.156.163.63
+ipv4_netmask: /32
+ipv4_gateway: 100.100.0.0
+ipv6_address: 2407:b9c0:e002:166:26a3:f0ff:fe46:6e9c
+ipv6_netmask: /64
+ipv6_gateway: fe80::1
+ipv6_ignore_ra: true
+filesystem: btrfs
+network_interface: enp3s0
+system_disks:
+  - /dev/vda
+
+wireguard_address: 10.0.0.51
+wireguard_public_key: Kzma6D82LjLZhwj4/7pLS9w660PIHnLob7jqjvBO5y8=

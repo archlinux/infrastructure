@@ -1,0 +1,15 @@
+mirror_domain: losangeles.mirror.pkgbuild.com
+ipv4_address: 209.209.59.11
+ipv4_netmask: /32
+ipv4_gateway: 100.100.0.0
+ipv6_address: 2a0e:6901:110:95:26a3:f0ff:fe48:999e
+ipv6_netmask: /64
+ipv6_gateway: fe80::1
+ipv6_ignore_ra: true
+filesystem: btrfs
+network_interface: enp3s0
+system_disks:
+  - /dev/vda
+
+wireguard_address: 10.0.0.50
+wireguard_public_key: E4L+960hnziPxdmp5yPLEN/J53tUqy23wg1g+N1+xx0=

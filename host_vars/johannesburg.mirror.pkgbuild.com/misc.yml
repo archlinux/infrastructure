@@ -1,0 +1,15 @@
+mirror_domain: johannesburg.mirror.pkgbuild.com
+ipv4_address: 102.130.49.241
+ipv4_netmask: /32
+ipv4_gateway: 100.100.0.0
+ipv6_address: 2a0b:4342:1a91:3b5:26a3:f0ff:fe49:9bf9
+ipv6_netmask: /64
+ipv6_gateway: fe80::1
+ipv6_ignore_ra: true
+filesystem: btrfs
+network_interface: enp3s0
+system_disks:
+  - /dev/vda
+
+wireguard_address: 10.0.0.49
+wireguard_public_key: iteueE5NMEMCiqItSIDWmvi5OxSBzjnNaHA8APZ9eCE=
