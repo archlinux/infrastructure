@@ -11,6 +11,10 @@
     repo: https://gitlab.archlinux.org/archlinux/archbbs.git
     dest: "{{ fluxbb_dir }}"
     version: "{{ fluxbb_version }}"
+    force: true
+
+- name: Delete install.php for security
+  file: state=absent path="{{ fluxbb_dir }}/install.php"
 
 - name: Fix home permissions
   file: state=directory owner=fluxbb group=fluxbb mode=0755  path="{{ fluxbb_dir }}"
