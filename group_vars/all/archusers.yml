@@ -741,7 +741,7 @@ arch_users:
     name: "Sven-Hendrik Haase"
     email: "svenstaro@archlinux.org"
     ssh_key: svenstaro.pub
-    shell: /bin/fish
+    shell: /bin/zsh
     groups:
       - packager
       - junior-packager
