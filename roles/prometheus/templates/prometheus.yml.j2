@@ -50,6 +50,12 @@ scrape_configs:
         labels:
           instance: "{{ inventory_hostname }}"
 
+  - job_name: tempo
+    static_configs:
+      - targets: ['127.0.0.1:3200']
+        labels:
+          instance: "{{ inventory_hostname }}"
+
   - job_name: 'node_exporter'
     static_configs:
       {% for host in groups['all'] %}
