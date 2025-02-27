@@ -174,6 +174,7 @@ locals {
     "package-maintainer-bylaws.aur" = "680c89d189c8f342cc00bcb624d813a3"
     "terms"                         = "0b62a71af2aa85fb491295b543b4c3d2"
     "patchwork"                     = "37eeadf24d5cd6614e8edb1f12868a5e"
+    "panic"                         = "5112598cea498d8df7fcdfbcb2e33fe6"
   }
 
   archlinux_page_gitlab_pages = {
