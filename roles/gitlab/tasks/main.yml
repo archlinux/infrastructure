@@ -32,6 +32,10 @@
       # In addition, see https://docs.gitlab.com/ee/administration/pages/ for the GitLab Pages trickery done below.
       # Basically, we only allow specific GitLab Pages with custom domains to work. We don't want to enable everyone
       # to be able to have a GitLab Page on purpose (for security and legal safety reasons).
+      #
+      # The seemingly random 8k maximum request size for gitlab pages requests
+      # comes from the size that a linux kernel panic form (which we host via
+      # pages) can encode in a panic qr code link.
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'https://{{ gitlab_domain }}'
         registry_external_url 'https://registry.archlinux.org'
@@ -47,6 +51,7 @@
         gitlab_pages['rate_limit_source_ip'] = 10.0
         gitlab_pages['rate_limit_source_ip_burst'] = 300
         gitlab_pages['env'] = { 'FF_ENFORCE_IP_RATE_LIMITS' => 'true', 'FF_CONFIGURABLE_ROOT_DIR' => 'true', 'FF_ENABLE_DOMAIN_REDIRECT' => 'true' }
+        gitlab_pages['max_uri_length'] = 8192
         letsencrypt['enable'] = true
         letsencrypt['contact_emails'] = ['webmaster@archlinux.org']
         gitlab_rails['env'] = {'GITLAB_THROTTLE_BYPASS_HEADER' => 'Gitlab-Bypass-Rate-Limiting'}
