@@ -4,7 +4,7 @@ archwiki_nginx_conf: '/etc/nginx/nginx.d/archwiki.conf'
 archwiki_nginx_challenge_value: '41ce6c6'
 archwiki_user: 'archwiki'
 archwiki_repository: 'https://gitlab.archlinux.org/archlinux/archwiki.git'
-archwiki_version: '1.42.5-1'
+archwiki_version: '1.43.0-2'
 archwiki_question_answer_file: '/srv/http/archwiki/registration-question-answer.txt'
 
 archwiki_socket: '/run/php-fpm/archwiki.socket'
