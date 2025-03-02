@@ -4,13 +4,13 @@ DevOps team maintain a geo mirror across the world. The Geo mirror is public fac
 
 ## Locations
 
-| Mirror | Location |
-| ----------- | ----------- |
-| https://sydney.mirror.pkgbuild.com/ | Australia |
-| https://europe.mirror.pkgbuild.com/ | Czechia |
-| https://asia.mirror.pkgbuild.com/ | Hong Kong |
-| https://london.mirror.pkgbuild.com/ | United Kingdom |
-| https://america.mirror.pkgbuild.com/ | United States |
+| Mirror                               | Location                |
+| ------------------------------------ | ----------------------- |
+| https://america.mirror.pkgbuild.com/ | Miami (United States)   |
+| https://asia.mirror.pkgbuild.com/    | Hong Kong               |
+| https://europe.mirror.pkgbuild.com/  | Prague (Czechia)        |
+| https://london.mirror.pkgbuild.com/  | London (United Kingdom) |
+| https://sydney.mirror.pkgbuild.com/  | Sydney (Australia)      |
 
 ### Logical split
 The continent mirrors america, asia and europe contain the archive mirrors as well as repository mirrors. The city mirrors have just the repositories hosted.
