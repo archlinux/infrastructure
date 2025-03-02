@@ -361,6 +361,11 @@ locals {
       ipv6_address = "2a02:6ea0:d605::2"
       http3        = true
     }
+    "berlin.mirror" = {
+      ipv4_address = "45.142.247.77"
+      ipv6_address = "2a12:8d02:2100:10d:26a3:f0ff:fe47:bfaf"
+      http3        = true
+    }
     "europe.mirror" = {
       ipv4_address = "89.187.191.12"
       ipv6_address = "2a02:6ea0:c237::2"
@@ -371,14 +376,34 @@ locals {
       ipv6_address = "2a02:6ea0:c237::2"
       http3        = true
     }
+    "johannesburg.mirror" = {
+      ipv4_address = "102.130.49.241"
+      ipv6_address = "2a0b:4342:1a91:3b5:26a3:f0ff:fe49:9bf9"
+      http3        = true
+    }
     "london.mirror" = {
       ipv4_address = "185.73.44.89"
       ipv6_address = "2001:ba8:0:4030::2"
       http3        = true
     }
+    "losangeles.mirror" = {
+      ipv4_address = "209.209.59.11"
+      ipv6_address = "2a0e:6901:110:95:26a3:f0ff:fe48:999e"
+      http3        = true
+    }
+    "singapore.mirror" = {
+      ipv4_address = "194.156.163.63"
+      ipv6_address = "2407:b9c0:e002:166:26a3:f0ff:fe46:6e9c"
+      http3        = true
+    }
     "sydney.mirror" = {
       ipv4_address = "147.75.48.159"
       ipv6_address = "2604:1380:40f1:6a00::1"
+      http3        = true
+    }
+    "taipei.mirror" = {
+      ipv4_address = "45.150.242.222"
+      ipv6_address = "2407:b9c0:b001:c4:26a3:f0ff:fe46:b1dc"
       http3        = true
     }
     repro2 = {

@@ -15,4 +15,4 @@
     - { role: prometheus_exporters }
     - { role: promtail }
     - { role: fail2ban }
-    - { role: geo_dns, when: "'geo_mirrors' in group_names" }
+    - { role: geo_dns, when: "'geo_mirror_name_servers' in group_names" }
