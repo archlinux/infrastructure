@@ -1,6 +1,3 @@
-hostname: "archlinux-packer"
-
 dhcp: true
-filesystem: btrfs
 system_disks:
   - /dev/sda

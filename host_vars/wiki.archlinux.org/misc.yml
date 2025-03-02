@@ -1,4 +1,3 @@
-filesystem: btrfs
 memcached_socket: "/run/memcached/archwiki.sock"
 wireguard_address: 10.0.0.22
 wireguard_public_key: +HOjbJivvyeww7Mvej5IOZghZ000AAGxy1qN1eZZajo=

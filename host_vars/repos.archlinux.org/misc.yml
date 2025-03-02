@@ -1,12 +1,9 @@
-hostname: "repos.archlinux.org"
-
 ipv4_address: "168.119.141.106"
 ipv4_netmask: "/32"
 ipv6_address: "2a01:4f8:251:598::"
 ipv6_netmask: "/64"
 ipv4_gateway: "168.119.141.65"
 ipv6_gateway: "fe80::1"
-filesystem: "btrfs"
 system_disks:
   - /dev/nvme0n1
   - /dev/nvme1n1

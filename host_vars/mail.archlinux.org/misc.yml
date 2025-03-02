@@ -1,5 +1,3 @@
-filesystem: btrfs
-
 mail_domain: "mail.archlinux.org"
 
 fail2ban_jails:

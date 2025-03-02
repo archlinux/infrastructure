@@ -1,4 +1,3 @@
-filesystem: btrfs
 zram_fraction: 2.0
 wireguard_address: 10.0.0.6
 wireguard_public_key: d/emQtrNru4RLGGLc4TUfM3kHZrQZcweW3IGyHKHoUo=

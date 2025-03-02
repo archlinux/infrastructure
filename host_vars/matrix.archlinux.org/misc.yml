@@ -1,4 +1,3 @@
-filesystem: btrfs
 static_dns: true
 wireguard_address: 10.0.0.15
 wireguard_public_key: Oh6gZG9HbchVM6xiYOJQ6JpF6QD7EeRD7Xa6c5fr5CA=

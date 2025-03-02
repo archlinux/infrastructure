@@ -8,9 +8,6 @@
 - name: Start and enable vnstatd
   service: name=vnstat enabled=yes state=started
 
-- name: Install inetutils for hostname
-  pacman: name=inetutils state=present
-
 - name: Set hostname
   hostname: name="{{ inventory_hostname }}"
 
@@ -132,15 +129,6 @@
 
 - name: Start and enable logrotate timer
   service: name=logrotate.timer state=started enabled=yes
-
-- name: Create zsh directory
-  file: path=/root/.zsh state=directory owner=root group=root mode=0700
-
-- name: Install root shell config
-  copy: src={{ item }} dest=/root/.{{ item }} owner=root group=root mode=0644
-  loop:
-    - zshrc
-    - dircolors
 
 - name: Install pacman-contrib for paccache/pacdiff and fakeroot for checkupdates
   pacman: name=pacman-contrib,fakeroot state=installed
