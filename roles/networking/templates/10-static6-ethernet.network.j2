@@ -1,0 +1,14 @@
+[Match]
+Name={{ ipv6_interface }}
+
+[Network]
+Gateway={{ ipv6_gateway }}
+{% if ipv6_ignore_ra|default(false) is true %}
+IPv6AcceptRA=false
+{% endif %}
+
+[Address]
+{% if ipv6_netmask != "/64" %}
+Peer={{ ipv6_gateway }}/128
+{% endif %}
+Address={{ ipv6_address }}{{ ipv6_netmask }}
