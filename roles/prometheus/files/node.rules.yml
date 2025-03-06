@@ -3,7 +3,7 @@ groups:
     interval: 60s
     rules:
       - alert: HostHighCpuLoad
-        expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle",instance!~"build.archlinux.org",instance!~"repro3.pkgbuild.com",instance!~"repro2.pkgbuild.com",instance!~"runner1.archlinux.org",instance!~"runner3.archlinux.org"}[10m])) * 100) > 90
+        expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle",instance!~"build.archlinux.org",instance!~"repro.*pkgbuild.com",instance!~"runner.*archlinux.org"}[10m])) * 100) > 90
         for: 10m
         labels:
           severity: warning
@@ -21,7 +21,7 @@ groups:
           description: "Swap is filling up (>80%)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
       - alert: HostOutOfMemory
-        expr: node_memory_MemAvailable_bytes{instance!~"build.archlinux.org",instance!~"repro3.pkgbuild.com",instance!~"repro2.pkgbuild.com"} / node_memory_MemTotal_bytes * 100 < 10
+        expr: node_memory_MemAvailable_bytes{instance!~"build.archlinux.org",instance!~"repro.*pkgbuild.com"} / node_memory_MemTotal_bytes * 100 < 10
         for: 5m
         labels:
           severity: warning
@@ -30,7 +30,7 @@ groups:
           description: "Node memory is filling up (< 10% left)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
       - alert: BuildHostOutOfMemory
-        expr: node_memory_MemAvailable_bytes{instance="build.archlinux.org",instance="repro3.pkgbuild.com",instance="repro2.pkgbuild.com"} / node_memory_MemTotal_bytes * 100 < 10
+        expr: node_memory_MemAvailable_bytes{instance="build.archlinux.org",instance="repro.*pkgbuild.com"} / node_memory_MemTotal_bytes * 100 < 10
         for: 12h
         labels:
           severity: warning
