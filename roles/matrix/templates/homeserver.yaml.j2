@@ -111,7 +111,7 @@ turn_shared_secret: "{{ vault_matrix_secrets.turn_shared_secret }}"
 # Metrics
 enable_metrics: true
 metrics_flags:
-    known_servers: true
+  known_servers: true
 report_stats: true
 federation_metrics_domains:
   - matrix.org
@@ -162,12 +162,28 @@ oidc_providers:
 
 # Directories
 user_directory:
-    prefer_local_users: true
+  prefer_local_users: true
+alias_creation_rules:
+{% for network in vault_matrix_secrets.irc_networks %}
+  - user_id: "@{{ network.name }}_*:{{ matrix_server_name }}"
+    action: deny
+{% endfor %}
+  - user_id: "@*:{{ matrix_server_name }}"
+    action: allow
+  - action: deny
+room_list_publication_rules:
+{% for network in vault_matrix_secrets.irc_networks %}
+  - user_id: "@{{ network.name }}_*:{{ matrix_server_name }}"
+    action: deny
+{% endfor %}
+  - user_id: "@*:{{ matrix_server_name }}"
+    action: allow
+  - action: deny
 allow_public_rooms_without_auth: true
 allow_public_rooms_over_federation: true
 default_identity_server: https://matrix.org
 account_threepid_delegates:
-    msisdn: https://vector.im
+  msisdn: https://vector.im
 
 # Federation
 signing_key_path: "/etc/synapse/{{ matrix_server_name }}.signing.key"
