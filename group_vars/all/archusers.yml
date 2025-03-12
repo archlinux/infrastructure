@@ -729,6 +729,12 @@ arch_users:
       - packager
       - junior-packager
       - tu
+  strit:
+    name: "Dan Johansen"
+    email: "strit@archlinux.org"
+    ssh_key: strit.pub
+    groups:
+      - junior-packager
   svartkanin:
     name: "Daniel Girtler"
     email: "svartkanin@archlinux.org"
