@@ -117,7 +117,7 @@ locals {
       http3       = true
     }
     "monitoring.archlinux.org" = {
-      server_type = "cx32"
+      server_type = "cpx31"
       domain      = "monitoring"
     }
     "mumble.archlinux.org" = {
