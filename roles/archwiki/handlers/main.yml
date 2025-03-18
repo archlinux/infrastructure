@@ -1,6 +1,9 @@
 - name: Restart php-fpm@archwiki
   service: name=php-fpm@{{ archwiki_user }} state=restarted
 
+- name: Restart memcached@archwiki
+  service: name=memcached@{{ archwiki_user }} state=restarted
+
 - name: Run wiki updatescript  # noqa no-changed-when
   command: php {{ archwiki_dir }}/public/maintenance/run.php update --quick
   become: true
