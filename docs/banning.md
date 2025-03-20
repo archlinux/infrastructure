@@ -33,3 +33,10 @@ To remove a banned IP Address:
 ```
 firewall-cmd --remove-rich-rule='rule family="ipv6" source address="1:2:3:4:6::" reject' --zone=public
 ```
+
+## Applying your changes
+
+After adding new rules you need to reload the firewall:
+```
+firewall-cmd --reload
+```
