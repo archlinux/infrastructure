@@ -312,14 +312,6 @@ arch_users:
     groups:
       - packager
       - junior-packager
-  farseerfc:
-    name: "Jiachen Yang"
-    email: "farseerfc@archlinux.org"
-    ssh_key: farseerfc.pub
-    groups:
-      - packager
-      - junior-packager
-      - tu
   felixonmars:
     name: "Felix Yan"
     email: "felixonmars@archlinux.org"
