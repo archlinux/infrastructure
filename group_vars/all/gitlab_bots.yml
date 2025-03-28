@@ -13,4 +13,7 @@ gitlab_bots:
   - project_10177_bot_a8dd89a4bf249d4b5d3ec1c3d46e8caf
   - nvchecker
   - project_57074_bot_f7e3b3fe2a01bef8e3aa5ed9d34b741b
-  - group_81209_bot_10e437f10042ac36030406d8523b7954 # group/packaging-buildbtw-dev, user: buildbtw-dev test
+  # group/packaging-buildbtw-dev, user: buildbtw-dev test
+  - group_81209_bot_10e437f10042ac36030406d8523b7954
+  # archlinux/devblog, gitlab issue bot
+  - project_98291_bot_6369e6b37b8d1e0ecabbbb4dabfb5c21
