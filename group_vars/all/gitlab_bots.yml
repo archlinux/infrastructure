@@ -17,3 +17,5 @@ gitlab_bots:
   - group_81209_bot_10e437f10042ac36030406d8523b7954
   # archlinux/devblog, gitlab issue bot
   - project_98291_bot_6369e6b37b8d1e0ecabbbb4dabfb5c21
+  # archlinux/buildbtw, user: buildbtw-dev test
+  - project_84422_bot_97861d9e46abb5faf685117cb3d0f685
