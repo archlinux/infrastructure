@@ -145,26 +145,14 @@ password_config:
    enabled: false
    pepper: "{{ vault_matrix.pepper }}"
 
-oidc_providers:
-  - idp_id: oidc
-    idp_name: "Arch Linux"
-    idp_icon: "mxc://archlinux.org/iQmyhmksPLmphXWFUxiLEwVw"
-    idp_brand: archlinux
-    issuer: "https://accounts.archlinux.org/realms/archlinux"
-    client_id: "openid_matrix"
-    client_secret: "{{ vault_matrix_openid_client_secret }}"
-    scopes: ["openid", "profile", "email", "roles"]
-    allow_existing_users: false
-    enable_registration: true
-    backchannel_logout_enabled: true
-    user_mapping_provider:
-      config:
-        localpart_template: "{{ '{{ user.preferred_username }}' }}"
-        display_name_template: "{{ '{{ user.name | default(user.preferred_username, true) }}' }}"
-        email_template: "{{ '{{ user.email }}' }}"
-    attribute_requirements:
-      - attribute: roles
-        value: "Staff"
+experimental_features:
+  msc3861:
+    enabled: true
+    issuer: "https://{{ matrix_auth_domain }}/"
+    client_id: "{{ matrix_mas_client_id }}"
+    client_auth_metrod: client_secret_basic
+    client_secret: "{{ vault_matrix.mas.client_secret }}"
+    admin_token: "{{ vault_matrix.mas.shared_secret }}"
 
 # Directories
 user_directory:

@@ -320,6 +320,7 @@ locals {
     coc             = { value = "redirect" }
     git             = { value = "redirect" }
     "tu-bylaws.aur" = { value = "redirect" }
+    "auth.matrix"   = { value = "matrix" }
 
     # MTA-STS
     mta-sts               = { value = "mail" }

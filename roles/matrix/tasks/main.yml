@@ -4,6 +4,7 @@
   vars:
     domains:
       - "{{ matrix_domain }}"
+      - "{{ matrix_auth_domain }}"
 
 - name: Install packages
   pacman:
@@ -22,6 +23,7 @@
       - libxslt
       - libzip
       - make
+      - matrix-authentication-service
       - nodejs-lts-iron
       - npm
       - openssl
@@ -164,12 +166,22 @@
   loop:
     - synapse
     - irc
+    - mas
 
 - name: Add synapse postgres user
   postgresql_user:
     login_db: synapse
     user: synapse
     password: '{{ vault_postgres_users.matrix.synapse }}'
+  become: true
+  become_user: postgres
+  become_method: ansible.builtin.su
+
+- name: Add mas postgres user
+  postgresql_user:
+    login_db: mas
+    user: mas
+    password: '{{ vault_postgres_users.matrix.mas }}'
   become: true
   become_user: postgres
   become_method: ansible.builtin.su
@@ -193,6 +205,19 @@
     - worker-media_repository.yaml
   notify:
     - Restart synapse
+
+- name: Install mas config
+  template: src=mas.yaml.j2 dest=/etc/matrix-authentication-service/config.yaml owner=root group=mas mode=0640
+  register: mas_config
+  notify:
+    - Restart mas
+
+- name: Resync mas config  # noqa no-changed-when
+  command: mas-cli config sync --prune
+  become: true
+  become_user: mas
+  become_method: ansible.builtin.sudo
+  when: mas_config.changed
 
 - name: Install draupnir config
   template: src=draupnir.yaml.j2 dest=/etc/synapse/draupnir.yaml owner=root group=synapse mode=0640
@@ -286,6 +311,8 @@
     - synapse-worker@federation_reader.service
     - synapse-worker@federation_sender.service
     - synapse-worker@media_repository.service
+    - matrix-authentication-service.service
+    - matrix-authentication-service-worker.service
     - draupnir.service
     - matrix-appservice-irc.service
     - turnserver.service
