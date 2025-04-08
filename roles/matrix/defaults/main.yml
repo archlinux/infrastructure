@@ -43,6 +43,10 @@ matrix_nginx_config:
       - "~ ^/_synapse/admin/v1/media/.*$"
       - "~ ^/_synapse/admin/v1/quarantine_media/.*$"
       - "~ ^/_synapse/admin/v1/users/.*/media$"
+  - name: mas
+    port: 8009
+    locations:
+      - "~ ^/_matrix/client/(.*)/(login|logout|refresh)"
   - name: homeserver
     port: 8008
     locations:
@@ -68,3 +72,8 @@ matrix_metrics_endpoints:
   - name: irc-bridge
     port: 8024
     path: metrics
+  - name: mas
+    port: 8025
+    path: metrics
+
+matrix_mas_client_id: 01JRBW5WCBW6KMD3QF59V2TF15

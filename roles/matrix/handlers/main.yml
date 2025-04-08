@@ -5,6 +5,13 @@
     enabled: true
     daemon_reload: true
 
+- name: Restart mas
+  systemd_service:
+    name: matrix-authentication-service
+    state: restarted
+    enabled: true
+    daemon_reload: true
+
 - name: Restart draupnir
   systemd_service:
     name: draupnir

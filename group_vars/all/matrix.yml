@@ -1,4 +1,6 @@
 matrix_domain: "matrix.archlinux.org"
+matrix_auth_domain: "auth.matrix.archlinux.org"
+matrix_openid_mas_client_id: 01JRBSDQHEHVFY5A90E0R822C6
 
 # Same as archweb_domain
 matrix_server_name: "archlinux.org"

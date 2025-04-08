@@ -1,0 +1,75 @@
+http:
+  listeners:
+    - name: web
+      resources:
+        - name: discovery
+        - name: human
+        - name: oauth
+        - name: compat
+        - name: graphql
+      binds:
+        - host: localhost
+          port: 8009
+    - name: metrics
+      resources:
+        - name: prometheus
+      binds:
+        - host: localhost
+          port: 8025
+  trusted_proxies:
+    - "127.0.0.1/8"
+    - "::1/128"
+  public_base: "https://{{ matrix_auth_domain }}/"
+  issuer: "https://{{ matrix_auth_domain }}/"
+database:
+  uri: "postgresql://mas:{{ vault_postgres_users.matrix.mas }}@%2Frun%2Fpostgresql/mas"
+  max_connections: 10
+  min_connections: 0
+  connect_timeout: 30
+  idle_timeout: 600
+  max_lifetime: 1800
+email:
+  from: '"Arch Linux Matrix Authentication Service" <noreply@{{ matrix_server_name }}>'
+  reply_to: '"Arch Linux Matrix Authentication Service" <noreply@{{ matrix_server_name }}>'
+  transport: smtp
+  mode: plain
+  hostname: localhost
+  port: 25
+secrets:
+  {{ vault_matrix.mas.secrets | to_yaml(indent=2, default_style='|') | indent(2) }}
+passwords:
+  enabled: false
+  schemes:
+    - version: 1
+      algorithm: bcrypt
+    - version: 2
+      algorithm: argon2id
+matrix:
+  homeserver: "{{ matrix_server_name }}"
+  secret: "{{ vault_matrix.mas.shared_secret }}"
+  endpoint: "https://{{ matrix_domain }}/"
+upstream_oauth2:
+  providers:
+    - id: "{{ matrix_openid_mas_client_id }}"
+      issuer: "https://accounts.archlinux.org/realms/archlinux"
+      human_name: "Arch Linux SSO"
+      brand_name: archlinux
+      client_id: openid_matrix_mas
+      client_secret: "{{ vault_matrix_openid_mas_client_secret }}"
+      token_endpoint_auth_method: client_secret_basic
+      scope: "openid profile email roles"
+      claims_imports:
+        localpart:
+          action: require
+          template: "{{ '{{ user.preferred_username }}' }}"
+        displayname:
+          action: suggest
+          template: "{{ '{{ user.name | default(user.preferred_username, true) }}' }}"
+        email:
+          action: require
+          template: "{{ '{{ user.email }}' }}"
+          set_email_verification: always
+clients:
+  - client_id: "{{ matrix_mas_client_id }}"
+    client_auth_method: client_secret_basic
+    client_secret: "{{ vault_matrix.mas.client_secret }}"
