@@ -88,6 +88,18 @@
 - name: Configure robots.txt
   copy: src=robots.txt dest="{{ archweb_dir }}/archlinux.org/robots.txt" owner=root group=root mode=0644
 
+- name: Make .well-known dirs
+  file: path="{{ archweb_dir }}/archlinux.org/{{ item }}" state=directory owner=root group=root mode=0755
+  loop:
+    - .well-known
+    - .well-known/matrix
+
+- name: Configure .well-known/matrix
+  template: src=well-known-matrix-{{ item }}.json.j2 dest="{{ archweb_dir }}/archlinux.org/.well-known/matrix/{{ item }}" owner=root group=root mode=0644
+  loop:
+    - server
+    - client
+
 - name: Configure archweb
   template: src=local_settings.py.j2 dest={{ archweb_dir }}/local_settings.py owner=archweb group=archweb mode=0660
   register: config
