@@ -2,8 +2,8 @@
   include_role:
     name: certificate
   vars:
-    domains: ["{{ matrix_domain }}"]
-  when: 'matrix_domain is defined'
+    domains:
+      - "{{ matrix_domain }}"
 
 - name: Install packages
   pacman:
@@ -164,28 +164,30 @@
   notify:
     - Restart postgres
 
-- name: Add synapse postgres db
-  postgresql_db: db=synapse lc_collate=C lc_ctype=C template=template0
+- name: Add postgresql databases
+  postgresql_db:
+    name: '{{ item }}'
+    lc_collate: C
+    lc_ctype: C
+    template: template0
   become: true
   become_user: postgres
   become_method: ansible.builtin.su
+  loop:
+    - synapse
+    - irc
 
 - name: Add synapse postgres user
-  postgresql_user: db=synapse user=synapse password={{ vault_postgres_users.synapse }}
-  become: true
-  become_user: postgres
-  become_method: ansible.builtin.su
-
-- name: Add irc postgres db
-  postgresql_db: db=irc
+  postgresql_user:
+    login_db: synapse
+    user: synapse
+    password: '{{ vault_postgres_users.matrix.synapse }}'
   become: true
   become_user: postgres
   become_method: ansible.builtin.su
 
 - name: Create synapse config dir
-  file: path={{ item }} state=directory owner=root group=synapse mode=0750
-  loop:
-    - /etc/synapse
+  file: path=/etc/synapse state=directory owner=root group=synapse mode=0750
 
 - name: Install homeserver config
   template: src=homeserver.yaml.j2 dest=/etc/synapse/homeserver.yaml owner=root group=synapse mode=0640
@@ -221,7 +223,7 @@
 
 - name: Install signing key  # noqa template-instead-of-copy
   copy:
-    content: '{{ vault_matrix_secrets.signing_key }}'
+    content: '{{ vault_matrix.signing_key }}'
     dest: /etc/synapse/{{ matrix_server_name }}.signing.key
     owner: root
     group: synapse
@@ -229,7 +231,7 @@
 
 - name: Install ircpass key  # noqa template-instead-of-copy
   copy:
-    content: '{{ vault_matrix_secrets.ircpass_key }}'
+    content: '{{ vault_matrix.irc.ircpass_key }}'
     dest: /etc/synapse/{{ matrix_server_name }}.ircpass.key
     owner: root
     group: synapse
@@ -237,7 +239,7 @@
 
 - name: Install ircmedia key  # noqa template-instead-of-copy
   copy:
-    content: '{{ vault_matrix_secrets.ircmedia_key }}'
+    content: '{{ vault_matrix.irc.ircmedia_key }}'
     dest: /etc/synapse/{{ matrix_server_name }}.ircmedia.key
     owner: root
     group: synapse
@@ -303,7 +305,7 @@
 - name: Open firewall holes
   ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes
   loop:
-    # synapse's identd
+    # matrix-appservice-irc's identd
     - 113/tcp
     # turnserver
     - 2410-2411/tcp

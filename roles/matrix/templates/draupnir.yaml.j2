@@ -9,7 +9,7 @@ rawHomeserverUrl: "https://{{ matrix_domain }}"
 # Matrix Access Token to use, Draupnir will only use this if pantalaimon.use is false.
 # This option can be loaded from a file by passing "--access-token-path <path>" at the command line,
 # which would allow using secret management systems such as systemd's service credentials.
-accessToken: "{{ vault_matrix_secrets.mjolnir_access_token }}"
+accessToken: "{{ vault_matrix.draupnir.access_token }}"
 
 # Options related to Pantalaimon (https://github.com/matrix-org/pantalaimon)
 pantalaimon:
@@ -168,7 +168,7 @@ protections:
     # The configuration in the past stated support for Regex erroneously.
     #
     words:
-{% for word in vault_matrix_secrets.badwords %}
+{% for word in vault_matrix.draupnir.badwords %}
       - {{ word | to_json }}
 {% endfor %}
 

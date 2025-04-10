@@ -1,22 +1,22 @@
-id: {{ vault_matrix_secrets.irc_appservice_id }}
-hs_token: {{ vault_matrix_secrets.irc_hs_token }}
-as_token: {{ vault_matrix_secrets.irc_as_token }}
+id: {{ vault_matrix.irc.appservice_id }}
+hs_token: {{ vault_matrix.irc.hs_token }}
+as_token: {{ vault_matrix.irc.as_token }}
 namespaces:
 
   users:
-{% for network in vault_matrix_secrets.irc_networks %}
+{% for network in vault_matrix.irc.networks %}
     - exclusive: true
       regex: '@{{ network.name | regex_escape() }}_.*:{{ matrix_server_name | regex_escape() }}'
 {% endfor %}
 
   aliases:
-{% for network in vault_matrix_secrets.irc_networks %}
+{% for network in vault_matrix.irc.networks %}
     - exclusive: true
       regex: '#{{ network.name | regex_escape() }}_.*:{{ matrix_server_name | regex_escape() }}'
 {% endfor %}
 
   rooms:
-{% for room in vault_matrix_secrets | json_query("irc_networks[?!disabled].mappings[].room") %}
+{% for room in vault_matrix.irc.networks | json_query("[?!disabled].mappings[].room") %}
     - exclusive: false
       regex: '{{ room | regex_escape() }}'
 {% endfor %}

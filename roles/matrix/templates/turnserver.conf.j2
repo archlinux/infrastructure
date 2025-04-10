@@ -266,7 +266,7 @@ use-auth-secret
 # in the user database (if present). The database-stored  value can be changed on-the-fly
 # by a separate program, so this is why that mode is considered 'dynamic'.
 #
-static-auth-secret="{{ vault_matrix_secrets.turn_shared_secret }}"
+static-auth-secret="{{ vault_matrix.turn_shared_secret }}"
 
 # Server name used for
 # the oAuth authentication purposes.

@@ -28,7 +28,7 @@ database:
   args:
     dbname: synapse
     user: synapse
-    password: {{ vault_postgres_users.synapse }}
+    password: {{ vault_postgres_users.matrix.synapse }}
     cp_min: 1
     cp_max: 8
 
@@ -106,7 +106,7 @@ turn_uris:
   - "turns:{{ matrix_domain }}:2420?transport=tcp"
   - "turn:{{ matrix_domain }}:2410?transport=udp"
   - "turn:{{ matrix_domain }}:2410?transport=tcp"
-turn_shared_secret: "{{ vault_matrix_secrets.turn_shared_secret }}"
+turn_shared_secret: "{{ vault_matrix.turn_shared_secret }}"
 
 # Metrics
 enable_metrics: true
@@ -118,7 +118,7 @@ federation_metrics_domains:
 
 # Auto-join new users to rooms
 auto_join_rooms:
-{% for room in vault_matrix_secrets.auto_join_rooms %}
+{% for room in vault_matrix.auto_join_rooms %}
   - {{ room | to_json }}
 {% endfor %}
 autocreate_auto_join_rooms: false
@@ -131,13 +131,13 @@ auto_accept_invites:
   only_from_local_users: true
 
 # Login and registration
-registration_shared_secret: "{{ vault_matrix_secrets.registration_shared_secret }}"
-macaroon_secret_key: "{{ vault_matrix_secrets.macaroon_secret_key }}"
-form_secret: "{{ vault_matrix_secrets.form_secret }}"
+registration_shared_secret: "{{ vault_matrix.registration_shared_secret }}"
+macaroon_secret_key: "{{ vault_matrix.macaroon_secret_key }}"
+form_secret: "{{ vault_matrix.form_secret }}"
 
 password_config:
    enabled: false
-   pepper: "{{ vault_matrix_secrets.pepper }}"
+   pepper: "{{ vault_matrix.pepper }}"
 
 oidc_providers:
   - idp_id: oidc
@@ -164,7 +164,7 @@ oidc_providers:
 user_directory:
   prefer_local_users: true
 alias_creation_rules:
-{% for network in vault_matrix_secrets.irc_networks %}
+{% for network in vault_matrix.irc.networks %}
   - user_id: "@{{ network.name }}_*:{{ matrix_server_name }}"
     action: deny
 {% endfor %}
@@ -172,7 +172,7 @@ alias_creation_rules:
     action: allow
   - action: deny
 room_list_publication_rules:
-{% for network in vault_matrix_secrets.irc_networks %}
+{% for network in vault_matrix.irc.networks %}
   - user_id: "@{{ network.name }}_*:{{ matrix_server_name }}"
     action: deny
 {% endfor %}
@@ -197,7 +197,7 @@ enable_media_repo: false
 notify_appservices_from_worker: appservice
 federation_sender_instances:
   - federation_sender
-worker_replication_secret: "{{ vault_matrix_secrets.worker_replication_secret }}"
+worker_replication_secret: "{{ vault_matrix.worker_replication_secret }}"
 worker_log_config: "/etc/synapse/log_config.yaml"
 redis:
   enabled: true

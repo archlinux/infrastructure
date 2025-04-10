@@ -40,7 +40,7 @@ ircService:
   # All server keys can be hot-reloaded, however existing IRC connections
   # will not have changes applied to them.
   servers:
-{% for network in vault_matrix_secrets | json_query("irc_networks[?!disabled]") %}
+{% for network in vault_matrix.irc.networks | json_query("[?!disabled]") %}
     # The address of the server to connect to.
     "{{ network.address }}":
       # A human-readable short name. This is used to label IRC status rooms
@@ -637,7 +637,7 @@ ircService:
   # '*': admin
   # 'matrix.org': admin
   # '@fibble:matrix.org': admin
-{% for admin in vault_matrix_secrets.irc_admins %}
+{% for admin in vault_matrix.irc.admins %}
     {{ admin | to_json }}: admin
 {% endfor %}
 
@@ -695,7 +695,7 @@ database:
    # Either a PostgreSQL connection string, or a path to the NeDB storage directory.
    # For postgres, it must start with postgres://
    # For NeDB, it must start with nedb://. The path is relative to the project directory.
-  connectionString: "socket://synapse:{{ vault_postgres_users.synapse }}@/run/postgresql?db=irc"
+  connectionString: "socket://synapse:{{ vault_postgres_users.matrix.synapse }}@/run/postgresql?db=irc"
 
 # Enable running IRC connections out of a secondary process.
 # See https://matrix-org.github.io/matrix-appservice-irc/latest/connection_pooling.html for more information
