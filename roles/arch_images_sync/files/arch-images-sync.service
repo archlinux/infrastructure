@@ -1,0 +1,9 @@
+[Unit]
+Description=Sync arch-images releases
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/arch-images-sync.sh boxes wsl
+ProtectSystem=strict
+PrivateTmp=true
+ReadWritePaths=/srv/ftp/lastupdate /srv/ftp/images /srv/ftp/wsl
