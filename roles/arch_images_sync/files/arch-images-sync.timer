@@ -1,5 +1,5 @@
 [Unit]
-Description=Sync arch-boxes releases hourly
+Description=Sync arch-images releases hourly
 
 [Timer]
 OnCalendar=hourly
