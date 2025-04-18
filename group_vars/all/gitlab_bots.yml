@@ -17,3 +17,7 @@ gitlab_bots:
   - group_81209_bot_10e437f10042ac36030406d8523b7954
   # archlinux/devblog, gitlab issue bot
   - project_98291_bot_6369e6b37b8d1e0ecabbbb4dabfb5c21
+  # archlinux/archlinux-wsl, token for cleaning up the package registry
+  - project_85684_bot_601164180ca9019d6ade06b04b0161da
+  # archlinux/archlinux-wsl, gitlab issue bot
+  - project_85684_bot_1c840b3a28d3a03d2a13ef0b9aea2ed9
