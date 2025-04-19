@@ -21,3 +21,4 @@ gitlab_bots:
   - project_85684_bot_601164180ca9019d6ade06b04b0161da
   # archlinux/archlinux-wsl, gitlab issue bot
   - project_85684_bot_1c840b3a28d3a03d2a13ef0b9aea2ed9
+  - gluebuddy
