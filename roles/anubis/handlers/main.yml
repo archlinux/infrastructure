@@ -1,0 +1,2 @@
+- name: Restart anubis
+  service: name=anubis@default state=restarted

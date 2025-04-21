@@ -1,0 +1,13 @@
+- name: Install anubis
+  pacman: name=anubis state=present
+
+- name: Install anubis configuration
+  copy: src=default.env dest=/etc/anubis/ owner=root group=root mode=644
+  notify: Restart anubis
+
+- name: Install anubis bot policies
+  copy: src=botPolicies.yaml dest=/etc/anubis/botPolicies.default.yaml owner=root group=root mode=644
+  notify: Restart anubis
+
+- name: Start and enable anubis
+  service: name=anubis@default enabled=yes state=started

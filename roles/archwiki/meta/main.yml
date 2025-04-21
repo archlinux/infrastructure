@@ -4,3 +4,4 @@ galaxy_info:
 
 dependencies:
   - role: nginx
+  - role: anubis
