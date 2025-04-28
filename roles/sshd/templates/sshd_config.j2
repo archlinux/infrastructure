@@ -3,15 +3,6 @@ LogLevel VERBOSE
 PasswordAuthentication no
 ClientAliveInterval 30
 
-{% if 'buildservers' not in group_names %}
-AllowAgentForwarding no
-AllowTcpForwarding no
-{% else %}
-Match User root
-	AllowAgentForwarding no
-	AllowTcpForwarding no
-{% endif %}
-
 # unlink forwarded sockets; for gpg agent forwarding
 StreamLocalBindUnlink yes
 
@@ -21,3 +12,15 @@ AcceptEnv COLORFGBG
 AcceptEnv LANG
 AcceptEnv LC_*
 AcceptEnv TZ
+
+{% if 'buildservers' not in group_names %}
+AllowAgentForwarding no
+AllowTcpForwarding no
+{% else %}
+Match User root
+	AllowAgentForwarding no
+	AllowTcpForwarding no
+{% endif %}
+
+# Do *not* add anything here, it is matched by the
+# block above for user root only on build server!
