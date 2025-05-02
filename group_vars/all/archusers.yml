@@ -439,6 +439,12 @@ arch_users:
       - packager
       - junior-packager
       - tu
+  integral:
+    name: "George Hu"
+    email: "integral@archlinux.org"
+    ssh_key: integral.pub
+    groups:
+      - junior-packager
   jelle:
     name: "Jelle van der Waa"
     email: "jelle@archlinux.org"
