@@ -75,7 +75,7 @@
 - name: Install synapse
   pip:
     name:
-      - 'matrix-synapse[postgres,oidc,systemd,url-preview,redis,user-search]==1.129.0'
+      - 'matrix-synapse[postgres,oidc,systemd,url-preview,redis]==1.129.0'
     state: latest
     extra_args: '--upgrade-strategy=eager'
     virtualenv: /var/lib/synapse/venv
