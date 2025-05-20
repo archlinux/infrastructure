@@ -9,6 +9,7 @@ matrix_nginx_config:
   - name: federation_reader
     port: 8011
     locations:
+      - "~ ^/_matrix/federation/v1/version$"
       - "~ ^/_matrix/federation/v1/event/"
       - "~ ^/_matrix/federation/v1/state/"
       - "~ ^/_matrix/federation/v1/state_ids/"
