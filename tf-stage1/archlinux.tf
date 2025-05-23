@@ -671,7 +671,7 @@ resource "hcloud_volume" "mirror" {
 
 resource "hcloud_volume" "homedir" {
   name              = "homedir"
-  size              = 100
+  size              = 125
   server_id         = hcloud_server.machine["homedir.archlinux.org"].id
   delete_protection = true
 }
