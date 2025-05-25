@@ -8,11 +8,8 @@ listen.owner = {{ archwiki_user }}
 listen.group = http
 listen.mode = 0660
 
-pm = dynamic
-pm.max_children = 30
-pm.start_servers = 10
-pm.min_spare_servers = 5
-pm.max_spare_servers = 10
+pm = static
+pm.max_children = {{ ansible_processor_vcpus }}
 pm.max_requests = 2000
 
 php_admin_value[open_basedir] = {{ archwiki_dir }}:/usr/bin/diff3:/usr/bin/diff:/var/log/archwiki
