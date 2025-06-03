@@ -36,7 +36,7 @@ aurweb_environment_type: 'prod'
 # aurweb timers and services are installed and restarted by default,
 # unless .install and .restart are explicitly set to "false"
 aurweb_timers:
-  - { name: "aurweb-git.timer" }
+  # - { name: "aurweb-git.timer" }
   - { name: "aurweb-aurblup.timer" }
   - { name: "aurweb-mkpkglists.timer" }
   - { name: "aurweb-pkgmaint.timer" }
