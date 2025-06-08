@@ -44,9 +44,11 @@ server {
         access_log /var/log/nginx/{{ matrix_domain }}/access.log.json json_main;
 {% if location.add_cors | default(false) %}
         include snippets/headers.conf;
-        add_header Access-Control-Allow-Origin *;
-        add_header Access-Control-Allow-Methods "GET, HEAD, POST, PUT, DELETE, OPTIONS";
-        add_header Access-Control-Allow-Headers "X-Requested-With, Content-Type, Authorization, Date";
+        add_header Access-Control-Allow-Origin "*" always;
+        add_header Access-Control-Allow-Methods "GET,HEAD,POST,PUT,DELETE,OPTIONS" always;
+        add_header Access-Control-Allow-Headers "Authorization,Content-Type,Accept,Origin,User-Agent,DNT,Cache-Control,X-Mx-ReqToken,Keep-Alive,X-Requested-With,If-Modified-Since,Date" always;
+        add_header Access-Control-Expose-Headers "Content-Length,Content-Range" always;
+        add_header Access-Control-Max-Age 1728000;
 {% endif %}
         proxy_pass http://matrix_{{ config.name }}{{ location.pass | default('') }};
         proxy_http_version 1.1;

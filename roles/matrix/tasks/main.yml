@@ -76,6 +76,7 @@
   pip:
     name:
       - 'matrix-synapse[postgres,oidc,systemd,url-preview,redis]==1.131.0'
+      - synapse-http-antispam
     state: latest
     extra_args: '--upgrade-strategy=eager'
     virtualenv: /var/lib/synapse/venv
@@ -90,7 +91,7 @@
   git:
     repo: https://github.com/the-draupnir-project/Draupnir
     dest: /var/lib/synapse/draupnir
-    version: v2.2.0
+    version: v2.3.1
     force: true
   become: true
   become_user: synapse
@@ -115,19 +116,6 @@
   become_user: synapse
   become_method: ansible.builtin.sudo
   when: draupnir_git.changed
-
-- name: Install draupnir antispam module
-  pip:
-    name:
-      - /var/lib/synapse/draupnir/synapse_antispam
-    state: latest
-    virtualenv: /var/lib/synapse/venv
-  become: true
-  become_user: synapse
-  become_method: ansible.builtin.sudo
-  when: synapse_pip.changed or draupnir_git.changed
-  notify:
-    - Restart synapse
 
 - name: Download matrix-appservice-irc
   git:
