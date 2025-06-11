@@ -10,6 +10,17 @@
     - /srv/gitlab
     - /srv/gitlab/scripts
 
+    # This is where mixins for inside GitLab's nginx's own server block end up.
+    - /srv/gitlab/config/nginx-gitlab-server-mixins
+
+- name: Install nginx config mixins
+  template: src={{ item }}.conf.j2 dest=/srv/gitlab/config/nginx-gitlab-server-mixins/{{ item }}.conf owner=root group=root mode=0644
+  loop:
+    - nginx-mixin-block-bytespider
+    - nginx-mixin-bypass
+  notify:
+    - Restart gitlab
+
 - name: Start docker gitlab image
   docker_container:
     name: gitlab
@@ -37,7 +48,7 @@
         registry_external_url 'https://registry.archlinux.org'
         nginx['client_max_body_size'] = '10g'
         nginx['listen_addresses'] = {{ gitlab_primary_addresses }}
-        nginx['custom_gitlab_server_config'] = "set $bypass 0;\nif ($remote_addr = \"{{ hostvars['repos.archlinux.org']['ipv4_address'] }}\") {\nset $bypass 1;\n}\nif ($remote_addr = \"{{ hostvars['repos.archlinux.org']['ipv6_address'] }}\") {\nset $bypass 1;\n}\nproxy_set_header Gitlab-Bypass-Rate-Limiting $bypass;\n"
+        nginx['custom_gitlab_server_config'] = "include /etc/gitlab/nginx-gitlab-server-mixins/*.conf;"
         registry_nginx['listen_addresses'] = {{ gitlab_primary_addresses }}
         gitlab_pages['inplace_chroot'] = true
         pages_external_url "http://{{ gitlab_domain }}"
