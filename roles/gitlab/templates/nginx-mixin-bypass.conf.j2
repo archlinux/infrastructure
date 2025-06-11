@@ -1,0 +1,11 @@
+set $bypass 0;
+
+if ($remote_addr = "{{ hostvars['repos.archlinux.org']['ipv4_address'] }}") {
+  set $bypass 1;
+}
+
+if ($remote_addr = "{{ hostvars['repos.archlinux.org']['ipv6_address'] }}") {
+  set $bypass 1;
+}
+
+proxy_set_header Gitlab-Bypass-Rate-Limiting $bypass;

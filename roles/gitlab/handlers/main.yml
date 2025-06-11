@@ -1,0 +1,4 @@
+- name: Restart gitlab
+  docker_container:
+    name: gitlab
+    restart: true
