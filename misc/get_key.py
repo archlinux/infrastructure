@@ -4,11 +4,10 @@ import json
 import os
 import sys
 from contextlib import contextmanager
-from enum import Enum
 from pathlib import Path
-from typing import List
 import click
 import yaml
+import enum
 
 
 @contextmanager
@@ -45,18 +44,15 @@ def load_vault(path):
     )
 
 
-class OutputFormat(str, Enum):
-    BARE = "bare"
-    ENV = "env"
-    JSON = "json"
-
-    def __str__(self):
-        return self.value
+class OutputFormat(enum.StrEnum):
+    bare = enum.auto()
+    env = enum.auto()
+    json = enum.auto()
 
 @click.command()
 @click.argument('vault', type=click.Path(exists=True))
 @click.argument('keys', nargs=-1)
-@click.option('--format', default=OutputFormat.BARE, type=click.Choice([e.value for e in OutputFormat]), help='Output format')
+@click.option('--format', default=OutputFormat.bare, type=click.Choice(OutputFormat), help='Output format')
 def main(vault, keys, format):
     """
     Get a bunch of entries from the vault located at VAULT.
@@ -66,13 +62,13 @@ def main(vault, keys, format):
     vault = load_vault(vault)
     filtered = {vault_key: vault[vault_key] for vault_key in keys}
 
-    if format == OutputFormat.BARE:
+    if format == OutputFormat.bare:
         for secret in filtered.values():
             print(secret)
-    elif format == OutputFormat.ENV:
+    elif format == OutputFormat.env:
         for key, secret in filtered.items():
             print(f"{key}={secret}")
-    elif format == OutputFormat.JSON:
+    elif format == OutputFormat.json:
         json.dump(filtered, sys.stdout)
         print()
 
