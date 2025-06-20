@@ -139,3 +139,6 @@
 
 - name: Install makepkg gitconfig
   copy: src=gitconfig dest=/etc/makepkg.d/gitconfig owner=root group=root mode=0644
+
+- name: Install hgrc
+  copy: src=hgrc dest=/etc/mercurial/hgrc owner=root group=root mode=0755

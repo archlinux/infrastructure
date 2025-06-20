@@ -1,0 +1,5 @@
+[web]
+cacerts = /etc/ssl/certs/ca-certificates.crt
+
+[trusted]
+groups = users
