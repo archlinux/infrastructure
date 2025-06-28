@@ -1,5 +1,5 @@
 - name: Install prometheus-node-exporter
-  pacman: name=prometheus-node-exporter,arch-audit,pacman-contrib,jq,hq,sudo state=present
+  pacman: name=prometheus-node-exporter,arch-audit,pacman-contrib,jq,sudo state=present
 
 - name: Install prometheus-blackbox-exporter
   pacman: name=prometheus-blackbox-exporter state=present
