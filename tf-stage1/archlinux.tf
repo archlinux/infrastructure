@@ -159,7 +159,7 @@ locals {
       backups     = true
     }
     "wiki.archlinux.org" = {
-      server_type = "cpx31"
+      server_type = "cpx41"
       domain      = "wiki"
       http3       = true
     }
