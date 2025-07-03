@@ -1,1 +1,2 @@
-gitlab_runner_libvirt_vm_memory: 2048
+gitlab_runner_memory_limit_libvirt_mb: 16384
+gitlab_runner_memory_limit_docker: "16384m"
