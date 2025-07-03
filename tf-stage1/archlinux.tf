@@ -13,6 +13,15 @@ data "external" "vault_hetzner" {
   ]
 }
 
+data "external" "vault_hetzner_s3" {
+  program = [
+    "${path.module}/../misc/get_key.py", "${path.module}/../group_vars/all/vault_hetzner_s3.yml",
+    "vault_hetzner_s3_gitlab_runners_access_key",
+    "vault_hetzner_s3_gitlab_runners_secret_key",
+    "--format", "json"
+  ]
+}
+
 data "hcloud_image" "archlinux" {
   with_selector = "custom_image=archlinux"
   most_recent   = true
@@ -25,6 +34,30 @@ provider "hcloud" {
 
 provider "hetznerdns" {
   apitoken = data.external.vault_hetzner.result.hetzner_dns_api_key
+}
+
+provider "minio" {
+  minio_server   = "fsn1.your-objectstorage.com"
+  minio_user     = data.external.vault_hetzner_s3.result.vault_hetzner_s3_gitlab_runners_access_key
+  minio_password = data.external.vault_hetzner_s3.result.vault_hetzner_s3_gitlab_runners_secret_key
+  minio_region   = "fsn1"
+  minio_ssl      = true
+}
+
+resource "minio_s3_bucket" "gitlab_runners_cache" {
+  bucket         = "archlinux-gitlab-runners-cache"
+  acl            = "private"
+  object_locking = false
+}
+
+resource "minio_ilm_policy" "gitlab_runners_cache_expiry" {
+  bucket = minio_s3_bucket.gitlab_runners_cache.bucket
+
+  rule {
+    id         = "expire-14d"
+    status     = "Enabled"
+    expiration = "14d"
+  }
 }
 
 locals {
