@@ -9,6 +9,9 @@ terraform {
     hetznerdns = {
       source = "timohirt/hetznerdns"
     }
+    minio = {
+      source = "aminueza/minio"
+    }
   }
   required_version = ">= 0.13"
 }
