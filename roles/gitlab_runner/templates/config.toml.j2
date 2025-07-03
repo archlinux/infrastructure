@@ -23,6 +23,7 @@ listen_address = ":9252"
     disable_cache = false
     volumes = ["/cache"]
     shm_size = 0
+    memory = "{{ gitlab_runner_memory_limit_docker }}"
 {% if 'gitlab_vm_runners' in group_names %}
 
 [[runners]]
