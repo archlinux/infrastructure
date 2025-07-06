@@ -11,6 +11,7 @@
   loop:
     - domains
     - msa_header_checks
+    - users_managed
 
 - name: Update aliases db  # noqa no-changed-when
   command: postalias /etc/postfix/aliases
