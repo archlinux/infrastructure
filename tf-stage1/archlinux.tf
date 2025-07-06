@@ -245,6 +245,7 @@ locals {
     "_smtp._tls"            = { value = "v=TLSRPTv1;rua=mailto:postmaster@archlinux.org" }
     "_smtp._tls.aur"        = { value = "v=TLSRPTv1;rua=mailto:postmaster@archlinux.org" }
     "_smtp._tls.master-key" = { value = "v=TLSRPTv1;rua=mailto:postmaster@archlinux.org" }
+    "_smtp._tls.gitlab"     = { value = "v=TLSRPTv1;rua=mailto:postmaster@archlinux.org" }
     "_smtp._tls.lists"      = { value = "v=TLSRPTv1;rua=mailto:postmaster@archlinux.org" }
     # Generated with: date +%Y%m%d01
     "_mta-sts"   = { value = "v=STSv1; id=2022051602" }
@@ -252,6 +253,7 @@ locals {
     "mail"       = { value = "v=spf1 ip4:${hcloud_server.machine["mail.archlinux.org"].ipv4_address} ip6:${hcloud_server.machine["mail.archlinux.org"].ipv6_address} ~all" }
     "aur"        = { value = "v=spf1 ip4:${hcloud_server.machine["mail.archlinux.org"].ipv4_address} ip6:${hcloud_server.machine["mail.archlinux.org"].ipv6_address} ~all" }
     "master-key" = { value = "v=spf1 ip4:${hcloud_server.machine["mail.archlinux.org"].ipv4_address} ip6:${hcloud_server.machine["mail.archlinux.org"].ipv6_address} ~all" }
+    gitlab       = { value = "v=spf1 ip4:${hcloud_server.machine["mail.archlinux.org"].ipv4_address} ip6:${hcloud_server.machine["mail.archlinux.org"].ipv6_address} ~all" }
     lists        = { value = "v=spf1 ip4:${hcloud_server.machine["lists.archlinux.org"].ipv4_address} ip6:${hcloud_server.machine["lists.archlinux.org"].ipv6_address} ~all" }
   }
 
@@ -266,6 +268,7 @@ locals {
     "@"        = { mx = "mail" }
     aur        = { mx = "mail" }
     master-key = { mx = "mail" }
+    gitlab     = { mx = "mail" }
     lists      = { mx = "lists" }
   }
 
@@ -359,6 +362,8 @@ locals {
     "_mta-sts.aur"        = { value = "_mta-sts" }
     "mta-sts.master-key"  = { value = "mail" }
     "_mta-sts.master-key" = { value = "_mta-sts" }
+    "mta-sts.gitlab"      = { value = "mail" }
+    "_mta-sts.gitlab"     = { value = "_mta-sts" }
     "mta-sts.lists"       = { value = "mail" }
     "_mta-sts.lists"      = { value = "_mta-sts" }
   }

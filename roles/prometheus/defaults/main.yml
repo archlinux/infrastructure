@@ -64,6 +64,7 @@ blackbox_targets:
     - https://monthly-reports.archlinux.page
     - https://mta-sts.archlinux.org/.well-known/mta-sts.txt
     - https://mta-sts.aur.archlinux.org/.well-known/mta-sts.txt
+    - https://mta-sts.gitlab.archlinux.org/.well-known/mta-sts.txt
     - https://mta-sts.lists.archlinux.org/.well-known/mta-sts.txt
     - https://mta-sts.master-key.archlinux.org/.well-known/mta-sts.txt
     - https://openpgpkey.archlinux.org/.well-known/openpgpkey/archlinux.org/policy
