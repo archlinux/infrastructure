@@ -578,6 +578,14 @@ arch_users:
       - mail.archlinux.org
     groups:
       - support-staff
+  nukesor:
+    name: "Arne Christian Beer"
+    ssh_key: nukesor.pub
+    hosts:
+      - mail.archlinux.org
+      - homedir.archlinux.org
+    groups:
+      - support-staff
   orhun:
     name: "Orhun Parmaksiz"
     email: "orhun@archlinux.org"
