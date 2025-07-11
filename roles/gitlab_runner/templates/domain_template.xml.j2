@@ -1,6 +1,6 @@
 <domain type='kvm'>
   <name>$vm_name</name>
-  <memory unit='MiB'>{{ gitlab_runner_libvirt_vm_memory }}</memory>
+  <memory unit='MiB'>{{ gitlab_runner_memory_limit_libvirt_mb }}</memory>
   <vcpu>4</vcpu>
   <sysinfo type='smbios'>
     <oemStrings>
