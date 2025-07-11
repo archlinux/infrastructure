@@ -12,7 +12,14 @@ listen_address = ":9252"
   executor = "docker"
   [runners.custom_build_dir]
   [runners.cache]
+    Type = "s3"
+    Shared = true
     [runners.cache.s3]
+      ServerAddress = "fsn1.your-objectstorage.com"
+      AccessKey = "{{ vault_hetzner_s3_gitlab_runners_access_key }}"
+      SecretKey = "{{ vault_hetzner_s3_gitlab_runners_secret_key }}"
+      # Also refer to minio_s3_bucket.gitlab_runners_cache in tf-stage1/archlinux.tf
+      BucketName = "archlinux-gitlab-runners-cache"
     [runners.cache.gcs]
   [runners.docker]
     tls_verify = false
@@ -20,8 +27,7 @@ listen_address = ":9252"
     privileged = false
     disable_entrypoint_overwrite = false
     oom_kill_disable = false
-    disable_cache = false
-    volumes = ["/cache"]
+    disable_cache = true
     shm_size = 0
     memory = "{{ gitlab_runner_memory_limit_docker }}"
 {% if 'gitlab_vm_runners' in group_names %}
@@ -33,6 +39,15 @@ listen_address = ":9252"
   executor = "custom"
   builds_dir = "/builds"
   cache_dir = "/cache"
+  [runners.cache]
+    Type = "s3"
+    Shared = true
+    [runners.cache.s3]
+      ServerAddress = "fsn1.your-objectstorage.com"
+      AccessKey = "{{ vault_hetzner_s3_gitlab_runners_access_key }}"
+      SecretKey = "{{ vault_hetzner_s3_gitlab_runners_secret_key }}"
+      # Also refer to minio_s3_bucket.gitlab_runners_cache in tf-stage1/archlinux.tf
+      BucketName = "archlinux-gitlab-runners-cache"
   environment = ["ARCHIVER_STAGING_DIR=/var/tmp"]
   [runners.custom]
     prepare_exec = "/usr/local/bin/libvirt-executor"
