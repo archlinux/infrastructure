@@ -2,3 +2,4 @@ letsencrypt_validation_dir: "/var/lib/letsencrypt"
 nginx_firewall_zone:
 nginx_extra_modules: []
 nginx_enable_http3: false
+nginx_explict_listen_addresses: false

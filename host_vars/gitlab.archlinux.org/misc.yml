@@ -14,3 +14,4 @@ ipv6_gateway: "fe80::1"
 system_disks:
   - /dev/nvme0n1
   - /dev/nvme1n1
+nginx_explict_listen_addresses: true

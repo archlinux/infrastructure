@@ -1,11 +1,11 @@
 server {
-    listen       80 default_server;
-    listen       [::]:80 default_server;
-    listen       443 default_server ssl;
-    listen       [::]:443 default_server ssl;
+    listen       {{ ipv4_address ~ ':' if nginx_explict_listen_addresses }}80 default_server;
+    listen       [{{ ipv6_address if nginx_explict_listen_addresses else '::' }}]:80 default_server;
+    listen       {{ ipv4_address ~ ':' if nginx_explict_listen_addresses }}443 default_server ssl;
+    listen       [{{ ipv6_address if nginx_explict_listen_addresses else '::' }}]:443 default_server ssl;
 {% if nginx_enable_http3 %}
-    listen       443 default_server quic reuseport;
-    listen       [::]:443 default_server quic reuseport;
+    listen       {{ ipv4_address ~ ':' if nginx_explict_listen_addresses }}443 default_server quic reuseport;
+    listen       [{{ ipv6_address if nginx_explict_listen_addresses else '::' }}]:443 default_server quic reuseport;
 {% endif %}
     http2        on;
     ssl_reject_handshake on;
