@@ -12,7 +12,6 @@
       - freetype2
       - gcc
       - git
-      - icu
       - jemalloc
       - libffi
       - libjpeg-turbo
@@ -75,7 +74,7 @@
 - name: Install synapse
   pip:
     name:
-      - 'matrix-synapse[postgres,oidc,systemd,url-preview,redis]==1.133.0'
+      - 'matrix-synapse[postgres,oidc,systemd,url-preview,redis]==1.134.0'
       - synapse-http-antispam
     state: latest
     extra_args: '--upgrade-strategy=eager'
