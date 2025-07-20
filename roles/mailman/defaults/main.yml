@@ -133,6 +133,6 @@ lists:
   staff:
     advertised: false
     archive_policy: private
-    description: Internal list that includes all Arch Linux staff members (devs, TUs, support staff)
+    description: Internal list that includes all Arch Linux staff members (devs, PMs, support staff)
     display_name: Staff
     subscription_policy: confirm_then_moderate
