@@ -61,10 +61,13 @@ If you want to add a new official project, here are some guidelines to follow:
        target repository are exactly the same.
 1. [ ] Go to https://gitlab.archlinux.org/archlinux/my-example/-/settings/repository and open
        *Mirroring repositories*. Make sure it has these settings:
-   - `Git repository URL`: `ssh://git@github.com/archlinux/my-example.git`
+   - `Git repository URL`: `ssh://github.com/archlinux/my-example.git`
    - `Mirror direction`: `Push`
+   - Click `Detect host keys`
    - `Authentication method`: `SSH public key`
-   - `Only mirror protected branches` : `off`
+   - `Username`: `git`
+   - `Keep divergent refs` : `off`
+   - `Mirror branches` : `Mirror all branches`
 1. [ ] Click `Mirror repository`.
 1. [ ] A new entry will pop up which has a button titled `Copy SSH public key`. Click that to copy the public key to your clipboard.
 
@@ -84,14 +87,17 @@ If you want to add a new official project, here are some guidelines to follow:
    - `GitHub Actions`
    - `Wiki`
    - `Issues`
+   - `Discussions`
    - `Projects`
-1. [ ] Go to https://github.com/archlinux/my-example/settings/hooks and add a new webhook
+1. [ ] Make sure the GitHub Pull Request Closer can run.
+       Go to https://github.com/archlinux/my-example/settings/hooks and add a new webhook
    - `Payload URL`: `$(misc/get_key.py misc/vaults/vault_github.yml github_pull_closer_webhook_url)`
    - `Content type`: `application/json`
    - `Which events would you like to trigger this webhook?`
      - `Let me select individual events.`: `Pull requests`
 1. [ ] In the GitHub description of the mirrored project, append " (read-only mirror)" so that people know it's a mirror.
-1. [ ] Disable `Packages` and `Environments` from being shown on the main page.
+1. [ ] Disable `Packages` and `Deployments` from being shown on the main page.
 1. [ ] In the website field put the full url to the repository on our GitLab.
+1. [ ] Log in with your primary GitHub account.
 1. [ ] Go to https://github.com/archlinux/my-example/settings/access and remove the GitHub account `archlinux-github`
 1. [ ] Go to https://github.com/orgs/archlinux/teams/read-only-mirrors/repositories and add the repository with `write` permission
