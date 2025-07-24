@@ -2,7 +2,7 @@
   hosts: archlinux.org
   tasks:
     - name: Assign ipv4 addresses to fact postgres_hosts4
-      set_fact: postgres_hosts4="{{ [repos4] + detected_ips }}"
+      set_fact: postgres_hosts4="{{ [repos4] | union(detected_ips) }}"
       vars:
         repos4: "{{ hostvars['repos.archlinux.org']['wireguard_address'] }}/32"
         detected_ips: "{{ groups['mirrors'] | map('extract', hostvars, ['wireguard_address']) | select() | map('regex_replace', '^(.+)$', '\\1/32') | list }}"
