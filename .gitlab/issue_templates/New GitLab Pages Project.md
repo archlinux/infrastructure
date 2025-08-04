@@ -19,8 +19,9 @@ something hosted below one of our domains is official).
 1. [ ] Specify this path (`public/`) as an artifact path.
 1. [ ] GitLab should now recognize that you're trying to use Pages and will show some relevant
        information at https://gitlab.archlinux.org/your-namespace/your-project/pages
-1. [ ] At this page, you'll also need to add your custom domain. Add the custom domain you requested earlier.
+1. [ ] On this page, you'll also need to add your custom domain. Add the custom domain you requested earlier.
        GitLab will then show domain verification information which you'll need in the next step.
+1. [ ] Still on this page, choose your requested domain in the **Primary domain** drop-down menu.
 1. [ ] At this point, we'll need to add some stuff to the `archlinux_org_gitlab_pages` variable in `archlinux.tf`. It should look something like this.
        Make sure to substitute the `your-domain` and `your-code-shown-by-gitlab` strings accordingly:
 
