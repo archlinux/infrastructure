@@ -51,6 +51,7 @@
 
 - name: Clone archwiki repo
   git: repo={{ archwiki_repository }} dest="{{ archwiki_dir }}/public" version={{ archwiki_version }}
+  diff: false
   become: true
   become_user: "{{ archwiki_user }}"
   notify:
