@@ -42,6 +42,7 @@ blackbox_targets:
     - https://bbs.archlinux.org
     - https://berlin.mirror.pkgbuild.com
     - https://bugs.archlinux.org
+    - https://bumpbuddy.archlinux.org
     - https://conf.archlinux.org
     - https://dashboards.archlinux.org/healthz
     - https://debuginfod.archlinux.org

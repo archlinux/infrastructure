@@ -1,0 +1,8 @@
+[Unit]
+Description=Upstream Release Tracker
+
+[Service]
+Type=oneshot
+User=bumpbuddy
+EnvironmentFile=/etc/conf.d/bumpbuddy
+ExecStart=/usr/local/bin/bumpbuddy.sh

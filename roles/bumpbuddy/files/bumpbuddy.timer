@@ -1,0 +1,9 @@
+[Unit]
+Description=Schedule for Upstream Release Tracker
+
+[Timer]
+OnCalendar=00/03:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

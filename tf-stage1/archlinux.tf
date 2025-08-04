@@ -103,6 +103,10 @@ locals {
       server_type = "cx22"
       domain      = "bugbuddy"
     }
+    "bumpbuddy.archlinux.org" = {
+      server_type = "cx22"
+      domain      = "bumpbuddy"
+    }
     "dashboards.archlinux.org" = {
       server_type = "cx22"
       domain      = "dashboards"
@@ -156,11 +160,6 @@ locals {
     "mumble.archlinux.org" = {
       server_type = "cx22"
       domain      = "mumble"
-    }
-    "nvchecker-poc.pkgbuild.com" = {
-      server_type = "cx22"
-      domain      = "nvchecker-poc"
-      zone        = hetznerdns_zone.pkgbuild.id
     }
     "opensearch.archlinux.org" = {
       server_type = "cx22"
