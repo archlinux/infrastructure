@@ -1,0 +1,14 @@
+- name: Setup bumpbuddy.archlinux.org
+  hosts: bumpbuddy.archlinux.org
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: firewalld }
+    - { role: wireguard }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: prometheus_exporters }
+    - { role: certbot }
+    - { role: promtail }
+    - { role: fail2ban }
+    - { role: bumpbuddy }

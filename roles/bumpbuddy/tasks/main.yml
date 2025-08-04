@@ -1,0 +1,56 @@
+- name: Install dependencies
+  pacman: name=devtools,jq,nvchecker,git,pyalpm,python-awesomeversion,python-jq,python-lxml,python-packaging state=present
+
+- name: Clone bumpbuddy repo # noqa: latest
+  git: repo=https://gitlab.archlinux.org/archlinux/bumpbuddy.git dest=/opt/bumpbuddy version="{{ bumpbuddy_version }}" force=true
+
+- name: Create bumpbuddy user
+  user: name=bumpbuddy state=present shell=/usr/bin/bash
+
+- name: Create clones directory
+  file: path=/opt/bumpbuddy/clones state=directory mode=0755 owner=bumpbuddy group=bumpbuddy
+
+- name: Create web directory
+  file: path=/opt/bumpbuddy/web state=directory mode=0755 owner=bumpbuddy group=bumpbuddy
+
+- name: Create nvchecker config directory
+  file: path=/home/bumpbuddy/.config/nvchecker state=directory mode=0755 owner=bumpbuddy group=bumpbuddy
+
+- name: Create symlink for main script
+  file: src=/opt/bumpbuddy/checker.sh dest=/usr/local/bin/bumpbuddy.sh owner=root group=root state=link
+
+- name: Install systemd services and timers
+  copy: src="{{ item }}" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
+  loop:
+    - bumpbuddy.service
+    - bumpbuddy.timer
+    - repo-syncer.service
+    - repo-syncer.timer
+  notify:
+    - Daemon reload
+
+- name: Install conf file
+  template: src=bumpbuddy.conf.j2 dest=/etc/conf.d/bumpbuddy owner=root group=root mode=0600
+
+- name: Install keyfile
+  template: src=keyfile.toml.j2 dest=/home/bumpbuddy/.config/nvchecker/keyfile.toml owner=bumpbuddy group=bumpbuddy mode=0600
+
+- name: Create ssl cert
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ bumpbuddy_domain }}"]
+
+- name: Make nginx log dir
+  file: path=/var/log/nginx/{{ bumpbuddy_domain }} state=directory owner=root group=root mode=0755
+
+- name: Install nginx conf file
+  template: src=bumpbuddy-nginx.conf.j2 dest=/etc/nginx/nginx.d/bumpbuddy.conf owner=root group=root mode=0600
+  notify:
+    - Reload nginx
+
+- name: Start and enable systemd timers
+  systemd_service: name="{{ item }}" enabled=true state=started
+  loop:
+    - bumpbuddy.timer
+    - repo-syncer.timer
