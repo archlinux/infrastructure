@@ -1,5 +1,5 @@
 - name: Install dependencies
-  pacman: name=devtools,jq,nvchecker,git,pyalpm,python-awesomeversion,python-jq,python-lxml,python-packaging state=present
+  pacman: name=arch-pkg-repo-updater,devtools,jq,nvchecker,git,pyalpm,python-awesomeversion,python-jq,python-lxml,python-packaging state=present
 
 - name: Clone bumpbuddy repo # noqa: latest
   git: repo=https://gitlab.archlinux.org/archlinux/bumpbuddy.git dest=/opt/bumpbuddy version="{{ bumpbuddy_version }}" force=true
@@ -8,7 +8,7 @@
   user: name=bumpbuddy state=present shell=/usr/bin/bash
 
 - name: Create clones directory
-  file: path=/opt/bumpbuddy/clones state=directory mode=0755 owner=bumpbuddy group=bumpbuddy
+  file: path=/opt/bumpbuddy/source_repos state=directory mode=0755 owner=bumpbuddy group=bumpbuddy
 
 - name: Create web directory
   file: path=/opt/bumpbuddy/web state=directory mode=0755 owner=bumpbuddy group=bumpbuddy
@@ -24,13 +24,16 @@
   loop:
     - bumpbuddy.service
     - bumpbuddy.timer
-    - repo-syncer.service
-    - repo-syncer.timer
+    - arch-pkg-repo-updater.service
+    - arch-pkg-repo-updater.timer
   notify:
     - Daemon reload
 
-- name: Install conf file
-  template: src=bumpbuddy.conf.j2 dest=/etc/conf.d/bumpbuddy owner=root group=root mode=0600
+- name: Install conf files
+  template: src="{{ item }}" dest="/etc/conf.d/{{ item | split('.') | first }}" owner=root group=root mode=0600
+  loop:
+    - bumpbuddy.conf.j2
+    - arch-pkg-repo-updater.conf.j2
 
 - name: Install keyfile
   template: src=keyfile.toml.j2 dest=/home/bumpbuddy/.config/nvchecker/keyfile.toml owner=bumpbuddy group=bumpbuddy mode=0600
@@ -53,4 +56,4 @@
   systemd_service: name="{{ item }}" enabled=true state=started
   loop:
     - bumpbuddy.timer
-    - repo-syncer.timer
+    - arch-pkg-repo-updater.timer

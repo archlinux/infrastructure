@@ -1,0 +1,5 @@
+[Service]
+Type=oneshot
+User=bumpbuddy
+EnvironmentFile=/etc/conf.d/arch-pkg-repo-updater
+ExecStart=/usr/bin/ssh-agent bash -c "ssh-add /home/bumpbuddy/.ssh/id_ed25519; arch-pkg-repo-updater run"
