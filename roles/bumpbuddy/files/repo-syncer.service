@@ -1,5 +1,0 @@
-[Service]
-Type=oneshot
-User=bumpbuddy
-EnvironmentFile=/etc/conf.d/bumpbuddy
-ExecStart=/opt/bumpbuddy/repo-syncer.py
