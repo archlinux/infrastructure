@@ -52,6 +52,9 @@
   notify:
     - Reload nginx
 
+- name: Install gitconfig
+  copy: src=gitconfig dest=/etc/gitconfig owner=root group=root mode=0644
+
 - name: Start and enable systemd timers
   systemd_service: name="{{ item }}" enabled=true state=started
   loop:
