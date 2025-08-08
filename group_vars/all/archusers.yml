@@ -687,19 +687,14 @@ arch_users:
       - mail.archlinux.org
     groups:
       - support-staff
-  # packager login disabled due to the almost expired key
-  # https://gitlab.archlinux.org/archlinux/archlinux-keyring/-/issues/285
   kpcyrd:
     name: "Kpcyrd"
     email: "kpcyrd@archlinux.org"
     ssh_key: kpcyrd.pub
     groups:
-      - support-staff
-      # - packager
-      # - junior-packager
-      # - tu
-    hosts:
-      - mail.archlinux.org
+      - packager
+      - junior-packager
+      - tu
   raster:
     name: "Carsten Haitzler"
     email: "raster@archlinux.org"
