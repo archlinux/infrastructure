@@ -3,7 +3,7 @@
 {% if item.value.additional_ssh_keys is defined %}
 	{% for key in item.value.additional_ssh_keys %}
 		{% if inventory_hostname in key.hosts or 'all' in key.hosts %}
-			{{- keys.append(key.name) -}}
+			{% set _ = keys.append(key.name) %}
 		{% endif %}
 	{% endfor %}
 {% endif %}
