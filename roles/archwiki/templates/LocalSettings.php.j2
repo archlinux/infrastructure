@@ -418,6 +418,7 @@ $wgDebugLogGroups = array(
 
 # CAPTCHA
 wfLoadExtensions([ 'ConfirmEdit', 'ConfirmEdit/QuestyCaptcha' ]);
+$wgCaptchaClass = 'QuestyCaptcha';
 $wgCaptchaTriggers['edit'] = false;
 $wgCaptchaTriggers['create'] = false;
 $wgCaptchaTriggers['addurl'] = false;
