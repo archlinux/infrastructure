@@ -16,9 +16,9 @@ class Handler(http.server.BaseHTTPRequestHandler):
         for method in ["GET", "HEAD"]:
             # Please keep in sync with "fastcgi_cache_key" in nginx.d.conf.j2
             if o.query:
-                cache_key = f"https{method}{o.netloc}{o.path}?{o.query}"
+                cache_key = f"http{method}{o.netloc}{o.path}?{o.query}"
             else:
-                cache_key = f"https{method}{o.netloc}{o.path}"
+                cache_key = f"http{method}{o.netloc}{o.path}"
             hash = hashlib.md5(cache_key.encode("utf-8")).hexdigest()
             # Please keep in sync with "fastcgi_cache_path" in nginx.d.conf.j2
             pathlib.Path(

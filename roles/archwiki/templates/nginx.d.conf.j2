@@ -15,32 +15,6 @@ upstream archwiki {
     server unix://{{ archwiki_socket }};
 }
 
-# Challenge the client if the cookie "challenge" is not set to
-# the value of "archwiki_nginx_challenge_value".
-map $cookie_challenge $challenge_required2 {
-    default 1;
-    {{ archwiki_nginx_challenge_value }} 0;
-}
-
-# Challenge the client if it is requesting an "action view" and
-# $challenge_required2 is true.
-map $request_uri $challenge_required {
-    default         0;
-    ~^/index\.php\? $challenge_required2;
-}
-
-geoip2 /var/lib/GeoIP/GeoLite2-Country.mmdb {
-    auto_reload 60m;
-    $geoip2_data_country_iso_code country iso_code;
-}
-
-# Challenge the client if it is from China and $challenge_required is
-# true. This is enough to "throw off" some bots/crawlers from China.
-map $geoip2_data_country_iso_code $challenge {
-    default 0;
-    CN      $challenge_required;
-}
-
 server {
     listen       80;
     listen       [::]:80;
@@ -62,13 +36,33 @@ server {
     include      snippets/listen-443.conf;
     server_name  {{ archwiki_domain }};
 
+    access_log off;
+    error_log off;
+
+    ssl_certificate      /etc/letsencrypt/live/wiki.archlinux.org/fullchain.pem;
+    ssl_certificate_key  /etc/letsencrypt/live/wiki.archlinux.org/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/wiki.archlinux.org/chain.pem;
+
+    location / {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Http-Version $server_protocol;
+        proxy_redirect http://wiki.archlinux.org:3000/ /;
+        # Anubis
+        # proxy_pass http://127.0.0.1:8923;
+        # Bypass Anubis
+        proxy_pass http://127.0.0.1:3000;
+    }
+}
+
+server {
+    set_real_ip_from 127.0.0.1;
+    real_ip_header X-Real-IP;
+    listen 127.0.0.1:3000;
+
     access_log   /var/log/nginx/{{ archwiki_domain }}/access.log reduced;
     access_log   /var/log/nginx/{{ archwiki_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ archwiki_domain }}/error.log;
-
-    ssl_certificate      /etc/letsencrypt/live/{{ archwiki_domain }}/fullchain.pem;
-    ssl_certificate_key  /etc/letsencrypt/live/{{ archwiki_domain }}/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/{{ archwiki_domain }}/chain.pem;
 
     root {{ archwiki_dir }}/public;
     index index.php;
@@ -107,6 +101,7 @@ server {
         access_log   /var/log/nginx/{{ archwiki_domain }}/access.log main;
         access_log   /var/log/nginx/{{ archwiki_domain }}/access.log.json json_main;
         fastcgi_pass   archwiki;
+        fastcgi_param  HTTP_X_FORWARDED_PROTO https;
         fastcgi_index  index.php;
         include        fastcgi.conf;
 
@@ -135,22 +130,18 @@ server {
         access_log   /var/log/nginx/{{ archwiki_domain }}/access.log main;
         access_log   /var/log/nginx/{{ archwiki_domain }}/access.log.json json_main;
         fastcgi_pass   archwiki;
+        fastcgi_param  HTTP_X_FORWARDED_PROTO https;
         fastcgi_index  index.php;
         include        fastcgi.conf;
     }
 
     # normal PHP FastCGI handler
     location ~ ^/[^/]+\.php$ {
-        if ($challenge) {
-            include snippets/headers.conf;
-            add_header Set-Cookie "challenge={{ archwiki_nginx_challenge_value }}; SameSite=Strict";
-            return 303 $scheme://$server_name/$request_uri;
-        }
-
         try_files $uri =404;
         access_log   /var/log/nginx/{{ archwiki_domain }}/access.log main;
         access_log   /var/log/nginx/{{ archwiki_domain }}/access.log.json json_main;
         fastcgi_pass   archwiki;
+        fastcgi_param  HTTP_X_FORWARDED_PROTO https;
         fastcgi_index  index.php;
         include        fastcgi.conf;
 
