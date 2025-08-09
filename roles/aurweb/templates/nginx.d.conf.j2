@@ -46,7 +46,6 @@ server {
 
     ssl_certificate      /etc/letsencrypt/live/{{ aurweb_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ aurweb_domain }}/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/{{ aurweb_domain }}/chain.pem;
 
     root    {{ aurweb_dir }}/static;
     index   index.php;

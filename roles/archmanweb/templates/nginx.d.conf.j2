@@ -32,7 +32,6 @@ server {
 
     ssl_certificate      /etc/letsencrypt/live/{{ archmanweb_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ archmanweb_domain }}/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/{{ archmanweb_domain }}/chain.pem;
 
     limit_req zone=archmanweb_limit burst=10 delay=8;
 

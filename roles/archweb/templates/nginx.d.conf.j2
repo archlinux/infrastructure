@@ -63,7 +63,6 @@ server {
 
     ssl_certificate      /etc/letsencrypt/live/{{ archweb_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ archweb_domain }}/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/{{ archweb_domain }}/chain.pem;
 
     location /.well-known/ {
         include snippets/headers.conf;
@@ -109,7 +108,6 @@ server {
 
     ssl_certificate      /etc/letsencrypt/live/{{ archweb_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ archweb_domain }}/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/{{ archweb_domain }}/chain.pem;
 
     location = /.well-known/matrix/server {
         alias {{ archweb_dir }}/archlinux.org/.well-known/matrix/server;

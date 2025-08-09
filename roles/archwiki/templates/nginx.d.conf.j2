@@ -41,7 +41,6 @@ server {
 
     ssl_certificate      /etc/letsencrypt/live/{{ archwiki_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ archwiki_domain }}/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/{{ archwiki_domain }}/chain.pem;
 
     location / {
         proxy_set_header Host $host;
