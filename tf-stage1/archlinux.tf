@@ -190,6 +190,10 @@ locals {
       domain      = "state"
       backups     = true
     }
+    "vaultwarden.archlinux.org" = {
+      server_type = "cx22"
+      domain      = "vaultwarden"
+    }
     "wiki.archlinux.org" = {
       server_type = "cpx41"
       domain      = "wiki"
