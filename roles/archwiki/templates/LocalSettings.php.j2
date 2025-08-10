@@ -471,6 +471,10 @@ $wgVisualEditorAvailableNamespaces = [
     NS_DEVELOPERWIKI => false,
 ];
 
+# Separately load Parsoid and actually enable linting (e.g. Dark mode issue tracking)
+wfLoadExtension( 'Parsoid', "$IP/vendor/wikimedia/parsoid/extension.json" );
+$wgParsoidSettings['linting'] = true;
+
 wfLoadExtension( 'VisualEditor' );
 wfLoadExtension( 'Linter' );
 wfLoadExtension( 'DiscussionTools' );
