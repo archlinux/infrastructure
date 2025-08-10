@@ -30,6 +30,11 @@
   notify:
     - Daemon reload
 
+- name: Fetch secrets
+  set_fact:
+    vault_bumpbuddy_gitlab_token: "{{ lookup('community.general.bitwarden', 'vault_bumpbuddy_gitlab_token', collection_name='bumpbuddy.archlinux.org', field='password', result_count=1)[0] }}"
+    vault_bumpbuddy_github_token: "{{ lookup('community.general.bitwarden', 'vault_bumpbuddy_github_token', collection_name='bumpbuddy.archlinux.org', field='password', result_count=1)[0] }}"
+
 - name: Install conf files
   template: src="{{ item }}" dest="/etc/conf.d/{{ item | split('.') | first }}" owner=root group=root mode=0600
   loop:

@@ -233,6 +233,10 @@ locals {
     "test.pkgbuild.com" = {
       server_type = "cx23"
     }
+    "vaultwarden.archlinux.org" = {
+      server_type = "cx23"
+      domain      = "vaultwarden"
+    }
     "wiki.archlinux.org" = {
       server_type = "cpx52"
       # reserve IPv6 address as static target for the HAproxy ADN service
