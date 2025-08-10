@@ -1,0 +1,8 @@
+vaultwarden_domain: vaultwarden.archlinux.org
+vaultwarden_policies:
+  - id: 0 # Require two-step login
+    enabled: true
+  - id: 3 # Single organization
+    enabled: true
+  - id: 5 # Enforce organization data ownership
+    enabled: true
