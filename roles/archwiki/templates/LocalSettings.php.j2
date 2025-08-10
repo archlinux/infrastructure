@@ -461,6 +461,13 @@ wfLoadExtension( 'DarkMode' );
 wfLoadExtension( 'Echo' );
 wfLoadExtension( 'Thanks' );
 
+# Linter extension, dependency of DiscussionTools (see below)
+# Also load Parsoid seperately to actually enable linting (see Special:LintErrors)
+wfLoadExtension( 'Parsoid', "$IP/vendor/wikimedia/parsoid/extension.json" );
+$wgParsoidSettings['linting'] = true;
+
+wfLoadExtension( 'Linter' );
+
 # Discussion Tools
 $wgVisualEditorAvailableNamespaces = [
     NS_MAIN => false,
@@ -472,12 +479,7 @@ $wgVisualEditorAvailableNamespaces = [
 ];
 
 wfLoadExtension( 'VisualEditor' );
-wfLoadExtension( 'Linter' );
 wfLoadExtension( 'DiscussionTools' );
-
-# Separately load Parsoid and actually enable linting (see Special:LintErrors)
-wfLoadExtension( 'Parsoid', "$IP/vendor/wikimedia/parsoid/extension.json" );
-$wgParsoidSettings['linting'] = true;
 
 ##
 ## Temporary settings for maintenance
