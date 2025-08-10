@@ -8,7 +8,7 @@
       include_tasks: include/upgrade-server.yml
 
     - name: Wait for Keycloak to become available
-      uri: url=https://{{ inventory_hostname }}/metrics
+      uri: url=https://{{ inventory_hostname }}/
       register: result
       until: result.status == 200
       # retry for 5 minutes after boot
@@ -16,7 +16,7 @@
       delay: 10
 
 - name: Upgrade and reboot all hetzner servers
-  hosts: all,!accounts.archlinux.org,!kape_servers,!equinix_metal
+  hosts: all,!accounts.archlinux.org,!kape_servers,!equinix_metal,!misaka
   max_fail_percentage: 0
   serial: 20%
   gather_facts: false
@@ -25,8 +25,8 @@
     - name: Upgrade each host in this batch
       include_tasks: include/upgrade-server.yml
 
-- name: Upgrade and reboot all Kape and Equinix Metal servers
-  hosts: kape_servers,equinix_metal
+- name: Upgrade and reboot all sponsored external servers
+  hosts: kape_servers,equinix_metal,misaka
   max_fail_percentage: 0
   serial: 1
   gather_facts: false
