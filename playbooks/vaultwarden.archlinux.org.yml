@@ -1,0 +1,14 @@
+- name: Setup vaultwarden.archlinux.org
+  hosts: vaultwarden.archlinux.org
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: firewalld }
+#    - { role: wireguard }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: prometheus_exporters }
+    - { role: certbot } # as dependecy?
+    - { role: promtail }
+    - { role: fail2ban }
+    - { role: vaultwarden }
