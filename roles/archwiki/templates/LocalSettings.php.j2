@@ -300,12 +300,9 @@ $wgGroupPermissions['privileged']['editprotected2'] = true;
 
 # disable user account creation via API
 $wgAPIModules['createaccount'] = 'ApiDisabled';
-# remove 'writeapi' right from unregistered users
-$wgGroupPermissions['*']['writeapi'] = false;
 # stricter conditions for 'autoconfirmed' promotion
 $wgAutoConfirmAge = 86400*3; // three days
-# require at least 20 normal edits before granting the 'writeapi' right
-$wgAutoConfirmCount = 20;
+$wgAutoConfirmCount = 20; // require at least 20 normal edits
 
 # Enforce basic editing etiquette (FS#46190)
 # We set the defaults for "minordefault" (disabled), "forceeditsummary"
