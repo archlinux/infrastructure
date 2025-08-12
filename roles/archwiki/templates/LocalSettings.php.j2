@@ -122,14 +122,14 @@ $wgEmailAuthentication = true;
 # avoid bouncing of user-to-user emails (FS#26737)
 $wgUserEmailUseReplyTo = true;
 
-$wgSMTP = array(
+$wgSMTP = [
  'host'     => "localhost", // could also be an IP address. Where the SMTP server is located
  'IDHost'   => "wiki.archlinux.org",      // Generally this will be the domain name of your website (aka mywiki.org)
  'port'     => 25,                 // Port to use when connecting to the SMTP server
  'auth'     => false,               // Should we use SMTP authentication (true or false)
  #'username' => "my_user_name",     // Username to use for SMTP authentication (if being used)
  #'password' => "my_password"       // Password to use for SMTP authentication (if being used)
-);
+];
 
 
 ##
@@ -207,7 +207,7 @@ $wgDefaultSkin = 'vector-2022';
 
 wfLoadExtension( 'ArchLinux' );
 $wgArchHome = 'https://archlinux.org/';
-$wgArchNavBar = array(
+$wgArchNavBar = [
 			'Home' => 'https://archlinux.org/',
 			'Packages' => 'https://archlinux.org/packages/',
 			'Forums' => 'https://bbs.archlinux.org/',
@@ -216,7 +216,7 @@ $wgArchNavBar = array(
 			'Security' => 'https://security.archlinux.org/',
 			'AUR' => 'https://aur.archlinux.org/',
 			'Download' => 'https://archlinux.org/download/'
-		);
+];
 $wgArchNavBarSelectedDefault = 'Wiki';
 $wgFooterIcons = [
 	"copyright" => [
@@ -237,12 +237,12 @@ $wgFooterIcons = [
 ## specific access levels (see below) as needed.
 ##
 
-$wgGroupPermissions['maintainer'] = array();
-$wgGroupPermissions['translator'] = array();
-$wgGroupPermissions['archdev'] = array();
-$wgGroupPermissions['archpackager'] = array();
-$wgGroupPermissions['archstaff'] = array();
-$wgGroupPermissions['administrator_fellow'] = array();
+$wgGroupPermissions['maintainer'] = [];
+$wgGroupPermissions['translator'] = [];
+$wgGroupPermissions['archdev'] = [];
+$wgGroupPermissions['archpackager'] = [];
+$wgGroupPermissions['archstaff'] = [];
+$wgGroupPermissions['administrator_fellow'] = [];
 
 
 ##
@@ -300,12 +300,9 @@ $wgGroupPermissions['privileged']['editprotected2'] = true;
 
 # disable user account creation via API
 $wgAPIModules['createaccount'] = 'ApiDisabled';
-# remove 'writeapi' right from unregistered users
-$wgGroupPermissions['*']['writeapi'] = false;
 # stricter conditions for 'autoconfirmed' promotion
 $wgAutoConfirmAge = 86400*3; // three days
-# require at least 20 normal edits before granting the 'writeapi' right
-$wgAutoConfirmCount = 20;
+$wgAutoConfirmCount = 20; // require at least 20 normal edits
 
 # Enforce basic editing etiquette (FS#46190)
 # We set the defaults for "minordefault" (disabled), "forceeditsummary"
@@ -331,7 +328,7 @@ $wgNamespacesWithSubpages[NS_MAIN] = true;
 
 # Template
 # Restrict editing to autoconfirmed users
-$wgNamespaceProtection[NS_TEMPLATE] = array( 'editsemiprotected' );
+$wgNamespaceProtection[NS_TEMPLATE] = [ 'editsemiprotected' ];
 
 # DeveloperWiki
 define("NS_DEVELOPERWIKI", 3000);
@@ -342,7 +339,7 @@ $wgNamespacesWithSubpages[NS_DEVELOPERWIKI] = true;
 $wgNamespacesWithSubpages[NS_DEVELOPERWIKI_TALK] = true;
 $wgContentNamespaces[] = NS_DEVELOPERWIKI;
 $wgNamespacesToBeSearchedDefault[NS_DEVELOPERWIKI] = true;
-$wgNamespaceProtection[NS_DEVELOPERWIKI] = array( 'editprotected2' );
+$wgNamespaceProtection[NS_DEVELOPERWIKI] = [ 'editprotected2' ];
 
 
 ##
@@ -378,15 +375,15 @@ $wgGroupPermissions['sysop']['abusefilter-privatedetails-log'] = true;
 $wgGroupPermissions['sysop']['renameuser'] = true;
 
 # filter groups
-$wgAbuseFilterValidGroups = array( 'default', 'proofed' );
-$wgAbuseFilterEmergencyDisableThreshold = array(
+$wgAbuseFilterValidGroups = [ 'default', 'proofed' ];
+$wgAbuseFilterEmergencyDisableThreshold = [
     'default' => 0.5,
     'proofed' => 1.0,
-);
-$wgAbuseFilterEmergencyDisableCount = array(
+];
+$wgAbuseFilterEmergencyDisableCount = [
     'default' => 10,
     'proofed' => 65535,
-);
+];
 
 # CheckUser extension
 wfLoadExtension( 'CheckUser' );
@@ -411,9 +408,9 @@ $wgBounceHandlerInternalIPs = ["{{hostvars['mail.archlinux.org']['ipv4_address']
 $wgVERPprefix = "wikibounce";
 $wgVERPdomainPart = "archlinux.org";
 $wgDebugLogFile = "/dev/null";
-$wgDebugLogGroups = array(
+$wgDebugLogGroups = [
 	'BounceHandler' => '/var/log/archwiki/bouncehandler.log',
-	);
+];
 
 
 # CAPTCHA
