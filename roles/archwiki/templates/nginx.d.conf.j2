@@ -39,15 +39,15 @@ server {
     access_log off;
     error_log off;
 
-    ssl_certificate      /etc/letsencrypt/live/wiki.archlinux.org/fullchain.pem;
-    ssl_certificate_key  /etc/letsencrypt/live/wiki.archlinux.org/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/wiki.archlinux.org/chain.pem;
+    ssl_certificate      /etc/letsencrypt/live/{{ archwiki_domain }}/fullchain.pem;
+    ssl_certificate_key  /etc/letsencrypt/live/{{ archwiki_domain }}/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/{{ archwiki_domain }}/chain.pem;
 
     location / {
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Http-Version $server_protocol;
-        proxy_redirect http://wiki.archlinux.org:3000/ /;
+        proxy_redirect http://{{ archwiki_domain }}:3000/ /;
         # Anubis
         # proxy_pass http://127.0.0.1:8923;
         # Bypass Anubis
