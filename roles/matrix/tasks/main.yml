@@ -90,7 +90,7 @@
   git:
     repo: https://github.com/the-draupnir-project/Draupnir
     dest: /var/lib/synapse/draupnir
-    version: v2.5.1
+    version: v2.6.0
     force: true
   become: true
   become_user: synapse
