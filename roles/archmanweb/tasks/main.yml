@@ -76,7 +76,7 @@
   register: db_created
 
 - name: Add pg_trgm extension to the archmanweb db
-  postgresql_ext: name="pg_trgm" db="{{ archmanweb_db }}" login_host="{{ archmanweb_db_host }}" login_password="{{ vault_postgres_users.postgres }}"
+  postgresql_ext: name="pg_trgm" login_db="{{ archmanweb_db }}" login_host="{{ archmanweb_db_host }}" login_password="{{ vault_postgres_users.postgres }}"
   when: db_created.changed or archmanweb_forced_deploy
 
 - name: Run Django management tasks
