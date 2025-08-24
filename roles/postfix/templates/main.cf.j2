@@ -26,6 +26,7 @@ mydestination = archlinux.org
 
 mailbox_transport = lmtp:unix:private/dovecot-lmtp
 lmtp_destination_recipient_limit = 1
+lmtp_header_checks = pcre:${config_directory}/lmtp_header_checks
 mailbox_size_limit = 0
 message_size_limit = 104857600
 recipient_delimiter = +
@@ -100,6 +101,7 @@ alias_database = $alias_maps
 
 virtual_alias_maps =
   ${indexed}/users
+  ${indexed}/users_managed
 virtual_alias_domains = ${indexed}/domains
 
 # reject mails to system users (nobody looks in those mailboxes)

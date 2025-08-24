@@ -92,12 +92,12 @@
         gitlab_rails['smtp_tls'] = true
         gitlab_rails['smtp_openssl_verify_mode'] = 'peer'
         gitlab_rails['gitlab_email_enabled'] = true
-        gitlab_rails['gitlab_email_from'] = 'gitlab@archlinux.org'
+        gitlab_rails['gitlab_email_from'] = 'gitlab@gitlab.archlinux.org'
         gitlab_rails['gitlab_email_display_name'] = 'GitLab'
-        gitlab_rails['gitlab_email_reply_to'] = 'noreply@archlinux.org'
+        gitlab_rails['gitlab_email_reply_to'] = 'noreply@gitlab.archlinux.org'
         gitlab_rails['gitlab_default_theme'] = 2
         gitlab_rails['incoming_email_enabled'] = true
-        gitlab_rails['incoming_email_address'] = "gitlab+%{key}@archlinux.org"
+        gitlab_rails['incoming_email_address'] = "incoming+%{key}@gitlab.archlinux.org"
         gitlab_rails['incoming_email_email'] = "gitlab@archlinux.org"
         gitlab_rails['incoming_email_password'] = "{{ vault_gitlab_root_password }}"
         gitlab_rails['incoming_email_host'] = "mail.archlinux.org"

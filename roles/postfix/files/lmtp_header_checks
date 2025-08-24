@@ -1,0 +1,10 @@
+# Shenanigan so GitLab will recognize the email
+# https://docs.gitlab.com/administration/incoming_email/#accepted-headers
+# https://gitlab.com/gitlab-org/gitlab/-/issues/416637#note_2637620446
+/^To:.+[ <]?trademarks@archlinux.org([> ]|$)/ PREPEND X-Delivered-To: incoming+archlinux-legal-trademark-requests-19573-issue-@gitlab.archlinux.org
+/^To:.+[ <]?privacy@archlinux.org([> ]|$)/ PREPEND X-Delivered-To: incoming+archlinux-legal-privacy-requests-19621-issue-@gitlab.archlinux.org
+/^To:.+[ <]?forum@archlinux.org([> ]|$)/ PREPEND X-Delivered-To: incoming+archlinux-service-desks-forum-19692-issue-@gitlab.archlinux.org
+/^To:.+[ <]?accountsupport@archlinux.org([> ]|$)/ PREPEND X-Delivered-To: incoming+archlinux-service-desks-account-support-19709-issue-@gitlab.archlinux.org
+/^To:.+[ <]?mirrors@archlinux.org([> ]|$)/ PREPEND X-Delivered-To: incoming+archlinux-arch-mirrors-57011-issue-@gitlab.archlinux.org
+/^To:.+[ <]?arch-testing-accounts@archlinux.org([> ]|$)/ PREPEND X-Delivered-To: incoming+archlinux-service-desks-testing-accounts-69672-issue-@gitlab.archlinux.org
+/^To:.+[ <]?package-sources-licensing@archlinux.org([> ]|$)/ PREPEND X-Delivered-To: incoming+archlinux-packaging-licensing-package-sources-84987-issue-@gitlab.archlinux.org

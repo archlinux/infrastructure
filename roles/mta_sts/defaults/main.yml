@@ -5,6 +5,7 @@ mta_sts:
       - archlinux.org
       - aur.archlinux.org
       - master-key.archlinux.org
+      - gitlab.archlinux.org
   - mx:
       - lists.archlinux.org
     domains:

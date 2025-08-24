@@ -8,6 +8,7 @@
     - master.cf
     - transport.pcre
     - aliases
+    - users_managed
   notify:
     - Restart postfix
     - Postmap additional files
@@ -18,6 +19,7 @@
   loop:
     - domains
     - msa_header_checks
+    - lmtp_header_checks
   notify:
     - Postmap additional files
 
