@@ -351,7 +351,7 @@ locals {
     rsync           = { value = "repos" }
     sources         = { value = "repos" }
     "static.conf"   = { value = "redirect" }
-    status          = { value = "redirect" }
+    status          = { value = "stats.uptimerobot.com." }
     coc             = { value = "redirect" }
     git             = { value = "redirect" }
     "tu-bylaws.aur" = { value = "redirect" }
