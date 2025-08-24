@@ -1,8 +1,15 @@
-- name: Install docker dependencies
-  pacman: name=docker,python-docker state=present
+- name: Create ssl cert
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ gitlab_domain }}", "{{ gitlab_registry_domain }}"]
 
-- name: Start docker
-  service: name=docker enabled=yes state=started
+- name: Make nginx log dir
+  file: path=/var/log/nginx/{{ gitlab_domain }} state=directory owner=root group=root mode=755
+
+- name: Set up nginx
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/gitlab.conf owner=root group=root mode=644
+  notify: Reload nginx
 
 - name: Create directories for gitlab
   file: path={{ item }} state=directory owner=root group=root mode=0755
@@ -20,6 +27,12 @@
     - nginx-mixin-bypass
   notify:
     - Restart gitlab
+
+- name: Install docker dependencies
+  pacman: name=docker,python-docker state=present
+
+- name: Start docker
+  service: name=docker enabled=yes state=started
 
 - name: Start docker gitlab image
   docker_container:
@@ -45,11 +58,19 @@
       # to be able to have a GitLab Page on purpose (for security and legal safety reasons).
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'https://{{ gitlab_domain }}'
-        registry_external_url 'https://registry.archlinux.org'
+        nginx['listen_addresses'] = ['127.0.0.1']
+        nginx['listen_port'] = 8081
+        nginx['listen_https'] = false
+        nginx['real_ip_trusted_addresses'] = ['127.0.0.1']
+        nginx['real_ip_header'] = 'X-Forwarded-For'
+        registry_external_url 'https://{{ gitlab_registry_domain }}'
+        registry_nginx['listen_addresses'] = ['127.0.0.1']
+        registry_nginx['listen_port'] = 8081
+        registry_nginx['listen_https'] = false
+        registry_nginx['real_ip_trusted_addresses'] = ['127.0.0.1']
+        registry_nginx['real_ip_header'] = 'X-Forwarded-For'
         nginx['client_max_body_size'] = '10g'
-        nginx['listen_addresses'] = {{ gitlab_primary_addresses }}
         nginx['custom_gitlab_server_config'] = "include /etc/gitlab/nginx-gitlab-server-mixins/*.conf;"
-        registry_nginx['listen_addresses'] = {{ gitlab_primary_addresses }}
         gitlab_pages['inplace_chroot'] = true
         pages_external_url "http://{{ gitlab_domain }}"
         pages_nginx['enable'] = false
@@ -58,8 +79,6 @@
         gitlab_pages['rate_limit_source_ip'] = 10.0
         gitlab_pages['rate_limit_source_ip_burst'] = 300
         gitlab_pages['env'] = { 'FF_ENFORCE_IP_RATE_LIMITS' => 'true', 'FF_CONFIGURABLE_ROOT_DIR' => 'true', 'FF_ENABLE_DOMAIN_REDIRECT' => 'true' }
-        letsencrypt['enable'] = true
-        letsencrypt['contact_emails'] = ['webmaster@archlinux.org']
         gitlab_rails['env'] = {'GITLAB_THROTTLE_BYPASS_HEADER' => 'Gitlab-Bypass-Rate-Limiting'}
         gitlab_rails['lfs_enabled'] = true
         gitlab_rails['gitlab_username_changing_enabled'] = false
