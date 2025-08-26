@@ -1,3 +1,20 @@
+- name: Pre-upgrade tasks
+  hosts: all
+  tasks:
+    - name: Apply IgnorePkg to pacman.conf
+      ansible.builtin.lineinfile:
+        path: /etc/pacman.conf
+        regexp: 'IgnorePkg\s*='
+        line: "IgnorePkg    = {{ ignore_package_upgrades | join(' ') }}"
+      when: ignore_package_upgrades | default([], true) | length > 0
+
+    - name: Comment IgnorePkg in pacman.conf if no value set
+      ansible.builtin.lineinfile:
+        path: /etc/pacman.conf
+        regexp: 'IgnorePkg\s*='
+        line: "#IgnorePkg   ="
+      when: ignore_package_upgrades | default([], true) | length == 0
+
 - name: Upgrade, reboot and health-check accounts.archlinux.org
   hosts: accounts.archlinux.org
   max_fail_percentage: 0
