@@ -4,5 +4,15 @@
 
 [Definition]
 
-actionban = firewall-cmd --ipset=fail2ban --add-entry=<ip>
-actionunban = firewall-cmd --ipset=fail2ban --remove-entry=<ip>
+# As we have two separate ipsets for IPv4 and IPv6 we need to specify two
+# different ban actions.
+# The 'sed' command below returns the following:
+#
+#     echo "2a01:4f9:c010:6b1f::1/64" | sed "s/^.*:.*$/6/;s/^.*\..*//" => "6"
+#     echo "94.31.75.247"             | sed "s/^.*:.*$/6/;s/^.*\..*//" => ""
+#
+# We can therefore use this output to select either the "fail2ban" or
+# "fail2ban6" ipset.
+
+actionban = firewall-cmd --ipset=fail2ban$(echo '<ip>' | sed "s/^.*:.*$/6/;s/^.*\..*//") --add-entry=<ip>
+actionunban = firewall-cmd --ipset=fail2ban$(echo '<ip>' | sed "s/^.*:.*$/6/;s/^.*\..*//") --remove-entry=<ip>

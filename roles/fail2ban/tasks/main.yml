@@ -89,15 +89,34 @@
     - Reload fail2ban jails
 
 - name: Install fail2ban ipset for firewalld
-  copy: src=fail2ban.xml dest=/etc/firewalld/ipsets/ owner=root group=root mode=0644
+  copy: src="{{ item }}" dest=/etc/firewalld/ipsets/ owner=root group=root mode=0644
   register: result
+  loop:
+    - fail2ban.xml
+    - fail2ban6.xml
 
 - name: Restart firewalld
-  systemd_service: name=firewalld state=restarted
+  systemd_service: name=firewalld state=stopped
+  when: result.changed
+
+- name: Restart firewalld
+  systemd_service: name=firewalld state=started
   when: result.changed
 
 - name: Add fail2ban ipset to the firewalld drop zone
-  ansible.posix.firewalld: source=ipset:fail2ban zone=drop permanent=true immediate=true state=enabled
+  ansible.posix.firewalld: source="ipset:{{ item }}" zone=drop permanent=true state=enabled
+  register: result
+  loop:
+    - fail2ban
+    - fail2ban6
+
+- name: Restart firewalld
+  systemd_service: name=firewalld state=stopped
+  when: result.changed
+
+- name: Restart firewalld
+  systemd_service: name=firewalld state=started
+  when: result.changed
 
 - name: Start and enable service
   systemd_service:
