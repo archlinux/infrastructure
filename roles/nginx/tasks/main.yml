@@ -62,6 +62,12 @@
 - name: Enable nginx
   service: name=nginx enabled=yes
 
+- name: Install goaccess
+  pacman: name=goaccess state=present
+
+- name: Create .goaccessrc
+  copy: src=goaccessrc dest=/root/.goaccessrc owner=root group=root mode=0644
+
 - name: Open firewall holes
   ansible.posix.firewalld: service={{ item }} zone={{ nginx_firewall_zone }} permanent=true state=enabled immediate=yes
   loop:
