@@ -1,0 +1,8 @@
+date-format %d/%b/%Y
+time-format %H:%M:%S
+
+# Main log format
+log-format %h %v %e [%d:%t %^] "%r" %s %b "%R" "%u" "%^" %T %H %K %k %C
+
+# Reduced log format
+#log-format %v [%d:%t %^] "%r" %s %b "%R" "%u" %H %K %k %C
