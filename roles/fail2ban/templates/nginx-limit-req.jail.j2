@@ -7,8 +7,8 @@
 enabled = true
 filter = nginx-limit-req
 logpath = /var/log/nginx/*/error.log
-findtime = 5min
-bantime = 24hours
-maxretry = 3
+findtime = 1sec
+bantime = 1w
+maxretry = 1
 # Do not fail2ban archweb's rss limit.
 ignoreregex = rsslimit
