@@ -18,6 +18,8 @@
 # only checked after the fast-track for ESTABLISHED,RELATED connection states.
 
 actionban = firewall-cmd --ipset=fail2ban$(echo '<ip>' | sed "s/^.*:.*$/6/;s/^.*\..*//") --add-entry=<ip> ; \
+            firewall-cmd --ipset=fail2ban$(echo '<ip>' | sed "s/^.*:.*$/6/;s/^.*\..*//") --add-entry=<ip> --permanent ; \
             conntrack -D -s '<ip>' -p tcp || true ; \
             conntrack -D -d '<ip>' -p tcp || true
-actionunban = firewall-cmd --ipset=fail2ban$(echo '<ip>' | sed "s/^.*:.*$/6/;s/^.*\..*//") --remove-entry=<ip>
+actionunban = firewall-cmd --ipset=fail2ban$(echo '<ip>' | sed "s/^.*:.*$/6/;s/^.*\..*//") --remove-entry=<ip> ;\
+              firewall-cmd --ipset=fail2ban$(echo '<ip>' | sed "s/^.*:.*$/6/;s/^.*\..*//") --remove-entry=<ip> --permanent
