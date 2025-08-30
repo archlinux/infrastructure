@@ -89,7 +89,10 @@
     - Reload fail2ban jails
 
 - name: Install fail2ban ipset for firewalld
-  copy: src=fail2ban.xml dest=/etc/firewalld/ipsets/ owner=root group=root mode=0644
+  template: src=fail2ban.xml.j2 dest=/etc/firewalld/ipsets/{{ item.set }}.xml owner=root group=root mode=0644
+  loop:
+    - {family: inet, set: fail2ban}
+    - {family: inet6, set: fail2ban6}
   register: result
 
 - name: Restart firewalld
@@ -97,7 +100,26 @@
   when: result.changed
 
 - name: Add fail2ban ipset to the firewalld drop zone
-  ansible.posix.firewalld: source=ipset:fail2ban zone=drop permanent=true immediate=true state=enabled
+  ansible.posix.firewalld: source=ipset:{{ item }} zone=drop permanent=true immediate=true state=enabled
+  loop:
+    - fail2ban
+    - fail2ban6
+
+- name: Install script dependencies
+  pacman: name=python,python-redis state=present
+
+- name: Install blacklist-ban and blacklist-syncer scripts
+  template: src={{ item }}.j2 dest=/usr/local/bin/{{ item }} owner=root group=root mode=0755
+  loop:
+    - blacklist-ban
+    - blacklist-syncer
+  notify: Restart blacklist-syncer
+
+- name: Intall blacklist-syncer service
+  copy: src=blacklist-syncer.service dest=/etc/systemd/system/blacklist-syncer.service owner=root group=root mode=0644
+
+- name: Start and enable blacklist-syncer
+  service: name=blacklist-syncer enabled=yes state=started
 
 - name: Start and enable service
   systemd_service:

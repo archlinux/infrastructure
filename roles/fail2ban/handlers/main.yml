@@ -5,3 +5,6 @@
 
 - name: Reload fail2ban jails  # noqa no-changed-when
   shell: type fail2ban-server > /dev/null && (fail2ban-client ping > /dev/null && fail2ban-client reload > /dev/null || true) || true
+
+- name: Restart blacklist-syncer
+  service: name=blacklist-syncer state=restarted

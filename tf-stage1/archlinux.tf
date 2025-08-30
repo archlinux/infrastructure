@@ -114,6 +114,10 @@ locals {
       server_type = "cx22"
       domain      = "dashboards"
     }
+    "db.archlinux.org" = {
+      server_type = "cx22"
+      domain      = "db"
+    }
     "debuginfod.archlinux.org" = {
       server_type = "cx32"
       domain      = "debuginfod"

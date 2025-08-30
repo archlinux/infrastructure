@@ -1,0 +1,5 @@
+[Service]
+ExecStart=/usr/local/bin/blacklist-purger
+
+[Install]
+WantedBy=multi-user.target

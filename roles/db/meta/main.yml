@@ -1,0 +1,5 @@
+dependencies:
+  - role: valkey
+    vars:
+      valkey_listen_wg: true
+      valkey_protected_mode: false

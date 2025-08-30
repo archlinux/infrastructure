@@ -1,0 +1,11 @@
+#!/usr/bin/env -S python -u
+import time
+
+import redis
+
+r = redis.Redis(host="localhost", port=6379, decode_responses=True)
+
+while True:
+    res = r.zremrangebyscore("blacklist", "-inf", int(time.time()))
+    print(f"{res} expired IP addresses removed")
+    time.sleep(60)

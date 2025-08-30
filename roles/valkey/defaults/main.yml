@@ -1,0 +1,2 @@
+valkey_listen_wg: false
+valkey_protected_mode: true

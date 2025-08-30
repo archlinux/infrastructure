@@ -1,0 +1,12 @@
+- name: Install script dependencies
+  pacman: name=python,python-redis state=present
+
+- name: Install blacklist-purger script
+  copy: src=blacklist-purger dest=/usr/local/bin/blacklist-purger owner=root group=root mode=0755
+  notify: Restart blacklist-purger
+
+- name: Intall blacklist-purger service
+  copy: src=blacklist-purger.service dest=/etc/systemd/system/blacklist-purger.service owner=root group=root mode=0644
+
+- name: Start and enable blacklist-purger
+  service: name=blacklist-purger enabled=yes state=started

@@ -1,0 +1,11 @@
+- name: Setup db.archlinux.org
+  hosts: db.archlinux.org
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: firewalld }
+    - { role: wireguard }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: prometheus_exporters }
+    - { role: promtail }

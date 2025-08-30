@@ -1,0 +1,2 @@
+- name: Restart blacklist-purger
+  service: name=blacklist-purger state=restarted

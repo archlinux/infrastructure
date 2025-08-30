@@ -1,0 +1,43 @@
+#!/usr/bin/env -S python -u
+import ipaddress
+import time
+
+import firewall.client
+import redis
+
+
+def get_set(set):
+    entries = fw.getEntries(set)
+    return [str(entry) for entry in entries]
+
+
+r = redis.Redis(
+    host="{{ hostvars['db.archlinux.org']['wireguard_address'] }}",
+    port=6379,
+    decode_responses=True,
+)
+fw = firewall.client.FirewallClient()
+
+while True:
+    global_blacklist = set(r.zrange("blacklist", 0, -1))
+    local_blacklist = set(get_set("fail2ban"))
+    local_blacklist.update(set(get_set("fail2ban6")))
+
+    new_addresses = global_blacklist - local_blacklist
+    removed_addresses = local_blacklist - global_blacklist
+
+    print(
+        f"Synchronizing local blacklist ({len(new_addresses)} new addresses and {len(removed_addresses)} removed addresses)"
+    )
+    for address in new_addresses:
+        fw.addEntry(
+            "fail2ban" if ipaddress.ip_address(address).version == 4 else "fail2ban6",
+            address,
+        )
+
+    for address in removed_addresses:
+        fw.removeEntry(
+            "fail2ban" if ipaddress.ip_address(address).version == 4 else "fail2ban6",
+            address,
+        )
+    time.sleep(60)
