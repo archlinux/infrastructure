@@ -4,5 +4,4 @@
 
 [Definition]
 
-actionban = firewall-cmd --ipset=fail2ban --add-entry=<ip>
-actionunban = firewall-cmd --ipset=fail2ban --remove-entry=<ip>
+actionban = /usr/local/bin/blacklist-ban <ip> <time> <bantime>

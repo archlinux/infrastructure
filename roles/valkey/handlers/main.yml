@@ -1,0 +1,2 @@
+- name: Restart valkey
+  service: name=valkey state=restarted

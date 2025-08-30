@@ -1,0 +1,26 @@
+#!/usr/bin/env -S python -u
+import ipaddress
+import sys
+import time
+
+import dbus
+import firewall.client
+import redis
+
+address = ipaddress.ip_address(sys.argv[1])
+ban_time = int(float(sys.argv[2]))
+ban_length = int(sys.argv[3])
+
+r = redis.Redis(
+    host="{{ hostvars['db.archlinux.org']['wireguard_address'] }}",
+    port=6379,
+    decode_responses=True,
+)
+fw = firewall.client.FirewallClient()
+
+r.zadd("blacklist", {str(address): int(time.time()) + ban_time + ban_length})
+try:
+    fw.addEntry("fail2ban" if address.version == 4 else "fail2ban6", str(address))
+except dbus.exceptions.DBusException as e:
+    if not e.get_dbus_message().startswith("ALREADY_ENABLED"):
+        raise e

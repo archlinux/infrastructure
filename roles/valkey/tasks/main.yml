@@ -1,5 +1,13 @@
 - name: Install valkey
   pacman: name=valkey state=present
 
+- name: Install valkey configuration
+  template: src=valkey.conf.j2 dest=/etc/valkey/valkey.conf owner=root group=root mode=0644
+  notify: Restart valkey
+
+- name: Open firewall hole
+  ansible.posix.firewalld: service=redis zone=wireguard permanent=true state=enabled immediate=yes
+  when: valkey_listen_wg
+
 - name: Start and enable valkey
   service: name=valkey enabled=yes state=started

@@ -1,0 +1,5 @@
+[Service]
+ExecStart=/usr/local/bin/blacklist-syncer
+
+[Install]
+WantedBy=multi-user.target
