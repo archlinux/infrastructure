@@ -5,6 +5,11 @@
   notify:
     - Restart fail2ban
 
+- name: Install conntrack-tools
+  package:
+    name: "conntrack-tools"
+    state: "present"
+
 - name: Create systemd unit override path
   file:
     path: "/etc/systemd/system/fail2ban.service.d"
