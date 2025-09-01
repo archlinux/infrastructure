@@ -1,7 +1,7 @@
 listen {{ ipv4_address ~ ':' if nginx_explict_listen_addresses }}443 ssl;
 listen [{{ ipv6_address if nginx_explict_listen_addresses else '::' }}]:443 ssl;
 {% if nginx_enable_http3 %}
-listen {{ ipv4_address ~ ':' if nginx_explict_listen_addresses }}:443 quic;
+listen {{ ipv4_address ~ ':' if nginx_explict_listen_addresses }}443 quic;
 listen [{{ ipv6_address if nginx_explict_listen_addresses else '::' }}]:443 quic;
 {% endif %}
 http2  on;
