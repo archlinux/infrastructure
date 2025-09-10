@@ -15,7 +15,7 @@
   service: name=mariadb state=started enabled=yes
 
 - name: Delete anonymous users
-  mysql_user: user='' host_all=yes state='absent'
+  mysql_user: name='' host_all=yes state='absent'
 
 - name: Disallow remote root login
   command: 'mysql -NBe "{{ item }}"'
@@ -27,7 +27,7 @@
   mysql_db: db=test state=absent
 
 - name: Set root password
-  mysql_user: user=root host={{ item }} password={{ vault_mariadb_users.root }}
+  mysql_user: name=root host={{ item }} password={{ vault_mariadb_users.root }}
   loop:
     - '127.0.0.1'
     - '::1'

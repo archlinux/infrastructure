@@ -2,13 +2,13 @@
   pacman: name=quassel-core,python-pexpect state=present
 
 - name: Add quassel postgres db
-  postgresql_db: db=quassel
+  postgresql_db: name=quassel
   become: true
   become_user: postgres
   become_method: ansible.builtin.su
 
 - name: Add quassel postgres user
-  postgresql_user: db=quassel name=quassel password={{ vault_postgres_users.quassel }} encrypted=true
+  postgresql_user: login_db=quassel name=quassel password={{ vault_postgres_users.quassel }} encrypted=true
   become: true
   become_user: postgres
   become_method: ansible.builtin.su

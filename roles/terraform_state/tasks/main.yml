@@ -1,5 +1,5 @@
 - name: Create terraform state db
-  postgresql_db: db="{{ terraform_db }}"
+  postgresql_db: name="{{ terraform_db }}"
   become: true
   become_user: postgres
   become_method: ansible.builtin.su
@@ -7,10 +7,19 @@
 - name: Create terraform state db user
   postgresql_user:
     name: "{{ terraform_db_user }}"
-    db: "{{ terraform_db }}"
+    login_db: "{{ terraform_db }}"
     password: "{{ vault_terraform_db_password }}"
     encrypted: true
-    priv: "ALL"
+  become: true
+  become_user: postgres
+  become_method: ansible.builtin.su
+
+- name: Grant privs to state db user
+  postgresql_privs:
+    login_db: "{{ terraform_db }}"
+    privs: ALL
+    type: database
+    roles: "{{ terraform_db_user }}"
   become: true
   become_user: postgres
   become_method: ansible.builtin.su

@@ -8,13 +8,13 @@
   pacman: name=hedgedoc state=present
 
 - name: Add hedgedoc postgres db
-  postgresql_db: db=hedgedoc
+  postgresql_db: name=hedgedoc
   become: true
   become_user: postgres
   become_method: ansible.builtin.su
 
 - name: Add hedgedoc postgres user
-  postgresql_user: db=hedgedoc name=hedgedoc password={{ vault_postgres_users.hedgedoc }} encrypted=true
+  postgresql_user: login_db=hedgedoc name=hedgedoc password={{ vault_postgres_users.hedgedoc }} encrypted=true
   become: true
   become_user: postgres
   become_method: ansible.builtin.su
