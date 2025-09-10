@@ -626,14 +626,20 @@ arch_users:
       - packager
       - junior-packager
       - tu
+  # packager login disabled due to the almost expired key
+  # https://gitlab.archlinux.org/archlinux/archlinux-keyring/-/issues/298#note_315914
   sangy:
     name: "Santiago Torres-Arias"
     email: "santiago@archlinux.org"
     ssh_key: sangy.pub
     groups:
-      - packager
-      - junior-packager
-      - tu
+      - support-staff
+      # - packager
+      # - junior-packager
+      # - tu
+    hosts:
+      - mail.archlinux.org
+
   morganamilo:
     name: "Morgan Adamiec"
     email: "morganamilo@archlinux.org"
