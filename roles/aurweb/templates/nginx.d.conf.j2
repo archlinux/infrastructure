@@ -15,6 +15,8 @@ limit_req_zone $binary_remote_addr zone=aurweblimit:10m rate=20r/s;
 
 limit_req_status 429;
 
+proxy_cache_path  /var/lib/nginx/cache levels=1:2 keys_zone=aurwebcache:10m inactive=60m;
+
 # needed for long server names (dev box)
 server_names_hash_bucket_size 128;
 
@@ -139,7 +141,7 @@ server {
         proxy_set_header X-Forwarded-For $remote_addr;
     }
 
-    location / {
+    location /rss {
 {% block asgi_proxy  %}
         # Proxy over to aurweb's ASGI application.
         proxy_pass http://{{ aurweb_asgi_bind }};
@@ -148,6 +150,17 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header X-Forwarded-Ssl on;
 {% endblock %}
+
+        proxy_cache             aurwebcache;
+        proxy_cache_key         $scheme$proxy_host$uri$http_authorization;
+        proxy_cache_valid any 1m;
+        add_header X-Cache-Status $upstream_cache_status;
+
+        limit_req zone=aurweblimit burst=10 nodelay;
+    }
+
+    location / {
+{{ self.asgi_proxy() }}
 
         limit_req zone=aurweblimit burst=10 nodelay;
     }
