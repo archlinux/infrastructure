@@ -222,6 +222,7 @@ locals {
     "alpm"            = "363d06e0957fbfd22403e4dd992afc48"
     "signstar"        = "5c348888c16d81166379017879a29fe3"
     "devblog"         = "b4af31061ba3a13d82a1ce69897acf9b"
+    "voa"             = "9c326f517d3d4248b7223fd220287d89"
   }
 
   # This creates archlinux.org TXT DNS entries
