@@ -30,14 +30,10 @@ blackbox_targets:
     # regenerate the list below with: ./misc/find-arch-on-crt.sh targets
     - https://accounts.archlinux.org
     - https://alpm.archlinux.page/
-    - https://america.archive.pkgbuild.com
-    - https://america.mirror.pkgbuild.com
     - https://archinstall.archlinux.page
     - https://archive.archlinux.org
     - https://archlinux.org
     - https://archlinux.page
-    - https://asia.archive.pkgbuild.com
-    - https://asia.mirror.pkgbuild.com
     - https://aur.archlinux.org
     - https://bbs.archlinux.org
     - https://berlin.mirror.pkgbuild.com

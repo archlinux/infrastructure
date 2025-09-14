@@ -6,8 +6,6 @@ DevOps team maintain a geo mirror across the world. The Geo mirror is public fac
 
 | Mirror                                    | Location                    |
 | ----------------------------------------- | --------------------------- |
-| https://america.mirror.pkgbuild.com/      | Miami (United States)       |
-| https://asia.mirror.pkgbuild.com/         | Hong Kong                   |
 | https://berlin.mirror.pkgbuild.com/       | Berlin (Germany)            |
 | https://europe.mirror.pkgbuild.com/       | Prague (Czechia)            |
 | https://johannesburg.mirror.pkgbuild.com/ | Johannesburg (South Africa) |
@@ -18,7 +16,7 @@ DevOps team maintain a geo mirror across the world. The Geo mirror is public fac
 | https://taipei.mirror.pkgbuild.com/       | Taipei (Taiwan)             |
 
 ### Logical split
-The continent mirrors america, asia and europe contain the archive mirrors as well as repository mirrors. The city mirrors have just the repositories hosted.
+The continent mirror europe contain the archive mirrors as well as repository mirrors. The city mirrors have just the repositories hosted.
 
 ## Requirements
 - Host with Arch Linux installed

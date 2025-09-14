@@ -262,26 +262,6 @@ resource "hetznerdns_record" "machine_https" {
   type = "HTTPS"
 }
 
-resource "hetznerdns_record" "geo_ns1" {
-  for_each = local.geo_domains
-
-  zone_id = lookup(each.value, "zone", hetznerdns_zone.archlinux.id)
-  name    = each.value.name
-  value   = "america.mirror.pkgbuild.com."
-  type    = "NS"
-  ttl     = lookup(local.geo_domains[each.key], "ttl", 86400)
-}
-
-resource "hetznerdns_record" "geo_ns2" {
-  for_each = local.geo_domains
-
-  zone_id = lookup(each.value, "zone", hetznerdns_zone.archlinux.id)
-  name    = each.value.name
-  value   = "asia.mirror.pkgbuild.com."
-  type    = "NS"
-  ttl     = lookup(local.geo_domains[each.key], "ttl", 86400)
-}
-
 resource "hetznerdns_record" "geo_ns3" {
   for_each = local.geo_domains
 

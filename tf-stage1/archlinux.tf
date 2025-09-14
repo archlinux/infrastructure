@@ -385,26 +385,6 @@ locals {
       ipv4_address = hcloud_server.machine["homedir.archlinux.org"].ipv4_address
       ipv6_address = hcloud_server.machine["homedir.archlinux.org"].ipv6_address
     }
-    "america.mirror" = {
-      ipv4_address = "143.244.34.62"
-      ipv6_address = "2a02:6ea0:cc0e::2"
-      http3        = true
-    }
-    "america.archive" = {
-      ipv4_address = "143.244.34.62"
-      ipv6_address = "2a02:6ea0:cc0e::2"
-      http3        = true
-    }
-    "asia.mirror" = {
-      ipv4_address = "84.17.57.98"
-      ipv6_address = "2a02:6ea0:d605::2"
-      http3        = true
-    }
-    "asia.archive" = {
-      ipv4_address = "84.17.57.98"
-      ipv6_address = "2a02:6ea0:d605::2"
-      http3        = true
-    }
     "berlin.mirror" = {
       ipv4_address = "45.142.247.77"
       ipv6_address = "2a12:8d02:2100:10d:26a3:f0ff:fe47:bfaf"

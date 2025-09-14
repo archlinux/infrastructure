@@ -18,8 +18,6 @@ singapore.mirror.pkgbuild.com
 taipei.mirror.pkgbuild.com
 
 [mirrors]
-america.mirror.pkgbuild.com
-asia.mirror.pkgbuild.com
 berlin.mirror.pkgbuild.com
 europe.mirror.pkgbuild.com
 johannesburg.mirror.pkgbuild.com
@@ -31,15 +29,11 @@ sydney.mirror.pkgbuild.com
 taipei.mirror.pkgbuild.com
 
 [geo_mirror_name_servers]
-america.mirror.pkgbuild.com
-asia.mirror.pkgbuild.com
 europe.mirror.pkgbuild.com
 london.mirror.pkgbuild.com
 sydney.mirror.pkgbuild.com
 
 [geo_mirrors]
-america.mirror.pkgbuild.com
-asia.mirror.pkgbuild.com
 berlin.mirror.pkgbuild.com
 europe.mirror.pkgbuild.com
 johannesburg.mirror.pkgbuild.com
@@ -50,8 +44,6 @@ sydney.mirror.pkgbuild.com
 taipei.mirror.pkgbuild.com
 
 [archive_mirrors]
-america.mirror.pkgbuild.com
-asia.mirror.pkgbuild.com
 europe.mirror.pkgbuild.com
 
 [borg_clients]
@@ -121,8 +113,6 @@ wiki.archlinux.org
 monitoring.archlinux.org
 
 [kape_servers]
-america.mirror.pkgbuild.com
-asia.mirror.pkgbuild.com
 europe.mirror.pkgbuild.com
 repro2.pkgbuild.com
 runner1.archlinux.org
