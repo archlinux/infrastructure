@@ -2,7 +2,8 @@ image: "archlinux:latest"
 
 ansible-lint:
   before_script:
-    - pacman -Syu --needed --noconfirm ansible-lint ansible python-jmespath
+    # workaround black bug by install pytokens https://gitlab.archlinux.org/archlinux/packaging/packages/python-black/-/issues/3
+    - pacman -Syu --needed --noconfirm ansible-lint ansible python-jmespath python-pytokens
   script:
     # Fix weird ansible bug: https://github.com/trailofbits/algo/issues/1637
     # This probably happens due to gitlab-runner mounting the git repo into the container
