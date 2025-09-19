@@ -541,6 +541,12 @@ arch_users:
       - dev
       - junior-dev
       - tu
+  martin:
+    name: "Martin Rys"
+    email: "martin@archlinux.org"
+    ssh_key: martin.pub
+    groups:
+      - junior-packager
   mh4ckt3mh4ckt1c4s:
     name: "Quentin Michaud"
     email: "mh4ckt3mh4ckt1c4s@archlinux.org"
