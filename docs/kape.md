@@ -6,8 +6,6 @@ All donated servers are with EFI except runner1.archlinux.org.
 
 Three servers have set up as archive and regular mirrors:
 
-* america.mirror.pkgbuild.com
-* asia.mirror.pkgbuild.com
 * europe.mirror.pkgbuild.com
 
 The servers have been setup as RAID 5 with 3 x 10TB disks.
