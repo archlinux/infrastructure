@@ -1,0 +1,27 @@
+server {
+    listen 873;
+    listen [::]:873;
+
+    access_log /var/log/nginx/{{ repos_rsync_domain }}/stream.log stream;
+    access_log /var/log/nginx/{{ repos_rsync_domain }}/stream.log.json json_stream;
+    error_log  /var/log/nginx/{{ repos_rsync_domain }}/stream.error.log;
+
+    proxy_pass unix:/run/rsyncd.sock;
+    proxy_protocol on;
+}
+
+server {
+    listen      874 ssl;
+    listen      [::]:874 ssl;
+    server_name {{ repos_rsync_domain }};
+
+    access_log  /var/log/nginx/{{ repos_rsync_domain }}/stream.log stream;
+    access_log  /var/log/nginx/{{ repos_rsync_domain }}/stream.log.json json_stream;
+    error_log   /var/log/nginx/{{ repos_rsync_domain }}/stream.error.log;
+
+    ssl_certificate     /etc/letsencrypt/live/{{ repos_domain }}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/{{ repos_domain }}/privkey.pem;
+
+    proxy_pass unix:/run/rsyncd.sock;
+    proxy_protocol on;
+}

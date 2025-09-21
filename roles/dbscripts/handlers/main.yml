@@ -1,0 +1,2 @@
+- name: Restart rsyncd.socket
+  systemd_service: name=rsyncd.socket daemon_reload=yes state=restarted

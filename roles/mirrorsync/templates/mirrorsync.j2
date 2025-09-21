@@ -12,8 +12,8 @@ flock -n 9 || exit
 
 {% set delay_updates = '--delay-updates' if item.value.delay_updates | default(true) %}
 rsync_cmd() {
-	local -a cmd=(rsync -rlptH --safe-links --delete-delay {{ delay_updates }}
-		"--timeout=600" "--contimeout=60" --no-motd)
+	local -a cmd=(rsync{{ '-ssl --type=openssl' if item.value.tls | default(true) }} -rlptH --safe-links --delete-delay {{ delay_updates }}
+		"--timeout=600" --no-motd)
 
 	if stty &>/dev/null; then
 		cmd+=(-h -v --progress)

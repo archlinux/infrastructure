@@ -19,6 +19,13 @@
 - name: Install rsyncd config
   copy: src=rsyncd.conf dest=/etc/rsyncd.conf owner=root group=root mode=0644
 
+- name: Create drop-in directory for rsyncd.socket
+  file: path=/etc/systemd/system/rsyncd.socket.d state=directory owner=root group=root mode=0755
+
+- name: Install drop-in for rsyncd.socket
+  copy: src=rsyncd-override.socket.conf dest=/etc/systemd/system/rsyncd.socket.d/override.conf owner=root group=root mode=0644
+  notify: Restart rsyncd.socket
+
 - name: Start and enable rsyncd.socket
   service: name=rsyncd.socket enabled=yes state=started
 
@@ -28,7 +35,10 @@
   when: 'mirror_domain is defined'
 
 - name: Set up nginx
-  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/syncrepo.conf owner=root group=root mode=0644
+  template: src={{ item.src }} dest=/etc/nginx/{{ item.dest }} owner=root group=root mode=0644
+  loop:
+    - { src: nginx.d.conf.j2, dest: nginx.d/syncrepo.conf }
+    - { src: stream.d.conf.j2, dest: stream.d/syncrepo.conf }
   vars:
     mirror_domains: "{{ [mirror_domain, geo_mirror_domain] if 'geo_mirrors' in group_names else [mirror_domain] }}"
   notify:
@@ -37,7 +47,10 @@
   tags: ['nginx']
 
 - name: Open firewall holes
-  ansible.posix.firewalld: service=rsyncd permanent=true state=enabled immediate=yes
+  ansible.posix.firewalld: port={{ item }} permanent=true state=enabled immediate=yes
+  loop:
+    - 873/tcp
+    - 874/tcp
   when: configure_firewall
   tags:
     - firewall
