@@ -89,15 +89,18 @@ locals {
       server_type = "cpx41"
       domain      = "@"
       http3       = true
+      ttl         = 60
     }
     "aur.archlinux.org" = {
       server_type = "cpx51"
       domain      = "aur"
       http3       = true
+      ttl         = 60
     }
     "bbs.archlinux.org" = {
       server_type = "cx22"
       domain      = "bbs"
+      ttl         = 60
     }
     "bugbuddy.archlinux.org" = {
       server_type = "cx22"
@@ -194,6 +197,7 @@ locals {
       server_type = "cpx41"
       domain      = "wiki"
       http3       = true
+      ttl         = 60
     }
   }
 
