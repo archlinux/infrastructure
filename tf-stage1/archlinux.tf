@@ -91,7 +91,7 @@ locals {
       http3       = true
     }
     "aur.archlinux.org" = {
-      server_type = "cx52"
+      server_type = "cpx51"
       domain      = "aur"
       http3       = true
     }
