@@ -86,7 +86,7 @@ locals {
       domain      = "accounts"
     }
     "archlinux.org" = {
-      server_type = "cx22"
+      server_type = "cpx41"
       domain      = "@"
       http3       = true
     }
