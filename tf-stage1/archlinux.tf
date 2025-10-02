@@ -256,6 +256,9 @@ locals {
     "master-key" = { value = "v=spf1 ip4:${hcloud_server.machine["mail.archlinux.org"].ipv4_address} ip6:${hcloud_server.machine["mail.archlinux.org"].ipv6_address} ~all" }
     gitlab       = { value = "v=spf1 ip4:${hcloud_server.machine["mail.archlinux.org"].ipv4_address} ip6:${hcloud_server.machine["mail.archlinux.org"].ipv6_address} ~all" }
     lists        = { value = "v=spf1 ip4:${hcloud_server.machine["lists.archlinux.org"].ipv4_address} ip6:${hcloud_server.machine["lists.archlinux.org"].ipv6_address} ~all" }
+
+    # haveibeenpwned domain authentication
+    "hibp-verify" = { value = "dweb_bg4zcytxcp8esi17cbg1edgj" }
   }
 
   # This creates archlinux.org MX DNS entries
