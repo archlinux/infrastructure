@@ -8,12 +8,12 @@ provider "fastly" {
   api_key = data.external.vault_fastly.result.vault_fastly_api_key
 }
 
-resource "fastly_service_vcl" "demo" {
-  name = "Terraform Test"
+resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
+  name = "Arch Linux Fastly Mirror"
 
   domain {
-    name    = "teapot.mirror.pkgbuild.com"
-    comment = "Terraform demo test"
+    name    = "fastly.mirror.pkgbuild.com"
+    comment = "Arch Linux Fastly Mirror"
   }
 
   backend {
@@ -24,8 +24,10 @@ resource "fastly_service_vcl" "demo" {
     use_ssl           = true
     ssl_cert_hostname = "europe.mirror.pkgbuild.com"
     ssl_sni_hostname  = "europe.mirror.pkgbuild.com"
-    shield            = "paris-fr"
+    shield            = "vie-vienna-at"
   }
+
+  http3 = true
 
   snippet {
     name    = "Enable segmented caching for packages"
@@ -33,6 +35,7 @@ resource "fastly_service_vcl" "demo" {
     # Setup caching for all files to avoid 503 on large packages and files
     if (req.url.ext ~ "[a-zA-Z0-9]+$") {
       set req.enable_segmented_caching = true;
+      set segmented_caching.block_size = 20971520;
     }
     EOT
     type    = "recv"
@@ -135,4 +138,9 @@ resource "fastly_service_vcl" "demo" {
   }
 
   force_destroy = true
+}
+
+resource "fastly_tls_subscription" "fastly_mirror_pkgbuild_com" {
+  domains               = [for domain in fastly_service_vcl.fastly_mirror_pkgbuild_com.domain : domain.name]
+  certificate_authority = "lets-encrypt"
 }
