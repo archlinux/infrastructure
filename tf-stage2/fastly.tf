@@ -12,8 +12,8 @@ resource "fastly_service_vcl" "demo" {
   name = "Terraform Test"
 
   domain {
-    name    = "teapot.mirror.pkgbuild.com"
-    comment = "Terraform demo test"
+    name    = "fastly.mirror.pkgbuild.com"
+    comment = "Arch Linux Fastly Mirror"
   }
 
   backend {
