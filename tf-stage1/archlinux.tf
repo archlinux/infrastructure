@@ -531,6 +531,13 @@ resource "hetznerdns_record" "pkgbuild_com_teapot_mirror_cname" {
   type    = "CNAME"
 }
 
+resource "hetznerdns_record" "pkgbuild_com_fastly_mirror_cname" {
+  zone_id = hetznerdns_zone.pkgbuild.id
+  name    = "fastly.mirror"
+  value   = "t.sni.global.fastly.net."
+  type    = "CNAME"
+}
+
 resource "hetznerdns_record" "archlinux_page_origin_ns3" {
   zone_id = hetznerdns_zone.archlinux_page.id
   name    = "@"
