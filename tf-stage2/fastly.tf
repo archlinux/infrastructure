@@ -1,3 +1,13 @@
+data "external" "vault_fastly" {
+  program = ["${path.module}/../misc/get_key.py", "${path.module}/../group_vars/all/vault_fastly.yml",
+    "vault_fastly_api_key",
+  "--format", "json"]
+}
+
+provider "fastly" {
+  api_key = data.external.vault_fastly.result.vault_fastly_api_key
+}
+
 resource "fastly_service_vcl" "demo" {
   name = "Terraform Test"
 
