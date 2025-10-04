@@ -552,6 +552,7 @@ arch_users:
     email: "mh4ckt3mh4ckt1c4s@archlinux.org"
     ssh_key: mh4ckt3mh4ckt1c4s.pub
     groups:
+      - packager
       - junior-packager
   moson:
     name: "Mario Oenning"
