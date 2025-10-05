@@ -1,0 +1,18 @@
+[Unit]
+Description=buildbtw build coordination service
+Wants=network-online.target
+After=network-online.target
+
+[Container]
+Image=registry.archlinux.org/archlinux/buildbtw/backend:{{ buildbtw_version }}
+Exec=run
+#User=buildbtw
+#Group=buildbtw
+ContainerName=buildbtw
+EnvironmentFile=/etc/conf.d/buildbtw
+PublishPort=8080:8080
+Pull=newer
+Volume={{ buildbtw_dir }}:/var/lib/buildbtw
+
+[Install]
+WantedBy=multi-user.target default.target
