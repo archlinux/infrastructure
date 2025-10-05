@@ -1,0 +1,5 @@
+wireguard_address: 10.0.0.56
+wireguard_public_key: 4kLlYGSM5IEfYdzMnw6rXaEOk1nFopre+0Xx4oGSjQU=
+nginx_enable_http3: true
+buildbtw_deploy_token: "{{ vault_buildbtw_dev_deploy_token }}"
+buildbtw_cookie_encryption_key: "{{ vault_buildbtw_dev_cookie_encryption_key }}"
