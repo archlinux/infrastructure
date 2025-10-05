@@ -99,6 +99,14 @@ locals {
       domain      = "bbs"
       ttl         = 60
     }
+    "buildbtw.archlinux.org" = {
+      server_type = "cx22"
+      domain      = "buildbtw"
+    }
+    "buildbtw-staging.archlinux.org" = {
+      server_type = "cx22"
+      domain      = "buildbtw-staging"
+    }
     "bugbuddy.archlinux.org" = {
       server_type = "cx22"
       domain      = "bugbuddy"
