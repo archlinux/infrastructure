@@ -1,0 +1,6 @@
+[
+  {
+    "id": "deploy-main",
+    "execute-command": "/usr/local/bin/redeploy-staging.sh"
+  }
+]
