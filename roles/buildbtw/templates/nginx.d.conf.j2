@@ -1,0 +1,60 @@
+upstream buildbtw {
+    server localhost:8080
+}
+
+upstream webhook {
+    server localhost:9000
+}
+
+server {
+    listen       80;
+    listen       [::]:80;
+    server_name  {{ buildbtw_domain }};
+
+    access_log   /var/log/nginx/{{ buildbtw_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ buildbtw_domain }}/access.log.json json_reduced;
+    error_log    /var/log/nginx/{{ buildbtw_domain }}/error.log;
+
+    include snippets/letsencrypt.conf;
+
+    location / {
+        access_log off;
+        return 301 https://$server_name$request_uri;
+    }
+}
+
+server {
+    include      snippets/listen-443.conf;
+    server_name  {{ buildbtw_domain }};
+
+    access_log   /var/log/nginx/{{ buildbtw_domain }}/access.log reduced;
+    access_log   /var/log/nginx/{{ buildbtw_domain }}/access.log.json json_reduced;
+    error_log    /var/log/nginx/{{ buildbtw_domain }}/error.log;
+
+    ssl_certificate      /etc/letsencrypt/live/{{ buildbtw_domain }}/fullchain.pem;
+    ssl_certificate_key  /etc/letsencrypt/live/{{ buildbtw_domain }}/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/{{ buildbtw_domain }}/chain.pem;
+
+    root {{ buildbtw_domain }};
+
+    location / {
+        proxy_set_header    Host               $host;
+        proxy_set_header    X-Real-IP          $remote_addr;
+        proxy_set_header    X-Forwarded-For    $remote_addr;
+        proxy_set_header    X-Forwarded-Proto  $scheme;
+        proxy_pass http://buildbtw
+    }
+
+    # We do deployment via webhook and as such as we need to expose them here.
+    location /deploy {
+        # We only want to allow access from the WireGuard network.
+        deny all;
+        allow 10.0.0.0/24;
+
+        proxy_set_header    Host               $host;
+        proxy_set_header    X-Real-IP          $remote_addr;
+        proxy_set_header    X-Forwarded-For    $remote_addr;
+        proxy_set_header    X-Forwarded-Proto  $scheme;
+        proxy_pass http://webhook
+    }
+}
