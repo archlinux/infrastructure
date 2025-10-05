@@ -3,11 +3,11 @@ packer {
   required_plugins {
     ansible = {
       source  = "github.com/hashicorp/ansible"
-      version = ">= 1.1.2"
+      version = ">= 1.1.4"
     }
     hcloud = {
-      source  = "github.com/hashicorp/hcloud"
-      version = ">= 1.6.0"
+      source  = "github.com/hetznercloud/hcloud"
+      version = ">= 1.7.0"
     }
   }
 }
@@ -47,6 +47,7 @@ build {
     playbook_file       = "playbooks/tasks/install_arch.yml"
     extra_arguments = [
       "--extra-vars", jsonencode({
+        ansible_python_interpreter : "/usr/bin/python3"
         install_ec2_public_keys_service : var.install_ec2_public_keys_service
       })
     ]
