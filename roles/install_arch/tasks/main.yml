@@ -226,6 +226,8 @@
 
 - name: Configure sshd via drop-in
   template: src=sshd_config.j2 dest=/mnt/etc/ssh/sshd_config.d/override.conf owner=root group=root mode=0644
+  vars:
+    sshd_port: 22
 
 - name: Clean pacman cache  # noqa risky-shell-pipe ("Illegal option -o pipefail" in Hetzner's recovery environment (dash?))
   shell: yes | chroot /mnt pacman -Scc
