@@ -201,6 +201,9 @@ locals {
       domain      = "state"
       backups     = true
     }
+    "test.pkgbuild.com" = {
+      server_type = "cx22"
+    }
     "vaultwarden.archlinux.org" = {
       server_type = "cx22"
       domain      = "vaultwarden"
@@ -466,6 +469,10 @@ locals {
       ipv4_address = "194.71.11.121"
       ipv6_address = "2001:6b0:19:2::121"
       http3        = true
+    }
+    test = {
+      ipv4_address = "209.126.35.77"
+      ipv6_address = "2640:cac0:a104:d::1"
     }
     www = {
       ipv4_address = hcloud_server.machine["homedir.archlinux.org"].ipv4_address
