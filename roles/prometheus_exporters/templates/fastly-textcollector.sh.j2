@@ -21,7 +21,7 @@ MTD="$(curl --silent \
             --fail \
             --header @<(echo Fastly-Key: ${fastly_token}) \
             --header "Accept: application/json" \
-            "https://api.fastly.com/billing/v2/account_customers/${fastly_customer_id}/mtd_invoice" | jq .total.cost)"
+            "https://api.fastly.com/billing/v3/invoices/month-to-date" | jq '.monthly_transaction_amount | tonumber')"
 
 echo "# HELP fastly_mtd_estimate_dollars_total month-to-date billing estimate" >> $TMP_FILE
 echo "# TYPE fastly_mtd_estimate_dollars_total gauge" >> $TMP_FILE
