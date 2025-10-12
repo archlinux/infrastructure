@@ -276,11 +276,17 @@
   file: path={{ item }} state=directory owner=root group=root mode=0755
   loop:
     - /etc/systemd/system/turnserver.service.d
+    - /etc/systemd/resolved.conf.d
 
 - name: Install turnserver unit snippet
   copy: src=turnserver.service.d dest=/etc/systemd/system/turnserver.service.d/override.conf owner=root group=root mode=0644
   notify:
     - Restart turnserver
+
+- name: Install resolved.conf snippet
+  copy: src=resolved.conf.d dest=/etc/systemd/resolved.conf.d/synapse.conf owner=root group=root mode=0644
+  notify:
+    - Restart systemd-resolved
 
 - name: Enable units
   service: name={{ item }} enabled=yes

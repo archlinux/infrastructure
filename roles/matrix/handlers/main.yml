@@ -25,3 +25,10 @@
     state: restarted
     enabled: true
     daemon_reload: true
+
+- name: Restart systemd-resolved
+  systemd_service:
+    name: systemd-resolved
+    state: restarted
+    enabled: true
+    daemon_reload: true
