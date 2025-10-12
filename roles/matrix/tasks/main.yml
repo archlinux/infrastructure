@@ -272,6 +272,11 @@
   notify:
     - Restart matrix-appservice-irc
 
+- name: Create systemd snippet dirs
+  file: path={{ item }} state=directory owner=root group=root mode=0755
+  loop:
+    - /etc/systemd/system/turnserver.service.d
+
 - name: Install turnserver unit snippet
   copy: src=turnserver.service.d dest=/etc/systemd/system/turnserver.service.d/override.conf owner=root group=root mode=0644
   notify:
