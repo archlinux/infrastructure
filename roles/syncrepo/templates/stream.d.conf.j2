@@ -1,0 +1,29 @@
+server {
+    listen 873;
+    listen [::]:873;
+
+    access_log /var/log/nginx/{{ mirror_domain }}/stream.log stream;
+    access_log /var/log/nginx/{{ mirror_domain }}/stream.log.json json_stream;
+    error_log  /var/log/nginx/{{ mirror_domain }}/stream.error.log;
+
+    proxy_pass unix:/run/rsyncd.sock;
+    proxy_protocol on;
+}
+{% for domain in mirror_domains %}
+
+server {
+    listen      874 ssl;
+    listen      [::]:874 ssl;
+    server_name {{ domain }};
+
+    access_log  /var/log/nginx/{{ domain }}/stream.log stream;
+    access_log  /var/log/nginx/{{ domain }}/stream.log.json json_stream;
+    error_log   /var/log/nginx/{{ domain }}/stream.error.log;
+
+    ssl_certificate     /etc/letsencrypt/live/{{ domain }}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/{{ domain }}/privkey.pem;
+
+    proxy_pass unix:/run/rsyncd.sock;
+    proxy_protocol on;
+}
+{% endfor %}

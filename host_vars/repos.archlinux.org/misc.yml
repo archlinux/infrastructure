@@ -10,5 +10,7 @@ system_disks:
   - /dev/nvme2n1
 raid_level: "raid1"
 
+nginx_stream: true
+
 wireguard_address: 10.0.0.45
 wireguard_public_key: ZE7fr78hG6eB3Qjhys0n7DxplMBbcWzBGI7DhMvCeDc=

@@ -2,6 +2,9 @@ worker_processes  auto;
 
 load_module /usr/lib/nginx/modules/ngx_http_brotli_filter_module.so;
 load_module /usr/lib/nginx/modules/ngx_http_brotli_static_module.so;
+{% if nginx_stream %}
+load_module /usr/lib/nginx/modules/ngx_stream_module.so;
+{% endif %}
 {% for module in nginx_extra_modules %}
 {% if module.so_name is not defined %}
 load_module /usr/lib/nginx/modules/ngx_http_{{ module.name }}_module.so;
@@ -100,8 +103,36 @@ http {
 
     access_log syslog:server=unix:/dev/log,nohostname,tag=nginx_http main;
 
-    include snippets/sslsettings.conf;
+    include snippets/sslsettings-http.conf;
     include snippets/headers.conf;
 
     include nginx.d/*.conf;
 }
+{% if nginx_stream %}
+
+stream {
+    log_format stream
+        '$remote_addr $server_name [$time_local] '
+        '$status $bytes_sent $session_time '
+        '$ssl_protocol $ssl_cipher';
+    log_format json_stream escape=json
+        '{'
+        '"server_name":"$server_name",'
+        '"remote_addr":"$remote_addr",'
+        '"time_local":"$time_local",'
+        '"status":"$status",'
+        '"bytes_sent":"$bytes_sent",'
+        '"session_time":"$session_time",'
+        '"ssl_protocol":"$ssl_protocol",'
+        '"ssl_cipher":"$ssl_cipher",'
+        # This was added to keep every log line unique as Loki drops
+        # log line with the same timestamp and log text:
+        # https://grafana.com/docs/loki/latest/overview/#timestamp-ordering
+        '"connection":"$connection"'
+        '}';
+
+    include snippets/sslsettings-stream.conf;
+
+    include stream.d/*.conf;
+}
+{% endif %}

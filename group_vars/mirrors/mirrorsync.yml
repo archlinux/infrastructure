@@ -2,6 +2,7 @@ mirrorsync_mirrors:
   archive:
     hosts: "{{ groups['archive_mirrors'] }}"
     source: rsync://{{ hostvars['archive.archlinux.org']['wireguard_address'] }}/archive
+    tls: false
     target: /srv/archive
     last_update_url: https://archive.archlinux.org/repos/last/lastupdate
     last_update_dst: lastupdate
@@ -32,6 +33,7 @@ mirrorsync_mirrors:
     hosts: "{{ groups['geo_mirrors'] }}"
     mirror_domain: riscv.mirror.pkgbuild.com
     source: rsync://archriscv.felixc.at/archriscv
+    tls: false
     target: /srv/riscv
     last_update_url: https://archriscv.felixc.at/.status/lastupdate.txt
     last_update_dst: .status/lastupdate.txt

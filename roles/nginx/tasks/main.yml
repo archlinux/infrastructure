@@ -1,5 +1,5 @@
 - name: Install nginx
-  pacman: name=nginx,nginx-mod-brotli state=present
+  pacman: name=nginx,nginx-mod-brotli{{ ',nginx-mod-stream' if nginx_stream }} state=present
 
 - name: Install extra nginx modules
   pacman: name={{ nginx_extra_modules | map(attribute='name') | map('regex_replace', '^', 'nginx-mod-') }} state=present
@@ -19,10 +19,11 @@
     - snippets
 
 - name: Copy snippets
-  template: src={{ item }} dest=/etc/nginx/snippets/{{ item | regex_replace('\\.j2$', '') }} owner=root group=root mode=0644
+  template: src={{ item if item.src is not defined else item.src }} dest=/etc/nginx/snippets/{{ item | regex_replace('\\.j2$', '') if item.dest is not defined else item.dest }} owner=root group=root mode=0644
   loop:
     - letsencrypt.conf
-    - sslsettings.conf
+    - {src: sslsettings.conf, dest: sslsettings-http.conf, server: http}
+    - {src: sslsettings.conf, dest: sslsettings-stream.conf, server: stream}
     - headers.conf
     - listen-443.conf.j2
   notify:
@@ -34,6 +35,10 @@
 
 - name: Create nginx.d directory
   file: state=directory path=/etc/nginx/nginx.d owner=root group=root mode=0755
+
+- name: Create stream.d directory
+  file: state=directory path=/etc/nginx/stream.d owner=root group=root mode=0755
+  when: nginx_stream
 
 - name: Create auth directory
   file: state=directory path=/etc/nginx/auth owner=root group=root mode=0755

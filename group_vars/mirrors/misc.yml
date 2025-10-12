@@ -5,3 +5,4 @@ tcp_rmem: "10240 87380 33554432"
 tcp_wmem: "10240 87380 33554432"
 
 nginx_enable_http3: true
+nginx_stream: true
