@@ -26,7 +26,6 @@ server {
 
     ssl_certificate      /etc/letsencrypt/live/{{ service_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ service_domain }}/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/{{ service_domain }}/chain.pem;
 
     location / {
         access_log off;
@@ -63,7 +62,6 @@ server {
 
     ssl_certificate      /etc/letsencrypt/live/{{ service_domain }}_legacy/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ service_domain }}_legacy/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/{{ service_domain }}_legacy/chain.pem;
 
     location / {
         access_log off;
@@ -99,7 +97,6 @@ server {
 
     ssl_certificate      /etc/letsencrypt/live/{{ service_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ service_domain }}/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/{{ service_domain }}/chain.pem;
 
     error_page 503 /503.html;
 

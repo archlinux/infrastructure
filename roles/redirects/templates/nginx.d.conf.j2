@@ -18,7 +18,6 @@ server {
 
     ssl_certificate      /etc/letsencrypt/live/{{ redirect.domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ redirect.domain }}/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/{{ redirect.domain }}/chain.pem;
 
     include snippets/letsencrypt.conf;
 

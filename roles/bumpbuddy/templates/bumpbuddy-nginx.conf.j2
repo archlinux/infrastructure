@@ -25,7 +25,6 @@ server {
 
     ssl_certificate      /etc/letsencrypt/live/{{ bumpbuddy_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ bumpbuddy_domain }}/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/{{ bumpbuddy_domain }}/chain.pem;
 
     root /opt/bumpbuddy/web;
     autoindex on;

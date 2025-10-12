@@ -33,7 +33,6 @@ server {
 
     ssl_certificate      /etc/letsencrypt/live/{{ hedgedoc_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ hedgedoc_domain }}/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/{{ hedgedoc_domain }}/chain.pem;
 
 {% set proxy -%}
         proxy_pass http://hedgedoc;

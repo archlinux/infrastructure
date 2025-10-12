@@ -44,7 +44,6 @@ server {
 
     ssl_certificate      /etc/letsencrypt/live/{{ lists_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ lists_domain }}/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/{{ lists_domain }}/chain.pem;
 
     location /static/ {
       alias /var/lib/mailman-web/static/;
