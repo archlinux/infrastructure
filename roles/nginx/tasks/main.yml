@@ -51,8 +51,8 @@
 - name: Create default nginx log directory
   file: state=directory path=/var/log/nginx/default owner=root group=root mode=0755
 
-- name: Create unique DH group
-  command: openssl dhparam -out /etc/ssl/dhparams.pem 2048 creates=/etc/ssl/dhparams.pem
+- name: Install ffdhe2048 DH parameters
+  copy: src=ffdhe2048.txt dest=/etc/ssl/dhparams.pem owner=root group=root mode=0644
 
 - name: Create directory to store validation stuff in
   file: owner=root group=http mode=0750 path={{ letsencrypt_validation_dir }} state=directory
