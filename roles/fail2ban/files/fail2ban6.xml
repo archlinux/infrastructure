@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ipset type="hash:net">
+  <option name="family" value="inet6"/>
+</ipset>
