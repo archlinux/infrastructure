@@ -43,6 +43,9 @@ accounts.archlinux.org
 archive.archlinux.org
 archlinux.org
 aur.archlinux.org
+buildbtw.dev.archlinux.org
+buildbtw.staging.archlinux.org
+buildbtw.archlinux.org
 bbs.archlinux.org
 gitlab.archlinux.org
 homedir.archlinux.org
@@ -113,6 +116,9 @@ archlinux.org
 aur.archlinux.org
 bbs.archlinux.org
 bugbuddy.archlinux.org
+buildbtw.dev.archlinux.org
+buildbtw.staging.archlinux.org
+buildbtw.archlinux.org
 bumpbuddy.archlinux.org
 dashboards.archlinux.org
 debuginfod.archlinux.org

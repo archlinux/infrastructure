@@ -1,0 +1,20 @@
+[
+  {
+    "id": "deploy-branch",
+    "execute-command": "/usr/local/bin/deploy-branch.sh",
+    "pass-arguments-to-command":
+    [
+      "source": "url",
+      "name": "branch-name"
+    ]
+  },
+  {
+    "id": "undeploy-branch",
+    "execute-command": "/usr/local/bin/undeploy-branch.sh",
+    "pass-arguments-to-command":
+    [
+      "source": "url",
+      "name": "branch-name"
+    ]
+  }
+]
