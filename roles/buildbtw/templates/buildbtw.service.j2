@@ -1,0 +1,21 @@
+[Unit]
+Description=buildbtw build coordination service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+Restart=on-failure
+User=buildbtw
+Group=buildbtw
+WorkingDirectory={{ buildbtw_dir }}
+EnvironmentFile=-/etc/conf.d/buildbtw
+ExecStartPre=/usr/lib/systemd/systemd-networkd-wait-online
+ExecStart=podman run \
+  --name buildbtw \
+  --replace \
+  --pull newer \
+  --rm \
+  -p 127.0.0.1:8080:8080 \
+  registry.archlinux.org/archlinux/buildbtw:{{ buildbtw_version }}
+ExecStop=podman stop buildbtw
