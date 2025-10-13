@@ -1,0 +1,4 @@
+wireguard_address: 10.0.0.54
+wireguard_public_key: Bs2NcbIK7hcVB0qjrI0mh+7BQv9TZJgHxISlsZ5azjk=
+nginx_enable_http3: true
+buildbtw_version: v0.0.1

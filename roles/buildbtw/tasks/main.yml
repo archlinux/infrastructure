@@ -1,0 +1,44 @@
+- name: Install podman and webhook
+  pacman: name=podman,webhook state=present
+
+- name: Create user
+  user: >
+    name=buildbtw home="{{ buildbtw_dir }}"
+    shell=/bin/false system=yes createhome=no
+
+- name: Create ssl cert
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ buildbtw_domain }}"]
+
+- name: Make nginx log dir
+  file: path=/var/log/nginx/{{ buildbtw_domain }} state=directory owner=root group=root mode=0755
+
+- name: Set up nginx
+  template: src=nginx.d.conf.j2 dest="/etc/nginx/nginx.d/buildbtw.conf" owner=root group=root mode=644
+  notify: Reload nginx
+  tags: ['nginx']
+
+- name: Check if user is lingering
+  stat: path="/var/lib/systemd/linger/buildbtw"
+  register: user_lingering
+
+- name: Enable lingering is needed so that podman can work
+  command: "loginctl enable-linger buildbtw"
+  when: not user_lingering.stat.exists
+
+- name: Install buildbtw systemd service
+  template: src=buildbtw.service.j2 dest=/etc/systemd/system/buildbtw.service owner=root group=root mode=0644
+
+- name: Install buildbtw environment config
+  template: src=buildbtw.env.j2 dest=/etc/conf.d/buildbtw owner=root group=root mode=0600
+
+- name: Install webhook config
+  template: src=hooks.json dest=/etc/webhook/hooks.json owner=root group=root mode=0644
+
+- name: Start and enable systemd services
+  systemd: name={{ item }} state=started enabled=true daemon_reload=yes
+  loop:
+    - webhook
+    - buildbtw
