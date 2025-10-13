@@ -1,0 +1,82 @@
+server {
+    include      snippets/listen-80.conf;
+{% if buildbtw_stage == "dev" %}
+{# For review apps, we allow dynamic subdomains and so we also need to redirect those requests. #}
+    server_name  .{{ buildbtw_domain }};
+{% else %}
+    server_name  {{ buildbtw_domain }};
+{% endif %}
+
+    access_log   /var/log/nginx/{{ buildbtw_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ buildbtw_domain }}/access.log.json json_main;
+    error_log    /var/log/nginx/{{ buildbtw_domain }}/error.log;
+
+    include snippets/letsencrypt.conf;
+
+    location / {
+        access_log off;
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    include      snippets/listen-443.conf;
+{% if buildbtw_stage == "dev" %}
+{# Allow review apps to work by figuring out which subdomain was requested using a regex capture group
+and then storing that in a variable. We will then later use that variable to pick the correct upstream socket
+to dispatch to #}
+    server_name  ~^(?<instance>[0-9a-z-]+).{{ buildbtw_domain }}$ {{ buildbtw_domain }};
+{% else %}
+{# The above dance isn't necessary if we are not a review app since on staging and production, we don't multiplex
+multiple instances on the same server. #}
+    server_name  {{ buildbtw_domain }};
+{% endif %}
+
+{# Here it would probably make sense to split out the logs to separate files for the review apps.
+For instance, it would be neat to have myapp1-error.log and such.
+However, this is not supported by nginx so everything has to crowd into the same error file. )#}
+    access_log   /var/log/nginx/{{ buildbtw_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ buildbtw_domain }}/access.log.json json_main;
+    error_log    /var/log/nginx/{{ buildbtw_domain }}/error.log;
+
+    ssl_certificate      /etc/letsencrypt/live/{{ buildbtw_domain }}/fullchain.pem;
+    ssl_certificate_key  /etc/letsencrypt/live/{{ buildbtw_domain }}/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/{{ buildbtw_domain }}/chain.pem;
+
+    location / {
+        proxy_set_header    Host               $host;
+        proxy_set_header    X-Real-IP          $remote_addr;
+        proxy_set_header    X-Forwarded-For    $remote_addr;
+        proxy_set_header    X-Forwarded-Proto  $scheme;
+{% if buildbtw_stage == "dev" %}
+        if ($instance = '') {
+          return 200 'Pick an instance subdomain';
+        }
+
+        if (!-x /run/buildbtw/$instance.sock) {
+          return 404 "The requested instance '$instance' doesn't exist";
+        }
+
+        proxy_pass http://unix:/run/buildbtw/$instance.sock;
+{% elif buildbtw_stage == "staging" %}
+        proxy_pass http://unix:/run/buildbtw/staging.sock;
+{% elif buildbtw_stage == "production" %}
+        proxy_pass http://unix:/run/buildbtw/production.sock;
+{% endif %}
+    }
+
+{% if buildbtw_stage in ["dev", "staging"] %}
+    # We do deployment via webhook and as such as we need to expose them here.
+    location /hooks {
+        if ($http_authorization != "Bearer {{ vault_buildbtw_deploy_token }}") {
+            return 403;
+        }
+
+        proxy_set_header    Host               $host;
+        proxy_set_header    X-Real-IP          $remote_addr;
+        proxy_set_header    X-Forwarded-For    $remote_addr;
+        proxy_set_header    X-Forwarded-Proto  $scheme;
+        proxy_pass http://localhost:9000;
+    }
+{% endif %}
+}

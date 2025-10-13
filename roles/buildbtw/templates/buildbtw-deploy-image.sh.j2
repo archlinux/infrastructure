@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -Eeuxo pipefail
+
+# Deploy an image
+# ./buildbtw-deploy-image.sh <image tag>
+
+image_tag=$1
+
+# Restart so that a potentially newer image may get pulled
+echo "Deploying ${image_tag}"
+systemctl restart "buildbtw@${image_tag}"
+{% if buildbtw_stage == "dev" %}
+# Manual symlink (as suggested in podman-systemd.unit(5) because this will
+# generate a service and generated/transient services can't be enabled. We can
+# manually instantiate them, however, to make sure they run on boot.
+ln -sf buildbtw@.container "/etc/containers/systemd/buildbtw@${image_tag}.container"
+{% endif %}

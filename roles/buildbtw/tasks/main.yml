@@ -1,0 +1,76 @@
+- name: Install podman and webhook
+  pacman: name=podman,webhook state=present
+
+- name: Create ssl cert
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ buildbtw_domain }}", "*.{{ buildbtw_domain }}"]
+    challenge: "DNS-01"
+  when: buildbtw_stage == "dev"
+
+- name: Create ssl cert
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ buildbtw_domain }}"]
+    challenge: "HTTP-01"
+  when: buildbtw_stage in ["staging", "production"]
+
+- name: Make nginx log dir
+  file: path=/var/log/nginx/{{ buildbtw_domain }} state=directory owner=root group=root mode=0755
+
+- name: Set up nginx
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/buildbtw.conf owner=root group=root mode=640
+  notify: Reload nginx
+  tags: ['nginx']
+
+- name: Create containers dirs
+  file: path=/etc/containers/systemd owner=root group=root mode=0755 state=directory
+
+- name: Install buildbtw systemd container file
+  template: src=buildbtw@.container.j2 dest=/etc/containers/systemd/buildbtw@.container owner=root group=root mode=0644
+  notify: Restart buildbtw
+
+- name: Install buildbtw tmpfiles.d entry
+  copy: src=buildbtw-tmpfiles.d.conf dest=/etc/tmpfiles.d/buildbtw.conf owner=root group=root mode=0644
+  register: buildbtwtmpfiles
+
+- name: Use tmpfiles.d/buildbtw.conf
+  command: systemd-tmpfiles --create creates=/run/buildbtw
+  when: buildbtwtmpfiles.changed
+
+- name: Install webhook config
+  copy: src=hooks.json dest=/etc/webhook/hooks.json owner=root group=root mode=0644
+  notify: Restart webhook
+  when: buildbtw_stage in ["dev", "staging"]
+
+- name: Install deployment scripts
+  template: src={{ item }}.j2 dest=/usr/local/bin/{{ item }} owner=root group=root mode=0755
+  when: buildbtw_stage in ["dev", "staging"]
+  loop:
+    - buildbtw-deploy-image.sh
+    - buildbtw-undeploy-image.sh
+
+- name: Create dir for webhook systemd service override
+  file: path=/etc/systemd/system/webhook.service.d owner=root group=root mode=0755 state=directory
+  when: buildbtw_stage in ["dev", "staging"]
+
+- name: Make sure webhook runs only on localhost
+  copy: src=webhook-override.conf dest=/etc/systemd/system/webhook.service.d/override.conf owner=root group=root mode=644
+  notify: Restart webhook
+  when: buildbtw_stage in ["dev", "staging"]
+
+- name: Create buildbtw working dirs
+  file: path={{ item }} owner=root group=root mode=0755 state=directory
+  loop:
+    - /var/lib/buildbtw
+    - /run/buildbtw
+
+- name: Start and enable webhook systemd service
+  systemd_service: name=webhook state=started enabled=true daemon_reload=yes
+  when: buildbtw_stage in ["dev", "staging"]
+
+- name: Start buildbtw systemd service
+  systemd_service: name=buildbtw@{{ buildbtw_stage }} state=started daemon_reload=yes
+  when: buildbtw_stage in ["staging", "production"]

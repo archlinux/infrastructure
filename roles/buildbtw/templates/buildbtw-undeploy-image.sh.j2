@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -Eeuxo pipefail
+
+# Undeploy an image
+# ./buildbtw-undeploy-image.sh <image tag>
+
+image_tag=$1
+
+echo "Undeploying ${image_tag}"
+systemctl stop "buildbtw@${image_tag}"
+{% if buildbtw_stage == "dev" %}
+# Clean up manually created symlink.
+# See `buildbtw-deploy-image.sh`.
+rm -f "/etc/containers/systemd/buildbtw@${image_tag}.container"
+{% endif %}
