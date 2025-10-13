@@ -1,0 +1,16 @@
+- name: Setup buildbtw
+  hosts: [buildbtw.dev.archlinux.org, buildbtw.staging.archlinux.org, buildbtw.archlinux.org]
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: firewalld }
+    - { role: wireguard }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: borg_client, tags: ["borg"] }
+    - { role: certbot }
+    - { role: nginx }
+    - { role: fail2ban }
+    - { role: prometheus_exporters }
+    - { role: promtail }
+    - { role: buildbtw }

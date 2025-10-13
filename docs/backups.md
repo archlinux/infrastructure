@@ -90,11 +90,13 @@ Restoring backups can be done with `pg_restore`. See also [official PostgreSQL d
 
 Adding a new server to be backed up goes as follows:
 
-* Make sure the new servers host key is synced to `docs/ssh-known_hosts.txt` if not run:
+* Make sure the new server's host key is synced to `docs/ssh-known_hosts.txt`.
+
+  If not, run:
 
       ansible-playbook playbooks/tasks/sync-ssh-hostkeys.yml
 
-* Add the server to [borg-clients] in hosts
+* Add the server to `[borg_clients]` in hosts
 
 * Run the borg role on u236610.your-storagebox.de to allow the new machine to create backups
 
