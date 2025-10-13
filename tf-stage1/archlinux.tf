@@ -102,13 +102,20 @@ locals {
       domain      = "bbs"
       ttl         = 60
     }
-    "buildbtw.archlinux.org" = {
-      server_type = "cx22"
-      domain      = "buildbtw"
+    "buildbtw.dev.archlinux.org" = {
+      server_type = "cx23"
+      domain      = "buildbtw.dev"
+      http3       = true
     }
-    "buildbtw-staging.archlinux.org" = {
-      server_type = "cx22"
-      domain      = "buildbtw-staging"
+    "buildbtw.staging.archlinux.org" = {
+      server_type = "cx23"
+      domain      = "buildbtw.staging"
+      http3       = true
+    }
+    "buildbtw.archlinux.org" = {
+      server_type = "cx23"
+      domain      = "buildbtw"
+      http3       = true
     }
     "bugbuddy.archlinux.org" = {
       server_type = "cx23"
@@ -370,19 +377,20 @@ locals {
   # Example:
   # dev                      = { value = "www.archlinux.org.", ttl = 3600 }
   archlinux_org_cname = {
-    ipxe            = { value = "www.archlinux.org." }
-    mailman         = { value = "redirect.archlinux.org." }
-    packages        = { value = "www.archlinux.org." }
-    ping            = { value = "redirect.archlinux.org." }
-    planet          = { value = "www.archlinux.org." }
-    registry        = { value = "gitlab.archlinux.org." }
-    rsync           = { value = "repos.archlinux.org." }
-    sources         = { value = "repos.archlinux.org." }
-    "static.conf"   = { value = "redirect.archlinux.org." }
-    status          = { value = "stats.uptimerobot.com." }
-    coc             = { value = "redirect.archlinux.org." }
-    git             = { value = "redirect.archlinux.org." }
-    "tu-bylaws.aur" = { value = "redirect.archlinux.org." }
+    ipxe             = { value = "www.archlinux.org." }
+    mailman          = { value = "redirect.archlinux.org." }
+    packages         = { value = "www.archlinux.org." }
+    ping             = { value = "redirect.archlinux.org." }
+    planet           = { value = "www.archlinux.org." }
+    registry         = { value = "gitlab.archlinux.org." }
+    "*.buildbtw.dev" = { value = "buildbtw.dev.archlinux.org." }
+    rsync            = { value = "repos.archlinux.org." }
+    sources          = { value = "repos.archlinux.org." }
+    "static.conf"    = { value = "redirect.archlinux.org." }
+    status           = { value = "stats.uptimerobot.com." }
+    coc              = { value = "redirect.archlinux.org." }
+    git              = { value = "redirect.archlinux.org." }
+    "tu-bylaws.aur"  = { value = "redirect.archlinux.org." }
 
     # MTA-STS
     mta-sts               = { value = "mail.archlinux.org." }

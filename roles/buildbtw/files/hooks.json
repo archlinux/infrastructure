@@ -1,0 +1,24 @@
+[
+  {
+    "id": "deploy-branch",
+    "execute-command": "/usr/local/bin/buildbtw-deploy-branch.sh",
+    "pass-arguments-to-command":
+    [
+      {
+        "source": "url",
+        "name": "branch"
+      }
+    ]
+  },
+  {
+    "id": "undeploy-branch",
+    "execute-command": "/usr/local/bin/buildbtw-undeploy-branch.sh",
+    "pass-arguments-to-command":
+    [
+      {
+        "source": "url",
+        "name": "branch"
+      }
+    ]
+  }
+]
