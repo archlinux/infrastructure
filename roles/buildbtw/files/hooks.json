@@ -1,0 +1,7 @@
+[
+  {
+    "id": "redeploy-staging",
+    "execute-command": "/usr/local/bin/redeploy-staging.sh",
+    "include-command-output-in-response", true
+  }
+]
