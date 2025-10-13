@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -Eeuxo pipefail
+
+# Deploy a branch
+# ./deploy-branch.sh <branch>
+
+branch=$1
+
+# Restart so that a potentially newer image may get pulled
+echo "Deploying ${branch}"
+systemctl restart "buildbtw@${branch}"
+{% if buildbtw_stage == "dev" %}
+# Manual symlink (as suggested in podman-systemd.unit(5) because this will
+# generate a service and generated/transient services can't be enabled. We can
+# manually instantiate them, however, to make sure they run on boot.
+ln -s buildbtw@.container "/etc/containers/systemd/buildbtw@${branch}.container"
+{% endif %}
