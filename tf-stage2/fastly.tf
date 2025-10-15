@@ -165,3 +165,8 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
 
   force_destroy = true
 }
+
+resource "fastly_tls_subscription" "fastly_mirror_pkgbuild_com" {
+  domains               = [for domain in fastly_service_vcl.fastly_mirror_pkgbuild_com.domain : domain.name]
+  certificate_authority = "lets-encrypt"
+}
