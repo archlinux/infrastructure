@@ -190,6 +190,9 @@ locals {
       domain      = "state"
       backups     = true
     }
+    "test.pkgbuild.com" = {
+      server_type = "cx23"
+    }
     "wiki.archlinux.org" = {
       server_type = "cpx41"
       domain      = "wiki"
@@ -441,6 +444,11 @@ locals {
     }
     repro4 = {
       ipv6_address = "2001:1470:fffd:3050::189:1"
+    }
+    test = {
+      # From HAProxy
+      ipv4_address = "209.126.35.77"
+      ipv6_address = "2640:cac0:a104:d::1"
     }
     www = {
       ipv4_address = hcloud_server.machine["homedir.archlinux.org"].ipv4_address
