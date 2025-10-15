@@ -1,3 +1,8 @@
+fail2ban_jails:
+  sshd: true
+  nginx_limit_req: true
+  postfix: false
+  dovecot: false
 ipv4_address: 95.217.236.249
 wireguard_address: 10.0.0.34
 wireguard_public_key: XUbI7fDRKPbG/MIfgH3c4fNhC28F4aXWvknOEV3CxUg=
