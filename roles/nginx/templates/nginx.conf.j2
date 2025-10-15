@@ -106,6 +106,11 @@ http {
     include snippets/sslsettings-http.conf;
     include snippets/headers.conf;
 
+{% if nginx_proxy_protocol_host %}
+    set_real_ip_from {{ nginx_proxy_protocol_host }};
+    real_ip_header proxy_protocol;
+{% endif %}
+
     include nginx.d/*.conf;
 }
 {% if nginx_stream %}
@@ -132,6 +137,11 @@ stream {
         '}';
 
     include snippets/sslsettings-stream.conf;
+
+{% if nginx_proxy_protocol_host %}
+    set_real_ip_from {{ nginx_proxy_protocol_host }};
+    real_ip_header proxy_protocol;
+{% endif %}
 
     include stream.d/*.conf;
 }

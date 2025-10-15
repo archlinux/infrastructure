@@ -1,0 +1,2 @@
+listen 80{{ ' proxy_protocol' if nginx_proxy_protocol_host }};
+listen [::]:80{{ ' proxy_protocol' if nginx_proxy_protocol_host }};
