@@ -8,6 +8,21 @@ provider "fastly" {
   api_key = data.external.vault_fastly.result.vault_fastly_api_key
 }
 
+locals {
+  if_modified_since_snippet_vcl = <<-EOT
+if(!req.backend.is_origin){
+  set req.http.x-if-modified-since = bereq.http.if-modified-since;
+  set req.http.x-if-none-match = bereq.http.if-none-match;
+  unset bereq.http.if-modified-since;
+  unset bereq.http.if-none-match;
+}else{
+  set bereq.http.if-modified-since = bereq.http.x-if-modified-since;
+  set bereq.http.if-none-match =  bereq.http.x-if-none-match;
+}
+EOT
+}
+
+
 resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
   name = "Arch Linux Fastly Mirror"
 
@@ -134,6 +149,18 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
     cache_condition = "Skip staging database cache"
     stale_ttl       = 0
     ttl             = 0
+  }
+
+  snippet {
+    name    = "snippet_pass_if_modified_since"
+    type    = "pass"
+    content = local.if_modified_since_snippet_vcl
+  }
+
+  snippet {
+    name    = "snippet_miss_if_modified_since"
+    type    = "miss"
+    content = local.if_modified_since_snippet_vcl
   }
 
   force_destroy = true
