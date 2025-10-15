@@ -10,4 +10,4 @@
     - { role: certbot }
     - { role: nginx }
     - { role: fail2ban }
-    - { role: certificate, domains: ['test.pkgbuild.com'] }
+    - { role: proxy_test, public_domain: 'test.pkgbuild.com' }
