@@ -50,6 +50,7 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
     # Setup caching for all files to avoid 503 on large packages and files
     if (req.url.ext ~ "[a-zA-Z0-9]+$") {
       set req.enable_segmented_caching = true;
+      set segmented_caching.block_size = 20971520;
     }
     EOT
     type    = "recv"
