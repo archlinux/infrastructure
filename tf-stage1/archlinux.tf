@@ -741,3 +741,17 @@ resource "hcloud_volume" "debuginfod" {
   server_id         = hcloud_server.machine["debuginfod.archlinux.org"].id
   delete_protection = true
 }
+
+resource "hcloud_floating_ip" "proxy_ipv4_aur_archlinux_org" {
+  name              = "ipv4-proxy-aur"
+  type              = "ipv4"
+  server_id         = hcloud_server.machine["aur.archlinux.org"].id
+  delete_protection = true
+}
+
+resource "hcloud_floating_ip" "proxy_ipv6_aur_archlinux_org" {
+  name              = "ipv6-proxy-aur"
+  type              = "ipv6"
+  server_id         = hcloud_server.machine["aur.archlinux.org"].id
+  delete_protection = true
+}
