@@ -94,6 +94,10 @@ locals {
       http3       = true
       ttl         = 60
     }
+    "bastion.archlinux.org" = {
+      server_type = "cx23"
+      domain      = "bastion"
+    }
     "bbs.archlinux.org" = {
       server_type = "cx22"
       domain      = "bbs"
