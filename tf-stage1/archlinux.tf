@@ -91,6 +91,10 @@ locals {
     "aur.archlinux.org" = {
       server_type = "cpx51"
     }
+    "bastion.archlinux.org" = {
+      server_type = "cx23"
+      domain      = "bastion"
+    }
     "bbs.archlinux.org" = {
       server_type = "cx23"
       domain      = "bbs"
@@ -755,6 +759,13 @@ resource "hcloud_volume" "debuginfod" {
   name              = "debuginfod"
   size              = 125
   server_id         = hcloud_server.machine["debuginfod.archlinux.org"].id
+  delete_protection = true
+}
+
+resource "hcloud_floating_ip" "whitelist_ip_bastion_archlinux_org" {
+  name              = "bastion-host-IP-DO-NO-DELETE"
+  type              = "ipv4"
+  server_id         = hcloud_server.machine["bastion.archlinux.org"].id
   delete_protection = true
 }
 
