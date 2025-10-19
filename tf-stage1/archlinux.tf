@@ -94,6 +94,10 @@ locals {
       floating_ipv4 = true
       floating_ipv6 = true
     }
+    "bastion.archlinux.org" = {
+      server_type = "cx23"
+      domain      = "bastion"
+    }
     "bbs.archlinux.org" = {
       server_type   = "cx23"
       domain        = "bbs"

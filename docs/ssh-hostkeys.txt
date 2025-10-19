@@ -34,6 +34,15 @@
 256 MD5:f6:38:f7:d3:26:dd:8f:70:fb:7e:59:5b:52:54:5f:d6 root@archlinux-packer (ED25519)
 3072 MD5:f7:3e:6c:e7:8d:8e:f3:30:b4:a9:3d:ff:04:1a:65:76 root@archlinux-packer (RSA)
 
+# bastion.archlinux.org
+256 SHA256:zDFP2d9JLEOA9o+Mu9vYHmzy8BfN3nbcRHUmfGxlb0o root@bastion.archlinux.org (ECDSA)
+256 SHA256:n4+Ei4BbO/EzaYNJ89KU0yhw/B0okT5Mub9JeqyxGm0 root@bastion.archlinux.org (ED25519)
+3072 SHA256:9F7nqtQclJRZWqW4lLqZhwL++m8nk2bgQwOd7cjDRV8 root@bastion.archlinux.org (RSA)
+
+256 MD5:ac:ed:78:4a:33:64:94:81:37:3d:b2:65:ae:03:3f:b5 root@bastion.archlinux.org (ECDSA)
+256 MD5:51:2c:aa:37:0f:76:d1:ef:b6:16:28:e1:8b:47:38:d4 root@bastion.archlinux.org (ED25519)
+3072 MD5:ac:9b:19:cf:c9:45:f3:d4:7b:b7:8d:8c:cd:ae:8f:eb root@bastion.archlinux.org (RSA)
+
 # bbs.archlinux.org
 256 SHA256:N35ylQxDBW9lohn+NBxcG8aW8Qfz2+nMYN+mnaojzgg root@archlinux-packer (ECDSA)
 256 SHA256:xEiyFiCkC9L5iU53Hozm4mjdGgFI48+L4NK4Bx2EjA4 root@archlinux-packer (ED25519)
