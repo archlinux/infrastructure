@@ -94,6 +94,10 @@ locals {
       http3       = true
       ttl         = 60
     }
+    "bastion.archlinux.org" = {
+      server_type = "cx23"
+      domain      = "bastion"
+    }
     "bbs.archlinux.org" = {
       server_type = "cx22"
       domain      = "bbs"
@@ -766,5 +770,12 @@ resource "hcloud_floating_ip" "proxy_ipv6_aur_archlinux_org" {
   name              = "ipv6-proxy-aur"
   type              = "ipv6"
   server_id         = hcloud_server.machine["aur.archlinux.org"].id
+  delete_protection = true
+}
+
+resource "hcloud_floating_ip" "whitelist_ip_bastion_archlinux_org" {
+  name              = "bastion-host-IP-DO-NO-DELETE"
+  type              = "ipv4"
+  server_id         = hcloud_server.machine["bastion.archlinux.org"].id
   delete_protection = true
 }
