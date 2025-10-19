@@ -1,155 +1,185 @@
 # This files contains template handling for the main archlinux.tf file
 
-resource "hetznerdns_record" "archlinux_org_gitlab_pages_cname" {
+resource "hcloud_zone_rrset" "archlinux_org_gitlab_pages_cname" {
   for_each = local.archlinux_org_gitlab_pages
 
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = each.key
-  value   = "pages.archlinux.org."
-  type    = "CNAME"
+  zone = hcloud_zone.archlinux_org.name
+  name = each.key
+  type = "CNAME"
+  records = [
+    { value = "pages.archlinux.org." },
+  ]
 }
 
-resource "hetznerdns_record" "archlinux_org_gitlab_pages_verification_code_txt" {
+resource "hcloud_zone_rrset" "archlinux_org_gitlab_pages_verification_code_txt" {
   for_each = local.archlinux_org_gitlab_pages
 
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "_gitlab-pages-verification-code.${each.key}"
-  value   = "gitlab-pages-verification-code=${each.value}"
-  type    = "TXT"
+  zone = hcloud_zone.archlinux_org.name
+  name = "_gitlab-pages-verification-code.${each.key}"
+  type = "TXT"
+  records = [
+    { value = "\"gitlab-pages-verification-code=${each.value}\"" },
+  ]
 }
 
-resource "hetznerdns_record" "archlinux_page_gitlab_pages_cname" {
+resource "hcloud_zone_rrset" "archlinux_page_gitlab_pages_cname" {
   for_each = local.archlinux_page_gitlab_pages
 
-  zone_id = hetznerdns_zone.archlinux_page.id
-  name    = each.key
-  value   = "pages.archlinux.org."
-  type    = "CNAME"
+  zone = hcloud_zone.archlinux_page.name
+  name = each.key
+  type = "CNAME"
+  records = [
+    { value = "pages.archlinux.org." },
+  ]
 }
 
-resource "hetznerdns_record" "archlinux_page_gitlab_pages_verification_code_txt" {
+resource "hcloud_zone_rrset" "archlinux_page_gitlab_pages_verification_code_txt" {
   for_each = local.archlinux_page_gitlab_pages
 
-  zone_id = hetznerdns_zone.archlinux_page.id
-  name    = "_gitlab-pages-verification-code.${each.key}"
-  value   = "gitlab-pages-verification-code=${each.value}"
-  type    = "TXT"
+  zone = hcloud_zone.archlinux_page.name
+  name = "_gitlab-pages-verification-code.${each.key}"
+  type = "TXT"
+  records = [
+    { value = "\"gitlab-pages-verification-code=${each.value}\"" },
+  ]
 }
 
-resource "hetznerdns_record" "archlinux_page_a" {
+resource "hcloud_zone_rrset" "archlinux_page_a" {
   for_each = local.archlinux_page_a_aaaa
 
-  zone_id = hetznerdns_zone.archlinux_page.id
-  name    = each.key
-  ttl     = lookup(local.archlinux_page_a_aaaa[each.key], "ttl", null)
-  value   = each.value.ipv4_address
-  type    = "A"
+  zone = hcloud_zone.archlinux_page.name
+  name = each.key
+  type = "A"
+  ttl  = lookup(local.archlinux_page_a_aaaa[each.key], "ttl", null)
+  records = [
+    { value = each.value.ipv4_address },
+  ]
 }
 
-resource "hetznerdns_record" "archlinux_page_aaaa" {
+resource "hcloud_zone_rrset" "archlinux_page_aaaa" {
   for_each = local.archlinux_page_a_aaaa
 
-  zone_id = hetznerdns_zone.archlinux_page.id
-  name    = each.key
-  ttl     = lookup(local.archlinux_page_a_aaaa[each.key], "ttl", null)
-  value   = each.value.ipv6_address
-  type    = "AAAA"
+  zone = hcloud_zone.archlinux_page.name
+  name = each.key
+  type = "AAAA"
+  ttl  = lookup(local.archlinux_page_a_aaaa[each.key], "ttl", null)
+  records = [
+    { value = each.value.ipv6_address },
+  ]
 }
 
-resource "hetznerdns_record" "pkgbuild_com_a" {
+resource "hcloud_zone_rrset" "pkgbuild_com_a" {
   for_each = {
     for k, v in local.pkgbuild_com_a_aaaa : k => v if try(v.ipv4_address != "", false)
   }
 
-  zone_id = hetznerdns_zone.pkgbuild.id
-  name    = each.key
-  ttl     = lookup(local.pkgbuild_com_a_aaaa[each.key], "ttl", null)
-  value   = each.value.ipv4_address
-  type    = "A"
+  zone = hcloud_zone.pkgbuild_com.name
+  name = each.key
+  type = "A"
+  ttl  = lookup(local.pkgbuild_com_a_aaaa[each.key], "ttl", null)
+  records = [
+    { value = each.value.ipv4_address },
+  ]
 }
 
-resource "hetznerdns_record" "pkgbuild_com_aaaa" {
+resource "hcloud_zone_rrset" "pkgbuild_com_aaaa" {
   for_each = local.pkgbuild_com_a_aaaa
 
-  zone_id = hetznerdns_zone.pkgbuild.id
-  name    = each.key
-  ttl     = lookup(local.pkgbuild_com_a_aaaa[each.key], "ttl", null)
-  value   = each.value.ipv6_address
-  type    = "AAAA"
+  zone = hcloud_zone.pkgbuild_com.name
+  name = each.key
+  type = "AAAA"
+  ttl  = lookup(local.pkgbuild_com_a_aaaa[each.key], "ttl", null)
+  records = [
+    { value = each.value.ipv6_address },
+  ]
 }
 
-resource "hetznerdns_record" "pkgbuild_org_https" {
+resource "hcloud_zone_rrset" "pkgbuild_org_https" {
   for_each = {
     for k, v in local.pkgbuild_com_a_aaaa : k => v if try(v.http3, false)
   }
 
-  zone_id = hetznerdns_zone.pkgbuild.id
-  name    = each.key
-  ttl     = lookup(local.pkgbuild_com_a_aaaa[each.key], "ttl", null)
-  value   = "1 . alpn=h2,h3 ipv4hint=${each.value.ipv4_address} ipv6hint=${each.value.ipv6_address}"
-  type    = "HTTPS"
+  zone = hcloud_zone.pkgbuild_com.name
+  name = each.key
+  type = "HTTPS"
+  ttl  = lookup(local.pkgbuild_com_a_aaaa[each.key], "ttl", null)
+  records = [
+    { value = "1 . alpn=h2,h3 ipv4hint=${each.value.ipv4_address} ipv6hint=${each.value.ipv6_address}" },
+  ]
 }
 
-resource "hetznerdns_record" "archlinux_org_txt" {
+resource "hcloud_zone_rrset" "archlinux_org_txt" {
   for_each = local.archlinux_org_txt
 
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = each.key
-  ttl     = lookup(local.archlinux_org_txt[each.key], "ttl", null)
-  value   = "\"${each.value.value}\""
-  type    = "TXT"
+  zone = hcloud_zone.archlinux_org.name
+  name = each.key
+  type = "TXT"
+  ttl  = lookup(local.archlinux_org_txt[each.key], "ttl", null)
+  records = [
+    { value = "\"${each.value.value}\"" },
+  ]
 }
 
-resource "hetznerdns_record" "archlinux_org_mx" {
+resource "hcloud_zone_rrset" "archlinux_org_mx" {
   for_each = local.archlinux_org_mx
 
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = each.key
-  ttl     = lookup(local.archlinux_org_mx[each.key], "ttl", null)
-  value   = "10 ${each.value.mx}"
-  type    = "MX"
+  zone = hcloud_zone.archlinux_org.name
+  name = each.key
+  type = "MX"
+  ttl  = lookup(local.archlinux_org_mx[each.key], "ttl", null)
+  records = [
+    { value = "10 ${each.value.mx}" },
+  ]
 }
 
-resource "hetznerdns_record" "archlinux_org_a" {
+resource "hcloud_zone_rrset" "archlinux_org_a" {
   for_each = local.archlinux_org_a_aaaa
 
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = each.key
-  ttl     = lookup(local.archlinux_org_a_aaaa[each.key], "ttl", null)
-  value   = each.value.ipv4_address
-  type    = "A"
+  zone = hcloud_zone.archlinux_org.name
+  name = each.key
+  type = "A"
+  ttl  = lookup(local.archlinux_org_a_aaaa[each.key], "ttl", null)
+  records = [
+    { value = each.value.ipv4_address },
+  ]
 }
 
-resource "hetznerdns_record" "archlinux_org_aaaa" {
+resource "hcloud_zone_rrset" "archlinux_org_aaaa" {
   for_each = local.archlinux_org_a_aaaa
 
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = each.key
-  ttl     = lookup(local.archlinux_org_a_aaaa[each.key], "ttl", null)
-  value   = each.value.ipv6_address
-  type    = "AAAA"
+  zone = hcloud_zone.archlinux_org.name
+  name = each.key
+  type = "AAAA"
+  ttl  = lookup(local.archlinux_org_a_aaaa[each.key], "ttl", null)
+  records = [
+    { value = each.value.ipv6_address },
+  ]
 }
 
-resource "hetznerdns_record" "archlinux_org_https" {
+resource "hcloud_zone_rrset" "archlinux_org_https" {
   for_each = {
     for k, v in local.archlinux_org_a_aaaa : k => v if try(v.http3, false)
   }
 
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = each.key
-  ttl     = lookup(local.archlinux_org_a_aaaa[each.key], "ttl", null)
-  value   = "1 . alpn=h2,h3 ipv4hint=${each.value.ipv4_address} ipv6hint=${each.value.ipv6_address}"
-  type    = "HTTPS"
+  zone = hcloud_zone.archlinux_org.name
+  name = each.key
+  type = "HTTPS"
+  ttl  = lookup(local.archlinux_org_a_aaaa[each.key], "ttl", null)
+  records = [
+    { value = "1 . alpn=h2,h3 ipv4hint=${each.value.ipv4_address} ipv6hint=${each.value.ipv6_address}" },
+  ]
 }
 
-resource "hetznerdns_record" "archlinux_org_cname" {
+resource "hcloud_zone_rrset" "archlinux_org_cname" {
   for_each = local.archlinux_org_cname
 
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = each.key
-  ttl     = lookup(local.archlinux_org_cname[each.key], "ttl", null)
-  value   = each.value.value
-  type    = "CNAME"
+  zone = hcloud_zone.archlinux_org.name
+  name = each.key
+  type = "CNAME"
+  ttl  = lookup(local.archlinux_org_cname[each.key], "ttl", null)
+  records = [
+    { value = each.value.value },
+  ]
 }
 
 resource "hcloud_rdns" "rdns_ipv4" {
@@ -223,71 +253,61 @@ resource "hcloud_server" "machine" {
   }
 }
 
-resource "hetznerdns_record" "machine_a" {
+resource "hcloud_zone_rrset" "machine_a" {
   for_each = {
     for name, machine in local.machines : name => machine if can(machine.domain) && try(machine.ipv4_enabled, true)
   }
 
-  zone_id = lookup(local.machines[each.key], "zone", hetznerdns_zone.archlinux.id)
-  name    = each.value.domain
-  ttl     = lookup(local.machines[each.key], "ttl", null)
-  value   = hcloud_server.machine[each.key].ipv4_address
-  type    = "A"
+  zone = lookup(local.machines[each.key], "zone", hcloud_zone.archlinux_org.name)
+  name = each.value.domain
+  type = "A"
+  ttl  = lookup(local.machines[each.key], "ttl", null)
+  records = [
+    { value = hcloud_server.machine[each.key].ipv4_address },
+  ]
 }
 
-resource "hetznerdns_record" "machine_aaaa" {
+resource "hcloud_zone_rrset" "machine_aaaa" {
   for_each = {
     for name, machine in local.machines : name => machine if can(machine.domain)
   }
 
-  zone_id = lookup(local.machines[each.key], "zone", hetznerdns_zone.archlinux.id)
-  name    = each.value.domain
-  ttl     = lookup(local.machines[each.key], "ttl", null)
-  value   = hcloud_server.machine[each.key].ipv6_address
-  type    = "AAAA"
+  zone = lookup(local.machines[each.key], "zone", hcloud_zone.archlinux_org.name)
+  name = each.value.domain
+  type = "AAAA"
+  ttl  = lookup(local.machines[each.key], "ttl", null)
+  records = [
+    { value = hcloud_server.machine[each.key].ipv6_address },
+  ]
 }
 
-resource "hetznerdns_record" "machine_https" {
+resource "hcloud_zone_rrset" "machine_https" {
   for_each = {
     for name, machine in local.machines : name => machine if can(machine.domain) && try(machine.http3, false)
   }
 
-  zone_id = lookup(local.machines[each.key], "zone", hetznerdns_zone.archlinux.id)
-  name    = each.value.domain
-  ttl     = lookup(local.machines[each.key], "ttl", null)
-  value = (try(local.machines[each.key].ipv4_enabled, true) ?
-    "1 . alpn=h2,h3 ipv4hint=${hcloud_server.machine[each.key].ipv4_address} ipv6hint=${hcloud_server.machine[each.key].ipv6_address}" :
-    "1 . alpn=h2,h3 ipv6hint=${hcloud_server.machine[each.key].ipv6_address}"
-  )
+  zone = lookup(local.machines[each.key], "zone", hcloud_zone.archlinux_org.name)
+  name = each.value.domain
   type = "HTTPS"
+  ttl  = lookup(local.machines[each.key], "ttl", null)
+  records = [
+    { value = (try(local.machines[each.key].ipv4_enabled, true) ?
+      "1 . alpn=h2,h3 ipv4hint=${hcloud_server.machine[each.key].ipv4_address} ipv6hint=${hcloud_server.machine[each.key].ipv6_address}" :
+      "1 . alpn=h2,h3 ipv6hint=${hcloud_server.machine[each.key].ipv6_address}")
+    },
+  ]
 }
 
-resource "hetznerdns_record" "geo_ns3" {
+resource "hcloud_zone_rrset" "geo_ns" {
   for_each = local.geo_domains
 
-  zone_id = lookup(each.value, "zone", hetznerdns_zone.archlinux.id)
-  name    = each.value.name
-  value   = "europe.mirror.pkgbuild.com."
-  type    = "NS"
-  ttl     = lookup(local.geo_domains[each.key], "ttl", 86400)
-}
-
-resource "hetznerdns_record" "geo_ns5" {
-  for_each = local.geo_domains
-
-  zone_id = lookup(each.value, "zone", hetznerdns_zone.archlinux.id)
-  name    = each.value.name
-  value   = "sydney.mirror.pkgbuild.com."
-  type    = "NS"
-  ttl     = lookup(local.geo_domains[each.key], "ttl", 86400)
-}
-
-resource "hetznerdns_record" "geo_ns6" {
-  for_each = local.geo_domains
-
-  zone_id = lookup(each.value, "zone", hetznerdns_zone.archlinux.id)
-  name    = each.value.name
-  value   = "london.mirror.pkgbuild.com."
-  type    = "NS"
-  ttl     = lookup(local.geo_domains[each.key], "ttl", 86400)
+  zone = lookup(each.value, "zone", hcloud_zone.archlinux_org.name)
+  name = each.value.name
+  type = "NS"
+  ttl  = lookup(local.geo_domains[each.key], "ttl", 86400)
+  records = [
+    { value = "europe.mirror.pkgbuild.com." },
+    { value = "sydney.mirror.pkgbuild.com." },
+    { value = "london.mirror.pkgbuild.com." }
+  ]
 }

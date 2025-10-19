@@ -30,10 +30,7 @@ data "hcloud_image" "archlinux" {
 
 provider "hcloud" {
   token = data.external.vault_hetzner.result.hetzner_cloud_api_key
-}
 
-provider "hetznerdns" {
-  apitoken = data.external.vault_hetzner.result.hetzner_dns_api_key
 }
 
 provider "minio" {
@@ -153,7 +150,7 @@ locals {
     "mirror.pkgbuild.com" = {
       server_type = "cx33"
       domain      = "mirror"
-      zone        = hetznerdns_zone.pkgbuild.id
+      zone        = hcloud_zone.pkgbuild_com.id
       http3       = true
     }
     "monitoring.archlinux.org" = {
@@ -268,13 +265,13 @@ locals {
   #   - ttl (optional)
   #
   # Example:
-  # "lists" = { mx = "lists", ttl = 3600 }
+  # "lists" = { mx = "lists.archlinux.org.", ttl = 3600 }
   archlinux_org_mx = {
-    "@"        = { mx = "mail" }
-    aur        = { mx = "mail" }
-    master-key = { mx = "mail" }
-    gitlab     = { mx = "mail" }
-    lists      = { mx = "lists" }
+    "@"        = { mx = "mail.archlinux.org." }
+    aur        = { mx = "mail.archlinux.org." }
+    master-key = { mx = "mail.archlinux.org." }
+    gitlab     = { mx = "mail.archlinux.org." }
+    lists      = { mx = "lists.archlinux.org." }
   }
 
   # This creates archlinux.org A/AAAA DNS entries in addition to those already specified by the VPSes.
@@ -345,32 +342,32 @@ locals {
   #   - ttl (optional)
   #
   # Example:
-  # dev                      = { value = "www", ttl = 3600 }
+  # dev                      = { value = "www.archlinux.org.", ttl = 3600 }
   archlinux_org_cname = {
-    ipxe            = { value = "www" }
-    mailman         = { value = "redirect" }
-    packages        = { value = "www" }
-    ping            = { value = "redirect" }
-    planet          = { value = "www" }
-    registry        = { value = "gitlab" }
-    rsync           = { value = "repos" }
-    sources         = { value = "repos" }
-    "static.conf"   = { value = "redirect" }
+    ipxe            = { value = "www.archlinux.org." }
+    mailman         = { value = "redirect.archlinux.org." }
+    packages        = { value = "www.archlinux.org." }
+    ping            = { value = "redirect.archlinux.org." }
+    planet          = { value = "www.archlinux.org." }
+    registry        = { value = "gitlab.archlinux.org." }
+    rsync           = { value = "repos.archlinux.org." }
+    sources         = { value = "repos.archlinux.org." }
+    "static.conf"   = { value = "redirect.archlinux.org." }
     status          = { value = "stats.uptimerobot.com." }
-    coc             = { value = "redirect" }
-    git             = { value = "redirect" }
-    "tu-bylaws.aur" = { value = "redirect" }
+    coc             = { value = "redirect.archlinux.org." }
+    git             = { value = "redirect.archlinux.org." }
+    "tu-bylaws.aur" = { value = "redirect.archlinux.org." }
 
     # MTA-STS
-    mta-sts               = { value = "mail" }
-    "mta-sts.aur"         = { value = "mail" }
-    "_mta-sts.aur"        = { value = "_mta-sts" }
-    "mta-sts.master-key"  = { value = "mail" }
-    "_mta-sts.master-key" = { value = "_mta-sts" }
-    "mta-sts.gitlab"      = { value = "mail" }
-    "_mta-sts.gitlab"     = { value = "_mta-sts" }
-    "mta-sts.lists"       = { value = "mail" }
-    "_mta-sts.lists"      = { value = "_mta-sts" }
+    mta-sts               = { value = "mail.archlinux.org." }
+    "mta-sts.aur"         = { value = "mail.archlinux.org." }
+    "_mta-sts.aur"        = { value = "_mta-sts.archlinux.org." }
+    "mta-sts.master-key"  = { value = "mail.archlinux.org." }
+    "_mta-sts.master-key" = { value = "_mta-sts.archlinux.org." }
+    "mta-sts.gitlab"      = { value = "mail.archlinux.org." }
+    "_mta-sts.gitlab"     = { value = "_mta-sts.archlinux.org." }
+    "mta-sts.lists"       = { value = "mail.archlinux.org." }
+    "_mta-sts.lists"      = { value = "_mta-sts.archlinux.org." }
   }
 
   # This creates pkgbuild.com A/AAAA DNS entries in addition to those already specified by the VPSes.
@@ -470,7 +467,7 @@ locals {
   # Domains served by machines in the geo_mirrors group
   # Valid parameters are:
   #   - name (mandatory, specifies the subdomain to create in the above zone)
-  #   - zone (optional, defaults to hetznerdns_zone.archlinux.id)
+  #   - zone (optional, defaults to hcloud_zone.archlinux_org.id)
   #   - ttl (optional, the TTL of the NS records, defaults to 86400 if unset)
   #
   # Note: If you use a custom TTL, also add it to geo_options[domain]['ns_ttl']
@@ -479,231 +476,234 @@ locals {
   geo_domains = {
     "geo.mirror.pkgbuild.com" = {
       name = "geo.mirror"
-      zone = hetznerdns_zone.pkgbuild.id
+      zone = hcloud_zone.pkgbuild_com.name
     }
     "riscv.mirror.pkgbuild.com" = {
       name = "riscv.mirror"
-      zone = hetznerdns_zone.pkgbuild.id
+      zone = hcloud_zone.pkgbuild_com.name
     }
   }
 }
 
-resource "hetznerdns_zone" "archlinux" {
-  name = "archlinux.org"
-  ttl  = 3600
+resource "hcloud_zone" "archlinux_org" {
+  name              = "archlinux.org"
+  mode              = "primary"
+  ttl               = 3600
+  delete_protection = true
 }
 
-resource "hetznerdns_zone" "archlinux_page" {
-  name = "archlinux.page"
-  ttl  = 3600
+resource "hcloud_zone" "archlinux_page" {
+  name              = "archlinux.page"
+  mode              = "primary"
+  ttl               = 3600
+  delete_protection = true
 }
 
-resource "hetznerdns_zone" "pkgbuild" {
-  name = "pkgbuild.com"
-  ttl  = 3600
+resource "hcloud_zone" "pkgbuild_com" {
+  name              = "pkgbuild.com"
+  mode              = "primary"
+  ttl               = 3600
+  delete_protection = true
 }
 
-resource "hetznerdns_record" "archlinux_page_origin_caa" {
-  zone_id = hetznerdns_zone.archlinux_page.id
-  name    = "@"
-  value   = "0 issue \"letsencrypt.org\""
-  type    = "CAA"
+resource "hcloud_zone_rrset" "archlinux_page_origin_caa" {
+  zone = hcloud_zone.archlinux_page.name
+  name = "@"
+  type = "CAA"
+  records = [
+    { value = "0 issue \"letsencrypt.org\"" },
+  ]
 }
 
-resource "hetznerdns_record" "archlinux_page_origin_mx" {
-  zone_id = hetznerdns_zone.archlinux_page.id
-  name    = "@"
-  value   = "0 ."
-  type    = "MX"
+resource "hcloud_zone_rrset" "archlinux_page_origin_mx" {
+  zone = hcloud_zone.archlinux_page.name
+  name = "@"
+  type = "MX"
+  records = [
+    { value = "0 ." },
+  ]
 }
 
-resource "hetznerdns_record" "archlinux_page_archinstall_cname" {
-  zone_id = hetznerdns_zone.archlinux_page.id
-  name    = "archinstall"
-  value   = "archlinux.github.io."
-  type    = "CNAME"
+resource "hcloud_zone_rrset" "archlinux_page_archinstall_cname" {
+  zone = hcloud_zone.archlinux_page.name
+  name = "archinstall"
+  type = "CNAME"
+  records = [
+    { value = "archlinux.github.io." },
+  ]
 }
 
-resource "hetznerdns_record" "pkgbuild_com_teapot_mirror_cname" {
-  zone_id = hetznerdns_zone.pkgbuild.id
-  name    = "teapot.mirror"
-  value   = "t.sni.global.fastly.net."
-  type    = "CNAME"
+resource "hcloud_zone_rrset" "pkgbuild_com_teapot_mirror_cname" {
+  zone = hcloud_zone.pkgbuild_com.name
+  name = "teapot.mirror"
+  type = "CNAME"
+  records = [
+    { value = "t.sni.global.fastly.net." },
+  ]
 }
 
-resource "hetznerdns_record" "pkgbuild_com_fastly_mirror_cname" {
-  zone_id = hetznerdns_zone.pkgbuild.id
-  name    = "fastly.mirror"
-  value   = "t.sni.global.fastly.net."
-  type    = "CNAME"
+resource "hcloud_zone_rrset" "pkgbuild_com_fastly_mirror_cname" {
+  zone = hcloud_zone.pkgbuild_com.name
+  name = "fastly.mirror"
+  type = "CNAME"
+  records = [
+    { value = "t.sni.global.fastly.net." },
+  ]
 }
 
-resource "hetznerdns_record" "archlinux_page_origin_ns3" {
-  zone_id = hetznerdns_zone.archlinux_page.id
-  name    = "@"
-  value   = "helium.ns.hetzner.de."
-  type    = "NS"
-  ttl     = 86400
+resource "hcloud_zone_rrset" "archlinux_page_origin_ns" {
+  zone = hcloud_zone.archlinux_page.name
+  name = "@"
+  type = "NS"
+  ttl  = 86400
+  records = [
+    { value = "hydrogen.ns.hetzner.com." },
+    { value = "oxygen.ns.hetzner.com." },
+    { value = "helium.ns.hetzner.de." },
+  ]
 }
 
-resource "hetznerdns_record" "archlinux_page_origin_ns2" {
-  zone_id = hetznerdns_zone.archlinux_page.id
-  name    = "@"
-  value   = "oxygen.ns.hetzner.com."
-  type    = "NS"
-  ttl     = 86400
-}
-
-resource "hetznerdns_record" "archlinux_page_origin_ns1" {
-  zone_id = hetznerdns_zone.archlinux_page.id
-  name    = "@"
-  value   = "hydrogen.ns.hetzner.com."
-  type    = "NS"
-  ttl     = 86400
-}
-
-resource "hetznerdns_record" "archlinux_page_sandbox_ns1" {
-  zone_id = hetznerdns_zone.archlinux_page.id
-  name    = "sandbox"
-  value   = "redirect.archlinux.org."
-  type    = "NS"
-  ttl     = 86400
+resource "hcloud_zone_rrset" "archlinux_page_sandbox_ns" {
+  zone = hcloud_zone.archlinux_page.name
+  name = "sandbox"
+  type = "NS"
+  ttl  = 86400
+  records = [
+    { value = "redirect.archlinux.org." },
+  ]
 }
 
 # TODO: Commented currently as we have no idea how to handle SOA stuff with Terraform:
 # https://github.com/timohirt/terraform-provider-hetznerdns/issues/20
 # https://gitlab.archlinux.org/archlinux/infrastructure/-/merge_requests/62#note_4040
-# resource "hetznerdns_record" "archlinux_page_origin_soa" {
-#   zone_id = hetznerdns_zone.archlinux_page.id
+# resource "hcloud_zone_rrset" "archlinux_page_origin_soa" {
+#   zone = hcloud_zone.archlinux_page.name
 #   name = "@"
-#   value = "hydrogen.ns.hetzner.com. hetzner.archlinux.org. 2021070703 3600 1800 604800 3600"
 #   type = "SOA"
+#   records = [
+#     { value = "hydrogen.ns.hetzner.com. hetzner.archlinux.org. 2021070703 3600 1800 604800 3600" },
+#   ]
 # }
 
-resource "hetznerdns_record" "archlinux_page_origin_txt" {
-  zone_id = hetznerdns_zone.archlinux_page.id
-  name    = "@"
-  value   = "\"v=spf1 -all\""
-  type    = "TXT"
+resource "hcloud_zone_rrset" "archlinux_page_origin_txt" {
+  zone = hcloud_zone.archlinux_page.name
+  name = "@"
+  type = "TXT"
+  records = [
+    { value = "\"v=spf1 -all\"" },
+  ]
 }
 
-resource "hetznerdns_record" "pages_verification_code_archlinux_page_origin_txt" {
-  zone_id = hetznerdns_zone.archlinux_page.id
-  name    = "_gitlab-pages-verification-code"
-  value   = "gitlab-pages-verification-code=0b9e3fc74735f5d83c7cfc86883b40cb"
-  type    = "TXT"
+resource "hcloud_zone_rrset" "pages_verification_code_archlinux_page_origin_txt" {
+  zone = hcloud_zone.archlinux_page.name
+  name = "_gitlab-pages-verification-code"
+  type = "TXT"
+  records = [
+    { value = "\"gitlab-pages-verification-code=0b9e3fc74735f5d83c7cfc86883b40cb\"" },
+  ]
 }
 
-resource "hetznerdns_record" "pkgbuild_com_origin_caa" {
-  zone_id = hetznerdns_zone.pkgbuild.id
-  name    = "@"
-  value   = "0 issue \"letsencrypt.org\""
-  type    = "CAA"
+resource "hcloud_zone_rrset" "pkgbuild_com_origin_caa" {
+  zone = hcloud_zone.pkgbuild_com.name
+  name = "@"
+  type = "CAA"
+  records = [
+    { value = "0 issue \"letsencrypt.org\"" },
+  ]
 }
 
-resource "hetznerdns_record" "pkgbuild_com_origin_mx" {
-  zone_id = hetznerdns_zone.pkgbuild.id
-  name    = "@"
-  value   = "0 ."
-  type    = "MX"
+resource "hcloud_zone_rrset" "pkgbuild_com_origin_mx" {
+  zone = hcloud_zone.pkgbuild_com.name
+  name = "@"
+  type = "MX"
+  records = [
+    { value = "0 ." },
+  ]
 }
 
-resource "hetznerdns_record" "pkgbuild_com_origin_ns3" {
-  zone_id = hetznerdns_zone.pkgbuild.id
-  name    = "@"
-  value   = "helium.ns.hetzner.de."
-  type    = "NS"
-  ttl     = 86400
-}
-
-resource "hetznerdns_record" "pkgbuild_com_origin_ns2" {
-  zone_id = hetznerdns_zone.pkgbuild.id
-  name    = "@"
-  value   = "oxygen.ns.hetzner.com."
-  type    = "NS"
-  ttl     = 86400
-}
-
-resource "hetznerdns_record" "pkgbuild_com_origin_ns1" {
-  zone_id = hetznerdns_zone.pkgbuild.id
-  name    = "@"
-  value   = "hydrogen.ns.hetzner.com."
-  type    = "NS"
-  ttl     = 86400
+resource "hcloud_zone_rrset" "pkgbuild_com_origin_ns" {
+  zone = hcloud_zone.pkgbuild_com.name
+  name = "@"
+  type = "NS"
+  ttl  = 86400
+  records = [
+    { value = "hydrogen.ns.hetzner.com." },
+    { value = "oxygen.ns.hetzner.com." },
+    { value = "helium.ns.hetzner.de." },
+  ]
 }
 
 # TODO: Commented currently as we have no idea how to handle SOA stuff with Terraform:
 # https://github.com/timohirt/terraform-provider-hetznerdns/issues/20
 # https://gitlab.archlinux.org/archlinux/infrastructure/-/merge_requests/62#note_4040
-# resource "hetznerdns_record" "pkgbuild_com_origin_soa" {
-#   zone_id = hetznerdns_zone.pkgbuild.id
+# resource "hcloud_zone_rrset" "pkgbuild_com_origin_soa" {
+#   zone = hcloud_zone.pkgbuild_com.name
 #   name = "@"
-#   value = "hydrogen.ns.hetzner.com. hetzner.archlinux.org. 2021070703 3600 1800 604800 3600"
 #   type = "SOA"
+#   records = [
+#     { value = "hydrogen.ns.hetzner.com. hetzner.archlinux.org. 2021070703 3600 1800 604800 3600" },
+#   ]
 # }
 
-resource "hetznerdns_record" "pkgbuild_com_origin_txt" {
-  zone_id = hetznerdns_zone.pkgbuild.id
-  name    = "@"
-  value   = "\"v=spf1 -all\""
-  type    = "TXT"
+resource "hcloud_zone_rrset" "pkgbuild_com_origin_txt" {
+  zone = hcloud_zone.pkgbuild_com.name
+  name = "@"
+  type = "TXT"
+  records = [
+    { value = "\"v=spf1 -all\"" },
+  ]
 }
 
-resource "hetznerdns_record" "archlinux_org_origin_caa" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "@"
-  value   = "0 issue \"letsencrypt.org\""
-  type    = "CAA"
+resource "hcloud_zone_rrset" "archlinux_org_origin_caa" {
+  zone = hcloud_zone.archlinux_org.name
+  name = "@"
+  type = "CAA"
+  records = [
+    { value = "0 issue \"letsencrypt.org\"" },
+  ]
 }
 
-resource "hetznerdns_record" "archlinux_org_origin_ns3" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "@"
-  value   = "helium.ns.hetzner.de."
-  type    = "NS"
-  ttl     = 86400
+resource "hcloud_zone_rrset" "archlinux_org_origin_ns" {
+  zone = hcloud_zone.archlinux_org.name
+  name = "@"
+  type = "NS"
+  ttl  = 86400
+  records = [
+    { value = "hydrogen.ns.hetzner.com." },
+    { value = "oxygen.ns.hetzner.com." },
+    { value = "helium.ns.hetzner.de." },
+  ]
 }
 
-resource "hetznerdns_record" "archlinux_org_origin_ns2" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "@"
-  value   = "oxygen.ns.hetzner.com."
-  type    = "NS"
-  ttl     = 86400
+resource "hcloud_zone_rrset" "archlinux_org_acme_challenge_mumble_ns" {
+  zone = hcloud_zone.archlinux_org.name
+  name = "_acme-challenge.mumble"
+  type = "NS"
+  ttl  = 86400
+  records = [
+    { value = "redirect.archlinux.org." },
+  ]
 }
 
-resource "hetznerdns_record" "archlinux_org_origin_ns1" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "@"
-  value   = "hydrogen.ns.hetzner.com."
-  type    = "NS"
-  ttl     = 86400
-}
-
-resource "hetznerdns_record" "archlinux_org_acme_challenge_mumble_ns1" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "_acme-challenge.mumble"
-  value   = "redirect.archlinux.org."
-  type    = "NS"
-  ttl     = 86400
-}
-
-resource "hetznerdns_record" "archlinux_org_nextcloud" {
-  zone_id = hetznerdns_zone.archlinux.id
-  name    = "nextcloud"
-  value   = "nx80699.your-storageshare.de."
-  type    = "CNAME"
-  ttl     = 3600
+resource "hcloud_zone_rrset" "archlinux_org_nextcloud" {
+  zone = hcloud_zone.archlinux_org.name
+  name = "nextcloud"
+  type = "CNAME"
+  ttl  = 3600
+  records = [
+    { value = "nx80699.your-storageshare.de." },
+  ]
 }
 
 # TODO: Commented currently as we have no idea how to handle SOA stuff with Terraform:
 # https://github.com/timohirt/terraform-provider-hetznerdns/issues/20
 # https://gitlab.archlinux.org/archlinux/infrastructure/-/merge_requests/62#note_4040
-#; resource "hetznerdns_record" "archlinux_org_origin_soa" {
-#   zone_id = hetznerdns_zone.archlinux.id
-#   name = "@"
-#   value = "hydrogen.ns.hetzner.com. hetzner.archlinux.org. 2021070703 3600 1800 604800 3600"
+#; resource "hcloud_zone_rrset" "archlinux_org_origin_soa" {
+#   zone = hcloud_zone.archlinux_org.name
 #   type = "SOA"
+#   records = [
+#     { value = "hydrogen.ns.hetzner.com. hetzner.archlinux.org. 2021070703 3600 1800 604800 3600" },
+#   ]
 # }
 
 resource "hcloud_volume" "mirror" {
