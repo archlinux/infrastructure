@@ -17,13 +17,13 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
   }
 
   backend {
-    address           = "europe.mirror.pkgbuild.com"
-    name              = "EUPKGBUILD"
+    address           = "mirror.pkgbuild.com"
+    name              = "MIRRORPKGBUILD"
     port              = 443
-    override_host     = "europe.mirror.pkgbuild.com"
+    override_host     = "mirror.pkgbuild.com"
     use_ssl           = true
-    ssl_cert_hostname = "europe.mirror.pkgbuild.com"
-    ssl_sni_hostname  = "europe.mirror.pkgbuild.com"
+    ssl_cert_hostname = "mirror.pkgbuild.com"
+    ssl_sni_hostname  = "mirror.pkgbuild.com"
     shield            = "vie-vienna-at"
   }
 
