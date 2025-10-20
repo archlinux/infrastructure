@@ -6,9 +6,6 @@ terraform {
     hcloud = {
       source = "hetznercloud/hcloud"
     }
-    hetznerdns = {
-      source = "timohirt/hetznerdns"
-    }
     minio = {
       source = "aminueza/minio"
     }
