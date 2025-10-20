@@ -447,7 +447,7 @@ locals {
     }
     test = {
       ipv4_address = "209.126.35.77"
-      ipv6_address = "2640:cac0:a104:d::1"
+      ipv6_address = "2604:cac0:a104:d::1"
     }
     www = {
       ipv4_address = hcloud_server.machine["homedir.archlinux.org"].ipv4_address
