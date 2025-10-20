@@ -69,7 +69,7 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
     name          = "Enable HSTS"
     type          = "response"
     priority      = 100
-    source        = "\"max-age=300\"" #quite hacky
+    source        = "\"max-age=31536000\""
     ignore_if_set = false
   }
 
