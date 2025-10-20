@@ -25,6 +25,7 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
     ssl_cert_hostname = "mirror.pkgbuild.com"
     ssl_sni_hostname  = "mirror.pkgbuild.com"
     shield            = "frankfurt-de"
+    prefer_ipv6       = true
   }
 
   http3 = true
