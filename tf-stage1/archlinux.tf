@@ -151,7 +151,7 @@ locals {
       domain      = "md"
     }
     "mirror.pkgbuild.com" = {
-      server_type = "cx22"
+      server_type = "cx33"
       domain      = "mirror"
       zone        = hetznerdns_zone.pkgbuild.id
       http3       = true
@@ -527,6 +527,13 @@ resource "hetznerdns_record" "archlinux_page_archinstall_cname" {
 resource "hetznerdns_record" "pkgbuild_com_teapot_mirror_cname" {
   zone_id = hetznerdns_zone.pkgbuild.id
   name    = "teapot.mirror"
+  value   = "t.sni.global.fastly.net."
+  type    = "CNAME"
+}
+
+resource "hetznerdns_record" "pkgbuild_com_fastly_mirror_cname" {
+  zone_id = hetznerdns_zone.pkgbuild.id
+  name    = "fastly.mirror"
   value   = "t.sni.global.fastly.net."
   type    = "CNAME"
 }
