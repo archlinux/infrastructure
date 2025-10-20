@@ -1,5 +1,5 @@
-listen {{ ipv4_address ~ ':' if nginx_explict_listen_addresses }}443 ssl{{ ' proxy_protocol' if nginx_proxy_protocol_host }};
-listen [{{ ipv6_address if nginx_explict_listen_addresses else '::' }}]:443 ssl{{ ' proxy_protocol' if nginx_proxy_protocol_host }};
+listen {{ ipv4_address ~ ':' if nginx_explict_listen_addresses }}443 ssl{{ ' proxy_protocol' if nginx_proxy_protocol_host or nginx_proxy_vendor }};
+listen [{{ ipv6_address if nginx_explict_listen_addresses else '::' }}]:443 ssl{{ ' proxy_protocol' if nginx_proxy_protocol_host or nginx_proxy_vendor }};
 {% if nginx_enable_http3 %}
 listen {{ ipv4_address ~ ':' if nginx_explict_listen_addresses }}443 quic;
 listen [{{ ipv6_address if nginx_explict_listen_addresses else '::' }}]:443 quic;

@@ -4,4 +4,7 @@ nginx_extra_modules: []
 nginx_enable_http3: false
 nginx_explict_listen_addresses: false
 nginx_stream: false
+# a single proxy like a Hetzner LoadBalancer
 nginx_proxy_protocol_host:
+# a vendor like haproxy
+nginx_proxy_vendor:
