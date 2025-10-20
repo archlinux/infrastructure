@@ -29,6 +29,9 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
 
   http3 = true
 
+  # use a cache TTL of 24h as the databases are uncached anyways
+  default_ttl = 86400
+
   snippet {
     name    = "Enable segmented caching for packages"
     content = <<-EOT
@@ -66,7 +69,7 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
     name          = "Enable HSTS"
     type          = "response"
     priority      = 100
-    source        = "\"max-age=300\"" #quite hacky
+    source        = "\"max-age=31536000\""
     ignore_if_set = false
   }
 
