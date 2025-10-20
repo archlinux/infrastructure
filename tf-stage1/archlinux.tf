@@ -151,7 +151,7 @@ locals {
       domain      = "md"
     }
     "mirror.pkgbuild.com" = {
-      server_type = "cx22"
+      server_type = "cx33"
       domain      = "mirror"
       zone        = hetznerdns_zone.pkgbuild.id
       http3       = true
