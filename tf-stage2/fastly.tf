@@ -9,7 +9,10 @@ provider "fastly" {
 }
 
 resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
-  name = "Arch Linux Fastly Mirror"
+  name  = "Arch Linux Fastly Mirror"
+  http3 = true
+  # use a cache TTL of 24h as the databases are uncached anyways
+  default_ttl = 86400
 
   domain {
     name    = "fastly.mirror.pkgbuild.com"
@@ -18,7 +21,7 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
 
   backend {
     address           = "mirror.pkgbuild.com"
-    name              = "MIRRORPKGBUILD"
+    name              = "PRIMARY"
     port              = 443
     override_host     = "mirror.pkgbuild.com"
     use_ssl           = true
@@ -27,12 +30,47 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
     shield            = "frankfurt-de"
     prefer_ipv6       = true
     max_conn          = 1000
+    auto_loadbalance  = true
+    healthcheck       = "mirror-extra-x86_64-database-check"
   }
 
-  http3 = true
+  healthcheck {
+    name   = "mirror-extra-x86_64-database-check"
+    host   = "mirror.pkgbuild.com"
+    path   = "extra/os/x86_64/extra.db"
+    method = "HEAD"
+  }
 
-  # use a cache TTL of 24h as the databases are uncached anyways
-  default_ttl = 86400
+  backend {
+    address           = "europe.mirror.pkgbuild.com"
+    name              = "FAILOVER"
+    port              = 443
+    override_host     = "europe.mirror.pkgbuild.com"
+    use_ssl           = true
+    ssl_cert_hostname = "europe.mirror.pkgbuild.com"
+    ssl_sni_hostname  = "europe.mirror.pkgbuild.com"
+    shield            = "frankfurt-de"
+    prefer_ipv6       = true
+    max_conn          = 1000
+    auto_loadbalance  = true
+    request_condition = "primary-backend-unhealthy"
+    # TODO: enable once confirmed working
+    # healthcheck       = "europe-extra-x86_64-database-check"
+  }
+
+  healthcheck {
+    name   = "europe-extra-x86_64-database-check"
+    host   = "europe.mirror.pkgbuild.com"
+    path   = "extra/os/x86_64/extra.db"
+    method = "HEAD"
+  }
+
+  condition {
+    name      = "primary-backend-unhealthy"
+    statement = "backend.PRIMARY.healthy == false"
+    type      = "REQUEST"
+    priority  = 10
+  }
 
   snippet {
     name    = "Enable segmented caching for packages"
@@ -133,8 +171,6 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
     action            = "pass"
     request_condition = "Skip staging database cache"
   }
-
-  force_destroy = true
 }
 
 resource "fastly_tls_subscription" "fastly_mirror_pkgbuild_com" {
