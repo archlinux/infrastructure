@@ -134,7 +134,6 @@ locals {
     }
     "man.archlinux.org" = {
       server_type = "cx23"
-      domain      = "man"
     }
     "matrix.archlinux.org" = {
       server_type = "cpx32"
@@ -308,6 +307,12 @@ locals {
     gitlab = {
       ipv4_address = "213.133.111.15"
       ipv6_address = "2a01:4f8:222:174c::1"
+    }
+    man = {
+      # From HAProxy
+      ipv4_address = "209.126.35.76"
+      ipv6_address = "2604:cac0:a104:d::0"
+      ttl          = 60
     }
     master-key = {
       ipv4_address = hcloud_server.machine["archlinux.org"].ipv4_address
