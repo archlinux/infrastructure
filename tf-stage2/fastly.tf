@@ -29,6 +29,9 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
 
   http3 = true
 
+  # use a cache TTL of 24h as the databases are uncached anyways
+  default_ttl = 86400
+
   snippet {
     name    = "Enable segmented caching for packages"
     content = <<-EOT
