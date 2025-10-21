@@ -547,7 +547,7 @@ resource "hcloud_zone_rrset" "pkgbuild_com_fastly_mirror_cname" {
   name = "fastly.mirror"
   type = "CNAME"
   records = [
-    { value = "t.sni.global.fastly.net." },
+    { value = "dualstack.t.sni.global.fastly.net." },
   ]
 }
 
