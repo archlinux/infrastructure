@@ -73,13 +73,13 @@ locals {
   #
   # Example:
   # "archlinux.org" = {
-  #   server_type = "cx22"
+  #   server_type = "cx23"
   #   domain      = "@"
   #   ttl         = 3600
   # }
   machines = {
     "accounts.archlinux.org" = {
-      server_type = "cx22"
+      server_type = "cx23"
       domain      = "accounts"
     }
     "archlinux.org" = {
@@ -95,20 +95,20 @@ locals {
       ttl         = 60
     }
     "bbs.archlinux.org" = {
-      server_type = "cx22"
+      server_type = "cx23"
       domain      = "bbs"
       ttl         = 60
     }
     "bugbuddy.archlinux.org" = {
-      server_type = "cx22"
+      server_type = "cx23"
       domain      = "bugbuddy"
     }
     "bumpbuddy.archlinux.org" = {
-      server_type = "cx22"
+      server_type = "cx23"
       domain      = "bumpbuddy"
     }
     "dashboards.archlinux.org" = {
-      server_type = "cx22"
+      server_type = "cx23"
       domain      = "dashboards"
     }
     "debuginfod.archlinux.org" = {
@@ -120,23 +120,23 @@ locals {
       domain      = "discourse.sandbox"
     }
     "gluebuddy.archlinux.org" = {
-      server_type = "cx22"
+      server_type = "cx23"
       domain      = "gluebuddy"
     }
     "homedir.archlinux.org" = {
-      server_type = "cx22"
+      server_type = "cx23"
       domain      = "homedir"
     }
     "lists.archlinux.org" = {
-      server_type = "cx22"
+      server_type = "cx23"
       domain      = "lists"
     }
     "mail.archlinux.org" = {
-      server_type = "cx22"
+      server_type = "cx23"
       domain      = "mail"
     }
     "man.archlinux.org" = {
-      server_type = "cx22"
+      server_type = "cx23"
       domain      = "man"
     }
     "matrix.archlinux.org" = {
@@ -144,7 +144,7 @@ locals {
       domain      = "matrix"
     }
     "md.archlinux.org" = {
-      server_type = "cx22"
+      server_type = "cx23"
       domain      = "md"
     }
     "mirror.pkgbuild.com" = {
@@ -158,35 +158,35 @@ locals {
       domain      = "monitoring"
     }
     "mumble.archlinux.org" = {
-      server_type = "cx22"
+      server_type = "cx23"
       domain      = "mumble"
     }
     "opensearch.archlinux.org" = {
-      server_type = "cx22"
+      server_type = "cx23"
       domain      = "opensearch"
     }
     "phrik.archlinux.org" = {
-      server_type = "cx22"
+      server_type = "cx23"
       domain      = "phrik"
     }
     "quassel.archlinux.org" = {
-      server_type = "cx22"
+      server_type = "cx23"
       domain      = "quassel"
     }
     "redirect.archlinux.org" = {
-      server_type = "cx22"
+      server_type = "cx23"
       domain      = "redirect"
     }
     "reproducible.archlinux.org" = {
-      server_type = "cx22"
+      server_type = "cx23"
       domain      = "reproducible"
     }
     "security.archlinux.org" = {
-      server_type = "cx22"
+      server_type = "cx23"
       domain      = "security"
     }
     "state.archlinux.org" = {
-      server_type = "cx22"
+      server_type = "cx23"
       domain      = "state"
       backups     = true
     }
