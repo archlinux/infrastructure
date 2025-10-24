@@ -102,6 +102,19 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
     priority  = 10
   }
 
+  request_setting {
+    name              = "Skip cache directory listings setting"
+    action            = "pass"
+    request_condition = "Skip cache directory listings"
+  }
+
+  condition {
+    name      = "Skip cache directory listings"
+    statement = "req.url.path ~ \"/$\""
+    type      = "REQUEST"
+    priority  = 10
+  }
+
   condition {
     name      = "Skip date sync files cache"
     statement = "req.url ~ \"^/(lastsync|lastupdate)\""
