@@ -34,11 +34,13 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
   # use a cache TTL of 24h as the databases are uncached anyways
   default_ttl = 86400
 
+  # Segmented caching only make sense for filetypes that are usually big
+  # find /srv/ftp/ -type f -size +1M -printf "%f\n" | rev | cut -d "." -f 1 | rev | sort --unique
   snippet {
     name    = "Enable segmented caching for packages"
     content = <<-EOT
     # Setup caching for all files to avoid 503 on large packages and files
-    if (req.url.ext ~ "[a-zA-Z0-9]+$") {
+    if (req.url.ext ~ "^(gz|img|iso|old|qcow2|sfs|wsl|zst)\z" || req.url.basename == "vmlinuz-linux") {
       set req.enable_segmented_caching = true;
       set segmented_caching.block_size = 20971520;
     }
