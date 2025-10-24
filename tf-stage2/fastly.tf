@@ -64,6 +64,13 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
     ignore_if_set = false
   }
 
+  # We don't benefit much from gzip as most of our content is zst compressed anyways
+  gzip {
+    name          = "Disable gzip"
+    extensions    = []
+    content_types = []
+  }
+
   # Can be used (and the request setting) instead of toggling "force TLS and enable HSTS in UI"
   header {
     action        = "set"
