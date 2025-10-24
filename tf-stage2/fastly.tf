@@ -102,6 +102,19 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
     priority  = 10
   }
 
+  request_setting {
+    name              = "Skip cache status codes setting"
+    action            = "pass"
+    request_condition = "Skip cache HTML files"
+  }
+
+  condition {
+    name      = "Skip cache HTML files"
+    statement = "req.url.ext == \"html\""
+    type      = "REQUEST"
+    priority  = 10
+  }
+
   condition {
     name      = "Skip date sync files cache"
     statement = "req.url ~ \"^/(lastsync|lastupdate)\""
