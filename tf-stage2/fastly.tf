@@ -89,6 +89,19 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
     xff           = ""
   }
 
+  cache_setting {
+    name            = "Skip cache status codes setting"
+    action          = "pass"
+    cache_condition = "Skip cache status codes"
+  }
+
+  condition {
+    name      = "Skip cache status codes"
+    statement = "beresp.status == 404"
+    type      = "CACHE"
+    priority  = 10
+  }
+
   condition {
     name      = "Skip date sync files cache"
     statement = "req.url ~ \"^/(lastsync|lastupdate)\""
