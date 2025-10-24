@@ -77,7 +77,7 @@ So to set up this server from scratch, run:
 ## mirror.pkgbuild.com
 
 ### Services
-  - Regular mirror.
+  - Regular mirror, that also serves as a backend for the [Fastly CDN mirror](https://fastly.mirror.pkgbuild.com).
 
 ## reproducible.archlinux.org
 
