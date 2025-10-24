@@ -74,7 +74,7 @@
 - name: Install synapse
   pip:
     name:
-      - 'matrix-synapse[postgres,oidc,systemd,url-preview,redis]==1.138.4'
+      - 'matrix-synapse[postgres,oidc,systemd,url-preview,redis]==1.140.0'
       - synapse-http-antispam
     state: latest
     extra_args: '--upgrade-strategy=eager'
