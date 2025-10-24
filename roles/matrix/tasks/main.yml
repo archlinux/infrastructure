@@ -21,7 +21,7 @@
       - libxslt
       - libzip
       - make
-      - nodejs-lts-iron
+      - nodejs-lts-jod
       - npm
       - openssl
       - pkgconf
@@ -120,7 +120,7 @@
   git:
     repo: https://github.com/matrix-org/matrix-appservice-irc
     dest: /var/lib/synapse/matrix-appservice-irc
-    version: 3.0.5
+    version: 4.0.0
     force: true
   become: true
   become_user: synapse
