@@ -10,3 +10,9 @@ ipv4_address: "95.216.189.61"
 ipv6_address: "2a01:4f9:c010:3052::1"
 wireguard_address: 10.0.0.14
 wireguard_public_key: zB4ALQPMOYu8yzGdiDL1AHgowmVZHc2OUJq1igy3Ixo=
+# remove once we have adapted our configs for dovecot 2.4
+ignore_package_upgrades:
+  - dovecot
+  - dovecot-fts-elastic
+  - dovecot-fts-xapian
+  - pigeonhole
