@@ -28,7 +28,7 @@ source "hcloud" "rescue" {
   image       = "ubuntu-24.04"
   location    = "fsn1"
   rescue      = "linux64"
-  server_type = "cx22"
+  server_type = "cx23"
   snapshot_labels = {
     custom_image = "archlinux"
   }
