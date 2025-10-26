@@ -184,7 +184,7 @@ resource "hcloud_zone_rrset" "archlinux_org_cname" {
 
 resource "hcloud_rdns" "rdns_ipv4" {
   for_each = {
-    for name, machine in local.machines : name => machine if try(machine.ipv4_enabled, true)
+    for name, machine in local.machines : name => machine if can(machine.domain) && try(machine.ipv4_enabled, true)
   }
 
   server_id  = hcloud_server.machine[each.key].id
@@ -193,7 +193,9 @@ resource "hcloud_rdns" "rdns_ipv4" {
 }
 
 resource "hcloud_rdns" "rdns_ipv6" {
-  for_each = local.machines
+  for_each = {
+    for name, machine in local.machines : name => machine if can(machine.domain)
+  }
 
   server_id  = hcloud_server.machine[each.key].id
   ip_address = hcloud_server.machine[each.key].ipv6_address
