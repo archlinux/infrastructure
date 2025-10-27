@@ -5,8 +5,8 @@ upstream matrix_{{ config.name }} {
 
 {% endfor %}
 server {
-    listen       80;
-    listen       [::]:80;
+    include snippets/listen-80.conf;
+
     server_name  {{ matrix_domain }};
 
     access_log   /var/log/nginx/{{ matrix_domain }}/access.log reduced;

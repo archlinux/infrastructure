@@ -31,8 +31,8 @@ upstream archweb {
 {% for domain in archweb_domains_redirects | dict2items(key_name='domain', value_name='redirect') %}
 
 server {
-    listen       80;
-    listen       [::]:80;
+    include snippets/listen-80.conf;
+
     server_name  {{ domain['domain'] }};
 
     access_log   /var/log/nginx/{{ archweb_domain }}/access.log reduced;
@@ -82,8 +82,8 @@ server {
 
 server {
 {% endif %}
-    listen       80;
-    listen       [::]:80;
+    include snippets/listen-80.conf;
+
     server_name  {{ archweb_domain }};
 
     access_log   /var/log/nginx/{{ archweb_domain }}/access.log reduced;

@@ -12,8 +12,8 @@ upstream security-tracker {
 }
 
 server {
-    listen       80;
-    listen       [::]:80;
+    include snippets/listen-80.conf;
+
     server_name  {{ security_tracker_domain }};
 
     access_log   /var/log/nginx/{{ security_tracker_domain }}/access.log reduced;

@@ -1,8 +1,8 @@
 {% for config in mta_sts %}
 {% set domain = "mta-sts." + config.domains | first %}
 server {
-    listen       80;
-    listen       [::]:80;
+    include snippets/listen-80.conf;
+
     server_name  mta-sts.{{ config.domains | join(' mta-sts.') }};
 
     access_log   /var/log/nginx/{{ domain }}/access.log reduced;

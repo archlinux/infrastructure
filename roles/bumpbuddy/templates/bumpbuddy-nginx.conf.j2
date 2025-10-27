@@ -1,6 +1,6 @@
 server {
-    listen       80;
-    listen       [::]:80;
+    include snippets/listen-80.conf;
+
     server_name  {{ bumpbuddy_domain }};
 
     access_log   /var/log/nginx/{{ bumpbuddy_domain }}/access.log reduced;

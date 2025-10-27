@@ -1,6 +1,6 @@
 server {
-    listen       80;
-    listen       [::]:80;
+    include snippets/listen-80.conf;
+
     server_name  {{ keycloak_domain }};
 
     access_log   /var/log/nginx/{{ keycloak_domain }}/access.log reduced;

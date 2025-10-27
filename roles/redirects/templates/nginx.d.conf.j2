@@ -7,8 +7,8 @@ map $uri ${{ redirect.map | hash('md5') }} {
 
 {% endif %}
 server {
-    listen       80;
-    listen       [::]:80;
+    include snippets/listen-80.conf;
+
     include      snippets/listen-443.conf;
     server_name  {{ redirect.domain }};
 
