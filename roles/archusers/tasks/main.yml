@@ -13,7 +13,7 @@
     group: users
     groups: "{{ item.value.groups | join(',') }}"
     comment: "{{ item.value.name }}"
-    shell: "{{ shell_override | default(item.value.shell | default('/bin/bash')) }}"
+    shell: "{{ shell_override | default(item.value.shell | default('/bin/zsh')) }}"
     password: ""
     update_password: on_create
     state: present
