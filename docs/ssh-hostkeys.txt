@@ -70,6 +70,33 @@
 256 MD5:7b:38:67:01:59:c8:a7:b3:66:ec:78:df:ec:dd:30:72 root@build.archlinux.org (ED25519)
 3072 MD5:f2:6a:ba:b0:53:9b:d4:73:83:21:d6:76:0f:70:71:72 root@build.archlinux.org (RSA)
 
+# buildbtw.archlinux.org
+256 SHA256:SiynQaNLUDzByl2sIqNNtsnJ/CBVJBT9DJ4lg2a7+48 root@packer-base-image (ECDSA)
+256 SHA256:37WKyLulkMglXtgSR7F7J9OO/yY9OJBiMwKvogJiulA root@packer-base-image (ED25519)
+3072 SHA256:bMp4n62+UWO1UB1dbakkt0id8TetKHUg1QcZTF9A1Cc root@packer-base-image (RSA)
+
+256 MD5:0a:19:08:42:09:6d:65:3c:21:7d:ee:95:7f:ee:75:85 root@packer-base-image (ECDSA)
+256 MD5:06:a9:00:bb:1c:ec:d4:0c:5a:59:a8:a7:14:b7:40:68 root@packer-base-image (ED25519)
+3072 MD5:16:21:2a:ab:b8:d0:59:c7:0b:29:16:d6:4f:7c:f0:bf root@packer-base-image (RSA)
+
+# buildbtw.dev.archlinux.org
+256 SHA256:/oB6umIss0t3iZZe6IHQYB2A9Do/hZIQrJm6iu5dt38 root@packer-base-image (ECDSA)
+256 SHA256:LXVEkd1wbZIKzxfGGUhCAV2H8Cgmms0kLjbTcyUK9TQ root@packer-base-image (ED25519)
+3072 SHA256:4GSNQgx4LTXOAMiFzS4lBy/Urqv6lwzQKk7/4WWzDxs root@packer-base-image (RSA)
+
+256 MD5:23:49:77:84:e5:59:1c:c6:df:26:51:0e:30:64:13:d2 root@packer-base-image (ECDSA)
+256 MD5:80:3b:e6:7a:57:e3:67:97:ad:86:49:26:7c:ec:ba:c3 root@packer-base-image (ED25519)
+3072 MD5:18:02:55:3c:f3:a8:05:2f:99:34:db:69:a3:60:e1:ec root@packer-base-image (RSA)
+
+# buildbtw.staging.archlinux.org
+256 SHA256:5XC5wjav7UBYkxiowfdNP+zN+XCAWWnvzPrSnpb7ZqE root@packer-base-image (ECDSA)
+256 SHA256:ZKKSE40g0DyYKu3VovvnwOLaqksZvG1xb+8eb0GpVbQ root@packer-base-image (ED25519)
+3072 SHA256:wYsOzTF01SYxTNE8Cfma66CtbVL9gb/Ihzk+DPIWQpM root@packer-base-image (RSA)
+
+256 MD5:e9:aa:43:47:88:f4:15:34:41:26:6f:ad:83:e1:2e:65 root@packer-base-image (ECDSA)
+256 MD5:65:b5:35:4a:e1:9d:8c:9e:86:fc:17:aa:64:df:a0:d2 root@packer-base-image (ED25519)
+3072 MD5:68:32:0e:a8:4b:c4:dd:9a:69:cd:51:01:70:e5:9d:df root@packer-base-image (RSA)
+
 # bumpbuddy.archlinux.org
 256 SHA256:LrJ6gz7Sz03ypKIOEQnxbeP7XmzqoxY3exDoGXx1QeA root@archlinux-packer (ECDSA)
 256 SHA256:AoEF7EsR7k8rOiYF1usjqJNR2/EvUGDpnKD5/tRG9NA root@archlinux-packer (ED25519)
