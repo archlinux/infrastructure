@@ -1,8 +1,9 @@
 server {
-    listen       {{ ipv4_address ~ ':' if nginx_explict_listen_addresses }}80 default_server;
-    listen       [{{ ipv6_address if nginx_explict_listen_addresses else '::' }}]:80 default_server;
-    listen       {{ ipv4_address ~ ':' if nginx_explict_listen_addresses }}443 default_server ssl;
-    listen       [{{ ipv6_address if nginx_explict_listen_addresses else '::' }}]:443 default_server ssl;
+    listen       {{ ipv4_address ~ ':' if nginx_explict_listen_addresses }}80 default_server{{ ' proxy_protocol' if nginx_proxy_protocol_upstream_host or nginx_proxy_vendor }};
+    listen       [{{ ipv6_address if nginx_explict_listen_addresses else '::' }}]:80 default_server{{ ' proxy_protocol' if nginx_proxy_protocol_upstream_host or nginx_proxy_vendor }};
+
+    listen       {{ ipv4_address ~ ':' if nginx_explict_listen_addresses }}443 default_server ssl{{ ' proxy_protocol' if nginx_proxy_protocol_upstream_host or nginx_proxy_vendor }};
+    listen       [{{ ipv6_address if nginx_explict_listen_addresses else '::' }}]:443 default_server ssl{{ ' proxy_protocol' if nginx_proxy_protocol_upstream_host or nginx_proxy_vendor }};
 {% if nginx_enable_http3 %}
     listen       {{ ipv4_address ~ ':' if nginx_explict_listen_addresses }}443 default_server quic reuseport;
     listen       [{{ ipv6_address if nginx_explict_listen_addresses else '::' }}]:443 default_server quic reuseport;

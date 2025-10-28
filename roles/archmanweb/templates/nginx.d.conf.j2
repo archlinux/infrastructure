@@ -6,8 +6,8 @@ limit_req_zone $binary_remote_addr zone=archmanweb_limit:10m rate=2r/s;
 limit_req_status 429;
 
 server {
-    listen       80;
-    listen       [::]:80;
+    include snippets/listen-80.conf;
+
     server_name  {{ archmanweb_domain }};
 
     access_log   /var/log/nginx/{{ archmanweb_domain }}/access.log reduced;

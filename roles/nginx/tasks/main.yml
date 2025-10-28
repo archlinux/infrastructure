@@ -25,7 +25,9 @@
     - {src: sslsettings.conf, dest: sslsettings-http.conf, server: http}
     - {src: sslsettings.conf, dest: sslsettings-stream.conf, server: stream}
     - headers.conf
+    - listen-80.conf.j2
     - listen-443.conf.j2
+    - proxy-settings.conf.j2
   notify:
     - Reload nginx
 

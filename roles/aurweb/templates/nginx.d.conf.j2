@@ -21,8 +21,8 @@ proxy_cache_path  /var/lib/nginx/cache levels=1:2 keys_zone=aurwebcache:10m inac
 server_names_hash_bucket_size 128;
 
 server {
-    listen       80;
-    listen       [::]:80;
+    include snippets/listen-80.conf;
+
     server_name  {{ aurweb_domain }};
 
     access_log   /var/log/nginx/{{ aurweb_domain }}/access.log main;

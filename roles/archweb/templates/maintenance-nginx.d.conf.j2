@@ -4,8 +4,8 @@ upstream archweb {
 
 {% for domain in service_alternate_domains | default([]) %}
 server {
-    listen       80;
-    listen       [::]:80;
+    include snippets/listen-80.conf;
+
     server_name  {{ domain }};
 
     access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log reduced;
@@ -40,8 +40,8 @@ server {
 {% endfor %}
 {% for domain in service_legacy_domains | default([]) %}
 server {
-    listen       80;
-    listen       [::]:80;
+    include snippets/listen-80.conf;
+
     server_name  {{ domain }};
 
     access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log reduced;
@@ -75,8 +75,8 @@ server {
 
 {% endfor %}
 server {
-    listen       80;
-    listen       [::]:80;
+    include snippets/listen-80.conf;
+
     server_name  {{ service_domain }};
 
     access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log reduced;

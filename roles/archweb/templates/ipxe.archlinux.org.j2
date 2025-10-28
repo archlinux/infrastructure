@@ -1,6 +1,6 @@
 server {
-    listen       80;
-    listen       [::]:80;
+    include snippets/listen-80.conf;
+
     server_name  {{ domain['domain_name'] }};
 
     access_log   /var/log/nginx/{{ archweb_domain }}/access.log reduced;

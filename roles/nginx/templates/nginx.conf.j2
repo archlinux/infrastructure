@@ -105,6 +105,7 @@ http {
 
     include snippets/sslsettings-http.conf;
     include snippets/headers.conf;
+    include snippets/proxy-settings.conf;
 
     include nginx.d/*.conf;
 }
@@ -132,6 +133,7 @@ stream {
         '}';
 
     include snippets/sslsettings-stream.conf;
+    include snippets/proxy-settings.conf;
 
     include stream.d/*.conf;
 }

@@ -4,8 +4,7 @@ map $http_upgrade $connection_upgrade {
 }
 
 server {
-    listen       {{ ipv4_address }}:80;
-    listen       [{{ ipv6_address }}]:80;
+    include      snippets/listen-80.conf;
     server_name  {{ gitlab_domain }} {{ gitlab_registry_domain }};
 
     access_log   /var/log/nginx/{{ gitlab_domain }}/access.log reduced;
