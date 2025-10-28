@@ -54,30 +54,35 @@
 
 - name: Retrieve sub-account information
   uri:
-    url: https://robot-ws.your-server.de/storagebox/{{ storagebox_id }}/subaccount
-    user: "{{ hetzner_webservice_username }}"
-    password: "{{ hetzner_webservice_password }}"
+    url: https://api.hetzner.com/v1/storage_boxes/{{ storagebox_id }}/subaccounts
+    headers:
+      Bearer: "{{ hetzner_cloud_api_key }}"
   check_mode: false
   register: subaccounts_raw
   no_log: true
 
 - name: Get list of sub-accounts
   set_fact:
-    subaccounts: "{{ subaccounts_raw.json | json_query('[].subaccount') }}"
+    subaccounts: "{{ subaccounts_raw.json | json_query('.subaccounts[]') }}"
 
 - name: Create missing sub-accounts
   uri:
     timeout: 60
-    url: https://robot-ws.your-server.de/storagebox/{{ storagebox_id }}/subaccount
-    user: "{{ hetzner_webservice_username }}"
-    password: "{{ hetzner_webservice_password }}"
+    url: https://api.hetzner.com/v1/storage_boxes/{{ storagebox_id }}/subaccounts
+    headers:
+      Bearer: "{{ hetzner_cloud_api_key }}"
     method: POST
-    body_format: form-urlencoded
+    body_format: json
     body:
       homedirectory: "{{ backup_dir }}/{{ item }}"
-      comment: "{{ item }}"
-      ssh: "true"
-  loop: "{{ backup_clients | difference(subaccounts | json_query('[].comment')) }}"
+      description: "{{ item }}"
+      access_settings:
+        reachable_externally: true
+        ssh_enabled: true
+        samba_enabled: false
+        webdav_enabled: false
+        readonly: false
+  loop: "{{ backup_clients | difference(subaccounts | json_query('[].description')) }}"
   register: new_subaccounts_raw
   no_log: true
 
