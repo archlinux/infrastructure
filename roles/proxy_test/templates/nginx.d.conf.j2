@@ -1,0 +1,35 @@
+limit_req_zone $binary_remote_addr zone=testlimit:10m rate=1r/s;
+limit_req_status 429;
+
+server {
+    include      snippets/listen-80.conf;
+
+    server_name  {{ public_domain }};
+    root         /srv/http/test;
+
+    access_log   /var/log/nginx/{{ public_domain }}/access.log main;
+    error_log    /var/log/nginx/{{ public_domain }}/error.log;
+
+    include snippets/letsencrypt.conf;
+
+    location / {
+        return 301 https://$server_name$request_uri;
+    }
+}
+
+server {
+    include      snippets/listen-443.conf;
+    server_name  {{ public_domain }};
+    root         /srv/http/test;
+
+    access_log   /var/log/nginx/{{ public_domain }}/access.log main;
+    error_log    /var/log/nginx/{{ public_domain }}/error.log;
+
+    ssl_certificate      /etc/letsencrypt/live/{{ public_domain }}/fullchain.pem;
+    ssl_certificate_key  /etc/letsencrypt/live/{{ public_domain }}/privkey.pem;
+
+    location /index.html {
+        alias /srv/http/test/index.html;
+        limit_req zone=testlimit;
+    }
+}
