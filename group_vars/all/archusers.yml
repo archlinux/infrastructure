@@ -541,6 +541,15 @@ arch_users:
       - dev
       - junior-dev
       - tu
+  mark:
+    name: "Mark Hegreberg"
+    email: "mark@archlinux.org"
+    ssh_key: mark.pub
+    hosts:
+      - mail.archlinux.org
+      - homedir.archlinux.org
+    groups:
+      - support-staff
   martin:
     name: "Martin Rys"
     email: "martin@archlinux.org"
