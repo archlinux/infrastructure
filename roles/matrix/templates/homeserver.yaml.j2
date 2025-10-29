@@ -46,16 +46,13 @@ modules:
     config:
       base_url: http://localhost:8010/api/1/spam_check
       authorization: "{{ vault_matrix.draupnir.antispam_token }}"
+      do_ping: true
       enabled_callbacks:
-        - check_event_for_spam
         - user_may_invite
         - user_may_join_room
       fail_open:
-        check_event_for_spam: true
         user_may_invite: true
         user_may_join_room: true
-      async:
-        check_event_for_spam: true
 
 event_cache_size: 15K
 caches:
