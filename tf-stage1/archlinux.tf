@@ -90,9 +90,6 @@ locals {
     }
     "aur.archlinux.org" = {
       server_type = "cpx51"
-      domain      = "aur"
-      http3       = true
-      ttl         = 60
     }
     "bbs.archlinux.org" = {
       server_type = "cx23"
@@ -298,6 +295,11 @@ locals {
     archive = {
       ipv4_address = "49.12.124.107"
       ipv6_address = "2a01:4f8:242:5614::2"
+    }
+    aur = {
+      ipv4_address = "209.126.35.78"
+      ipv6_address = "2604:cac0:a104:d::2"
+      ttl          = 60
     }
     build = {
       ipv4_address = "162.55.28.166"
