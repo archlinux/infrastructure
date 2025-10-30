@@ -87,9 +87,15 @@ locals {
       domain      = "@"
       http3       = true
       ttl         = 60
+      # reserve extra IPs for the HAproxy backend
+      floating_ipv4 = true
+      floating_ipv6 = true
     }
     "aur.archlinux.org" = {
       server_type = "cpx51"
+      # reserve extra IPs for the HAproxy backend
+      floating_ipv4 = true
+      floating_ipv6 = true
     }
     "bastion.archlinux.org" = {
       server_type = "cx23"
@@ -787,19 +793,5 @@ resource "hcloud_floating_ip" "whitelist_ip_bastion_archlinux_org" {
   name              = "bastion-host-IP-DO-NO-DELETE"
   type              = "ipv4"
   server_id         = hcloud_server.machine["bastion.archlinux.org"].id
-  delete_protection = true
-}
-
-resource "hcloud_floating_ip" "proxy_ipv4_aur_archlinux_org" {
-  name              = "ipv4-proxy-aur"
-  type              = "ipv4"
-  server_id         = hcloud_server.machine["aur.archlinux.org"].id
-  delete_protection = true
-}
-
-resource "hcloud_floating_ip" "proxy_ipv6_aur_archlinux_org" {
-  name              = "ipv6-proxy-aur"
-  type              = "ipv6"
-  server_id         = hcloud_server.machine["aur.archlinux.org"].id
   delete_protection = true
 }
