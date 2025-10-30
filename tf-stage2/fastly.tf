@@ -34,11 +34,13 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
   # use a cache TTL of 24h as the databases are uncached anyways
   default_ttl = 86400
 
+  # Segmented caching only make sense for filetypes that are usually big
+  # find /srv/ftp/ -type f -size +1M -printf "%f\n" | rev | cut -d "." -f 1 | rev | sort --unique
   snippet {
     name    = "Enable segmented caching for packages"
     content = <<-EOT
     # Setup caching for all files to avoid 503 on large packages and files
-    if (req.url.ext ~ "[a-zA-Z0-9]+$") {
+    if (req.url.ext ~ "^(gz|img|iso|old|qcow2|sfs|wsl|zst)\z" || req.url.basename == "vmlinuz-linux") {
       set req.enable_segmented_caching = true;
       set segmented_caching.block_size = 20971520;
     }
@@ -64,6 +66,13 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
     ignore_if_set = false
   }
 
+  # We don't benefit much from gzip as most of our content is zst compressed anyways
+  gzip {
+    name          = "Disable gzip"
+    extensions    = []
+    content_types = []
+  }
+
   # Can be used (and the request setting) instead of toggling "force TLS and enable HSTS in UI"
   header {
     action        = "set"
@@ -80,6 +89,33 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
     force_ssl     = true
     max_stale_age = 0
     xff           = ""
+  }
+
+  cache_setting {
+    name            = "Skip cache status codes setting"
+    action          = "pass"
+    cache_condition = "Skip cache status codes"
+  }
+
+  condition {
+    name      = "Skip cache status codes"
+    statement = "beresp.status == 404"
+    type      = "CACHE"
+    priority  = 5
+  }
+
+  # Cache HTML pages for 5 min
+  cache_setting {
+    name            = "HTML TTL setting"
+    cache_condition = "HTML TTL"
+    ttl             = 300
+  }
+
+  condition {
+    name      = "HTML TTL"
+    statement = "beresp.http.Content-Type == \"text/html\""
+    type      = "CACHE"
+    priority  = 10
   }
 
   condition {
