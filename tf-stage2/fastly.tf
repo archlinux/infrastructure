@@ -101,19 +101,20 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
     name      = "Skip cache status codes"
     statement = "beresp.status == 404"
     type      = "CACHE"
-    priority  = 10
+    priority  = 5
   }
 
-  request_setting {
-    name              = "Skip cache directory listings setting"
-    action            = "pass"
-    request_condition = "Skip cache directory listings"
+  # Cache HTML pages for 5 min
+  cache_setting {
+    name            = "HTML TTL setting"
+    cache_condition = "HTML TTL"
+    ttl             = 300
   }
 
   condition {
-    name      = "Skip cache directory listings"
-    statement = "req.url.path ~ \"/$\""
-    type      = "REQUEST"
+    name      = "HTML TTL"
+    statement = "beresp.http.Content-Type == \"text/html\""
+    type      = "CACHE"
     priority  = 10
   }
 
