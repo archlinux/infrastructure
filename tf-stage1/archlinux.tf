@@ -87,6 +87,9 @@ locals {
       domain      = "@"
       http3       = true
       ttl         = 60
+      # reserve extra IPs for the HAproxy backend
+      floating_ipv4 = true
+      floating_ipv6 = true
     }
     "aur.archlinux.org" = {
       server_type = "cpx51"
