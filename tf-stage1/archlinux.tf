@@ -87,10 +87,13 @@ locals {
       domain      = "@"
       http3       = true
       ttl         = 60
+      # reserve extra IPs as static target for the HAproxy ADN service
+      floating_ipv4 = true
+      floating_ipv6 = true
     }
     "aur.archlinux.org" = {
       server_type = "cpx52"
-      # reserve extra IPs for the HAproxy backend
+      # reserve extra IPs as static target for the HAproxy ADN service
       floating_ipv4 = true
       floating_ipv6 = true
     }
