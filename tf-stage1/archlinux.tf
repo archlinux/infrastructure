@@ -83,13 +83,13 @@ locals {
       domain      = "accounts"
     }
     "archlinux.org" = {
-      server_type = "cpx41"
+      server_type = "cpx32"
       domain      = "@"
       http3       = true
       ttl         = 60
     }
     "aur.archlinux.org" = {
-      server_type = "cpx51"
+      server_type = "cpx52"
     }
     "bbs.archlinux.org" = {
       server_type = "cx23"
@@ -109,11 +109,11 @@ locals {
       domain      = "dashboards"
     }
     "debuginfod.archlinux.org" = {
-      server_type = "cx32"
+      server_type = "cx33"
       domain      = "debuginfod"
     }
     "discourse.sandbox.archlinux.org" = {
-      server_type = "cx32"
+      server_type = "cx23"
       domain      = "discourse.sandbox"
     }
     "gluebuddy.archlinux.org" = {
@@ -137,7 +137,7 @@ locals {
       domain      = "man"
     }
     "matrix.archlinux.org" = {
-      server_type = "cpx31"
+      server_type = "cpx32"
       domain      = "matrix"
     }
     "md.archlinux.org" = {
@@ -151,7 +151,7 @@ locals {
       http3       = true
     }
     "monitoring.archlinux.org" = {
-      server_type = "cpx31"
+      server_type = "cpx32"
       domain      = "monitoring"
     }
     "mumble.archlinux.org" = {
@@ -191,7 +191,7 @@ locals {
       server_type = "cx23"
     }
     "wiki.archlinux.org" = {
-      server_type = "cpx41"
+      server_type = "cpx42"
       domain      = "wiki"
       http3       = true
       ttl         = 60
