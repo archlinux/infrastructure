@@ -444,6 +444,7 @@ arch_users:
     email: "integral@archlinux.org"
     ssh_key: integral.pub
     groups:
+      - packager
       - junior-packager
   jelle:
     name: "Jelle van der Waa"
