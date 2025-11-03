@@ -73,6 +73,23 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
     content_types = []
   }
 
+  header {
+    name          = "Fastly Purge"
+    action        = "set"
+    type          = "request"
+    destination   = "http.Fastly-Purge-Requires-Auth"
+    source        = "true"
+    priority      = 10
+    ignore_if_set = false
+  }
+
+  condition {
+    name      = "Purge"
+    statement = "req.request == \"FASTLYPURGE\""
+    type      = "REQUEST"
+    priority  = 10
+  }
+
   # Can be used (and the request setting) instead of toggling "force TLS and enable HSTS in UI"
   header {
     action        = "set"
