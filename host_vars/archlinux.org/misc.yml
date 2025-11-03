@@ -1,8 +1,8 @@
 fetchmail_user: "donate@archlinux.org"
 fetchmail_delivery_cmd: "/usr/local/bin/donor_import_wrapper.sh"
 
-ipv4_address: "95.217.163.246"
-ipv6_address: "2a01:4f9:c010:6b1f::1"
+ipv4_address: "46.62.203.164"
+ipv6_address: "2a01:4f9:c012:16e3::1"
 
 fail2ban_jails:
   sshd: true
