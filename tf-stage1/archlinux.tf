@@ -78,6 +78,10 @@ locals {
   #   ttl         = 3600
   # }
   machines = {
+    "aarch64.sandbox.archlinux.org" = {
+      server_type = "cax31"
+      domain      = "aarch64.sandbox"
+    }
     "accounts.archlinux.org" = {
       server_type = "cx23"
       domain      = "accounts"
