@@ -695,16 +695,6 @@ resource "hcloud_zone_rrset" "archlinux_org_acme_challenge_mumble_ns" {
   ]
 }
 
-resource "hcloud_zone_rrset" "archlinux_org_nextcloud" {
-  zone = hcloud_zone.archlinux_org.name
-  name = "nextcloud"
-  type = "CNAME"
-  ttl  = 3600
-  records = [
-    { value = "nx80699.your-storageshare.de." },
-  ]
-}
-
 # TODO: Commented currently as we have no idea how to handle SOA stuff with Terraform:
 # https://github.com/timohirt/terraform-provider-hetznerdns/issues/20
 # https://gitlab.archlinux.org/archlinux/infrastructure/-/merge_requests/62#note_4040
