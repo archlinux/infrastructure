@@ -113,7 +113,7 @@ locals {
       domain      = "debuginfod"
     }
     "discourse.sandbox.archlinux.org" = {
-      server_type = "cx23"
+      server_type = "cx33"
       domain      = "discourse.sandbox"
     }
     "gluebuddy.archlinux.org" = {
