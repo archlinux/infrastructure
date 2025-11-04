@@ -1,17 +1,22 @@
 <!--
-This template should be used by DevOps members when adding a GitLab Pages project to GitLab.
+This template should be used by DevOps members when adding a GitLab Pages
+project to GitLab.
 
-In order to use GitLab Pages with Arch Linux, you'll have to specifically request a custom subdomain
-below `pkgbuild.com` or `archlinux.org` to be assigned. We don't allow random projects to use Pages
-because of legal and safety reasons (we don't want people to be able to trick others into thinking
+In order to use GitLab Pages with Arch Linux, you'll have to specifically
+request a custom subdomain below `archlinux.page` or `archlinux.org` to be
+assigned. We don't allow random projects to use Pages because of legal and
+safety reasons (we don't want people to be able to trick others into thinking
 something hosted below one of our domains is official).
+
+Additionally we separate pages with user produced content from other domains
+due to potential cookie sharing on domain level.
 -->
 
 # Procedure for adding a GitLab Pages project to GitLab
 
 ## Details
 - **Project name**: hello
-- **Desired subdomain**: hello.archlinux.org
+- **Desired subdomain**: hello.archlinux.page
 
 ## New Pages site checklist
 
@@ -21,7 +26,7 @@ something hosted below one of our domains is official).
        information at https://gitlab.archlinux.org/your-namespace/your-project/pages
 1. [ ] At this page, you'll also need to add your custom domain. Add the custom domain you requested earlier.
        GitLab will then show domain verification information which you'll need in the next step.
-1. [ ] At this point, we'll need to add some stuff to the `archlinux_org_gitlab_pages` variable in `archlinux.tf`. It should look something like this.
+1. [ ] At this point, we'll need to add some stuff to the `archlinux_page_gitlab_pages` variable in `archlinux.tf`. It should look something like this.
        Make sure to substitute the `your-domain` and `your-code-shown-by-gitlab` strings accordingly:
 
         "your-domain" = "your-code-shown-by-gitlab"
