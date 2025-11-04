@@ -2,6 +2,7 @@ fail2ban_jails:
   sshd: true
   postfix: false
   dovecot: false
-  nginx_limit_req: true
+  nginx_limit_req: false
 wireguard_address: 10.0.0.32
 wireguard_public_key: CuhJyhmHsi0ccdeXgXRacqnFVfYrjVDHxfPPOLehkhw=
+nginx_proxy_vendor: haproxy
