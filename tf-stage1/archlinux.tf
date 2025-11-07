@@ -223,6 +223,7 @@ locals {
     "signstar"        = "5c348888c16d81166379017879a29fe3"
     "devblog"         = "b4af31061ba3a13d82a1ce69897acf9b"
     "voa"             = "9c326f517d3d4248b7223fd220287d89"
+    "manual"          = "df7e144644be537891582e89c9942957"
   }
 
   # This creates archlinux.org TXT DNS entries

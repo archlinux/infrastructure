@@ -52,6 +52,7 @@ blackbox_targets:
     - https://losangeles.mirror.pkgbuild.com
     - https://mailman.archlinux.org
     - https://man.archlinux.org
+    - https://manual.archlinux.page
     - https://master-key.archlinux.org
     - https://matrix.archlinux.org
     - https://md.archlinux.org
