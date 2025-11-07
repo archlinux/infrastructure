@@ -129,6 +129,8 @@
             }
           }
         ]
+        {# This caching helps with many concurrent CI builds #}
+        gitaly['configuration'] = { pack_objects_cache: { enabled: true } }
         prometheus_monitoring['enable'] = false
         postgresql['shared_buffers'] = "8GB"
     volumes:
