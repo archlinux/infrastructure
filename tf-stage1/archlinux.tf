@@ -230,15 +230,15 @@ locals {
   # This creates archlinux.org TXT DNS entries
   # Valid parameters are:
   #   - ttl (optional)
-  #   - value (mandatory)
+  #   - value, automatically wrapped in hcloud::txt_record (mandatory)
   #
   # Example:
   # "_github-challenge-archlinux" = { ttl = 3600, value = "824af4446e" }
   archlinux_org_txt = {
     "dkim-ed25519._domainkey.lists" = { value = "v=DKIM1; k=ed25519;p=ongbdFgt5Vimg/VRRbbSVRU4lBCkcYNaPA4K3JS/DnY=" }
-    "dkim-rsa._domainkey.lists"     = { value = "v=DKIM1; k=rsa; \" \"p=MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA4M+y3ZeB9eI3GVgcrvMcI1SYOveH7P5TTRstaCHTlE/aRTiCzu5h6zKwwxEiK6NR5ugbHpBtfFnfnsl1eoaXVFBQfNdDNglHllJOZGVxTnyrFjRJUk9zN+PV/Haz73nAe1hOAENgV8NKnTok1ntaOYSH1AEj4yTswfQkuN23NPrQc1eyy3+hGC+lYpud3xAAl+oT4QE76PaLgk6Hz\" \"HOvZmAPGD3azJZRbobninZZXTAEvZFuPkfpWeUreDU9Hk9VX3zOmnqTN+YjIS5CdV6+Ghem3dCkmR9j3gOZBeBUYD7b+cinTYe/PZO2OG/LWCwN11EYyf1LSBGhBJCF9HPGiGIdhy5T62nKvwDQS0bj1HL+y6pXZdv2C7KgH+lAZ0idpOQ2TtV5e0tlVdryY4QXY9m7mSQ84WsoEdGDsetOhiTEKuqyGnDoYa0wYbM5477LL6EOzS0x3ZC/mbOg\" \"B+FSdzmLWCH/WjuzMNpw9WU+u4BucwVbYcnZ1vAxQQOEnA/Ku9drRHMFixBwodQuMA78j8ICCMJKlUiXmbbL7OFoXBArYJ7lgVs7mlaoEaqzDPCyqs1lJ9kOxdNoZj5zdxERcQhLm+Yo/948i6Js/nkWT0eAjNlHxZuCg3B4z7L4lRZpaGt+vHdcGUIeDKW34O0dWxPwIUmQA4CwmhUB0HWL9UcCAwEAAQ==" }
+    "dkim-rsa._domainkey.lists"     = { value = "v=DKIM1; k=rsa; p=MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA4M+y3ZeB9eI3GVgcrvMcI1SYOveH7P5TTRstaCHTlE/aRTiCzu5h6zKwwxEiK6NR5ugbHpBtfFnfnsl1eoaXVFBQfNdDNglHllJOZGVxTnyrFjRJUk9zN+PV/Haz73nAe1hOAENgV8NKnTok1ntaOYSH1AEj4yTswfQkuN23NPrQc1eyy3+hGC+lYpud3xAAl+oT4QE76PaLgk6HzHOvZmAPGD3azJZRbobninZZXTAEvZFuPkfpWeUreDU9Hk9VX3zOmnqTN+YjIS5CdV6+Ghem3dCkmR9j3gOZBeBUYD7b+cinTYe/PZO2OG/LWCwN11EYyf1LSBGhBJCF9HPGiGIdhy5T62nKvwDQS0bj1HL+y6pXZdv2C7KgH+lAZ0idpOQ2TtV5e0tlVdryY4QXY9m7mSQ84WsoEdGDsetOhiTEKuqyGnDoYa0wYbM5477LL6EOzS0x3ZC/mbOgB+FSdzmLWCH/WjuzMNpw9WU+u4BucwVbYcnZ1vAxQQOEnA/Ku9drRHMFixBwodQuMA78j8ICCMJKlUiXmbbL7OFoXBArYJ7lgVs7mlaoEaqzDPCyqs1lJ9kOxdNoZj5zdxERcQhLm+Yo/948i6Js/nkWT0eAjNlHxZuCg3B4z7L4lRZpaGt+vHdcGUIeDKW34O0dWxPwIUmQA4CwmhUB0HWL9UcCAwEAAQ==" }
     "dkim-ed25519._domainkey"       = { value = "v=DKIM1; k=ed25519; p=XOHB7b7V1puX+FryNIhsjXHYIFqk+q6JRu4XQ7Jc8MQ=" }
-    "dkim-rsa._domainkey"           = { value = "v=DKIM1; k=rsa; \" \"p=MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA1GjGrEczq7iHZbvT7wa4ltJz2jwSndUGdRHgfEPnGBeevOXEAlEFr4zsdkfZEaNaQLIhZNpvKAt/A+kkyalkj4u9AnxqeNsNmZflFl6TKgvh0tWNEP3+XNxfdQ7zfml4WggL/YdAjXngg42oZEUsnS/6iozOFn7bNvzqBx5PFJ21pgyuR8DWyLaeOt+p55dVed7DCKnKi11Xjiu7k\" \"H68W8rose7g8Fv9fecBatEE4jwloOXsjh+tH0iab1NSSSpIq6EdgcPrpmrllN3/n2J/kCGK6ztISB6vR7xWgvgHSMjmEL0GPWzohGPrw2UQhZhrNV8dJpiLRYmfK+rXaKF0Kqag/F0e4C4jCKFX7NYFcYXYRlN5QlDFjZvUmOILlgnZ8w/SdZUKzpLObGuwnANLG+WSOjw42p9mXVGN6AfOQPu8OjRjS1MyhcdDIbUvZiQjbmiVJ5frpYZ39BTg\" \"CIzYLJJ5932+3gnwROu1OeljWkpBkfHZXPzADus80l3Vxsk91XZVB36rN8tyuMownR/M4HNC7ZE/EBwOnn1mGH7bLd6pva8u5Qy8Y6LrDdYea5Kk7aZ2WJSSRTV+nkPvOEIx+DfsIWNfmkVWzmuVky96fRvwOCuh38w8zpmlqzhDuGSQrBaLFXwAC7LYQ6kPDHzrjQhs99ScR0ix6YclrmpimMcCAwEAAQ==" }
+    "dkim-rsa._domainkey"           = { value = "v=DKIM1; k=rsa; p=MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA1GjGrEczq7iHZbvT7wa4ltJz2jwSndUGdRHgfEPnGBeevOXEAlEFr4zsdkfZEaNaQLIhZNpvKAt/A+kkyalkj4u9AnxqeNsNmZflFl6TKgvh0tWNEP3+XNxfdQ7zfml4WggL/YdAjXngg42oZEUsnS/6iozOFn7bNvzqBx5PFJ21pgyuR8DWyLaeOt+p55dVed7DCKnKi11Xjiu7kH68W8rose7g8Fv9fecBatEE4jwloOXsjh+tH0iab1NSSSpIq6EdgcPrpmrllN3/n2J/kCGK6ztISB6vR7xWgvgHSMjmEL0GPWzohGPrw2UQhZhrNV8dJpiLRYmfK+rXaKF0Kqag/F0e4C4jCKFX7NYFcYXYRlN5QlDFjZvUmOILlgnZ8w/SdZUKzpLObGuwnANLG+WSOjw42p9mXVGN6AfOQPu8OjRjS1MyhcdDIbUvZiQjbmiVJ5frpYZ39BTgCIzYLJJ5932+3gnwROu1OeljWkpBkfHZXPzADus80l3Vxsk91XZVB36rN8tyuMownR/M4HNC7ZE/EBwOnn1mGH7bLd6pva8u5Qy8Y6LrDdYea5Kk7aZ2WJSSRTV+nkPvOEIx+DfsIWNfmkVWzmuVky96fRvwOCuh38w8zpmlqzhDuGSQrBaLFXwAC7LYQ6kPDHzrjQhs99ScR0ix6YclrmpimMcCAwEAAQ==" }
 
     "_dmarc"                          = { value = "v=DMARC1; p=none; rua=mailto:dmarc-reports@archlinux.org; ruf=mailto:dmarc-reports@archlinux.org;" }
     "_github-challenge-archlinux"     = { value = "824af4446e" }
@@ -594,7 +594,7 @@ resource "hcloud_zone_rrset" "archlinux_page_origin_txt" {
   name = "@"
   type = "TXT"
   records = [
-    { value = "\"v=spf1 -all\"" },
+    { value = provider::hcloud::txt_record("v=spf1 -all") },
   ]
 }
 
@@ -603,7 +603,7 @@ resource "hcloud_zone_rrset" "pages_verification_code_archlinux_page_origin_txt"
   name = "_gitlab-pages-verification-code"
   type = "TXT"
   records = [
-    { value = "\"gitlab-pages-verification-code=0b9e3fc74735f5d83c7cfc86883b40cb\"" },
+    { value = provider::hcloud::txt_record("gitlab-pages-verification-code=0b9e3fc74735f5d83c7cfc86883b40cb") },
   ]
 }
 
@@ -654,7 +654,7 @@ resource "hcloud_zone_rrset" "pkgbuild_com_origin_txt" {
   name = "@"
   type = "TXT"
   records = [
-    { value = "\"v=spf1 -all\"" },
+    { value = provider::hcloud::txt_record("v=spf1 -all") },
   ]
 }
 
