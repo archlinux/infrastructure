@@ -514,7 +514,7 @@ groups:
     interval: 60m
     rules:
       - alert: FastlyCostNotZero
-        expr: max_over_time(fastly_mtd_estimate_dollars_total[2h]) > 0
+        expr: max_over_time(fastly_mtd_estimate_dollars_total[2h]) > 1
         labels:
           severity: warning
           service: fastly
