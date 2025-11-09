@@ -224,6 +224,7 @@ locals {
     "devblog"         = "b4af31061ba3a13d82a1ce69897acf9b"
     "voa"             = "9c326f517d3d4248b7223fd220287d89"
     "manual"          = "df7e144644be537891582e89c9942957"
+    "ports"           = "a110b58a4a74de2f8ff0e02bb731ab0f"
   }
 
   # This creates archlinux.org TXT DNS entries
