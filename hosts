@@ -5,11 +5,6 @@ gitlab.archlinux.org
 repos.archlinux.org
 secure-runner1.archlinux.org
 
-[equinix_metal]
-repro3.pkgbuild.com
-runner3.archlinux.org
-sydney.mirror.pkgbuild.com
-
 [misaka]
 berlin.mirror.pkgbuild.com
 johannesburg.mirror.pkgbuild.com
@@ -25,13 +20,11 @@ london.mirror.pkgbuild.com
 losangeles.mirror.pkgbuild.com
 mirror.pkgbuild.com
 singapore.mirror.pkgbuild.com
-sydney.mirror.pkgbuild.com
 taipei.mirror.pkgbuild.com
 
 [geo_mirror_name_servers]
 europe.mirror.pkgbuild.com
 london.mirror.pkgbuild.com
-sydney.mirror.pkgbuild.com
 
 [geo_mirrors]
 berlin.mirror.pkgbuild.com
@@ -40,7 +33,6 @@ johannesburg.mirror.pkgbuild.com
 london.mirror.pkgbuild.com
 losangeles.mirror.pkgbuild.com
 singapore.mirror.pkgbuild.com
-sydney.mirror.pkgbuild.com
 taipei.mirror.pkgbuild.com
 
 [archive_mirrors]
@@ -91,7 +83,6 @@ build.archlinux.org
 
 [gitlab_runners]
 runner1.archlinux.org
-runner3.archlinux.org
 secure-runner1.archlinux.org
 
 [gitlab_vm_runners]
@@ -103,7 +94,6 @@ reproducible.archlinux.org
 
 [rebuilderd_workers]
 repro2.pkgbuild.com
-repro3.pkgbuild.com
 repro4.pkgbuild.com
 
 [memcached]

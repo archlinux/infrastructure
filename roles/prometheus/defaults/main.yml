@@ -84,7 +84,6 @@ blackbox_targets:
     - https://singapore.mirror.pkgbuild.com
     - https://sources.archlinux.org
     - https://static.conf.archlinux.org/README.md
-    - https://sydney.mirror.pkgbuild.com
     - https://taipei.mirror.pkgbuild.com
     - https://terms.archlinux.org
     - https://tu-bylaws.aur.archlinux.org

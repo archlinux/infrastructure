@@ -12,7 +12,6 @@ DevOps team maintain a geo mirror across the world. The Geo mirror is public fac
 | https://london.mirror.pkgbuild.com/       | London (United Kingdom)     |
 | https://losangeles.mirror.pkgbuild.com/   | Los Angeles (United States) |
 | https://singapore.mirror.pkgbuild.com/    | Singapore                   |
-| https://sydney.mirror.pkgbuild.com/       | Sydney (Australia)          |
 | https://taipei.mirror.pkgbuild.com/       | Taipei (Taiwan)             |
 
 ### Logical split
