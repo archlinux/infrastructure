@@ -87,9 +87,15 @@ locals {
       domain      = "@"
       http3       = true
       ttl         = 60
+      # reserve extra IPs as static target for the HAproxy ADN service
+      floating_ipv4 = true
+      floating_ipv6 = true
     }
     "aur.archlinux.org" = {
       server_type = "cpx52"
+      # reserve extra IPs as static target for the HAproxy ADN service
+      floating_ipv4 = true
+      floating_ipv6 = true
     }
     "bbs.archlinux.org" = {
       server_type = "cx23"
@@ -725,19 +731,5 @@ resource "hcloud_volume" "debuginfod" {
   name              = "debuginfod"
   size              = 125
   server_id         = hcloud_server.machine["debuginfod.archlinux.org"].id
-  delete_protection = true
-}
-
-resource "hcloud_floating_ip" "proxy_ipv4_aur_archlinux_org" {
-  name              = "ipv4-proxy-aur"
-  type              = "ipv4"
-  server_id         = hcloud_server.machine["aur.archlinux.org"].id
-  delete_protection = true
-}
-
-resource "hcloud_floating_ip" "proxy_ipv6_aur_archlinux_org" {
-  name              = "ipv6-proxy-aur"
-  type              = "ipv6"
-  server_id         = hcloud_server.machine["aur.archlinux.org"].id
   delete_protection = true
 }
