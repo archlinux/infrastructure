@@ -313,23 +313,23 @@ resource "hcloud_zone_rrset" "geo_ns" {
   ]
 }
 
-resource "hcloud_floating_ip" "machine_floating_ipv4_reserve" {
+resource "hcloud_floating_ip" "machine_floating_ipv4" {
   for_each = {
     for name, machine in local.machines : name => machine if can(machine.floating_ipv4)
   }
 
-  name              = "ipv4-${each.key}-reserve"
+  name              = "ipv4-${each.key}-floating"
   type              = "ipv4"
   server_id         = hcloud_server.machine[each.key].id
   delete_protection = true
 }
 
-resource "hcloud_floating_ip" "machine_floating_ipv6_reserve" {
+resource "hcloud_floating_ip" "machine_floating_ipv6" {
   for_each = {
     for name, machine in local.machines : name => machine if can(machine.floating_ipv6)
   }
 
-  name              = "ipv6-${each.key}-reserve"
+  name              = "ipv6-${each.key}-floating"
   type              = "ipv6"
   server_id         = hcloud_server.machine[each.key].id
   delete_protection = true
