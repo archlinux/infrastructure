@@ -33,7 +33,7 @@
       delay: 10
 
 - name: Upgrade and reboot all hetzner servers
-  hosts: all,!accounts.archlinux.org,!kape_servers,!equinix_metal,!misaka
+  hosts: all,!accounts.archlinux.org,!kape_servers,!misaka
   max_fail_percentage: 0
   serial: 20%
   gather_facts: false
@@ -43,7 +43,7 @@
       include_tasks: include/upgrade-server.yml
 
 - name: Upgrade and reboot all sponsored external servers
-  hosts: kape_servers,equinix_metal,misaka
+  hosts: kape_servers,misaka
   max_fail_percentage: 0
   serial: 1
   gather_facts: false
