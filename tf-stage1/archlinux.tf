@@ -333,10 +333,6 @@ locals {
       ipv4_address = "138.199.19.15"
       ipv6_address = "2a02:6ea0:c72e::2"
     }
-    runner3 = {
-      ipv4_address = "86.109.5.205"
-      ipv6_address = "2604:1380:4091:8800::1"
-    }
     secure-runner1 = {
       ipv4_address = "116.202.134.150"
       ipv6_address = "2a01:4f8:231:4e1e::2"
@@ -433,11 +429,6 @@ locals {
       ipv6_address = "2407:b9c0:e002:166:26a3:f0ff:fe46:6e9c"
       http3        = true
     }
-    "sydney.mirror" = {
-      ipv4_address = "147.75.48.159"
-      ipv6_address = "2604:1380:40f1:6a00::1"
-      http3        = true
-    }
     "taipei.mirror" = {
       ipv4_address = "45.150.242.222"
       ipv6_address = "2407:b9c0:b001:c4:26a3:f0ff:fe46:b1dc"
@@ -446,10 +437,6 @@ locals {
     repro2 = {
       ipv4_address = "212.102.38.209"
       ipv6_address = "2a02:6ea0:c238::2"
-    }
-    repro3 = {
-      ipv4_address = "147.75.84.133"
-      ipv6_address = "2604:1380:4601:7d00::1"
     }
     repro4 = {
       ipv6_address = "2001:1470:fffd:3050::189:1"

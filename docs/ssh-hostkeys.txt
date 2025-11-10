@@ -286,15 +286,6 @@
 256 MD5:21:76:73:3b:ac:30:6d:f5:a5:f6:52:2e:13:dc:b4:cb root@repro2.pkgbuild.com (ED25519)
 3072 MD5:12:70:8a:d4:ef:a9:43:6e:6b:53:46:71:f7:96:ec:fb root@repro2.pkgbuild.com (RSA)
 
-# repro3.pkgbuild.com
-256 SHA256:nHvXWHzyUiPSDnziFovrOANbIUPcpdDRZ7Zptk8Es+c root@repro3.pkgbuild.com (ECDSA)
-256 SHA256:5bu/HRIvyyHrLAFdCh3ydy7uwgc+yliEykHxhA92Ftw root@repro3.pkgbuild.com (ED25519)
-3072 SHA256:fMQPcjKR5EyO0+YYOSd5p7jIcLAy+LdeTMYuR/Pr3qo root@repro3.pkgbuild.com (RSA)
-
-256 MD5:be:f1:3e:28:32:2e:38:8a:f6:c5:0c:16:e3:5c:db:f7 root@repro3.pkgbuild.com (ECDSA)
-256 MD5:cf:cd:f8:9b:1e:ae:15:0b:ea:a3:a7:73:c2:b8:10:21 root@repro3.pkgbuild.com (ED25519)
-3072 MD5:9f:4e:4b:02:54:07:8c:ae:66:de:72:cd:15:51:00:64 root@repro3.pkgbuild.com (RSA)
-
 # repro4.pkgbuild.com
 256 SHA256:OYEQvCD+cjMC5wm/Fm+uQAJf3Lh2k5YtPHnhNw5Na3w root@repro4.pkgbuild.com (ECDSA)
 256 SHA256:eoo6mKNJtfDEKjRVi2iY5/OGiRNtBIunTZH+Xy0MYdU root@repro4.pkgbuild.com (ED25519)
@@ -321,15 +312,6 @@
 256 MD5:54:d3:ac:fa:52:e6:38:be:09:5c:51:c4:5c:3f:0e:d4 root@runner3.archlinux.org (ECDSA)
 256 MD5:fe:fc:6f:0f:0f:5e:76:25:ed:ac:6d:f1:5d:22:94:13 root@runner3.archlinux.org (ED25519)
 3072 MD5:92:43:38:30:47:11:2a:a3:df:2d:df:93:ce:3f:cc:d8 root@runner3.archlinux.org (RSA)
-
-# runner3.archlinux.org
-256 SHA256:tJd9an8rlb+OAjj8FN8uOx37F5WOkge2MYlYwVOzH4M root@runner3.archlinux.org (ECDSA)
-256 SHA256:0VriXejd3wkb37ENKuFpgaWgw4qMhKjU50ttNpkYZs4 root@runner3.archlinux.org (ED25519)
-3072 SHA256:iv4/fPkDuQj9dgd81h8Tu/wH86YC7JjBecDSv3RHUP0 root@runner3.archlinux.org (RSA)
-
-256 MD5:e7:ad:97:e0:27:78:41:3d:90:9a:60:42:b6:8f:e1:ab root@runner3.archlinux.org (ECDSA)
-256 MD5:90:26:14:89:6c:a7:5f:7f:ff:7f:70:60:ea:96:90:ee root@runner3.archlinux.org (ED25519)
-3072 MD5:e1:25:f6:c5:0e:f2:6c:43:e8:49:78:cb:18:22:30:3e root@runner3.archlinux.org (RSA)
 
 # secure-runner1.archlinux.org
 256 SHA256:vOiB1q11CrqLrxaXXRtqrtpxkG/M6RXbTesgezgGqSE root@secure-runner1.archlinux.org (ECDSA)
@@ -366,15 +348,6 @@
 256 MD5:56:0e:32:49:23:93:29:73:c2:e2:a3:af:38:19:50:e5 root@archlinux-packer (ECDSA)
 256 MD5:2b:7f:a8:75:ef:38:e3:c3:f7:2e:ea:9e:73:fd:3e:d5 root@archlinux-packer (ED25519)
 2048 MD5:f8:a9:75:e2:99:4f:ae:2b:70:72:a2:ae:9e:fb:f1:a2 root@archlinux-packer (RSA)
-
-# sydney.mirror.pkgbuild.com
-256 SHA256:0C14BCI+/X8GqB08i/3UxpZChq5f3wEkefUy4Q46tEk root@sydney.mirror.pkgbuild.com (ECDSA)
-256 SHA256:t+3/dVmHhvmSvaAOi6ebI8S5TqoFHb83FQIoeGAzwAg root@sydney.mirror.pkgbuild.com (ED25519)
-3072 SHA256:R539MN4EivkbsJNEi9EfPnmRXes5klMaig/p/cWUQpg root@sydney.mirror.pkgbuild.com (RSA)
-
-256 MD5:90:8d:6a:cb:0d:eb:eb:b6:46:67:79:ea:75:96:44:6c root@sydney.mirror.pkgbuild.com (ECDSA)
-256 MD5:70:c0:65:60:49:d3:7c:2e:9f:3f:71:04:6d:96:34:40 root@sydney.mirror.pkgbuild.com (ED25519)
-3072 MD5:a7:db:a0:e5:27:8e:77:65:08:0d:38:48:77:0e:4b:c1 root@sydney.mirror.pkgbuild.com (RSA)
 
 # taipei.mirror.pkgbuild.com
 256 SHA256:3q4IRQW0LCmZrJeAO7CceSKY6hkkYFJf4ghQ/wZQ7us root@berlin.mirror.pkgbuild.com (ECDSA)
