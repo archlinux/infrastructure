@@ -18,7 +18,7 @@ resource "hcloud_zone_rrset" "archlinux_org_gitlab_pages_verification_code_txt" 
   name = "_gitlab-pages-verification-code.${each.key}"
   type = "TXT"
   records = [
-    { value = "\"gitlab-pages-verification-code=${each.value}\"" },
+    { value = provider::hcloud::txt_record("gitlab-pages-verification-code=${each.value}") },
   ]
 }
 
@@ -40,7 +40,7 @@ resource "hcloud_zone_rrset" "archlinux_page_gitlab_pages_verification_code_txt"
   name = "_gitlab-pages-verification-code.${each.key}"
   type = "TXT"
   records = [
-    { value = "\"gitlab-pages-verification-code=${each.value}\"" },
+    { value = provider::hcloud::txt_record("gitlab-pages-verification-code=${each.value}") },
   ]
 }
 
@@ -116,7 +116,7 @@ resource "hcloud_zone_rrset" "archlinux_org_txt" {
   type = "TXT"
   ttl  = lookup(local.archlinux_org_txt[each.key], "ttl", null)
   records = [
-    { value = "\"${each.value.value}\"" },
+    { value = provider::hcloud::txt_record(each.value.value) },
   ]
 }
 
