@@ -22,10 +22,12 @@ losangeles.mirror.pkgbuild.com
 mirror.pkgbuild.com
 singapore.mirror.pkgbuild.com
 taipei.mirror.pkgbuild.com
+umea.mirror.pkgbuild.com
 
 [geo_mirror_name_servers]
 europe.mirror.pkgbuild.com
 london.mirror.pkgbuild.com
+umea.mirror.pkgbuild.com
 
 [geo_mirrors]
 berlin.mirror.pkgbuild.com
@@ -35,9 +37,11 @@ london.mirror.pkgbuild.com
 losangeles.mirror.pkgbuild.com
 singapore.mirror.pkgbuild.com
 taipei.mirror.pkgbuild.com
+umea.mirror.pkgbuild.com
 
 [archive_mirrors]
 europe.mirror.pkgbuild.com
+umea.mirror.pkgbuild.com
 
 [borg_clients]
 accounts.archlinux.org
