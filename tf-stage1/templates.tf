@@ -311,5 +311,6 @@ resource "hcloud_zone_rrset" "geo_ns" {
     { value = "europe.mirror.pkgbuild.com." },
     { value = "sydney.mirror.pkgbuild.com." },
     { value = "london.mirror.pkgbuild.com." }
+    { value = "umea.mirror.pkgbuild.com." }
   ]
 }

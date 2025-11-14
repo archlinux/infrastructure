@@ -2,15 +2,15 @@
   hosts: mirrors
   remote_user: root
   roles:
-    - { role: common }
-    - { role: firewalld }
-    - { role: wireguard }
-    - { role: sshd }
-    - { role: root_ssh }
-    - { role: certbot }
-    - { role: nginx }
-    - { role: syncrepo, tags: ['nginx'] }
-    - { role: mirrorsync }
+    # - { role: common }
+    # - { role: firewalld }
+    # - { role: wireguard }
+    # - { role: sshd }
+    # - { role: root_ssh }
+    # - { role: certbot }
+    # - { role: nginx }
+    # - { role: syncrepo, tags: ['nginx'] }
+    # - { role: mirrorsync }
     - { role: archweb, when: archweb_mirrorcheck_locations is defined, archweb_site: false, archweb_services: false, archweb_mirrorcheck: true }
     - { role: prometheus_exporters }
     - { role: promtail }

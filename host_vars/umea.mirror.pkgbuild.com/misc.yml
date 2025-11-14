@@ -1,0 +1,16 @@
+mirror_domain: "umea.mirror.pkgbuild.com"
+archive_domain: "umea.archive.pkgbuild.com"
+archweb_mirrorcheck_locations: [63, 20]
+ipv4_address: "194.71.11.121"
+ipv4_netmask: "/25"
+ipv4_gateway: "194.71.11.1"
+ipv6_address: "2001:6b0:19:2::121"
+ipv6_netmask: "/64"
+ipv6_gateway: "2001:6b0:19:2::1"
+network_interface: "eno1"
+system_disks:
+  - /dev/sda
+extra_disks:
+  - /dev/sdb
+wireguard_address: 10.0.0.19
+wireguard_public_key: 7AH4aQpL1I6vppK/JjjwJhMWEBxpsJN2p0V1lOMS7Qw=
