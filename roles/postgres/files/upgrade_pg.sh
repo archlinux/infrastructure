@@ -5,7 +5,7 @@ set -e
 TO_VERSION=$(pacman -Q postgresql | grep -Po '(?<=postgresql )[0-9]+\.[0-9]')
 
 to_major=${TO_VERSION%%.*}
-if (( $to_major != 17 )); then
+if (( $to_major != 18 )); then
 	# NOTE: When this happens you should check the changelog and add any
 	# necessary changes here. Then bump the version check.
 	echo "ERROR: major upgrade detected, aborting..."
@@ -54,6 +54,10 @@ for f in pg_hba.conf postgresql.conf {fullchain,chain,privkey}.pem; do
 		cp -av /var/lib/postgres/{data-$FROM_VERSION,data}/$f
 	fi
 done
+
+# enable checksums on the old cluster; fails when already enabled
+su - postgres -c "/opt/pgsql-$FROM_VERSION/bin/pg_checksums -e -P \
+	-D /var/lib/postgres/data-$FROM_VERSION" || :
 
 # running pg_upgrade from /tmp so it can create pg_upgrade_internal.log
 su - postgres -c "cd /tmp && \
