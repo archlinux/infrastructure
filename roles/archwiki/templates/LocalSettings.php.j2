@@ -437,6 +437,8 @@ $wgCaptchaQuestions = [
 #$wgSpecialPageLockdown['Diff'] = [ 'user' ];
 #$wgActionLockdown['history'] = ['user'];
 
+wfLoadExtension( 'CrawlerProtection' );
+
 # UserMerge extension
 wfLoadExtension( 'UserMerge' );
 $wgGroupPermissions['sysop']['usermerge'] = true;
