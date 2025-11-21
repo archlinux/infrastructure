@@ -37,7 +37,7 @@ server {
     server_name  {{ archwiki_domain }};
 
     access_log off;
-    error_log off;
+    error_log /dev/null;
 
     ssl_certificate      /etc/letsencrypt/live/{{ archwiki_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ archwiki_domain }}/privkey.pem;
