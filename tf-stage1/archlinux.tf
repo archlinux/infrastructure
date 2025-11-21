@@ -219,7 +219,7 @@ locals {
       domain      = "vaultwarden"
     }
     "wiki.archlinux.org" = {
-      server_type = "cpx42"
+      server_type = "cpx52"
       domain      = "wiki"
       http3       = true
       ttl         = 60
