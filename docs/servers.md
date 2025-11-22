@@ -97,6 +97,16 @@ Medium-fast-ish Kape Arch Linux box.
 ### Services
   - GitLab runner
 
+## secure-runner1.archlinux.org
+
+### Services
+  - GitLab runner
+
+## runner2.archlinux.org
+
+### Services
+  - GitLab runner
+
 ## mail.archlinux.org
 
 ### Services

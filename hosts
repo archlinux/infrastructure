@@ -4,6 +4,7 @@ build.archlinux.org
 gitlab.archlinux.org
 repos.archlinux.org
 secure-runner1.archlinux.org
+runner2.archlinux.org
 
 [misaka]
 berlin.mirror.pkgbuild.com
@@ -84,10 +85,12 @@ build.archlinux.org
 [gitlab_runners]
 runner1.archlinux.org
 secure-runner1.archlinux.org
+runner2.archlinux.org
 
 [gitlab_vm_runners]
 runner1.archlinux.org
 secure-runner1.archlinux.org
+runner2.archlinux.org
 
 [rebuilderd]
 reproducible.archlinux.org
