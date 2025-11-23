@@ -335,10 +335,6 @@ locals {
       ipv6_address = "2a01:4f8:251:598::"
       http3        = true
     }
-    runner1 = {
-      ipv4_address = "138.199.19.15"
-      ipv6_address = "2a02:6ea0:c72e::2"
-    }
     secure-runner1 = {
       ipv4_address = "116.202.134.150"
       ipv6_address = "2a01:4f8:231:4e1e::2"
@@ -417,6 +413,11 @@ locals {
     "europe.archive" = {
       ipv4_address = "89.187.191.12"
       ipv6_address = "2a02:6ea0:c237::2"
+      http3        = true
+    }
+    "frankfurt.mirror" = {
+      ipv4_address = "138.199.19.15"
+      ipv6_address = "2a02:6ea0:c72e::2"
       http3        = true
     }
     "johannesburg.mirror" = {

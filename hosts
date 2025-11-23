@@ -16,6 +16,7 @@ taipei.mirror.pkgbuild.com
 [mirrors]
 berlin.mirror.pkgbuild.com
 europe.mirror.pkgbuild.com
+frankfurt.mirror.pkgbuild.com
 johannesburg.mirror.pkgbuild.com
 london.mirror.pkgbuild.com
 losangeles.mirror.pkgbuild.com
@@ -32,6 +33,7 @@ umea.mirror.pkgbuild.com
 [geo_mirrors]
 berlin.mirror.pkgbuild.com
 europe.mirror.pkgbuild.com
+frankfurt.mirror.pkgbuild.com
 johannesburg.mirror.pkgbuild.com
 london.mirror.pkgbuild.com
 losangeles.mirror.pkgbuild.com
@@ -87,12 +89,10 @@ state.archlinux.org
 build.archlinux.org
 
 [gitlab_runners]
-runner1.archlinux.org
 secure-runner1.archlinux.org
 runner2.archlinux.org
 
 [gitlab_vm_runners]
-runner1.archlinux.org
 secure-runner1.archlinux.org
 runner2.archlinux.org
 
@@ -111,8 +111,8 @@ monitoring.archlinux.org
 
 [kape_servers]
 europe.mirror.pkgbuild.com
+frankfurt.mirror.pkgbuild.com
 repro2.pkgbuild.com
-runner1.archlinux.org
 
 [hcloud]
 accounts.archlinux.org
