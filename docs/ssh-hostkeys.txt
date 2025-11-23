@@ -106,6 +106,15 @@
 256 MD5:bd:af:e2:cb:6b:fe:b6:60:73:b0:ba:7b:db:af:21:b7 root@europe.mirror.pkgbuild.com (ED25519)
 3072 MD5:57:a2:59:db:c7:07:4f:ac:91:9a:f8:db:7f:16:a7:d4 root@europe.mirror.pkgbuild.com (RSA)
 
+# frankfurt.mirror.pkgbuild.com
+256 SHA256:VIbire3ek5TUMOFgLAO/hQV9FG5/OYWSJif0CziS/CI root@runner3.archlinux.org (ECDSA)
+256 SHA256:gWeV6cBQPoe6hrqtItOVhv9Wr7Awnzgt1YcnzcmArJM root@runner3.archlinux.org (ED25519)
+3072 SHA256:Ke3/DVYRlx8EA/JzmdD4evxbyVwPQ3rQAroGkmScpRs root@runner3.archlinux.org (RSA)
+
+256 MD5:54:d3:ac:fa:52:e6:38:be:09:5c:51:c4:5c:3f:0e:d4 root@runner3.archlinux.org (ECDSA)
+256 MD5:fe:fc:6f:0f:0f:5e:76:25:ed:ac:6d:f1:5d:22:94:13 root@runner3.archlinux.org (ED25519)
+3072 MD5:92:43:38:30:47:11:2a:a3:df:2d:df:93:ce:3f:cc:d8 root@runner3.archlinux.org (RSA)
+
 # gitlab.archlinux.org
 256 SHA256:ZHy7zbNNwKHukTEyFcAT2Ns+mT/wlc2vAjJULnlOroE root@gitlab.archlinux.org (ECDSA)
 256 SHA256:KD3Og7bPg9glmODrqUKN0r3Jl18pQ0OVp2MT7xv/bm8 root@gitlab.archlinux.org (ED25519)
@@ -303,15 +312,6 @@
 256 MD5:a5:9a:16:cc:8b:eb:c4:70:b1:86:17:9b:a8:46:e7:4b root@archlinux-packer (ECDSA)
 256 MD5:1c:37:46:02:c8:ea:3a:dd:5e:41:66:05:5e:18:27:6a root@archlinux-packer (ED25519)
 3072 MD5:42:0a:57:89:2a:ae:e6:c5:c1:ae:6a:a2:bd:3d:5f:dc root@archlinux-packer (RSA)
-
-# runner1.archlinux.org
-256 SHA256:VIbire3ek5TUMOFgLAO/hQV9FG5/OYWSJif0CziS/CI root@runner3.archlinux.org (ECDSA)
-256 SHA256:gWeV6cBQPoe6hrqtItOVhv9Wr7Awnzgt1YcnzcmArJM root@runner3.archlinux.org (ED25519)
-3072 SHA256:Ke3/DVYRlx8EA/JzmdD4evxbyVwPQ3rQAroGkmScpRs root@runner3.archlinux.org (RSA)
-
-256 MD5:54:d3:ac:fa:52:e6:38:be:09:5c:51:c4:5c:3f:0e:d4 root@runner3.archlinux.org (ECDSA)
-256 MD5:fe:fc:6f:0f:0f:5e:76:25:ed:ac:6d:f1:5d:22:94:13 root@runner3.archlinux.org (ED25519)
-3072 MD5:92:43:38:30:47:11:2a:a3:df:2d:df:93:ce:3f:cc:d8 root@runner3.archlinux.org (RSA)
 
 # runner2.archlinux.org
 256 SHA256:OT6Hka6fe7G20Q8wd2mpBEv9xqpMZRZBWKmxDyuJgis root@runner2.archlinux.org (ECDSA)
