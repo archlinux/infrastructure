@@ -1,0 +1,11 @@
+ipv4_address: "157.180.104.115"
+ipv4_netmask: "/32"
+ipv6_address: "2a01:4f9:3090:11cb::2"
+ipv6_netmask: "/128"
+ipv4_gateway: "157.180.104.65"
+ipv6_gateway: "fe80::1"
+system_disks:
+  - /dev/nvme0n1
+  - /dev/nvme1n1
+wireguard_address: 10.0.0.58
+wireguard_public_key: Y8eYq23msrRlKYe+1OnrSs+pzHPFUiRZLJeVSrcO9zU=

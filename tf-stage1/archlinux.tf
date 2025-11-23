@@ -343,6 +343,10 @@ locals {
       ipv4_address = "116.202.134.150"
       ipv6_address = "2a01:4f8:231:4e1e::2"
     }
+    runner2 = {
+      ipv4_address = "157.180.104.115"
+      ipv6_address = "2a01:4f9:3090:11cb::2"
+    }
     www = {
       ipv4_address = hcloud_server.machine["archlinux.org"].ipv4_address
       ipv6_address = hcloud_server.machine["archlinux.org"].ipv6_address

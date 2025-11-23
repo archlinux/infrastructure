@@ -44,11 +44,11 @@ ignoreip = 127.0.0.1/8 ::1
     {{ hostvars[host]['inventory_hostname'] }}
 {% endfor %}
 
-{% if nginx_proxy_protocol_upstream_host %}
+{% if nginx_proxy_protocol_upstream_host is defined and nginx_proxy_protocol_upstream_host %}
 # IP addresses of our proxy upstream so we don't accidentally ban it.
     {{ nginx_proxy_protocol_upstream_host }}
 {% endif %}
-{% if nginx_proxy_vendor %}
+{% if nginx_proxy_vendor is defined and nginx_proxy_vendor %}
 # IP addresses of our proxy upstreams so we don't accidentally ban those.
 {% for proxy_ip_addr in vault_proxy_vendor_trusted_ips[nginx_proxy_vendor] %}
     {{ proxy_ip_addr }}
