@@ -313,6 +313,15 @@
 256 MD5:fe:fc:6f:0f:0f:5e:76:25:ed:ac:6d:f1:5d:22:94:13 root@runner3.archlinux.org (ED25519)
 3072 MD5:92:43:38:30:47:11:2a:a3:df:2d:df:93:ce:3f:cc:d8 root@runner3.archlinux.org (RSA)
 
+# runner2.archlinux.org
+256 SHA256:OT6Hka6fe7G20Q8wd2mpBEv9xqpMZRZBWKmxDyuJgis root@runner2.archlinux.org (ECDSA)
+256 SHA256:cuk1NZp68ztM2nNwum1G6LMtNaEFEchePOqRtC/X5ns root@runner2.archlinux.org (ED25519)
+3072 SHA256:0PBWVuTPebgylAsgj3RSS1tN6DDP6GFywxRKmgF7g8c root@runner2.archlinux.org (RSA)
+
+256 MD5:78:ce:d9:90:d3:51:9f:bd:bd:a4:d5:ac:61:0c:ab:f2 root@runner2.archlinux.org (ECDSA)
+256 MD5:63:08:80:89:a1:47:a1:92:dc:ce:d9:76:f5:2d:3f:f3 root@runner2.archlinux.org (ED25519)
+3072 MD5:14:4b:59:cb:44:e7:e5:5d:c3:43:69:29:18:1d:a8:68 root@runner2.archlinux.org (RSA)
+
 # secure-runner1.archlinux.org
 256 SHA256:vOiB1q11CrqLrxaXXRtqrtpxkG/M6RXbTesgezgGqSE root@secure-runner1.archlinux.org (ECDSA)
 256 SHA256:DU8wC9mn3jYj2rnBQgITkT33UquGI5vy+9r1jeNZRjM root@secure-runner1.archlinux.org (ED25519)
