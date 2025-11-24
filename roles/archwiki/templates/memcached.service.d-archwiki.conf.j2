@@ -1,6 +1,6 @@
 [Service]
 User={{ archwiki_user }}
 Group=memcached
-Environment=CACHESIZE={{ (ansible_memtotal_mb / 2) | int }}
+Environment=CACHESIZE={{ ( ansible_facts.memtotal_mb / 2 ) | int }}
 Environment=LISTEN="-s {{ archwiki_memcached_socket }} -a 770"
 ProtectHome=true
