@@ -9,7 +9,7 @@ listen.group = http
 listen.mode = 0660
 
 pm = static
-pm.max_children = {{ ansible_processor_vcpus }}
+pm.max_children = {{ ansible_facts.processor_vcpus }}
 pm.max_requests = 2000
 
 php_admin_value[open_basedir] = {{ archwiki_dir }}:/usr/bin/diff3:/usr/bin/diff:/var/log/archwiki
