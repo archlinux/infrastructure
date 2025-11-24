@@ -712,8 +712,8 @@ denied-peer-ip=fe80::-febf:ffff:ffff:ffff:ffff:ffff:ffff:ffff
 
 # special case the turn server itself so that client->TURN->TURN->client flows work
 # this should be one of the turn server's listening IPs
-allowed-peer-ip={{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}
-allowed-peer-ip={{ ansible_default_ipv6.address | default(ansible_all_ipv6_addresses[0]) }}
+allowed-peer-ip={{ ansible_facts['default_ipv4']['address'] | default(ansible_facts['all_ipv4_addresses'][0]) }}
+allowed-peer-ip={{ ansible_facts['default_ipv6']['address'] | default(ansible_facts['all_ipv6_addresses'][0]) }}
 
 # File name to store the pid of the process.
 # Default is /var/run/turnserver.pid (if superuser account is used) or

@@ -25,19 +25,19 @@
 
 - name: Install smart
   pacman: name=smartmontools state=present
-  when: ansible_virtualization_role == "host"
+  when: ansible_facts['virtualization_role'] == "host"
 
 - name: Configure smartd to do periodic health checks
   copy: src=smartd.conf dest=/etc/smartd.conf owner=root group=root mode=0644
-  when: ansible_virtualization_role == "host"
+  when: ansible_facts['virtualization_role'] == "host"
 
 - name: Start and enable smart
   service: name=smartd enabled=yes state=started
-  when: ansible_virtualization_role == "host"
+  when: ansible_facts['virtualization_role'] == "host"
 
 - name: Start and enable btrfs scrub timer
   service: name=btrfs-scrub@{{ '-' if (item.mount | length == 1) else (item.mount.split("/", 1)[1] | replace("/", "-")) }}.timer enabled=yes state=started
-  loop: "{{ ansible_mounts | sort(attribute='mount') | groupby('uuid') | map(attribute=1) | map('first') }}"
+  loop: "{{ ansible_facts['mounts'] | sort(attribute='mount') | groupby('uuid') | map(attribute=1) | map('first') }}"
   when:
     - item.fstype == 'btrfs'
     - not 'backup' in item.mount
