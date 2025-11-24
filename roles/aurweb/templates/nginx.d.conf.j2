@@ -110,7 +110,6 @@ server {
         root    {{ aurweb_dir }}/archives;
         default_type text/plain;
         include snippets/headers.conf;
-        add_header Content-Encoding gzip;
         expires 5m;
     }
 
