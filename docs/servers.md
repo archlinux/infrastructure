@@ -171,7 +171,9 @@ Prometheus, and Grafana server which receives selected performance/metrics from 
 The [Arch Linux Archive](https://archive.archlinux.org) is mirrored to three dedicated servers to help aid global availability.
 
 ### Servers
+
   - https://europe.archive.pkgbuild.com
+  - https://umea.archive.pkgbuild.com
 
 ## gitlab.archlinux.org
 
