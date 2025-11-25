@@ -3,7 +3,12 @@ plugins = cgi
 socket = {{ cgit_socket }}
 chown-socket = {{ aurweb_user }}:http
 chmod-socket = 770
-threads = 8
+processes = 4
+threads = 2
+enable-threads = true
+thunder-lock = true
+harakiri = 30
+reload-on-rss = 200
 daemonize = /var/log/uwsgi/cgit-aurweb.log
 
 cgi = /usr/share/webapps/cgit-aurweb/cgit.cgi

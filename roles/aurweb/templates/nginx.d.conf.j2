@@ -20,6 +20,17 @@ proxy_cache_path  /var/lib/nginx/cache levels=1:2 keys_zone=aurwebcache:10m inac
 # needed for long server names (dev box)
 server_names_hash_bucket_size 128;
 
+# Cache for cgit (uWSGI)
+# Keep TTL short to avoid stale views, but long enough to absorb crawler bursts.
+uwsgi_cache_path /var/lib/nginx/uwsgi-cache
+                 levels=1:2
+                 keys_zone=cgitcache:50m
+                 inactive=120m
+                 max_size=5g;
+
+# Rate limits for cgit.
+limit_req_zone $binary_remote_addr zone=cgitlight:10m rate=5r/s;
+
 server {
     include snippets/listen-80.conf;
 
@@ -106,12 +117,21 @@ server {
     }
 
     location ~ ^/cgit {
-        limit_req zone=aurwebgitlimit burst=300 nodelay;
+        limit_req zone=cgitlight burst=20;
         include uwsgi_params;
         rewrite ^/cgit/([^?/]+/[^?]*)?(?:\?(.*))?$ /cgit.cgi?url=$1&$2 last;
         uwsgi_modifier1 9;
         uwsgi_param CGIT_CONFIG {{ aurweb_conf_dir }}/cgitrc;
         uwsgi_pass cgit;
+
+        uwsgi_cache cgitcache;
+        uwsgi_cache_key $scheme$host$request_uri;
+        uwsgi_cache_valid 200 301 302 5m;
+        uwsgi_cache_valid 404 30s;
+        uwsgi_cache_use_stale error timeout updating http_500 http_503;
+        uwsgi_cache_lock on;
+        uwsgi_cache_lock_timeout 10s;
+        add_header X-Cgit-Cache $upstream_cache_status always;
     }
 
     location ~ \.gz$ {
