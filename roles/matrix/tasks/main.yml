@@ -8,6 +8,7 @@
 - name: Install packages
   pacman:
     name:
+      - corepack
       - coturn
       - freetype2
       - gcc
@@ -90,7 +91,7 @@
   git:
     repo: https://github.com/the-draupnir-project/Draupnir
     dest: /var/lib/synapse/draupnir
-    version: v2.7.1
+    version: v2.8.0
     force: true
   become: true
   become_user: synapse
