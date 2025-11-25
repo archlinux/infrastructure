@@ -87,6 +87,8 @@ blackbox_targets:
     - https://taipei.mirror.pkgbuild.com
     - https://terms.archlinux.org
     - https://tu-bylaws.aur.archlinux.org
+    - https://umea.archive.pkgbuild.com
+    - https://umea.mirror.pkgbuild.com
     - https://whatcanidofor.archlinux.org
     - https://wiki.archlinux.org
     - https://www.archlinux.org
