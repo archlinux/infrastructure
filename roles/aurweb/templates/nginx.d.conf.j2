@@ -97,6 +97,14 @@ server {
         uwsgi_param  GIT_PROJECT_ROOT {{ aurweb_dir }};
     }
 
+    location = /cgit.js {
+        alias /usr/share/webapps/cgit-aurweb/cgit.js;
+        expires 7d;
+        include snippets/headers.conf;
+        add_header Pragma public;
+        add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+    }
+
     location ~ ^/cgit {
         limit_req zone=aurwebgitlimit burst=300 nodelay;
         include uwsgi_params;
