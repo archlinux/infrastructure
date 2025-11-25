@@ -13,17 +13,21 @@ DevOps team maintain a geo mirror across the world. The Geo mirror is public fac
 | https://losangeles.mirror.pkgbuild.com/   | Los Angeles (United States) |
 | https://singapore.mirror.pkgbuild.com/    | Singapore                   |
 | https://taipei.mirror.pkgbuild.com/       | Taipei (Taiwan)             |
+| https://umea.mirror.pkgbuild.com/         | Umea (Sweden)               |
 
 ### Logical split
+
 The continent mirror europe contain the archive mirrors as well as repository mirrors. The city mirrors have just the repositories hosted.
 
 ## Requirements
+
 - Host with Arch Linux installed
 - root access provided
 - Enough storage to host repos / debugrepos (at least)
 - Bandwidth (depends on location)
 
 ## Adding a new mirror box
+
 - Add new entries in `hosts` file under `mirrors` and `geo_mirrors` sections
 - Adjust terraform `tf-stage1/archlinux.tf` to include the IPv4 and IPv6 entries of the new server
 - Adjust terraform `tf-stage1/templates.tf` to include the IPv4 and IPv6 entries of the new server as a `NS` record for `geo.mirror.pkgbuild.com`

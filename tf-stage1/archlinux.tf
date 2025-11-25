@@ -456,6 +456,16 @@ locals {
       ipv4_address = "209.126.35.77"
       ipv6_address = "2604:cac0:a104:d::1"
     }
+    "umea.mirror" = {
+      ipv4_address = "194.71.11.121"
+      ipv6_address = "2001:6b0:19:2::121"
+      http3        = true
+    }
+    "umea.archive" = {
+      ipv4_address = "194.71.11.121"
+      ipv6_address = "2001:6b0:19:2::121"
+      http3        = true
+    }
     www = {
       ipv4_address = hcloud_server.machine["homedir.archlinux.org"].ipv4_address
       ipv6_address = hcloud_server.machine["homedir.archlinux.org"].ipv6_address

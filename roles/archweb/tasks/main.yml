@@ -53,6 +53,14 @@
   file: path={{ archweb_rsync_iso_dir }} state=directory owner=archweb group=archweb mode=0755
   when: archweb_site | bool
 
+- name: Receive valid signing keys
+  command: /usr/bin/gpg --keyserver keys.openpgp.org --recv {{ item }}
+  loop: '{{ archweb_pgp_key }}'
+  become: true
+  become_user: "archweb"
+  register: gpg
+  changed_when: "gpg.rc == 0"
+
 - name: Clone archweb repo
   git: >
     repo={{ archweb_repository }}

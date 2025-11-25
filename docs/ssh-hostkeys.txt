@@ -376,6 +376,15 @@
 256 MD5:c7:20:df:a2:2b:48:d8:30:95:27:9e:d5:e7:c4:da:1e root@packer-base-image (ED25519)
 3072 MD5:46:2f:72:bb:6c:3d:14:84:0d:e2:0a:81:c4:a4:15:9b root@packer-base-image (RSA)
 
+# umea.mirror.pkgbuild.com
+256 SHA256:Wwc6qaze+FEelZAFe6am9OQg+80WjGJ6t6kO5BViTdo root@umea.mirror.pkgbuild.com (ECDSA)
+256 SHA256:EB46Oyv17rJcGtokQh5bNcyBNjDtnnU9Ut07fTZPR4k root@umea.mirror.pkgbuild.com (ED25519)
+3072 SHA256:ECZFeCqbbxqJNs9uMTWiGoNjDgXkwQ9KoMTqwFSc82g root@umea.mirror.pkgbuild.com (RSA)
+
+256 MD5:65:e3:3c:4d:3c:01:aa:7a:37:5d:b4:a2:1d:ab:11:bb root@umea.mirror.pkgbuild.com (ECDSA)
+256 MD5:ba:e8:8b:48:34:7b:30:7d:34:e0:9c:d7:1c:55:d9:31 root@umea.mirror.pkgbuild.com (ED25519)
+3072 MD5:e2:74:16:0f:59:17:4a:3f:16:e8:fe:8a:3e:16:57:39 root@umea.mirror.pkgbuild.com (RSA)
+
 # wiki.archlinux.org
 256 SHA256:26K98Dg4laIWFt++vxGPiANR6w+AvxgQUTb1TzeLilY root@archlinux-packer (ECDSA)
 256 SHA256:rRzytaydRgwVjifkE+QURI9ezl9JnRRjmXMjLKfzPO4 root@archlinux-packer (ED25519)
