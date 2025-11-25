@@ -210,6 +210,9 @@
   file: path=/etc/uwsgi/vassals/cgit.ini state=touch owner={{ aurweb_user }} group=http mode=0644
   when: cgit.changed
 
+- name: Make cgit cache dir
+  file: path=/var/cache/cgit-aurweb state=directory owner={{ aurweb_user }} group=http mode=0750
+
 - name: Configure smartgit uwsgi service
   template: src=smartgit.ini.j2 dest=/etc/uwsgi/vassals/smartgit.ini owner={{ aurweb_user }} group=http mode=0644
 
