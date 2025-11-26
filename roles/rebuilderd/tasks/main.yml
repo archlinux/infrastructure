@@ -22,6 +22,16 @@
     - Reload nginx
   tags: ['nginx']
 
+- name: Create systemd override dir for rebuilderd
+  file: path=/etc/systemd/system/rebuilderd.service.d state=directory owner=root group=root mode=0755
+  notify:
+    - Daemon reload
+
+- name: Configure rebuilderd limits
+  template: src=limits.conf dest=/etc/systemd/system/rebuilderd.service.d/override.conf owner=root group=root mode=0644
+  notify:
+    - Restart rebuilderd
+
 - name: Start and enable rebuilderd
   systemd_service: name=rebuilderd enabled=yes state=started
 

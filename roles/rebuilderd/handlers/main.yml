@@ -1,0 +1,6 @@
+- name: Daemon reload
+  systemd_service:
+    daemon-reload: true
+
+- name: Restart rebuilderd
+  service: name=rebuilderd state=restarted
