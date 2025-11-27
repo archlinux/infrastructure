@@ -15,6 +15,7 @@
     - { role: sudo }
     - { role: php_fpm, php_extensions: ['bcmath', 'curl', 'gd', 'iconv', 'intl', 'mysqli', 'sockets', 'zip'], zend_extensions: ['opcache'] }
     - { role: memcached }
+    - { role: anubis }
     - { role: archwiki }
     - { role: fail2ban }
     - { role: prometheus_exporters }
