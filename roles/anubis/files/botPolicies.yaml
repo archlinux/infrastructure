@@ -104,13 +104,29 @@ bots:
         - path == "/api.php" && "action" in query && query["action"] == "opensearch"
         - path.matches("^/rest\\.php/v1/search(/title|$)")
 
-  # Generic catchall rule
-  - name: generic-browser
-    user_agent_regex: >-
-      Mozilla|Opera
+  # Inspiration taken from Extension:CrawlerProtection
+  - name: archwiki-expensive
     action: WEIGH
     weight:
       adjust: 10
+    expression:
+      any:
+        - path.startsWith("/title/Special:Diff/")
+        - path.startsWith("/title/Special:RecentChanges/")
+        - path.startsWith("/title/Special:RecentChangesLinked/")
+        - path.startsWith("/title/Special:WhatLinksHere/")
+        - path.startsWith("/title/Special:Log/")
+        - path.startsWith("/title/Special:Contributions/")
+        - path == "/index.php" && "oldid" in query
+        - path == "/index.php" && "diff" in query
+
+  # Generic catchall rule
+  # - name: generic-browser
+  #   user_agent_regex: >-
+  #     Mozilla|Opera
+  #   action: WEIGH
+  #   weight:
+  #     adjust: 10
 
 dnsbl: false
 
