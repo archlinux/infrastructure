@@ -6,8 +6,14 @@
   notify: Restart anubis
 
 - name: Install anubis bot policies
-  copy: src=botPolicies.yaml dest=/etc/anubis/botPolicies.default.yaml owner=root group=root mode=644
+  template: src=botPolicies.yaml.j2 dest=/etc/anubis/botPolicies.default.yaml owner=root group=root mode=644
   notify: Restart anubis
+
+- name: Install anubis bot policy dropins
+  copy: src={{ item }}.yaml dest=/etc/anubis/{{ item }}.yaml owner=root group=root mode=644
+  notify: Restart anubis
+  when: anubis_extra_rules is defined
+  loop: "{{ anubis_extra_rules }}"
 
 - name: Start and enable anubis
   service: name=anubis@default enabled=yes state=started
