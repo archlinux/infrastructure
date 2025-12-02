@@ -597,17 +597,14 @@ resource "hcloud_zone_rrset" "archlinux_page_sandbox_ns" {
   ]
 }
 
-# TODO: Commented currently as we have no idea how to handle SOA stuff with Terraform:
-# https://github.com/timohirt/terraform-provider-hetznerdns/issues/20
-# https://gitlab.archlinux.org/archlinux/infrastructure/-/merge_requests/62#note_4040
-# resource "hcloud_zone_rrset" "archlinux_page_origin_soa" {
-#   zone = hcloud_zone.archlinux_page.name
-#   name = "@"
-#   type = "SOA"
-#   records = [
-#     { value = "hydrogen.ns.hetzner.com. hetzner.archlinux.org. 2021070703 3600 1800 604800 3600" },
-#   ]
-# }
+resource "hcloud_zone_rrset" "archlinux_page_origin_soa" {
+  zone = hcloud_zone.archlinux_page.name
+  name = "@"
+  type = "SOA"
+  records = [
+    { value = "hydrogen.ns.hetzner.com. dns.hetzner.com. 0 86400 10800 3600000 3600" },
+  ]
+}
 
 resource "hcloud_zone_rrset" "archlinux_page_origin_txt" {
   zone = hcloud_zone.archlinux_page.name
@@ -657,17 +654,14 @@ resource "hcloud_zone_rrset" "pkgbuild_com_origin_ns" {
   ]
 }
 
-# TODO: Commented currently as we have no idea how to handle SOA stuff with Terraform:
-# https://github.com/timohirt/terraform-provider-hetznerdns/issues/20
-# https://gitlab.archlinux.org/archlinux/infrastructure/-/merge_requests/62#note_4040
-# resource "hcloud_zone_rrset" "pkgbuild_com_origin_soa" {
-#   zone = hcloud_zone.pkgbuild_com.name
-#   name = "@"
-#   type = "SOA"
-#   records = [
-#     { value = "hydrogen.ns.hetzner.com. hetzner.archlinux.org. 2021070703 3600 1800 604800 3600" },
-#   ]
-# }
+resource "hcloud_zone_rrset" "pkgbuild_com_origin_soa" {
+  zone = hcloud_zone.pkgbuild_com.name
+  name = "@"
+  type = "SOA"
+  records = [
+    { value = "hydrogen.ns.hetzner.com. dns.hetzner.com. 0 86400 10800 3600000 3600" },
+  ]
+}
 
 resource "hcloud_zone_rrset" "pkgbuild_com_origin_txt" {
   zone = hcloud_zone.pkgbuild_com.name
@@ -709,16 +703,14 @@ resource "hcloud_zone_rrset" "archlinux_org_acme_challenge_mumble_ns" {
   ]
 }
 
-# TODO: Commented currently as we have no idea how to handle SOA stuff with Terraform:
-# https://github.com/timohirt/terraform-provider-hetznerdns/issues/20
-# https://gitlab.archlinux.org/archlinux/infrastructure/-/merge_requests/62#note_4040
-#; resource "hcloud_zone_rrset" "archlinux_org_origin_soa" {
-#   zone = hcloud_zone.archlinux_org.name
-#   type = "SOA"
-#   records = [
-#     { value = "hydrogen.ns.hetzner.com. hetzner.archlinux.org. 2021070703 3600 1800 604800 3600" },
-#   ]
-# }
+resource "hcloud_zone_rrset" "archlinux_org_origin_soa" {
+  zone = hcloud_zone.archlinux_org.name
+  name = "@"
+  type = "SOA"
+  records = [
+    { value = "hydrogen.ns.hetzner.com. dns.hetzner.com. 0 86400 10800 3600000 3600" },
+  ]
+}
 
 resource "hcloud_volume" "mirror" {
   name              = "mirror"
