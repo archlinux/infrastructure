@@ -13,6 +13,9 @@ limit_req_zone $binary_remote_addr zone=aurwebgitlimit:10m rate=30r/m;
 # limit general requests to 20 r/s to block DoS attempts.
 limit_req_zone $binary_remote_addr zone=aurweblimit:10m rate=20r/s;
 
+# limit redirect requests to 20 r/s to block DoS attempts.
+limit_req_zone $binary_remote_addr zone=httpredirectlimit:10m rate=20r/s;
+
 limit_req_status 429;
 
 proxy_cache_path  /var/lib/nginx/cache levels=1:2 keys_zone=aurwebcache:10m inactive=60m;
@@ -31,21 +34,7 @@ uwsgi_cache_path /var/lib/nginx/uwsgi-cache
 # Rate limits for cgit.
 limit_req_zone $binary_remote_addr zone=cgitlight:10m rate=5r/s;
 
-server {
-    include snippets/listen-80.conf;
-
-    server_name  {{ aurweb_domain }};
-
-    access_log   /var/log/nginx/{{ aurweb_domain }}/access.log main;
-    access_log   /var/log/nginx/{{ aurweb_domain }}/access.log.json json_main;
-    error_log    /var/log/nginx/{{ aurweb_domain }}/error.log;
-
-    include snippets/letsencrypt.conf;
-
-    location / {
-        return 301 https://$server_name$request_uri;
-    }
-}
+include snippets/redirect-80.conf;
 
 server {
     include      snippets/listen-443.conf;
