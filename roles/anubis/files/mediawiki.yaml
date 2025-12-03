@@ -1,0 +1,32 @@
+- name: archwiki
+  action: ALLOW
+  expression:
+    any:
+      - path == "/load.php"
+      - path.startsWith("/skins/") || path.startsWith("/resources/")
+      - query.size() == 0
+      - '"Cookie" in headers && headers["Cookie"].matches("(^| )(archwiki_session|archwikiToken)=")'
+      - path == "/api.php" && "action" in query && query["action"] == "opensearch"
+      - path.matches("^/rest\\.php/v1/search(/title|$)")
+
+# Inspiration taken from Extension:CrawlerProtection
+- name: archwiki-expensive
+  action: WEIGH
+  weight:
+    adjust: 10
+  expression:
+    any:
+      - path.startsWith("/title/Special:Diff/")
+      - path.startsWith("/title/Special:RecentChanges/")
+      - path.startsWith("/title/Special:RecentChangesLinked/")
+      - path.startsWith("/title/Special:WhatLinksHere/")
+      - path.startsWith("/title/Special:Log/")
+      - path.startsWith("/title/Special:Contributions/")
+      - path == "/index.php" && "title" in query && query["title"].startsWith("Special:Diff")
+      - path == "/index.php" && "title" in query && query["title"].startsWith("Special:RecentChanges")
+      - path == "/index.php" && "title" in query && query["title"].startsWith("Special:RecentChangesLinked")
+      - path == "/index.php" && "title" in query && query["title"].startsWith("Special:WhatLinksHere")
+      - path == "/index.php" && "title" in query && query["title"].startsWith("Special:Log")
+      - path == "/index.php" && "title" in query && query["title"].startsWith("Special:Contributions")
+      - path == "/index.php" && "oldid" in query
+      - path == "/index.php" && "diff" in query
