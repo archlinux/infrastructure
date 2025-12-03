@@ -44,6 +44,7 @@ blackbox_targets:
     - https://debuginfod.archlinux.org
     - https://europe.archive.pkgbuild.com
     - https://europe.mirror.pkgbuild.com
+    - https://frankfurt.mirror.pkgbuild.com
     - https://gitlab.archlinux.org
     - https://ipxe.archlinux.org
     - https://johannesburg.mirror.pkgbuild.com

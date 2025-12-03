@@ -8,6 +8,7 @@ DevOps team maintain a geo mirror across the world. The Geo mirror is public fac
 | ----------------------------------------- | --------------------------- |
 | https://berlin.mirror.pkgbuild.com/       | Berlin (Germany)            |
 | https://europe.mirror.pkgbuild.com/       | Prague (Czechia)            |
+| https://frankfurt.mirror.pkgbuild.com/    | Frankfurt (Germany)         |
 | https://johannesburg.mirror.pkgbuild.com/ | Johannesburg (South Africa) |
 | https://london.mirror.pkgbuild.com/       | London (United Kingdom)     |
 | https://losangeles.mirror.pkgbuild.com/   | Los Angeles (United States) |

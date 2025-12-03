@@ -1,6 +1,6 @@
 ## Kape Servers
 
-All donated servers are with EFI except runner1.archlinux.org.
+All donated servers are with EFI except frankfurt.mirror.pkgbuild.com.
 
 ### Archive mirrors
 
@@ -10,9 +10,9 @@ Three servers have set up as archive and regular mirrors:
 
 The servers have been setup as RAID 5 with 3 x 10TB disks.
 
-### Gitlab runner
+### Regular mirror
 
-A runner is setup on a 2xE5-2620v4 -  64GB - 2x 1TB SSD as runner1.archlinux.org.
+A regular mirror is setup on a 2xE5-2620v4 -  64GB - 2x 1TB SSD as frankfurt.mirror.pkgbuild.com.
 
 ### Rebuilderd worker
 

@@ -89,14 +89,6 @@ So to set up this server from scratch, run:
     - repro2.pkgbuild.com (Kape server with an EPYC 7702P and 256G RAM - 4 workers)
     - repro4.pkgbuild.com (Proxmox VM with 16vCores and 192G RAM - 2 workers)
 
-
-## runner1.archlinux.org
-
-Medium-fast-ish Kape Arch Linux box.
-
-### Services
-  - GitLab runner
-
 ## secure-runner1.archlinux.org
 
 ### Services
