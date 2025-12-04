@@ -1,2 +1,5 @@
 - name: Reload blackbox exporter
   service: name=prometheus-blackbox-exporter state=reloaded
+
+- name: Restart fastly exporter
+  service: name=prometheus-fastly-exporter state=restarted
