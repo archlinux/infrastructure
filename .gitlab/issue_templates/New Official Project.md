@@ -6,9 +6,11 @@ It can be used for migrations as well as new projects.
 # Procedure for adding an official project to GitLab
 
 ## Details
+
 - **Project name**: my-example
 - **Type**: MIGRATION or NEW PROJECT <!-- delete one of these -->
 - **Current location**: git.archlinux.org/my-example.git <!-- delete this line if it's a new project and not a migration -->
+- **List of users who should get access to the project:** <!-- add the @-prefixed usernames of the developers for the project -->
 
 ## New repo checklist
 
@@ -32,6 +34,7 @@ If you want to add a new official project, here are some guidelines to follow:
        reflect these values:
    - `Reject unverified users`: `on`
    - `Reject unsigned commits`: `on`
+   - `Reject inconsistent username`: `on`
    - `Do not allow users to remove tags with git push`: `on`
    - `Check whether author is a GitLab user`: `on`
    - `Prevent pushing secret files`: `on`
@@ -94,7 +97,7 @@ If you want to add a new official project, here are some guidelines to follow:
    - `Payload URL`: `$(misc/get_key.py misc/vaults/vault_github.yml github_pull_closer_webhook_url)`
    - `Content type`: `application/json`
    - `Which events would you like to trigger this webhook?`
-     - `Let me select individual events.`: `Pull requests`
+      - `Let me select individual events.`: `Pull requests`
 1. [ ] In the GitHub description of the mirrored project, append " (read-only mirror)" so that people know it's a mirror.
 1. [ ] Disable `Packages` and `Deployments` from being shown on the main page.
 1. [ ] In the website field put the full url to the repository on our GitLab.
