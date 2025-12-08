@@ -2,6 +2,7 @@ worker_processes  auto;
 
 load_module /usr/lib/nginx/modules/ngx_http_brotli_filter_module.so;
 load_module /usr/lib/nginx/modules/ngx_http_brotli_static_module.so;
+load_module /usr/lib/nginx/modules/ngx_http_acme_module.so;
 {% if nginx_stream %}
 load_module /usr/lib/nginx/modules/ngx_stream_module.so;
 {% endif %}
@@ -106,6 +107,16 @@ http {
     include snippets/sslsettings-http.conf;
     include snippets/headers.conf;
     include snippets/proxy-settings.conf;
+
+    resolver 127.0.0.53;
+    ssl_certificate_cache max=2;
+    acme_issuer letsencrypt {
+        uri         https://acme-v02.api.letsencrypt.org/directory;
+        contact     webmaster@archlinux.org;
+        state_path  /var/lib/nginx/acme;
+
+        accept_terms_of_service;
+    }
 
     include nginx.d/*.conf;
 }
