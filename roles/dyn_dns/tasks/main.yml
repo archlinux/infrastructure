@@ -20,15 +20,15 @@
 
 - name: Create zones
   shell: |
-    pdnsutil create-zone {{ item.zone }} {{ inventory_hostname }}
-    pdnsutil replace-rrset {{ item.zone }} @ SOA "{{ inventory_hostname }}. root.archlinux.org. 0 10800 3600 604800 3600"
+    pdnsutil zone create {{ item.zone }} {{ inventory_hostname }}
+    pdnsutil rrset replace {{ item.zone }} {{ item.zone }} SOA "{{ inventory_hostname }}. root.archlinux.org. 0 10800 3600 604800 3600"
   loop: "{{ dyn_dns_zones | dict2items(key_name='zone') }}"
   loop_control:
     label: "{{ item.zone }}"
   changed_when: false
 
 - name: Import TSIG keys
-  command: pdnsutil import-tsig-key {{ item.key }} {{ item.value.algorithm }} {{ item.value.secret }}
+  command: pdnsutil tsigkey import {{ item.key }} {{ item.value.algorithm }} {{ item.value.secret }}
   loop: "{{ dyn_dns_keys | dict2items }}"
   loop_control:
     label: "{{ item.key }}"
