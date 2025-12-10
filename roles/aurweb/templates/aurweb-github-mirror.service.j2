@@ -4,3 +4,6 @@ User={{ aurweb_user }}
 WorkingDirectory={{ aurweb_git_dir }}
 Environment="GIT_SSH_COMMAND=ssh -o ServerAliveInterval=25"
 ExecStart=git push --force --all git@github.com:archlinux/aur.git
+CPUWeight=30
+CPUQuota=25%
+IOWeight=20
