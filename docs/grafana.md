@@ -10,15 +10,16 @@ Dashboards and datasources are automatically provisioned by Grafana with Grafana
 
 A new dashboard can be configured in our Grafana instance to try it out and if satisfactory checked in to Git as following:
 
-* Export the dashboard to json (top left, share dashboard => exporter => save to file).
-* Save the json file in `roles/grafana/files/dashboards'
-* Git add the file and run the grafana playbook
-* If it needs to be available in `dashboards.archlinux.org` create a symlink in `roles/grafana/files/public-dashboards` to the dashboard in `roles/grafana/files/dashboards`
+* Export the dashboard to json (top right, Export => Export as code => Download file).
+* Save the json file in `roles/grafana/files/dashboards`.
+* Git add the file and run `ansible-playbook playbooks/monitoring.archlinux.org.yml -t grafana`.
 
 ## Adding new metrics to dashboards.archlinux.org
 
-Metrics can be added to the public grafana instance if they are already collected on `monitoring.archlinux.org`
+Metrics can be added to the public grafana instance if they are already collected on `monitoring.archlinux.org`:
 
 * Verify that the metrics are allowed to be made public and check with another DevOps member.
-* Edit `roles/prometheus/templates/prometheus.yml.j2` and extending the `regex` of the `remote_write` block.
-* Run `ansible-playbook playboks/monitoring.archlinux.org -t prometheus` to update the `remote_write` configuration.
+* Create a symlink in `roles/grafana/files/public-dashboards` to the dashboard in `roles/grafana/files/dashboards`.
+* Edit `roles/prometheus/defaults/main.yml` and extend the `prometheus_remote_write_relabel_configs` block with the job name matching the prometheus config from `roles/prometheus/templates/prometheus.yml.j2`.
+* Run `ansible-playbook playboks/monitoring.archlinux.org.yml -t prometheus` to update the `remote_write` configuration.
+* Run `ansible-playbook playboks/dashboards.archlinux.org.yml -t grafana` to deploy the dashboard to `dashboards.archlinux.org`.
