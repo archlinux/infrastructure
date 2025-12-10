@@ -1,0 +1,7 @@
+- name: aurweb-cgit
+  action: WEIGH
+  weight:
+    adjust: 10
+  expression:
+    any:
+      - path.startsWith("/cgit/")
