@@ -5,6 +5,7 @@ password = {{ vault_aurweb_db_password }}
 
 [options]
 aurwebdir = {{ aurweb_dir }}
+disable_http_login = 0
 {% if maintenance is defined and maintenance %}
 enable_maintenance = 1
 maintenance-exceptions = {{ maintenance_remote_machine }}
