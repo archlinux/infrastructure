@@ -125,7 +125,8 @@
     regexp: '^#?{{ item.name | regex_escape }}='
     line: '{{ item.name }}={{ item.value }}'
   loop:
-    - { name: MAKEFLAGS, value: '"-j$(nproc)"' }
+    - { name: NPROC, value: '"$(nproc)"' }
+    - { name: MAKEFLAGS, value: '"-j$NPROC"' }
     - { name: SRCDEST, value: /var/lib/archbuilddest/srcdest }
 
 - name: Install archbuild sudoers config
