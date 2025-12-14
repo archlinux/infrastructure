@@ -8,7 +8,6 @@
     - { role: sshd }
     - { role: root_ssh }
     - { role: prometheus_exporters }
-    - { role: certbot }
     - { role: promtail }
     - { role: fail2ban }
     - { role: bumpbuddy }

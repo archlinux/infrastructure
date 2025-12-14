@@ -1,12 +1,6 @@
 - name: Install required packages
   pacman: name=rebuilderd,rebuilderd-website state=present
 
-- name: Create ssl cert
-  include_role:
-    name: certificate
-  vars:
-    domains: ["{{ rebuilderd_domain }}"]
-
 - name: Configure rebuilderd.conf
   template: src=rebuilderd.conf.j2 dest=/etc/rebuilderd.conf owner=rebuilderd group=rebuilderd mode=0660
 

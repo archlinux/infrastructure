@@ -16,8 +16,9 @@ server {
     access_log   /var/log/nginx/{{ redirect.domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ redirect.domain }}/error.log;
 
-    ssl_certificate      /etc/letsencrypt/live/{{ redirect.domain }}/fullchain.pem;
-    ssl_certificate_key  /etc/letsencrypt/live/{{ redirect.domain }}/privkey.pem;
+    acme_certificate     letsencrypt;
+    ssl_certificate      $acme_certificate;
+    ssl_certificate_key  $acme_certificate_key;
 
     include snippets/letsencrypt.conf;
 

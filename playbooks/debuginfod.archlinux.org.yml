@@ -8,7 +8,6 @@
     - { role: hardening }
     - { role: sshd }
     - { role: root_ssh }
-    - { role: certbot }
     - { role: nginx }
     - { role: debuginfod }
     - { role: mirrorsync }

@@ -5,7 +5,6 @@
     - { role: common }
     - { role: sshd }
     - { role: root_ssh }
-    - { role: certbot }
     - { role: nginx }
     - { role: mariadb, mariadb_query_cache_type: '0', mariadb_innodb_buffer_pool_size: '512M', mariadb_innodb_disable_snapshot_isolation: true }
     - { role: sudo }

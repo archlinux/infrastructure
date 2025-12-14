@@ -55,8 +55,9 @@ server {
     access_log   /var/log/nginx/{{ aurweb_domain }}/access.log.json json_main;
     error_log    /var/log/nginx/{{ aurweb_domain }}/error.log;
 
-    ssl_certificate      /etc/letsencrypt/live/{{ aurweb_domain }}/fullchain.pem;
-    ssl_certificate_key  /etc/letsencrypt/live/{{ aurweb_domain }}/privkey.pem;
+    acme_certificate     letsencrypt;
+    ssl_certificate      $acme_certificate;
+    ssl_certificate_key  $acme_certificate_key;
 
     root    {{ aurweb_dir }}/static;
     index   index.php;

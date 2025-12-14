@@ -25,8 +25,9 @@ server {
     access_log   /var/log/nginx/{{ domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ domain }}/error.log;
 
-    ssl_certificate      /etc/letsencrypt/live/{{ domain }}/fullchain.pem;
-    ssl_certificate_key  /etc/letsencrypt/live/{{ domain }}/privkey.pem;
+    acme_certificate     letsencrypt;
+    ssl_certificate      $acme_certificate;
+    ssl_certificate_key  $acme_certificate_key;
 
     location = /.well-known/mta-sts.txt {
         default_type text/plain;

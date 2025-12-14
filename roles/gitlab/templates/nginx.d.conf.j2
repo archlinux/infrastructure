@@ -27,8 +27,9 @@ server {
     access_log   /var/log/nginx/{{ gitlab_domain }}/access.log.json json_main;
     error_log    /var/log/nginx/{{ gitlab_domain }}/error.log;
 
-    ssl_certificate      /etc/letsencrypt/live/{{ gitlab_domain }}/fullchain.pem;
-    ssl_certificate_key  /etc/letsencrypt/live/{{ gitlab_domain }}/privkey.pem;
+    acme_certificate     letsencrypt;
+    ssl_certificate      $acme_certificate;
+    ssl_certificate_key  $acme_certificate_key;
 
     location / {
         proxy_pass http://127.0.0.1:8081;

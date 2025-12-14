@@ -25,8 +25,9 @@ server {
     access_log   /var/log/nginx/{{ public_domain }}/access.log main;
     error_log    /var/log/nginx/{{ public_domain }}/error.log;
 
-    ssl_certificate      /etc/letsencrypt/live/{{ public_domain }}/fullchain.pem;
-    ssl_certificate_key  /etc/letsencrypt/live/{{ public_domain }}/privkey.pem;
+    acme_certificate     letsencrypt;
+    ssl_certificate      $acme_certificate;
+    ssl_certificate_key  $acme_certificate_key;
 
     location /index.html {
         alias /srv/http/test/index.html;

@@ -23,22 +23,6 @@
   user: name=archweb groups=uwsgi
   when: archweb_site | bool
 
-- name: Create ssl cert
-  include_role:
-    name: certificate
-  vars:
-    domains: "{{ [archweb_domain] + archweb_alternate_domains }}"
-  when: archweb_site | bool and maintenance is not defined
-
-- name: Create legacy ssl cert
-  include_role:
-    name: certificate
-  vars:
-    cert_name: "{{ archweb_domain }}_legacy"
-    domains: "{{ archweb_legacy_domains }}"
-    legacy: true
-  when: archweb_site | bool and maintenance is not defined
-
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest="{{ archweb_nginx_conf }}" owner=root group=root mode=644
   notify: Reload nginx

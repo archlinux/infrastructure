@@ -1,9 +1,3 @@
-- name: Create ssl cert
-  include_role:
-    name: certificate
-  vars:
-    domains: ["{{ public_domain }}", "www.{{ public_domain }}"]
-
 - name: Copy webroot files
   copy: src=public_html dest=/srv owner=root group=root mode=0644 directory_mode=0755
 

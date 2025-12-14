@@ -11,8 +11,9 @@ server {
 
     include snippets/letsencrypt.conf;
 
-    ssl_certificate      /etc/letsencrypt/live/{{ ping_domain }}/fullchain.pem;
-    ssl_certificate_key  /etc/letsencrypt/live/{{ ping_domain }}/privkey.pem;
+    acme_certificate     letsencrypt;
+    ssl_certificate      $acme_certificate;
+    ssl_certificate_key  $acme_certificate_key;
 
     default_type text/plain;
 

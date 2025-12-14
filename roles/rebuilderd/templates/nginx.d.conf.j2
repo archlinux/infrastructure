@@ -23,8 +23,9 @@ server {
     access_log   /var/log/nginx/{{ rebuilderd_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ rebuilderd_domain }}/error.log;
 
-    ssl_certificate      /etc/letsencrypt/live/{{ rebuilderd_domain }}/fullchain.pem;
-    ssl_certificate_key  /etc/letsencrypt/live/{{ rebuilderd_domain }}/privkey.pem;
+    acme_certificate     letsencrypt;
+    ssl_certificate      $acme_certificate;
+    ssl_certificate_key  $acme_certificate_key;
 
     # Security headers
     include snippets/headers.conf;

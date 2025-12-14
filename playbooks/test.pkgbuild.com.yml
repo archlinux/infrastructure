@@ -8,7 +8,6 @@
     - { role: wireguard }
     - { role: sshd }
     - { role: root_ssh }
-    - { role: certbot }
     - { role: nginx }
     - { role: fail2ban }
     - { role: proxy_test, public_domain: 'test.pkgbuild.com' }

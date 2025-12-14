@@ -23,8 +23,9 @@ server {
     access_log   /var/log/nginx/{{ debuginfod_domain }}/access.log.json json_reduced;
     error_log    /var/log/nginx/{{ debuginfod_domain }}/error.log;
 
-    ssl_certificate      /etc/letsencrypt/live/{{ debuginfod_domain }}/fullchain.pem;
-    ssl_certificate_key  /etc/letsencrypt/live/{{ debuginfod_domain }}/privkey.pem;
+    acme_certificate     letsencrypt;
+    ssl_certificate      $acme_certificate;
+    ssl_certificate_key  $acme_certificate_key;
 
     root  /srv/http/debuginfod;
     index index.html;

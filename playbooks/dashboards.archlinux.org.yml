@@ -12,7 +12,6 @@
     - { role: prometheus, prometheus_receive_only: true }
     - { role: prometheus_exporters }
     - { role: promtail }
-    - { role: certbot }
     - { role: nginx }
     - { role: grafana, grafana_anonymous_access: true, grafana_domain: 'dashboards.archlinux.org' }
     - { role: fail2ban }

@@ -7,7 +7,6 @@
     - { role: wireguard }
     - { role: sshd }
     - { role: root_ssh }
-    - { role: certbot }
     - { role: nginx }
     - { role: gitlab,
         gitlab_domain: "gitlab.archlinux.org",

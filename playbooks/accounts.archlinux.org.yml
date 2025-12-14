@@ -8,7 +8,6 @@
     - { role: sshd }
     - { role: root_ssh }
     - { role: prometheus_exporters }
-    - { role: certbot }
     - { role: nginx }
     - role: postgres
       postgres_shared_buffers: 500MB

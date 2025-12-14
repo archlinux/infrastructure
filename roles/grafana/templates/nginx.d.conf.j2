@@ -32,8 +32,9 @@ server {
     access_log   /var/log/nginx/{{ grafana_domain }}/access.log.json json_main;
     error_log    /var/log/nginx/{{ grafana_domain }}/error.log;
 
-    ssl_certificate      /etc/letsencrypt/live/{{ grafana_domain }}/fullchain.pem;
-    ssl_certificate_key  /etc/letsencrypt/live/{{ grafana_domain }}/privkey.pem;
+    acme_certificate     letsencrypt;
+    ssl_certificate      $acme_certificate;
+    ssl_certificate_key  $acme_certificate_key;
 
     root {{ grafana_domain }};
 

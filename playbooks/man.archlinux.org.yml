@@ -8,7 +8,6 @@
     - { role: sshd }
     - { role: root_ssh }
     - { role: hardening }
-    - { role: certbot }
     - { role: nginx }
     - { role: fail2ban }
     - { role: prometheus_exporters }

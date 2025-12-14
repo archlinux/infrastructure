@@ -1,10 +1,3 @@
-- name: Create ssl cert
-  include_role:
-    name: certificate
-  vars:
-    domains: "{{ ['mta-sts.'] | product(item.domains) | map('join') }}"
-  loop: "{{ mta_sts }}"
-
 - name: Make nginx log dir
   file: path=/var/log/nginx/{{ "mta-sts." + item.domains | first }} state=directory owner=root group=root mode=0755
   loop: "{{ mta_sts }}"
