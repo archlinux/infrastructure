@@ -1,0 +1,6 @@
+# Inverted version of the catchall rule
+- name: inverted-catchall
+  action: ALLOW
+  expression:
+    any:
+      - (! userAgent.contains("Mozilla")) && (! userAgent.contains("Opera"))
