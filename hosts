@@ -25,6 +25,9 @@ singapore.mirror.pkgbuild.com
 taipei.mirror.pkgbuild.com
 umea.mirror.pkgbuild.com
 
+[fastly_origins]
+mirror.pkgbuild.com
+
 [geo_mirror_name_servers]
 europe.mirror.pkgbuild.com
 london.mirror.pkgbuild.com
