@@ -17,6 +17,9 @@ bots:
     import: (data)/bots/_deny-pathological.yaml
   - import: (data)/bots/aggressive-brazilian-scrapers.yaml
 
+  # Allowlist phrik
+  - import: (data)/bots/irc-bots/archlinux-phrik.yaml
+
   # Aggressively block AI/LLM related bots/agents by default
   - import: (data)/meta/ai-block-aggressive.yaml
 
@@ -109,7 +112,7 @@ dnsbl: false
 # https://anubis.techaro.lol/docs/admin/configuration/open-graph/
 openGraph:
   # Enables Open Graph passthrough
-  enabled: false
+  enabled: true
   # Enables the use of the HTTP host in the cache key, this enables
   # caching metadata for multiple http hosts at once.
   considerHost: false
