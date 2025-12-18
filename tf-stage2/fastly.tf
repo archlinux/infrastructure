@@ -35,12 +35,13 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
   default_ttl = 86400
 
   # Segmented caching only make sense for filetypes that are usually big
-  # find /srv/ftp/ -type f -size +1M -printf "%f\n" | rev | cut -d "." -f 1 | rev | sort --unique
+  # Note: We need to follow symbolic links (-L) in order to also find big files that symlinks are pointing to because the webserver will serve the target of the symlink (and potentially exceed the allowed filesize)
+  # find -L /srv/ftp/ -type f -size +10M -printf "%f\n" | rev | cut -d "." -f 1 | rev | sort --unique
   snippet {
     name    = "Enable segmented caching for packages"
     content = <<-EOT
     # Setup caching for all files to avoid 503 on large packages and files
-    if (req.url.ext ~ "^(gz|img|iso|old|qcow2|sfs|wsl|zst)\z" || req.url.basename == "vmlinuz-linux") {
+    if (req.url.ext ~ "^(files|gz|img|iso|old|qcow2|sfs|wsl|zst)\z" || req.url.basename == "vmlinuz-linux") {
       set req.enable_segmented_caching = true;
       set segmented_caching.block_size = 20971520;
     }
