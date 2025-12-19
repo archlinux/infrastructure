@@ -42,17 +42,17 @@ app_service_config_files:
   - /etc/synapse/appservice-registration-irc.yaml
 
 modules:
-  #- module: synapse_http_antispam.HTTPAntispam
-  #  config:
-  #    base_url: http://localhost:8010/api/1/spam_check
-  #    authorization: "{{ vault_matrix.draupnir.antispam_token }}"
-  #    do_ping: true
-  #    enabled_callbacks:
-  #      - user_may_invite
-  #      - user_may_join_room
-  #    fail_open:
-  #      user_may_invite: true
-  #      user_may_join_room: true
+  - module: synapse_http_antispam.HTTPAntispam
+    config:
+      base_url: http://localhost:8010/api/1/spam_check
+      authorization: "{{ vault_matrix.draupnir.antispam_token }}"
+      do_ping: true
+      enabled_callbacks:
+        - user_may_invite
+        - user_may_join_room
+      fail_open:
+        user_may_invite: true
+        user_may_join_room: true
 
 event_cache_size: 15K
 caches:
