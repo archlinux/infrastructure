@@ -35,12 +35,13 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
   default_ttl = 86400
 
   # Segmented caching only make sense for filetypes that are usually big
-  # find /srv/ftp/ -type f -size +1M -printf "%f\n" | rev | cut -d "." -f 1 | rev | sort --unique
+  # Note: We need to follow symbolic links (-L) in order to also find big files that symlinks are pointing to because the webserver will serve the target of the symlink (and potentially exceed the allowed filesize)
+  # find -L /srv/ftp/ -type f -size +10M -printf "%f\n" | rev | cut -d "." -f 1 | rev | sort --unique
   snippet {
     name    = "Enable segmented caching for packages"
     content = <<-EOT
     # Setup caching for all files to avoid 503 on large packages and files
-    if (req.url.ext ~ "^(gz|img|iso|old|qcow2|sfs|wsl|zst)\z" || req.url.basename == "vmlinuz-linux") {
+    if (req.url.ext ~ "^(files|gz|img|iso|old|qcow2|sfs|wsl|zst)\z" || req.url.basename == "vmlinuz-linux") {
       set req.enable_segmented_caching = true;
       set segmented_caching.block_size = 20971520;
     }
@@ -129,45 +130,6 @@ resource "fastly_service_vcl" "fastly_mirror_pkgbuild_com" {
     name              = "Skip date sync files cache setting"
     action            = "pass"
     request_condition = "Skip date sync files cache"
-  }
-
-  condition {
-    name      = "Skip stable database cache"
-    statement = "req.url ~ \"^/(core/os/x86_64/core.files|core/os/x86_64/core.db|extra/os/x86_64/extra.files|extra/os/x86_64/extra.db|multilib/os/x86_64/multilib.files|multilib/os/x86_64/multilib.db)\""
-    type      = "REQUEST"
-    priority  = 10
-  }
-
-  request_setting {
-    name              = "Skip stable database cache setting"
-    action            = "pass"
-    request_condition = "Skip stable database cache"
-  }
-
-  condition {
-    name      = "Skip testing database cache"
-    statement = "req.url ~ \"^/(core-testing/os/x86_64/core-testing.files|core-testing/os/x86_64/core-testing.db|extra-testing/os/x86_64/extra-testing.files|extra-testing/os/x86_64/extra-testing.db|multilib-testing/os/x86_64/multilib-testing.files|multilib-testing/os/x86_64/multilib-testing.db|kde-unstable/os/x86_64/kde-unstable.files|kde-unstable/os/x86_64/kde-unstable.db|gnome-unstable/os/x86_64/gnome-unstable.files|gnome-unstable/os/x86_64/gnome-unstable.db)\""
-    type      = "REQUEST"
-    priority  = 10
-  }
-
-  request_setting {
-    name              = "Skip testing database cache setting"
-    action            = "pass"
-    request_condition = "Skip testing database cache"
-  }
-
-  condition {
-    name      = "Skip staging database cache"
-    statement = "req.url ~ \"^/(core-staging/os/x86_64/core-staging.files|core-staging/os/x86_64/core-staging.db|extra-staging/os/x86_64/extra-staging.files|extra-staging/os/x86_64/extra-staging.db|multilib-staging/os/x86_64/multilib-staging.files|multilib-staging/os/x86_64/multilib-staging.db)\""
-    type      = "REQUEST"
-    priority  = 10
-  }
-
-  request_setting {
-    name              = "Skip staging database cache setting"
-    action            = "pass"
-    request_condition = "Skip staging database cache"
   }
 
   force_destroy = true

@@ -1,0 +1,30 @@
+- name: Install curl
+  pacman: name=curl state=present
+
+- name: Install the fastly invalidate script
+  copy: src=fastly-invalidate.sh dest=/usr/local/bin/fastly-invalidate.sh owner=root group=root mode=0755
+
+- name: Install env file
+  template: src=fastly-invalidate.conf.j2 dest=/etc/conf.d/fastly-invalidate owner=root group=root mode=0600
+
+- name: Install the fastly systemd service templates
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  loop:
+    - fastly-invalidate@.path
+    - fastly-invalidate@.service
+
+- name: Start and enable the path units
+  systemd_service: name=fastly-invalidate@{{ item }}.path enabled=yes state=started daemon_reload=yes
+  loop:
+    # TODO: Should we pull this list from the dbscripts role?
+    - core
+    - core-testing
+    - core-staging
+    - extra
+    - extra-testing
+    - extra-staging
+    - multilib
+    - multilib-testing
+    - multilib-staging
+    - gnome-unstable
+    - kde-unstable

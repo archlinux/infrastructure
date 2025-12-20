@@ -16,3 +16,4 @@
     - { role: promtail }
     - { role: fail2ban }
     - { role: geo_dns, when: "'geo_mirror_name_servers' in group_names" }
+    - { role: fastly_origin, when: "'fastly_origins' in group_names" }
