@@ -7,7 +7,6 @@ DevOps team maintain a geo mirror across the world. The Geo mirror is public fac
 | Mirror                                    | Location                    |
 | ----------------------------------------- | --------------------------- |
 | https://berlin.mirror.pkgbuild.com/       | Berlin (Germany)            |
-| https://europe.mirror.pkgbuild.com/       | Prague (Czechia)            |
 | https://frankfurt.mirror.pkgbuild.com/    | Frankfurt (Germany)         |
 | https://johannesburg.mirror.pkgbuild.com/ | Johannesburg (South Africa) |
 | https://london.mirror.pkgbuild.com/       | London (United Kingdom)     |
@@ -15,10 +14,6 @@ DevOps team maintain a geo mirror across the world. The Geo mirror is public fac
 | https://singapore.mirror.pkgbuild.com/    | Singapore                   |
 | https://taipei.mirror.pkgbuild.com/       | Taipei (Taiwan)             |
 | https://umea.mirror.pkgbuild.com/         | Umea (Sweden)               |
-
-### Logical split
-
-The continent mirror europe contain the archive mirrors as well as repository mirrors. The city mirrors have just the repositories hosted.
 
 ## Requirements
 

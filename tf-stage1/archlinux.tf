@@ -405,16 +405,6 @@ locals {
       ipv6_address = "2a12:8d02:2100:10d:26a3:f0ff:fe47:bfaf"
       http3        = true
     }
-    "europe.mirror" = {
-      ipv4_address = "89.187.191.12"
-      ipv6_address = "2a02:6ea0:c237::2"
-      http3        = true
-    }
-    "europe.archive" = {
-      ipv4_address = "89.187.191.12"
-      ipv6_address = "2a02:6ea0:c237::2"
-      http3        = true
-    }
     "frankfurt.mirror" = {
       ipv4_address = "138.199.19.15"
       ipv6_address = "2a02:6ea0:c72e::2"
