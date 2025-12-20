@@ -164,7 +164,6 @@ The [Arch Linux Archive](https://archive.archlinux.org) is mirrored to three ded
 
 ### Servers
 
-  - https://europe.archive.pkgbuild.com
   - https://umea.archive.pkgbuild.com
 
 ## gitlab.archlinux.org

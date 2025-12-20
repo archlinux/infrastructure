@@ -308,7 +308,6 @@ resource "hcloud_zone_rrset" "geo_ns" {
   type = "NS"
   ttl  = lookup(local.geo_domains[each.key], "ttl", 86400)
   records = [
-    { value = "europe.mirror.pkgbuild.com." },
     { value = "london.mirror.pkgbuild.com." },
     { value = "umea.mirror.pkgbuild.com." }
   ]
