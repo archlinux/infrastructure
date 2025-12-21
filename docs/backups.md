@@ -3,6 +3,13 @@
 Backups should be checked now and then. Some common tasks are listed below.
 You'll have to get the correct username from the vault.
 
+## Fetching the borg keys for local storage
+
+- Make sure you have all the GPG keys **at least** locally signed
+- Run the `playbooks/tasks/fetch-borg-keys.yml` playbook
+- Make sure the playbook runs successfully and check the keys under the
+  borg-keys directory
+
 ## Accessing backup hosts
 
 We use two different borg backup hosts: A primary one and an offsite one.
