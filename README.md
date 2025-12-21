@@ -84,67 +84,12 @@ See [docs/terraform.md](./docs/terraform.md) for details about terraform.
 All hosts should be relaying email through our primary mx host (currently
 'mail.archlinux.org'). See [docs/email.md](./docs/email.md) for full details.
 
-### Putting a service in maintenance mode
-
-Most web services with a nginx configuration, can be put into a maintenance
-mode, by running the playbook with a maintenance variable:
-
-```
-ansible-playbook -e maintenance=true playbooks/<playbook.yml>
-```
-
-This also works with a tag:
-
-```
-ansible-playbook -t <tag> -e maintenance=true playbooks/<playbook.yml>
-```
-
-As long as you pass the maintenance variable to the playbook run, the web
-service will stay in maintenance mode. As soon as you stop passing it on the
-command line and run the playbook again, the regular nginx configuration should
-resume and the service should accept requests by the end of the run.
-
-Passing `maintenance=false`, will also prevent the regular nginx configuration
-from resuming, but will not put the service into maintenance mode.
-
-Keep in mind that passing the maintenance variable to the whole playbook,
-without any tag, will make all the web services that have the
-maintenance mode in them, to be put in maintenance mode. Use tags to affect
-only the services you want.
-
-Documentation on how to add the maintenance mode to a web service is inside
-[docs/maintenance.md](./docs/maintenance.md).
-
-### Finding servers requiring security updates
-
-Arch-audit can be used to find servers in need of updates for security issues.
-
-```
-ansible all -a "arch-audit -u"
-```
-
-### Semi-automated server upgrades
-
-For updating all servers in a mostly unattented manner, the following playbook
-can be used:
-
-```
-ansible-playbook playbooks/tasks/upgrade-servers.yml [-l SUBSET]
-```
-
-It runs `pacman -Syu` on the targeted hosts in batches and then reboots them.
-If any server fails to reboot successfully, the rolling update stops and
-further batches are cancelled. To display the packages updated on each host,
-you can pass the `--diff` option to ansible-playbook.
-
-Using this update method, `.pacnew` files are left unmerged which is OK for
-most configuration files that are managed by Ansible. However, care must be
-taken with updates that require manual intervention (e.g. major PostgreSQL
-releases).
-
 ## Servers
 
 This section has been moved to [docs/servers.md](docs/servers.md).
+
+Documentation on upgrades and the maintenance mode is now in
+[docs/maintenance.md](./docs/maintenance.md).
 
 ## Ansible repo workflows
 
@@ -169,16 +114,6 @@ We use BorgBackup for all of our backup needs. We have a primary backup storage
 as well as an additional offsite backup.
 
 See [docs/backups.md](./docs/backups.md) for detailed backup information.
-
-## Updating Gitlab
-
-Our Gitlab installation uses [Omnibus](https://docs.gitlab.com/omnibus/) to run
-Gitlab on Docker. Updating Gitlab is as simple as running the ansible gitlab
-playbook:
-
-```
-ansible-playbook playbooks/gitlab.archlinux.org.yml --diff -t gitlab
-```
 
 To view the current Gitlab version visit [this url](https://gitlab.archlinux.org/help/)
 
