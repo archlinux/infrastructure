@@ -97,15 +97,6 @@
 256 MD5:32:66:ec:d5:e2:75:66:c7:0d:a7:8a:8c:17:ba:dc:4b root@archlinux-packer (ED25519)
 3072 MD5:b2:79:fd:7c:e7:4f:2f:62:2f:17:71:21:d2:94:2d:2a root@archlinux-packer (RSA)
 
-# europe.mirror.pkgbuild.com
-256 SHA256:3S0HuO72jHUUrPM8BjfcjsB0FNXkubxovc7Sm5jZBjc root@europe.mirror.pkgbuild.com (ECDSA)
-256 SHA256:aqnPnq4WG/3xNuKOJlsuCGgPiH0RWavcQi/n/HO9h6Y root@europe.mirror.pkgbuild.com (ED25519)
-3072 SHA256:cJGscbI/w0iINNBpU+Q6jLtSlF2Y3hLPs/By8CzX4tM root@europe.mirror.pkgbuild.com (RSA)
-
-256 MD5:44:ef:66:dc:e2:68:86:69:ad:74:22:a4:92:c6:5b:e1 root@europe.mirror.pkgbuild.com (ECDSA)
-256 MD5:bd:af:e2:cb:6b:fe:b6:60:73:b0:ba:7b:db:af:21:b7 root@europe.mirror.pkgbuild.com (ED25519)
-3072 MD5:57:a2:59:db:c7:07:4f:ac:91:9a:f8:db:7f:16:a7:d4 root@europe.mirror.pkgbuild.com (RSA)
-
 # frankfurt.mirror.pkgbuild.com
 256 SHA256:VIbire3ek5TUMOFgLAO/hQV9FG5/OYWSJif0CziS/CI root@runner3.archlinux.org (ECDSA)
 256 SHA256:gWeV6cBQPoe6hrqtItOVhv9Wr7Awnzgt1YcnzcmArJM root@runner3.archlinux.org (ED25519)
