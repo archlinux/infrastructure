@@ -93,13 +93,6 @@ Documentation on upgrades and the maintenance mode is now in
 
 ## Ansible repo workflows
 
-### Fetching the borg keys for local storage
-
-- Make sure you have all the GPG keys **at least** locally signed
-- Run the `playbooks/tasks/fetch-borg-keys.yml` playbook
-- Make sure the playbook runs successfully and check the keys under the
-  borg-keys directory
-
 ### Re-encrypting the vaults after adding a new PGP key
 
 Follow the instructions in [`group_vars/all/root_access.yml`](group_vars/all/root_access.yml).
