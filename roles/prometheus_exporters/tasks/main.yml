@@ -5,6 +5,10 @@
   pacman: name=prometheus-blackbox-exporter state=present
   when: "'prometheus' in group_names"
 
+- name: Install prometheus-fastly-exporter
+  pacman: name=prometheus-fastly-exporter state=present
+  when: "'prometheus' in group_names"
+
 - name: Install smartmontools for dedicated servers
   pacman: name=smartmontools state=present
   when: ansible_facts['virtualization_role'] == "host"
@@ -144,6 +148,11 @@
   notify: Reload blackbox exporter
   when: "'prometheus' in group_names"
 
+- name: Install fastly exporter configuration
+  template: src=prometheus-fastly-exporter.j2 dest=/etc/conf.d/prometheus-fastly-exporter owner=root group=root mode=0644
+  notify: Restart fastly exporter
+  when: "'prometheus' in group_names"
+
 - name: Install rebuilderd textcollector service
   template: src=prometheus-rebuilderd-textcollector.service.j2 dest=/etc/systemd/system/prometheus-rebuilderd-textcollector.service owner=root group=root mode=644
   when: "'rebuilderd' in group_names"
@@ -216,6 +225,10 @@
 
 - name: Start and enable prometheus-blackbox-exporter service
   systemd_service: name=prometheus-blackbox-exporter enabled=yes daemon_reload=yes state=started
+  when: "'prometheus' in group_names"
+
+- name: Start and enable prometheus-fastly-exporter service
+  systemd_service: name=prometheus-fastly-exporter enabled=yes daemon_reload=yes state=started
   when: "'prometheus' in group_names"
 
 - name: Start and enable prometheus-memcached-exporter service
