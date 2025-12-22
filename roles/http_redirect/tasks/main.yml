@@ -1,0 +1,8 @@
+- name: Create http redirect snippet for {{ domain }}
+  template:
+    src: redirect-80.conf.j2
+    dest: /etc/nginx/snippets/redirect-80.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload nginx

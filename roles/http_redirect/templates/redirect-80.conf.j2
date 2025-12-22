@@ -1,12 +1,12 @@
-limit_req_zone $binary_remote_addr zone=httpredirectlimit:10m rate=20r/s;
+limit_req_zone $binary_remote_addr zone={{ http_redirect_ratelimit_zone }}:10m rate=20r/s;
 server {
     include snippets/listen-80.conf;
 
-    server_name  {{ aurweb_domain }};
+    server_name  {{ domain }};
 
-    access_log   /var/log/nginx/{{ aurweb_domain }}/access.log main;
-    access_log   /var/log/nginx/{{ aurweb_domain }}/access.log.json json_main;
-    error_log    /var/log/nginx/{{ aurweb_domain }}/error.log;
+    access_log   /var/log/nginx/{{ domain }}/access.log main;
+    access_log   /var/log/nginx/{{ domain }}/access.log.json json_main;
+    error_log    /var/log/nginx/{{ domain }}/error.log;
 
     include snippets/letsencrypt.conf;
 
