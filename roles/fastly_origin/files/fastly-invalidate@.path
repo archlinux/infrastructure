@@ -3,3 +3,6 @@ Description=Watching /srv/ftp/%i/os/x86_64/%i.db.tar.gz for changes
 
 [Path]
 PathChanged=/srv/ftp/%i/os/x86_64/%i.db.tar.gz
+
+[Install]
+WantedBy=paths.target
