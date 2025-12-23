@@ -28,8 +28,9 @@ server {
     access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log.json json_reduced;
     error_log    {{ maintenance_logs_dir }}/{{ service_domain }}-error.log;
 
-    ssl_certificate      /etc/letsencrypt/live/{{ service_domain }}/fullchain.pem;
-    ssl_certificate_key  /etc/letsencrypt/live/{{ service_domain }}/privkey.pem;
+    acme_certificate     letsencrypt;
+    ssl_certificate      $acme_certificate;
+    ssl_certificate_key  $acme_certificate_key;
 
     location / {
         access_log off;
@@ -64,8 +65,9 @@ server {
     access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log.json json_reduced;
     error_log    {{ maintenance_logs_dir }}/{{ service_domain }}-error.log;
 
-    ssl_certificate      /etc/letsencrypt/live/{{ service_domain }}_legacy/fullchain.pem;
-    ssl_certificate_key  /etc/letsencrypt/live/{{ service_domain }}_legacy/privkey.pem;
+    acme_certificate     letsencrypt key=rsa:4096;
+    ssl_certificate      $acme_certificate;
+    ssl_certificate_key  $acme_certificate_key;
 
     location / {
         access_log off;
@@ -99,8 +101,9 @@ server {
     access_log   {{ maintenance_logs_dir }}/{{ service_domain }}-access.log.json json_reduced;
     error_log    {{ maintenance_logs_dir }}/{{ service_domain }}-error.log;
 
-    ssl_certificate      /etc/letsencrypt/live/{{ service_domain }}/fullchain.pem;
-    ssl_certificate_key  /etc/letsencrypt/live/{{ service_domain }}/privkey.pem;
+    acme_certificate     letsencrypt;
+    ssl_certificate      $acme_certificate;
+    ssl_certificate_key  $acme_certificate_key;
 
     error_page 503 /503.html;
 

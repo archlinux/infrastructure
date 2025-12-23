@@ -10,7 +10,6 @@
     - { role: fail2ban }
     - { role: borg_client, tags: ["borg"] }
     - { role: nginx }
-    - { role: certbot }
     - role: postgres
       postgres_max_connections: 100
       postgres_ssl: 'off'

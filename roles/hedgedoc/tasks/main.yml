@@ -1,9 +1,3 @@
-- name: Create ssl cert
-  include_role:
-    name: certificate
-  vars:
-    domains: ["{{ hedgedoc_domain }}"]
-
 - name: Install hedgedoc
   pacman: name=hedgedoc state=present
 

@@ -25,8 +25,9 @@ server {
 
     ssl_ciphers AES128-SHA:AES256-SHA:AES128-SHA256:AES256-SHA256;
 
-    ssl_certificate      /etc/letsencrypt/live/{{ archweb_domain }}_legacy/fullchain.pem;
-    ssl_certificate_key  /etc/letsencrypt/live/{{ archweb_domain }}_legacy/privkey.pem;
+    acme_certificate     letsencrypt key=rsa:4096;
+    ssl_certificate      $acme_certificate;
+    ssl_certificate_key  $acme_certificate_key;
 
     location /releng/netboot/ {
         access_log   /var/log/nginx/{{ archweb_domain }}/access.log main;

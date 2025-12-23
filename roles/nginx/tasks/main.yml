@@ -1,5 +1,5 @@
 - name: Install nginx
-  pacman: name=nginx,nginx-mod-brotli{{ ',nginx-mod-stream' if nginx_stream }} state=present
+  pacman: name=nginx,nginx-mod-brotli,nginx-mod-acme{{ ',nginx-mod-stream' if nginx_stream }} state=present
 
 - name: Install extra nginx modules
   pacman: name={{ nginx_extra_modules | map(attribute='name') | map('regex_replace', '^', 'nginx-mod-') }} state=present

@@ -23,8 +23,9 @@ server {
     access_log   /var/log/nginx/{{ bumpbuddy_domain }}/access.log.json json_main;
     error_log    /var/log/nginx/{{ bumpbuddy_domain }}/error.log;
 
-    ssl_certificate      /etc/letsencrypt/live/{{ bumpbuddy_domain }}/fullchain.pem;
-    ssl_certificate_key  /etc/letsencrypt/live/{{ bumpbuddy_domain }}/privkey.pem;
+    acme_certificate     letsencrypt;
+    ssl_certificate      $acme_certificate;
+    ssl_certificate_key  $acme_certificate_key;
 
     root /opt/bumpbuddy/web;
     autoindex on;

@@ -1,13 +1,6 @@
 - name: Install debuginfod
   pacman: name=debuginfod state=present
 
-- name: Create ssl cert
-  include_role:
-    name: certificate
-  vars:
-    domains: ["{{ debuginfod_domain }}"]
-  when: debuginfod_domain
-
 - name: Configure debuginfod systemd service
   template: src=debuginfod.service.j2 dest=/etc/systemd/system/debuginfod.service owner=root group=root mode=0644
   vars:

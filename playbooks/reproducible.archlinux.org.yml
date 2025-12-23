@@ -8,7 +8,6 @@
     - { role: sshd }
     - { role: root_ssh }
     - { role: borg_client, tags: ["borg"] }
-    - { role: certbot }
     - { role: nginx }
     - { role: rebuilderd }
     - { role: prometheus_exporters }

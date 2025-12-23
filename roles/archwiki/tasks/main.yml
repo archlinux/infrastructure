@@ -7,13 +7,6 @@
     service_nginx_conf: "{{ archwiki_nginx_conf }}"
   when: maintenance is defined
 
-- name: Create ssl cert
-  include_role:
-    name: certificate
-  vars:
-    domains: ["{{ archwiki_domain }}"]
-  when: 'archwiki_domain is defined'
-
 - name: Install packages
   pacman: name=git,php-intl state=present
 
