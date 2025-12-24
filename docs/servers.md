@@ -175,3 +175,18 @@ The [Arch Linux Archive](https://archive.archlinux.org) is mirrored to three ded
 
 ### Services
   - [bumpbuddy](https://gitlab.archlinux.org/archlinux/bumpbuddy)
+
+## buildbtw.archlinux.org
+
+### Services
+  - buildbtw production
+
+## buildbtw.staging.archlinux.org
+
+### Services
+  - buildbtw staging
+
+## buildbtw.dev.archlinux.org
+
+### Services
+  - buildbtw dev (review apps)

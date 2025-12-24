@@ -102,6 +102,21 @@ locals {
       domain      = "bbs"
       ttl         = 60
     }
+    "buildbtw.dev.archlinux.org" = {
+      server_type = "cx23"
+      domain      = "buildbtw.dev"
+      http3       = true
+    }
+    "buildbtw.staging.archlinux.org" = {
+      server_type = "cx23"
+      domain      = "buildbtw.staging"
+      http3       = true
+    }
+    "buildbtw.archlinux.org" = {
+      server_type = "cx23"
+      domain      = "buildbtw"
+      http3       = true
+    }
     "bugbuddy.archlinux.org" = {
       server_type = "cx23"
       domain      = "bugbuddy"
@@ -358,19 +373,20 @@ locals {
   # Example:
   # dev                      = { value = "www.archlinux.org.", ttl = 3600 }
   archlinux_org_cname = {
-    ipxe            = { value = "www.archlinux.org." }
-    mailman         = { value = "redirect.archlinux.org." }
-    packages        = { value = "www.archlinux.org." }
-    ping            = { value = "redirect.archlinux.org." }
-    planet          = { value = "www.archlinux.org." }
-    registry        = { value = "gitlab.archlinux.org." }
-    rsync           = { value = "repos.archlinux.org." }
-    sources         = { value = "repos.archlinux.org." }
-    "static.conf"   = { value = "redirect.archlinux.org." }
-    status          = { value = "stats.uptimerobot.com." }
-    coc             = { value = "redirect.archlinux.org." }
-    git             = { value = "redirect.archlinux.org." }
-    "tu-bylaws.aur" = { value = "redirect.archlinux.org." }
+    ipxe             = { value = "www.archlinux.org." }
+    mailman          = { value = "redirect.archlinux.org." }
+    packages         = { value = "www.archlinux.org." }
+    ping             = { value = "redirect.archlinux.org." }
+    planet           = { value = "www.archlinux.org." }
+    registry         = { value = "gitlab.archlinux.org." }
+    "*.buildbtw.dev" = { value = "buildbtw.dev.archlinux.org." }
+    rsync            = { value = "repos.archlinux.org." }
+    sources          = { value = "repos.archlinux.org." }
+    "static.conf"    = { value = "redirect.archlinux.org." }
+    status           = { value = "stats.uptimerobot.com." }
+    coc              = { value = "redirect.archlinux.org." }
+    git              = { value = "redirect.archlinux.org." }
+    "tu-bylaws.aur"  = { value = "redirect.archlinux.org." }
 
     # MTA-STS
     mta-sts               = { value = "mail.archlinux.org." }
@@ -681,6 +697,16 @@ resource "hcloud_zone_rrset" "archlinux_org_origin_ns" {
     { value = "hydrogen.ns.hetzner.com." },
     { value = "oxygen.ns.hetzner.com." },
     { value = "helium.ns.hetzner.de." },
+  ]
+}
+
+resource "hcloud_zone_rrset" "archlinux_org_acme_challenge_buildbtw_dev_ns" {
+  zone = hcloud_zone.archlinux_org.name
+  name = "_acme-challenge.buildbtw.dev"
+  type = "NS"
+  ttl  = 86400
+  records = [
+    { value = "redirect.archlinux.org." },
   ]
 }
 

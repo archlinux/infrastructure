@@ -1,0 +1,6 @@
+- name: Restart buildbtw
+  systemd_service: name=buildbtw@{{ buildbtw_image_tag }} state=restarted daemon_reload=true
+  when: buildbtw_stage in ["staging", "production"]
+
+- name: Restart webhook
+  systemd_service: name=webhook state=restarted daemon_reload=true

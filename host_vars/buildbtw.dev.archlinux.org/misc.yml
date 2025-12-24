@@ -1,0 +1,10 @@
+ipv4_address: "46.224.36.180"
+ipv4_netmask: "/32"
+ipv6_address: "2a01:4f8:c014:9a04::1"
+wireguard_address: 10.0.0.56
+wireguard_public_key: 4kLlYGSM5IEfYdzMnw6rXaEOk1nFopre+0Xx4oGSjQU=
+nginx_enable_http3: true
+buildbtw_domain: buildbtw.dev.archlinux.org
+buildbtw_stage: dev
+certbot_dns_support: true
+certbot_tsig_name: buildbtw

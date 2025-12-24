@@ -1,0 +1,24 @@
+[
+  {
+    "id": "deploy-branch",
+    "execute-command": "/usr/local/bin/buildbtw-deploy-image.sh",
+    "pass-arguments-to-command":
+    [
+      {
+        "source": "url",
+        "name": "image-tag"
+      }
+    ]
+  },
+  {
+    "id": "undeploy-branch",
+    "execute-command": "/usr/local/bin/buildbtw-undeploy-image.sh",
+    "pass-arguments-to-command":
+    [
+      {
+        "source": "url",
+        "name": "image-tag"
+      }
+    ]
+  }
+]

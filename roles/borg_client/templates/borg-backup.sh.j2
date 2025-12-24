@@ -49,7 +49,7 @@ fi
 
 if is_btrfs "$src"; then
     # List all btrfs submounts we want to backup, e.g. homedir.archlinux.org with "/ /home"
-    list_of_btrfs_submounts=$(findmnt -Rl -o target,fstype,options / | grep btrfs | grep -v docker | grep -v "subvol=\/[[:alnum:]]" | cut -d ' ' -f1)
+    list_of_btrfs_submounts=$(findmnt -Rl -o target,fstype,options / | grep btrfs | grep -v -e docker -e containers | grep -v "subvol=/[[:alnum:]]" | cut -d ' ' -f1)
 
     if [[ -d "$backup_mountdir" ]]; then
         if [[ $(findmnt -M "$backup_mountdir") ]]; then
