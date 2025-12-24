@@ -67,6 +67,21 @@ max_event_delay_duration: 24h
 
 default_room_version: "12"
 
+rc_message:
+  per_second: 0.5
+  burst_count: 15.0
+
+rc_admin_redaction:
+  per_second: 2.0
+  burst_count: 200.0
+
+rc_federation:
+  window_size: 750
+  sleep_limit: 15
+  sleep_delay: 400
+  reject_limit: 40
+  concurrent: 5
+
 # Retention
 delete_stale_devices_after: 1y
 media_retention:
