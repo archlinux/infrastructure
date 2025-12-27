@@ -40,9 +40,3 @@ as well as an additional offsite backup.
 See [docs/backups.md](./docs/backups.md) for detailed backup information.
 
 To view the current Gitlab version visit [this url](https://gitlab.archlinux.org/help/)
-
-## One-shots
-
-A bunch of once-only admin task scripts can be found in `one-shots/`.
-We try to minimize the amount of manual one-shot admin work we have to do but
-sometimes for some migrations it might be necessary to have such scripts.
