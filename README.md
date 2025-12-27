@@ -44,19 +44,6 @@ update the SSH hostkeys file in this git repo. For this you can simply run the
 makes to this git repository.
 It will also deploy any new SSH host keys to all our machines.
 
-#### Note about GPG keys
-
-The `root_access.yml` file contains the `vault_default_pgpkeys` variable which
-determines the users that have access to the `default` vault, as well as the
-borg backup keys. A separate `super` vault exists for storing highly sensitive
-secrets like Hetzner credentials; access to the `super` vault is controlled by
-the `vault_super_pgpkeys` variable.
-
-All the keys should be on the local user gpg keyring and at **minimum** be
-locally signed with `--lsign-key` (or if you use TOFU, have `--tofu-policy
-good`). This is necessary for running any of the `reencrypt-vault-default-key`,
-`reencrypt-vault-super-key` or `fetch-borg-keys` tasks.
-
 #### Note about packer
 
 We use packer to build snapshots on hcloud to use as server base images.
@@ -90,16 +77,6 @@ This section has been moved to [docs/servers.md](docs/servers.md).
 
 Documentation on upgrades and the maintenance mode is now in
 [docs/maintenance.md](./docs/maintenance.md).
-
-## Ansible repo workflows
-
-### Re-encrypting the vaults after adding a new PGP key
-
-Follow the instructions in [`group_vars/all/root_access.yml`](group_vars/all/root_access.yml).
-
-### Changing the vault password on encrypted files
-
-See [docs/vault-rekeying.md](docs/vault-rekeying.md).
 
 ## Backup documentation
 

@@ -24,3 +24,26 @@ topic.
 
 After a lot of trust is built up, Junior DevOps may graduate to become full DevOps. This usually
 takes 3-9 months.
+
+## Onboarding
+
+### OpenPGP Keys
+
+The `root_access.yml` file contains the `vault_default_pgpkeys` variable which
+determines the users that have access to the `default` vault, as well as the
+borg backup keys. A separate `super` vault exists for storing highly sensitive
+secrets like Hetzner credentials; access to the `super` vault is controlled by
+the `vault_super_pgpkeys` variable.
+
+All the keys should be on the local user gpg keyring and at **minimum** be
+locally signed with `--lsign-key` (or if you use TOFU, have `--tofu-policy
+good`). This is necessary for running any of the `reencrypt-vault-default-key`,
+`reencrypt-vault-super-key` or `fetch-borg-keys` tasks.
+
+### Re-encrypting the vaults after adding a new PGP key
+
+Follow the instructions in [`group_vars/all/root_access.yml`](group_vars/all/root_access.yml).
+
+### Changing the vault password on encrypted files
+
+See [docs/vault-rekeying.md](docs/vault-rekeying.md).
