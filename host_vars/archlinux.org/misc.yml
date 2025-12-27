@@ -11,4 +11,3 @@ fail2ban_jails:
   nginx_limit_req: true
 wireguard_address: 10.0.0.1
 wireguard_public_key: 2Mk9WPdkf+1Q6Kk6g5eeX5xSHfCisiGJAdmSjRyefBo=
-nginx_enable_http3: true
