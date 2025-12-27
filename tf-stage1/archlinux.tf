@@ -211,9 +211,9 @@ locals {
     }
     "wiki.archlinux.org" = {
       server_type = "cpx52"
-      domain      = "wiki"
-      http3       = true
-      ttl         = 60
+      # reserve extra IPs as static target for the HAproxy ADN service
+      floating_ipv4 = true
+      floating_ipv6 = true
     }
   }
 
@@ -357,6 +357,11 @@ locals {
     runner2 = {
       ipv4_address = "157.180.104.115"
       ipv6_address = "2a01:4f9:3090:11cb::2"
+    }
+    wiki = {
+      ipv4_address = "209.126.35.81"
+      ipv6_address = "2604:cac0:a104:d::4"
+      ttl          = 60
     }
     www = {
       ipv4_address = hcloud_server.machine["archlinux.org"].ipv4_address
