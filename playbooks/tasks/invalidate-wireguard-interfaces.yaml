@@ -1,0 +1,10 @@
+- name: Invalidate wireguard interfaces
+  hosts: all
+  tasks:
+    - name: Delete wg0  # noqa no-changed-when
+      command: networkctl delete wg0
+      register: result
+      failed_when: result.rc not in [0, 1]
+
+    - name: Reload .network and .netdev files  # noqa no-changed-when
+      command: networkctl reload
