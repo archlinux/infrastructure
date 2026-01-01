@@ -15,5 +15,6 @@
     - { role: borg_client, tags: ["borg"] }
     - { role: postfix_null }
     - { role: fail2ban }
+    - { role: anubis }
     - { role: aurweb }
     - { role: wireguard }

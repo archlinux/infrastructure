@@ -7,3 +7,6 @@ memcached_socket: "/run/memcached/aurweb.sock"
 wireguard_address: 10.0.0.2
 wireguard_public_key: 51KGJWs3ZlI4tEdOpYFENhf22aETQEn9ApbmVyiF4zQ=
 nginx_proxy_vendor: haproxy
+anubis_extra_rules:
+  - skip-all-non-browser
+  - aurweb-cgit
