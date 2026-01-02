@@ -1,13 +1,13 @@
 fetchmail_user: "donate@archlinux.org"
 fetchmail_delivery_cmd: "/usr/local/bin/donor_import_wrapper.sh"
 
-ipv4_address: "46.62.254.168"
-ipv6_address: "2a01:4f9:c013:e0e4::1"
-
 fail2ban_jails:
   sshd: true
   postfix: false
   dovecot: false
   nginx_limit_req: true
+
+nginx_proxy_vendor: haproxy
+
 wireguard_address: 10.0.0.1
 wireguard_public_key: 2Mk9WPdkf+1Q6Kk6g5eeX5xSHfCisiGJAdmSjRyefBo=
