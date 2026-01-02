@@ -1,0 +1,7 @@
+[Service]
+ProtectSystem=strict
+EnvironmentFile=/etc/conf.d/account-allowlist
+ExecStart=/usr/local/bin/account-allowlist
+
+[Install]
+WantedBy=multi-user.target
