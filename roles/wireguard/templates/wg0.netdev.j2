@@ -6,7 +6,7 @@ Kind=wireguard
 ListenPort=51820
 PrivateKey=@network.wireguard.private.wg0
 
-{% for host in groups['all'] if host != inventory_hostname %}
+{% for host in groups['all'] if host != inventory_hostname and hostvars[host]['wireguard_address'] is defined and hostvars[host]['wireguard_public_key'] is defined %}
 [WireGuardPeer]
 PublicKey={{ hostvars[host]['wireguard_public_key'] }}
 AllowedIPs={{ hostvars[host]['wireguard_address'] }}/32
