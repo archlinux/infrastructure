@@ -1,6 +1,9 @@
 - name: Restart keycloak
   service: name=keycloak state=restarted
 
+- name: Restart account-allowlist
+  service: name=account-allowlist daemon_reload=yes state=restarted
+
 - name: Daemon reload
   systemd_service:
     daemon-reload: true

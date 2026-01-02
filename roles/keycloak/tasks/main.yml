@@ -67,3 +67,18 @@
   notify:
     - Reload nginx
   tags: ['nginx']
+
+- name: Install account-allowlist script
+  copy: src=account-allowlist.py dest=/usr/local/bin/account-allowlist owner=root group=root mode=0755
+  notify: Restart account-allowlist
+
+- name: Install account-allowlist service
+  copy: src=account-allowlist.service dest=/etc/systemd/system/account-allowlist.service owner=root group=root mode=0644
+  notify: Restart account-allowlist
+
+- name: Install account-allowlist configuration
+  template: src=account-allowlist.j2 dest=/etc/conf.d/account-allowlist owner=root group=root mode=0640
+  notify: Restart account-allowlist
+
+- name: Start and enable systemd timers
+  systemd_service: name=account-allowlist enabled=yes state=started

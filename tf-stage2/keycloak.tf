@@ -248,6 +248,15 @@ resource "keycloak_realm_user_profile" "archlinux" {
       }
     }
   }
+
+  attribute {
+    name = "allowlistedAt"
+
+    permissions {
+      view = ["admin"]
+      edit = ["admin"]
+    }
+  }
 }
 
 resource "keycloak_required_action" "custom-terms-and-conditions" {
@@ -664,6 +673,9 @@ resource "keycloak_authentication_execution_config" "registration_hcaptcha_actio
 // |- Identity Provider Redirector (A)
 // |- Password and 2FA Subflow (A)
 //   |- Username Password Form (R)
+//   |- Allowlist Subflow (C)
+//     |- Condition - User Attribute (R)
+//     |- Deny access (R)
 //   |- 2FA Subflow (R)
 //      |- WebAuthn Authenticator (A)
 //      |- OTP Form (A)
@@ -713,12 +725,58 @@ resource "keycloak_authentication_execution" "username_password_form" {
   priority          = 4
 }
 
+resource "keycloak_authentication_subflow" "allowlist" {
+  realm_id          = "archlinux"
+  alias             = "Allowlist subflow"
+  parent_flow_alias = keycloak_authentication_subflow.password_and_2fa.alias
+  requirement       = "CONDITIONAL"
+  priority          = 5
+}
+
+resource "keycloak_authentication_execution" "user_attribute_condition" {
+  realm_id          = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.allowlist.alias
+  authenticator     = "conditional-user-attribute"
+  requirement       = "REQUIRED"
+  priority          = 6
+}
+
+resource "keycloak_authentication_execution_config" "user_attribute_condition" {
+  realm_id     = "archlinux"
+  execution_id = keycloak_authentication_execution.user_attribute_condition.id
+  alias        = "User attribute condition"
+  config = {
+    attribute_name           = "allowlistedAt"
+    attribute_expected_value = "[0-9]+"
+    not                      = "true"
+    regex                    = "true"
+  }
+}
+
+resource "keycloak_authentication_execution" "deny_access" {
+  realm_id          = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.allowlist.alias
+  authenticator     = "deny-access-authenticator"
+  requirement       = "REQUIRED"
+  depends_on        = [keycloak_authentication_execution.user_attribute_condition]
+  priority          = 7
+}
+
+resource "keycloak_authentication_execution_config" "deny_access" {
+  realm_id     = "archlinux"
+  execution_id = keycloak_authentication_execution.deny_access.id
+  alias        = "Deny access"
+  config = {
+    denyErrorMessage = "Denied!"
+  }
+}
+
 resource "keycloak_authentication_subflow" "_2fa" {
   realm_id          = "archlinux"
   alias             = "2FA subflow"
   parent_flow_alias = keycloak_authentication_subflow.password_and_2fa.alias
   requirement       = "REQUIRED"
-  priority          = 5
+  priority          = 8
 }
 
 resource "keycloak_authentication_execution" "webauthn_form" {
@@ -726,7 +784,7 @@ resource "keycloak_authentication_execution" "webauthn_form" {
   parent_flow_alias = keycloak_authentication_subflow._2fa.alias
   authenticator     = "webauthn-authenticator"
   requirement       = "ALTERNATIVE"
-  priority          = 6
+  priority          = 9
 }
 
 resource "keycloak_authentication_execution" "otp_form" {
@@ -734,7 +792,7 @@ resource "keycloak_authentication_execution" "otp_form" {
   parent_flow_alias = keycloak_authentication_subflow._2fa.alias
   authenticator     = "auth-otp-form"
   requirement       = "ALTERNATIVE"
-  priority          = 7
+  priority          = 10
 }
 
 resource "keycloak_authentication_subflow" "otp_default" {
@@ -742,7 +800,7 @@ resource "keycloak_authentication_subflow" "otp_default" {
   alias             = "OTP Default Subflow"
   parent_flow_alias = keycloak_authentication_subflow._2fa.alias
   requirement       = "ALTERNATIVE"
-  priority          = 8
+  priority          = 11
 }
 
 resource "keycloak_authentication_execution" "otp_default_form" {
@@ -750,12 +808,15 @@ resource "keycloak_authentication_execution" "otp_default_form" {
   parent_flow_alias = keycloak_authentication_subflow.otp_default.alias
   authenticator     = "auth-otp-form"
   requirement       = "REQUIRED"
-  priority          = 9
+  priority          = 12
 }
 
 // Add new custom post-Identity Provider login flow with forced OTP for some user roles
 //
 // Arch Post IPR Flow
+// |- Allowlist Subflow (C)
+//   |- Condition - User Attribute (R)
+//   |- Deny access (R)
 // |- WebAuthn Form (A)
 // |- OTP Form (A)
 // |- IPR OTP Default Subflow (A)
@@ -767,12 +828,58 @@ resource "keycloak_authentication_flow" "arch_post_ipr_flow" {
   description = "Post IPR login flow that forces 2FA."
 }
 
+resource "keycloak_authentication_subflow" "ipr_allowlist" {
+  realm_id          = "archlinux"
+  alias             = "IPR Allowlist subflow"
+  parent_flow_alias = keycloak_authentication_flow.arch_post_ipr_flow.alias
+  requirement       = "CONDITIONAL"
+  priority          = 1
+}
+
+resource "keycloak_authentication_execution" "ipr_user_attribute_condition" {
+  realm_id          = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.ipr_allowlist.alias
+  authenticator     = "conditional-user-attribute"
+  requirement       = "REQUIRED"
+  priority          = 2
+}
+
+resource "keycloak_authentication_execution_config" "ipr_user_attribute_condition" {
+  realm_id     = "archlinux"
+  execution_id = keycloak_authentication_execution.ipr_user_attribute_condition.id
+  alias        = "User attribute condition"
+  config = {
+    attribute_name           = "allowlistedAt"
+    attribute_expected_value = "[0-9]+"
+    not                      = "true"
+    regex                    = "true"
+  }
+}
+
+resource "keycloak_authentication_execution" "ipr_deny_access" {
+  realm_id          = "archlinux"
+  parent_flow_alias = keycloak_authentication_subflow.ipr_allowlist.alias
+  authenticator     = "deny-access-authenticator"
+  requirement       = "REQUIRED"
+  depends_on        = [keycloak_authentication_execution.user_attribute_condition]
+  priority          = 3
+}
+
+resource "keycloak_authentication_execution_config" "ipr_deny_access" {
+  realm_id     = "archlinux"
+  execution_id = keycloak_authentication_execution.ipr_deny_access.id
+  alias        = "Deny access"
+  config = {
+    denyErrorMessage = "Denied!"
+  }
+}
+
 resource "keycloak_authentication_execution" "ipr_webauthn_form" {
   realm_id          = "archlinux"
   parent_flow_alias = keycloak_authentication_flow.arch_post_ipr_flow.alias
   authenticator     = "webauthn-authenticator"
   requirement       = "ALTERNATIVE"
-  priority          = 1
+  priority          = 4
 }
 
 resource "keycloak_authentication_execution" "ipr_otp_form" {
@@ -780,7 +887,7 @@ resource "keycloak_authentication_execution" "ipr_otp_form" {
   parent_flow_alias = keycloak_authentication_flow.arch_post_ipr_flow.alias
   authenticator     = "auth-otp-form"
   requirement       = "ALTERNATIVE"
-  priority          = 2
+  priority          = 5
 }
 
 resource "keycloak_authentication_subflow" "ipr_otp_default" {
@@ -788,7 +895,7 @@ resource "keycloak_authentication_subflow" "ipr_otp_default" {
   alias             = "IPR OTP Default Subflow"
   parent_flow_alias = keycloak_authentication_flow.arch_post_ipr_flow.alias
   requirement       = "ALTERNATIVE"
-  priority          = 3
+  priority          = 6
 }
 
 resource "keycloak_authentication_execution" "ipr_otp_default_form" {
@@ -796,7 +903,7 @@ resource "keycloak_authentication_execution" "ipr_otp_default_form" {
   parent_flow_alias = keycloak_authentication_subflow.ipr_otp_default.alias
   authenticator     = "auth-otp-form"
   requirement       = "REQUIRED"
-  priority          = 4
+  priority          = 7
 }
 
 // Add new custom Reset Credentials flow that asks users to verify 2FA before resetting their password
