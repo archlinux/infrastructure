@@ -28,6 +28,10 @@ gitlab_bots:
   # archlinux/account-allowlist issue-bot
   - project_100502_bot_e12ccfdac7cc5cf30c084276a2ad1cdd
   - gluebuddy
+  # archlinux/account-allowlist, allowlist bot
+  - project_100502_bot_e72660623d782cd4a8667b213bcc00af
+  # archlinux/account-allowlist, gitlab issue bot
+  - project_100502_bot_e12ccfdac7cc5cf30c084276a2ad1cdd
   # gitlab security bots, added in here until we have an implementation for
   # https://gitlab.archlinux.org/archlinux/gluebuddy/-/issues/21
   - gitlab_security_policy_project_100057_bot_e8f55abc019bbe779cfcff3c4243a61d
