@@ -15,11 +15,11 @@ AcceptEnv TZ
 
 {% if 'buildservers' not in group_names %}
 AllowAgentForwarding no
-AllowTcpForwarding no
+AllowTcpForwarding {{ sshd_tcp_forwarding }}
 {% else %}
 Match User root
 	AllowAgentForwarding no
-	AllowTcpForwarding no
+	AllowTcpForwarding {{ sshd_tcp_forwarding }}
 {% endif %}
 
 # Do *not* add anything here, it is matched by the
