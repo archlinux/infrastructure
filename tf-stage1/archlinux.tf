@@ -99,9 +99,10 @@ locals {
       domain      = "bastion"
     }
     "bbs.archlinux.org" = {
-      server_type = "cx23"
-      domain      = "bbs"
-      ttl         = 60
+      server_type   = "cx23"
+      domain        = "bbs"
+      ttl           = 60
+      floating_ipv6 = true
     }
     "buildbtw.dev.archlinux.org" = {
       server_type = "cx23"
