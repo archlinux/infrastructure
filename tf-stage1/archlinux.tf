@@ -84,8 +84,6 @@ locals {
     }
     "archlinux.org" = {
       server_type = "cpx32"
-      domain      = "@"
-      ttl         = 60
       # reserve extra IPs as static target for the HAproxy ADN service
       floating_ipv4 = true
       floating_ipv6 = true
@@ -313,6 +311,11 @@ locals {
   #   ttl          = 3600
   # }
   archlinux_org_a_aaaa = {
+    "@" = {
+      ipv4_address = "209.126.35.79"
+      ipv6_address = "2604:cac0:a104:d::3"
+      ttl          = 60
+    }
     archive = {
       ipv4_address = "49.12.124.107"
       ipv6_address = "2a01:4f8:242:5614::2"
@@ -337,8 +340,8 @@ locals {
       ttl          = 60
     }
     master-key = {
-      ipv4_address = hcloud_server.machine["archlinux.org"].ipv4_address
-      ipv6_address = hcloud_server.machine["archlinux.org"].ipv6_address
+      ipv4_address = "209.126.35.79"
+      ipv6_address = "2604:cac0:a104:d::3"
       ttl          = 60
     }
     pages = {
@@ -364,8 +367,8 @@ locals {
       ttl          = 60
     }
     www = {
-      ipv4_address = hcloud_server.machine["archlinux.org"].ipv4_address
-      ipv6_address = hcloud_server.machine["archlinux.org"].ipv6_address
+      ipv4_address = "209.126.35.79"
+      ipv6_address = "2604:cac0:a104:d::3"
       ttl          = 60
     }
   }
