@@ -11,4 +11,5 @@
     - { role: nginx }
     - { role: fail2ban }
     - { role: prometheus_exporters }
+    - { role: promtail }
     - { role: proxy_test, public_domain: 'test.pkgbuild.com' }
