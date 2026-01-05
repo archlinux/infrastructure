@@ -101,6 +101,8 @@ locals {
     "bastion.archlinux.org" = {
       server_type = "cx23"
       domain      = "bastion"
+      # reserve extra IP for allowlisting in management interface
+      floating_ipv4 = true
     }
     "bbs.archlinux.org" = {
       server_type   = "cx23"
@@ -782,12 +784,5 @@ resource "hcloud_volume" "debuginfod" {
   name              = "debuginfod"
   size              = 125
   server_id         = hcloud_server.machine["debuginfod.archlinux.org"].id
-  delete_protection = true
-}
-
-resource "hcloud_floating_ip" "whitelist_ip_bastion_archlinux_org" {
-  name              = "bastion-host-IP-DO-NO-DELETE"
-  type              = "ipv4"
-  server_id         = hcloud_server.machine["bastion.archlinux.org"].id
   delete_protection = true
 }
