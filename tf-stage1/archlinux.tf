@@ -84,14 +84,12 @@ locals {
     }
     "archlinux.org" = {
       server_type = "cpx32"
-      # reserve extra IPs as static target for the HAproxy ADN service
-      floating_ipv4 = true
+      # reserve IPv6 address as static target for the HAproxy ADN service
       floating_ipv6 = true
     }
     "aur.archlinux.org" = {
       server_type = "cpx52"
-      # reserve extra IPs as static target for the HAproxy ADN service
-      floating_ipv4 = true
+      # reserve IPv6 address as static target for the HAproxy ADN service
       floating_ipv6 = true
     }
     "bbs.archlinux.org" = {
@@ -210,8 +208,7 @@ locals {
     }
     "wiki.archlinux.org" = {
       server_type = "cpx52"
-      # reserve extra IPs as static target for the HAproxy ADN service
-      floating_ipv4 = true
+      # reserve IPv6 address as static target for the HAproxy ADN service
       floating_ipv6 = true
     }
   }
