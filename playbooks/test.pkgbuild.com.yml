@@ -10,4 +10,5 @@
     - { role: root_ssh }
     - { role: nginx }
     - { role: fail2ban }
+    - { role: prometheus_exporters }
     - { role: proxy_test, public_domain: 'test.pkgbuild.com' }
