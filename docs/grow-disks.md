@@ -7,18 +7,26 @@ To use the additional space, one needs to grow the partition and the filesystem.
 
 Grow the partition with a tool called growpart
 
-    growpart /dev/sdX <partnum>
+```
+growpart /dev/sdX <partnum>
+```
 
 So for most of our machines this is:
 
-    growpart /dev/sda 1
+```
+growpart /dev/sda 1
+```
 
 ## Resizing filesystem
 
 This is straight forward
 
-    btrfs fi res max <mountpoint>
+```
+btrfs fi res max <mountpoint>
+```
 
 For most of our setups, being in the root homedir:
 
-    btrfs fi res max .
+```
+btrfs fi res max .
+```
