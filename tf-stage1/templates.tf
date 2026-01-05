@@ -240,11 +240,11 @@ resource "hcloud_server" "machine" {
   server_type        = each.value.server_type
   backups            = lookup(local.machines[each.key], "backups", false)
   keep_disk          = true
-  datacenter         = "fsn1-dc14"
+  location           = "fsn1-dc14"
   delete_protection  = true
   rebuild_protection = true
   lifecycle {
-    ignore_changes = [image, datacenter]
+    ignore_changes = [image, location]
   }
   public_net {
     ipv4_enabled = try(each.value.ipv4_enabled, true)
