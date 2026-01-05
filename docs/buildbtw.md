@@ -1,6 +1,7 @@
 # buildbtw
 
 The [buildbtw build service](https://gitlab.archlinux.org/archlinux/buildbtw) is deployed to three hosts:
+
 - buildbtw.dev.archlinux.org (dynamically created development instances for [GitLab Review Apps](https://docs.gitlab.com/ci/review_apps/))
 - buildbtw.staging.archlinux.org (staging instance which is deployed from images of the `main` branch)
 - buildbtw.archlinux.org (production instance from tagged point versions like `v1.2.3`)
@@ -8,27 +9,34 @@ The [buildbtw build service](https://gitlab.archlinux.org/archlinux/buildbtw) is
 A single Ansible playbook deploys all hosts.
 
 ## Dynamic Deployments
+
 We use [webhook](https://github.com/adnanh/webhook) in order to receive calls from GitLab CI to deploy/undeploy a branch.
 This way, we can (re)deploy instances dynamically via HTTP calls.
 
 For debugging, it might come in handy to call this manually.
 For instance, you could redeploy the main branch like this:
+
 ```
 curl -H "Authorization: Bearer $(misc/get_key.py group_vars/all/vault_buildbtw.yml vault_buildbtw_staging_deploy_token)" "https://buildbtw.staging.archlinux.org/hooks/deploy-branch?branch=main"
 ```
+
 To manually undeploy a dev instance, you could do this:
+
 ```
 curl -H "Authorization: Bearer $(misc/get_key.py group_vars/all/vault_buildbtw.yml vault_buildbtw_dev_deploy_token)" "https://buildbtw.dev.archlinux.org/hooks/deploy-branch?branch=my-old-instance"
 ```
 
 ## Static Deployments
+
 Our production instance is managed and deployed manually by devops. It is not deployable from CI.
 To bump its version, change `buildbtw_image_tag` in `host_vars/buildbtw.archlinux.org/misc.yml` and then run
+
 ```
 ansible-playbook playbooks/buildbtw.yml -l buildbtw.dev.archlinux.org -t buildbtw
 ```
 
 ## Systemd Management
+
 We use [systemd container units](https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html) in rootful mode.
 We use the container units for better integration with systemd.
 
