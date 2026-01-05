@@ -71,6 +71,8 @@ locals {
   #   - zone (optional, required for pkgbuild.com machines)
   #   - ipv4_enabled (optional, set to false to create an IPv6-only server)
   #   - location (optional, defaults to 'fsn1')
+  #   - floating_ipv4 (optional, creates an additional ipv4 floating address for the server)
+  #   - floating_ipv6 (optional, creates an additional ipv6 floating address for the server)
   #
   # Example:
   # "archlinux.org" = {
