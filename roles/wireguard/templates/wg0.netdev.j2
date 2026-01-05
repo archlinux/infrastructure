@@ -7,9 +7,14 @@ ListenPort=51820
 PrivateKey=@network.wireguard.private.wg0
 
 {% for host in groups['all'] if host != inventory_hostname %}
+# {{ host }}
 [WireGuardPeer]
-PublicKey={{ hostvars[host]['wireguard_public_key'] }}
-AllowedIPs={{ hostvars[host]['wireguard_address'] }}/32
+PublicKey={{ hostvars[host]['wireguard_public_key'] | mandatory(host + ' is missing mandatory host var wireguard_public_key') }}
+AllowedIPs={{ hostvars[host]['wireguard_address'] | mandatory(host + ' is missing mandatory host var wireguard_address') }}/32
+{% if hostvars[host]['ansible_host'] is defined and (hostvars[host]['nginx_proxy_protocol_upstream_host'] is defined or hostvars[host]['nginx_proxy_vendor'] is defined) %}
+Endpoint={{ hostvars[host]['ansible_host'] }}:51820
+{% else %}
 Endpoint={{ host }}:51820
+{% endif %}
 
 {% endfor %}
