@@ -4,7 +4,7 @@ terraform {
       source = "hashicorp/external"
     }
     keycloak = {
-      source = "mrparkers/keycloak"
+      source = "keycloak/keycloak"
     }
     uptimerobot = {
       source = "vexxhost/uptimerobot"

@@ -615,6 +615,7 @@ resource "keycloak_authentication_subflow" "registration_form" {
   provider_id       = "form-flow"
   authenticator     = "registration-page-form"
   requirement       = "REQUIRED"
+  priority          = 1
 }
 
 resource "keycloak_authentication_execution" "registration_user_creation" {
@@ -622,6 +623,7 @@ resource "keycloak_authentication_execution" "registration_user_creation" {
   parent_flow_alias = keycloak_authentication_subflow.registration_form.alias
   authenticator     = "registration-user-creation"
   requirement       = "REQUIRED"
+  priority          = 2
 }
 
 resource "keycloak_authentication_execution" "registration_password_action" {
@@ -629,7 +631,7 @@ resource "keycloak_authentication_execution" "registration_password_action" {
   parent_flow_alias = keycloak_authentication_subflow.registration_form.alias
   authenticator     = "registration-password-action"
   requirement       = "REQUIRED"
-  depends_on        = [keycloak_authentication_execution.registration_user_creation]
+  priority          = 3
 }
 
 resource "keycloak_authentication_execution" "registration_hcaptcha_action" {
@@ -637,7 +639,7 @@ resource "keycloak_authentication_execution" "registration_hcaptcha_action" {
   parent_flow_alias = keycloak_authentication_subflow.registration_form.alias
   authenticator     = "registration-hcaptcha-action"
   requirement       = "REQUIRED"
-  depends_on        = [keycloak_authentication_execution.registration_password_action]
+  priority          = 4
 }
 
 resource "keycloak_authentication_execution_config" "registration_hcaptcha_action_config" {
@@ -654,9 +656,6 @@ resource "keycloak_authentication_execution_config" "registration_hcaptcha_actio
 //
 // Try misc/kcadm_wrapper.sh get authentication/flows/{{ your flow alias}}/executions
 // to make this a whole lot easier.
-// NOTE: We use the `depends_on` calls to properly order the executions and subflows inside the
-// flow. This has to be done until https://github.com/mrparkers/terraform-provider-keycloak/issues/296
-// is fixed. :(
 // We want to end up with something like this:
 //
 // Arch Browser flow
@@ -686,7 +685,7 @@ resource "keycloak_authentication_execution" "cookie" {
   parent_flow_alias = keycloak_authentication_flow.arch_browser_flow.alias
   authenticator     = "auth-cookie"
   requirement       = "ALTERNATIVE"
-  depends_on        = [keycloak_authentication_flow.arch_browser_flow]
+  priority          = 1
 }
 
 resource "keycloak_authentication_execution" "identity_provider_redirector" {
@@ -694,7 +693,7 @@ resource "keycloak_authentication_execution" "identity_provider_redirector" {
   parent_flow_alias = keycloak_authentication_flow.arch_browser_flow.alias
   authenticator     = "identity-provider-redirector"
   requirement       = "ALTERNATIVE"
-  depends_on        = [keycloak_authentication_execution.cookie]
+  priority          = 2
 }
 
 resource "keycloak_authentication_subflow" "password_and_2fa" {
@@ -702,7 +701,7 @@ resource "keycloak_authentication_subflow" "password_and_2fa" {
   alias             = "Password and 2FA subflow"
   parent_flow_alias = keycloak_authentication_flow.arch_browser_flow.alias
   requirement       = "ALTERNATIVE"
-  depends_on        = [keycloak_authentication_execution.identity_provider_redirector]
+  priority          = 3
 }
 
 resource "keycloak_authentication_execution" "username_password_form" {
@@ -710,6 +709,7 @@ resource "keycloak_authentication_execution" "username_password_form" {
   parent_flow_alias = keycloak_authentication_subflow.password_and_2fa.alias
   authenticator     = "auth-username-password-form"
   requirement       = "REQUIRED"
+  priority          = 4
 }
 
 resource "keycloak_authentication_subflow" "_2fa" {
@@ -717,7 +717,7 @@ resource "keycloak_authentication_subflow" "_2fa" {
   alias             = "2FA subflow"
   parent_flow_alias = keycloak_authentication_subflow.password_and_2fa.alias
   requirement       = "REQUIRED"
-  depends_on        = [keycloak_authentication_execution.username_password_form]
+  priority          = 5
 }
 
 resource "keycloak_authentication_execution" "webauthn_form" {
@@ -725,6 +725,7 @@ resource "keycloak_authentication_execution" "webauthn_form" {
   parent_flow_alias = keycloak_authentication_subflow._2fa.alias
   authenticator     = "webauthn-authenticator"
   requirement       = "ALTERNATIVE"
+  priority          = 6
 }
 
 resource "keycloak_authentication_execution" "otp_form" {
@@ -732,7 +733,7 @@ resource "keycloak_authentication_execution" "otp_form" {
   parent_flow_alias = keycloak_authentication_subflow._2fa.alias
   authenticator     = "auth-otp-form"
   requirement       = "ALTERNATIVE"
-  depends_on        = [keycloak_authentication_execution.webauthn_form]
+  priority          = 7
 }
 
 resource "keycloak_authentication_subflow" "otp_default" {
@@ -740,7 +741,7 @@ resource "keycloak_authentication_subflow" "otp_default" {
   alias             = "OTP Default Subflow"
   parent_flow_alias = keycloak_authentication_subflow._2fa.alias
   requirement       = "ALTERNATIVE"
-  depends_on        = [keycloak_authentication_execution.otp_form]
+  priority          = 8
 }
 
 resource "keycloak_authentication_execution" "otp_default_form" {
@@ -748,6 +749,7 @@ resource "keycloak_authentication_execution" "otp_default_form" {
   parent_flow_alias = keycloak_authentication_subflow.otp_default.alias
   authenticator     = "auth-otp-form"
   requirement       = "REQUIRED"
+  priority          = 9
 }
 
 // Add new custom post-Identity Provider login flow with forced OTP for some user roles
@@ -769,6 +771,7 @@ resource "keycloak_authentication_execution" "ipr_webauthn_form" {
   parent_flow_alias = keycloak_authentication_flow.arch_post_ipr_flow.alias
   authenticator     = "webauthn-authenticator"
   requirement       = "ALTERNATIVE"
+  priority          = 1
 }
 
 resource "keycloak_authentication_execution" "ipr_otp_form" {
@@ -776,7 +779,7 @@ resource "keycloak_authentication_execution" "ipr_otp_form" {
   parent_flow_alias = keycloak_authentication_flow.arch_post_ipr_flow.alias
   authenticator     = "auth-otp-form"
   requirement       = "ALTERNATIVE"
-  depends_on        = [keycloak_authentication_execution.ipr_webauthn_form]
+  priority          = 2
 }
 
 resource "keycloak_authentication_subflow" "ipr_otp_default" {
@@ -784,7 +787,7 @@ resource "keycloak_authentication_subflow" "ipr_otp_default" {
   alias             = "IPR OTP Default Subflow"
   parent_flow_alias = keycloak_authentication_flow.arch_post_ipr_flow.alias
   requirement       = "ALTERNATIVE"
-  depends_on        = [keycloak_authentication_execution.ipr_otp_form]
+  priority          = 3
 }
 
 resource "keycloak_authentication_execution" "ipr_otp_default_form" {
@@ -792,6 +795,7 @@ resource "keycloak_authentication_execution" "ipr_otp_default_form" {
   parent_flow_alias = keycloak_authentication_subflow.ipr_otp_default.alias
   authenticator     = "auth-otp-form"
   requirement       = "REQUIRED"
+  priority          = 4
 }
 
 // Add new custom Reset Credentials flow that asks users to verify 2FA before resetting their password
@@ -819,6 +823,7 @@ resource "keycloak_authentication_execution" "rc_choose_user" {
   parent_flow_alias = keycloak_authentication_flow.arch_reset_credentials_flow.alias
   authenticator     = "reset-credentials-choose-user"
   requirement       = "REQUIRED"
+  priority          = 1
 }
 
 resource "keycloak_authentication_execution" "rc_reset_email" {
@@ -826,7 +831,7 @@ resource "keycloak_authentication_execution" "rc_reset_email" {
   parent_flow_alias = keycloak_authentication_flow.arch_reset_credentials_flow.alias
   authenticator     = "reset-credential-email"
   requirement       = "REQUIRED"
-  depends_on        = [keycloak_authentication_execution.rc_choose_user]
+  priority          = 2
 }
 
 resource "keycloak_authentication_subflow" "rc_conditional_2fa" {
@@ -834,7 +839,7 @@ resource "keycloak_authentication_subflow" "rc_conditional_2fa" {
   alias             = "Conditional Reset Credentials 2FA Subflow"
   parent_flow_alias = keycloak_authentication_flow.arch_reset_credentials_flow.alias
   requirement       = "CONDITIONAL"
-  depends_on        = [keycloak_authentication_execution.rc_choose_user]
+  priority          = 3
 }
 
 resource "keycloak_authentication_execution" "rc_2fa_condition" {
@@ -842,6 +847,7 @@ resource "keycloak_authentication_execution" "rc_2fa_condition" {
   parent_flow_alias = keycloak_authentication_subflow.rc_conditional_2fa.alias
   authenticator     = "conditional-user-configured"
   requirement       = "REQUIRED"
+  priority          = 4
 }
 
 resource "keycloak_authentication_subflow" "rc_2fa" {
@@ -849,7 +855,7 @@ resource "keycloak_authentication_subflow" "rc_2fa" {
   alias             = "Reset Credentials 2FA Subflow"
   parent_flow_alias = keycloak_authentication_subflow.rc_conditional_2fa.alias
   requirement       = "REQUIRED"
-  depends_on        = [keycloak_authentication_execution.rc_2fa_condition]
+  priority          = 5
 }
 
 resource "keycloak_authentication_execution" "rc_webauthn_form" {
@@ -857,6 +863,7 @@ resource "keycloak_authentication_execution" "rc_webauthn_form" {
   parent_flow_alias = keycloak_authentication_subflow.rc_2fa.alias
   authenticator     = "webauthn-authenticator"
   requirement       = "ALTERNATIVE"
+  priority          = 6
 }
 
 resource "keycloak_authentication_execution" "rc_otp_form" {
@@ -864,7 +871,7 @@ resource "keycloak_authentication_execution" "rc_otp_form" {
   parent_flow_alias = keycloak_authentication_subflow.rc_2fa.alias
   authenticator     = "auth-otp-form"
   requirement       = "ALTERNATIVE"
-  depends_on        = [keycloak_authentication_execution.rc_webauthn_form]
+  priority          = 7
 }
 
 resource "keycloak_authentication_subflow" "rc_otp_default" {
@@ -872,7 +879,7 @@ resource "keycloak_authentication_subflow" "rc_otp_default" {
   alias             = "Reset Credentials OTP Default Subflow"
   parent_flow_alias = keycloak_authentication_subflow.rc_2fa.alias
   requirement       = "ALTERNATIVE"
-  depends_on        = [keycloak_authentication_execution.rc_otp_form]
+  priority          = 8
 }
 
 resource "keycloak_authentication_execution" "rc_otp_default_form" {
@@ -880,6 +887,7 @@ resource "keycloak_authentication_execution" "rc_otp_default_form" {
   parent_flow_alias = keycloak_authentication_subflow.rc_otp_default.alias
   authenticator     = "auth-otp-form"
   requirement       = "REQUIRED"
+  priority          = 9
 }
 
 resource "keycloak_authentication_execution" "rc_reset_password" {
@@ -887,7 +895,7 @@ resource "keycloak_authentication_execution" "rc_reset_password" {
   parent_flow_alias = keycloak_authentication_flow.arch_reset_credentials_flow.alias
   authenticator     = "reset-password"
   requirement       = "REQUIRED"
-  depends_on        = [keycloak_authentication_subflow.rc_conditional_2fa]
+  priority          = 10
 }
 
 output "gitlab_saml_configuration" {
