@@ -521,6 +521,14 @@ arch_users:
       - mail.archlinux.org
     groups:
       - support-staff
+  kycko:
+    name: "Anton Samartsev"
+    email: "kycko@archlinux.org"
+    ssh_key: kycko.pub
+    hosts:
+      - mail.archlinux.org
+    groups:
+      - support-staff
   lahwaacz:
     name: "Jakub Klinkovský"
     email: "lahwaacz@archlinux.org"
