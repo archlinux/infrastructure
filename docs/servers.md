@@ -24,6 +24,11 @@
 ### Services
   - aurweb
 
+## bastion.archlinux.org
+
+### Services
+  - SSH bastion/jump host for accessing resources which need static incoming IP. The server has a floating IPv4 assigned in Hetzner - see [vault_umea](../misc/vaults/vault_umea.yml)
+
 ## bbs.archlinux.org
 
 ### Services
