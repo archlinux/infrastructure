@@ -446,6 +446,14 @@ arch_users:
     groups:
       - packager
       - junior-packager
+  j-g00da:
+    name: "Jagoda Ślązak"
+    email: "j-g00da@archlinux.org"
+    ssh_key: j-g00da.pub
+    hosts:
+      - mail.archlinux.org
+    groups:
+      - support-staff
   jelle:
     name: "Jelle van der Waa"
     email: "jelle@archlinux.org"
