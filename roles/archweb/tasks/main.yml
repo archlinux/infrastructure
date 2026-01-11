@@ -56,12 +56,13 @@
   become_user: archweb
   register: release
 
-- name: Compile requirements.txt using uv
+- name: Compile requirements.txt using uv  # noqa no-changed-when
   command: uv pip compile --group prod pyproject.toml -o requirements.txt
   args:
     chdir: "{{ archweb_dir }}"
   become: true
   become_user: archweb
+  when: release.changed or archweb_forced_deploy
 
 - name: Make virtualenv
   command: python -m venv --system-site-packages "{{ archweb_dir }}"/env creates="{{ archweb_dir }}/env/bin/python"
