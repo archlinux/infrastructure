@@ -70,6 +70,9 @@ locals {
   #   - ttl (optional, applies to the dns entries)
   #   - zone (optional, required for pkgbuild.com machines)
   #   - ipv4_enabled (optional, set to false to create an IPv6-only server)
+  #   - location (optional, defaults to 'fsn1')
+  #   - floating_ipv4 (optional, creates an additional ipv4 floating address for the server)
+  #   - floating_ipv6 (optional, creates an additional ipv6 floating address for the server)
   #
   # Example:
   # "archlinux.org" = {
@@ -81,24 +84,28 @@ locals {
     "accounts.archlinux.org" = {
       server_type = "cx23"
       domain      = "accounts"
+      location    = "hel1"
     }
     "archlinux.org" = {
       server_type = "cpx32"
       # reserve extra IPs as static target for the HAproxy ADN service
       floating_ipv4 = true
       floating_ipv6 = true
+      location      = "hel1"
     }
     "aur.archlinux.org" = {
       server_type = "cpx52"
       # reserve extra IPs as static target for the HAproxy ADN service
       floating_ipv4 = true
       floating_ipv6 = true
+      location      = "hel1"
     }
     "bbs.archlinux.org" = {
       server_type   = "cx23"
       domain        = "bbs"
       ttl           = 60
       floating_ipv6 = true
+      location      = "nbg1"
     }
     "buildbtw.dev.archlinux.org" = {
       server_type = "cx23"
@@ -142,35 +149,43 @@ locals {
     "homedir.archlinux.org" = {
       server_type = "cx23"
       domain      = "homedir"
+      location    = "nbg1"
     }
     "lists.archlinux.org" = {
       server_type = "cx23"
       domain      = "lists"
+      location    = "hel1"
     }
     "mail.archlinux.org" = {
       server_type = "cx23"
       domain      = "mail"
+      location    = "hel1"
     }
     "man.archlinux.org" = {
       server_type = "cx23"
+      location    = "hel1"
     }
     "matrix.archlinux.org" = {
       server_type = "cpx32"
       domain      = "matrix"
+      location    = "nbg1"
     }
     "md.archlinux.org" = {
       server_type = "cx23"
       domain      = "md"
+      location    = "hel1"
     }
     "mirror.pkgbuild.com" = {
       server_type = "cx33"
       domain      = "mirror"
       zone        = hcloud_zone.pkgbuild_com.id
       http3       = true
+      location    = "nbg1"
     }
     "monitoring.archlinux.org" = {
       server_type = "cpx32"
       domain      = "monitoring"
+      location    = "hel1"
     }
     "mumble.archlinux.org" = {
       server_type = "cx23"
@@ -183,27 +198,33 @@ locals {
     "phrik.archlinux.org" = {
       server_type = "cx23"
       domain      = "phrik"
+      location    = "nbg1"
     }
     "quassel.archlinux.org" = {
       server_type = "cx23"
       domain      = "quassel"
+      location    = "nbg1"
     }
     "redirect.archlinux.org" = {
       server_type = "cx23"
       domain      = "redirect"
+      location    = "hel1"
     }
     "reproducible.archlinux.org" = {
       server_type = "cx23"
       domain      = "reproducible"
+      location    = "hel1"
     }
     "security.archlinux.org" = {
       server_type = "cx23"
       domain      = "security"
+      location    = "hel1"
     }
     "state.archlinux.org" = {
       server_type = "cx23"
       domain      = "state"
       backups     = true
+      location    = "nbg1"
     }
     "test.pkgbuild.com" = {
       server_type = "cx23"
@@ -213,6 +234,7 @@ locals {
       # reserve extra IPs as static target for the HAproxy ADN service
       floating_ipv4 = true
       floating_ipv6 = true
+      location      = "hel1"
     }
   }
 
