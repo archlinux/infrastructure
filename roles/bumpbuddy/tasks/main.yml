@@ -3,6 +3,7 @@
 
 - name: Clone bumpbuddy repo # noqa: latest
   git: repo=https://gitlab.archlinux.org/archlinux/bumpbuddy.git dest=/opt/bumpbuddy version="{{ bumpbuddy_version }}" force=true
+  register: git_clone_state
 
 - name: Create bumpbuddy user
   user: name=bumpbuddy state=present shell=/usr/bin/bash
@@ -10,8 +11,8 @@
 - name: Create clones directory
   file: path=/opt/bumpbuddy/source_repos state=directory mode=0755 owner=bumpbuddy group=bumpbuddy
 
-- name: Create web directory
-  file: path=/opt/bumpbuddy/web state=directory mode=0755 owner=bumpbuddy group=bumpbuddy
+- name: Create data directory
+  file: path=/opt/bumpbuddy/data state=directory mode=0755 owner=bumpbuddy group=bumpbuddy
 
 - name: Create nvchecker config directory
   file: path=/home/bumpbuddy/.config/nvchecker state=directory mode=0755 owner=bumpbuddy group=bumpbuddy
@@ -48,6 +49,12 @@
 
 - name: Install gitconfig
   copy: src=gitconfig dest=/etc/gitconfig owner=root group=root mode=0644
+
+- name: Invoke dl-web-deps script  # noqa no-changed-when
+  command: /opt/bumpbuddy/dl-web-deps.sh
+  args:
+    chdir: /opt/bumpbuddy
+  when: git_clone_state.changed 
 
 - name: Start and enable systemd timers
   systemd_service: name="{{ item }}" enabled=true state=started
