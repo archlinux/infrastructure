@@ -3,7 +3,7 @@ This template should be used by DevOps members when adding a GitLab Pages
 project to GitLab.
 
 In order to use GitLab Pages with Arch Linux, you'll have to specifically
-request a custom subdomain below `archlinux.page` or `archlinux.org` to be
+request a custom subdomain below `archlinux.page` to be
 assigned. We don't allow random projects to use Pages because of legal and
 safety reasons (we don't want people to be able to trick others into thinking
 something hosted below one of our domains is official).
