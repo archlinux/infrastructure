@@ -33,8 +33,9 @@ If you want to add a new official project, here are some guidelines to follow:
 1. [ ] Make sure that the *Push Rules* in https://gitlab.archlinux.org/archlinux/my-example/-/settings/repository
        reflect these values:
    - `Reject unverified users`: `on`
+   - `Reject inconsistent user name`: `on`
    - `Reject unsigned commits`: `on`
-   - `Reject inconsistent username`: `on`
+   - `Reject commits that aren't DCO certified`: `off`
    - `Do not allow users to remove tags with git push`: `on`
    - `Check whether author is a GitLab user`: `on`
    - `Prevent pushing secret files`: `on`
