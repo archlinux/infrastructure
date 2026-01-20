@@ -42,18 +42,25 @@ If you want to add a new official project, here are some guidelines to follow:
    - All of these should be activated by default as per group rules but it's good to check.
 1. [ ] The *Protected Branches* in https://gitlab.archlinux.org/archlinux/my-example/-/settings/repository should specify
        `Allowed to merge` and `Allowed to push` as `Developers + Maintainers.`
-1. [ ] Disable unneeded project features under *Visibility, project features, permissions* (https://gitlab.archlinux.org/archlinux/my-example/edit)
-   Always:
-   - `Users can request access`: `off`
-   Often, but not always:
-   - Repository -> Container registry
-   - Repository -> Git Large File Storage (LFS)
-   - Repository -> Packages
-   - Analytics
-   - Requirements
-   - Security & Compliance
-   - Wiki
-   - Operations
+1. [ ] Disable unneeded project features under `Visibility, project features, permissions` (https://gitlab.archlinux.org/archlinux/my-example/edit)
+   - Always:
+     - `Users can request access`: `off`
+   - Usually, but not always:
+     - `Repository`
+     - `Repository` -> `Git Large File Storage (LFS)`
+     - `Container registry`
+     - `Analytics`
+     - `Requirements`
+     - `Security & Compliance`
+     - `Wiki`
+     - `Snippets`
+     - `Package registry`
+     - `Model experiments`
+     - `Monitor`
+     - `Environments`
+     - `Feature flags`
+     - `Infrastructure`
+1. [ ] Disable `Activate Service Desk` under `Service Desk`
 
 ## GitHub.com mirroring checklist
 
