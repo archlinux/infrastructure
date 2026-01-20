@@ -338,20 +338,6 @@ arch_users:
       - mail.archlinux.org
     groups:
       - support-staff
-  foutrelis:
-    name: "Evangelos Foutras"
-    email: "foutrelis@archlinux.org"
-    ssh_key: foutrelis.pub
-    additional_ssh_keys:
-      - name: foutrelis_buildhost.pub
-        hosts:
-          - build.archlinux.org
-    groups:
-      - packager
-      - junior-packager
-      - dev
-      - junior-dev
-      - tu
   foxboron:
     name: "Morten Linderud"
     email: "foxboron@archlinux.org"

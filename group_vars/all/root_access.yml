@@ -1,7 +1,6 @@
 # deploy tag 'sudo' when this changes
 sudo_users:
   - root
-  - foutrelis
   - freswa
   - jelle
   - svenstaro
@@ -12,7 +11,6 @@ sudo_users:
 
 # deploy tag 'root_ssh' when this changes
 root_ssh_keys:
-  - key: foutrelis.pub
   - key: freswa.pub
   - key: heftig_nitrokey.pub
     hosts:
@@ -36,7 +34,6 @@ root_ssh_keys:
 # `ansible-vault view misc/vaults/vault_{hetzner,hcloud}.yml`
 # NOTE: adding a key to this list gives access to both default and super vaults
 vault_super_pgpkeys: &vault_super_pgpkeys
-  - 86CFFCA918CF3AF47147588051E8B148A9999C34  # foutrelis
   - 05C7775A9E8B977407FE08E69D4C5AA15426DA0A  # freswa
   - E499C79F53C96A54E572FEE1C06086337C50773E  # jelle
   - 8FC15A064950A99DD1BD14DD39E4B877E62EB915  # svenstaro

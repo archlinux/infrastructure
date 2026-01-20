@@ -59,7 +59,6 @@
   loop:
     - anthraxx@archlinux.org
     - jelle@archlinux.org
-    - foutrelis@archlinux.org
   register: gpg
   changed_when: "gpg.rc == 0"
 
