@@ -20,3 +20,7 @@ fail2ban_jails:
   postfix: false
   dovecot: false
   nginx_limit_req: true
+
+anubis_extra_rules:
+  - skip-all-non-browser
+  - gitlab-upstream-location

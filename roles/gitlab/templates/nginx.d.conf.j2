@@ -16,8 +16,8 @@ map $remote_addr $foobar {
     2a01:4f8:c010:d02::1 http://127.0.0.1:3000;  # gluebuddy.archlinux.org
     168.119.250.50 http://127.0.0.1:3000;        # bumpbuddy.archlinux.org
     2a01:4f8:c010:baed::1 http://127.0.0.1:3000; # bumpbuddy.archlinux.org
-#    default http://127.0.0.1:8923;               # default to Anubis
-    default http://127.0.0.1:3000;               # bypass
+    default http://127.0.0.1:8923;               # default to Anubis
+#    default http://127.0.0.1:3000;               # bypass
 }
 
 server {
@@ -39,7 +39,6 @@ server {
 server {
     include      snippets/listen-443.conf;
     server_name  {{ gitlab_domain }} {{ gitlab_registry_domain }};
-
     access_log   /var/log/nginx/{{ gitlab_domain }}/access.log main;
     access_log   /var/log/nginx/{{ gitlab_domain }}/access.log.json json_main;
     error_log    /var/log/nginx/{{ gitlab_domain }}/error.log;
@@ -47,30 +46,6 @@ server {
     acme_certificate     letsencrypt;
     ssl_certificate      $acme_certificate;
     ssl_certificate_key  $acme_certificate_key;
-
-    # location /api/graphql {
-    #     deny all;
-    #     return 429;
-    # }
-
-    # Allow gluebuddy to query members
-    location ~ /packaging/upstream/packaging/upstream/members {
-        proxy_pass http://127.0.0.1:8081;
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-For $remote_addr;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection $connection_upgrade;
-        proxy_read_timeout 3600;
-        proxy_connect_timeout 300;
-        client_max_body_size 10g;
-    }
-
-    location ~ /packaging/upstream/.* {
-        limit_req zone=scrapelimit;
-        limit_req_status 429;
-
-        return 429;
-    }
 
     location / {
         proxy_set_header Host $host;
@@ -100,30 +75,6 @@ server {
     access_log   /var/log/nginx/gitlab.archlinux.org/access.log main;
     access_log   /var/log/nginx/gitlab.archlinux.org/access.log.json json_main;
     error_log    /var/log/nginx/gitlab.archlinux.org/error.log;
-
-    # location /api/graphql {
-    #     deny all;
-    #     return 429;
-    # }
-
-    # Allow gluebuddy to query members
-    location ~ /packaging/upstream/packaging/upstream/members {
-        proxy_pass http://127.0.0.1:8081;
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-For $remote_addr;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection $connection_upgrade;
-        proxy_read_timeout 3600;
-        proxy_connect_timeout 300;
-        client_max_body_size 10g;
-    }
-
-    location ~ /packaging/upstream/.* {
-        limit_req zone=scrapelimit;
-        limit_req_status 429;
-
-        return 429;
-    }
 
     location / {
         # limit_req zone=scrapelimit burst=20 nodelay;
