@@ -69,6 +69,9 @@
 - name: Enable nginx
   service: name=nginx enabled=yes
 
+- name: Configure geoipupdate
+  include_role: name=geoipupdate
+
 - name: Install goaccess
   pacman: name=goaccess state=present
 
