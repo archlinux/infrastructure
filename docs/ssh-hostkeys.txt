@@ -304,15 +304,6 @@
 256 MD5:90:98:6c:ee:72:b5:a6:dc:bf:ae:12:39:2e:99:b2:c4 root@repos.archlinux.org (ED25519)
 3072 MD5:48:53:1e:51:81:7f:40:fd:ee:7c:dc:06:7c:98:a3:9e root@repos.archlinux.org (RSA)
 
-# repro2.pkgbuild.com
-256 SHA256:enqq08K6vQV8CcISu1upR3Ooa63HD6Z+PtRzMVArnTk root@repro2.pkgbuild.com (ECDSA)
-256 SHA256:CA71k+BRGrEEcLLVKqtUBU55th2W12Emq/x++zGtoH0 root@repro2.pkgbuild.com (ED25519)
-3072 SHA256:zQy/zasnSYXF5h863hxxjKy7xqw2HifboYGBb59g9Vg root@repro2.pkgbuild.com (RSA)
-
-256 MD5:95:c1:25:1a:b3:46:f3:d2:9f:19:21:02:9b:e7:5f:9e root@repro2.pkgbuild.com (ECDSA)
-256 MD5:21:76:73:3b:ac:30:6d:f5:a5:f6:52:2e:13:dc:b4:cb root@repro2.pkgbuild.com (ED25519)
-3072 MD5:12:70:8a:d4:ef:a9:43:6e:6b:53:46:71:f7:96:ec:fb root@repro2.pkgbuild.com (RSA)
-
 # repro4.pkgbuild.com
 256 SHA256:OYEQvCD+cjMC5wm/Fm+uQAJf3Lh2k5YtPHnhNw5Na3w root@repro4.pkgbuild.com (ECDSA)
 256 SHA256:eoo6mKNJtfDEKjRVi2iY5/OGiRNtBIunTZH+Xy0MYdU root@repro4.pkgbuild.com (ED25519)

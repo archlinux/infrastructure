@@ -102,7 +102,6 @@ runner2.archlinux.org
 reproducible.archlinux.org
 
 [rebuilderd_workers]
-repro2.pkgbuild.com
 repro4.pkgbuild.com
 
 [memcached]
@@ -118,7 +117,6 @@ monitoring.archlinux.org
 
 [kape_servers]
 frankfurt.mirror.pkgbuild.com
-repro2.pkgbuild.com
 
 [hcloud]
 accounts.archlinux.org
