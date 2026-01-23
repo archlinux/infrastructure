@@ -23,7 +23,6 @@ Environment="RUST_LOG=debug,sqlx=info,hyper_util::client=info"
 Pull=newer
 Volume={{ buildbtw_dir }}:/var/lib/buildbtw
 Volume=/run/buildbtw:/run/buildbtw
-WorkingDir={{ buildbtw_dir }}
 
 [Install]
 WantedBy=multi-user.target default.target
