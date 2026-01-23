@@ -17,13 +17,12 @@ Environment="BUILDBTW_BASE_URL=https://%i.{{ buildbtw_domain }}"
 {% else %}
 Environment="BUILDBTW_BASE_URL=https://{{ buildbtw_domain }}"
 {% endif %}
-Environment="BUILDBTW_DATABASE_FILE=buildbtw-%i.sqlite"
+Environment="BUILDBTW_DATABASE_FILE=/var/lib/buildbtw/buildbtw-%i.sqlite"
 Environment="BUILDBTW_COOKIE_ENCRYPTION_KEY={{ vault_buildbtw_cookie_encryption_key }}"
 Environment="RUST_LOG=debug,sqlx=info,hyper_util::client=info"
 Pull=newer
 Volume={{ buildbtw_dir }}:/var/lib/buildbtw
 Volume=/run/buildbtw:/run/buildbtw
-WorkingDir={{ buildbtw_dir }}
 
 [Install]
 WantedBy=multi-user.target default.target
