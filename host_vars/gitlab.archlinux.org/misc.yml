@@ -15,3 +15,12 @@ system_disks:
   - /dev/nvme0n1
   - /dev/nvme1n1
 nginx_explict_listen_addresses: true
+fail2ban_jails:
+  sshd: true
+  postfix: false
+  dovecot: false
+  nginx_limit_req: true
+
+anubis_extra_rules:
+  - skip-all-non-browser
+  - gitlab-upstream-location
