@@ -4,7 +4,6 @@
   roles:
     - { role: common }
     - { role: archusers }
-    - { role: bugbot }
     - { role: phrik }
     - { role: sshd }
     - { role: root_ssh }
