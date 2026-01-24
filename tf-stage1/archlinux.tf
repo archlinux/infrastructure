@@ -479,10 +479,6 @@ locals {
       ipv6_address = "2407:b9c0:b001:c4:26a3:f0ff:fe46:b1dc"
       http3        = true
     }
-    repro2 = {
-      ipv4_address = "212.102.38.209"
-      ipv6_address = "2a02:6ea0:c238::2"
-    }
     repro4 = {
       ipv6_address = "2001:1470:fffd:3050::189:1"
     }
