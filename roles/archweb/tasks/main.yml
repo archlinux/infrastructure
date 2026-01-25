@@ -52,6 +52,7 @@
     version={{ archweb_version }}
     verify_commit=true
     gpg_allowlist={{ archweb_pgp_key }}
+    recursive=true
   become: true
   become_user: archweb
   register: release
