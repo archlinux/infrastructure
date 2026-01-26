@@ -98,6 +98,12 @@ locals {
       floating_ipv6 = true
       location      = "hel1"
     }
+    "bastion.archlinux.org" = {
+      server_type = "cx23"
+      domain      = "bastion"
+      # reserve extra IP for allowlisting in management interface
+      floating_ipv4 = true
+    }
     "bbs.archlinux.org" = {
       server_type   = "cx23"
       domain        = "bbs"

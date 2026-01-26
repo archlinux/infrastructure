@@ -24,6 +24,11 @@
 ### Services
   - aurweb
 
+## bastion.archlinux.org
+
+### Services
+  - SSH bastion/jump host for accessing resources which need static incoming IP. The server has a floating IPv4 assigned in Hetzner - see [vault_umea](../misc/vaults/vault_umea.yml). Once a tunnel is setup using `ssh -D1080 root@bastion.archlinux.org` see [FoxyProxy Docs](https://foxyproxy.github.io/browser-extension/src/content/help.html) on how to setup for required domain.
+
 ## bbs.archlinux.org
 
 ### Services

@@ -1,0 +1,6 @@
+sshd_tcp_forwarding: local
+additional_addresses: ["5.75.217.8/32"]
+system_disks:
+  - /dev/sda
+wireguard_address: 10.0.0.59
+wireguard_public_key: WJBMDv6mnn1NKxC2FCXMle46OtzxTD9eT6Gc4gCPVRA=

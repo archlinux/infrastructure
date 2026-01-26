@@ -1,1 +1,2 @@
 sshd_port: 22
+sshd_tcp_forwarding: "no"
