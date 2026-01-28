@@ -184,6 +184,12 @@
   become: true
   become_user: "{{ aurweb_user }}"
 
+- name: Setup HTTP redirect
+  include_role:
+    name: http_redirect
+  vars:
+    domain: "{{ aurweb_domain }}"
+
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest={{ aurweb_nginx_conf }} owner=root group=http mode=640
   notify: Reload nginx
