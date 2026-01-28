@@ -5,7 +5,7 @@ metrics-enabled=true
 http-enabled=true
 http-host=127.0.0.1
 http-port={{ keycloak_port }}
-proxy=edge
+proxy-headers=xforwarded
 
 db=postgres
 db-username={{ vault_keycloak_db_user }}
@@ -16,4 +16,4 @@ db-url=jdbc:postgresql://localhost/{{ keycloak_db_name }}
 # https://www.keycloak.org/2022/04/keycloak-1800-released#_openid_connect_logout
 spi-login-protocol-openid-connect-legacy-logout-redirect-uri=true
 
-features=account3
+features=account
