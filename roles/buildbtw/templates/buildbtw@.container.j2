@@ -1,7 +1,5 @@
 [Unit]
 Description=buildbtw build coordination service
-Wants=network-online.target
-After=network-online.target
 
 [Container]
 {% if buildbtw_stage == "dev" %}
