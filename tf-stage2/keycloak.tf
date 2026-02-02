@@ -359,9 +359,10 @@ resource "keycloak_saml_client" "saml_gitlab" {
   name    = "Arch Linux GitLab"
   enabled = true
 
-  signature_algorithm = "RSA_SHA256"
-  sign_documents      = true
-  sign_assertions     = true
+  signature_algorithm  = "RSA_SHA256"
+  sign_documents       = true
+  sign_assertions      = true
+  encryption_algorithm = "AES_128_CBC"
 
   valid_redirect_uris = [
     var.gitlab_instance.saml_redirect_url
