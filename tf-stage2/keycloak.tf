@@ -86,8 +86,8 @@ resource "keycloak_realm" "archlinux" {
   }
 
   login_theme   = "archlinux"
-  account_theme = "archlinux"
-  admin_theme   = "archlinux"
+  account_theme = "keycloak.v3"
+  admin_theme   = "keycloak.v2"
   email_theme   = "archlinux"
 
   browser_flow           = "Arch Browser"
