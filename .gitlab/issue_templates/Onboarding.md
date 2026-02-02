@@ -42,7 +42,7 @@ https://www.gnupg.org/gph/en/manual/x135.html
 - [ ] Subscribe **communication e-mail address** to internal [staff mailing list](https://lists.archlinux.org/mailman3/lists/staff.lists.archlinux.org/mass_subscribe/).
 - [ ] Allow sending from **communication e-mail address** on [arch-dev-public](https://lists.archlinux.org/mailman3/lists/arch-dev-public.lists.archlinux.org/members/member/) (subscribe and/or find address and remove moderation).
 - [ ] Give the user access to `#archlinux-staff` on Libera Chat.
-- [ ] Give the user a link to our [staff services page](https://wiki.archlinux.org/title/DeveloperWiki:Staff_Services).
+- [ ] Give the user a link to our [staff services page](https://manual.archlinux.page/staff/staff-services/).
 - [ ] Replace the **Team member username** with the @-prefixed username on Gitlab.
 - [ ] Remove personal information (such as **Full Name** and **Personal e-mail
   address**, as well as the clearsigned representation of this data), remove
