@@ -52,6 +52,24 @@ data "external" "vault_security_tracker" {
   "--format", "json"]
 }
 
+data "external" "vault_buildbtw_dev" {
+  program = ["${path.module}/../misc/get_key.py", "${path.module}/../host_vars/buildbtw.dev.archlinux.org/vault_buildbtw_dev_archlinux_org.yml",
+    "vault_buildbtw_openid_client_secret",
+  "--format", "json"]
+}
+
+data "external" "vault_buildbtw_staging" {
+  program = ["${path.module}/../misc/get_key.py", "${path.module}/../host_vars/buildbtw.staging.archlinux.org/vault_buildbtw_staging_archlinux_org.yml",
+    "vault_buildbtw_openid_client_secret",
+  "--format", "json"]
+}
+
+data "external" "vault_buildbtw_production" {
+  program = ["${path.module}/../misc/get_key.py", "${path.module}/../host_vars/buildbtw.archlinux.org/vault_buildbtw_archlinux_org.yml",
+    "vault_buildbtw_openid_client_secret",
+  "--format", "json"]
+}
+
 provider "keycloak" {
   client_id = "admin-cli"
   username  = data.external.vault_keycloak.result.vault_keycloak_admin_user
@@ -1010,6 +1028,63 @@ resource "keycloak_openid_client" "gluebuddy_openid_client" {
   use_refresh_tokens    = false
   valid_redirect_uris = [
     "https://gitlab.archlinux.org/"
+  ]
+}
+
+resource "keycloak_openid_client" "buildbtw_dev_openid_client" {
+  realm_id      = "archlinux"
+  client_id     = "buildbtw-dev"
+  client_secret = data.external.vault_buildbtw_dev.result.vault_buildbtw_openid_client_secret
+  web_origins   = []
+
+  name    = "buildbtw dev"
+  enabled = true
+
+  service_accounts_enabled = true
+
+  access_type           = "CONFIDENTIAL"
+  standard_flow_enabled = true
+  use_refresh_tokens    = true
+  valid_redirect_uris = [
+    "https://*.buildbtw.dev.archlinux.org/oidc/authorized"
+  ]
+}
+
+resource "keycloak_openid_client" "buildbtw_staging_openid_client" {
+  realm_id      = "archlinux"
+  client_id     = "buildbtw-staging"
+  client_secret = data.external.vault_buildbtw_staging.result.vault_buildbtw_openid_client_secret
+  web_origins   = []
+
+  name    = "buildbtw staging"
+  enabled = true
+
+  service_accounts_enabled = true
+
+  access_type           = "CONFIDENTIAL"
+  standard_flow_enabled = true
+  use_refresh_tokens    = true
+  valid_redirect_uris = [
+    "https://buildbtw.staging.archlinux.org/oidc/authorized"
+  ]
+}
+
+resource "keycloak_openid_client" "buildbtw_production_openid_client" {
+  realm_id      = "archlinux"
+  client_id     = "buildbtw-production"
+  client_secret = data.external.vault_buildbtw_production.result.vault_buildbtw_openid_client_secret
+  web_origins   = []
+
+  name    = "buildbtw production"
+  enabled = true
+
+  service_accounts_enabled = true
+
+  access_type           = "CONFIDENTIAL"
+  standard_flow_enabled = true
+  use_refresh_tokens    = true
+  valid_redirect_uris = [
+    "https://buildbtw.archlinux.org/oidc/authorized"
   ]
 }
 
