@@ -1,0 +1,7 @@
+# We have to split our config between Environment= entries and this file (included using EnvironmentFile=)
+# since instance variables like %i don't work in files included via EnvironmentFile= in systemd :(
+BUILDBTW_COOKIE_ENCRYPTION_KEY={{ vault_buildbtw_cookie_encryption_key }}
+BUILDBTW_OIDC_CLIENT_ID=buildbtw-{{ buildbtw_stage }}
+BUILDBTW_OIDC_CLIENT_SECRET={{ vault_buildbtw_openid_client_secret }}
+BUILDBTW_OIDC_ISSUER_URL=https://accounts.archlinux.org/realms/archlinux
+BUILDBTW_OIDC_ISSUER_NAME="Arch Linux SSO"
