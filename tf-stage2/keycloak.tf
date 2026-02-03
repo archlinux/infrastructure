@@ -97,6 +97,13 @@ resource "keycloak_realm" "archlinux" {
   login_with_email_allowed = true
   password_policy          = "length(8) and notUsername"
 
+  sso_session_idle_timeout             = "1h"
+  sso_session_max_lifespan             = "168h"
+  sso_session_idle_timeout_remember_me = "168h"
+  sso_session_max_lifespan_remember_me = "720h"
+  offline_session_idle_timeout         = "720h"
+  offline_session_max_lifespan_enabled = false
+
   web_authn_policy {
     relying_party_entity_name = "Arch Linux SSO"
     relying_party_id          = "accounts.archlinux.org"
