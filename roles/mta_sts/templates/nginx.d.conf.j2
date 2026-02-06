@@ -1,21 +1,7 @@
+include snippets/redirect-80.conf;
+
 {% for config in mta_sts %}
 {% set domain = "mta-sts." + config.domains | first %}
-server {
-    include snippets/listen-80.conf;
-
-    server_name  mta-sts.{{ config.domains | join(' mta-sts.') }};
-
-    access_log   /var/log/nginx/{{ domain }}/access.log reduced;
-    access_log   /var/log/nginx/{{ domain }}/access.log.json json_reduced;
-    error_log    /var/log/nginx/{{ domain }}/error.log;
-
-    include snippets/letsencrypt.conf;
-
-    location / {
-        access_log off;
-        return 301 https://$server_name$request_uri;
-    }
-}
 
 server {
     include      snippets/listen-443.conf;

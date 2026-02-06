@@ -15,22 +15,7 @@ upstream archwiki {
     server unix://{{ archwiki_socket }};
 }
 
-server {
-    include snippets/listen-80.conf;
-
-    server_name  {{ archwiki_domain }};
-
-    access_log   /var/log/nginx/{{ archwiki_domain }}/access.log reduced;
-    access_log   /var/log/nginx/{{ archwiki_domain }}/access.log.json json_reduced;
-    error_log    /var/log/nginx/{{ archwiki_domain }}/error.log;
-
-    include snippets/letsencrypt.conf;
-
-    location / {
-        access_log off;
-        return 301 https://$server_name$request_uri;
-    }
-}
+include snippets/redirect-80.conf;
 
 server {
     include      snippets/listen-443.conf;

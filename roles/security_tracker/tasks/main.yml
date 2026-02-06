@@ -78,6 +78,12 @@
 - name: Restrict database permissions
   file: mode=0640 owner=security group=security path="{{ security_tracker_dir }}/tracker.db"
 
+- name: Setup HTTP redirect
+  include_role:
+    name: http_redirect
+  vars:
+    domain: "{{ security_tracker_domain }}"
+
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest="{{ security_tracker_nginx_conf }}" owner=root group=root mode=644
   notify:

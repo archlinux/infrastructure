@@ -26,6 +26,12 @@
 - name: Fix uploads permissions
   file: state=directory owner="{{ archwiki_user }}" group="{{ archwiki_user }}" mode=0755 path="{{ archwiki_dir }}/uploads"
 
+- name: Setup HTTP redirect
+  include_role:
+    name: http_redirect
+  vars:
+    domain: "{{ archwiki_domain }}"
+
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest="{{ archwiki_nginx_conf }}" owner=root group=root mode=644
   notify:
