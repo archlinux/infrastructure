@@ -10,10 +10,7 @@
       - python-django-csp
       - python-psycopg2
       - python-requests
-      - python-xtarfile
       - uwsgi-plugin-python
-      - make
-      - sassc
 
 - name: Make archmanweb user
   user: name=archmanweb shell=/bin/false home="{{ archmanweb_dir }}"
@@ -43,14 +40,6 @@
   become: true
   become_user: archmanweb
   register: release
-
-- name: Build archlinux-common-style  # noqa no-changed-when
-  command:
-    cmd: make SASS=sassc
-    chdir: "{{ archmanweb_dir }}/repo/archlinux-common-style"
-  become: true
-  become_user: archmanweb
-  when: release.changed or archmanweb_forced_deploy
 
 - name: Configure archmanweb
   template: src=local_settings.py.j2 dest={{ archmanweb_dir }}/repo/local_settings.py owner=archmanweb group=archmanweb mode=0660
