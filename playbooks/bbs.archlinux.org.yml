@@ -8,7 +8,7 @@
     - { role: nginx }
     - { role: mariadb, mariadb_query_cache_type: '0', mariadb_innodb_buffer_pool_size: '512M', mariadb_innodb_disable_snapshot_isolation: true }
     - { role: sudo }
-    - { role: php_fpm, php_extensions: ['apcu', 'iconv', 'intl', 'mysqli'], zend_extensions: ['opcache'] }
+    - { role: php_fpm, php_extensions: ['apcu', 'iconv', 'intl', 'mysqli'] }
     - { role: fluxbb }
     - { role: borg_client, tags: ["borg"] }
     - { role: postfix_null }
