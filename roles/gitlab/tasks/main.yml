@@ -58,6 +58,14 @@
         nginx['real_ip_trusted_addresses'] = ['127.0.0.1']
         nginx['real_ip_header'] = 'X-Forwarded-For'
         registry_external_url 'https://{{ gitlab_registry_domain }}'
+        registry['database'] = {
+          'enabled' => true,
+        }
+        registry['storage'] = {
+          'filesystem' => {
+            'rootdirectory' => "/var/opt/gitlab/gitlab-rails/shared/registry"
+          },
+        }
         registry_nginx['listen_addresses'] = ['127.0.0.1']
         registry_nginx['listen_port'] = 8081
         registry_nginx['listen_https'] = false
