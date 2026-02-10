@@ -1038,6 +1038,21 @@ resource "keycloak_openid_client" "gluebuddy_openid_client" {
   ]
 }
 
+resource "keycloak_openid_client_scope" "groups" {
+  realm_id               = "archlinux"
+  name                   = "groups"
+  description            = "Map a user's group memberships to a claim"
+  include_in_token_scope = true
+}
+
+resource "keycloak_openid_group_membership_protocol_mapper" "client_scope_group_membership_mapper" {
+  realm_id        = "archlinux"
+  client_scope_id = keycloak_openid_client_scope.groups.id
+  name            = "group-membership-mapper"
+
+  claim_name = "groups"
+}
+
 resource "keycloak_openid_client" "buildbtw_dev_openid_client" {
   realm_id      = "archlinux"
   client_id     = "buildbtw-dev"
@@ -1054,6 +1069,20 @@ resource "keycloak_openid_client" "buildbtw_dev_openid_client" {
   use_refresh_tokens    = true
   valid_redirect_uris = [
     "https://*.buildbtw.dev.archlinux.org/oidc/authorized"
+  ]
+}
+
+resource "keycloak_openid_client_optional_scopes" "builbdtw_dev_client_optional_scopes" {
+  realm_id  = "archlinux"
+  client_id = keycloak_openid_client.buildbtw_dev_openid_client.id
+
+  optional_scopes = [
+    "address",
+    "phone",
+    "offline_access",
+    "microprofile-jwt",
+    "groups",
+    keycloak_openid_client_scope.groups.name
   ]
 }
 
@@ -1076,6 +1105,20 @@ resource "keycloak_openid_client" "buildbtw_staging_openid_client" {
   ]
 }
 
+resource "keycloak_openid_client_optional_scopes" "builbdtw_staging_client_optional_scopes" {
+  realm_id  = "archlinux"
+  client_id = keycloak_openid_client.buildbtw_staging_openid_client.id
+
+  optional_scopes = [
+    "address",
+    "phone",
+    "offline_access",
+    "microprofile-jwt",
+    "groups",
+    keycloak_openid_client_scope.groups.name
+  ]
+}
+
 resource "keycloak_openid_client" "buildbtw_production_openid_client" {
   realm_id      = "archlinux"
   client_id     = "buildbtw-production"
@@ -1092,6 +1135,20 @@ resource "keycloak_openid_client" "buildbtw_production_openid_client" {
   use_refresh_tokens    = true
   valid_redirect_uris = [
     "https://buildbtw.archlinux.org/oidc/authorized"
+  ]
+}
+
+resource "keycloak_openid_client_optional_scopes" "builbdtw_production_client_optional_scopes" {
+  realm_id  = "archlinux"
+  client_id = keycloak_openid_client.buildbtw_production_openid_client.id
+
+  optional_scopes = [
+    "address",
+    "phone",
+    "offline_access",
+    "microprofile-jwt",
+    "groups",
+    keycloak_openid_client_scope.groups.name
   ]
 }
 
