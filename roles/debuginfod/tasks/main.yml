@@ -39,7 +39,7 @@
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/debuginfod.conf owner=root group=root mode=0644
   notify:
     - Reload nginx
-  when: debuginfod_domain
+  when: debuginfod_domain != ""
   tags: ['nginx']
 
 - name: Open debuginfod ipv4 port for monitoring.archlinux.org
