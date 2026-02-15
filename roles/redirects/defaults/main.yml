@@ -25,3 +25,7 @@ redirects:
     domain: tu-bylaws.aur.archlinux.org
     to: https://package-maintainer-bylaws.aur.archlinux.org
     type: 301
+  - status:
+    domain: archlinux.wiki
+    to: https://wiki.archlinux.org
+    type: 301
