@@ -115,6 +115,15 @@
 256 MD5:07:d1:b1:78:2f:eb:68:be:d2:bd:cc:59:35:f9:92:0b root@archlinux-packer (ED25519)
 3072 MD5:95:a1:aa:0d:f0:c1:c0:c8:80:cc:d7:a9:d4:52:6c:44 root@archlinux-packer (RSA)
 
+# codesearch.archlinux.org
+256 SHA256:p2IYCVI1XmChkd8Xppai0F6O41JC70pqXDz1y1ZvYt8 codesearch.archlinux.org (ECDSA)
+256 SHA256:2RXjkHaOAbiP6pyQBuLJyLfX7D8vfE/33bg0jbFgctc codesearch.archlinux.org (ED25519)
+3072 SHA256:eFruN8EPHshIYaGwWrcnQJ60c7ipEJgTzOhqdPe5zws codesearch.archlinux.org (RSA)
+
+256 MD5:48:00:ee:e7:23:c2:e1:25:50:98:f9:e6:80:a7:4a:6a codesearch.archlinux.org (ECDSA)
+256 MD5:95:fe:cc:17:e7:b2:7f:97:b6:6d:94:45:f5:a7:49:7c codesearch.archlinux.org (ED25519)
+3072 MD5:e5:47:20:1e:2a:d7:23:60:be:38:98:87:c1:b3:cb:ab codesearch.archlinux.org (RSA)
+
 # dashboards.archlinux.org
 256 SHA256:b9dVKP5g+tEvBDxSVeDy5st0K/3MrlHqoIZreusIag8 root@archlinux-packer (ECDSA)
 256 SHA256:DvYeApOHuG/tZDiWHwAoOkY5ayT0S32fbCyJEMMCJ0M root@archlinux-packer (ED25519)

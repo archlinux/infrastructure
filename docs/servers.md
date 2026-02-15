@@ -194,6 +194,11 @@ The [Arch Linux Archive](https://archive.archlinux.org) is mirrored to the follo
 
 ### Services
   - buildbtw review apps
+## codesearch.archlinux.org
+
+### Services
+  - [zoekt](https://codesearch.archlinux.org) code search over Arch Linux package sources
+
 ## finance.archlinux.org
 
 ### Services
