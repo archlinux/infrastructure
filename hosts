@@ -5,6 +5,7 @@ gitlab.archlinux.org
 repos.archlinux.org
 secure-runner1.archlinux.org
 runner2.archlinux.org
+codesearch.archlinux.org
 
 [misaka]
 berlin.mirror.pkgbuild.com
