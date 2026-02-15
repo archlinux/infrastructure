@@ -68,6 +68,30 @@ resource "hcloud_zone_rrset" "archlinux_page_aaaa" {
   ]
 }
 
+resource "hcloud_zone_rrset" "archlinux_wiki_a" {
+  for_each = local.archlinux_wiki_a_aaaa
+
+  zone = hcloud_zone.archlinux_wiki.name
+  name = each.key
+  type = "A"
+  ttl  = lookup(local.archlinux_wiki_a_aaaa[each.key], "ttl", null)
+  records = [
+    { value = each.value.ipv4_address },
+  ]
+}
+
+resource "hcloud_zone_rrset" "archlinux_wiki_aaaa" {
+  for_each = local.archlinux_wiki_a_aaaa
+
+  zone = hcloud_zone.archlinux_wiki.name
+  name = each.key
+  type = "AAAA"
+  ttl  = lookup(local.archlinux_wiki_a_aaaa[each.key], "ttl", null)
+  records = [
+    { value = each.value.ipv6_address },
+  ]
+}
+
 resource "hcloud_zone_rrset" "pkgbuild_com_a" {
   for_each = {
     for k, v in local.pkgbuild_com_a_aaaa : k => v if try(v.ipv4_address != "", false)
