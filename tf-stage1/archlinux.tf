@@ -525,6 +525,13 @@ locals {
     }
   }
 
+  archlinux_wiki_a_aaaa = {
+    "@" = {
+      ipv4_address = hcloud_server.machine["redirect.archlinux.org"].ipv4_address
+      ipv6_address = hcloud_server.machine["redirect.archlinux.org"].ipv6_address
+    }
+  }
+
   # Domains served by machines in the geo_mirrors group
   # Valid parameters are:
   #   - name (mandatory, specifies the subdomain to create in the above zone)
@@ -560,11 +567,48 @@ resource "hcloud_zone" "archlinux_page" {
   delete_protection = true
 }
 
+resource "hcloud_zone" "archlinux_wiki" {
+  name              = "archlinux.wiki"
+  mode              = "primary"
+  ttl               = 3600
+  delete_protection = true
+}
+
 resource "hcloud_zone" "pkgbuild_com" {
   name              = "pkgbuild.com"
   mode              = "primary"
   ttl               = 3600
   delete_protection = true
+}
+
+resource "hcloud_zone_rrset" "archlinux_wiki_origin_caa" {
+  zone = hcloud_zone.archlinux_wiki.name
+  name = "@"
+  type = "CAA"
+  records = [
+    { value = "0 issue \"letsencrypt.org\"" },
+  ]
+}
+
+resource "hcloud_zone_rrset" "archlinux_wiki_origin_ns" {
+  zone = hcloud_zone.archlinux_wiki.name
+  name = "@"
+  type = "NS"
+  ttl  = 86400
+  records = [
+    { value = "ns.second-ns.com." },
+    { value = "ns1.your-server.de." },
+    { value = "ns3.second-ns.de." },
+  ]
+}
+
+resource "hcloud_zone_rrset" "archlinux_wiki_origin_soa" {
+  zone = hcloud_zone.archlinux_wiki.name
+  name = "@"
+  type = "SOA"
+  records = [
+    { value = "hydrogen.ns.hetzner.com. dns.hetzner.com. 0 86400 10800 3600000 3600" },
+  ]
 }
 
 resource "hcloud_zone_rrset" "archlinux_page_origin_caa" {
