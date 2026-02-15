@@ -1,0 +1,214 @@
+#!/bin/bash
+# fetch-sources: Fetch PKGBUILDs from GitLab and download upstream sources
+# for all packages in the configured repos.
+#
+# Package list and versions are read from the archlinux/packaging/state repo,
+# which is cloned/updated at the start of each run.
+# PKGBUILDs are only fetched from GitLab when the package version is new
+# (i.e. the expected source directory does not yet exist).
+# Upstream sources are downloaded via makepkg --nobuild.
+#
+# Each package source directory is named <pkgbase>-[epoch:]<pkgver>
+# Existing directories for unchanged versions are skipped (idempotent).
+# Stale directories for packages no longer in the repos are removed.
+# Safe to interrupt and restart - completed packages are never re-fetched.
+
+set -euo pipefail
+
+SOURCES_DIR="{{ codesearch_sources_dir }}"
+STATE_REPO_DIR="{{ codesearch_state_repo_dir }}"
+STATE_REPO_URL="{{ codesearch_state_repo_url }}"
+STATE_REPOS="{{ codesearch_state_repos }}"
+LOGFILE="{{ codesearch_log_dir }}/fetch-sources.log"
+FETCH_WORKDIR="{{ codesearch_fetch_workdir }}"
+STATE_DIR="{{ codesearch_state_dir }}"
+GITLAB_BASE="{{ codesearch_gitlab_base }}"
+GITLAB_TOKEN="{{ codesearch_gitlab_token }}"
+JOBS="{{ codesearch_fetch_jobs }}"
+
+# Logging functions
+msg() {
+    printf '[%s] %s\n' "$(date -Iseconds)" "$*" | tee -a "$LOGFILE"
+}
+
+error() {
+    printf "error: $1\n" "${@:2}" >&2 | tee -a "$LOGFILE"
+}
+
+warning() {
+    printf "warning: $1\n" "${@:2}" >&2 | tee -a "$LOGFILE"
+}
+
+die() {
+    (( $# )) && error "$@"
+    cleanup 255
+}
+
+cleanup() {
+    rm -f "$EXPECTED_DIRS_FILE" "$RESULTS_FILE" "$FETCH_WORKDIR/.fetch-sources.lock"
+    exit "${1:-0}"
+}
+
+# Setup signal handling (devtools style)
+trap 'trap - EXIT INT QUIT TERM HUP; cleanup 255' INT QUIT TERM HUP
+trap 'r=$?; trap - EXIT INT QUIT TERM HUP; cleanup $r' EXIT
+
+mkdir -p "$SOURCES_DIR" "$(dirname "$LOGFILE")" "$FETCH_WORKDIR"
+
+# Create lock file to prevent concurrent runs
+touch "$FETCH_WORKDIR/.fetch-sources.lock"
+
+# Clean up leftover work dirs from any previously interrupted run
+find "$FETCH_WORKDIR" -maxdepth 1 -mindepth 1 -type d -name '*-work' -print0 | xargs -0 -r rm -rf
+
+msg "starting source fetch for repos: $STATE_REPOS"
+
+# Temp files for parallel job coordination (scoped to this run via PID)
+EXPECTED_DIRS_FILE="$FETCH_WORKDIR/expected-dirs-$$"
+RESULTS_FILE="$FETCH_WORKDIR/results-$$"
+> "$EXPECTED_DIRS_FILE"
+> "$RESULTS_FILE"
+trap 'rm -f "$EXPECTED_DIRS_FILE" "$RESULTS_FILE"' EXIT
+
+fetch_package() {
+    # Argument: "pkgbase version_key" where version_key is "epoch:pkgver" or "pkgver"
+    local pkgbase version_key
+    read -r pkgbase version_key <<< "$1"
+
+    local dest_dir="$SOURCES_DIR/${pkgbase}-${version_key}"
+
+    if [[ -d "$dest_dir" ]]; then
+        msg "skip: $pkgbase-$version_key already extracted"
+        echo "skip:${dest_dir##*/}" >> "$RESULTS_FILE"
+        return 0
+    fi
+
+    local work_dir="$FETCH_WORKDIR/${pkgbase}-work"
+    rm -rf "$work_dir"
+
+    # Clone the full package repo (PKGBUILD + install scripts, patches, etc.)
+    # Use authenticated URL to avoid rate limiting
+    local repo_url="$GITLAB_BASE/$pkgbase.git"
+    if [[ -n "$GITLAB_TOKEN" ]]; then
+        # Extract protocol and rest of URL, insert credentials
+        repo_url="${repo_url//https:\/\//https:\/\/oauth2:${GITLAB_TOKEN}@}"
+    fi
+
+    if ! GIT_TERMINAL_PROMPT=0 git clone --depth=1 --quiet "$repo_url" "$work_dir" 2>>"$LOGFILE"; then
+        error "failed to clone %s from GitLab" "$pkgbase"
+        echo "fail:${dest_dir##*/}" >> "$RESULTS_FILE"
+        rm -rf "$work_dir"
+        return 1
+    fi
+
+    msg "fetch: $pkgbase-$version_key"
+
+    if (cd "$work_dir" && \
+        GIT_TERMINAL_PROMPT=0 TERM=dumb makepkg --nobuild --noprepare --nodeps --nocheck --skippgpcheck \
+                SRCDEST="$work_dir/downloads" BUILDDIR="$work_dir" </dev/null 2>>"$LOGFILE"); then
+        if [[ -d "$work_dir/src" ]]; then
+            mv "$work_dir/src" "$dest_dir"
+            # Remove .git dirs - git objects are binary/large and not useful for code search
+            while IFS= read -rd '' dir; do
+                rm -rf "$dir"
+            done < <(find "$dest_dir" -type d -name ".git" -print0)
+            # Remove symlinks - codesearch's walker crashes on cyclic symlinks
+            find "$dest_dir" -type l -delete
+            msg "ok: $pkgbase-$version_key"
+            echo "ok:${dest_dir##*/}" >> "$RESULTS_FILE"
+            rm -rf "$work_dir"
+            return 0
+        else
+            warning "no src/ dir after makepkg for %s-%s" "$pkgbase" "$version_key"
+            echo "fail:${dest_dir##*/}" >> "$RESULTS_FILE"
+        fi
+    else
+        error "makepkg failed for %s-%s" "$pkgbase" "$version_key"
+        echo "fail:${dest_dir##*/}" >> "$RESULTS_FILE"
+    fi
+
+    rm -rf "$work_dir"
+    return 1
+}
+
+export -f fetch_package msg error warning
+export SOURCES_DIR FETCH_WORKDIR GITLAB_BASE GITLAB_TOKEN LOGFILE RESULTS_FILE
+
+# Clone or update the packaging state repo
+if [[ ! -d "$STATE_REPO_DIR/.git" ]]; then
+    msg "cloning packaging state repo..."
+    git clone --depth=1 --quiet "$STATE_REPO_URL" "$STATE_REPO_DIR"
+else
+    msg "updating packaging state repo..."
+    git -C "$STATE_REPO_DIR" pull --ff-only --quiet
+fi
+
+# Read package list from state repo - one file per pkgbase, format: "pkgname ver ver commithash"
+# Deduplicate across repo dirs (stable dirs listed first; later entries overwrite with newer version)
+package_specs=()
+declare -A seen_bases=()
+
+for repo_dir in $STATE_REPOS; do
+    [[ -d "$STATE_REPO_DIR/$repo_dir" ]] || continue
+
+    for pkg_file in "$STATE_REPO_DIR/$repo_dir"/*; do
+        [[ -f "$pkg_file" ]] || continue
+        pkgbase=$(basename "$pkg_file")
+        [[ -n "${seen_bases[$pkgbase]+_}" ]] && continue
+        seen_bases["$pkgbase"]=1
+
+        # version field is "pkgver-pkgrel"; strip pkgrel - source doesn't change with pkgrel bumps
+        version_raw=$(awk '{print $2}' "$pkg_file")
+        version_key="${version_raw%-*}"
+
+        dest_dir="$SOURCES_DIR/${pkgbase}-${version_key}"
+        echo "$dest_dir" >> "$EXPECTED_DIRS_FILE"
+
+        package_specs+=("$pkgbase $version_key")
+    done
+done
+
+total=${{ '{' }}#package_specs[@]{{ '}' }}
+already=$(find "$SOURCES_DIR" -maxdepth 1 -mindepth 1 -type d | wc -l)
+msg "found $total unique pkgbases across repos: $STATE_REPOS ($already already fetched, running with $JOBS parallel jobs)"
+
+# Process packages in parallel
+if ! parallel --no-notice --jobs "${JOBS}" fetch_package ::: "${package_specs[@]}"; then
+    error "failed to fetch some packages, please check %s" "$LOGFILE"
+fi
+
+# Extract newly-fetched packages for incremental indexing
+mkdir -p "$STATE_DIR"
+grep '^ok:' "$RESULTS_FILE" | cut -d: -f2- > "$STATE_DIR/new-packages.tmp" || true
+[[ -f "$STATE_DIR/new-packages.tmp" ]] && mv "$STATE_DIR/new-packages.tmp" "$STATE_DIR/new-packages"
+
+count_ok=$(grep -c '^ok:' "$RESULTS_FILE" || true)
+count_skip=$(grep -c '^skip:' "$RESULTS_FILE" || true)
+count_fail=$(grep -c '^fail:' "$RESULTS_FILE" || true)
+
+msg "fetch complete: $count_ok fetched, $count_skip skipped, $count_fail failed (total: $total)"
+
+# Remove stale directories (versions no longer in any repo)
+msg "checking for stale source directories"
+stale_count=0
+> "$STATE_DIR/stale-packages.tmp"
+while IFS= read -r -d '' existing_dir; do
+    if ! grep -qxF "$existing_dir" "$EXPECTED_DIRS_FILE"; then
+        pkg_name=$(basename "$existing_dir")
+        msg "removing stale: $pkg_name"
+        echo "$pkg_name" >> "$STATE_DIR/stale-packages.tmp"
+        rm -rf "$existing_dir"
+        ((stale_count++)) || true
+    fi
+done < <(find "$SOURCES_DIR" -maxdepth 1 -mindepth 1 -type d -print0)
+
+# Atomically move stale packages file if it has content
+if [[ -s "$STATE_DIR/stale-packages.tmp" ]]; then
+    mv "$STATE_DIR/stale-packages.tmp" "$STATE_DIR/stale-packages"
+else
+    rm -f "$STATE_DIR/stale-packages.tmp"
+fi
+
+[[ $stale_count -gt 0 ]] && msg "removed $stale_count stale source directories"
+
+msg "source fetch complete"

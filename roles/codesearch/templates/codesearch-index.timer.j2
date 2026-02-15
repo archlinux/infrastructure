@@ -1,0 +1,9 @@
+[Unit]
+Description=Codesearch reindex timer
+
+[Timer]
+OnUnitInactiveSec=15min
+Unit=codesearch-index.service
+
+[Install]
+WantedBy=timers.target

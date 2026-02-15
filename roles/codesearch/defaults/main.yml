@@ -1,0 +1,25 @@
+---
+codesearch_volume_device: /dev/sdb
+codesearch_domain: codesearch.archlinux.org
+codesearch_state_repo_url: "https://gitlab.archlinux.org/archlinux/packaging/state.git"
+codesearch_state_repo_dir: /srv/codesearch/packaging-state
+codesearch_state_repos: "core-x86_64 core-any extra-x86_64 extra-any"
+codesearch_user: codesearch
+codesearch_group: codesearch
+
+codesearch_extract_schedule: "*-*-* 02,14:30:00"
+
+codesearch_zoekt_version: "latest"
+codesearch_zoekt_web_port: 6070
+codesearch_index_parallelism: 4
+codesearch_index_concurrent: 1
+
+codesearch_sources_dir: /srv/codesearch/sources
+codesearch_index_dir: /srv/codesearch/index
+codesearch_state_dir: /srv/codesearch/state
+codesearch_fetch_workdir: /var/lib/codesearch/fetch-work
+codesearch_log_dir: /var/log/codesearch
+
+codesearch_gitlab_base: "https://gitlab.archlinux.org/archlinux/packaging/packages"
+codesearch_gitlab_token: "{{ vault_codesearch_gitlab_token }}"
+codesearch_fetch_jobs: 2

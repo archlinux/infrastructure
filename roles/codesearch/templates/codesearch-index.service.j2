@@ -1,0 +1,10 @@
+[Unit]
+Description=Codesearch incremental reindex
+
+[Service]
+Type=oneshot
+User={{ codesearch_user }}
+Group={{ codesearch_group }}
+Nice=10
+IOSchedulingClass=idle
+ExecStart=/usr/local/bin/codesearch-index
