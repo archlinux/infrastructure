@@ -1,0 +1,57 @@
+- name: Install rsync
+  pacman: name=rsync state=present
+
+- name: Install sourceballs requirements (makepkg download dependencies)
+  pacman: name=git,subversion,mercurial,breezy,base-devel state=present
+
+- name: Add sourceballs user
+  user: name=sourceballs shell=/sbin/nologin
+
+- name: Create git-packages directory
+  file: path=/srv/repos/git-packages state=directory owner=root group=root mode=0755
+
+- name: Create git-packages/tmp directory
+  file: path={{ sourceballs_tmp_dir }} state=directory owner=sourceballs group=sourceballs mode=1775
+
+- name: Create git-packages/source-cleanup directory
+  file: path={{ sourceballs_source_cleanup_dir }} state=directory owner=sourceballs group=sourceballs mode=0755
+
+- name: Create FTP base directory
+  file: path={{ sourceballs_ftp_base }} state=directory owner=root group=root mode=0755
+
+- name: Create sources pool directory
+  file: path={{ sourceballs_ftp_base }}/sources/packages state=directory owner=sourceballs group=sourceballs mode=0775 recurse=yes
+
+- name: Create lock directory
+  file: path=/srv/repos/lock state=directory owner=sourceballs group=sourceballs mode=0755
+
+- name: Fetch dbscripts PGP keys
+  command: /usr/bin/gpg --keyserver keys.openpgp.org --auto-key-locate wkd,keyserver --locate-keys {{ item }}
+  loop: "{{ dbscripts_pgp_emails }}"
+  register: gpg
+  changed_when: "gpg.rc == 0"
+
+- name: Clone dbscripts git repo
+  git: dest={{ sourceballs_dbscripts_path }} repo={{ dbscripts_repo_url }} version={{ dbscripts_commit }} update={{ dbscripts_update }} verify_commit=yes
+
+- name: Install dbscripts config.local
+  template: src=config.local.j2 dest={{ sourceballs_dbscripts_path }}/config.local owner=root group=root mode=0644
+
+- name: Install sync-repos script
+  template: src=sync-repos.j2 dest=/usr/local/bin/sync-repos owner=root group=root mode=0755
+
+- name: Install systemd units
+  template: src={{ item }}.j2 dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  loop:
+    - sync-repos.service
+    - sync-repos.timer
+    - sourceballs.service
+    - sourceballs.timer
+  notify:
+    - Daemon reload
+
+- name: Enable and start sync-repos timer
+  systemd_service: name=sync-repos.timer enabled=yes state=started daemon_reload=yes
+
+- name: Enable and start sourceballs timer
+  systemd_service: name=sourceballs.timer enabled=yes state=started daemon_reload=yes

@@ -1,0 +1,21 @@
+sourceballs_ftp_base: /srv/ftp
+sourceballs_repos_base: /srv/repos
+sourceballs_dbscripts_path: /srv/repos/git-packages/dbscripts
+sourceballs_tmp_dir: /srv/repos/git-packages/tmp
+sourceballs_source_cleanup_dir: /srv/repos/git-packages/source-cleanup
+
+# Rsync source - repos.archlinux.org via wireguard
+sourceballs_rsync_source: "rsync://{{ hostvars['repos.archlinux.org']['wireguard_address'] }}/ftp"
+
+# Optional rsync filter - set to sync only specific files (e.g. just .db files)
+sourceballs_rsync_filter: ""
+
+# dbscripts git configuration
+dbscripts_repo_url: https://gitlab.archlinux.org/archlinux/dbscripts.git
+dbscripts_commit: "4086734db79e757a4b4fe1644f6344b835571f3c"
+dbscripts_update: true
+dbscripts_pgp_emails:
+  - jelle@archlinux.org
+  - anthraxx@archlinux.org
+  - foxboron@archlinux.org
+  - kristian@klausen.dk

@@ -1,0 +1,10 @@
+[Unit]
+Description=Codesearch source fetch timer
+ConditionPathExists=!/var/lib/codesearch/fetch-work/.fetch-sources.lock
+
+[Timer]
+OnCalendar={{ codesearch_extract_schedule }}
+Persistent=true
+
+[Install]
+WantedBy=timers.target

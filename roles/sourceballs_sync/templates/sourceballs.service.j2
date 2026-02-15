@@ -1,0 +1,10 @@
+[Unit]
+Description=Sourceballs
+
+[Service]
+Type=oneshot
+User=sourceballs
+ExecStart={{ sourceballs_dbscripts_path }}/cron-jobs/sourceballs
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7

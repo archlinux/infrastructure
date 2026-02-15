@@ -790,7 +790,7 @@ resource "hcloud_volume" "monitoring" {
 
 resource "hcloud_volume" "codesearch" {
   name              = "codesearch"
-  size              = 200
+  size              = 1000
   server_id         = hcloud_server.machine["codesearch.archlinux.org"].id
   delete_protection = true
 }

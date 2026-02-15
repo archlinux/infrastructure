@@ -1,0 +1,33 @@
+#!/hint/bash
+
+PKGREPOS=(
+	core core-staging core-testing
+	extra extra-staging extra-testing
+	multilib multilib-staging multilib-testing
+	kde-unstable gnome-unstable
+)
+DEBUGREPOS=(
+	core-debug core-staging-debug core-testing-debug
+	extra-debug extra-staging-debug extra-testing-debug
+	multilib-debug multilib-staging-debug multilib-testing-debug
+	kde-unstable-debug gnome-unstable-debug
+)
+STABLE_REPOS=(core extra multilib)
+TESTING_REPOS=(core-testing extra-testing multilib-testing)
+STAGING_REPOS=(core-staging extra-staging multilib-staging)
+UNSTABLE_REPOS=(kde-unstable gnome-unstable)
+
+PKGPOOL='pool/packages'
+DEBUGPKGPOOL='pool/packages-debug'
+SRCPOOL='sources/packages'
+
+# Empty array = generate sources for ALL packages regardless of license
+ALLOWED_LICENSES=()
+
+CLEANUP_DESTDIR="/var/tmp"
+SOURCE_CLEANUP_DESTDIR="{{ sourceballs_source_cleanup_dir }}"
+TMPDIR="{{ sourceballs_tmp_dir }}"
+
+GIT_PACKAGING_REPOS_URL="https://gitlab.archlinux.org/archlinux/packaging/packages"
+
+LOCK_DIR="/srv/repos/lock"

@@ -1,0 +1,37 @@
+#!/bin/bash
+# Sync repository from repos.archlinux.org
+# Full mirror sync for sourceballs generation
+
+set -e
+
+target="{{ sourceballs_ftp_base }}"
+lock="/run/lock/sync-repos.lck"
+source_url='{{ sourceballs_rsync_source }}'
+
+[ ! -d "${target}" ] && mkdir -p "${target}"
+
+exec 9>"${lock}"
+flock -n 9 || exit
+
+rsync_cmd() {
+	local -a cmd=(rsync -rlptH --safe-links --delete-delay --delay-updates
+		"--timeout=600" --no-motd)
+
+	if stty &>/dev/null; then
+		cmd+=(-h -v --progress)
+	else
+		cmd+=("--info=name1")
+	fi
+
+	"${cmd[@]}" "$@"
+}
+
+# Sync repository (excluding other/ and debug packages)
+rsync_cmd \
+	--exclude="/other" \
+	--exclude="/sources" \
+	--exclude="*-debug/" \
+	{% if sourceballs_rsync_filter %}{{ sourceballs_rsync_filter }} \
+	{% endif %}"${source_url}/" "${target}/"
+
+echo "Sync completed at $(date)"

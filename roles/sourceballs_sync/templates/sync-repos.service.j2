@@ -1,0 +1,11 @@
+[Unit]
+Description=Synchronize repository data from repos.archlinux.org
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/sync-repos
+Nice=19
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7

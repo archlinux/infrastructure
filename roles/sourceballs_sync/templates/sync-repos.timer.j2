@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily repository sync from repos.archlinux.org
+
+[Timer]
+OnCalendar=daily
+RandomizedDelaySec=1h
+Persistent=true
+
+[Install]
+WantedBy=timers.target

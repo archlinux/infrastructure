@@ -31,6 +31,7 @@ hosts deny = *
 	path = /srv/ftp
 	comment = ftp area (most mirrors should use this)
 	exclude = /archive/ /other/ /sources/ /*-debug/ /pool/*-debug/ /lastsync.tmp
+	hosts allow = {{ hostvars['codesearch.archlinux.org']['wireguard_address'] }}
 
 [ftp_tier1]
 	path = /srv/ftp

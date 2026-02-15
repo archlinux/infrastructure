@@ -1,0 +1,16 @@
+- name: Setup codesearch.archlinux.org
+  hosts: codesearch.archlinux.org
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: tools }
+    - { role: firewalld }
+    - { role: wireguard }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: sourceballs_sync }
+    - { role: nginx }
+    - { role: codesearch }
+    - { role: fail2ban }
+    - { role: prometheus_exporters }
+    - { role: promtail }
