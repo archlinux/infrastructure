@@ -17,7 +17,7 @@ Environment="BUILDBTW_BASE_URL=https://{{ buildbtw_domain }}"
 {% endif %}
 Environment="BUILDBTW_DATABASE_FILE=/var/lib/buildbtw/buildbtw-%i.sqlite"
 EnvironmentFile=/etc/conf.d/buildbtw
-Environment="RUST_LOG=debug,sqlx=info,hyper_util::client=info"
+Environment="RUST_LOG=debug,sqlx::query=warn,hyper_util::client=info"
 Pull=newer
 Volume={{ buildbtw_dir }}:/var/lib/buildbtw
 Volume=/run/buildbtw:/run/buildbtw
