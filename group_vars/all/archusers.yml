@@ -696,9 +696,12 @@ arch_users:
     ssh_key: shibumi.pub
     shell: /bin/zsh
     groups:
-      - packager
-      - junior-packager
-      - tu
+      - support-staff
+      # - packager
+      # - junior-packager
+      # - tu
+    hosts:
+      - mail.archlinux.org
   skydiver:
     name: "Xiao Guo"
     ssh_key: skydiver.pub
