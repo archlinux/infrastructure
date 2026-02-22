@@ -118,6 +118,13 @@ monitoring.archlinux.org
 [kape_servers]
 frankfurt.mirror.pkgbuild.com
 
+[haproxy_backends]
+archlinux.org
+aur.archlinux.org
+man.archlinux.org
+test.pkgbuild.com
+wiki.archlinux.org
+
 [hcloud]
 accounts.archlinux.org
 archlinux.org
