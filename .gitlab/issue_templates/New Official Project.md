@@ -100,12 +100,7 @@ If you want to add a new official project, here are some guidelines to follow:
    - `Issues`
    - `Discussions`
    - `Projects`
-1. [ ] Make sure the GitHub Pull Request Closer can run.
-       Go to https://github.com/archlinux/my-example/settings/hooks and add a new webhook
-   - `Payload URL`: `$(misc/get_key.py misc/vaults/vault_github.yml github_pull_closer_webhook_url)`
-   - `Content type`: `application/json`
-   - `Which events would you like to trigger this webhook?`
-      - `Let me select individual events.`: `Pull requests`
+   - `Pull requests`
 1. [ ] In the GitHub description of the mirrored project, append " (read-only mirror)" so that people know it's a mirror.
 1. [ ] Disable `Packages` and `Deployments` from being shown on the main page.
 1. [ ] In the website field put the full url to the repository on our GitLab.
