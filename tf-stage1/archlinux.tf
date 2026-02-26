@@ -110,14 +110,16 @@ locals {
       floating_ipv6 = true
       location      = "nbg1"
     }
-    "buildbtw.dev.archlinux.org" = {
+    "buildbtw.archlinux.builders" = {
       server_type = "cx23"
-      domain      = "buildbtw.dev"
+      domain      = "buildbtw"
+      zone        = hcloud_zone.archlinux_builders.id
       http3       = true
     }
-    "buildbtw.staging.archlinux.org" = {
+    "buildbtw.archlinux.review" = {
       server_type = "cx23"
-      domain      = "buildbtw.staging"
+      domain      = "buildbtw"
+      zone        = hcloud_zone.archlinux_review.id
       http3       = true
     }
     "buildbtw.archlinux.org" = {
@@ -415,20 +417,19 @@ locals {
   # Example:
   # dev                      = { value = "www.archlinux.org.", ttl = 3600 }
   archlinux_org_cname = {
-    ipxe             = { value = "www.archlinux.org." }
-    mailman          = { value = "redirect.archlinux.org." }
-    packages         = { value = "www.archlinux.org." }
-    ping             = { value = "redirect.archlinux.org." }
-    planet           = { value = "www.archlinux.org." }
-    registry         = { value = "gitlab.archlinux.org." }
-    "*.buildbtw.dev" = { value = "buildbtw.dev.archlinux.org." }
-    rsync            = { value = "repos.archlinux.org." }
-    sources          = { value = "repos.archlinux.org." }
-    "static.conf"    = { value = "redirect.archlinux.org." }
-    status           = { value = "stats.uptimerobot.com." }
-    coc              = { value = "redirect.archlinux.org." }
-    git              = { value = "redirect.archlinux.org." }
-    "tu-bylaws.aur"  = { value = "redirect.archlinux.org." }
+    ipxe            = { value = "www.archlinux.org." }
+    mailman         = { value = "redirect.archlinux.org." }
+    packages        = { value = "www.archlinux.org." }
+    ping            = { value = "redirect.archlinux.org." }
+    planet          = { value = "www.archlinux.org." }
+    registry        = { value = "gitlab.archlinux.org." }
+    rsync           = { value = "repos.archlinux.org." }
+    sources         = { value = "repos.archlinux.org." }
+    "static.conf"   = { value = "redirect.archlinux.org." }
+    status          = { value = "stats.uptimerobot.com." }
+    coc             = { value = "redirect.archlinux.org." }
+    git             = { value = "redirect.archlinux.org." }
+    "tu-bylaws.aur" = { value = "redirect.archlinux.org." }
 
     # MTA-STS
     mta-sts               = { value = "mail.archlinux.org." }
@@ -556,6 +557,20 @@ locals {
 
 resource "hcloud_zone" "archlinux_org" {
   name              = "archlinux.org"
+  mode              = "primary"
+  ttl               = 3600
+  delete_protection = true
+}
+
+resource "hcloud_zone" "archlinux_builders" {
+  name              = "archlinux.builders"
+  mode              = "primary"
+  ttl               = 3600
+  delete_protection = true
+}
+
+resource "hcloud_zone" "archlinux_review" {
+  name              = "archlinux.review"
   mode              = "primary"
   ttl               = 3600
   delete_protection = true
@@ -738,13 +753,31 @@ resource "hcloud_zone_rrset" "archlinux_org_origin_ns" {
   ]
 }
 
-resource "hcloud_zone_rrset" "archlinux_org_acme_challenge_buildbtw_dev_ns" {
-  zone = hcloud_zone.archlinux_org.name
-  name = "_acme-challenge.buildbtw.dev"
+resource "hcloud_zone_rrset" "archlinux_review_acme_challenge_buildbtw_ns" {
+  zone = hcloud_zone.archlinux_review.name
+  name = "_acme-challenge.buildbtw"
   type = "NS"
   ttl  = 86400
   records = [
     { value = "redirect.archlinux.org." },
+  ]
+}
+
+resource "hcloud_zone_rrset" "archlinux_review_buildbtw_wildcard_a" {
+  zone = hcloud_zone.archlinux_review.name
+  name = "*.buildbtw"
+  type = "A"
+  records = [
+    { value = hcloud_server.machine["buildbtw.archlinux.review"].ipv4_address },
+  ]
+}
+
+resource "hcloud_zone_rrset" "archlinux_review_buildbtw_wildcard_aaaa" {
+  zone = hcloud_zone.archlinux_review.name
+  name = "*.buildbtw"
+  type = "AAAA"
+  records = [
+    { value = hcloud_server.machine["buildbtw.archlinux.review"].ipv6_address },
   ]
 }
 
