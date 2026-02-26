@@ -2,7 +2,7 @@
 Description=buildbtw build coordination service
 
 [Container]
-{% if buildbtw_stage == "dev" %}
+{% if buildbtw_stage == "review" %}
 Image=registry.archlinux.org/archlinux/buildbtw/backend:%i
 {% else %}
 Image=registry.archlinux.org/archlinux/buildbtw/backend:{{ buildbtw_image_tag }}
@@ -10,7 +10,7 @@ Image=registry.archlinux.org/archlinux/buildbtw/backend:{{ buildbtw_image_tag }}
 Exec=run
 ContainerName=buildbtw-%i
 Environment="BUILDBTW_LISTEN=unix:/run/buildbtw/%i.sock:777"
-{% if buildbtw_stage == "dev" %}
+{% if buildbtw_stage == "review" %}
 Environment="BUILDBTW_BASE_URL=https://%i.{{ buildbtw_domain }}"
 {% else %}
 Environment="BUILDBTW_BASE_URL=https://{{ buildbtw_domain }}"
@@ -29,6 +29,6 @@ RestartSec=5
 
 [Install]
 WantedBy=multi-user.target default.target
-{% if buildbtw_stage != "dev" %}
+{% if buildbtw_stage != "review" %}
 DefaultInstance={{ buildbtw_stage }}
 {% endif %}

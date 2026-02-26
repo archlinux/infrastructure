@@ -52,20 +52,20 @@ data "external" "vault_security_tracker" {
   "--format", "json"]
 }
 
-data "external" "vault_buildbtw_dev" {
-  program = ["${path.module}/../misc/get_key.py", "${path.module}/../host_vars/buildbtw.dev.archlinux.org/vault_buildbtw_dev_archlinux_org.yml",
+data "external" "vault_buildbtw_review" {
+  program = ["${path.module}/../misc/get_key.py", "${path.module}/../host_vars/buildbtw.archlinux.reviews/vault_buildbtw_review.yml",
     "vault_buildbtw_openid_client_secret",
   "--format", "json"]
 }
 
 data "external" "vault_buildbtw_staging" {
-  program = ["${path.module}/../misc/get_key.py", "${path.module}/../host_vars/buildbtw.staging.archlinux.org/vault_buildbtw_staging_archlinux_org.yml",
+  program = ["${path.module}/../misc/get_key.py", "${path.module}/../host_vars/buildbtw.archlinux.builders/vault_buildbtw_staging.yml",
     "vault_buildbtw_openid_client_secret",
   "--format", "json"]
 }
 
 data "external" "vault_buildbtw_production" {
-  program = ["${path.module}/../misc/get_key.py", "${path.module}/../host_vars/buildbtw.archlinux.org/vault_buildbtw_archlinux_org.yml",
+  program = ["${path.module}/../misc/get_key.py", "${path.module}/../host_vars/buildbtw.archlinux.org/vault_buildbtw_production.yml",
     "vault_buildbtw_openid_client_secret",
   "--format", "json"]
 }
@@ -1053,13 +1053,13 @@ resource "keycloak_openid_group_membership_protocol_mapper" "client_scope_group_
   claim_name = "groups"
 }
 
-resource "keycloak_openid_client" "buildbtw_dev_openid_client" {
+resource "keycloak_openid_client" "buildbtw_review_openid_client" {
   realm_id      = "archlinux"
-  client_id     = "buildbtw-dev"
-  client_secret = data.external.vault_buildbtw_dev.result.vault_buildbtw_openid_client_secret
+  client_id     = "buildbtw-review"
+  client_secret = data.external.vault_buildbtw_review.result.vault_buildbtw_openid_client_secret
   web_origins   = []
 
-  name    = "buildbtw dev"
+  name    = "buildbtw review"
   enabled = true
 
   service_accounts_enabled = true
@@ -1068,13 +1068,13 @@ resource "keycloak_openid_client" "buildbtw_dev_openid_client" {
   standard_flow_enabled = true
   use_refresh_tokens    = true
   valid_redirect_uris = [
-    "https://*.buildbtw.dev.archlinux.org/oidc/authorized"
+    "https://*.buildbtw.archlinux.reviews/oidc/authorized"
   ]
 }
 
-resource "keycloak_openid_client_optional_scopes" "builbdtw_dev_client_optional_scopes" {
+resource "keycloak_openid_client_optional_scopes" "builbdtw_review_client_optional_scopes" {
   realm_id  = "archlinux"
-  client_id = keycloak_openid_client.buildbtw_dev_openid_client.id
+  client_id = keycloak_openid_client.buildbtw_review_openid_client.id
 
   optional_scopes = [
     "address",
@@ -1101,7 +1101,7 @@ resource "keycloak_openid_client" "buildbtw_staging_openid_client" {
   standard_flow_enabled = true
   use_refresh_tokens    = true
   valid_redirect_uris = [
-    "https://buildbtw.staging.archlinux.org/oidc/authorized"
+    "https://buildbtw.archlinux.builders/oidc/authorized"
   ]
 }
 

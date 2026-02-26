@@ -111,14 +111,16 @@ locals {
       floating_ipv6 = true
       location      = "nbg1"
     }
-    "buildbtw.dev.archlinux.org" = {
+    "buildbtw.archlinux.builders" = {
       server_type = "cx23"
-      domain      = "buildbtw.dev"
+      domain      = "buildbtw"
+      zone        = hcloud_zone.archlinux_builders.id
       http3       = true
     }
-    "buildbtw.staging.archlinux.org" = {
+    "buildbtw.archlinux.review" = {
       server_type = "cx23"
-      domain      = "buildbtw.staging"
+      domain      = "buildbtw"
+      zone        = hcloud_zone.archlinux_review.id
       http3       = true
     }
     "buildbtw.archlinux.org" = {
@@ -552,6 +554,20 @@ locals {
 
 resource "hcloud_zone" "archlinux_org" {
   name              = "archlinux.org"
+  mode              = "primary"
+  ttl               = 3600
+  delete_protection = true
+}
+
+resource "hcloud_zone" "archlinux_builders" {
+  name              = "archlinux.builders"
+  mode              = "primary"
+  ttl               = 3600
+  delete_protection = true
+}
+
+resource "hcloud_zone" "archlinux_review" {
+  name              = "archlinux.review"
   mode              = "primary"
   ttl               = 3600
   delete_protection = true

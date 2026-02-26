@@ -17,8 +17,8 @@ dyn_dns_zones:
     allowed_ipv4: "{{ [hostvars['mumble.archlinux.org']['ipv4_address']] }}"
     allowed_ipv6: "{{ [hostvars['mumble.archlinux.org']['ipv6_address']] }}"
     valid_qtypes: [TXT]
-  _acme-challenge.buildbtw.dev.archlinux.org:
+  _acme-challenge.buildbtw.archlinux.reviews:
     key: buildbtw
-    allowed_ipv4: "{{ [hostvars['buildbtw.dev.archlinux.org']['ipv4_address']] }}"
-    allowed_ipv6: "{{ [hostvars['buildbtw.dev.archlinux.org']['ipv6_address']] }}"
+    allowed_ipv4: "{{ [hostvars['buildbtw.archlinux.reviews']['ipv4_address']] }}"
+    allowed_ipv6: "{{ [hostvars['buildbtw.archlinux.reviews']['ipv6_address']] }}"
     valid_qtypes: [TXT]
