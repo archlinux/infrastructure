@@ -7,7 +7,7 @@
   vars:
     domains: ["{{ buildbtw_domain }}", "*.{{ buildbtw_domain }}"]
     challenge: "DNS-01"
-  when: buildbtw_stage == "dev"
+  when: buildbtw_stage == "review"
 
 - name: Create ssl cert
   include_role:
@@ -43,23 +43,23 @@
 - name: Install webhook config
   copy: src=hooks.json dest=/etc/webhook/hooks.json owner=root group=root mode=0644
   notify: Restart webhook
-  when: buildbtw_stage in ["dev", "staging"]
+  when: buildbtw_stage in ["review", "staging"]
 
 - name: Install deployment scripts
   template: src={{ item }}.j2 dest=/usr/local/bin/{{ item }} owner=root group=root mode=0755
-  when: buildbtw_stage in ["dev", "staging"]
+  when: buildbtw_stage in ["review", "staging"]
   loop:
     - buildbtw-deploy-image.sh
     - buildbtw-undeploy-image.sh
 
 - name: Create dir for webhook systemd service override
   file: path=/etc/systemd/system/webhook.service.d owner=root group=root mode=0755 state=directory
-  when: buildbtw_stage in ["dev", "staging"]
+  when: buildbtw_stage in ["review", "staging"]
 
 - name: Make sure webhook runs only on localhost
   copy: src=webhook-override.conf dest=/etc/systemd/system/webhook.service.d/override.conf owner=root group=root mode=644
   notify: Restart webhook
-  when: buildbtw_stage in ["dev", "staging"]
+  when: buildbtw_stage in ["review", "staging"]
 
 - name: Install conf file
   template: src=buildbtw.conf.j2 dest=/etc/conf.d/buildbtw owner=root group=root mode=0600
@@ -72,7 +72,7 @@
 
 - name: Start and enable webhook systemd service
   systemd_service: name=webhook state=started enabled=true daemon_reload=yes
-  when: buildbtw_stage in ["dev", "staging"]
+  when: buildbtw_stage in ["review", "staging"]
 
 - name: Start buildbtw systemd service
   systemd_service: name=buildbtw@{{ buildbtw_stage }} state=started daemon_reload=yes

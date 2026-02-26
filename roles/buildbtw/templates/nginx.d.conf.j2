@@ -1,6 +1,6 @@
 server {
     include      snippets/listen-80.conf;
-{% if buildbtw_stage == "dev" %}
+{% if buildbtw_stage == "review" %}
 {# For review apps, we allow dynamic subdomains and so we also need to redirect those requests. #}
     server_name  .{{ buildbtw_domain }};
 {% else %}
@@ -21,7 +21,7 @@ server {
 
 server {
     include      snippets/listen-443.conf;
-{% if buildbtw_stage == "dev" %}
+{% if buildbtw_stage == "review" %}
 {# Allow review apps to work by figuring out which subdomain was requested using a regex capture group
 and then storing that in a variable. We will then later use that variable to pick the correct upstream socket
 to dispatch to #}
@@ -48,7 +48,7 @@ However, this is not supported by nginx so everything has to crowd into the same
         proxy_set_header    X-Real-IP          $remote_addr;
         proxy_set_header    X-Forwarded-For    $remote_addr;
         proxy_set_header    X-Forwarded-Proto  $scheme;
-{% if buildbtw_stage == "dev" %}
+{% if buildbtw_stage == "review" %}
         if ($instance = '') {
           return 200 'Pick an instance subdomain';
         }
@@ -65,7 +65,7 @@ However, this is not supported by nginx so everything has to crowd into the same
 {% endif %}
     }
 
-{% if buildbtw_stage in ["dev", "staging"] %}
+{% if buildbtw_stage in ["review", "staging"] %}
     # We do deployment via webhook and as such as we need to expose them here.
     location /hooks {
         if ($http_authorization != "Bearer {{ vault_buildbtw_deploy_token }}") {

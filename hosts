@@ -49,8 +49,8 @@ accounts.archlinux.org
 archive.archlinux.org
 archlinux.org
 aur.archlinux.org
-buildbtw.dev.archlinux.org
-buildbtw.staging.archlinux.org
+buildbtw.archlinux.review
+buildbtw.archlinux.builders
 buildbtw.archlinux.org
 bbs.archlinux.org
 gitlab.archlinux.org
@@ -108,8 +108,8 @@ repro4.pkgbuild.com
 wiki.archlinux.org
 
 [buildbtw]
-buildbtw.dev.archlinux.org
-buildbtw.staging.archlinux.org
+buildbtw.archlinux.review
+buildbtw.archlinux.builders
 buildbtw.archlinux.org
 
 [prometheus]
@@ -132,8 +132,8 @@ aur.archlinux.org
 bastion.archlinux.org
 bbs.archlinux.org
 bugbuddy.archlinux.org
-buildbtw.dev.archlinux.org
-buildbtw.staging.archlinux.org
+buildbtw.archlinux.review
+buildbtw.archlinux.builders
 buildbtw.archlinux.org
 bumpbuddy.archlinux.org
 dashboards.archlinux.org

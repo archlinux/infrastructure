@@ -185,12 +185,12 @@ The [Arch Linux Archive](https://archive.archlinux.org) is mirrored to three ded
 ### Services
   - buildbtw production
 
-## buildbtw.staging.archlinux.org
+## buildbtw.archlinux.builders
 
 ### Services
   - buildbtw staging
 
-## buildbtw.dev.archlinux.org
+## buildbtw.archlinux.reviews
 
 ### Services
-  - buildbtw dev (review apps)
+  - buildbtw review apps

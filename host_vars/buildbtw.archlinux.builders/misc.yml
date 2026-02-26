@@ -1,6 +1,6 @@
 wireguard_address: 10.0.0.57
 wireguard_public_key: SaD59Jv3B7n0MhCm0ifTG2Y0nnZ8+I94+FaoGbOBKFg=
 nginx_enable_http3: true
-buildbtw_domain: buildbtw.staging.archlinux.org
+buildbtw_domain: buildbtw.archlinux.builders
 buildbtw_stage: staging
 buildbtw_image_tag: main
