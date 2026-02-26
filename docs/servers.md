@@ -185,16 +185,15 @@ The [Arch Linux Archive](https://archive.archlinux.org) is mirrored to the follo
 ### Services
   - buildbtw production
 
-## buildbtw.staging.archlinux.org
+## buildbtw.archlinux.builders
 
 ### Services
   - buildbtw staging
 
-## buildbtw.dev.archlinux.org
+## buildbtw.archlinux.review
 
 ### Services
-  - buildbtw dev (review apps)
-
+  - buildbtw review apps
 ## codesearch.archlinux.org
 
 ### Services
