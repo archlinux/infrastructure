@@ -54,7 +54,7 @@
   command: /opt/bumpbuddy/dl-web-deps.sh
   args:
     chdir: /opt/bumpbuddy
-  when: git_clone_state.changed 
+  when: git_clone_state.changed
 
 - name: Start and enable systemd timers
   systemd_service: name="{{ item }}" enabled=true state=started
