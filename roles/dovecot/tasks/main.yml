@@ -1,5 +1,5 @@
 - name: Install dovecot
-  pacman: name=dovecot,pigeonhole state=present
+  pacman: name=dovecot23,pigeonhole23 state=present
 
 # FIXME: check directory permissions
 - name: Create dovecot configuration directory
