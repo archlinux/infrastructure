@@ -146,6 +146,10 @@ locals {
       server_type = "cx33"
       domain      = "discourse.sandbox"
     }
+    "finance.archlinux.org" = {
+      server_type = "cx23"
+      domain      = "finance"
+    }
     "gluebuddy.archlinux.org" = {
       server_type = "cx23"
       domain      = "gluebuddy"

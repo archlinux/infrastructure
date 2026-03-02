@@ -53,6 +53,7 @@ buildbtw.dev.archlinux.org
 buildbtw.staging.archlinux.org
 buildbtw.archlinux.org
 bbs.archlinux.org
+finance.archlinux.org
 gitlab.archlinux.org
 homedir.archlinux.org
 lists.archlinux.org
@@ -80,6 +81,7 @@ wiki.archlinux.org
 [postgresql_servers]
 accounts.archlinux.org
 archlinux.org
+finance.archlinux.org
 lists.archlinux.org
 man.archlinux.org
 matrix.archlinux.org
@@ -138,6 +140,7 @@ buildbtw.archlinux.org
 bumpbuddy.archlinux.org
 dashboards.archlinux.org
 debuginfod.archlinux.org
+finance.archlinux.org
 gluebuddy.archlinux.org
 homedir.archlinux.org
 lists.archlinux.org

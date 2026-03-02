@@ -194,3 +194,8 @@ The [Arch Linux Archive](https://archive.archlinux.org) is mirrored to three ded
 
 ### Services
   - buildbtw dev (review apps)
+
+## finance.archlinux.org
+
+### Services
+  - finance dashboards

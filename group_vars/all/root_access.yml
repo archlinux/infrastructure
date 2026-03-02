@@ -26,6 +26,7 @@ root_ssh_keys:
       - bumpbuddy.archlinux.org
       - monitoring.archlinux.org
       - dashboards.archlinux.org
+      - finance.archlinux.org
 
 # run 'playbooks/tasks/reencrypt-vault-{super,default}-key.yml' when this
 # changes; before doing so, make sure to 'gpg --lsign-key' all keys from both
