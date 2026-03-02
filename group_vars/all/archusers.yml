@@ -75,16 +75,21 @@ arch_users:
       - tu
       - packager
       - junior-packager
+  # packager login disabled due to marginally trusted key
+  # https://gitlab.archlinux.org/archlinux/archlinux-keyring/-/issues/269#note_398866
   anatolik:
     name: "Anatol Pomozov"
     email: "anatolik@archlinux.org"
     ssh_key: anatolik.pub
     groups:
-      - dev
-      - junior-dev
-      - tu
-      - packager
-      - junior-packager
+      - support-staff
+      # - dev
+      # - junior-dev
+      # - tu
+      # - packager
+      # - junior-packager
+    hosts:
+      - mail.archlinux.org
   andrew:
     name: "Andrew Gregory"
     email: "andrew@archlinux.org"
