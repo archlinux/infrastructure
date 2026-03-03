@@ -1,23 +1,4 @@
-server {
-    include      snippets/listen-80.conf;
-{% if buildbtw_stage == "dev" %}
-{# For review apps, we allow dynamic subdomains and so we also need to redirect those requests. #}
-    server_name  .{{ buildbtw_domain }};
-{% else %}
-    server_name  {{ buildbtw_domain }};
-{% endif %}
-
-    access_log   /var/log/nginx/{{ buildbtw_domain }}/access.log main;
-    access_log   /var/log/nginx/{{ buildbtw_domain }}/access.log.json json_main;
-    error_log    /var/log/nginx/{{ buildbtw_domain }}/error.log;
-
-    include snippets/letsencrypt.conf;
-
-    location / {
-        access_log off;
-        return 301 https://$host$request_uri;
-    }
-}
+include snippets/redirect-80.conf;
 
 server {
     include      snippets/listen-443.conf;

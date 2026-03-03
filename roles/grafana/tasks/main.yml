@@ -1,6 +1,12 @@
 - name: Install grafana
   pacman: name=grafana state=present
 
+- name: Setup HTTP redirect
+  include_role:
+    name: http_redirect
+  vars:
+    domain: "{{ grafana_domain }}"
+
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/grafana.conf owner=root group=http mode=640
   notify:

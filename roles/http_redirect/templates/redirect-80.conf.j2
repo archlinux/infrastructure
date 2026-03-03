@@ -2,7 +2,11 @@ limit_req_zone $binary_remote_addr zone={{ http_redirect_ratelimit_zone }}:10m r
 server {
     include snippets/listen-80.conf;
 
-    server_name  {{ domain }};
+{% if additional_domains is defined %}
+    server_name  {{ domain }} {{ additional_domains | join(' ') }};
+{% else %}
+    server_name {{ domain }};
+{% endif %}
 
     access_log   /var/log/nginx/{{ domain }}/access.log main;
     access_log   /var/log/nginx/{{ domain }}/access.log.json json_main;
@@ -13,7 +17,7 @@ server {
     location / {
         limit_req zone=httpredirectlimit burst=10 nodelay;
         # this try_files statement allows the limit_req to be enforced before the redirect.
-    	try_files "" @https_redirect;
+        try_files "" @https_redirect;
     }
 
     location @https_redirect {

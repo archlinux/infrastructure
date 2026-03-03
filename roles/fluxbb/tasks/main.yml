@@ -31,6 +31,12 @@
     name=fluxbb host=localhost password={{ fluxbb_db_password }}
     priv='fluxbb.*:ALL'
 
+- name: Setup HTTP redirect
+  include_role:
+    name: http_redirect
+  vars:
+    domain: "{{ fluxbb_domain }}"
+
 - name: Create nginx log directory
   file: path=/var/log/nginx/{{ fluxbb_domain }} state=directory owner=root group=root mode=0755
 

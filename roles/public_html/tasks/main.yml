@@ -16,6 +16,14 @@
     - generate-public_html.timer
     - generate-public_html.service
 
+
+- name: Setup HTTP redirect
+  include_role:
+    name: http_redirect
+  vars:
+    domain: "{{ public_domain }}"
+    additional_domains: ["www.{{ public_domain }}"]
+
 - name: Make nginx log dir
   file: path=/var/log/nginx/{{ public_domain }} state=directory owner=root group=root mode=0755
 

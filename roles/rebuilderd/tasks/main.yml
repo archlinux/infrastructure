@@ -7,6 +7,12 @@
 - name: Configure rebuilderd-sync.conf
   template: src=rebuilderd-sync.conf.j2 dest=/etc/rebuilderd-sync.conf owner=rebuilderd group=rebuilderd mode=0660
 
+- name: Setup HTTP redirect
+  include_role:
+    name: http_redirect
+  vars:
+    domain: "{{ rebuilderd_domain }}"
+
 - name: Make nginx log dir
   file: path=/var/log/nginx/{{ rebuilderd_domain }} state=directory owner=root group=root mode=0755
 

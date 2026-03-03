@@ -20,21 +20,7 @@ map $remote_addr $foobar {
 #    default http://127.0.0.1:3000;               # bypass
 }
 
-server {
-    include      snippets/listen-80.conf;
-    server_name  {{ gitlab_domain }} {{ gitlab_registry_domain }};
-
-    access_log   /var/log/nginx/{{ gitlab_domain }}/access.log reduced;
-    access_log   /var/log/nginx/{{ gitlab_domain }}/access.log.json json_reduced;
-    error_log    /var/log/nginx/{{ gitlab_domain }}/error.log;
-
-    include snippets/letsencrypt.conf;
-
-    location / {
-        access_log off;
-        return 301 https://$server_name$request_uri;
-    }
-}
+include snippets/redirect-80.conf;
 
 server {
     include      snippets/listen-443.conf;

@@ -50,6 +50,12 @@
       notify:
         - Daemon reload
 
+- name: Setup HTTP redirect
+  include_role:
+    name: http_redirect
+  vars:
+    domain: "{{ keycloak_domain }}"
+
 - name: Create htpasswd for nginx prometheus endpoint
   htpasswd:
     path: "{{ keycloak_nginx_htpasswd }}"

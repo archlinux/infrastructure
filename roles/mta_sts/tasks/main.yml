@@ -1,3 +1,10 @@
+- name: Setup HTTP redirect
+  include_role:
+    name: http_redirect
+  vars:
+    domain: "mta-sts.{{ (mta_sts | map(attribute='domains') | flatten)[0] }}"
+    additional_domains: "{{ (mta_sts | map(attribute='domains') | flatten | map('regex_replace', '^', 'mta-sts.'))[1:] }}"
+
 - name: Make nginx log dir
   file: path=/var/log/nginx/{{ "mta-sts." + item.domains | first }} state=directory owner=root group=root mode=0755
   loop: "{{ mta_sts }}"

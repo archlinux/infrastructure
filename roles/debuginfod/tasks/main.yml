@@ -26,6 +26,12 @@
 - name: Start and enable packagelist.timer
   service: name=packagelist.timer enabled=yes state=started
 
+- name: Setup HTTP redirect
+  include_role:
+    name: http_redirect
+  vars:
+    domain: "{{ debuginfod_domain }}"
+
 - name: Make nginx log dir
   file: path=/var/log/nginx/{{ debuginfod_domain }} state=directory owner=root group=root mode=0755
 
@@ -33,7 +39,7 @@
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/debuginfod.conf owner=root group=root mode=0644
   notify:
     - Reload nginx
-  when: debuginfod_domain
+  when: debuginfod_domain != ""
   tags: ['nginx']
 
 - name: Open debuginfod ipv4 port for monitoring.archlinux.org
