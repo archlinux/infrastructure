@@ -1,0 +1,15 @@
+- name: Setup finance.archlinux.org
+  hosts: finance.archlinux.org
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: firewalld }
+    - { role: wireguard }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: prometheus_exporters }
+    - { role: promtail }
+    - { role: fail2ban }
+    - { role: borg_client, tags: ["borg"] }
+    - { role: postgres }
+    - { role: metabase }

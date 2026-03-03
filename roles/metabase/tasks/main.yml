@@ -1,0 +1,54 @@
+- name: Add metabase postgres db
+  postgresql_db: name=metabase
+  become: true
+  become_user: postgres
+  become_method: ansible.builtin.su
+
+- name: Add metabase postgres user
+  postgresql_user: login_db=metabase name=metabase password={{ vault_postgres_users.metabase }} encrypted=true
+  become: true
+  become_user: postgres
+  become_method: ansible.builtin.su
+
+- name: Ensure metabase database is owned by the metabase user
+  postgresql_db: name=metabase owner=metabase
+  become: true
+  become_user: postgres
+  become_method: ansible.builtin.su
+
+- name: Install docker
+  pacman: name=docker state=present
+
+- name: Start and enable docker service
+  service: name=docker enabled=yes state=started
+
+- name: Start docker metabase image
+  docker_container:
+    name: metabase
+    image: "metabase/metabase:{{ metabase_version }}"
+    domainname: "{{ finance_domain }}"
+    hostname: "{{ finance_domain }}"
+    network_mode: host
+    pull: true
+    restart_policy: always
+    state: started
+    recreate: true
+    env:
+      MB_DB_TYPE: "postgres"
+      MB_DB_DBNAME: "metabase"
+      MB_DB_PORT: "5432"
+      MB_DB_USER: "metabase"
+      MB_DB_PASS: "{{ vault_postgres_users.metabase }}"
+      MB_DB_HOST: "127.0.0.1"
+
+- name: Prune unused docker images
+  docker_prune:
+    images: true
+
+- name: Create nginx log dir
+  file: path=/var/log/nginx/{{ finance_domain }} state=directory owner=root group=root mode=0755
+
+- name: Install nginx conf file
+  template: src=finance-nginx.conf.j2 dest=/etc/nginx/nginx.d/finance.conf owner=root group=root mode=0600
+  notify:
+    - Reload nginx
