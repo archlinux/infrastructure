@@ -26,6 +26,12 @@ update the SSH hostkeys file in this git repo. For this you can simply run the
 makes to this git repository. It will also deploy any new SSH host keys to all
 our machines.
 
+## General service
+
+- All our servers should be included in our internal [Wireguard network](./wireguard.md)
+- After setting up a server also include [monitoring](./monitoring.md)
+- If the service holds some state [backups](./backups.md) should also be configured for it
+
 ## Note about packer
 
 We use packer to build snapshots on hcloud to use as server base images.
