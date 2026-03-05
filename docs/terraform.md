@@ -40,9 +40,3 @@ to actually apply your changes.
 
 The same applies to changed application configuration in which case you'd run
 it inside of `tf-stage2` instead of `tf-stage1`.
-
-We store terraform state on a special server that is the only hcloud server NOT
-managed by terraform so that we do not run into a chicken-egg problem. The
-state server is assumed to just exist so in an unlikely case where we have to
-entirely redo this infrastructure, the state server would have to be manually
-set up.
