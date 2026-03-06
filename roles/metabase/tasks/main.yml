@@ -22,7 +22,7 @@
 - name: Start and enable docker service
   service: name=docker enabled=yes state=started
 
-- name: Start docker metabase image
+- name: Deploy docker metabase image
   docker_container:
     name: metabase
     image: "metabase/metabase:{{ metabase_version }}"
