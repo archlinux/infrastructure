@@ -23,6 +23,10 @@ gitlab_bots:
   - project_85684_bot_1c840b3a28d3a03d2a13ef0b9aea2ed9
   # archlinux/alpm/voa, gitlab issue bot
   - project_99023_bot_7da23d67ceaee3a657df421e78ee0fc9
+  # archlinux/account-allowlist Allowlist-bot
+  - project_100502_bot_e72660623d782cd4a8667b213bcc00af
+  # archlinux/account-allowlist issue-bot
+  - project_100502_bot_e12ccfdac7cc5cf30c084276a2ad1cdd
   - gluebuddy
   # gitlab security bots, added in here until we have an implementation for
   # https://gitlab.archlinux.org/archlinux/gluebuddy/-/issues/21
