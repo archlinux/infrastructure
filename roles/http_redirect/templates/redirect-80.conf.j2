@@ -2,7 +2,7 @@ limit_req_zone $binary_remote_addr zone={{ http_redirect_ratelimit_zone }}:10m r
 server {
     include snippets/listen-80.conf;
 
-{% if additional_domains is defined %}
+{% if additional_domains is defined and additional_domains|length > 0 %}
     server_name  {{ domain }} {{ additional_domains | join(' ') }};
 {% else %}
     server_name {{ domain }};
