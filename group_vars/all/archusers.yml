@@ -797,6 +797,12 @@ arch_users:
     groups:
       - junior-packager
       - packager
+  tippfehlr:
+    name: "Jonathan Grotelüschen"
+    email: "tippfehlr@archlinux.org"
+    ssh_key: tippfehlr.pub
+    groups:
+      - junior-packager
   torxed:
     name: "Anton Hvornum"
     email: "torxed@archlinux.org"
