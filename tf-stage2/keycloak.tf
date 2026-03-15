@@ -258,7 +258,7 @@ resource "keycloak_realm_user_profile" "archlinux" {
     name         = "archQuestion"
     display_name = "What is the output of: LC_ALL=C pacman -V|tail -n3|base32|head -1 ?"
 
-    required_for_roles = ["user"]
+    required_for_roles = []
 
     permissions {
       view = ["admin", "user"]
