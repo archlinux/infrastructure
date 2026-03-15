@@ -91,7 +91,7 @@ resource "keycloak_realm" "archlinux" {
   display_name      = "Arch Linux"
   display_name_html = "<div class=\"kc-logo-text\"><span>Arch Linux</span></div>"
 
-  registration_allowed     = false
+  registration_allowed     = true
   reset_password_allowed   = true
   verify_email             = true
   login_with_email_allowed = true
@@ -348,6 +348,18 @@ resource "keycloak_required_action" "verify_profile" {
   enabled        = true
   name           = "Verify Profile"
   priority       = 70
+}
+
+resource "keycloak_required_action" "allowlist" {
+  realm_id       = "archlinux"
+  alias          = "allowlist"
+  default_action = true
+  enabled        = true
+  name           = "Allowlist"
+  priority       = 80
+  config = {
+    message = "Please write an email to accountsupport@archlinux.org to get your account allowlisted!"
+  }
 }
 
 resource "keycloak_realm_events" "realm_events" {
