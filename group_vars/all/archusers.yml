@@ -495,16 +495,6 @@ arch_users:
       - mail.archlinux.org
     groups:
       - support-staff
-  kgizdov:
-    name: "Konstantin Gizdov"
-    email: "kgizdov@archlinux.org"
-    ssh_key: kgizdov.pub
-    groups:
-      - packager
-      - junior-packager
-      - dev
-      - junior-dev
-      - tu
   klausenbusk:
     name: "Kristian Klausen"
     ssh_key: klausenbusk.pub
