@@ -18,6 +18,8 @@ smtp      inet  n       -       n       -       -       smtpd
 
 msa_cleanup unix n      -       n       -       0       cleanup
     -o header_checks=pcre:/etc/postfix/msa_header_checks
+    -o mime_header_checks=
+    -o nested_header_checks=
 submissions inet n       -       n       -       -       smtpd
     -o cleanup_service_name=msa_cleanup
     -o smtpd_tls_wrappermode=yes
