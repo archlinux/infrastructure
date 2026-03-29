@@ -553,6 +553,7 @@ arch_users:
     email: "martin@archlinux.org"
     ssh_key: martin.pub
     groups:
+      - packager
       - junior-packager
   mh4ckt3mh4ckt1c4s:
     name: "Quentin Michaud"
