@@ -164,7 +164,7 @@ Prometheus, and Grafana server which receives selected performance/metrics from 
 
 ## Archive Mirrors
 
-The [Arch Linux Archive](https://archive.archlinux.org) is mirrored to three dedicated servers to help aid global availability.
+The [Arch Linux Archive](https://archive.archlinux.org) is mirrored to the following dedicated servers to help aid global availability.
 
 ### Servers
 
