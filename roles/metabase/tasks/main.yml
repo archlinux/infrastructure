@@ -33,6 +33,8 @@
     restart_policy: always
     state: started
     recreate: true
+    volumes:
+      - /root/metabase-mnt/:/mnt
     env:
       MB_DB_TYPE: "postgres"
       MB_DB_DBNAME: "metabase"
