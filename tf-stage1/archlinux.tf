@@ -134,6 +134,10 @@ locals {
       server_type = "cx23"
       domain      = "bumpbuddy"
     }
+    "codesearch.archlinux.org" = {
+      server_type = "cx33"
+      domain      = "codesearch"
+    }
     "dashboards.archlinux.org" = {
       server_type = "cx23"
       domain      = "dashboards"
@@ -781,6 +785,13 @@ resource "hcloud_volume" "monitoring" {
   name              = "monitoring"
   size              = 215
   server_id         = hcloud_server.machine["monitoring.archlinux.org"].id
+  delete_protection = true
+}
+
+resource "hcloud_volume" "codesearch" {
+  name              = "codesearch"
+  size              = 1500
+  server_id         = hcloud_server.machine["codesearch.archlinux.org"].id
   delete_protection = true
 }
 
