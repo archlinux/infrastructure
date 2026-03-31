@@ -1,0 +1,116 @@
+---
+- name: Format codesearch data volume
+  filesystem:
+    fstype: ext4
+    dev: "{{ codesearch_volume_device }}"
+    opts: "-L codesearch"
+  when: codesearch_volume_device is defined
+
+- name: Mount codesearch data volume
+  mount:
+    path: /srv/codesearch
+    src: "{{ codesearch_volume_device }}"
+    fstype: ext4
+    opts: defaults
+    state: mounted
+  when: codesearch_volume_device is defined
+
+- name: Create codesearch system user
+  user: name={{ codesearch_user }} shell=/sbin/nologin system=yes
+
+- name: Create codesearch source directory
+  file: path={{ codesearch_sources_dir }} state=directory owner={{ codesearch_user }} group={{ codesearch_group }} mode=0755
+
+- name: Create codesearch index directory
+  file: path={{ codesearch_index_dir }} state=directory owner={{ codesearch_user }} group={{ codesearch_group }} mode=0755
+
+- name: Create codesearch shards directory
+  file: path={{ codesearch_shards_dir }} state=directory owner={{ codesearch_user }} group={{ codesearch_group }} mode=0755
+
+- name: Create codesearch state directory
+  file: path={{ codesearch_state_dir }} state=directory owner={{ codesearch_user }} group={{ codesearch_group }} mode=0755
+
+- name: Create codesearch log directory
+  file: path={{ codesearch_log_dir }} state=directory owner={{ codesearch_user }} group={{ codesearch_group }} mode=0755
+
+- name: Install logrotate config
+  copy: src=logrotate.conf dest=/etc/logrotate.d/codesearch owner=root group=root mode=0644
+
+- name: Create codesearch work directory
+  file: path={{ codesearch_fetch_workdir }} state=directory owner={{ codesearch_user }} group={{ codesearch_group }} mode=0755
+
+- name: Create codesearch packaging state directory
+  file: path={{ codesearch_state_repo_dir }} state=directory owner={{ codesearch_user }} group={{ codesearch_group }} mode=0755
+
+- name: Install required packages
+  pacman:
+    name:
+      - go
+      - parallel
+    state: present
+
+# TODO: We should probably be installing zoekt from a package instead of building it ourselves, but this is easier for now.
+- name: Install zoekt binaries
+  command: go install github.com/sourcegraph/zoekt/cmd/{{ item }}@{{ codesearch_zoekt_version }}
+  environment:
+    GOPATH: /usr/local
+    GOMODCACHE: /var/cache/go
+  loop:
+    - zoekt-index
+    - zoekt-merge-index
+    - zoekt-webserver
+  changed_when: false
+
+- name: Install source fetch script
+  template: src=fetch-sources.j2 dest=/usr/local/bin/fetch-sources owner=root group=root mode=0755
+
+- name: Install codesearch index script
+  template: src=codesearch-index.sh.j2 dest=/usr/local/bin/codesearch-index owner=root group=root mode=0755
+
+- name: Deploy systemd units
+  template: src={{ item }}.j2 dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  loop:
+    - codesearch-extract.service
+    - codesearch-extract.timer
+    - codesearch-index.service
+    - codesearch-index.timer
+    - codesearch-webserver.service
+  notify:
+    - Daemon reload
+
+- name: Start and enable codesearch-webserver
+  systemd: name=codesearch-webserver state=started enabled=yes daemon_reload=yes
+
+- name: Start and enable codesearch timers
+  systemd:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  loop:
+    - codesearch-extract.timer
+    - codesearch-index.timer
+
+- name: Make nginx log dir
+  file: path=/var/log/nginx/{{ codesearch_domain }} state=directory owner=root group=root mode=0755
+
+- name: Set up nginx
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/codesearch.conf owner=root group=root mode=0644
+  notify:
+    - Reload nginx
+  tags: ['nginx']
+
+- name: Open port 80 for codesearch (HTTP redirect + ACME)
+  ansible.posix.firewalld: service=http state=enabled permanent=true immediate=yes
+  tags:
+    - firewall
+
+- name: Open port 443 for codesearch (HTTPS)
+  ansible.posix.firewalld: service=https state=enabled permanent=true immediate=yes
+  tags:
+    - firewall
+
+- name: Allow prometheus exporter access from monitoring.archlinux.org
+  ansible.posix.firewalld: zone=wireguard state=enabled permanent=true immediate=yes
+    rich_rule="rule family=ipv4 source address={{ hostvars['monitoring.archlinux.org']['wireguard_address'] }} port protocol=tcp port=9100 accept"
+  tags:
+    - firewall

@@ -1,0 +1,71 @@
+#!/bin/bash
+set -euo pipefail
+
+SOURCES_DIR="{{ codesearch_sources_dir }}"
+INDEX_DIR="{{ codesearch_index_dir }}"
+STATE_DIR="{{ codesearch_state_dir }}"
+LOGFILE="{{ codesearch_log_dir }}/codesearch-index.log"
+PARALLELISM="{{ codesearch_index_parallelism }}"
+CONCURRENT="{{ codesearch_index_concurrent }}"
+INDEXED_FILE="$STATE_DIR/indexed-packages"
+
+msg() { printf '[%s] %s\n' "$(date -Iseconds)" "$*" | tee -a "$LOGFILE" >&2; }
+
+mkdir -p "$INDEX_DIR" "$STATE_DIR"
+touch "$INDEXED_FILE"
+
+# Remove shards and indexed-file entries for packages whose source no longer exists
+msg "cleaning stale entries..."
+stale_count=0
+{
+    while IFS= read -r pkg; do
+        if [[ -d "$SOURCES_DIR/$pkg" ]]; then
+            echo "$pkg"
+        else
+            rm -f "$INDEX_DIR/${pkg}_v"*.zoekt
+            msg "removed stale shards: $pkg"
+            ((stale_count++)) || true
+        fi
+    done < "$INDEXED_FILE"
+} > "$INDEXED_FILE.tmp"
+mv "$INDEXED_FILE.tmp" "$INDEXED_FILE"
+[[ $stale_count -eq 0 ]] && msg "no stale entries found" || msg "removed $stale_count stale packages"
+
+# Index all packages (with concurrent processes)
+total=$(find "$SOURCES_DIR" -maxdepth 1 -mindepth 1 -type d | wc -l)
+msg "starting indexing: $total packages available ($CONCURRENT concurrent, $PARALLELISM parallelism each)"
+
+indexed=0
+skipped=0
+
+for src_dir in $(find "$SOURCES_DIR" -maxdepth 1 -mindepth 1 -type d | sort); do
+    pkg_name=$(basename "$src_dir")
+
+    # Skip if already indexed
+    if grep -qxF "$pkg_name" "$INDEXED_FILE" 2>/dev/null; then
+        ((skipped++)) || true
+        continue
+    fi
+
+    # Spawn indexing in background
+    (
+        msg "indexing [$((indexed + skipped + 1))/$total] $pkg_name"
+        if zoekt-index -index "$INDEX_DIR" -shard_prefix_override "$pkg_name" -parallelism "$PARALLELISM" "$src_dir/"; then
+            echo "$pkg_name" >> "$INDEXED_FILE"
+            msg "indexed: $pkg_name"
+        else
+            msg "failed: $pkg_name (will retry on next run)"
+        fi
+    ) &
+
+    ((indexed++)) || true
+
+    # Wait for a slot if we've spawned CONCURRENT processes
+    if (( $(jobs -r -p | wc -l) >= CONCURRENT )); then
+        wait -n
+    fi
+done
+
+# Wait for remaining processes
+wait
+msg "complete: $indexed newly indexed, $skipped already indexed, $total total"
