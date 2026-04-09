@@ -64,7 +64,6 @@
     - rebuilderd-status-textcollector.py
     - archive-textcollector.sh
     - repository-textcollector.sh
-    - btrfs-textcollector.sh
     - fail2ban-textcollector.sh
     - smart-textcollector.sh
 
@@ -203,22 +202,6 @@
 - name: Start and enable prometheus fastly textcollector timer
   systemd_service: name=prometheus-fastly-textcollector.timer enabled=yes daemon_reload=yes state=started
   when: "inventory_hostname == 'monitoring.archlinux.org'"
-
-- name: Install sudoers for btrfs
-  copy: src=sudoers dest=/etc/sudoers.d/node_exporter owner=root group=root mode=0440 validate='visudo -cf %s'
-  when: filesystem == "btrfs"
-
-- name: Install btrfs textcollector service
-  template: src=prometheus-btrfs-textcollector.service.j2 dest=/etc/systemd/system/prometheus-btrfs-textcollector.service owner=root group=root mode=644
-  when: filesystem == "btrfs"
-
-- name: Install btrfs textcollector timer
-  template: src=prometheus-btrfs-textcollector.timer.j2 dest=/etc/systemd/system/prometheus-btrfs-textcollector.timer owner=root group=root mode=644
-  when: filesystem == "btrfs"
-
-- name: Start and enable prometheus btrfs textcollector timer
-  systemd_service: name=prometheus-btrfs-textcollector.timer enabled=yes daemon_reload=yes state=started
-  when: filesystem == "btrfs"
 
 - name: Start and enable prometheus-node-exporter service
   systemd_service: name=prometheus-node-exporter enabled=yes daemon_reload=yes state=started
