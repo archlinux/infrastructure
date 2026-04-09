@@ -25,7 +25,7 @@
     - { role: uwsgi }
     - { role: memcached }
     - { role: fetchmail }
-    - { role: archweb, archweb_planet: true }
+    - { role: archweb, archweb_planet: true, archweb_pgp_import: true }
     - { role: fail2ban }
     - { role: prometheus_exporters }
     - { role: promtail }
