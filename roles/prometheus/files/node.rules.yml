@@ -254,45 +254,45 @@ groups:
     interval: 2m
     rules:
       - alert: btrfs_corruption_errs
-        expr: btrfs_corruption_errs > 1
+        expr: increase(node_btrfs_device_errors_total{type="corruption"}[5m]) > 0
         for: 15m
         labels:
           severity: warning
         annotations:
           description: 'host {{ $labels.instance }} btrfs corruption errors'
-          summary: '{{ $labels.instance }} has {{ $value }} btrfs_corruption_errs'
+          summary: '{{ $labels.instance }} has {{ $value }} btrfs corruption errors'
       - alert: btrfs_write_io_errs
-        expr: btrfs_write_io_errs > 1
+        expr: increase(node_btrfs_device_errors_total{type="write"}[5m]) > 0
         for: 15m
         labels:
           severity: warning
         annotations:
           description: 'host {{ $labels.instance }} btrfs write_io errors'
-          summary: '{{ $labels.instance }} has {{ $value }} btrfs_write_io_errs'
+          summary: '{{ $labels.instance }} has {{ $value }} btrfs write_io errors'
       - alert: btrfs_read_io_errs
-        expr: btrfs_read_io_errs > 1
+        expr: increase(node_btrfs_device_errors_total{type="read"}[5m]) > 0
         for: 15m
         labels:
           severity: warning
         annotations:
           description: 'host {{ $labels.instance }} btrfs read_io errors'
-          summary: '{{ $labels.instance }} has {{ $value }} btrfs_read_io_errs'
+          summary: '{{ $labels.instance }} has {{ $value }} btrfs read_io errors'
       - alert: btrfs_flush_io_errs
-        expr: btrfs_flush_io_errs > 1
+        expr: increase(node_btrfs_device_errors_total{type="flush"}[5m]) > 0
         for: 15m
         labels:
           severity: warning
         annotations:
           description: 'host {{ $labels.instance }} btrfs flush_io errors'
-          summary: '{{ $labels.instance }} has {{ $value }} btrfs_flush_io_errs'
-      - alert: btrfs_corruption_errs
-        expr: btrfs_corruption_errs > 1
+          summary: '{{ $labels.instance }} has {{ $value }} btrfs flush_io errors'
+      - alert: btrfs_generation_errs
+        expr: increase(node_btrfs_device_errors_total{type="generation"}[5m]) > 0
         for: 15m
         labels:
           severity: warning
         annotations:
-          description: 'host {{ $labels.instance }} btrfs corruption errors'
-          summary: '{{ $labels.instance }} has {{ $value }} btrfs_corruption_errs'
+          description: 'host {{ $labels.instance }} btrfs generation errors'
+          summary: '{{ $labels.instance }} has {{ $value }} btrfs generation errors'
 
   - name: smart
     interval: 1m
