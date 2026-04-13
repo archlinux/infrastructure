@@ -170,6 +170,12 @@ arch_users:
       - dev
       - junior-dev
       - tu
+  auerhuhn:
+    name: "Claudia Pellegrino"
+    email: "auerhuhn@archlinux.org"
+    ssh_key: auerhuhn.pub
+    groups:
+      - junior-packager
   aur-notify:
     name: ""
     groups: []
