@@ -105,8 +105,7 @@ locals {
       floating_ipv4 = true
     }
     "bbs.archlinux.org" = {
-      server_type   = "cx23"
-      domain        = "bbs"
+      server_type   = "cpx22"
       ttl           = 60
       floating_ipv6 = true
       location      = "nbg1"
@@ -361,6 +360,11 @@ locals {
     aur = {
       ipv4_address = "209.126.35.78"
       ipv6_address = "2604:cac0:a104:d::2"
+      ttl          = 60
+    }
+    bbs = {
+      ipv4_address = "209.126.35.82"
+      ipv6_address = "2604:cac0:a104:d::5"
       ttl          = 60
     }
     build = {
