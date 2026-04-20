@@ -354,6 +354,11 @@ locals {
       ipv6_address = "2604:cac0:a104:d::5"
       ttl          = 60
     }
+    bbs = {
+      ipv4_address = "209.126.35.82"
+      ipv6_address = "2604:cac0:a104:d::5"
+      ttl          = 60
+    }
     build = {
       ipv4_address = "162.55.28.166"
       ipv6_address = "2a01:4f8:2190:20e0::2"
