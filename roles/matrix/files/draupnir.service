@@ -4,32 +4,12 @@ Wants=synapse.service
 After=network.target synapse.service
 
 [Service]
-ExecStart=/var/lib/synapse/draupnir/draupnir-entrypoint.sh bot --draupnir-config /etc/synapse/draupnir.yaml
-WorkingDirectory=/var/lib/synapse/draupnir
-Restart=always
 User=synapse
+WorkingDirectory=/var/lib/synapse/draupnir
 Environment=NODE_ENV=production
-SyslogIdentifier=draupnir
-
-ReadWritePaths=/var/lib/synapse/draupnir-data
-NoNewPrivileges=yes
-PrivateDevices=yes
-PrivateTmp=yes
-ProtectHome=yes
-ProtectSystem=strict
-ProtectControlGroups=true
-RestrictSUIDSGID=true
-RestrictRealtime=true
-LockPersonality=true
-ProtectKernelLogs=true
-ProtectKernelTunables=true
-ProtectHostname=true
-ProtectKernelModules=true
-PrivateUsers=true
-ProtectClock=true
-SystemCallArchitectures=native
-SystemCallErrorNumber=EPERM
-SystemCallFilter=@system-service
+ExecStart=/usr/bin/node lib/index.js --draupnir-config /etc/synapse/draupnir.yaml
+Restart=on-failure
+RestartSec=30s
 
 [Install]
 WantedBy=multi-user.target
