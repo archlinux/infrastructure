@@ -125,6 +125,9 @@ Page][waf-details], especially under the "IPs" section.
    - https: 50
    - http: 25
    - ssh: 25
+- `bbs.archlinux.org`
+   - https: 25
+   - http: 25
 - `man.archlinux.org`
    - https: 200
    - http: 20
