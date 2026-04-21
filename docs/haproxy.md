@@ -119,18 +119,21 @@ IP needs to be investigated this is possible on the [WAF Details
 Page][waf-details], especially under the "IPs" section.
 
 - `archlinux.org`
-   - https: 200
-   - http: 20
+   - https: 25
+   - http: 25
 - `aur.archlinux.org`
    - https: 50
    - http: 25
    - ssh: 25
+- `bbs.archlinux.org`
+   - https: 25
+   - http: 25
 - `man.archlinux.org`
-   - https: 200
-   - http: 20
+   - https: 25
+   - http: 25
 - `wiki.archlinux.org`
-   - https: 200
-   - http: 20
+   - https: 25
+   - http: 25
 - `test.pkgbuild.com`
 
 The unit of these limits is the amount of allowed connections per moving 10
