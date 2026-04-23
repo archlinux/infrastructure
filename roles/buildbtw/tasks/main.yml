@@ -75,6 +75,7 @@
   file: path={{ item }} owner=root group=root mode=0755 state=directory
   loop:
     - /var/lib/buildbtw
+    - /var/lib/buildbtw/data
     - /run/buildbtw
 
 - name: Start and enable webhook systemd service
