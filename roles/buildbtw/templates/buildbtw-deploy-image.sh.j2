@@ -10,7 +10,7 @@ image_tag=$1
 # Restart so that a potentially newer image may get pulled
 echo "Deploying ${image_tag}"
 systemctl restart "buildbtw@${image_tag}"
-{% if buildbtw_stage == "dev" %}
+{% if buildbtw_stage == "review" %}
 # Manual symlink (as suggested in podman-systemd.unit(5) because this will
 # generate a service and generated/transient services can't be enabled. We can
 # manually instantiate them, however, to make sure they run on boot.
