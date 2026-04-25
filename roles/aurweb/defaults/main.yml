@@ -30,7 +30,7 @@ aurweb_request_limt: '4000'
 aurweb_window_length: '86400'
 aurweb_memcached_memory: 2048
 
-aurweb_workers: 4
+aurweb_workers: 8
 aurweb_environment_type: 'prod'
 
 # aurweb timers and services are installed and restarted by default,
