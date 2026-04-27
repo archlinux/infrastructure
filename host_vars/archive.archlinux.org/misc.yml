@@ -14,3 +14,10 @@ raid_level: "raid10"
 archive_domain: archive.archlinux.org
 wireguard_address: 10.0.0.20
 wireguard_public_key: GiMqMcJ7aEuW6rRwXsj27S+w7orx7Etnjq+dE6RhoSc=
+
+ignore_package_upgrades:
+  # Causes issues with rsync-ssl:
+  # - https://gitlab.archlinux.org/archlinux/infrastructure/-/issues/818
+  # - https://github.com/RsyncProject/rsync/issues/869
+  # - https://github.com/openssl/openssl/issues/30925
+  - openssl
