@@ -2,3 +2,10 @@ ipv4_address: 168.119.240.111
 ipv6_address: 2a01:4f8:c010:74d4::1
 wireguard_address: 10.0.0.35
 wireguard_public_key: R3ZlD7HmoiGH2FyIGSaiYc1hIA7JHp3ivXQlRGc7iyA=
+
+ignore_package_upgrades:
+  # Causes issues with rsync-ssl:
+  # - https://gitlab.archlinux.org/archlinux/infrastructure/-/issues/818
+  # - https://github.com/RsyncProject/rsync/issues/869
+  # - https://github.com/openssl/openssl/issues/30925
+  - openssl

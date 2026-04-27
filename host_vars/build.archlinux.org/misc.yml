@@ -13,3 +13,10 @@ raid_level: "raid1"
 archbuild_fs: 'btrfs'
 wireguard_address: 10.0.0.18
 wireguard_public_key: 9Lii487Uuzu5ihJwHx6RBpCiUWRHl9VGwC+Oz5wzejk=
+
+ignore_package_upgrades:
+  # Causes issues with rsync-ssl:
+  # - https://gitlab.archlinux.org/archlinux/infrastructure/-/issues/818
+  # - https://github.com/RsyncProject/rsync/issues/869
+  # - https://github.com/openssl/openssl/issues/30925
+  - openssl
