@@ -4,4 +4,10 @@ BUILDBTW_COOKIE_ENCRYPTION_KEY={{ vault_buildbtw_cookie_encryption_key }}
 BUILDBTW_OIDC_CLIENT_ID=buildbtw-{{ buildbtw_stage }}
 BUILDBTW_OIDC_CLIENT_SECRET={{ vault_buildbtw_openid_client_secret }}
 BUILDBTW_OIDC_ISSUER_URL=https://accounts.archlinux.org/realms/archlinux
-BUILDBTW_OIDC_ISSUER_NAME="Arch Linux SSO"
+BUILDBTW_OIDC_ISSUER_NAME=Arch Linux SSO
+BUILDBTW_GITLAB_TOKEN={{ vault_buildbtw_gitlab_token }}
+BUILDBTW_GITLAB_DOMAIN=https://gitlab.archlinux.org
+BUILDBTW_GITLAB_SSH_HOST_KEY=gitlab.archlinux.org ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICjT2SuA0k/xc5Cbyp+eBY5uN3bRL2K7GdpNtltOK6vy
+BUILDBTW_GITLAB_PACKAGES_GROUP={{ buildbtw_gitlab_packages_group }}
+BUILDBTW_DATA_DIR=/var/lib/buildbtw/data
+RUST_LOG=info,sqlx::query=warn,hyper_util::client=info,sea_orm_migration=warn,sea_orm=info,h2=info
