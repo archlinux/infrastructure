@@ -11,9 +11,9 @@ Exec=run
 ContainerName=buildbtw-%i
 Environment="BUILDBTW_LISTEN=unix:/run/buildbtw/%i.sock:777"
 {% if buildbtw_stage == "review" %}
-Environment="BUILDBTW_BASE_URL=https://%i.{{ buildbtw_domain }}"
+Environment="BUILDBTW_SERVER_URL=https://%i.{{ buildbtw_domain }}"
 {% else %}
-Environment="BUILDBTW_BASE_URL=https://{{ buildbtw_domain }}"
+Environment="BUILDBTW_SERVER_URL=https://{{ buildbtw_domain }}"
 {% endif %}
 Environment="BUILDBTW_DATABASE_FILE=/var/lib/buildbtw/buildbtw-%i.sqlite"
 Environment="BUILDBTW_DATA_DIR=/var/lib/buildbtw/data"
