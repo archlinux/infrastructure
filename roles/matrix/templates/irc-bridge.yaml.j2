@@ -242,7 +242,7 @@ ircService:
         # Syncing membership lists at startup can result in hundreds of members to
         # process all at once. This timer drip feeds membership entries at the
         # specified rate. Default: 10000. (10s)
-        floodDelayMs: 1000
+        floodDelayMs: 10000
 
         global:
           ircToMatrix:
@@ -315,7 +315,7 @@ ircService:
         # Number of tries a client can attempt to join a room before the request
         # is discarded. You can also use -1 to never retry or 0 to never give up.
         # Optional. Default: -1
-        joinAttempts: 2
+        joinAttempts: 20
 
       # Configuration for virtual IRC users. The following variables are exposed:
       # $LOCALPART => The user ID localpart ("alice" in @alice:localhost)
@@ -370,7 +370,7 @@ ircService:
         # reconnect for this server will be handled every reconnectIntervalMs ms using
         # a FIFO queue.
         # Default: 5000 (5 seconds)
-        reconnectIntervalMs: 2000
+        reconnectIntervalMs: 5000
         # The number of concurrent reconnects if a user has been disconnected unexpectedly
         # (e.g. a netsplit). You should set this to a reasonably high number so that
         # bridges are not waiting an eternity to reconnect all its clients if
