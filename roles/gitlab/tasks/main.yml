@@ -81,7 +81,6 @@
         registry_nginx['real_ip_header'] = 'X-Forwarded-For'
         nginx['client_max_body_size'] = '10g'
         nginx['custom_gitlab_server_config'] = "include /etc/gitlab/nginx-gitlab-server-mixins/*.conf;"
-        gitlab_pages['inplace_chroot'] = true
         pages_external_url "http://{{ gitlab_domain }}"
         pages_nginx['enable'] = false
         gitlab_pages['external_http'] = {{ gitlab_pages_http_addresses }}
