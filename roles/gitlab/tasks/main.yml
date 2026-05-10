@@ -81,14 +81,12 @@
         registry_nginx['real_ip_header'] = 'X-Forwarded-For'
         nginx['client_max_body_size'] = '10g'
         nginx['custom_gitlab_server_config'] = "include /etc/gitlab/nginx-gitlab-server-mixins/*.conf;"
-        gitlab_pages['inplace_chroot'] = true
         pages_external_url "http://{{ gitlab_domain }}"
         pages_nginx['enable'] = false
         gitlab_pages['external_http'] = {{ gitlab_pages_http_addresses }}
         gitlab_pages['external_https'] = {{ gitlab_pages_https_addresses }}
         gitlab_pages['rate_limit_source_ip'] = 10.0
         gitlab_pages['rate_limit_source_ip_burst'] = 300
-        gitlab_pages['env'] = { 'FF_ENFORCE_IP_RATE_LIMITS' => 'true', 'FF_CONFIGURABLE_ROOT_DIR' => 'true', 'FF_ENABLE_DOMAIN_REDIRECT' => 'true' }
         gitlab_rails['env'] = {'GITLAB_THROTTLE_BYPASS_HEADER' => 'Gitlab-Bypass-Rate-Limiting'}
         gitlab_rails['lfs_enabled'] = true
         gitlab_rails['gitlab_username_changing_enabled'] = false
