@@ -428,6 +428,12 @@ arch_users:
       - dev
       - junior-dev
       - tu
+  hyacinthe:
+    name: "Hyacinthe Cartiaux"
+    email: "hyacinthe@archlinux.org"
+    ssh_key: hyacinthe.pub
+    groups:
+      - junior-packager
   idevolder:
     name: "Ike Devolder"
     email: "ike.devolder@archlinux.org"
