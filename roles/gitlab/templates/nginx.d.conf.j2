@@ -5,9 +5,12 @@ map $http_upgrade $connection_upgrade {
     ''      close;
 }
 
-map $remote_addr $foobar {
+# Exclude some of our hosts from Anubis
+map $remote_addr $bypass_list {
     213.133.111.15 http://127.0.0.1:3000;        # gitlab.archlinux.org
     2a01:4f8:222:174c::1 http://127.0.0.1:3000;  # gitlab.archlinux.org
+    213.133.111.6 http://127.0.0.1:3000;         # archlinux.page
+    2a01:4f8:222:174c::2 http://127.0.0.1:3000;  # archlinux.page
     116.202.134.150 http://127.0.0.1:3000;       # scuree-runner1.archlinux.org
     2a01:4f8:231:4e1e::2 http://127.0.0.1:3000;  # secure-runner1.archlinux.org
     157.180.104.115 http://127.0.0.1:3000;       # runner2.archlinux.org
@@ -20,8 +23,36 @@ map $remote_addr $foobar {
 #    default http://127.0.0.1:3000;               # bypass
 }
 
+# We do not use the GitLab Pages-native custom domains feature since we want to
+# have more flexibility in how we use our domains. Specifically, GitLab Page
+# does not allow custom domains to be shared with the wildcard domain for
+# GitLab Pages. This means that in the official implementation, we can't have
+# the wildcard *.archlinux.page for dynamic GitLab pages and a custom domain
+# like signstar.archlinux.page.
+#
+# For that reason, we disable the official custom domain feature and instead
+# use this mapping table to set the custom domains.
+map $host $gitlab_pages_actual_host {
+    # archlinux.page
+{% for source, unique_domain in gitlab_pages_archlinux_page_map.items() %}
+    {{ source }} {{ unique_domain }};
+{% endfor %}
+
+    # archlinux.org
+{% for source, unique_domain in gitlab_pages_archlinux_org_map.items() %}
+    {{ source }} {{ unique_domain }};
+{% endfor %}
+
+    default $host;
+}
+
 include snippets/redirect-80.conf;
 
+#
+# Front nginx server for GitLab Rails and GitLab Container Registry
+#
+# Optionally passes requests onto Anubis.
+#
 server {
     include      snippets/listen-443.conf;
     server_name  {{ gitlab_domain }} {{ gitlab_registry_domain }};
@@ -39,10 +70,7 @@ server {
         proxy_set_header X-Http-Version $server_protocol;
         proxy_redirect http://gitlab.archlinux.org:3000/ /;
         # Anubis
-        proxy_pass $foobar;
-#        proxy_pass http://127.0.0.1:8923;
-        # Bypass Anubis
-#        proxy_pass http://127.0.0.1:3000;
+        proxy_pass $bypass_list;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection $connection_upgrade;
         proxy_read_timeout 3600;
@@ -51,6 +79,70 @@ server {
     }
 }
 
+#
+# Front nginx server for GitLab Pages on archlinux.page
+#
+# We need this additional block for handling the wildcard certificate.
+#
+server {
+    include      snippets/listen-443.conf;
+    server_name  {{ gitlab_pages_domain }} *.{{ gitlab_pages_domain }};
+    access_log   /var/log/nginx/{{ gitlab_pages_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ gitlab_pages_domain }}/access.log.json json_main;
+    error_log    /var/log/nginx/{{ gitlab_pages_domain }}/error.log;
+
+    ssl_certificate      /etc/letsencrypt/live/{{ gitlab_pages_domain }}/fullchain.pem;
+    ssl_certificate_key  /etc/letsencrypt/live/{{ gitlab_pages_domain }}/privkey.pem;
+
+    location / {
+        proxy_set_header Host $gitlab_pages_actual_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        # Proxy directly to GitLab Pages proxy listener
+        proxy_pass http://127.0.0.1:8090;
+
+        # Rewrite redirects from actual host to mapped domain
+        proxy_redirect //$gitlab_pages_actual_host/ /;
+
+        # Rewrite all HTML references of the actual host to the mapped domain
+        # NOTE: This is currently off as it's fairly invasive and we might not ever really need it.
+        #sub_filter_once off;
+        #sub_filter $gitlab_pages_actual_host $host;
+    }
+}
+
+#
+# Front nginx server for GitLab Pages on archlinux.org
+#
+server {
+    include      snippets/listen-443.conf;
+    server_name  {{ gitlab_pages_archlinux_org_map.keys() | join(" ") }};
+    access_log   /var/log/nginx/{{ gitlab_pages_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ gitlab_pages_domain }}/access.log.json json_main;
+    error_log    /var/log/nginx/{{ gitlab_pages_domain }}/error.log;
+
+    acme_certificate     letsencrypt;
+    ssl_certificate      $acme_certificate;
+    ssl_certificate_key  $acme_certificate_key;
+
+    location / {
+        proxy_set_header Host $gitlab_pages_actual_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        # Proxy directly to GitLab Pages proxy listener
+        proxy_pass http://127.0.0.1:8090;
+
+        # Rewrite redirects from actual host to mapped domain
+        proxy_redirect //$gitlab_pages_actual_host/ /;
+
+        # Rewrite all HTML references of the actual host to the mapped domain
+        # NOTE: This is currently off as it's fairly invasive and we might not ever really need it.
+        #sub_filter_once off;
+        #sub_filter $gitlab_pages_actual_host $host;
+    }
+}
+
+#
+# Receives from Anubis and proxies to GitLab Rails and Gitlab container Registry
+#
 server {
     set_real_ip_from 127.0.0.1;
     real_ip_header X-Real-IP;
@@ -58,9 +150,9 @@ server {
 
 #    server_name  gitlab.archlinux.org registry.archlinux.org;
 
-    access_log   /var/log/nginx/gitlab.archlinux.org/access.log main;
-    access_log   /var/log/nginx/gitlab.archlinux.org/access.log.json json_main;
-    error_log    /var/log/nginx/gitlab.archlinux.org/error.log;
+    access_log   /var/log/nginx/{{ gitlab_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ gitlab_domain }}/access.log.json json_main;
+    error_log    /var/log/nginx/{{ gitlab_domain }}/error.log;
 
     location / {
         # limit_req zone=scrapelimit burst=20 nodelay;

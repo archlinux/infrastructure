@@ -1,0 +1,20 @@
+#!/bin/sh
+
+test "$1" = renew || exit 0
+
+gitlab_pages_domain="{{ gitlab_pages_domain }}"
+
+for domain in $RENEWED_DOMAINS; do
+    case "$domain" in
+        $gitlab_pages_domain)
+            install -o root -g root -m 400 \
+                    /etc/letsencrypt/live/${gitlab_pages_domain}/privkey.pem \
+                    /srv/gitlab/config/ssl/${gitlab_pages_domain}.key
+            install -o root -g root -m 400 \
+                    /etc/letsencrypt/live/${gitlab_pages_domain}/fullchain.pem \
+                    /srv/gitlab/config/ssl/${gitlab_pages_domain}.crt
+            docker exec gitlab gitlab-ctl hup gitlab-pages
+            break
+            ;;
+    esac
+done

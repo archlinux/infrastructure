@@ -1,22 +1,16 @@
 <!--
-This template should be used by DevOps members when adding a GitLab Pages
-project to GitLab.
+This template should be used by DevOps members when adding an official GitLab Pages
+site at a custom domain under either *.archlinux.page or *.archlinux.org.
 
-In order to use GitLab Pages with Arch Linux, you'll have to specifically
-request a custom subdomain below `archlinux.page` to be
-assigned. We don't allow random projects to use Pages because of legal and
-safety reasons (we don't want people to be able to trick others into thinking
-something hosted below one of our domains is official).
-
-Additionally we separate pages with user produced content from other domains
-due to potential cookie sharing on domain level.
+For regular GitLab Pages using a generated unique domain, this is not necessary
+and just works as-is without manual involvement.
 -->
 
 # Procedure for adding a GitLab Pages project to GitLab
 
 ## Details
 - **Project name**: hello
-- **Desired subdomain**: hello.archlinux.page
+- **Desired subdomain**: Either hello.archlinux.page or hello.archlinux.org
 
 ## New Pages site checklist
 
@@ -24,13 +18,21 @@ due to potential cookie sharing on domain level.
 1. [ ] Specify this path (`public/`) as an artifact path.
 1. [ ] GitLab should now recognize that you're trying to use Pages and will show some relevant
        information at https://gitlab.archlinux.org/your-namespace/your-project/pages
-1. [ ] At this page, you'll also need to add your custom domain. Add the custom domain you requested earlier.
-       GitLab will then show domain verification information which you'll need in the next step.
-1. [ ] At this point, we'll need to add some stuff to the `archlinux_page_gitlab_pages` variable in `archlinux.tf`. It should look something like this.
-       Make sure to substitute the `your-domain` and `your-code-shown-by-gitlab` strings accordingly:
+1. [ ] On this page, you'll also need to make sure that **Use unique domain** is toggled **ON**.
+       Note down the custom domain.
 
-        "your-domain" = "your-code-shown-by-gitlab"
+### For a custom domain at *.archlinux.page
+1. [ ] Add a mapping between the domain name and its generated unique domain
+       from GitLab that you noted earlier into `gitlab_pages_archlinux_org_map` in
+       `host_vars/gitlab.archlinux.org/misc.yml`.
+1. [ ] Run `ansible-playbook playbooks/gitlab.archlinux.org.yml -t gitlab`.
 
-1. [ ] Run `terraform apply` and go back to GitLab. Hit `Verify` and it should pick up the new domain
-       verification code. It should then also automatically begin fetching a certificate via Let's
-       Encrypt. That should take roughly 10min.
+### For a custom domain at *.archlinux.org
+Please note that we don't give out custom domains under *.archlinux.org lightly.
+
+1. [ ] Add the desired domain name into `archlinux_org_gitlab_pages` in `tf-stage1/archlinux.tf`.
+1. [ ] Add a mapping between the domain name and its generated unique domain
+       from GitLab that you noted earlier into `gitlab_pages_archlinux_org_map` in
+       `host_vars/gitlab.archlinux.org/misc.yml`.
+1. [ ] Run `terraform apply`.
+1. [ ] Run `ansible-playbook playbooks/gitlab.archlinux.org.yml -t gitlab`.
