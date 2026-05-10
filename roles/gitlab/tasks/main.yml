@@ -87,7 +87,7 @@
         gitlab_pages['external_https'] = {{ gitlab_pages_https_addresses }}
         gitlab_pages['rate_limit_source_ip'] = 10.0
         gitlab_pages['rate_limit_source_ip_burst'] = 300
-        gitlab_pages['env'] = { 'FF_ENFORCE_IP_RATE_LIMITS' => 'true', 'FF_CONFIGURABLE_ROOT_DIR' => 'true' }
+        gitlab_pages['env'] = { 'FF_ENFORCE_IP_RATE_LIMITS' => 'true' }
         gitlab_rails['env'] = {'GITLAB_THROTTLE_BYPASS_HEADER' => 'Gitlab-Bypass-Rate-Limiting'}
         gitlab_rails['lfs_enabled'] = true
         gitlab_rails['gitlab_username_changing_enabled'] = false
