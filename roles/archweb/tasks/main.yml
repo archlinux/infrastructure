@@ -94,12 +94,14 @@
   loop:
     - .well-known
     - .well-known/matrix
+  when: item != ".well-known/matrix" or inventory_hostname == "archlinux.org"
 
 - name: Configure .well-known/matrix
   template: src=well-known-matrix-{{ item }}.json.j2 dest="{{ archweb_dir }}/archlinux.org/.well-known/matrix/{{ item }}" owner=root group=root mode=0644
   loop:
     - server
     - client
+  when: inventory_hostname == "archlinux.org"
 
 - name: Configure archweb
   template: src=local_settings.py.j2 dest={{ archweb_dir }}/local_settings.py owner=archweb group=archweb mode=0660
