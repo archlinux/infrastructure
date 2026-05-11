@@ -1,2 +1,2 @@
-- name: Reload nginx
-  service: name=nginx state=reloaded
+- name: Reload nginx # noqa no-changed-when
+  shell: nginx -t && systemctl reload nginx
