@@ -26,7 +26,7 @@ def configure_network():
                 continue
 
             sections.append(["[Address]", f"Address={subnet['address']}"])
-            sections.append(["[Route]", f"Gateway={subnet['gateway']}"])
+            sections.append(["[Route]", f"PreferredSource={subnet['address'].split('/')[0]}\nGateway={subnet['gateway']}"])
 
     path = Path("/etc/systemd/network/10-dhcp-ethernet.network.d/hcloud.conf")
     content = "\n\n".join(["\n".join(s) for s in sections]) + "\n"
