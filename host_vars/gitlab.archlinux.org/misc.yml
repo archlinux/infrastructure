@@ -14,7 +14,6 @@ ipv6_gateway: "fe80::1"
 system_disks:
   - /dev/nvme0n1
   - /dev/nvme1n1
-nginx_explict_listen_addresses: true
 fail2ban_jails:
   sshd: true
   postfix: false
@@ -24,3 +23,32 @@ fail2ban_jails:
 anubis_extra_rules:
   - skip-all-non-browser
   - gitlab-upstream-location
+
+gitlab_pages_archlinux_page_map:
+  archlinux.page: archlinux-page-caddcd.archlinux.page
+  signstar.archlinux.page: signstar-fda89a.archlinux.page
+  rfc.archlinux.page: rfcs-12a678.archlinux.page
+  repod.archlinux.page: repod-7effd5.archlinux.page
+  monthly-reports.archlinux.page: monthly-reports-985740.archlinux.page
+  pacman.archlinux.page: pacman-0adb8c.archlinux.page
+  alpm.archlinux.page: alpm-29eafc.archlinux.page
+  devblog.archlinux.page: devblog-3e312b.archlinux.page
+  voa.archlinux.page: voa-f11571.archlinux.page
+  manual.archlinux.page: developer-manual-2e40de.archlinux.page
+  ports.archlinux.page: docs-4e89b6.archlinux.page
+
+# In order for this to work, you also need to add a CNAME entry.
+# This can be done by adding an entry to `archlinux_org_gitlab_pages` in `tf-stage1/archlinux.tf`
+gitlab_pages_archlinux_org_map:
+  conf.archlinux.org: conf-200b83.archlinux.page
+  whatcanidofor.archlinux.org: neoasknot-2533cf.archlinux.page
+  openpgpkey.archlinux.org: archlinux-keyring-2139b9.archlinux.page
+  openpgpkey.master-key.archlinux.org: archlinux-keyring-2139b9.archlinux.page
+  bugs.archlinux.org: bugs-archive-82eed9.archlinux.page
+  package-maintainer-bylaws.aur.archlinux.org: package-maintainer-bylaws-f8a287.archlinux.page
+  terms.archlinux.org: service-agreements-47fcf9.archlinux.page
+  patchwork.archlinux.org: patchwork-archive-153924.archlinux.page
+  panic.archlinux.org: panic-report-09f973.archlinux.page
+
+certbot_dns_support: true
+certbot_tsig_name: gitlab-pages

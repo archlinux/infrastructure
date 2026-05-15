@@ -4,43 +4,10 @@ resource "hcloud_zone_rrset" "archlinux_org_gitlab_pages_cname" {
   for_each = local.archlinux_org_gitlab_pages
 
   zone = hcloud_zone.archlinux_org.name
-  name = each.key
+  name = each.value
   type = "CNAME"
   records = [
     { value = "pages.archlinux.org." },
-  ]
-}
-
-resource "hcloud_zone_rrset" "archlinux_org_gitlab_pages_verification_code_txt" {
-  for_each = local.archlinux_org_gitlab_pages
-
-  zone = hcloud_zone.archlinux_org.name
-  name = "_gitlab-pages-verification-code.${each.key}"
-  type = "TXT"
-  records = [
-    { value = provider::hcloud::txt_record("gitlab-pages-verification-code=${each.value}") },
-  ]
-}
-
-resource "hcloud_zone_rrset" "archlinux_page_gitlab_pages_cname" {
-  for_each = local.archlinux_page_gitlab_pages
-
-  zone = hcloud_zone.archlinux_page.name
-  name = each.key
-  type = "CNAME"
-  records = [
-    { value = "pages.archlinux.org." },
-  ]
-}
-
-resource "hcloud_zone_rrset" "archlinux_page_gitlab_pages_verification_code_txt" {
-  for_each = local.archlinux_page_gitlab_pages
-
-  zone = hcloud_zone.archlinux_page.name
-  name = "_gitlab-pages-verification-code.${each.key}"
-  type = "TXT"
-  records = [
-    { value = provider::hcloud::txt_record("gitlab-pages-verification-code=${each.value}") },
   ]
 }
 

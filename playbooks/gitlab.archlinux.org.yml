@@ -8,9 +8,11 @@
     - { role: sshd }
     - { role: root_ssh }
     - { role: anubis }
+    - { role: certbot }
     - { role: nginx }
     - { role: gitlab,
         gitlab_domain: "gitlab.archlinux.org",
+        gitlab_pages_domain: "archlinux.page",
         gitlab_registry_domain: "registry.archlinux.org",
         gitlab_primary_addresses: ['213.133.111.15', '[2a01:4f8:222:174c::1]', '127.0.0.1', '[::1]'],
         gitlab_pages_http_addresses: ['213.133.111.6:80', '[2a01:4f8:222:174c::2]:80'],

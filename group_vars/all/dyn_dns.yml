@@ -22,3 +22,9 @@ dyn_dns_zones:
     allowed_ipv4: "{{ [hostvars['buildbtw.archlinux.review']['ipv4_address']] }}"
     allowed_ipv6: "{{ [hostvars['buildbtw.archlinux.review']['ipv6_address']] }}"
     valid_qtypes: [TXT]
+  _acme-challenge.archlinux.page:
+    key: gitlab-pages
+    # The GitLab server has two IPs.
+    allowed_ipv4: "{{ [hostvars['gitlab.archlinux.org']['ipv4_address']] }}"
+    allowed_ipv6: "{{ [hostvars['gitlab.archlinux.org']['ipv6_address']] }}"
+    valid_qtypes: [TXT]

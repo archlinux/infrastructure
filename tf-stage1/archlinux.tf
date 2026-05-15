@@ -246,35 +246,20 @@ locals {
     }
   }
 
-  # This creates gitlab pages verification entries.
-  # Every line consists of "key" = "value":
-  #   - key equals the pages subdomain
-  #   - value equals the pages verification code
+  # This creates GitLab Pages CNAMEs.
   #
-  archlinux_org_gitlab_pages = {
-    "conf"                          = "60a06a1c02e42b36c3b4919f4d6de6bf"
-    "whatcanidofor"                 = "d9e45851002a623e10f6954ff9a85d21"
-    "openpgpkey"                    = "d20c137368e26dcc3db56d45a368e729"
-    "openpgpkey.master-key"         = "3eea8f39a9b473a5dc7c188366f84072"
-    "bugs"                          = "e41ef82b1a2d063ae958a4d5a3b2f870"
-    "package-maintainer-bylaws.aur" = "680c89d189c8f342cc00bcb624d813a3"
-    "terms"                         = "0b62a71af2aa85fb491295b543b4c3d2"
-    "patchwork"                     = "37eeadf24d5cd6614e8edb1f12868a5e"
-    "panic"                         = "5112598cea498d8df7fcdfbcb2e33fe6"
-  }
-
-  archlinux_page_gitlab_pages = {
-    "repod"           = "f2d1ad84f7e9f22cd881d3bef58263e0"
-    "rfc"             = "b457db2ce4ac4e162d2f4435f1fe1f39"
-    "monthly-reports" = "a2d60657e960b480cdb229df7cc7edf3"
-    "pacman"          = "3c5fb9413c1d66dac516a08277575662"
-    "alpm"            = "363d06e0957fbfd22403e4dd992afc48"
-    "signstar"        = "5c348888c16d81166379017879a29fe3"
-    "devblog"         = "b4af31061ba3a13d82a1ce69897acf9b"
-    "voa"             = "9c326f517d3d4248b7223fd220287d89"
-    "manual"          = "df7e144644be537891582e89c9942957"
-    "ports"           = "a110b58a4a74de2f8ff0e02bb731ab0f"
-  }
+  # NOTE: Don't forget to also add an entry to `gitlab_pages_archlinux_org_map` in `host_vars/gitlab.archlinux.org/misc.yml`
+  archlinux_org_gitlab_pages = toset([
+    "conf",
+    "whatcanidofor",
+    "openpgpkey",
+    "openpgpkey.master-key",
+    "bugs",
+    "package-maintainer-bylaws.aur",
+    "terms",
+    "patchwork",
+    "panic",
+  ])
 
   # This creates archlinux.org TXT DNS entries
   # Valid parameters are:
@@ -532,6 +517,10 @@ locals {
       ipv4_address = "213.133.111.6"
       ipv6_address = "2a01:4f8:222:174c::2"
     }
+    "*" = {
+      ipv4_address = "213.133.111.6"
+      ipv6_address = "2a01:4f8:222:174c::2"
+    }
   }
 
   # Domains served by machines in the geo_mirrors group
@@ -784,6 +773,16 @@ resource "hcloud_zone_rrset" "archlinux_review_buildbtw_wildcard_aaaa" {
 resource "hcloud_zone_rrset" "archlinux_org_acme_challenge_mumble_ns" {
   zone = hcloud_zone.archlinux_org.name
   name = "_acme-challenge.mumble"
+  type = "NS"
+  ttl  = 86400
+  records = [
+    { value = "redirect.archlinux.org." },
+  ]
+}
+
+resource "hcloud_zone_rrset" "archlinux_page_acme_challenge_wildcard_ns" {
+  zone = hcloud_zone.archlinux_page.name
+  name = "_acme-challenge"
   type = "NS"
   ttl  = 86400
   records = [

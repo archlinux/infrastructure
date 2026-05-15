@@ -1,3 +1,13 @@
+- name: Create TLS cert for gitlab-pages
+  include_role:
+    name: certificate
+  vars:
+    domains: ["{{ gitlab_pages_domain }}", "*.{{ gitlab_pages_domain }}"]
+    challenge: "DNS-01"
+
+- name: Install cert renewal hook
+  template: src=letsencrypt.hook.d.j2 dest=/etc/letsencrypt/hook.d/gitlab-pages owner=root group=root mode=0755
+
 - name: Setup HTTP redirect
   include_role:
     name: http_redirect
@@ -5,9 +15,14 @@
     domain: "{{ gitlab_domain }}"
     additional_domains:
       - "{{ gitlab_registry_domain }}"
+      - "{{ gitlab_pages_domain }}"
+      - "*.{{ gitlab_pages_domain }}"
 
 - name: Make nginx log dir
-  file: path=/var/log/nginx/{{ gitlab_domain }} state=directory owner=root group=root mode=755
+  file: path=/var/log/nginx/{{ item }} state=directory owner=root group=root mode=755
+  loop:
+    - "{{ gitlab_domain }}"
+    - "{{ gitlab_pages_domain }}"
 
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/gitlab.conf owner=root group=root mode=644
@@ -56,8 +71,7 @@
       # https://gitlab.com/gitlab-org/gitlab/issues/14414
       #
       # In addition, see https://docs.gitlab.com/ee/administration/pages/ for the GitLab Pages trickery done below.
-      # Basically, we only allow specific GitLab Pages with custom domains to work. We don't want to enable everyone
-      # to be able to have a GitLab Page on purpose (for security and legal safety reasons).
+      # We use the primary nginx as a reverse proxy to GitLab Rails, GitLab Registry, and GitLab Pages.
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'https://{{ gitlab_domain }}'
         nginx['listen_addresses'] = ['127.0.0.1']
@@ -81,12 +95,9 @@
         registry_nginx['real_ip_header'] = 'X-Forwarded-For'
         nginx['client_max_body_size'] = '10g'
         nginx['custom_gitlab_server_config'] = "include /etc/gitlab/nginx-gitlab-server-mixins/*.conf;"
-        pages_external_url "http://{{ gitlab_domain }}"
+        pages_external_url "https://{{ gitlab_pages_domain }}"
         pages_nginx['enable'] = false
-        gitlab_pages['external_http'] = {{ gitlab_pages_http_addresses }}
-        gitlab_pages['external_https'] = {{ gitlab_pages_https_addresses }}
-        gitlab_pages['rate_limit_source_ip'] = 10.0
-        gitlab_pages['rate_limit_source_ip_burst'] = 300
+        gitlab_pages['listen_proxy'] = '127.0.0.1:8090'
         gitlab_rails['env'] = {'GITLAB_THROTTLE_BYPASS_HEADER' => 'Gitlab-Bypass-Rate-Limiting'}
         gitlab_rails['lfs_enabled'] = true
         gitlab_rails['gitlab_username_changing_enabled'] = false
