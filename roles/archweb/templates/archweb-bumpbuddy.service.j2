@@ -1,0 +1,28 @@
+[Unit]
+Description=archweb - import bumpbuddy json service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=archweb
+WorkingDirectory={{ archweb_dir }}
+ExecStart={{ archweb_dir }}/env/bin/python manage.py read_bumpbuddy_status -v3
+
+ProtectSystem=full
+PrivateTmp=true
+PrivateDevices=true
+
+ProtectHostname=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+
+NoNewPrivileges=true
+RestrictRealtime=true
+# Unable to enable due to https://cffi.readthedocs.io/en/latest/using.html#callbacks
+#MemoryDenyWriteExecute=true
+
+[Install]
+WantedBy=multi-user.target
