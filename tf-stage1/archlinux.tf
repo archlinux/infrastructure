@@ -105,7 +105,7 @@ locals {
       floating_ipv4 = true
     }
     "bbs.archlinux.org" = {
-      server_type   = "cpx22"
+      server_type   = "cpx32"
       ttl           = 60
       floating_ipv6 = true
       location      = "nbg1"
