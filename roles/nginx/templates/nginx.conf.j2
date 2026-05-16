@@ -89,6 +89,10 @@ http {
         '}';
 
     sendfile on;
+    keepalive_timeout 10s;
+    client_body_timeout 5s;
+    client_header_timeout 2s;
+    send_timeout 10s;
     keepalive_timeout 65;
     client_max_body_size 16M;
 
