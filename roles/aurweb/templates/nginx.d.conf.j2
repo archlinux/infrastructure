@@ -195,6 +195,13 @@ server {
     location / {
 {{ self.asgi_proxy() }}
 
+        proxy_cache             aurwebcache;
+        proxy_cache_key         $scheme$proxy_host$uri$args;
+        proxy_cache_valid       200 1m;
+        proxy_cache_bypass      $cookie_AURSID;
+        proxy_no_cache          $cookie_AURSID;
+        add_header X-Cache-Status $upstream_cache_status;
+
         limit_req zone=aurweblimit burst=10 nodelay;
     }
 
