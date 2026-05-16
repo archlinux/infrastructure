@@ -19,7 +19,7 @@ events {
     worker_connections 2048;
 }
 
-worker_rlimit_nofile 2048;
+worker_rlimit_nofile 131072;
 
 error_log syslog:server=unix:/dev/log,nohostname info;
 
@@ -27,6 +27,7 @@ http {
     include mime.types;
     default_type application/octet-stream;
     types_hash_max_size 4096;
+    http2_max_concurrent_streams 4;
 
     log_format main
         '$remote_addr $host $remote_user [$time_local] "$request" '
