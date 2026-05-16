@@ -1,4 +1,6 @@
 
+fastcgi_cache_path /var/lib/nginx/fluxbb-cache levels=1:2 keys_zone=fluxbbcache:10m inactive=1m;
+
 # a limiter to stop abuse of the rss feed.
 # limit to 1 requests per minute, with a burst defined when we use this
 # limiter in the location directive below
@@ -90,6 +92,13 @@ server {
         try_files      $uri =404;
         fastcgi_param  HTTPS            on;
         include        fastcgi_params;
+
+        fastcgi_cache             fluxbbcache;
+        fastcgi_cache_key         $scheme$host$request_uri;
+        fastcgi_cache_valid       200 1m;
+        fastcgi_cache_bypass      $cookie_flux_cookie_eezohm0o;
+        fastcgi_no_cache          $cookie_flux_cookie_eezohm0o;
+        add_header X-Cache-Status $upstream_cache_status;
 
         limit_req zone=bbslimit burst=10 nodelay;
     }
