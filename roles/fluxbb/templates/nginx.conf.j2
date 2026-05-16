@@ -93,11 +93,16 @@ server {
         fastcgi_param  HTTPS            on;
         include        fastcgi_params;
 
-        fastcgi_cache             fluxbbcache;
-        fastcgi_cache_key         $scheme$host$request_uri;
-        fastcgi_cache_valid       200 1m;
-        fastcgi_cache_bypass      $cookie_flux_cookie_eezohm0o;
-        fastcgi_no_cache          $cookie_flux_cookie_eezohm0o;
+        fastcgi_cache                     fluxbbcache;
+        fastcgi_cache_key                 $scheme$host$request_uri;
+        fastcgi_cache_valid               200 1m;
+        fastcgi_cache_bypass              $cookie_flux_cookie_eezohm0o;
+        fastcgi_no_cache                  $cookie_flux_cookie_eezohm0o;
+        fastcgi_cache_lock                on;
+        fastcgi_cache_lock_timeout        10s;
+        fastcgi_cache_use_stale           error timeout updating http_500 http_503;
+        fastcgi_cache_background_update   on;
+        fastcgi_ignore_headers            Cache-Control Expires Set-Cookie;
         add_header X-Cache-Status $upstream_cache_status;
 
         limit_req zone=bbslimit burst=10 nodelay;
