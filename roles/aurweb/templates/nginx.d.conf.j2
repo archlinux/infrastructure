@@ -11,7 +11,7 @@ upstream smartgit {
 limit_req_zone $binary_remote_addr zone=aurwebgitlimit:10m rate=30r/m;
 
 # limit general requests to 20 r/s to block DoS attempts.
-limit_req_zone $binary_remote_addr zone=aurweblimit:10m rate=20r/s;
+limit_req_zone $binary_remote_addr zone=aurweblimit:10m rate=60r/m;
 
 limit_req_status 429;
 
