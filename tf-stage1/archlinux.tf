@@ -379,8 +379,8 @@ locals {
       ttl          = 60
     }
     pages = {
-      ipv4_address = "213.133.111.6"
-      ipv6_address = "2a01:4f8:222:174c::2"
+      ipv4_address = "213.133.111.15"
+      ipv6_address = "2a01:4f8:222:174c::1"
     }
     repos = {
       ipv4_address = "168.119.141.106"
@@ -527,12 +527,12 @@ locals {
   #
   archlinux_page_a_aaaa = {
     "@" = {
-      ipv4_address = "213.133.111.6"
-      ipv6_address = "2a01:4f8:222:174c::2"
+      ipv4_address = "213.133.111.15"
+      ipv6_address = "2a01:4f8:222:174c::1"
     }
     "*" = {
-      ipv4_address = "213.133.111.6"
-      ipv6_address = "2a01:4f8:222:174c::2"
+      ipv4_address = "213.133.111.15"
+      ipv6_address = "2a01:4f8:222:174c::1"
     }
   }
 
