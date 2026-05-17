@@ -19,8 +19,10 @@ If you want to add a new official project, here are some guidelines to follow:
 1. [ ] Evaluate whether the project can sit in the official [GitLab Arch Linux group](https://gitlab.archlinux.org/archlinux)
        or whether it needs its own group. It only needs its own group if the primary
        development group is somehow detached from Arch Linux and only losely related (for instance: [pacman](https://gitlab.archlinux.org/pacman))
-1. [ ] After project creation (use the GitLab import function if you migrate a repo), add the responsible people to the project
-       in the *Members* page (https://gitlab.archlinux.org/archlinux/my-example/-/project_members)
+1. [ ] Create the project repository. If the repo already exists under another group or namespace, you can transfer it to the targeted
+       group from the [admin area](https://gitlab.archlinux.org/admin/projects). If the repo already exists somewhere outside of this GitLab,
+       you can use the GitLab import function.
+1. [ ] Add the responsible people to the project in the *Members* page (https://gitlab.archlinux.org/archlinux/my-example/-/project_members)
        and give them the `Developer` role. The idea is to let these people mostly manage their own project while not giving them
        enough permissions to be able to misconfigure the project.
 1. [ ] If mirroring to github.com is desired, work through the **GitHub.com mirroring checklist**
