@@ -218,6 +218,15 @@
     - Daemon reload
   when: archweb_site
 
+- name: Install bumpbuddy status service and timer
+  template: src="{{ item }}.j2" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
+  loop:
+    - archweb-bumpbuddy.service
+    - archweb-bumpbuddy.timer
+  notify:
+    - Daemon reload
+  when: archweb_site
+
 - name: Install pgp_import service
   template: src="archweb-pgp_import.service.j2" dest="/etc/systemd/system/archweb-pgp_import.service" owner=root group=root mode=0644
   notify:
@@ -301,6 +310,10 @@
 
 - name: Start and enable archweb rebulderd update timer
   service: name="archweb-rebuilderd.timer" enabled=yes state=started
+  when: archweb_site
+
+- name: Start and enable archweb bumpbuddy update timer
+  service: name="archweb-bumpbuddy.timer" enabled=yes state=started
   when: archweb_site
 
 - name: Install donation import wrapper script
