@@ -13,19 +13,16 @@
   become_user: postgres
   become_method: ansible.builtin.su
 
-- name: Make nginx log dir
-  file: path=/var/log/nginx/{{ hedgedoc_domain }} state=directory owner=root group=root mode=0755
-
-- name: Setup HTTP redirect
+- name: Setup nginx configuration
   include_role:
-    name: http_redirect
+    name: vhost
   vars:
-    domain: "{{ hedgedoc_domain }}"
-
-- name: Set up nginx
-  template: src=nginx.d.conf.j2 dest={{ hedgedoc_nginx_conf }} owner=root group=http mode=640
-  notify: Reload nginx
-  tags: ['nginx']
+    vhost_domain: "{{ hedgedoc_domain }}"
+    vhost_backend: "http://localhost:3000"
+    vhost_metrics_token: "{{ vault_hedgedoc_metrics_token }}"
+    vhost_paths:
+      - path: /status
+        block: true
 
 - name: Add hedgedoc.service.d dir
   file: state=directory path=/etc/systemd/system/hedgedoc.service.d owner=root group=root mode=0755
