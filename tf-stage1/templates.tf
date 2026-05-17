@@ -175,13 +175,12 @@ resource "hcloud_primary_ip" "primary_ipv4" {
   }
 
   name              = "ipv4-${each.key}"
-  datacenter        = "fsn1-dc14"
+  location          = "fsn1"
   type              = "ipv4"
-  assignee_type     = "server"
   auto_delete       = false
   delete_protection = true
   lifecycle {
-    ignore_changes = [datacenter]
+    ignore_changes = [location]
   }
 }
 
@@ -189,13 +188,12 @@ resource "hcloud_primary_ip" "primary_ipv6" {
   for_each = local.machines
 
   name              = "ipv6-${each.key}"
-  datacenter        = "fsn1-dc14"
+  location          = "fsn1"
   type              = "ipv6"
-  assignee_type     = "server"
   auto_delete       = false
   delete_protection = true
   lifecycle {
-    ignore_changes = [datacenter]
+    ignore_changes = [location]
   }
 }
 
