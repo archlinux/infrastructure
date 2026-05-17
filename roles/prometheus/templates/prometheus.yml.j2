@@ -102,9 +102,8 @@ scrape_configs:
   - job_name: 'keycloak'
     scheme: https
     metrics_path: "/realms/master/metrics"
-    basic_auth:
-       username: "{{ vault_keycloak_nginx_user }}"
-       password: "{{ vault_keycloak_nginx_passwd }}"
+    authorization:
+      credentials: {{ vault_keycloak_metrics_token }}
     static_configs:
       - targets: ['accounts.archlinux.org:443']
         labels:

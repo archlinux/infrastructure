@@ -47,10 +47,9 @@
   docker_prune:
     images: true
 
-- name: Create nginx log dir
-  file: path=/var/log/nginx/{{ finance_domain }} state=directory owner=root group=root mode=0755
-
-- name: Install nginx conf file
-  template: src=finance-nginx.conf.j2 dest=/etc/nginx/nginx.d/finance.conf owner=root group=root mode=0600
-  notify:
-    - Reload nginx
+- name: Setup nginx configuration
+  include_role:
+    name: vhost
+  vars:
+    vhost_domain: "{{ finance_domain }}"
+    vhost_backend: "http://localhost:3000"

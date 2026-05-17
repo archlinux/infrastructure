@@ -26,21 +26,20 @@
 - name: Start and enable packagelist.timer
   service: name=packagelist.timer enabled=yes state=started
 
-- name: Setup HTTP redirect
+- name: Setup nginx configuration
   include_role:
-    name: http_redirect
+    name: vhost
   vars:
-    domain: "{{ debuginfod_domain }}"
-
-- name: Make nginx log dir
-  file: path=/var/log/nginx/{{ debuginfod_domain }} state=directory owner=root group=root mode=0755
-
-- name: Set up nginx
-  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/debuginfod.conf owner=root group=root mode=0644
-  notify:
-    - Reload nginx
-  when: debuginfod_domain != ""
-  tags: ['nginx']
+    vhost_log_format: reduced
+    vhost_domain: "{{ debuginfod_domain }}"
+    vhost_backend: http://localhost:8002
+    vhost_proxy_snippet: |
+      gzip_comp_level 1;
+      gzip_types application/octet-stream;
+    vhost_root: /srv/http/debuginfod
+    vhost_paths:
+      - path: /packages
+        type: text/plain
 
 - name: Open debuginfod ipv4 port for monitoring.archlinux.org
   ansible.posix.firewalld: zone=wireguard state=enabled permanent=true immediate=yes
