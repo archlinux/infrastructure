@@ -1,7 +1,7 @@
 # Monitoring
 
 All of our servers are monitored using Prometheus, exporters on the to be monitored machines have a firewall rule configured to allow connections from monitoring.archlinux.org for the specific exporter port.
-To access our monitoring system, go to https://monitoring.archlinux and log in via your Arch Linux SSO credentials.
+To access our monitoring system, go to https://monitoring.archlinux.org and log in via your Arch Linux SSO credentials.
 
 ## Adding a new host to monitoring
 
