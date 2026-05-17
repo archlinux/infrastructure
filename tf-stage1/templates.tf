@@ -175,26 +175,20 @@ resource "hcloud_primary_ip" "primary_ipv4" {
   }
 
   name              = "ipv4-${each.key}"
-  location          = "fsn1"
+  location          = lookup(local.machines[each.key], "location", "fsn1")
   type              = "ipv4"
   auto_delete       = false
   delete_protection = true
-  lifecycle {
-    ignore_changes = [location]
-  }
 }
 
 resource "hcloud_primary_ip" "primary_ipv6" {
   for_each = local.machines
 
   name              = "ipv6-${each.key}"
-  location          = "fsn1"
+  location          = lookup(local.machines[each.key], "location", "fsn1")
   type              = "ipv6"
   auto_delete       = false
   delete_protection = true
-  lifecycle {
-    ignore_changes = [location]
-  }
 }
 
 resource "hcloud_server" "machine" {
