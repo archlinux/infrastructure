@@ -1,0 +1,69 @@
+#jinja2: lstrip_blocks: True
+map $http_upgrade $connection_upgrade {
+        default upgrade;
+        ''      close;
+}
+
+include snippets/redirect-80.conf;
+
+server {
+    include      snippets/listen-443.conf;
+    server_name  {{ vhost_domain }};
+
+    access_log   /var/log/nginx/{{ vhost_domain }}/access.log {{ vhost_log_format }};
+    access_log   /var/log/nginx/{{ vhost_domain }}/access.log.json json_{{ vhost_log_format }};
+    error_log    /var/log/nginx/{{ vhost_domain }}/error.log;
+
+    acme_certificate     letsencrypt;
+    ssl_certificate      $acme_certificate;
+    ssl_certificate_key  $acme_certificate_key;
+{% if vhost_root is defined %}
+
+    root {{ vhost_root }};
+
+    location / {
+        try_files $uri $uri/ @backend;
+    }
+{% endif %}
+{% for path in vhost_paths %}
+
+    location = {{ path.path }} {
+    {% if path.snippet is defined %}
+        {{ path.snippet | trim | indent(8) }}
+    {% endif %}
+    {% if path.type is defined %}
+        default_type "{{ path.type }}";
+    {% endif %}
+    {% if path.block | default(false) %}
+        return 403;
+    {% endif %}
+    }
+{% endfor %}
+{% set proxy -%}
+        proxy_pass {{ vhost_backend }};
+
+        proxy_set_header Host              $host;
+        proxy_set_header X-Real-IP         $remote_addr;
+        proxy_set_header X-Forwarded-For   $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Upgrade           $http_upgrade;
+        proxy_set_header Connection        $connection_upgrade;
+    {%- if vhost_proxy_snippet is defined +%}
+
+        {{ vhost_proxy_snippet | trim | indent(8) }}
+    {%- endif %}
+{% endset %}
+
+    location {{ '/' if vhost_root is not defined else '@backend' }} {
+        {{ proxy }}
+    }
+{% if vhost_metrics_token | length > 0 %}
+
+    location {{ '~' if vhost_metrics_path_regex else '='}} {{ vhost_metrics_path }} {
+        if ($http_authorization != "Bearer {{ vhost_metrics_token }}") {
+            return 403;
+        }
+        {{ proxy }}
+    }
+{% endif %}
+}
