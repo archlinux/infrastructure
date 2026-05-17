@@ -1,0 +1,5 @@
+vhost_log_format: main
+vhost_metrics_path_regex: false
+vhost_metrics_path: /metrics
+vhost_metrics_token: ""
+vhost_paths: []
