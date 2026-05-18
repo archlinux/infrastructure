@@ -145,6 +145,11 @@ only been activiated for traffic coming from proxy networks. The queuing system
 scores traffic internally and tries to give higher priority to all traffic that
 is most likely not malicious.
 
+Current settings regarding the maxconn / request queueing backend:
+
+- ALL: 100
+- Brazil/Sao Paolo: 300
+
 [adn-property-example-ticket]: https://my.haproxy.com/portal/cust/index#view_ticket?ticketid=MSK-481-77696
 [haproxy-fail2ban-issue]: https://gitlab.archlinux.org/archlinux/infrastructure/-/issues/766
 [new-adn-property]: https://my.haproxy.com/portal/cust/index#summary/adn_request_form
