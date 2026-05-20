@@ -806,6 +806,7 @@ arch_users:
     ssh_key: tippfehlr.pub
     groups:
       - junior-packager
+      - packager
   torxed:
     name: "Anton Hvornum"
     email: "torxed@archlinux.org"
