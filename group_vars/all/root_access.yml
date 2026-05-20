@@ -8,6 +8,7 @@ sudo_users:
   - klausenbusk
   - artafinde
   - gromit
+  - antiz
 
 # deploy tag 'root_ssh' when this changes
 root_ssh_keys:
@@ -22,12 +23,6 @@ root_ssh_keys:
   - key: artafinde.pub
   - key: gromit.pub
   - key: antiz.pub
-    hosts:
-      - archive.archlinux.org
-      - bumpbuddy.archlinux.org
-      - dashboards.archlinux.org
-      - finance.archlinux.org
-      - monitoring.archlinux.org
 
 # run 'playbooks/tasks/reencrypt-vault-{super,default}-key.yml' when this
 # changes; before doing so, make sure to 'gpg --lsign-key' all keys from both
@@ -43,6 +38,7 @@ vault_super_pgpkeys: &vault_super_pgpkeys
   - DB650286BD9EAE39890D3FE6FE3DC1668CB24956  # klausenbusk
   - 2191B89431BAC0A8B96DE93D244740D17C7FD0EC  # artafinde
   - F00B96D15228013FFC9C9D0393B11DAA4C197E3D  # gromit
+  - 262A58EC6C51F7EA395B2E2DFDC3040B92ACA748  # antiz
 
 # run 'playbooks/tasks/reencrypt-vault-default-key.yml' when this changes;
 # before doing so, make sure to 'gpg --lsign-key' all keys below (or if you use
@@ -52,4 +48,3 @@ vault_super_pgpkeys: &vault_super_pgpkeys
 vault_default_pgpkeys:
   - *vault_super_pgpkeys
   - 83BC8889351B5DEBBB68416EB8AC08600F108CDF  # heftig
-  - 262A58EC6C51F7EA395B2E2DFDC3040B92ACA748  # antiz
