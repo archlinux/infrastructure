@@ -1,0 +1,17 @@
+diff --git c/package-lock.json i/package-lock.json
+index 48b0b17..98f037f 100644
+--- c/package-lock.json
++++ i/package-lock.json
+@@ -4647,9 +4647,9 @@
+       ]
+     },
+     "node_modules/@vector-im/matrix-bot-sdk": {
+-      "version": "0.8.0-element.2",
+-      "resolved": "https://registry.npmjs.org/@vector-im/matrix-bot-sdk/-/matrix-bot-sdk-0.8.0-element.2.tgz",
+-      "integrity": "sha512-Qasxj5w2a5jkEOz7fPcO+6nQkO7/TE3/XNZPxVnAo5rNrqAIsItXAwJU8vmrW2QRKWsCcDhT4ONgWOWz5e20MA==",
++      "version": "0.8.0-element.3",
++      "resolved": "https://registry.npmjs.org/@vector-im/matrix-bot-sdk/-/matrix-bot-sdk-0.8.0-element.3.tgz",
++      "integrity": "sha512-2FFo/Kz2vTnOZDv59Q0s803LHf7KzuQ2EwOYYAtO0zUKJ8pV5CPsVC/IHyFb+Fsxl3R9XWFiX529yhslb4v9cQ==",
+       "license": "MIT",
+       "dependencies": {
+         "@matrix-org/matrix-sdk-crypto-nodejs": "0.4.0",

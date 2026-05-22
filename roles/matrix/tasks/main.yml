@@ -92,7 +92,7 @@
   git:
     repo: https://github.com/the-draupnir-project/Draupnir
     dest: /var/lib/synapse/draupnir
-    version: v3.0.0
+    version: v3.1.0
     force: true
   become: true
   become_user: synapse
@@ -100,6 +100,16 @@
   register: draupnir_git
   notify:
     - Restart draupnir
+
+- name: Patch draupnir
+  patch:
+    src: draupnir-lockfile.patch
+    basedir: /var/lib/synapse/draupnir
+    strip: 1
+  become: true
+  become_user: synapse
+  become_method: ansible.builtin.sudo
+  when: draupnir_git.changed
 
 - name: Install draupnir
   community.general.npm:
