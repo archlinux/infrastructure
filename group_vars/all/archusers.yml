@@ -819,6 +819,7 @@ arch_users:
     name: "Torsten Keßler"
     email: "tpkessler@archlinux.org"
     ssh_key: tpkessler.pub
+    shell: /bin/zsh
     groups:
       - packager
       - junior-packager
