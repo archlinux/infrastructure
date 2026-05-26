@@ -1,0 +1,14 @@
+[Unit]
+Description=Zoekt code search web server
+After=network.target
+
+[Service]
+Type=simple
+User={{ codesearch_user }}
+Group={{ codesearch_group }}
+ExecStart=/usr/local/bin/zoekt-webserver -index {{ codesearch_index_dir }} -listen :{{ codesearch_zoekt_web_port }}
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

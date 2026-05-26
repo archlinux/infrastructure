@@ -1,0 +1,15 @@
+ipv4_address: "167.235.227.32"
+ipv4_netmask: "/32"
+ipv6_address: "2a01:4f8:c014:7725::1"
+ipv6_netmask: "/64"
+ipv4_gateway: "172.31.1.1"
+ipv6_gateway: "fe80::1"
+system_disks:
+  - /dev/sda
+
+enable_zram_swap: true
+
+sshd_tcp_forwarding: "no"
+
+wireguard_address: 10.0.0.21
+wireguard_public_key: "Ppvl71KFkcpJ90109pe+zZ1EN6KgWHSpmpfRjWO5zAc="
