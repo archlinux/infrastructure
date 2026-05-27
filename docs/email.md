@@ -17,7 +17,7 @@ appropriate category and run `postmap /etc/postfix/users`.
 
 If the user wants to forward email, either enter the destination directly in
 the /etc/postfix/users file or enter a username and then put the destination
-into `~username/.forward` so that they can edit it themselves.
+into `~/username/.forward` so that they can edit it themselves.
 
 If the user is a new onboarded user the password has to be made empty, so the
 user can login and set a password:
@@ -91,3 +91,11 @@ Then run `postalias`:
 ```
 postalias /etc/postfix/aliases
 ```
+
+# Promote a postorius account to superuser
+
+To promote a postorius account to superuser, log in to the webUI and head to
+<https://lists.archlinux.org/admin/auth/user/> (your own account should already
+have the superuser status to be able to access the Django admin panel). From
+here, search for the account to promote and check the "Superuser status"
+checkbox, then click the "SAVE" button at the bottom of the page.

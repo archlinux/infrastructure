@@ -23,7 +23,7 @@ information is not publicly visible.
 - **Communication e-mail address**: [arch, personal] <!-- Relevant for users who will be signed up to mailing lists. Either choose "arch" or "personal". -->
 
 <!--
-NOTE: When creating this ticket as the sponsor for a new trusted user or
+NOTE: When creating this ticket as the sponsor for a new package maintainer or
 support staff member, attach the above information as a clearsigned document to
 this ticket.
 https://www.gnupg.org/gph/en/manual/x135.html
@@ -31,15 +31,15 @@ https://www.gnupg.org/gph/en/manual/x135.html
 
 ## All roles checklist
 
-- [ ] Add user mail if TU or developer, or support staff and **communication e-mail address** is arch.
-  - [ ] Add new user email as per [`docs/email.md`](docs/email.md).
+- [ ] Add user mail if package maintainer or developer, or support staff and **communication e-mail address** is arch.
   - [ ] Add entry in [`group_vars/all/archusers.yml`](group_vars/all/archusers.yml).
     - If support staff `hosts` should be set to `mail.archlinux.org`.
     - `homedir.archlinux.org` is also allowed for support staff, but it is opt-in.
   - [ ] Add SSH pubkey to `pubkeys/<username>.pub`.
   - [ ] Run `ansible-playbook -t archusers $(git grep -l archusers playbooks/ | grep -v phrik)`.
+  - [ ] Add new user email as per [`docs/email.md`](docs/email.md).
 - [ ] Create a new user in [archweb](https://www.archlinux.org/devel/newuser/). Select the appropriate group membership and allowed repos (if applicable).
-- [ ] Subscribe **communication e-mail address** to internal [staff mailing list](https://lists.archlinux.org/mailman3/lists/staff.lists.archlinux.org/mass_subscribe/).
+- [ ] Subscribe **communication e-mail address** to internal [staff mailing list](https://lists.archlinux.org/mailman3/lists/staff.lists.archlinux.org/mass_subscribe/) (using your own postorious account, which needs to be [superuser](docs/email.md#promote-a-postorius-account-to-superuser)).
 - [ ] Allow sending from **communication e-mail address** on [arch-dev-public](https://lists.archlinux.org/mailman3/lists/arch-dev-public.lists.archlinux.org/members/member/) (subscribe and/or find address and remove moderation).
 - [ ] Give the user access to `#archlinux-staff` on Libera Chat.
 - [ ] Give the user a link to our [staff services page](https://manual.archlinux.page/staff/staff-services/).
@@ -59,14 +59,14 @@ https://www.gnupg.org/gph/en/manual/x135.html
 
 <!-- The ticket should be created by a sponsor of the new packager -->
 - [ ] Create an issue in [archlinux-keyring](https://gitlab.archlinux.org/archlinux/archlinux-keyring) using the [*"New Packager Key"*](https://gitlab.archlinux.org/archlinux/archlinux-keyring/-/issues/new?issuable_template=New%20Packager%20Key) template.
-- [ ] Assign the user to the correct group in the `Arch Linux Staff/Package Maintainer Team/` group on Keycloak.
+- [ ] Assign the user to the correct group in the `Arch Linux Staff/Package Maintainer Team/` group on [Keycloak](https://accounts.archlinux.org/admin/master/console/#/archlinux/users).
 - [ ] Assign the user to the `Package Maintainers` or `Developers` group on [archlinux.org](https://archlinux.org/admin/auth/user/).
-- [ ] Subscribe **communication e-mail address** to internal [arch-tu](https://lists.archlinux.org/mailman3/lists/arch-tu.lists.archlinux.org/mass_subscribe/) or [arch-dev](https://lists.archlinux.org/mailman3/lists/arch-dev.lists.archlinux.org/mass_subscribe/) mailing list.
+- [ ] Subscribe **communication e-mail address** to internal [arch-tu](https://lists.archlinux.org/mailman3/lists/arch-tu.lists.archlinux.org/mass_subscribe/) or [arch-dev](https://lists.archlinux.org/mailman3/lists/arch-dev.lists.archlinux.org/mass_subscribe/) mailing list (using your own postorious account, which needs to be [superuser](docs/email.md#promote-a-postorius-account-to-superuser)).
 - [ ] Give the user access to `#archlinux-tu` or `#archlinux-dev` aswell as `#archlinux-packaging` on Libera Chat.
 
 ## Support staff checklist
 
-- [ ] Assign the user to the proper support staff group on Keycloak.
+- [ ] Assign the user to the proper support staff group on [Keycloak](https://accounts.archlinux.org/admin/master/console/#/archlinux/users).
 
 ## DevOps onboarding checklist
 
