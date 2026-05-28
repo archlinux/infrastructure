@@ -260,6 +260,12 @@ arch_users:
       - packager
       - junior-packager
       - tu
+  deepchirp:
+    name: "DeepChirp"
+    email: "deepchirp@archlinux.org"
+    ssh_key: deepchirp.pub
+    groups:
+      - junior-packager
   demize:
     name: "Johannes Löthberg"
     email: "demize@archlinux.org"
