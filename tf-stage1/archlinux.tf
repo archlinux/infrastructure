@@ -819,7 +819,7 @@ resource "hcloud_volume" "homedir" {
 
 resource "hcloud_volume" "monitoring" {
   name              = "monitoring"
-  size              = 215
+  size              = 250
   server_id         = hcloud_server.machine["monitoring.archlinux.org"].id
   delete_protection = true
 }
