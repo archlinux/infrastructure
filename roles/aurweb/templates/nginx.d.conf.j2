@@ -10,8 +10,8 @@ upstream smartgit {
 # # grep aurwebgitlimit /var/log/nginx/aur.archlinux.org/error.log | awk '{ print $14 }' | sort | uniq | sort
 limit_req_zone $binary_remote_addr zone=aurwebgitlimit:10m rate=30r/m;
 
-# limit general requests to 20 r/s to block DoS attempts.
-limit_req_zone $binary_remote_addr zone=aurweblimit:10m rate=20r/s;
+# limit general requests to 60 r/m to block DoS attempts.
+limit_req_zone $binary_remote_addr zone=aurweblimit:10m rate=60r/m;
 
 limit_req_status 429;
 
@@ -22,14 +22,16 @@ server_names_hash_bucket_size 128;
 
 # Cache for cgit (uWSGI)
 # Keep TTL short to avoid stale views, but long enough to absorb crawler bursts.
+# inactive is kept well above the TTL so popular entries survive between visits
+# (cgit pages are tiny, max_size holds hundreds of thousands of them).
 uwsgi_cache_path /var/lib/nginx/uwsgi-cache
                  levels=1:2
                  keys_zone=cgitcache:50m
-                 inactive=120m
+                 inactive=24h
                  max_size=5g;
 
 # Rate limits for cgit.
-limit_req_zone $binary_remote_addr zone=cgitlight:10m rate=5r/s;
+limit_req_zone $binary_remote_addr zone=cgitlight:10m rate=1r/s;
 
 include snippets/redirect-80.conf;
 
@@ -124,7 +126,7 @@ server {
     }
 
     location ~ ^/cgit {
-        limit_req zone=cgitlight burst=20;
+        limit_req zone=cgitlight burst=5;
         include uwsgi_params;
         rewrite ^/cgit/([^?/]+/[^?]*)?(?:\?(.*))?$ /cgit.cgi?url=$1&$2 last;
         uwsgi_modifier1 9;
@@ -132,10 +134,15 @@ server {
         uwsgi_pass cgit;
 
         uwsgi_cache cgitcache;
-        uwsgi_cache_key $scheme$host$request_uri;
-        uwsgi_cache_valid 200 301 302 5m;
+        uwsgi_cache_key $host$request_uri;
+        uwsgi_cache_valid 200 301 302 15m;
         uwsgi_cache_valid 404 30s;
         uwsgi_cache_use_stale error timeout updating http_500 http_503;
+        # Serve expired entries instantly and refresh them in the background so
+        # expiry never blocks a user-facing request.
+        uwsgi_cache_background_update on;
+        # Revalidate via If-Modified-Since (cgit sends Last-Modified)
+        uwsgi_cache_revalidate on;
         uwsgi_cache_lock on;
         uwsgi_cache_lock_timeout 10s;
         add_header X-Cgit-Cache $upstream_cache_status always;
@@ -194,6 +201,17 @@ server {
 
     location / {
 {{ self.asgi_proxy() }}
+
+        proxy_cache                     aurwebcache;
+        proxy_cache_key                 $scheme$proxy_host$uri$args;
+        proxy_cache_valid               200 1m;
+        proxy_cache_bypass              $cookie_AURSID;
+        proxy_no_cache                  $cookie_AURSID;
+        proxy_cache_lock                on;
+        proxy_cache_lock_timeout        10s;
+        proxy_cache_use_stale           error timeout updating http_500 http_503;
+        proxy_cache_background_update   on;
+        add_header X-Cache-Status $upstream_cache_status;
 
         limit_req zone=aurweblimit burst=10 nodelay;
     }

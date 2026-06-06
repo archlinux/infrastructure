@@ -1,0 +1,20 @@
+# Deny AI training corpus scrapers and LLM crawlers hitting cgit.
+- name: deny-archwikimodel
+  user_agent_regex: archwikimodel
+  action: DENY
+
+- name: deny-gptbot
+  user_agent_regex: GPTBot
+  action: DENY
+
+- name: deny-claudebot
+  user_agent_regex: ClaudeBot
+  action: DENY
+
+- name: deny-meta-crawler
+  user_agent_regex: meta-externalagent
+  action: DENY
+
+- name: deny-oai-searchbot
+  user_agent_regex: OAI-SearchBot|ChatGPT-User
+  action: DENY
