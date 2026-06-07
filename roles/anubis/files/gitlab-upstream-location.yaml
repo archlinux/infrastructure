@@ -1,7 +1,0 @@
-- name: gitlab-upstream-location
-  action: WEIGH
-  weight:
-    adjust: 10
-  expression:
-    any:
-      - path.startsWith("/archlinux/packaging/upstream")

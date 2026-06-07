@@ -21,7 +21,7 @@ fail2ban_jails:
 
 anubis_extra_rules:
   - skip-all-non-browser
-  - gitlab-upstream-location
+  - gitlab
 
 gitlab_pages_archlinux_page_map:
   archlinux.page: archlinux-page-caddcd.archlinux.page

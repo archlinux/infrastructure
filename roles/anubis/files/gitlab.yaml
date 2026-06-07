@@ -1,0 +1,21 @@
+- name: gitlab
+  action: ALLOW
+  expression:
+    any:
+      # Allow subresource requests
+      - '"Cookie" in headers && headers["Cookie"].matches("(^| )_gitlab_session=") && "Sec-Fetch-Mode" in headers && headers["Sec-Fetch-Mode"].matches("^(cors|no-cors|same-origin|websocket)$")'
+      # Allow common paths
+      - '"Sec-Fetch-Mode" in headers && headers["Sec-Fetch-Mode"] == "navigate" && path.matches("/-/([a-z_]+)(/[0-9]+)?$") && size(query) == 0'
+      # https://archriscv.felixc.at/.status/status.htm
+      - '"Sec-Fetch-Mode" in headers && headers["Sec-Fetch-Mode"] == "cors" && "Origin" in headers && path.startsWith("/api/v4/")'
+
+- name: gitlab-expensive
+  action: WEIGH
+  weight:
+    adjust: 10
+  expression:
+    any:
+      # E.g. filtering
+      - size(query) > 0
+      # E.g. commits or files
+      - path.matches("/-/")
