@@ -20,9 +20,10 @@ distributor:
         http:
           endpoint: {{ wireguard_address }}:4318
 
-compactor:
-  compaction:
-    block_retention: 168h  # 7 days
+live_store:
+  shutdown_marker_dir: /var/lib/tempo/live-store/shutdown-marker
+  wal:
+    path: /var/lib/tempo/live-store/traces
 
 metrics_generator:
   registry:
@@ -33,8 +34,6 @@ metrics_generator:
     remote_write:
       - url: http://localhost:9090/api/v1/write
         send_exemplars: true
-  traces_storage:
-    path: /var/lib/tempo/generator/traces
 
 storage:
   trace:
@@ -45,7 +44,11 @@ storage:
       path: /var/lib/tempo/blocks
 
 overrides:
-  metrics_generator_processors: [service-graphs, span-metrics, local-blocks] # enables metrics generator
+  defaults:
+    metrics_generator:
+      processors: [service-graphs, span-metrics]
+    compaction:
+      block_retention: 168h  # 7 days
 
 usage_report:
   reporting_enabled: false
