@@ -9,3 +9,4 @@ system_disks:
   - /dev/nvme1n1
 wireguard_address: 10.0.0.58
 wireguard_public_key: Y8eYq23msrRlKYe+1OnrSs+pzHPFUiRZLJeVSrcO9zU=
+buildbtw_image_tag: main

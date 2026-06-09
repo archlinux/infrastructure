@@ -101,6 +101,11 @@ runner2.archlinux.org
 secure-runner1.archlinux.org
 runner2.archlinux.org
 
+[gitlab_buildbtw_runners]
+# TODO: Don't deploy secure until https://gitlab.archlinux.org/archlinux/buildbtw/-/work_items/258 is resolved.
+# secure-runner1.archlinux.org
+runner2.archlinux.org
+
 [rebuilderd]
 reproducible.archlinux.org
 
