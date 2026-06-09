@@ -210,6 +210,14 @@
   file: path=/etc/uwsgi/vassals/cgit.ini state=touch owner={{ aurweb_user }} group=http mode=0644
   when: cgit.changed
 
+- name: Override cgit-aurweb tmpfiles.d to set correct ownership for uwsgi
+  copy:
+    content: "d /var/cache/cgit-aurweb 0750 {{ aurweb_user }} http -\n"
+    dest: /etc/tmpfiles.d/cgit-aurweb.conf
+    owner: root
+    group: root
+    mode: '0644'
+
 - name: Make cgit cache dir
   file: path=/var/cache/cgit-aurweb state=directory owner={{ aurweb_user }} group=http mode=0750
 
