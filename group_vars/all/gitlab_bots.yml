@@ -14,18 +14,25 @@ gitlab_bots:
   - project_10177_bot_a8dd89a4bf249d4b5d3ec1c3d46e8caf
   - bumpbuddy
   - project_57074_bot_f7e3b3fe2a01bef8e3aa5ed9d34b741b
-  # group/packaging-buildbtw-dev, user: buildbtw-dev test
-  - group_81209_bot_10e437f10042ac36030406d8523b7954
+  - gluebuddy
+  - buildbtw
+  - buildbtw-staging
+  - buildbtw-review
+
   # archlinux/devblog, gitlab issue bot
   - project_98291_bot_6369e6b37b8d1e0ecabbbb4dabfb5c21
+
   # archlinux/archlinux-wsl, token for cleaning up the package registry
   - project_85684_bot_601164180ca9019d6ade06b04b0161da
+
   # archlinux/archlinux-wsl, gitlab issue bot
   - project_85684_bot_1c840b3a28d3a03d2a13ef0b9aea2ed9
+
   # archlinux/alpm/voa, gitlab issue bot
   - project_99023_bot_7da23d67ceaee3a657df421e78ee0fc9
+
   # archlinux/account-allowlist Allowlist-bot
   - project_100502_bot_e72660623d782cd4a8667b213bcc00af
+
   # archlinux/account-allowlist issue-bot
   - project_100502_bot_e12ccfdac7cc5cf30c084276a2ad1cdd
-  - gluebuddy

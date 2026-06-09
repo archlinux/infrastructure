@@ -4,3 +4,4 @@ nginx_enable_http3: true
 buildbtw_domain: buildbtw.archlinux.builders
 buildbtw_stage: staging
 buildbtw_image_tag: main
+buildbtw_gitlab_packages_group: archlinux/packaging/packages

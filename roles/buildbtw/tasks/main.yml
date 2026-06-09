@@ -73,6 +73,7 @@
 
 - name: Install conf file
   template: src=buildbtw.conf.j2 dest=/etc/conf.d/buildbtw owner=root group=root mode=0600
+  notify: Restart buildbtw
 
 - name: Create buildbtw working dirs
   file: path={{ item }} owner=root group=root mode=0755 state=directory
