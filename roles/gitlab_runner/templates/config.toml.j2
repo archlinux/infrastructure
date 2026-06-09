@@ -59,3 +59,26 @@ listen_address = ":9252"
     cleanup_exec = "/usr/local/bin/libvirt-executor"
     cleanup_args = [ "cleanup" ]
 {% endif %}
+{% if 'gitlab_buildbtw_runners' in group_names %}
+
+[[runners]]
+  name = "{{ inventory_hostname }}"
+  url = "https://gitlab.archlinux.org"
+  token = "{{ vault_gitlab_buildbtw_runner_token }}"
+  executor = "custom"
+  builds_dir = "/builds"
+  cache_dir = "/cache"
+  environment = ["RUST_BACKTRACE=1"]
+  [runners.custom]
+    config_exec = "/usr/local/bin/buildbtw-executor"
+    config_args = [ "config" ]
+
+    prepare_exec = "/usr/local/bin/buildbtw-executor"
+    prepare_args = [ "prepare" ]
+
+    run_exec = "/usr/local/bin/buildbtw-executor"
+    run_args = [ "run" ]
+
+    cleanup_exec = "/usr/local/bin/buildbtw-executor"
+    cleanup_args = [ "cleanup" ]
+{% endif %}

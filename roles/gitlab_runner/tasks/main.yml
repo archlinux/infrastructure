@@ -90,3 +90,32 @@
 
     - name: Start and enable libvirt-executor-fetch-image.timer
       systemd_service: name=libvirt-executor-fetch-image.timer state=started enabled=yes daemon_reload=yes
+
+- name: Setup buildbtw-executor
+  when: "'gitlab_buildbtw_runners' in group_names"
+  block:
+    - name: Install podman and vmexec
+      pacman: name=podman,vmexec state=present
+
+    - name: Pull executor OCI artifact
+      command: podman artifact pull registry.archlinux.org/archlinux/buildbtw/executor:{{ buildbtw_image_tag }}
+      changed_when: false
+
+    - name: Extract OCI artifact
+      command: podman artifact extract registry.archlinux.org/archlinux/buildbtw/executor:{{ buildbtw_image_tag }} /usr/local/bin/buildbtw-executor
+      changed_when: false
+
+    - name: Make executor executable
+      file: owner=root group=root mode=755 path=/usr/local/bin/buildbtw-executor
+
+    - name: Create required dirs
+      file: state=directory owner=root group=root mode=755 path=/srv/buildbtw/gitlab/{{ item }}
+      loop:
+        - builds
+        - cache
+
+    - name: Add subuids and subgids for virtiofsd
+      lineinfile: path=/etc/{{ item }} line="root:100000:65536"
+      with_items:
+        - subuid
+        - subgid
