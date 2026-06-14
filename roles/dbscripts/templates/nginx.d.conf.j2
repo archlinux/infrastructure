@@ -67,6 +67,7 @@ server {
 
         # Verify destination TLS cert
         proxy_ssl_verify              on;
+        proxy_ssl_verify_depth        2;
         proxy_ssl_trusted_certificate /etc/ssl/certs/ca-certificates.crt;
 
         # Send SNI with TLS handshake
