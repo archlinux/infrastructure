@@ -7,6 +7,9 @@
   tags:
     - firewall
 
+- name: Create tempo backend_scheduler work directory
+  file: path=/var/lib/tempo/scheduler state=directory owner=tempo group=tempo mode=0750
+
 - name: Configure tempo
   template: src=config.yml.j2 dest=/etc/tempo/config.yml owner=tempo group=tempo mode=0644
   notify:
