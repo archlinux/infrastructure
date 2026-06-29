@@ -3,6 +3,18 @@ limit_req_zone $binary_remote_addr zone=mailmanlimit:10m rate=2r/s;
 
 limit_req_status 429;
 
+# Drop various aggressive AI/scraper bots.
+map $http_user_agent $mailman_blocked_ua {
+    default                0;
+    "~*Bytespider"         1;
+    "~*GPTBot"             1;
+    "~*ClaudeBot"          1;
+    "~*Amazonbot"          1;
+    "~*AhrefsBot"          1;
+    "~*SemrushBot"         1;
+    "~*meta-externalagent" 1;
+}
+
 # This is for POSTORIUS_TEMPLATE_BASE_URL and mailman_hyperkitty.Archiver's base_url.
 server {
     listen       8000;
@@ -30,6 +42,9 @@ server {
     ssl_certificate      /etc/letsencrypt/live/{{ lists_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ lists_domain }}/privkey.pem;
 
+    # Bytespider's distributed AWS range.
+    deny 47.128.59.0/24;
+
     location /static/ {
       alias /var/lib/mailman-web/static/;
     }
@@ -39,6 +54,9 @@ server {
     }
 
     location / {
+      if ($mailman_blocked_ua) {
+          return 444;
+      }
       limit_req zone=mailmanlimit burst=5 nodelay;
       include /etc/nginx/uwsgi_params;
       uwsgi_pass unix:/run/mailman-web/mailman-web.sock;
