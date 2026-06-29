@@ -16,17 +16,38 @@
     adjust: 10
   expression:
     any:
-      - path.startsWith("/title/Special:Diff/")
-      - path.startsWith("/title/Special:RecentChanges/")
-      - path.startsWith("/title/Special:RecentChangesLinked/")
-      - path.startsWith("/title/Special:WhatLinksHere/")
-      - path.startsWith("/title/Special:Log/")
       - path.startsWith("/title/Special:Contributions/")
-      - path == "/index.php" && "title" in query && query["title"].startsWith("Special:Diff")
-      - path == "/index.php" && "title" in query && query["title"].startsWith("Special:RecentChanges")
-      - path == "/index.php" && "title" in query && query["title"].startsWith("Special:RecentChangesLinked")
-      - path == "/index.php" && "title" in query && query["title"].startsWith("Special:WhatLinksHere")
-      - path == "/index.php" && "title" in query && query["title"].startsWith("Special:Log")
       - path == "/index.php" && "title" in query && query["title"].startsWith("Special:Contributions")
+      - path.startsWith("/title/Special:Diff/")
+      - path == "/index.php" && "title" in query && query["title"].startsWith("Special:Diff")
+      - path.startsWith("/title/Special:ListUsers/")
+      - path == "/index.php" && "title" in query && query["title"].startsWith("Special:ListUsers")
+      - path.startsWith("/title/Special:Log/")
+      - path == "/index.php" && "title" in query && query["title"].startsWith("Special:Log")
+      - path.startsWith("/title/Special:RecentChanges/")
+      - path == "/index.php" && "title" in query && query["title"].startsWith("Special:RecentChanges")
+      - path.startsWith("/title/Special:RecentChangesLinked/")
+      - path == "/index.php" && "title" in query && query["title"].startsWith("Special:RecentChangesLinked")
+      - path.startsWith("/title/Special:Search/")
+      - path == "/index.php" && "title" in query && query["title"].startsWith("Special:Search")
+      - path.startsWith("/title/Special:WhatLinksHere/")
+      - path == "/index.php" && "title" in query && query["title"].startsWith("Special:WhatLinksHere")
       - path == "/index.php" && "oldid" in query
       - path == "/index.php" && "diff" in query
+
+# This should only affect "real" users on login
+- name: archwiki-crawler-suspicious
+  action: WEIGH
+  weight:
+    adjust: 20
+  expression:
+    any:
+      - path == "/index.php" && "returnto" in query
+
+# The crawlers use very innocent user agents, the challenge for WEIGH=10 should be fast for regular users
+- name: archwiki-suspicios-user-agents
+  user_agent_regex: >-
+    Windows NT|Macintosh
+  action: WEIGH
+  weight:
+    adjust: 10
