@@ -34,6 +34,7 @@
   "digests_enabled": true,
   "display_name": "",
   "discard_these_nonmembers": [],
+  "dmarc_addresses": [],
   "dmarc_mitigate_action": "no_mitigation",
   "dmarc_mitigate_unconditionally": false,
   "dmarc_moderation_notice": "",
