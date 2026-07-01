@@ -1,25 +1,5 @@
-[profile."archlinux-core"]
+[profile."archlinux"]
 distro = "archlinux"
-suite = "core"
+components = ["core", "core-testing", "extra", "extra-testing"]
 architectures = ["x86_64"]
 source = "https://geo.mirror.pkgbuild.com/$repo/os/$arch"
-
-[profile."archlinux-core-testing"]
-distro = "archlinux"
-suite = "core-testing"
-architectures = ["x86_64"]
-source = "https://geo.mirror.pkgbuild.com/$repo/os/$arch"
-
-[profile."archlinux-extra"]
-distro = "archlinux"
-suite = "extra"
-architectures = ["x86_64"]
-source = "https://geo.mirror.pkgbuild.com/$repo/os/$arch"
-excludes = ["cuda*", "tensorflow*", "*pytorch*", "*kube*", "python-tensorflow*"]
-
-[profile."archlinux-extra-testing"]
-distro = "archlinux"
-suite = "extra-testing"
-architectures = ["x86_64"]
-source = "https://geo.mirror.pkgbuild.com/$repo/os/$arch"
-excludes = ["cuda*", "tensorflow*", "*pytorch*", "*kube*", "python-tensorflow*"]

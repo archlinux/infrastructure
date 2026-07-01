@@ -35,6 +35,5 @@
 - name: Start and enable rebuilderd
   systemd_service: name=rebuilderd enabled=yes state=started
 
-- name: Start and enable rebuilderd-sync timer for {{ item }}
-  systemd_service: name=rebuilderd-sync@archlinux-{{ item }}.timer enabled=yes state=started
-  loop: "{{ suites }}"
+- name: Start and enable rebuilderd-sync timer
+  systemd_service: name=rebuilderd-sync@archlinux.timer enabled=yes state=started
