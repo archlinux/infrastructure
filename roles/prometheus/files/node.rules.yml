@@ -102,6 +102,15 @@ groups:
           summary: "Host OOM kill detected (instance {{ $labels.instance }})"
           description: "OOM kill detected\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
+      - alert: HostConntrackLimitFillingUp
+        expr: (node_nf_conntrack_entries / node_nf_conntrack_entries_limit) * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Host conntrack limit is filling up (instance {{ $labels.instance }})"
+          description: "The conntrack table is filling up (> 80% of the limit). Once full, new TCP connections will be dropped.\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
   - name: prometheus
     interval: 60s
     rules:
