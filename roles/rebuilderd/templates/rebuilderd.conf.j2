@@ -6,5 +6,19 @@ real_ip_header = "X-Real-IP"
 signup_secret = "{{ vault_rebuilderd_signup_secret }}"
 
 [schedule]
+## Configure the delay to automatically retry failed rebuilds in hours. The
+## default is 24h, this base is multiplied with the number of rebuilds, so the
+## first retry would happen after 24h, the second retry would happen 48h after the
+## first retry and the third retry would happen 72h after the second retry. By default, there is no upper limit to the
+## number of retries; however, you may set one with max_retries.
+## Successful rebuilds are not retried.
 # 1 week
 retry_delay_base = 168
+
+## Configure the initial delay for rebuild jobs (in seconds). This can be useful when packages appear before all build
+## information is available, as is sometimes the case. If the value is 0 or omitted, no delay is added.
+#initial_delay = 0
+
+## Configure the maximum number of times an unreproducible package will be retried (0 to N). There is no default upper
+## limit.
+#max_retries =
