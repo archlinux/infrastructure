@@ -71,14 +71,14 @@ listen_address = ":9252"
   environment = ["RUST_BACKTRACE=1"]
   [runners.custom]
     config_exec = "/usr/local/bin/buildbtw-executor"
-    config_args = [ "config" ]
+    config_args = [ "gitlab", "config" ]
 
     prepare_exec = "/usr/local/bin/buildbtw-executor"
-    prepare_args = [ "prepare" ]
+    prepare_args = [ "gitlab", "prepare" ]
 
     run_exec = "/usr/local/bin/buildbtw-executor"
-    run_args = [ "run" ]
+    run_args = [ "gitlab", "run" ]
 
     cleanup_exec = "/usr/local/bin/buildbtw-executor"
-    cleanup_args = [ "cleanup" ]
+    cleanup_args = [ "gitlab", "cleanup" ]
 {% endif %}
