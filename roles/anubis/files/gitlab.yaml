@@ -19,3 +19,10 @@
       - size(query) > 0
       # E.g. commits or files
       - path.matches("/-/")
+
+- name: gitlab-suspicios-user-agents
+  user_agent_regex: >-
+    Windows NT|Macintosh
+  action: WEIGH
+  weight:
+    adjust: 10
