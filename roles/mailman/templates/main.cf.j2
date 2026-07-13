@@ -50,6 +50,13 @@ local_recipient_maps = lmdb:/var/lib/mailman/data/postfix_lmtp $alias_maps
 alias_database = $alias_maps
 transport_maps = lmdb:/var/lib/mailman/data/postfix_lmtp
 
+# Throttle high-volume arch-commits via the slow transport (see master.cf).
+sender_dependent_default_transport_maps = pcre:/etc/postfix/sender_transport.pcre
+
 milter_header_checks = pcre:/etc/postfix/milter_header_checks
 
 delay_warning_time = 4h
+
+# Bump for backlog drain from the 5d default.
+bounce_queue_lifetime = 14d
+maximal_queue_lifetime = 14d

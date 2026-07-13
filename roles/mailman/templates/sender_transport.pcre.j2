@@ -1,0 +1,5 @@
+#
+# {{ ansible_managed }}
+#
+# Slow-lane the high-volume arch-commits list (matches VERP sender too).
+/^arch-commits-bounces(\+.*)?@{{ lists_domain | regex_escape }}$/   slow:

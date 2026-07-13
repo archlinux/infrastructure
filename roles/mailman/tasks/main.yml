@@ -29,6 +29,20 @@
     - milter_header_checks
   notify: Run postmap
 
+- name: Install postfix sender transport map
+  template: src=sender_transport.pcre.j2 dest=/etc/postfix/sender_transport.pcre owner=root group=root mode=0644
+  notify: Reload postfix
+
+- name: Add throttled slow transport to postfix master.cf
+  ansible.builtin.blockinfile:
+    path: /etc/postfix/master.cf
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - arch-commits slow lane"
+    block: |
+      slow      unix  -       -       n       -       -       smtp
+          -o syslog_name=postfix-slow
+          -o smtp_destination_rate_delay=1s
+  notify: Reload postfix
+
 - name: Open firewall holes for postfix
   ansible.posix.firewalld: service=smtp permanent=true state=enabled immediate=yes
   tags:

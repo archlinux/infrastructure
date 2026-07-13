@@ -1,6 +1,9 @@
 # limit general requests to 2 r/s to block DoS attempts.
 limit_req_zone $binary_remote_addr zone=mailmanlimit:10m rate=2r/s;
 
+# Throttle the heavy search endpoint harder than the rest.
+limit_req_zone $binary_remote_addr zone=mailmansearch:10m rate=20r/m;
+
 limit_req_status 429;
 
 # Drop various aggressive AI/scraper bots.
@@ -13,6 +16,11 @@ map $http_user_agent $mailman_blocked_ua {
     "~*AhrefsBot"          1;
     "~*SemrushBot"         1;
     "~*meta-externalagent" 1;
+    "~*DataForSeoBot"      1;
+    "~*DotBot"             1;
+    "~*Sogou"              1;
+    "~*PetalBot"           1;
+    "~*MJ12bot"            1;
 }
 
 # This is for POSTORIUS_TEMPLATE_BASE_URL and mailman_hyperkitty.Archiver's base_url.
@@ -51,6 +59,16 @@ server {
 
     location /pipermail/ {
         alias /var/lib/mailman2/archives/public/;
+    }
+
+    # Heavy search endpoint: stricter limit.
+    location ~ ^/(archives|hyperkitty)/search {
+      if ($mailman_blocked_ua) {
+          return 444;
+      }
+      limit_req zone=mailmansearch burst=5 nodelay;
+      include /etc/nginx/uwsgi_params;
+      uwsgi_pass unix:/run/mailman-web/mailman-web.sock;
     }
 
     location / {
