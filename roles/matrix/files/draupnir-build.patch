@@ -1,0 +1,71 @@
+ package-lock.json |  8 ++++----
+ package.json      | 11 ++++++++---
+ 2 files changed, 12 insertions(+), 7 deletions(-)
+
+diff --git c/package-lock.json i/package-lock.json
+index 282ab0e..dda8bfe 100644
+--- c/package-lock.json
++++ i/package-lock.json
+@@ -4647,9 +4647,9 @@
+       ]
+     },
+     "node_modules/@vector-im/matrix-bot-sdk": {
+-      "version": "0.8.0-element.2",
+-      "resolved": "https://registry.npmjs.org/@vector-im/matrix-bot-sdk/-/matrix-bot-sdk-0.8.0-element.2.tgz",
+-      "integrity": "sha512-Qasxj5w2a5jkEOz7fPcO+6nQkO7/TE3/XNZPxVnAo5rNrqAIsItXAwJU8vmrW2QRKWsCcDhT4ONgWOWz5e20MA==",
++      "version": "0.8.0-element.3",
++      "resolved": "https://registry.npmjs.org/@vector-im/matrix-bot-sdk/-/matrix-bot-sdk-0.8.0-element.3.tgz",
++      "integrity": "sha512-2FFo/Kz2vTnOZDv59Q0s803LHf7KzuQ2EwOYYAtO0zUKJ8pV5CPsVC/IHyFb+Fsxl3R9XWFiX529yhslb4v9cQ==",
+       "license": "MIT",
+       "dependencies": {
+         "@matrix-org/matrix-sdk-crypto-nodejs": "0.4.0",
+@@ -10584,7 +10584,7 @@
+       "dependencies": {
+         "@alloc/quick-lru": "^5.2.0",
+         "@types/nedb": "^1.8.16",
+-        "@vector-im/matrix-bot-sdk": "0.8.0-element.2",
++        "@vector-im/matrix-bot-sdk": "0.8.0-element.3",
+         "chalk": "^4.1.0",
+         "express": "^4.18.2",
+         "express-rate-limit": "^7.1.5",
+diff --git c/package.json i/package.json
+index a0eaa12..0f0c9c6 100644
+--- c/package.json
++++ i/package.json
+@@ -17,28 +17,33 @@
+   },
+   "homepage": "https://github.com/the-draupnir-project/Draupnir#readme",
+   "scripts": {
+-    "build": "tsc -b && npm run -ws build:assets --if-present",
+-    "build:all": "tsc -b tsconfig.all.json && npm run -ws build:assets --if-present",
++    "build": "tsc -b && npm run --workspaces build:assets --if-present",
++    "build:all": "tsc -b tsconfig.all.json && npm run --workspaces build:assets --if-present",
+     "build:clean": "tsc -b --clean",
+-    "test": "npm run -ws test --if-present && npm run -w apps/draupnir test:unit",
++    "test": "npm run --workspaces test --if-present && npm run -w apps/draupnir test:unit",
+     "lint": "eslint --cache 'packages/**/*.{ts,tsx}' 'apps/**/*.{ts,tsx}' && prettier --cache --ignore-unknown --check ."
+   },
+   "devDependencies": {
+     "@changesets/cli": "^2.30.0",
+     "@eslint/js": "^9.39.3",
+     "@types/jest": "^30.0.0",
+     "eslint": "^9.39.3",
+     "jest": "^30.3.0",
+     "prettier": "^3.3.3",
+     "ts-jest": "^29.4.6",
+     "typescript": "^5.9.3",
+     "typescript-eslint": "^8.56.1"
+   },
+   "overrides": {
+     "@vector-im/matrix-bot-sdk": "0.8.0-element.3",
+     "postgres": "3.4.7"
+   },
+   "engines": {
+     "node": ">=24.0.0"
++  },
++  "allowScripts": {
++    "@matrix-org/matrix-sdk-crypto-nodejs": true,
++    "better-sqlite3": true,
++    "unrs-resolver": true
+   }
+ }

@@ -103,7 +103,7 @@
 
 - name: Patch draupnir
   patch:
-    src: draupnir-lockfile.patch
+    src: draupnir-build.patch
     basedir: /var/lib/synapse/draupnir
     strip: 1
   become: true
