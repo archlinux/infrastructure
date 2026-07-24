@@ -9,6 +9,14 @@
       # https://archriscv.felixc.at/.status/status.htm
       - '"Sec-Fetch-Mode" in headers && headers["Sec-Fetch-Mode"] == "cors" && "Origin" in headers && path.startsWith("/api/v4/")'
 
+- name: gitlab-feeds
+  action: ALLOW
+  expression:
+    all:
+        # rss/atom feeds
+      - '"format" in query'
+      - 'query["format"] == "atom" || query["format"] == "rss"'
+
 - name: gitlab-expensive
   action: WEIGH
   weight:
