@@ -2,7 +2,7 @@ ipv4_address: "178.105.3.184"
 ipv4_netmask: "/32"
 ipv6_address: "2a01:4f8:c014:5646::1"
 wireguard_address: 10.0.0.56
-wireguard_public_key: 4kLlYGSM5IEfYdzMnw6rXaEOk1nFopre+0Xx4oGSjQU=
+wireguard_public_key: "+eDOT1NydpWaUBHrQPXxV/5amT6KFmSz1OfEzYTwpiU="
 nginx_enable_http3: true
 buildbtw_domain: buildbtw.archlinux.review
 buildbtw_stage: review
