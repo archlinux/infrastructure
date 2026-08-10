@@ -1,11 +1,11 @@
 - name: Install sudo
   pacman: name=sudo state=present
 
-# https://github.com/ansible/ansible/issues/11024
 - name: Remove all users from wheel group
-  command: groupmems -g wheel --purge
-  register: groupmems
-  changed_when: "groupmems.rc == 0"
+  ansible.builtin.group: name=wheel state=absent force=true
+
+- name: Re-create the wheel group
+  ansible.builtin.group: name=wheel state=present
 
 - name: Add sudo users to wheel
   user: name="{{ item }}" append=yes groups=wheel

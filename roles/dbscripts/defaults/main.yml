@@ -1,6 +1,6 @@
 dbscripts_commit: 4086734db79e757a4b4fe1644f6344b835571f3c
 dbscripts_update: true
-dbscripts_pgp_emails: ['jelle@archlinux.org', 'anthraxx@archlinux.org', 'foxboron@archlinux.org', 'kristian@klausen.dk']
+dbscripts_pgp_emails: ['jelle@archlinux.org', 'anthraxx@archlinux.org', 'kristian@klausen.dk']
 
 git_state_repo: /srv/repos/state
 git_pkg_cache: /srv/repos/pkg-cache
