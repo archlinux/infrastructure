@@ -350,16 +350,6 @@ arch_users:
       - mail.archlinux.org
     groups:
       - support-staff
-  foxboron:
-    name: "Morten Linderud"
-    email: "foxboron@archlinux.org"
-    ssh_key: foxboron.pub
-    groups:
-      - packager
-      - junior-packager
-      - dev
-      - junior-dev
-      - tu
   foxxx0:
     name: "Thore Bödecker"
     email: "foxxx0@archlinux.org"
