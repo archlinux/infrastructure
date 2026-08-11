@@ -1,0 +1,10 @@
+[Unit]
+Description=Warn and delete unverified aurweb accounts that left no packages or comments
+
+[Timer]
+OnStartupSec=1h
+OnUnitActiveSec=1h
+RandomizedDelaySec=5min
+
+[Install]
+WantedBy=timers.target

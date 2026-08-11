@@ -1,0 +1,10 @@
+[Unit]
+Description=Reject aurweb adoption requests no Package Maintainer acted on
+
+[Timer]
+OnStartupSec=1h
+OnUnitActiveSec=1h
+RandomizedDelaySec=5min
+
+[Install]
+WantedBy=timers.target
