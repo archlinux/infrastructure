@@ -6,6 +6,8 @@ use chroot = no
 max connections = 12
 syslog facility = local5
 proxy protocol = true
+# rsync sees unix-socket peers (nginx) as host "UNDETERMINED", required since 3.5.0
+proxy protocol hosts = UNDETERMINED
 pid file = /var/run/rsyncd.pid
 #transfer logging = yes
 transfer logging = no
