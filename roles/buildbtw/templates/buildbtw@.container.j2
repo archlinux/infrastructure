@@ -20,6 +20,7 @@ EnvironmentFile=/etc/conf.d/buildbtw
 Pull=newer
 Volume={{ buildbtw_dir }}:/var/lib/buildbtw
 Volume=/run/buildbtw:/run/buildbtw
+Volume={{ buildbtw_dir }}/ssh/id_ed25519:/etc/ssh/id_ed25519
 
 [Service]
 Restart=on-failure
