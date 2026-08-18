@@ -46,3 +46,23 @@ Using user-mode for system services results in undesireable ergonomics (or lack 
 For example: `systemctl --user -M buildbtw@ status buildbtw` (and even then the logs are missing) and `journalctl _UID=$(id -u buildbtw) -a`.
 As such, we use rootful mode.
 Since this is a single purpose machine and podman uses namespace isolation, it should still be reasonably safe to do so.
+
+## Service Users
+
+We have one service user per instance:
+
+- `buildbtw-review` (user id: `8450`)
+- `buildbtw-staging` (user id: `8451`)
+- `buildbtw` (user id: `8449`)
+
+We expect each of these users to have an SSH key added to them so that we can use the SSH key in buildbtw to authenticate against the repositories.
+However, since they are service accounts, it's currently not possible to add SSH keys to them in the GitLab UI.
+You can use this convenient curl to add public keys to them:
+```
+curl -X POST -H "Content-Type: application/json" -H "PRIVATE-TOKEN:<a PAT with global SSH creation powers>" --data '{"title":"buildbtw-review", "key":"ssh-ed25519 <SSH public key data>"}' https://gitlab.archlinux.org/api/v4/users/<user id>/keys
+```
+The SSH private key data is inside encrypted vaults, and is mounted into the buildbtw server containers. Respectively:
+
+- host_vars/buildbtw.archlinux.review/vault_buildbtw_review.yml
+- host_vars/buildbtw.archlinux.builders/vault_buildbtw_staging.yml
+- host_vars/buildbtw.archlinux.org/vault_buildbtw_production.yml
