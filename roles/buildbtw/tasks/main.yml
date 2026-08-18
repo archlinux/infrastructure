@@ -76,7 +76,7 @@
   notify: Restart buildbtw
 
 - name: Install SSH private key
-  copy: content="{{ vault_buildbtw_ssh_private_key }}" dest=/var/lib/buildbtw/id_ed25519 owner=root group=root mode=0600
+  copy: content="{{ vault_buildbtw_ssh_private_key }}" dest={{ buildbtw_dir }}/ssh/id_ed25519 owner=root group=root mode=0600
   notify: Restart buildbtw
 
 - name: Create buildbtw working dirs
@@ -84,6 +84,7 @@
   loop:
     - /var/lib/buildbtw
     - /var/lib/buildbtw/data
+    - /var/lib/buildbtw/ssh
     - /run/buildbtw
 
 - name: Start and enable webhook systemd service
