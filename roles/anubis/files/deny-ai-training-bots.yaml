@@ -18,3 +18,8 @@
 - name: deny-oai-searchbot
   user_agent_regex: OAI-SearchBot|ChatGPT-User
   action: DENY
+
+- name: lightpanda
+  user_agent_regex: Lightpanda
+  action: DENY
+

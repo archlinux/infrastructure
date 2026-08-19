@@ -1,0 +1,17 @@
+- name: aurweb-register-wave-ua
+  action: CHALLENGE
+  expression:
+    all:
+      - path == "/register"
+      - userAgent.matches("Chrome/136\\.0\\.0\\.0")
+      - userAgent.contains("Intel Mac OS X 10_15_7")
+  challenge:
+    algorithm: slow
+    difficulty: 8
+    report_as: 4
+
+- name: aurweb-register
+  action: CHALLENGE
+  expression:
+    any:
+      - path == "/register"

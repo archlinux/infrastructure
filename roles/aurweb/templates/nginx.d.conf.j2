@@ -74,6 +74,21 @@ server {
         alias {{ aurweb_dir }}/robots.txt;
     }
 
+{% if aurweb_registration_closed %}
+    location ~ /register$ {
+        error_page 503 /_registration-closed.html;
+        return 503;
+    }
+
+    location = /_registration-closed.html {
+        internal;
+        alias {{ aurweb_registration_closed_page }};
+        default_type text/html;
+        add_header Retry-After 86400 always;
+        add_header Cache-Control "no-store" always;
+    }
+{% endif %}
+
     # redirect /tu to /package-maintainer for external links
     location ~ ^/tu($|/.*) {
         return 301 https://aur.archlinux.org/package-maintainer$1;

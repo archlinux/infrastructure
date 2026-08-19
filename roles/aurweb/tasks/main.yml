@@ -190,6 +190,16 @@
   vars:
     domain: "{{ aurweb_domain }}"
 
+- name: Install the registration-closed page
+  when: aurweb_registration_closed
+  template:
+    src: registration-closed.html.j2
+    dest: "{{ aurweb_registration_closed_page }}"
+    owner: root
+    group: root
+    mode: '0644'
+  tags: ['nginx']
+
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest={{ aurweb_nginx_conf }} owner=root group=http mode=640
   notify: Reload nginx

@@ -32,6 +32,9 @@ aurweb_memcached_memory: 2048
 aurweb_workers: 8
 aurweb_environment_type: 'prod'
 
+aurweb_registration_closed: false
+aurweb_registration_closed_page: '/usr/share/nginx/html/aurweb-registration-closed.html'
+
 # aurweb timers and services are installed and restarted by default,
 # unless .install and .restart are explicitly set to "false"
 aurweb_timers:
