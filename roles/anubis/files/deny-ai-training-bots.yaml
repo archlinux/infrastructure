@@ -22,4 +22,3 @@
 - name: lightpanda
   user_agent_regex: Lightpanda
   action: DENY
-
