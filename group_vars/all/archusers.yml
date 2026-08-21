@@ -466,6 +466,12 @@ arch_users:
       - packager
       - junior-packager
       - tu
+  josie:
+    name: "Josephine Pfeiffer"
+    email: "josie@archlinux.org"
+    ssh_key: josie.pub
+    groups:
+      - junior-packager
   jouke:
     name: "Jouke Witteveen"
     ssh_key: jouke.pub
