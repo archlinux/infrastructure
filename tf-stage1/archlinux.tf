@@ -833,7 +833,7 @@ resource "hcloud_volume" "codesearch" {
 
 resource "hcloud_volume" "debuginfod" {
   name              = "debuginfod"
-  size              = 125
+  size              = 175
   server_id         = hcloud_server.machine["debuginfod.archlinux.org"].id
   delete_protection = true
 }
