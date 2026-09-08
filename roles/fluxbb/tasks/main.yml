@@ -24,10 +24,10 @@
   file: state=directory owner=fluxbb group=fluxbb mode=0755 path="{{ fluxbb_dir }}/uploads"
 
 - name: Create mariadb database
-  mysql_db: name=fluxbb state=present
+  ansible.mariadb.mariadb_db: name=fluxbb state=present
 
 - name: Create mariadb user
-  mysql_user: >
+  ansible.mariadb.mariadb_user: >
     name=fluxbb host=localhost password={{ fluxbb_db_password }}
     priv='fluxbb.*:ALL'
 

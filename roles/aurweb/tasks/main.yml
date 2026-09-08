@@ -116,12 +116,12 @@
   template: src=config.j2 dest={{ aurweb_conf_dir }}/config owner=root group=root mode=0644
 
 - name: Create aur db
-  mysql_db: name="{{ aurweb_db }}" login_host="{{ aurweb_db_host }}" login_password="{{ vault_mariadb_users.root }}" encoding=utf8
+  ansible.mariadb.mariadb_db: name="{{ aurweb_db }}" login_host="{{ aurweb_db_host }}" login_password="{{ vault_mariadb_users.root }}" encoding=utf8
   register: db_created
   no_log: true
 
 - name: Create aur db user
-  mysql_user: name={{ aurweb_db_user }} password={{ vault_aurweb_db_password }}
+  ansible.mariadb.mariadb_user: name={{ aurweb_db_user }} password={{ vault_aurweb_db_password }}
               login_host="{{ aurweb_db_host }}" login_password="{{ vault_mariadb_users.root }}"
               priv="{{ aurweb_db }}.*:ALL"
   no_log: true
@@ -338,7 +338,7 @@
       become_user: "{{ aurweb_user }}"
 
     - name: Import dummy data
-      mysql_db:
+      ansible.mariadb.mariadb_db:
         name: "{{ aurweb_db }}"
         login_host: "{{ aurweb_db_host }}"
         login_password: "{{ vault_mariadb_users.root }}"
