@@ -4,6 +4,9 @@ limit_req_zone $binary_remote_addr zone=rsslimit:8m rate=1r/m;
 # limit mirrors/status/json requests to 1 r/m
 limit_req_zone $binary_remote_addr zone=mirrorstatuslimit:8m rate=1r/m;
 
+# limit mirrorlist requests to 1 r/m
+limit_req_zone $binary_remote_addr zone=mirrorlistlimit:8m rate=1r/m;
+
 # limit general requests to 5 r/s to block DoS attempts.
 limit_req_zone $binary_remote_addr zone=archweblimit:10m rate=5r/s;
 
@@ -202,6 +205,21 @@ server {
         add_header X-Cache-Status $upstream_cache_status;
 
         limit_req zone=rsslimit burst=10 nodelay;
+    }
+
+    # Rate limit mirrorlist endpoint
+    location /mirrorlist {
+        include uwsgi_params;
+        uwsgi_pass archweb;
+
+        uwsgi_cache archwebcache;
+        uwsgi_cache_valid 5m;
+        uwsgi_cache_revalidate on;
+        uwsgi_cache_key $cache_key;
+        include snippets/headers.conf;
+        add_header X-Cache-Status $upstream_cache_status;
+
+        limit_req zone=mirrorlistlimit burst=10 nodelay;
     }
 
     # Rate limit mirror status json endpoint
