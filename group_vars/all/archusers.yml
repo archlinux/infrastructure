@@ -422,6 +422,7 @@ arch_users:
     ssh_key: hyacinthe.pub
     groups:
       - junior-packager
+      - packager
   idevolder:
     name: "Ike Devolder"
     email: "ike.devolder@archlinux.org"
