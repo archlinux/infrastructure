@@ -1,0 +1,12 @@
+[Unit]
+Description=Watch the fail2ban nginx stream deny list for changes
+
+[Path]
+PathChanged=/etc/nginx/snippets/stream-fail2ban-deny.conf
+# Setting a limit here could lead to the unit failing, which means that no
+# further reloads are applied and banned IPs can continue to access our
+# service.
+TriggerLimitBurst=0
+
+[Install]
+WantedBy=paths.target
