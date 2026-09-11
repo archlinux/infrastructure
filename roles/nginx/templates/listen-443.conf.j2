@@ -1,7 +1,12 @@
+{% if nginx_stream_deny %}
+listen 127.0.0.1:8443 ssl proxy_protocol;
+listen [::1]:8443 ssl proxy_protocol;
+{% else %}
 listen 443 ssl{{ ' proxy_protocol' if nginx_proxy_protocol_upstream_host or nginx_proxy_vendor }};
 listen [::]:443 ssl{{ ' proxy_protocol' if nginx_proxy_protocol_upstream_host or nginx_proxy_vendor }};
 {% if nginx_enable_http3 %}
 listen 443 quic;
 listen [::]:443 quic;
+{% endif %}
 {% endif %}
 http2 on;

@@ -2,8 +2,12 @@
 # If we receive traffic from one of these, we'll trust their real client IP as set by the PROXY protocol.
 # Without this, we'd end up rate limiting our upstream proxies.
 # See also https://nginx.org/en/docs/http/ngx_http_realip_module.html
+#
+# This template is rendered twice (item.server):
+# - as proxy-settings-http.conf for the http{} block
+# - as proxy-settings-stream.conf for the stream{} block.
 
-{% if nginx_proxy_protocol_upstream_host or nginx_proxy_vendor %}
+{% if (nginx_proxy_protocol_upstream_host or nginx_proxy_vendor) and item.server == 'http' %}
 real_ip_header proxy_protocol;
 {% endif %}
 
@@ -11,7 +15,12 @@ real_ip_header proxy_protocol;
 set_real_ip_from {{ nginx_proxy_protocol_upstream_host }};
 {% endif %}
 
-{% if nginx_proxy_vendor %}
+{% if item.server == 'http' and nginx_stream_deny %}
+# Behind the local stream front-proxy (nginx_stream_deny): it re-emits the PROXY
+# protocol from loopback, so the http{} servers only ever trust localhost here.
+set_real_ip_from 127.0.0.1;
+set_real_ip_from ::1;
+{% elif nginx_proxy_vendor %}
 {% for proxy_ip_addr in vault_proxy_vendor_trusted_ips[nginx_proxy_vendor] %}
 set_real_ip_from {{ proxy_ip_addr }};
 {% endfor %}
