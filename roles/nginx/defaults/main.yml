@@ -3,6 +3,11 @@ nginx_firewall_zone:
 nginx_extra_modules: []
 nginx_enable_http3: false
 nginx_stream: false
+# enable the L4 stream front-proxy that denies banned client IPs (by their real
+# IP from the PROXY protocol) before TLS termination, fed by the fail2ban
+# nginx-stream-deny action. implies a stream{} block and requires a proxy
+# vendor / upstream host. see docs/haproxy.md.
+nginx_stream_deny: false
 # a single proxy like a Hetzner LoadBalancer
 nginx_proxy_protocol_upstream_host:
 # a vendor like haproxy

@@ -1,0 +1,10 @@
+[Unit]
+Description=Watch the fail2ban nginx stream deny list for changes
+
+[Path]
+PathChanged=/etc/nginx/snippets/stream-fail2ban-deny.conf
+TriggerLimitIntervalSec=10s
+TriggerLimitBurst=30
+
+[Install]
+WantedBy=paths.target

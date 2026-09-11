@@ -1,4 +1,11 @@
 server {
+{% if nginx_stream_deny %}
+    listen       127.0.0.1:8080 default_server proxy_protocol;
+    listen       [::1]:8080 default_server proxy_protocol;
+
+    listen       127.0.0.1:8443 default_server ssl proxy_protocol;
+    listen       [::1]:8443 default_server ssl proxy_protocol;
+{% else %}
     listen       80 default_server{{ ' proxy_protocol' if nginx_proxy_protocol_upstream_host or nginx_proxy_vendor }};
     listen       [::]:80 default_server{{ ' proxy_protocol' if nginx_proxy_protocol_upstream_host or nginx_proxy_vendor }};
 
@@ -7,6 +14,7 @@ server {
 {% if nginx_enable_http3 %}
     listen       443 default_server quic reuseport;
     listen       [::]:443 default_server quic reuseport;
+{% endif %}
 {% endif %}
     http2        on;
     ssl_reject_handshake on;
