@@ -9,6 +9,7 @@ image_tag=$1
 
 # Restart so that a potentially newer image may get pulled
 echo "Deploying ${image_tag}"
+mkdir -p "{{ buildbtw_dir }}"/instances/${image_tag}
 systemctl restart "buildbtw@${image_tag}"
 {% if buildbtw_stage == "review" %}
 # Manual symlink (as suggested in podman-systemd.unit(5) because this will

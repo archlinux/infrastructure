@@ -78,10 +78,13 @@
 - name: Create buildbtw working dirs
   file: path={{ item }} owner=root group=root mode=0755 state=directory
   loop:
-    - /var/lib/buildbtw
-    - /var/lib/buildbtw/data
-    - /var/lib/buildbtw/ssh
+    - "{{ buildbtw_dir }}/instances"
+    - "{{ buildbtw_dir }}/ssh"
     - /run/buildbtw
+
+- name: Create buildbtw instance working dir
+  file: path={{ buildbtw_dir }}/instances/{{ buildbtw_stage }} owner=root group=root mode=0755 state=directory
+  when: buildbtw_stage in ["staging", "production"]
 
 - name: Install SSH private key
   copy: content="{{ vault_buildbtw_ssh_private_key }}" dest={{ buildbtw_dir }}/ssh/id_ed25519 owner=root group=root mode=0600
