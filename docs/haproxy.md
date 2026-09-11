@@ -42,14 +42,19 @@ end.
   and regular traffic, but then one of the two `listen` directives has to be bound
   to a specific interface. Most of this logic is abstracted away in the
   `listen-*.conf` snippets as part of the `nginx` Ansible role.
-- **fail2ban:** Since our regular `fail2ban` remediation logic is based on the
-  fact that the client is connecting to us directly and we can just ban via a
-  ipset in firewalld this does not work for us anymore. In the future (see the
-  [related issue][haproxy-fail2ban-issue]) we plan to we tunnel the incoming
-  TCP traffic through a nginx `stream {...}` directive, which we then populate
-  with `deny XXX.XXX.XXX.XXX;` entries from `fail2ban`. Additionally we need to
-  allowlist the IPs of the ADN proxies in order to not lock the users of a
-  certain point of presence out on accident.
+- **fail2ban:** Our regular `fail2ban` remediation bans via an ipset in
+  firewalld, which relies on the client connecting to us directly. Behind the
+  ADN every packet arrives from an (allowlisted) HAProxy IP, so an ipset ban of
+  the real client IP never matches and is useless (see the [related
+  issue][haproxy-fail2ban-issue]). Instead we tunnel the incoming TCP through a
+  nginx `stream {...}` front-proxy: it terminates the PROXY protocol, denies
+  banned clients by their *real* IP (`deny XXX.XXX.XXX.XXX;`) before TLS is even
+  terminated, then re-emits the PROXY protocol to the loopback http listeners
+  (`127.0.0.1:8080`/`:8443`). This is enabled per host with `nginx_stream_deny:
+  true` in the `host_vars`; `fail2ban` then uses the `nginx-stream-deny`
+  banaction (which writes the `deny` lines) and a systemd path unit reloads
+  nginx with a cooldown. The front-proxy also allowlists the ADN proxy IPs so a
+  realip hiccup can never lock out a whole point of presence.
 
 ## Setting up a service
 
@@ -103,8 +108,11 @@ end.
    - Ensure that the nginx config of the service already uses the
      `snippets/listen-*.conf`.
    - Set `nginx_proxy_vendor: haproxy` in the `host_vars`.
-   - Deploying the service role (i.e. `aurweb`) aswell as the `nginx` role and
-     manually disable `fail2ban`.
+   - Set `nginx_stream_deny: true` in the `host_vars` to front the service with
+     the L4 stream deny proxy, and enable the `nginx_limit_req` jail via
+     `fail2ban_jails` so bans work behind the ADN (see `docs/fail2ban.md`).
+   - Deploy the service role (i.e. `aurweb`) as well as the `nginx` and
+     `fail2ban` roles.
 1. **DNS Change:** After all is ready the DNS can be set to the HAProxy
    provided addresses.
 
