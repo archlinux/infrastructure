@@ -1,0 +1,9 @@
+[Unit]
+Description=Reload nginx to apply fail2ban stream deny list changes
+StartLimitIntervalSec=10s
+StartLimitBurst=30
+
+[Service]
+Type=oneshot
+ExecStartPre=/usr/bin/nginx -t
+ExecStart=/usr/bin/systemctl reload nginx

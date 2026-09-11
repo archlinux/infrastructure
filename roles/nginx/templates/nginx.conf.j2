@@ -3,7 +3,7 @@ worker_processes  auto;
 load_module /usr/lib/nginx/modules/ngx_http_brotli_filter_module.so;
 load_module /usr/lib/nginx/modules/ngx_http_brotli_static_module.so;
 load_module /usr/lib/nginx/modules/ngx_http_acme_module.so;
-{% if nginx_stream %}
+{% if nginx_stream or nginx_stream_deny %}
 load_module /usr/lib/nginx/modules/ngx_stream_module.so;
 {% endif %}
 {% for module in nginx_extra_modules %}
@@ -106,7 +106,7 @@ http {
 
     include snippets/sslsettings-http.conf;
     include snippets/headers.conf;
-    include snippets/proxy-settings.conf;
+    include snippets/proxy-settings-http.conf;
 
     resolver 127.0.0.53;
     ssl_certificate_cache max=2;
@@ -120,7 +120,7 @@ http {
 
     include nginx.d/*.conf;
 }
-{% if nginx_stream %}
+{% if nginx_stream or nginx_stream_deny %}
 
 stream {
     log_format stream
@@ -144,7 +144,7 @@ stream {
         '}';
 
     include snippets/sslsettings-stream.conf;
-    include snippets/proxy-settings.conf;
+    include snippets/proxy-settings-stream.conf;
 
     include stream.d/*.conf;
 }
