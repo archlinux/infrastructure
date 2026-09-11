@@ -15,12 +15,11 @@ Environment="BUILDBTW_SERVER_URL=https://%i.{{ buildbtw_domain }}"
 {% else %}
 Environment="BUILDBTW_SERVER_URL=https://{{ buildbtw_domain }}"
 {% endif %}
-Environment="BUILDBTW_DATABASE_FILE=/var/lib/buildbtw/buildbtw-%i.sqlite"
 EnvironmentFile=/etc/conf.d/buildbtw
 Pull=newer
-Volume={{ buildbtw_dir }}:/var/lib/buildbtw
+Volume={{ buildbtw_dir }}/instances/%i:/var/lib/buildbtw
+Volume={{ buildbtw_dir }}/ssh/id_ed25519:/root/.ssh/id_ed25519:ro
 Volume=/run/buildbtw:/run/buildbtw
-Volume={{ buildbtw_dir }}/ssh/id_ed25519:/etc/ssh/id_ed25519
 
 [Service]
 Restart=on-failure
