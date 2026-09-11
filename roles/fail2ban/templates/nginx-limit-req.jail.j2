@@ -10,5 +10,10 @@ logpath = /var/log/nginx/*/error.log
 findtime = 1sec
 bantime = 1w
 maxretry = 1
+{% if nginx_stream_deny is defined and nginx_stream_deny %}
+# Behind the HAProxy ADN, ban at the nginx stream layer (by real client IP)
+# instead of firewalld, which cannot match traffic arriving from the ADN.
+banaction = nginx-stream-deny
+{% endif %}
 # Do not fail2ban archweb's rss limit.
 ignoreregex = rsslimit
