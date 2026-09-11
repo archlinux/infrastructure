@@ -49,6 +49,17 @@
   notify:
     - Restart fail2ban
 
+- name: Install nginx-stream-deny action
+  when: nginx_stream_deny | default(false)
+  template:
+    src: "nginx-stream-deny.conf.j2"
+    dest: "/etc/fail2ban/action.d/nginx-stream-deny.conf"
+    owner: "root"
+    group: "root"
+    mode: '0644'
+  notify:
+    - Restart fail2ban
+
 - name: Install sshd jail
   when: fail2ban_jails.sshd
   template:
