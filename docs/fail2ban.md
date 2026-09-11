@@ -42,3 +42,11 @@ Add `fail2ban_jails` dict with `nginx_limit_req: true` to the host's `host_vars`
 
 The `rsslimit` zone is whitelisted from being banned with `ignoreregex`, as we
 choose to not ban RSS abusers.
+
+#### Behind the HAProxy ADN
+
+On hosts fronted by the HAProxy ADN the default firewalld banaction does not work:
+
+- Every packet arrives from an allowlisted ADN IP (so an ipset ban of the real client IP never matches)
+- Setting `nginx_stream_deny: true` in the host's `host_vars` (see `docs/haproxy.md`) switches the `nginx_limit_req` jail to the `nginx-stream-deny` banaction, which writes `deny <ip>;` lines into `/etc/nginx/snippets/stream-fail2ban-deny.conf`.
+- A systemd path unit (`nginx-stream-deny-reload`) reloads nginx with a cooldown so the deny takes effect before TLS termination.
