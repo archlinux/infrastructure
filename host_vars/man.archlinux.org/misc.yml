@@ -2,7 +2,11 @@ fail2ban_jails:
   sshd: true
   postfix: false
   dovecot: false
-  nginx_limit_req: false
+  nginx_limit_req: true
 wireguard_address: 10.0.0.32
 wireguard_public_key: CuhJyhmHsi0ccdeXgXRacqnFVfYrjVDHxfPPOLehkhw=
+
 nginx_proxy_vendor: haproxy
+# Front the http server with the L4 stream deny proxy so fail2ban can block
+# real client IPs behind the HAProxy ADN (see docs/haproxy.md).
+nginx_stream_deny: true
