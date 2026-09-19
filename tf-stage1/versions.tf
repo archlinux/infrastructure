@@ -9,6 +9,9 @@ terraform {
     minio = {
       source = "aminueza/minio"
     }
+    scaleway = {
+      source = "scaleway/scaleway"
+    }
   }
   required_version = ">= 0.13"
 }
