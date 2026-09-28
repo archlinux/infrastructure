@@ -648,6 +648,14 @@ arch_users:
       - packager
       - junior-packager
       - tu
+  rafaelff:
+    name: "Rafael Fontenelle"
+    email: rafaelff@archlinux.org
+    ssh_key: rafaelff.pub
+    groups:
+      - support-staff
+    hosts:
+      - mail.archlinux.org
   sangy:
     name: "Santiago Torres-Arias"
     email: "santiago@archlinux.org"
