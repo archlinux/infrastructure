@@ -215,6 +215,14 @@ arch_users:
       - mail.archlinux.org
     groups:
       - support-staff
+  brocellous:
+    name: "Ronan Pigott"
+    email: brocellous@archlinux.org
+    ssh_key: brocellous.pub
+    groups:
+      - support-staff
+    hosts:
+      - mail.archlinux.org
   carsme:
     name: "Carl Smedstad"
     email: "carsme@archlinux.org"
@@ -648,6 +656,14 @@ arch_users:
       - packager
       - junior-packager
       - tu
+  rafaelff:
+    name: "Rafael Fontenelle"
+    email: rafaelff@archlinux.org
+    ssh_key: rafaelff.pub
+    groups:
+      - support-staff
+    hosts:
+      - mail.archlinux.org
   sangy:
     name: "Santiago Torres-Arias"
     email: "santiago@archlinux.org"
