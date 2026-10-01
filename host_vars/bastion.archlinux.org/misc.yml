@@ -1,5 +1,9 @@
 sshd_tcp_forwarding: local
 additional_addresses: ["5.75.217.8/32"]
+# Some destinations only allow-list the floating IP, so make it the source address for that traffic
+additional_routes:
+  - destination: "{{ vault_bastion_umea_idrac_ip }}/32"
+    preferred_source: 5.75.217.8
 system_disks:
   - /dev/sda
 wireguard_address: 10.0.0.59

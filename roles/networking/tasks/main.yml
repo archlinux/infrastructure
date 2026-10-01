@@ -46,6 +46,12 @@
     - Restart networkd
   when: additional_addresses is defined
 
+- name: Configure additional network routes
+  template: src=additional_routes.conf.j2 dest={{ chroot_path }}/etc/systemd/network/10-{{ "dhcp" if dhcp | default(false) else "static" }}-ethernet.network.d/additional_routes.conf owner=root group=root mode=0644
+  notify:
+    - Restart networkd
+  when: additional_routes is defined
+
 - name: Disable IPv4 TCP Fast Open
   copy: src=50-tcp_fastopen.conf dest={{ chroot_path }}/etc/sysctl.d/50-tcp_fastopen.conf owner=root group=root mode=0644
   notify:

@@ -1,0 +1,11 @@
+# Additional routes to add to the default interface
+
+{% for route in additional_routes %}
+[Route]
+Destination={{ route.destination }}
+Gateway={{ "_dhcp4" if dhcp | default(false) else ipv4_gateway }}
+{% if route.preferred_source is defined %}
+PreferredSource={{ route.preferred_source }}
+{% endif %}
+
+{% endfor %}
