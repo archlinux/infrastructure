@@ -68,7 +68,11 @@ listen_address = ":9252"
   executor = "custom"
   builds_dir = "/builds"
   cache_dir = "/cache"
-  environment = ["RUST_BACKTRACE=1", "BUILDBTW_SERVER_URL=https://buildbtw.archlinux.org"]
+  environment = [
+    "RUST_BACKTRACE=1",
+    "BUILDBTW_SERVER_URL=https://buildbtw.archlinux.org",
+    "BUILDBTW_EXECUTOR_TOKEN={{ vault_gitlab_runner_buildbtw_executor_token }}"
+  ]
   [runners.custom]
     config_exec = "/usr/local/bin/buildbtw-executor"
     config_args = [ "gitlab", "config" ]
