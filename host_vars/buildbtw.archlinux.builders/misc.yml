@@ -5,3 +5,5 @@ buildbtw_domain: buildbtw.archlinux.builders
 buildbtw_stage: staging
 buildbtw_image_tag: main
 buildbtw_gitlab_packages_group: archlinux/packaging/packages
+# For debugging, we might sometimes change this to:
+# buildbtw_gitlab_packages_group: packaging-buildbtw-dev/packages
