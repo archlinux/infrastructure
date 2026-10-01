@@ -70,8 +70,14 @@ listen_address = ":9252"
   cache_dir = "/cache"
   environment = [
     "RUST_BACKTRACE=1",
+    {% if inventory_hostname == "runner2.archlinux.org" -%}
+    {# This is staging -#}
+    "BUILDBTW_SERVER_URL=https://buildbtw.archlinux.builders",
+    {% elif inventory_hostname == "secure-runner1.archlinux.org" -%}
+    {# This is production -#}
     "BUILDBTW_SERVER_URL=https://buildbtw.archlinux.org",
-    "BUILDBTW_EXECUTOR_TOKEN={{ vault_gitlab_runner_buildbtw_executor_token }}"
+    {% endif -%}
+    "BUILDBTW_EXECUTOR_TOKEN={{ vault_gitlab_buildbtw_runner_executor_token }}",
   ]
   [runners.custom]
     config_exec = "/usr/local/bin/buildbtw-executor"
