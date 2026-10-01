@@ -39,6 +39,7 @@ listen_address = ":9252"
   executor = "custom"
   builds_dir = "/builds"
   cache_dir = "/cache"
+  environment = ["ARCHIVER_STAGING_DIR=/var/tmp"]
   [runners.cache]
     Type = "s3"
     Shared = true
@@ -48,7 +49,6 @@ listen_address = ":9252"
       SecretKey = "{{ vault_hetzner_s3_gitlab_runners_secret_key }}"
       # Also refer to minio_s3_bucket.gitlab_runners_cache in tf-stage1/archlinux.tf
       BucketName = "archlinux-gitlab-runners-cache"
-  environment = ["ARCHIVER_STAGING_DIR=/var/tmp"]
   [runners.custom]
     prepare_exec = "/usr/local/bin/libvirt-executor"
     prepare_args = [ "prepare" ]
