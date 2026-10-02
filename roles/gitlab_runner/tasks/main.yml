@@ -108,6 +108,15 @@
     - name: Make executor executable
       file: owner=root group=root mode=755 path=/usr/local/bin/buildbtw-executor
 
+    - name: Add secret token to a path
+      lineinfile:
+        path: /etc/gitlab-runner/buildbtw-runner-executor-secret-token
+        line: "{{ vault_gitlab_buildbtw_runner_executor_secret_token }}"
+        create: true
+        owner: root
+        group: root
+        mode: "0600"
+
     - name: Create required dirs
       file: state=directory owner=root group=root mode=755 path=/srv/buildbtw/gitlab/{{ item }}
       loop:
