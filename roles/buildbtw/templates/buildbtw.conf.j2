@@ -1,6 +1,11 @@
 # We have to split our config between Environment= entries and this file (included using EnvironmentFile=)
 # since instance variables like %i don't work in files included via EnvironmentFile= in systemd :(
+{# Log staging more verbosely than production #}
+{% if buildbtw_stage == "staging" %}
+RUST_LOG=info,buildbtw=debug,sqlx::query=warn,hyper_util::client=info,sea_orm_migration=warn,sea_orm=info,h2=info
+{% elif buildbtw_stage == "production" %}
 RUST_LOG=info,sqlx::query=warn,hyper_util::client=info,sea_orm_migration=warn,sea_orm=info,h2=info
+{% endif %}
 
 BUILDBTW_DATABASE_FILE=/var/lib/buildbtw/buildbtw.sqlite
 BUILDBTW_DATA_DIR=/var/lib/buildbtw/data
