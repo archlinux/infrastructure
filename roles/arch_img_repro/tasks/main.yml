@@ -1,0 +1,43 @@
+- name: Install dependencies
+  pacman: name=podman,curl,jq,diffoci state=present
+
+- name: Install gitconfig
+  copy: src=gitconfig dest=/etc/gitconfig owner=root group=root mode=0644
+
+- name: Clone arch-img-repro repo # noqa: latest
+  git: repo=https://gitlab.archlinux.org/archlinux/arch-img-repro.git dest=/opt/arch-img-repro version="{{ arch_img_repro_version }}" force=true
+
+- name: Create symlink for main script
+  file: src=/opt/arch-img-repro/all.sh dest=/usr/local/bin/arch-img-repro.sh owner=root group=root state=link
+
+- name: Create builder user
+  user: name=builder state=present shell=/usr/bin/bash
+
+- name: Set permissions for the builder user on the web dir
+  file: path=/opt/arch-img-repro/web owner=builder group=builder recurse=true
+
+- name: Install systemd services and timers
+  copy: src="{{ item }}" dest="/etc/systemd/system/{{ item }}" owner=root group=root mode=0644
+  loop:
+    - arch-img-repro.service
+    - arch-img-repro.timer
+
+- name: Setup HTTP redirect
+  include_role:
+    name: http_redirect
+  vars:
+    domain: "{{ arch_img_repro_domain }}"
+
+- name: Make nginx log dir
+  file: path=/var/log/nginx/{{ arch_img_repro_domain }} state=directory owner=root group=root mode=0755
+
+- name: Install nginx conf file
+  template: src=arch-img-repro-nginx.conf.j2 dest=/etc/nginx/nginx.d/arch-img-repro.conf owner=root group=root mode=0600
+  notify:
+    - Reload nginx
+
+- name: Start and enable systemd timers
+  systemd_service: name=arch-img-repro.timer enabled=true state=started daemon_reload=true
+
+- name: Start the systemd service
+  systemd_service: name=arch-img-repro.service state=started no_block=true

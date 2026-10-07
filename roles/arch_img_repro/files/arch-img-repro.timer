@@ -1,0 +1,9 @@
+[Unit]
+Description=Trigger arch-img-repro every Wednesday at 08:00
+
+[Timer]
+OnCalendar=Wed *-*-* 08:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,9 @@
+[Unit]
+Description=Rebuild Arch Linux Images and test reproducibility
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=builder
+ExecStart=/usr/local/bin/arch-img-repro.sh --clean-images
