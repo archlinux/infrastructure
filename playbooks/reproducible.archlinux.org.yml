@@ -10,6 +10,7 @@
     - { role: borg_client, tags: ["borg"] }
     - { role: nginx }
     - { role: rebuilderd }
+    - { role: arch_img_repro }
     - { role: prometheus_exporters }
     - { role: promtail }
     - { role: fail2ban }
