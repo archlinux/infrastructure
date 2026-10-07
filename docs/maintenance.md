@@ -21,6 +21,57 @@ most configuration files that are managed by Ansible. However, care must be
 taken with updates that require manual intervention (e.g. major PostgreSQL
 releases).
 
+### Post upgrade checks and actions
+
+#### Reboot to the latest kernel
+
+The `upgrade-servers.yml` playbook reboots the server unless specific
+conditions are met (e.g. a borg backup is ongoing).
+
+As such, it is possible that some servers did not reboot after the upgrade
+process and are therefore not running the upgraded kernel version yet.
+It is advised to plan a manual reboot for those when possible.
+
+To identify servers that did not reboot, you can check their uptime and/or
+version of the running kernel:
+
+```
+ansible all -m shell -a "uptime && uname -r"
+```
+
+The following command can be run to check the ongoing package builds running
+on the build server (in order to avoid brutally cancelling them unexpectedly
+when rebooting):
+
+```
+ssh build.archlinux.org \
+  ps -ef \
+  | awk 'match($0,/pkgctl offload.*offload\/([^.\/]+)/,m){print $1, m[1]}' \
+  | sort -u \
+  | awk '{u[$1]=u[$1]"  ├── "$2"\n"} END{for(i in u) printf "%s\n%s\n",i,u[i]}'
+```
+
+#### Database migration after a MariaDB upgrade
+
+When updating to a new feature release, MariaDB databases should be migrated
+(see the related "post upgrade" instructions
+[here](https://gitlab.archlinux.org/archlinux/packaging/packages/mariadb/-/blob/main/mariadb.install)).
+
+To identify servers that needs a MariaDB database migration, you can check the
+presence of the above "post upgrade" message in the pacman logs:
+
+```
+ansible all -m shell -a "grep 'MariaDB was updated' /var/log/pacman.log | tail -1"
+```
+
+If the date of the last occurence of the message in the pacman logs (reported
+by the above command) correspond to the date of the upgrade, then run the
+following command on the related servers:
+
+```
+systemctl restart mariadb.service && mariadb-upgrade -u root -p
+```
+
 ## Finding servers requiring security updates
 
 Arch-audit can be used to find servers in need of updates for security issues.
