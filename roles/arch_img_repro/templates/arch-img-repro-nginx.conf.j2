@@ -1,0 +1,17 @@
+include snippets/redirect-80.conf;
+
+server {
+    include      snippets/listen-443.conf;
+    server_name  {{ arch_img_repro_domain }};
+
+    access_log   /var/log/nginx/{{ arch_img_repro_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ arch_img_repro_domain }}/access.log.json json_main;
+    error_log    /var/log/nginx/{{ arch_img_repro_domain }}/error.log;
+
+    acme_certificate     letsencrypt;
+    ssl_certificate      $acme_certificate;
+    ssl_certificate_key  $acme_certificate_key;
+
+    root /opt/arch-img-repro/web;
+    charset utf-8;
+}

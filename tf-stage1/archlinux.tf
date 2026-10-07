@@ -406,19 +406,20 @@ locals {
   # Example:
   # dev                      = { value = "www.archlinux.org.", ttl = 3600 }
   archlinux_org_cname = {
-    ipxe            = { value = "www.archlinux.org." }
-    mailman         = { value = "redirect.archlinux.org." }
-    packages        = { value = "www.archlinux.org." }
-    ping            = { value = "redirect.archlinux.org." }
-    planet          = { value = "www.archlinux.org." }
-    registry        = { value = "gitlab.archlinux.org." }
-    rsync           = { value = "repos.archlinux.org." }
-    sources         = { value = "repos.archlinux.org." }
-    "static.conf"   = { value = "redirect.archlinux.org." }
-    status          = { value = "stats.uptimerobot.com." }
-    coc             = { value = "redirect.archlinux.org." }
-    git             = { value = "redirect.archlinux.org." }
-    "tu-bylaws.aur" = { value = "redirect.archlinux.org." }
+    ipxe                = { value = "www.archlinux.org." }
+    mailman             = { value = "redirect.archlinux.org." }
+    packages            = { value = "www.archlinux.org." }
+    ping                = { value = "redirect.archlinux.org." }
+    planet              = { value = "www.archlinux.org." }
+    registry            = { value = "gitlab.archlinux.org." }
+    reproducible-images = { value = "reproducible.archlinux.org." }
+    rsync               = { value = "repos.archlinux.org." }
+    sources             = { value = "repos.archlinux.org." }
+    "static.conf"       = { value = "redirect.archlinux.org." }
+    status              = { value = "stats.uptimerobot.com." }
+    coc                 = { value = "redirect.archlinux.org." }
+    git                 = { value = "redirect.archlinux.org." }
+    "tu-bylaws.aur"     = { value = "redirect.archlinux.org." }
 
     # MTA-STS
     mta-sts               = { value = "mail.archlinux.org." }

@@ -1,0 +1,4 @@
+# vim:set ft=gitconfig noet sw=0 sts=-1:
+
+[safe]
+	directory = *

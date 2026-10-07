@@ -92,6 +92,7 @@ So to set up this server from scratch, run:
   - Runs a master [rebuilderd](https://reproducible.archlinux.org) instance
     with these workers:
     - repro4.pkgbuild.com (Proxmox VM with 24vCores and 128G RAM - 4 workers)
+  - Runs an [arch-img-repro](https://reproducible-images.archlinux.org) instance
 
 ## secure-runner1.archlinux.org
 
