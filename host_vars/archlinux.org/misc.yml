@@ -8,6 +8,9 @@ fail2ban_jails:
   nginx_limit_req: true
 
 nginx_proxy_vendor: haproxy
+# Front the http server with the L4 stream deny proxy so fail2ban can block
+# real client IPs behind the HAProxy ADN (see docs/haproxy.md).
+nginx_stream_deny: true
 
 wireguard_address: 10.0.0.1
 wireguard_public_key: 2Mk9WPdkf+1Q6Kk6g5eeX5xSHfCisiGJAdmSjRyefBo=

@@ -1,0 +1,28 @@
+#
+# {{ansible_managed}}
+#
+
+# Ban action for web servers behind the HAProxy ADN. The regular firewalld
+# banaction is useless there: every packet arrives from an allowlisted ADN IP,
+# so an ipset ban of the real client IP never matches. Instead we write
+# `deny <ip>;` lines into an nginx stream snippet that the L4 front-proxy
+# includes (see the nginx role, nginx_stream_deny).
+#
+# We deliberately do NOT reload nginx here: a systemd path unit
+# (nginx-stream-deny-reload) watches the snippet and reloads nginx with a
+# cooldown, coalescing a burst of bans into a single reload. nginx `deny`
+# accepts IPv4 and IPv6 literally, so no address-family juggling is needed.
+
+[Definition]
+
+denyfile = /etc/nginx/snippets/stream-fail2ban-deny.conf
+
+actionstart = touch "<denyfile>"
+actionstop =
+actioncheck =
+# idempotent append (avoids duplicate deny lines when fail2ban replays active
+# bans on reload/restart)
+actionban = grep -qxF 'deny <ip>;' "<denyfile>" || echo 'deny <ip>;' >> "<denyfile>"
+# rewrite without the banned line via a fixed temp file, then atomically swap.
+# no shell variables: fail2ban does not preserve them across the ';' here.
+actionunban = grep -vxF 'deny <ip>;' "<denyfile>" > "<denyfile>.tmp"; mv -f "<denyfile>.tmp" "<denyfile>"

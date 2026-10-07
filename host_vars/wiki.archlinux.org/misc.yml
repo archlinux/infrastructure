@@ -7,5 +7,8 @@ memcached_socket: "/run/memcached/archwiki.sock"
 wireguard_address: 10.0.0.22
 wireguard_public_key: +HOjbJivvyeww7Mvej5IOZghZ000AAGxy1qN1eZZajo=
 nginx_proxy_vendor: haproxy
+# Front the http server with the L4 stream deny proxy so fail2ban can block
+# real client IPs behind the HAProxy ADN (see docs/haproxy.md).
+nginx_stream_deny: true
 anubis_extra_rules:
   - mediawiki

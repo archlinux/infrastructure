@@ -141,7 +141,7 @@ server {
     }
 
     location ~ ^/cgit {
-        limit_req zone=cgitlight burst=5;
+        limit_req zone=cgitlight burst=30;
         include uwsgi_params;
         rewrite ^/cgit/([^?/]+/[^?]*)?(?:\?(.*))?$ /cgit.cgi?url=$1&$2 last;
         uwsgi_modifier1 9;

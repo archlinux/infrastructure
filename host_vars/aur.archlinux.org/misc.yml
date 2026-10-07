@@ -2,11 +2,21 @@ fail2ban_jails:
   sshd: true
   postfix: false
   dovecot: false
-  nginx_limit_req: false
+  nginx_limit_req: true
+fail2ban_nginx_limit_req_findtime: 1m
+fail2ban_nginx_limit_req_bantime: 1h
+fail2ban_nginx_limit_req_maxretry: 100
+fail2ban_nginx_limit_req_bantime_increment: false
+fail2ban_nginx_limit_req_ignore_zones:
+  - aurwebgitlimit
+  - cgitlight
 memcached_socket: "/run/memcached/aurweb.sock"
 wireguard_address: 10.0.0.2
 wireguard_public_key: 51KGJWs3ZlI4tEdOpYFENhf22aETQEn9ApbmVyiF4zQ=
 nginx_proxy_vendor: haproxy
+# Front the http server with the L4 stream deny proxy so fail2ban can block
+# real client IPs behind the HAProxy ADN (see docs/haproxy.md).
+nginx_stream_deny: true
 aurweb_registration_closed: true
 anubis_extra_rules:
   - deny-ai-training-bots

@@ -7,8 +7,16 @@
 enabled = true
 filter = nginx-limit-req
 logpath = /var/log/nginx/*/error.log
-findtime = 1sec
-bantime = 1w
-maxretry = 1
-# Do not fail2ban archweb's rss limit.
-ignoreregex = rsslimit
+findtime = {{ fail2ban_nginx_limit_req_findtime }}
+bantime = {{ fail2ban_nginx_limit_req_bantime }}
+maxretry = {{ fail2ban_nginx_limit_req_maxretry }}
+{% if not fail2ban_nginx_limit_req_bantime_increment %}
+bantime.increment = false
+{% endif %}
+{% if nginx_stream_deny is defined and nginx_stream_deny %}
+# Behind the HAProxy ADN, ban at the nginx stream layer (by real client IP)
+# instead of firewalld, which cannot match traffic arriving from the ADN.
+banaction = nginx-stream-deny
+{% endif %}
+# Do not fail2ban these limit_req zones, they only return 429.
+ignoreregex = by zone "(?:{{ fail2ban_nginx_limit_req_ignore_zones | join('|') }})"

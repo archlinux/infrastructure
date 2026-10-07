@@ -1,5 +1,5 @@
 - name: Install nginx
-  pacman: name=nginx,nginx-mod-brotli,nginx-mod-acme{{ ',nginx-mod-stream' if nginx_stream }} state=present
+  pacman: name=nginx,nginx-mod-brotli,nginx-mod-acme{{ ',nginx-mod-stream' if nginx_stream or nginx_stream_deny }} state=present
 
 - name: Install extra nginx modules
   pacman: name={{ nginx_extra_modules | map(attribute='name') | map('regex_replace', '^', 'nginx-mod-') }} state=present
@@ -27,7 +27,8 @@
     - headers.conf
     - listen-80.conf.j2
     - listen-443.conf.j2
-    - proxy-settings.conf.j2
+    - {src: proxy-settings.conf.j2, dest: proxy-settings-http.conf, server: http}
+    - {src: proxy-settings.conf.j2, dest: proxy-settings-stream.conf, server: stream}
   notify:
     - Reload nginx
 
@@ -40,7 +41,29 @@
 
 - name: Create stream.d directory
   file: state=directory path=/etc/nginx/stream.d owner=root group=root mode=0755
-  when: nginx_stream
+  when: nginx_stream or nginx_stream_deny
+
+- name: Bootstrap fail2ban stream deny snippet
+  # create-once (force=no) so re-running the role never clobbers runtime bans
+  copy: content="" dest=/etc/nginx/snippets/stream-fail2ban-deny.conf owner=root group=root mode=0644 force=no
+  when: nginx_stream_deny
+
+- name: Install fail2ban stream front-proxy
+  template: src=stream-fail2ban-frontend.conf.j2 dest=/etc/nginx/stream.d/fail2ban-frontend.conf owner=root group=root mode=0644
+  when: nginx_stream_deny
+  notify:
+    - Reload nginx
+
+- name: Install nginx stream deny reload units
+  copy: src={{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  loop:
+    - nginx-stream-deny-reload.path
+    - nginx-stream-deny-reload.service
+  when: nginx_stream_deny
+
+- name: Enable nginx stream deny reload path unit
+  systemd_service: name=nginx-stream-deny-reload.path enabled=yes state=started daemon_reload=yes
+  when: nginx_stream_deny
 
 - name: Create auth directory
   file: state=directory path=/etc/nginx/auth owner=root group=root mode=0755
