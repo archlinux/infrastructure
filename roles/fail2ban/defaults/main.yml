@@ -13,3 +13,9 @@ fail2ban_jails:
 fail2ban_findtime: 15min
 fail2ban_bantime: 1day
 fail2ban_maxretry: 5
+fail2ban_nginx_limit_req_findtime: 1sec
+fail2ban_nginx_limit_req_bantime: 1w
+fail2ban_nginx_limit_req_maxretry: 1
+fail2ban_nginx_limit_req_bantime_increment: true
+fail2ban_nginx_limit_req_ignore_zones:
+  - rsslimit

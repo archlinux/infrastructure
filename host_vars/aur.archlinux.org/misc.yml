@@ -3,6 +3,13 @@ fail2ban_jails:
   postfix: false
   dovecot: false
   nginx_limit_req: true
+fail2ban_nginx_limit_req_findtime: 1m
+fail2ban_nginx_limit_req_bantime: 1h
+fail2ban_nginx_limit_req_maxretry: 100
+fail2ban_nginx_limit_req_bantime_increment: false
+fail2ban_nginx_limit_req_ignore_zones:
+  - aurwebgitlimit
+  - cgitlight
 memcached_socket: "/run/memcached/aurweb.sock"
 wireguard_address: 10.0.0.2
 wireguard_public_key: 51KGJWs3ZlI4tEdOpYFENhf22aETQEn9ApbmVyiF4zQ=
