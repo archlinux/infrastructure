@@ -14,3 +14,9 @@ nginx_stream: true
 
 wireguard_address: 10.0.0.45
 wireguard_public_key: ZE7fr78hG6eB3Qjhys0n7DxplMBbcWzBGI7DhMvCeDc=
+
+ignore_package_upgrades:
+  # rsync 3.5.1 causes issues with the rsyncd socket:
+  # - https://gitlab.archlinux.org/archlinux/infrastructure/-/work_items/876
+  # - https://github.com/RsyncProject/rsync/issues/1119
+  - rsync
