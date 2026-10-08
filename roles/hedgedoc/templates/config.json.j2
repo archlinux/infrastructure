@@ -38,6 +38,16 @@
         "linkifyHeaderStyle": "gfm",
         "oauth2": {
             "clientSecret": "{{ vault_hedgedoc_client_secret }}"
-        }
+        },
+        "externalLinkWhitelist": [
+          "archlinux.org",
+          "*.archlinux.org",
+          "archlinux.page",
+          "*.archlinux.page",
+          "*.archlinux.builders",
+          "*.archlinux.review",
+          "pkgbuild.com",
+          "*.pkgbuild.com",
+        ]
     }
 }
