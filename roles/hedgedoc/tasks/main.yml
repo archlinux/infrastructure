@@ -35,7 +35,7 @@
   notify: Restart hedgedoc
 
 - name: Install hedgedoc config file
-  template: src=config.json.j2 dest=/etc/webapps/hedgedoc/config.json owner=root group=hedgedoc mode=0640
+  template: src=config.json.j2 dest=/etc/webapps/hedgedoc/config.json owner=root group=hedgedoc mode=0640 validate='python -mjson.tool %s'
   notify: Restart hedgedoc
 
 - name: Start and enable hedgedoc
