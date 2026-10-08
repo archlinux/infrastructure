@@ -14,6 +14,7 @@
     - { role: certbot }
     - { role: nginx }
     - { role: fail2ban }
+    - { role: anubis, anubis_opengraph_enabled: false }
     - { role: rspamd, rspamd_dkim_domain: lists.archlinux.org, rspamd_dkim_use_esld: false, tags: ["mail"] }
     - { role: unbound, unbound_port: 5353, tags: ["mail"] }
     - { role: uwsgi }

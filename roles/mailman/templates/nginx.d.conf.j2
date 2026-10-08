@@ -1,3 +1,5 @@
+uwsgi_cache_path /var/lib/nginx/cache/mailman levels=1:2 keys_zone=mailmancache:10m inactive=60m max_size=512m;
+
 # limit general requests to 2 r/s to block DoS attempts.
 limit_req_zone $binary_remote_addr zone=mailmanlimit:10m rate=2r/s;
 
@@ -5,6 +7,12 @@ limit_req_zone $binary_remote_addr zone=mailmanlimit:10m rate=2r/s;
 limit_req_zone $binary_remote_addr zone=mailmansearch:10m rate=20r/m;
 
 limit_req_status 429;
+
+# Global concurrency for uwsgi backend which runs 10 worker processes
+map $host $mailman_conn_key {
+    default "global";
+}
+limit_conn_zone $mailman_conn_key zone=mailmanconn:10m;
 
 # Drop various aggressive AI/scraper bots.
 map $http_user_agent $mailman_blocked_ua {
@@ -43,12 +51,32 @@ server {
     include      snippets/listen-443.conf;
     server_name  {{ lists_domain }};
 
-    access_log   /var/log/nginx/{{ lists_domain }}/access.log main;
-    access_log   /var/log/nginx/{{ lists_domain }}/access.log.json json_main;
-    error_log    /var/log/nginx/{{ lists_domain }}/error.log;
+    access_log off;
+    error_log /dev/null;
 
     ssl_certificate      /etc/letsencrypt/live/{{ lists_domain }}/fullchain.pem;
     ssl_certificate_key  /etc/letsencrypt/live/{{ lists_domain }}/privkey.pem;
+
+    location / {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Http-Version $server_protocol;
+        proxy_redirect http://{{ lists_domain }}:3000/ /;
+        # Anubis
+        proxy_pass http://127.0.0.1:8923;
+        # Bypass Anubis
+        # proxy_pass http://127.0.0.1:3000;
+    }
+}
+
+server {
+    set_real_ip_from 127.0.0.1;
+    real_ip_header X-Real-IP;
+    listen 127.0.0.1:3000;
+
+    access_log   /var/log/nginx/{{ lists_domain }}/access.log main;
+    access_log   /var/log/nginx/{{ lists_domain }}/access.log.json json_main;
+    error_log    /var/log/nginx/{{ lists_domain }}/error.log;
 
     # Bytespider's distributed AWS range.
     deny 47.128.59.0/24;
@@ -61,12 +89,42 @@ server {
         alias /var/lib/mailman2/archives/public/;
     }
 
+    # disabled mbox.gz thread export abused by scrapers costly to generate
+    location ~ ^/archives/list/[^/]+/export/ {
+      return 404;
+    }
+
+    # Cache archive list/thread/message pages
+    location ~ ^/(archives|hyperkitty)/list/[^/]+/ {
+      if ($mailman_blocked_ua) {
+          return 444;
+      }
+      limit_req zone=mailmanlimit burst=5 nodelay;
+      limit_conn mailmanconn 20;
+      include /etc/nginx/uwsgi_params;
+      uwsgi_pass unix:/run/mailman-web/mailman-web.sock;
+
+      uwsgi_cache             mailmancache;
+      uwsgi_cache_key         $scheme$host$uri$args;
+      uwsgi_cache_valid       200 15m;
+      uwsgi_cache_bypass      $cookie_sessionid;
+      uwsgi_no_cache          $cookie_sessionid;
+      uwsgi_cache_lock        on;
+      uwsgi_cache_use_stale   error timeout updating http_500 http_503;
+      # Django mints a fresh csrftoken cookie on every response, which
+      # would otherwise stop this from ever caching.
+      uwsgi_ignore_headers    Set-Cookie;
+      uwsgi_hide_header       Set-Cookie;
+      add_header X-Cache-Status $upstream_cache_status;
+    }
+
     # Heavy search endpoint: stricter limit.
     location ~ ^/(archives|hyperkitty)/search {
       if ($mailman_blocked_ua) {
           return 444;
       }
       limit_req zone=mailmansearch burst=5 nodelay;
+      limit_conn mailmanconn 20;
       include /etc/nginx/uwsgi_params;
       uwsgi_pass unix:/run/mailman-web/mailman-web.sock;
     }
@@ -76,6 +134,7 @@ server {
           return 444;
       }
       limit_req zone=mailmanlimit burst=5 nodelay;
+      limit_conn mailmanconn 20;
       include /etc/nginx/uwsgi_params;
       uwsgi_pass unix:/run/mailman-web/mailman-web.sock;
     }

@@ -18,6 +18,10 @@
     - Reload mailman
     - Restart mailman-web
 
+- name: Install mailman-web uwsgi configuration
+  template: src=mailman-web.ini.j2 dest=/etc/uwsgi/mailman-web.ini owner=root group=root mode=0644
+  notify: Restart mailman-web
+
 - name: Install postfix configuration
   template: src=main.cf.j2 dest=/etc/postfix/main.cf owner=root group=root mode=0644
   notify: Reload postfix
@@ -57,9 +61,15 @@
 - name: Make nginx log dir
   file: path=/var/log/nginx/{{ lists_domain }} state=directory owner=root group=root mode=0755
 
+- name: Make nginx cache dir
+  file: path=/var/lib/nginx/cache/mailman state=directory owner=http group=http mode=0750
+
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest="/etc/nginx/nginx.d/mailman.conf" owner=root group=root mode=644
   notify: Reload nginx
+
+- name: Install logrotate config
+  copy: src=logrotate.conf dest=/etc/logrotate.d/mailman3 owner=root group=root mode=0644
 
 - name: Create postgres {mailman,mailman-web} user
   postgresql_user: name={{ item.username }} password={{ item.password }}

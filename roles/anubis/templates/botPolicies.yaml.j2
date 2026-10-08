@@ -54,13 +54,13 @@ bots:
   #     report_as: 4    # lie to the operator
   #     algorithm: slow # intentionally waste CPU cycles and time
 
-  # ## System load based checks.
-  # # If the system is under high load, add weight.
-  # - name: high-load-average
-  #   action: WEIGH
-  #   expression: load_1m >= 10.0 # make sure to end the load comparison in a .0
-  #   weight:
-  #     adjust: 20
+  ## System load based checks.
+  # If the system is under high load, add weight.
+  - name: high-load-average
+    action: WEIGH
+    expression: load_1m >= 10.0 # make sure to end the load comparison in a .0
+    weight:
+      adjust: 20
 
   ## If your backend service is running on the same operating system as Anubis,
   ## you can uncomment this rule to make the challenge easier when the system is
@@ -112,7 +112,7 @@ dnsbl: false
 # https://anubis.techaro.lol/docs/admin/configuration/open-graph/
 openGraph:
   # Enables Open Graph passthrough
-  enabled: true
+  enabled: {{ anubis_opengraph_enabled | default(true) | lower }}
   # Enables the use of the HTTP host in the cache key, this enables
   # caching metadata for multiple http hosts at once.
   considerHost: false
