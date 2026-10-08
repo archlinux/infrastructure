@@ -8,6 +8,13 @@
   pacman: name=mailman3,mailman3-hyperkitty,python-psycopg2,mailman-web,python-xapian-haystack,uwsgi-plugin-python,postfix,postfix-pcre state=present
   register: install
 
+- name: Create drop-in directory for 10-dhcp-ethernet.network
+  file: path=/etc/systemd/network/10-dhcp-ethernet.network.d state=directory owner=root group=root mode=0755
+
+- name: Configure DNS (local unbound, then Hetzner, then Quad9 fallback)
+  copy: src=dns.conf dest=/etc/systemd/network/10-dhcp-ethernet.network.d/dns.conf owner=root group=root mode=0644
+  notify: Restart networkd
+
 - name: Install {mailman,mailman-web} configuration
   template: src={{ item.src }} dest={{ item.dest }} owner=root group={{ item.group }} mode=0640
   loop:

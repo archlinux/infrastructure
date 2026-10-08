@@ -7,6 +7,9 @@
 - name: Reload postfix
   service: name=postfix state=reloaded
 
+- name: Restart networkd
+  service: name=systemd-networkd state=restarted
+
 - name: Run postmap  # noqa no-changed-when
   command: postmap /etc/postfix/{{ item }}
   loop:
