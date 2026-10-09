@@ -102,6 +102,7 @@ server {
       limit_req zone=mailmanlimit burst=5 nodelay;
       limit_conn mailmanconn 20;
       include /etc/nginx/uwsgi_params;
+      uwsgi_param              HTTPS on;
       uwsgi_pass unix:/run/mailman-web/mailman-web.sock;
 
       uwsgi_cache             mailmancache;
@@ -126,6 +127,7 @@ server {
       limit_req zone=mailmansearch burst=5 nodelay;
       limit_conn mailmanconn 20;
       include /etc/nginx/uwsgi_params;
+      uwsgi_param              HTTPS on;
       uwsgi_pass unix:/run/mailman-web/mailman-web.sock;
     }
 
@@ -136,6 +138,7 @@ server {
       limit_req zone=mailmanlimit burst=5 nodelay;
       limit_conn mailmanconn 20;
       include /etc/nginx/uwsgi_params;
+      uwsgi_param              HTTPS on;
       uwsgi_pass unix:/run/mailman-web/mailman-web.sock;
     }
 }
