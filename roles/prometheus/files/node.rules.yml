@@ -519,6 +519,28 @@ groups:
           summary: "Rebuilderd workers offline {{ $labels.instance }})"
           description: "Not all rebuilder-workers are online, currently {{ $value }} workers are online"
 
+  - name: postfix
+    interval: 2m
+    rules:
+      - alert: PostfixDeferredQueueBacklog
+        expr: postfix_queue_messages{queue="deferred"} > 5000
+        for: 2h
+        labels:
+          severity: warning
+          service: postfix
+        annotations:
+          summary: "Postfix deferred queue backlog (instance {{ $labels.instance }})"
+          description: "{{ $value }} messages have been stuck in the deferred queue on {{ $labels.instance }} for over 2 hours. This usually means a destination is chronically rate-limiting or rejecting (e.g. Gmail 450 4.2.1), not a transient outage. Check postqueue -p for repeat-offender recipients."
+      - alert: PostfixDeferredQueueStale
+        expr: postfix_queue_oldest_message_age_seconds{queue="deferred"} > 86400 * 2
+        for: 30m
+        labels:
+          severity: warning
+          service: postfix
+        annotations:
+          summary: "Postfix oldest deferred message is stale (instance {{ $labels.instance }})"
+          description: "The oldest message in the deferred queue on {{ $labels.instance }} is {{ $value | humanizeDuration }} old. Mail isn't draining normally; check for chronic per-recipient rate limiting."
+
   - name: fastly
     interval: 60m
     rules:

@@ -1,0 +1,9 @@
+[Unit]
+Description=Prometheus Postfix Queue Exporter TextCollector Timer
+
+[Timer]
+OnUnitActiveSec=5min
+OnBootSec=1min
+
+[Install]
+WantedBy=timers.target

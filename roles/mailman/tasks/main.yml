@@ -54,6 +54,18 @@
           -o smtp_destination_rate_delay=1s
   notify: Reload postfix
 
+- name: Install postfix queue textcollector script
+  copy: src=postfix-queue-textcollector.sh dest=/usr/local/bin/postfix-queue-textcollector.sh owner=root group=root mode=0755
+
+- name: Install postfix queue textcollector service and timer
+  template: src={{ item }}.j2 dest=/etc/systemd/system/{{ item }} owner=root group=root mode=0644
+  loop:
+    - prometheus-postfix-queue-textcollector.service
+    - prometheus-postfix-queue-textcollector.timer
+
+- name: Start and enable prometheus postfix queue textcollector timer
+  systemd_service: name=prometheus-postfix-queue-textcollector.timer enabled=yes daemon_reload=yes state=started
+
 - name: Open firewall holes for postfix
   ansible.posix.firewalld: service=smtp permanent=true state=enabled immediate=yes
   tags:
