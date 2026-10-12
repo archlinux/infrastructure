@@ -30,12 +30,9 @@ now=$(date +%s)
     oldest=0
 
     if [ -d "$dir" ]; then
-      while IFS= read -r -d '' f; do
-        count=$((count + 1))
-        mtime=$(stat -c %Y "$f")
-        age=$((now - mtime))
-        (( age > oldest )) && oldest=$age
-      done < <(find "$dir" -type f -print0)
+      # Queue files move between queues so use the birth time
+      read -r count oldest < <(find "$dir" -type f -exec stat -c %W {} + 2>/dev/null \
+        | awk -v now="$now" '{ n++; if ($1 > 0 && now - $1 > o) o = now - $1 } END { printf "%d %d\n", n, o }')
     fi
 
     echo "postfix_queue_messages{queue=\"${queue}\"} ${count}"
