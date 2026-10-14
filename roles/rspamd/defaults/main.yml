@@ -1,1 +1,2 @@
 rspamd_dkim_use_esld: true
+rspamd_enable_arc: false

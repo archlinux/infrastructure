@@ -11,6 +11,12 @@
   notify:
     - Reload rspamd
 
+- name: Install arc_signing.conf
+  template: src=arc_signing.conf.j2 dest=/etc/rspamd/local.d/arc.conf owner=root group=root mode=0644
+  when: rspamd_enable_arc
+  notify:
+    - Reload rspamd
+
 - name: Create rspamd dkim directory
   file: path=/var/lib/rspamd/dkim state=directory owner=rspamd group=rspamd mode=0750
 

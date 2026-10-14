@@ -1,0 +1,27 @@
+# {{ ansible_managed }}
+#
+# ARC-seals relayed mail (e.g. Mailman) as our own hop, reusing the DKIM keys.
+
+sign_local = true;
+sign_authenticated = true;
+sign_inbound = false;
+try_fallback = false;
+
+# Seal as our own domain regardless of the message's From: domain.
+use_domain = "{{ rspamd_dkim_domain }}";
+use_esld = {{ 'true' if rspamd_dkim_use_esld else 'false' }};
+
+# Local re-injection skips SPF/DKIM/DMARC, so seal the results from our inbound scan.
+reuse_auth_results = true;
+trusted_authserv_id = "{{ rspamd_dkim_domain }}";
+
+# ARC only allows rsa-sha256 and rspamd only uses a single selector.
+domain {
+  {{ rspamd_dkim_domain }} {
+    selector = "dkim-rsa";
+    path = "/var/lib/rspamd/dkim/{{ rspamd_dkim_domain }}.dkim-rsa.key";
+  }
+}
+
+check_pubkey = true;
+allow_pubkey_mismatch = false;
