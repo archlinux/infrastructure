@@ -8,7 +8,6 @@
   challenge:
     algorithm: slow
     difficulty: 8
-    report_as: 4
 
 - name: aurweb-register
   action: CHALLENGE
