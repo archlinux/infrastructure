@@ -22,6 +22,8 @@ fail2ban_jails:
 anubis_extra_rules:
   - skip-all-non-browser
   - gitlab
+# OG tag lookups hit GitLab for every challenged URL, amplifying scraper load
+anubis_opengraph_enabled: false
 
 gitlab_pages_archlinux_page_map:
   archlinux.page: archlinux-page-caddcd.archlinux.page
