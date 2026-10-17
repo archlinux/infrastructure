@@ -27,6 +27,7 @@
 - name: Set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/gitlab.conf owner=root group=root mode=644
   notify: Reload nginx
+  tags: ['nginx']
 
 - name: Create directories for gitlab
   file: path={{ item }} state=directory owner=root group=root mode=0755
