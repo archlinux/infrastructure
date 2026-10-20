@@ -1,5 +1,5 @@
 - name: Install dependencies
-  pacman: name=arch-pkg-repo-updater,devtools,jq,nvchecker,git,pyalpm,python-awesomeversion,python-jq,python-lxml,python-packaging state=present
+   pacman: name=arch-pkg-repo-updater,devtools,jq,nvchecker,git,pyalpm,python-awesomeversion,python-jq,python-lxml,python-packaging state=present
 
 - name: Clone bumpbuddy repo # noqa: latest
   git: repo=https://gitlab.archlinux.org/archlinux/bumpbuddy.git dest=/opt/bumpbuddy version="{{ bumpbuddy_version }}" force=true
