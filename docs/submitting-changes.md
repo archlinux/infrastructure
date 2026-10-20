@@ -6,7 +6,7 @@ requests.
 Merge requests require the following rules in order to be merged:
 
 - The pipeline should succeed.
-- Every threads must be resolved.
+- Every thread must be resolved.
 - There should be at least one approval.
 
 While it's not technically enforced, approving your own merge requests should be avoided.  
