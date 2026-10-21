@@ -26,6 +26,7 @@ ProtectClock=true
 
 RestrictRealtime=true
 RestrictNamespaces=true
+RestrictSUIDSGID=true
 
 # Restricts the set of socket address families accessible to the processes of this unit.
 # Protects against vulnerabilities such as CVE-2016-8655
