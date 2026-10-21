@@ -23,6 +23,7 @@ ProtectKernelTunables=true
 ProtectControlGroups=true
 ProtectKernelLogs=true
 ProtectClock=true
+ProtectProc=invisible
 
 RestrictRealtime=true
 RestrictNamespaces=true
