@@ -32,6 +32,8 @@ RestrictSUIDSGID=true
 # Protects against vulnerabilities such as CVE-2016-8655
 RestrictAddressFamilies=AF_INET AF_INET6 AF_NETLINK AF_UNIX
 
+LockPersonality=true
+
 MemoryAccounting=yes
 CPUAccounting=yes
 IOAccounting=yes
