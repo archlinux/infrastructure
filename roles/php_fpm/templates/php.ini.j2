@@ -696,7 +696,7 @@ auto_globals_jit = On
 ; Its value may be 0 to disable the limit. It is ignored if POST data reading
 ; is disabled through enable_post_data_reading.
 ; https://php.net/post-max-size
-post_max_size = 16M
+post_max_size = 8M
 
 ; Automatically add files before PHP document.
 ; https://php.net/auto-prepend-file
@@ -1409,7 +1409,7 @@ session.trans_sid_tags = "a=href,area=href,frame=src,form="
 ; Development Value: On
 ; Production Value: On
 ; https://php.net/session.upload-progress.enabled
-;session.upload_progress.enabled = On
+session.upload_progress.enabled = Off
 
 ; Cleanup the progress information as soon as all POST data has been read
 ; (i.e. upload completed).

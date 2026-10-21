@@ -12,9 +12,7 @@ NoNewPrivileges=true
 ;PrivateNetwork=true
 PrivateDevices=true
 
-# AURweb's rendercomment script git bindings requires access to /home:
-# failed to stat '/home/aur/.gitconfig
-ProtectHome=tmpfs
+ProtectHome=true
 ProtectSystem=full
 InaccessiblePaths=-/var/lib/mysql
 
@@ -23,13 +21,17 @@ ProtectKernelTunables=true
 ProtectControlGroups=true
 ProtectKernelLogs=true
 ProtectClock=true
+ProtectProc=invisible
 
 RestrictRealtime=true
 RestrictNamespaces=true
+RestrictSUIDSGID=true
 
 # Restricts the set of socket address families accessible to the processes of this unit.
 # Protects against vulnerabilities such as CVE-2016-8655
 RestrictAddressFamilies=AF_INET AF_INET6 AF_NETLINK AF_UNIX
+
+LockPersonality=true
 
 MemoryAccounting=yes
 CPUAccounting=yes
