@@ -75,7 +75,7 @@
 - name: Install synapse
   pip:
     name:
-      - 'matrix-synapse[postgres,oidc,url-preview,redis]==1.163.0'
+      - 'matrix-synapse[postgres,oidc,url-preview,redis]==1.163.1'
       - synapse-http-antispam
       - systemd-python
     state: latest
@@ -92,7 +92,7 @@
   git:
     repo: https://github.com/the-draupnir-project/Draupnir
     dest: /var/lib/synapse/draupnir
-    version: v3.1.0
+    version: v3.2.0
     force: true
   become: true
   become_user: synapse
@@ -100,16 +100,6 @@
   register: draupnir_git
   notify:
     - Restart draupnir
-
-- name: Patch draupnir
-  patch:
-    src: draupnir-build.patch
-    basedir: /var/lib/synapse/draupnir
-    strip: 1
-  become: true
-  become_user: synapse
-  become_method: ansible.builtin.sudo
-  when: draupnir_git.changed
 
 - name: Install draupnir
   community.general.npm:
