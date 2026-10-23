@@ -35,7 +35,7 @@
   "display_name": "",
   "discard_these_nonmembers": [],
   "dmarc_addresses": [],
-  "dmarc_mitigate_action": "no_mitigation",
+  "dmarc_mitigate_action": "munge_from",
   "dmarc_mitigate_unconditionally": false,
   "dmarc_moderation_notice": "",
   "dmarc_wrapped_message_text": "",
