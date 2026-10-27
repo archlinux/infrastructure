@@ -17,6 +17,7 @@ server {
     listen [::]:80 proxy_protocol;
 
     access_log off;
+    error_log syslog:server=unix:/dev/log,nohostname notice; # info logs every connection
 
 {% if nginx_proxy_vendor %}
     # Never block the ADN proxies themselves (avoid locking out a whole PoP).
@@ -35,6 +36,7 @@ server {
     listen [::]:443 proxy_protocol;
 
     access_log off;
+    error_log syslog:server=unix:/dev/log,nohostname notice; # info logs every connection
 
 {% if nginx_proxy_vendor %}
     # Never block the ADN proxies themselves (avoid locking out a whole PoP).
