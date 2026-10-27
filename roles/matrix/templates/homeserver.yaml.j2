@@ -202,6 +202,7 @@ allow_public_rooms_over_federation: true
 default_identity_server: https://matrix.org
 account_threepid_delegates:
   msisdn: https://vector.im
+request_token_inhibit_3pid_errors: false
 
 # Federation
 signing_key_path: "/etc/synapse/{{ matrix_server_name }}.signing.key"
