@@ -805,7 +805,7 @@ resource "hcloud_zone_rrset" "archlinux_org_origin_soa" {
 
 resource "hcloud_volume" "mirror" {
   name              = "mirror"
-  size              = 150
+  size              = 175
   server_id         = hcloud_server.machine["mirror.pkgbuild.com"].id
   delete_protection = true
 }
