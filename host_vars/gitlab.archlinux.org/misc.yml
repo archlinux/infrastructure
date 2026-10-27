@@ -18,6 +18,13 @@ fail2ban_jails:
   postfix: false
   dovecot: false
   nginx_limit_req: true
+fail2ban_nginx_limit_req_findtime: 1m
+fail2ban_nginx_limit_req_bantime: 1h
+fail2ban_nginx_limit_req_maxretry: 100
+fail2ban_nginx_limit_req_bantime_increment: false
+fail2ban_nginx_limit_req_ignore_zones:
+  - rsslimit
+  - gitlabexpensive
 
 anubis_extra_rules:
   - skip-all-non-browser
