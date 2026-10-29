@@ -57,7 +57,7 @@ bots:
   # If the system is under high load, add weight.
   - name: high-load-average
     action: WEIGH
-    expression: load_1m >= 10.0 # make sure to end the load comparison in a .0
+    expression: load_1m >= 20.0 # make sure to end the load comparison in a .0
     weight:
       adjust: 20
 
@@ -196,4 +196,4 @@ thresholds:
     challenge:
       # https://anubis.techaro.lol/docs/admin/configuration/challenges/proof-of-work
       algorithm: fast
-      difficulty: 6
+      difficulty: 5

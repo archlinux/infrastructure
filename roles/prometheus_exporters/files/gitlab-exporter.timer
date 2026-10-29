@@ -2,7 +2,7 @@
 Description=Gitlab Exporter Timer
 
 [Timer]
-OnUnitActiveSec=10min
+OnUnitActiveSec=60min
 OnBootSec=5min
 RandomizedDelaySec=1min
 

@@ -94,6 +94,7 @@
         registry_nginx['listen_https'] = false
         registry_nginx['real_ip_trusted_addresses'] = ['127.0.0.1']
         registry_nginx['real_ip_header'] = 'X-Forwarded-For'
+        puma['per_worker_max_memory_mb'] = 2000
         nginx['client_max_body_size'] = '10g'
         nginx['custom_gitlab_server_config'] = "include /etc/gitlab/nginx-gitlab-server-mixins/*.conf;"
         pages_external_url "https://{{ gitlab_pages_domain }}"
