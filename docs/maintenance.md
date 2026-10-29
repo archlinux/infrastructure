@@ -39,17 +39,9 @@ version of the running kernel:
 ansible all -m shell -a "uptime && uname -r"
 ```
 
-The following command can be run to check the ongoing package builds running
-on the build server (in order to avoid brutally cancelling them unexpectedly
-when rebooting):
-
-```
-ssh build.archlinux.org \
-  ps -ef \
-  | awk 'match($0,/pkgctl offload.*offload\/([^.\/]+)/,m){print $1, m[1]}' \
-  | sort -u \
-  | awk '{u[$1]=u[$1]"  ├── "$2"\n"} END{for(i in u) printf "%s\n%s\n",i,u[i]}'
-```
+The `check-builds` command (from the `archlinux-contrib` package) can be run
+to check the list of ongoing package builds running on the build server (in
+order to avoid brutally cancelling them unexpectedly when rebooting it).
 
 #### Database migration after a MariaDB upgrade
 
