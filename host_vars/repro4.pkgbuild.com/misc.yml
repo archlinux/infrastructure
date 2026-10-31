@@ -17,5 +17,7 @@ configure_network: true
 rebuilderd_workers:
   - repro41
   - repro42
+  - repro43
+  - repro44
 wireguard_address: 10.0.0.47
 wireguard_public_key: MJrXDwK61CF7nT5r1HRxxp44DocZyrQslK5plCJFexY=
