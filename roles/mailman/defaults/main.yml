@@ -44,7 +44,7 @@ lists:
     description: General Discussion about Arch Linux
     display_name: Arch-general
     info: |
-      This mailing list hosts general discusson about the Arch Linux distribution.  Questions, problems, and new development ideas can be posted here.
+      This mailing list hosts general discussion about the Arch Linux distribution.  Questions, problems, and new development ideas can be posted here.
 
       You must be subscribed to the list in order to post to it.
   arch-mirrors-announce:
