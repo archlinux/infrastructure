@@ -31,3 +31,90 @@ resource "scaleway_billing_budget_alert_notification" "email" {
   budget_alert_id = scaleway_billing_budget_alert.scaleway_account_limit.id
   email_addresses = [data.external.vault_scaleway.result.scaleway_username]
 }
+
+locals {
+  scaleway_servers = [for server in var.servers : server if server.provider == "scaleway"]
+  scaleway_zones   = distinct([for server in local.scaleway_servers : server.zone])
+  scaleway_types   = distinct([for server in local.scaleway_servers : "${server.type}/${server.zone}/${server.subscription_period}"])
+}
+
+data "scaleway_baremetal_offer" "this" {
+  for_each = { for type in local.scaleway_types : type => split("/", type) }
+
+  name                = each.value[0]
+  subscription_period = each.value[2]
+  zone                = each.value[1]
+}
+
+data "scaleway_baremetal_os" "this" {
+  for_each = toset(local.scaleway_zones)
+
+  name    = "Custom install"
+  version = "via Remote access"
+  zone    = each.key
+}
+
+data "scaleway_baremetal_option" "this" {
+  for_each = toset(local.scaleway_zones)
+
+  name = "Public Bandwidth 1Gbps"
+  zone = each.key
+}
+
+resource "scaleway_baremetal_server" "this" {
+  for_each = { for server in local.scaleway_servers : server.fqdn => server }
+
+  name        = replace(each.value.fqdn, ".", "-")
+  description = each.value.fqdn
+  offer       = data.scaleway_baremetal_offer.this[format("%s/%s/%s", each.value.type, each.value.zone, each.value.subscription_period)].offer_id
+  os          = data.scaleway_baremetal_os.this[each.value.zone].os_id
+  zone        = each.value.zone
+  protected   = true
+
+  options {
+    id = data.scaleway_baremetal_option.this[each.value.zone].option_id
+  }
+
+  lifecycle {
+    action_trigger {
+      events  = [after_create]
+      actions = [action.scaleway_baremetal_server_action.this[each.key]]
+    }
+  }
+}
+
+action "scaleway_baremetal_server_action" "this" {
+  for_each = scaleway_baremetal_server.this
+
+  config {
+    server_id = each.value.id
+    action    = "reboot"
+    boot_type = "rescue"
+    wait      = true
+    zone      = each.value.zone
+  }
+}
+
+resource "hcloud_zone_rrset" "scaleway_a" {
+  for_each = scaleway_baremetal_server.this
+
+  zone = regex("[^\\.]+\\.[^\\.]+$", each.key)
+  name = regex("(.+)\\.[^\\.]+\\.[^\\.]+$", each.key)[0]
+  type = "A"
+  ttl  = null
+  records = [
+    { value = each.value.ipv4[0].address },
+  ]
+}
+
+resource "hcloud_zone_rrset" "scaleway_aaaa" {
+  for_each = scaleway_baremetal_server.this
+
+  zone = regex("[^\\.]+\\.[^\\.]+$", each.key)
+  name = regex("(.+)\\.[^\\.]+\\.[^\\.]+$", each.key)[0]
+  type = "AAAA"
+  ttl  = null
+  records = [
+    { value = each.value.ipv6[0].address },
+  ]
+}
