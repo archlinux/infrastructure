@@ -3,31 +3,15 @@
   register: motd_contents
   changed_when: motd_contents.stdout | length > 0
 
-- name: Check whether we're running in Hetzner or Equinix Metal rescue environment
+- name: Check whether we're running in Hetzner
   fail: msg="Not running in rescue system!"
   when:
     - "'Hetzner Rescue' not in motd_contents.stdout"
-    - "'Rescue environment based on Alpine Linux' not in motd_contents.stdout"
-    - "'OS Rescue Environment' not in motd_contents.stdout"
 
 # It sources some files which sets TMPDIR=/tmp/hwc which breaks mkinitcpio
 - name: Remove problematic ~/.bashrc
   file: path=/root/.bashrc state=absent
   when: "'Hetzner Rescue' in motd_contents.stdout"
-
-- name: Prepare Equinix Metal rescue system
-  when: ansible_facts['os_family'] == "Alpine"
-  block:
-    - name: Make sure all required packages are installed in the rescue system
-      apk: name=sgdisk,btrfs-progs,tar,gnupg update_cache=yes
-
-    - name: Create the GnuPG home directory for the root user
-      file: path=/root/.gnupg state=directory owner=root group=root mode=0700
-
-    # Need to set no-use-tor otherwise dirmngr hangs at startup checking if
-    # 127.0.0.1:9050 works and remains in SYN-SENT state for about a minute
-    - name: Set the no-use-tor option in dirmngr.conf
-      lineinfile: name=/root/.gnupg/dirmngr.conf create=yes line=no-use-tor owner=root group=root mode=0644
 
 - name: Check if running on a hypervisor
   command: systemd-detect-virt --vm --quiet
