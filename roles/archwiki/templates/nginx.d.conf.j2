@@ -68,6 +68,7 @@ server {
 
     # Redirect old URLs to the new short-url (/title/<page>)
     location ~ ^/index.php/(.*)$ {
+        port_in_redirect off;
         return 301 /title/$1$is_args$args;
     }
 
